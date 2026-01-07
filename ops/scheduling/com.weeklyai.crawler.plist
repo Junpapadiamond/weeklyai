@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>com.weeklyai.crawler</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>/bin/zsh</string>
+      <string>/Users/jun/Desktop/WeeklyAI/ops/scheduling/run_crawler.sh</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/Users/jun/Desktop/WeeklyAI</string>
+    <key>StartInterval</key>
+    <integer>43200</integer>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/Users/jun/Desktop/WeeklyAI/crawler/logs/launchd.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/jun/Desktop/WeeklyAI/crawler/logs/launchd.err.log</string>
+  </dict>
+</plist>

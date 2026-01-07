@@ -1,0 +1,22 @@
+{
+  "name": "weeklyai-frontend",
+  "version": "1.0.0",
+  "description": "WeeklyAI - AI产品发现平台前端",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ejs": "^3.1.9",
+    "axios": "^1.6.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "author": "",
+  "license": "MIT"
+}
+
+
