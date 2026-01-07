@@ -18,6 +18,11 @@ const elements = {
     searchInput: document.getElementById('searchInput'),
     searchBtn: document.getElementById('searchBtn'),
     categoryTags: document.getElementById('categoryTags'),
+    discoverSection: document.getElementById('discoverSection'),
+    swipeStack: document.getElementById('swipeStack'),
+    swipeLike: document.getElementById('swipeLike'),
+    swipeNope: document.getElementById('swipeNope'),
+    swipeStatus: document.getElementById('swipeStatus'),
     trendingSection: document.getElementById('trendingSection'),
     weeklySection: document.getElementById('weeklySection'),
     searchSection: document.getElementById('searchSection'),
@@ -35,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSearch();
     initCategoryTags();
     initHeroGlow();
+    initDiscovery();
     loadTrendingProducts();
 });
 
@@ -69,6 +75,9 @@ function switchSection(section) {
     
     // 切换显示的区域
     elements.trendingSection.style.display = section === 'trending' ? 'block' : 'none';
+    if (elements.discoverSection) {
+        elements.discoverSection.style.display = section === 'trending' ? 'block' : 'none';
+    }
     elements.weeklySection.style.display = section === 'weekly' ? 'block' : 'none';
     elements.searchSection.style.display = section === 'search' ? 'block' : 'none';
     
@@ -93,6 +102,252 @@ function initSearch() {
             performSearch();
         }
     });
+}
+
+// ========== Discovery Swipe ==========
+const discoveryState = {
+    pool: [],
+    stack: [],
+    liked: 0,
+    skipped: 0,
+    leftStreak: 0,
+    categoryWeights: {}
+};
+
+function initDiscovery() {
+    if (!elements.swipeStack || !elements.swipeLike || !elements.swipeNope) return;
+
+    elements.swipeLike.addEventListener('click', () => handleSwipe('right'));
+    elements.swipeNope.addEventListener('click', () => handleSwipe('left'));
+    loadDiscoveryProducts();
+}
+
+async function loadDiscoveryProducts() {
+    elements.swipeStack.innerHTML = '<div class="skeleton-card"></div>';
+
+    try {
+        const [trendingRes, weeklyRes] = await Promise.all([
+            fetch(`${API_BASE_URL}/products/trending`),
+            fetch(`${API_BASE_URL}/products/weekly-top`)
+        ]);
+        const trendingData = await trendingRes.json();
+        const weeklyData = await weeklyRes.json();
+
+        const products = mergeUniqueProducts([
+            ...(trendingData.success ? trendingData.data : []),
+            ...(weeklyData.success ? weeklyData.data : [])
+        ]);
+
+        buildDiscoveryDeck(products.length ? products : getMockWeeklyProducts());
+    } catch (error) {
+        console.error('加载发现产品失败:', error);
+        buildDiscoveryDeck(getMockWeeklyProducts());
+    }
+}
+
+function mergeUniqueProducts(products) {
+    const seen = new Set();
+    return products.filter(product => {
+        const key = `${product.website || ''}-${product.name || ''}`;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+    });
+}
+
+function buildDiscoveryDeck(products) {
+    discoveryState.pool = [...products];
+    discoveryState.stack = [];
+    discoveryState.liked = 0;
+    discoveryState.skipped = 0;
+    discoveryState.leftStreak = 0;
+    discoveryState.categoryWeights = {};
+
+    refillDiscoveryStack();
+    renderDiscoveryStack();
+    updateDiscoveryStatus();
+}
+
+function refillDiscoveryStack() {
+    while (discoveryState.stack.length < 3 && discoveryState.pool.length > 0) {
+        const next = pickNextDiscoveryProduct();
+        if (!next) break;
+        discoveryState.stack.push(next);
+    }
+}
+
+function pickNextDiscoveryProduct() {
+    if (discoveryState.pool.length === 0) return null;
+
+    const scored = discoveryState.pool.map(product => ({
+        product,
+        score: scoreDiscoveryProduct(product)
+    }));
+
+    scored.sort((a, b) => b.score - a.score);
+    const pickWindow = Math.min(6, scored.length);
+    const pickIndex = Math.floor(Math.random() * pickWindow);
+    const chosen = scored[pickIndex].product;
+
+    discoveryState.pool = discoveryState.pool.filter(item => item !== chosen);
+    return chosen;
+}
+
+function scoreDiscoveryProduct(product) {
+    let score = product.final_score || product.trending_score || 0;
+    const categories = product.categories || [];
+    categories.forEach(category => {
+        score += discoveryState.categoryWeights[category] || 0;
+    });
+    return score + Math.random() * 0.3;
+}
+
+function renderDiscoveryStack() {
+    if (!elements.swipeStack) return;
+
+    if (discoveryState.stack.length === 0) {
+        elements.swipeStack.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">✨</div>
+                <p class="empty-state-text">已经看完这一轮，稍后再来看看新产品吧。</p>
+            </div>
+        `;
+        return;
+    }
+
+    const renderOrder = [...discoveryState.stack].reverse();
+    elements.swipeStack.innerHTML = renderOrder.map((product, index) => {
+        const pos = discoveryState.stack.length - 1 - index;
+        return createSwipeCard(product, pos);
+    }).join('');
+
+    const activeCard = elements.swipeStack.querySelector('.swipe-card.is-active');
+    if (activeCard) {
+        attachSwipeHandlers(activeCard);
+    }
+}
+
+function createSwipeCard(product, position) {
+    const categories = (product.categories || []).slice(0, 2).map(getCategoryName).join(' · ');
+    const rating = product.rating ? product.rating.toFixed(1) : 'N/A';
+    const users = formatNumber(product.weekly_users);
+    const description = product.description || '暂无描述';
+    const website = product.website || '';
+
+    const logoMarkup = product.logo_url
+        ? `<img src="${product.logo_url}" alt="${product.name}" onerror="this.parentElement.innerHTML='<div class=\\'product-logo-placeholder\\'>${product.name.charAt(0)}</div>'">`
+        : `<div class="product-logo-placeholder">${product.name.charAt(0)}</div>`;
+
+    return `
+        <div class="swipe-card ${position === 0 ? 'is-active' : ''}" data-pos="${position}" data-website="${website}">
+            <div class="swipe-card-header">
+                <div class="swipe-card-logo">${logoMarkup}</div>
+                <div class="swipe-card-title">
+                    <h3>${product.name}</h3>
+                    <p>${categories || '精选 AI 工具'}</p>
+                </div>
+                <div class="product-meta-item">⭐ ${rating}</div>
+            </div>
+            <p class="swipe-card-desc">${description}</p>
+            <div class="swipe-card-meta">
+                <span>👥 ${users}</span>
+                ${website ? `<a class="swipe-link" href="${website}" target="_blank" rel="noopener noreferrer">访问官网 →</a>` : ''}
+            </div>
+        </div>
+    `;
+}
+
+function attachSwipeHandlers(card) {
+    let startX = 0;
+    let startY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let isDragging = false;
+
+    const onPointerMove = (event) => {
+        if (!isDragging) return;
+        currentX = event.clientX - startX;
+        currentY = event.clientY - startY;
+        const rotate = currentX / 18;
+        card.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${rotate}deg)`;
+    };
+
+    const onPointerUp = (event) => {
+        if (!isDragging) return;
+        isDragging = false;
+        card.releasePointerCapture?.(event.pointerId);
+
+        const threshold = 110;
+        if (currentX > threshold) {
+            handleSwipe('right');
+        } else if (currentX < -threshold) {
+            handleSwipe('left');
+        } else {
+            card.style.transition = 'transform 0.25s ease';
+            card.style.transform = '';
+        }
+    };
+
+    card.addEventListener('pointerdown', (event) => {
+        if (event.button !== 0) return;
+        isDragging = true;
+        startX = event.clientX;
+        startY = event.clientY;
+        card.setPointerCapture(event.pointerId);
+        card.style.transition = 'none';
+    });
+
+    card.addEventListener('pointermove', onPointerMove);
+    card.addEventListener('pointerup', onPointerUp);
+    card.addEventListener('pointercancel', onPointerUp);
+}
+
+function handleSwipe(direction) {
+    const activeCard = elements.swipeStack.querySelector('.swipe-card.is-active');
+    const activeProduct = discoveryState.stack[0];
+    if (!activeCard || !activeProduct) return;
+
+    activeCard.style.transform = '';
+    activeCard.style.transition = '';
+
+    if (direction === 'right') {
+        activeCard.classList.add('is-exit-like');
+    } else {
+        activeCard.classList.add('is-exit-nope');
+    }
+
+    updateDiscoveryPreferences(activeProduct, direction);
+    updateDiscoveryStatus();
+
+    setTimeout(() => {
+        discoveryState.stack.shift();
+        refillDiscoveryStack();
+        renderDiscoveryStack();
+    }, 260);
+}
+
+function updateDiscoveryPreferences(product, direction) {
+    const categories = product.categories || [];
+    if (direction === 'right') {
+        discoveryState.liked += 1;
+        discoveryState.leftStreak = 0;
+        categories.forEach(category => {
+            discoveryState.categoryWeights[category] = (discoveryState.categoryWeights[category] || 0) + 2;
+        });
+    } else {
+        discoveryState.skipped += 1;
+        discoveryState.leftStreak += 1;
+        if (discoveryState.leftStreak >= 4) {
+            categories.forEach(category => {
+                discoveryState.categoryWeights[category] = (discoveryState.categoryWeights[category] || 0) - 0.5;
+            });
+        }
+    }
+}
+
+function updateDiscoveryStatus() {
+    if (!elements.swipeStatus) return;
+    elements.swipeStatus.textContent = `已收藏 ${discoveryState.liked} · 已跳过 ${discoveryState.skipped}`;
 }
 
 // ========== Hero 互动光效 ==========

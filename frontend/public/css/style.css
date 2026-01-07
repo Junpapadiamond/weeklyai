@@ -560,6 +560,171 @@ body::after {
     font-size: 0.95rem;
 }
 
+/* ========== Discovery Swipe ========== */
+.discover-shell {
+    display: grid;
+    gap: 1.4rem;
+    max-width: 680px;
+}
+
+.swipe-stack {
+    position: relative;
+    height: clamp(360px, 52vw, 440px);
+}
+
+.swipe-card {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-soft);
+    box-shadow: var(--shadow-md);
+    padding: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    transition: transform 0.28s ease, opacity 0.28s ease;
+    backdrop-filter: blur(8px);
+}
+
+.swipe-card[data-pos="1"] {
+    transform: translateY(10px) scale(0.98);
+    opacity: 0.92;
+}
+
+.swipe-card[data-pos="2"] {
+    transform: translateY(20px) scale(0.96);
+    opacity: 0.84;
+}
+
+.swipe-card.is-active {
+    cursor: grab;
+    touch-action: none;
+}
+
+.swipe-card.is-active:active {
+    cursor: grabbing;
+}
+
+.swipe-card.is-exit-like {
+    transform: translateX(120%) rotate(12deg);
+    opacity: 0;
+}
+
+.swipe-card.is-exit-nope {
+    transform: translateX(-120%) rotate(-12deg);
+    opacity: 0;
+}
+
+.swipe-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+}
+
+.swipe-card-logo {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, rgba(29, 78, 216, 0.12), rgba(125, 211, 252, 0.2));
+    border: 1px solid rgba(29, 78, 216, 0.18);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.swipe-card-logo img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    display: block;
+}
+
+.swipe-card-title {
+    flex: 1;
+    min-width: 0;
+}
+
+.swipe-card-title h3 {
+    font-size: 1.2rem;
+    color: var(--ink-900);
+    margin-bottom: 0.25rem;
+}
+
+.swipe-card-title p {
+    font-size: 0.82rem;
+    color: var(--ink-500);
+}
+
+.swipe-card-desc {
+    font-size: 0.95rem;
+    color: var(--ink-700);
+    line-height: 1.6;
+}
+
+.swipe-card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+    color: var(--ink-500);
+}
+
+.swipe-link {
+    color: var(--cobalt);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.swipe-link:hover {
+    color: var(--coral);
+}
+
+.swipe-actions {
+    display: flex;
+    gap: 0.9rem;
+}
+
+.swipe-btn {
+    flex: 1;
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border-strong);
+    background: white;
+    color: var(--ink-700);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.swipe-btn--nope:hover {
+    border-color: rgba(11, 31, 58, 0.2);
+    transform: translateY(-1px);
+}
+
+.swipe-btn--like {
+    background: linear-gradient(135deg, rgba(29, 78, 216, 0.9), rgba(125, 211, 252, 0.9));
+    color: white;
+    border: none;
+    box-shadow: 0 16px 32px rgba(29, 78, 216, 0.2);
+}
+
+.swipe-btn--like:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 36px rgba(29, 78, 216, 0.26);
+}
+
+.swipe-btn:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+}
+
+.swipe-status {
+    font-size: 0.85rem;
+    color: var(--ink-500);
+}
+
 
 /* ========== Product Grid ========== */
 .products-grid {
@@ -1022,6 +1187,10 @@ body::after {
         margin-top: 0.5rem;
         padding-top: 0.5rem;
         border-top: 1px solid var(--border-soft);
+    }
+
+    .discover-shell {
+        max-width: 100%;
     }
 }
 
