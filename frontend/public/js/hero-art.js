@@ -5,7 +5,7 @@
     }
 
     const seed = 15421;
-    const palette = ['#3d5afe', '#69c9ff', '#35d6b4', '#ff7a6b'];
+    const palette = ['#1d4ed8', '#3b82f6', '#7dd3fc', '#bfe7ff'];
     const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const measureCanvas = () => {
@@ -27,8 +27,8 @@
         const flowScale = 0.007;
         const driftSpeed = 1.05;
         const pulseStrength = 0.6;
-        const trailAlpha = 12;
-        const lineWeight = 0.9;
+        const trailAlpha = 10;
+        const lineWeight = 0.85;
 
         const initializeSystem = () => {
             p.randomSeed(seed);
@@ -45,7 +45,7 @@
                 particles.push(new Particle());
             }
 
-            p.background(255, 248, 239);
+            p.background(247, 251, 255);
         };
 
         const fieldAngle = (x, y, t) => {
@@ -139,7 +139,7 @@
             }
 
             p.noStroke();
-            p.fill(255, 248, 239, 14);
+            p.fill(247, 251, 255, 12);
             p.rect(0, 0, p.width, p.height);
 
             for (let i = 0; i < particles.length; i += 1) {
