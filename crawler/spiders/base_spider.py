@@ -58,12 +58,16 @@ class BaseSpider(ABC):
         }
 
         extra = kwargs.get('extra', {}) or {}
+        if 'published_at' in kwargs and 'published_at' not in extra:
+            extra['published_at'] = kwargs.get('published_at')
         if 'release_year' in kwargs and 'release_year' not in extra:
             extra['release_year'] = kwargs.get('release_year')
         if 'price' in kwargs and 'price' not in extra:
             extra['price'] = kwargs.get('price')
         if extra:
             product['extra'] = extra
+            if 'published_at' in extra:
+                product['published_at'] = extra['published_at']
             if 'release_year' in extra:
                 product['release_year'] = extra['release_year']
             if 'price' in extra:

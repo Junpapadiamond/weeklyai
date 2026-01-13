@@ -3,10 +3,9 @@ GitHub 爬虫 - 增强版
 获取更完整的项目信息，包括README、Logo等
 """
 
-import re
 import time
+from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
-from bs4 import BeautifulSoup
 from .base_spider import BaseSpider
 
 
@@ -43,41 +42,45 @@ class GitHubSpider(BaseSpider):
     def _get_trending_ai_repos(self) -> List[Dict[str, Any]]:
         """获取 Trending AI 仓库"""
         products = []
-        
-        # 使用 GitHub API 搜索热门 AI 项目
-        ai_queries = [
-            "artificial intelligence stars:>5000",
-            "machine learning stars:>5000",
-            "deep learning stars:>3000",
-            "llm language:python stars:>1000",
-            "gpt chatbot stars:>1000",
+        recent_since = (datetime.utcnow() - timedelta(days=30)).strftime('%Y-%m-%d')
+
+        evergreen_queries = [
+            ("artificial intelligence stars:>3000", "stars"),
+            ("machine learning stars:>3000", "stars"),
         ]
-        
-        for query in ai_queries[:3]:  # 限制查询数
+        recent_queries = [
+            (f"ai created:>{recent_since} stars:>50", "stars"),
+            (f"llm pushed:>{recent_since} stars:>30", "updated"),
+            (f"gpt pushed:>{recent_since} stars:>30", "updated"),
+        ]
+
+        queries = evergreen_queries + recent_queries
+
+        for query, sort_by in queries[:5]:
             try:
-                repos = self._search_repos_api(query, per_page=10)
-                
+                repos = self._search_repos_api(query, per_page=8, sort=sort_by)
+
                 for repo_data in repos:
                     try:
                         product = self._parse_repo_detailed(repo_data)
                         if product:
                             products.append(product)
-                        time.sleep(0.5)  # 避免触发限流
-                    except:
+                        time.sleep(0.4)  # 避免触发限流
+                    except Exception:
                         continue
-                
+
             except Exception as e:
                 print(f"    ⚠ 搜索 '{query}' 失败: {e}")
                 continue
-        
+
         return products
     
-    def _search_repos_api(self, query: str, per_page: int = 10) -> List[Dict]:
+    def _search_repos_api(self, query: str, per_page: int = 10, sort: str = 'stars') -> List[Dict]:
         """使用 GitHub API 搜索仓库"""
         url = f"{self.API_BASE}/search/repositories"
         params = {
             'q': query,
-            'sort': 'stars',
+            'sort': sort,
             'order': 'desc',
             'per_page': per_page
         }
@@ -111,6 +114,18 @@ class GitHubSpider(BaseSpider):
         stars = repo.get('stargazers_count', 0)
         forks = repo.get('forks_count', 0)
         watchers = repo.get('watchers_count', 0)
+
+        created_at = repo.get('created_at', '')
+        pushed_at = repo.get('pushed_at', '')
+        now = datetime.utcnow()
+        created_dt = None
+        if created_at:
+            try:
+                created_dt = datetime.fromisoformat(created_at.replace('Z', ''))
+            except ValueError:
+                created_dt = None
+        age_days = max(1, (now - created_dt).days) if created_dt else 365
+        stars_per_day = stars / age_days if age_days else stars
         
         # 获取 Logo（GitHub 头像）
         logo_url = repo.get('owner', {}).get('avatar_url', '')
@@ -125,7 +140,7 @@ class GitHubSpider(BaseSpider):
         categories = self._infer_categories_from_repo(description, name, topics, language)
         
         # 计算热度分数
-        trending_score = self._calculate_trending_score(stars, forks, watchers)
+        trending_score = self._calculate_trending_score(stars, forks, watchers, stars_per_day, age_days)
         
         # 生成更详细的描述
         enhanced_description = self._generate_description(name, description, stars, topics)
@@ -140,12 +155,17 @@ class GitHubSpider(BaseSpider):
             weekly_users=stars // 10,  # 估算
             trending_score=trending_score,
             source='github',
+            published_at=created_at,
             extra={
                 'stars': stars,
                 'forks': forks,
+                'watchers': watchers,
                 'language': language,
                 'topics': topics[:5],
                 'owner': owner,
+                'created_at': created_at,
+                'pushed_at': pushed_at,
+                'stars_per_day': round(stars_per_day, 2),
             }
         )
     
@@ -236,7 +256,8 @@ class GitHubSpider(BaseSpider):
         
         return list(categories) if categories else ['coding']
     
-    def _calculate_trending_score(self, stars: int, forks: int, watchers: int) -> int:
+    def _calculate_trending_score(self, stars: int, forks: int, watchers: int,
+                                  stars_per_day: float, age_days: int) -> int:
         """计算热度分数"""
         score = 0
         
@@ -271,5 +292,21 @@ class GitHubSpider(BaseSpider):
             score += 10
         else:
             score += 5
-        
+
+        # Velocity bonus
+        if stars_per_day > 50:
+            score += 20
+        elif stars_per_day > 20:
+            score += 15
+        elif stars_per_day > 10:
+            score += 10
+        elif stars_per_day > 5:
+            score += 5
+
+        # Freshness bonus
+        if age_days <= 30:
+            score += 10
+        elif age_days <= 90:
+            score += 5
+
         return min(100, score)

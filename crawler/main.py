@@ -9,7 +9,7 @@ import time
 import json
 import math
 import argparse
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import List, Dict, Any
 
 # 添加项目路径
@@ -18,6 +18,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from spiders.github_spider import GitHubSpider
 from spiders.huggingface_spider import HuggingFaceSpider
 from spiders.product_hunt_spider import ProductHuntSpider
+from spiders.hackernews_spider import HackerNewsSpider
 from spiders.aitool_spider import AIToolSpider
 from spiders.hardware_spider import AIHardwareSpider
 from spiders.exhibition_spider import ExhibitionSpider
@@ -55,6 +56,7 @@ class CrawlerManager:
             'github': 0,
             'huggingface': 0,
             'producthunt': 0,
+            'hackernews': 0,
             'hardware': 0,
             'aitools': 0,
             'total': 0,
@@ -62,7 +64,7 @@ class CrawlerManager:
         }
         
         # 1. 展会/发布会产品
-        print("\n🏟️ [1/6] 展会产品库")
+        print("\n🏟️ [1/8] 展会产品库")
         print("-" * 40)
         try:
             spider = ExhibitionSpider()
@@ -75,7 +77,7 @@ class CrawlerManager:
             print(f"✗ 展会爬取失败: {e}")
 
         # 2. 公司产品库
-        print("\n🏢 [2/7] 公司产品库")
+        print("\n🏢 [2/8] 公司产品库")
         print("-" * 40)
         try:
             spider = CompanySpider()
@@ -88,7 +90,7 @@ class CrawlerManager:
             print(f"✗ 公司爬取失败: {e}")
 
         # 3. AI 硬件产品
-        print("\n🔧 [3/7] AI 硬件产品")
+        print("\n🔧 [3/8] AI 硬件产品")
         print("-" * 40)
         try:
             spider = AIHardwareSpider()
@@ -101,7 +103,7 @@ class CrawlerManager:
             print(f"✗ 硬件爬取失败: {e}")
         
         # 4. GitHub Trending
-        print("\n📦 [4/7] GitHub Trending AI 项目")
+        print("\n📦 [4/8] GitHub Trending AI 项目")
         print("-" * 40)
         try:
             spider = GitHubSpider()
@@ -114,7 +116,7 @@ class CrawlerManager:
             print(f"✗ GitHub 爬取失败: {e}")
         
         # 5. Hugging Face
-        print("\n🤗 [5/7] Hugging Face 热门模型")
+        print("\n🤗 [5/8] Hugging Face 热门模型")
         print("-" * 40)
         try:
             spider = HuggingFaceSpider()
@@ -127,7 +129,7 @@ class CrawlerManager:
             print(f"✗ Hugging Face 爬取失败: {e}")
         
         # 6. ProductHunt
-        print("\n🔥 [6/7] ProductHunt AI 产品")
+        print("\n🔥 [6/8] ProductHunt AI 产品")
         print("-" * 40)
         try:
             spider = ProductHuntSpider()
@@ -139,8 +141,21 @@ class CrawlerManager:
             stats['errors'].append(f"ProductHunt: {str(e)}")
             print(f"✗ ProductHunt 爬取失败: {e}")
         
-        # 7. AI 工具导航站
-        print("\n🛠️ [7/7] AI 工具导航网站")
+        # 7. Hacker News
+        print("\n🧠 [7/8] Hacker News 新发布")
+        print("-" * 40)
+        try:
+            spider = HackerNewsSpider()
+            products = spider.crawl()
+            all_products.extend(products)
+            stats['hackernews'] = len(products)
+            print(f"✓ Hacker News: 获取 {len(products)} 个发布")
+        except Exception as e:
+            stats['errors'].append(f"HackerNews: {str(e)}")
+            print(f"✗ Hacker News 爬取失败: {e}")
+
+        # 8. AI 工具导航站
+        print("\n🛠️ [8/8] AI 工具导航网站")
         print("-" * 40)
         try:
             spider = AIToolSpider()
@@ -158,6 +173,8 @@ class CrawlerManager:
         unique_products = self._deduplicate_products(all_products)
         print("  • 优化Logo...")
         enhanced_products = self._enhance_logos(unique_products)
+        print("  • 更新历史/动量字段...")
+        self._apply_history(enhanced_products)
         print("  • 计算排名...")
         ranked_products = self._calculate_rankings(enhanced_products)
         
@@ -192,8 +209,7 @@ class CrawlerManager:
         
         for product in products:
             # 使用名称的标准化版本作为key
-            name_key = product['name'].lower().strip()
-            name_key = ''.join(c for c in name_key if c.isalnum())
+            name_key = self._normalize_name(product['name'])
             
             if name_key in seen:
                 # 合并信息：保留更高的分数和更完整的描述
@@ -216,6 +232,133 @@ class CrawlerManager:
                 unique.append(product)
         
         return unique
+
+    @staticmethod
+    def _normalize_name(name: str) -> str:
+        """Normalize a product name for matching."""
+        name_key = name.lower().strip()
+        return ''.join(c for c in name_key if c.isalnum())
+
+    @staticmethod
+    def _history_key(product: Dict[str, Any]) -> str:
+        """Stable key for history tracking."""
+        name_key = CrawlerManager._normalize_name(product.get('name', ''))
+        source = product.get('source', 'unknown') or 'unknown'
+        return f"{name_key}:{source}"
+
+    @staticmethod
+    def _extract_metrics(product: Dict[str, Any]) -> Dict[str, float]:
+        """Extract numeric metrics for growth tracking."""
+        metrics = {}
+        for key in ['weekly_users', 'trending_score', 'rating']:
+            value = product.get(key)
+            if isinstance(value, (int, float)):
+                metrics[key] = float(value)
+        extra = product.get('extra', {}) or {}
+        for key, value in extra.items():
+            if isinstance(value, (int, float)):
+                metrics[key] = float(value)
+        return metrics
+
+    @staticmethod
+    def _diff_metrics(current: Dict[str, float], previous: Dict[str, float]) -> Dict[str, float]:
+        """Compute metric deltas."""
+        deltas = {}
+        for key, value in current.items():
+            prev = previous.get(key, 0.0)
+            delta = value - prev
+            if delta != 0:
+                deltas[key] = delta
+        return deltas
+
+    @staticmethod
+    def _normalize_datetime(value: Any) -> str:
+        """Normalize datetime-like values to ISO string."""
+        if isinstance(value, datetime):
+            return value.replace(microsecond=0).isoformat() + 'Z'
+        if isinstance(value, (int, float)):
+            return datetime.utcfromtimestamp(value).replace(microsecond=0).isoformat() + 'Z'
+        if isinstance(value, str):
+            return value
+        return ''
+
+    @staticmethod
+    def _parse_datetime(value: Any) -> Any:
+        """Parse datetime-like values into datetime."""
+        if isinstance(value, datetime):
+            return value
+        if isinstance(value, (int, float)):
+            return datetime.utcfromtimestamp(value)
+        if isinstance(value, str):
+            cleaned = value.strip()
+            if cleaned.endswith('Z'):
+                cleaned = cleaned[:-1]
+            try:
+                parsed = datetime.fromisoformat(cleaned)
+                if parsed.tzinfo:
+                    parsed = parsed.astimezone(timezone.utc).replace(tzinfo=None)
+                return parsed
+            except ValueError:
+                return None
+        return None
+
+    def _load_history(self) -> Dict[str, Any]:
+        """Load product history from local file."""
+        history_file = os.path.join(os.path.dirname(__file__), 'data', 'products_history.json')
+        try:
+            with open(history_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception:
+            return {}
+
+    def _save_history(self, history: Dict[str, Any]) -> None:
+        """Persist product history to local file."""
+        history_file = os.path.join(os.path.dirname(__file__), 'data', 'products_history.json')
+        os.makedirs(os.path.dirname(history_file), exist_ok=True)
+        with open(history_file, 'w', encoding='utf-8') as f:
+            json.dump(history, f, ensure_ascii=False, indent=2)
+
+    def _apply_history(self, products: List[Dict[str, Any]]) -> None:
+        """Annotate products with first_seen/last_seen and metric deltas."""
+        history = self._load_history()
+        now_iso = datetime.utcnow().replace(microsecond=0).isoformat() + 'Z'
+
+        for product in products:
+            key = self._history_key(product)
+            entry = history.get(key, {})
+
+            first_seen = entry.get('first_seen') or now_iso
+            product['first_seen'] = first_seen
+            product['last_seen'] = now_iso
+
+            published_at = product.get('published_at') or product.get('extra', {}).get('published_at')
+            if published_at:
+                normalized = self._normalize_datetime(published_at)
+                if normalized:
+                    product['published_at'] = normalized
+
+            metrics = self._extract_metrics(product)
+            previous_metrics = entry.get('last_metrics', {}) or {}
+            metric_delta = self._diff_metrics(metrics, previous_metrics)
+            if metric_delta:
+                extra = product.get('extra', {}) or {}
+                extra['metrics_delta'] = metric_delta
+                product['extra'] = extra
+
+            history_entry = {
+                'first_seen': first_seen,
+                'last_seen': now_iso,
+                'last_metrics': metrics,
+                'metrics_history': entry.get('metrics_history', []),
+            }
+            history_entry['metrics_history'].append({
+                'seen_at': now_iso,
+                'metrics': metrics
+            })
+            history_entry['metrics_history'] = history_entry['metrics_history'][-30:]
+            history[key] = history_entry
+
+        self._save_history(history)
     
     def _calculate_rankings(self, products: List[Dict]) -> List[Dict]:
         """计算热度排名 (Hot + Top)"""
@@ -314,23 +457,47 @@ class CrawlerManager:
         rating = product.get('rating', 0) or 0
         quality_score = min(1.0, rating / 5.0)
 
-        # Momentum: trending_score 0-100
+        # Momentum: base trend + growth deltas
         momentum_score = min(1.0, (product.get('trending_score', 0) or 0) / 100.0)
+        growth_score = 0.0
+        metric_delta = extra.get('metrics_delta', {}) or {}
+        if metric_delta:
+            growth_keys = ['stars', 'votes', 'likes', 'downloads', 'weekly_users', 'points', 'comments']
+            positive_sum = sum(max(0, metric_delta.get(k, 0)) for k in growth_keys)
+            if positive_sum > 0:
+                growth_score = min(1.0, math.log10(1 + positive_sum) / 4.0)
+                momentum_score = (0.65 * momentum_score) + (0.35 * growth_score)
 
-        # Recency: release year or extra release_year
-        release_year = product.get('release_year') or extra.get('release_year')
-        if release_year:
-            year_gap = max(0, current_year - int(release_year))
-            if year_gap == 0:
+        # Recency: published_at/first_seen or release year
+        recency_score = 0.55
+        published_at = product.get('published_at') or extra.get('published_at') or product.get('first_seen')
+        parsed = self._parse_datetime(published_at) if published_at else None
+        if parsed:
+            days = max(0, (datetime.utcnow() - parsed).days)
+            if days <= 7:
                 recency_score = 1.0
-            elif year_gap == 1:
-                recency_score = 0.8
-            elif year_gap == 2:
+            elif days <= 30:
+                recency_score = 0.85
+            elif days <= 90:
+                recency_score = 0.7
+            elif days <= 180:
                 recency_score = 0.6
+            elif days <= 365:
+                recency_score = 0.5
             else:
                 recency_score = 0.4
         else:
-            recency_score = 0.55
+            release_year = product.get('release_year') or extra.get('release_year')
+            if release_year:
+                year_gap = max(0, current_year - int(release_year))
+                if year_gap == 0:
+                    recency_score = 1.0
+                elif year_gap == 1:
+                    recency_score = 0.8
+                elif year_gap == 2:
+                    recency_score = 0.6
+                else:
+                    recency_score = 0.4
 
         # Source bonus (small bias for curated sources)
         source_bonus_map = {
@@ -338,6 +505,7 @@ class CrawlerManager:
             'producthunt_curated': 0.1,
             'github': 0.05,
             'huggingface': 0.04,
+            'hackernews': 0.04,
             'ai_hardware': 0.06,
             'exhibition': 0.08,
             'aitools': 0.03,
@@ -380,6 +548,7 @@ class CrawlerManager:
         print(f"  • GitHub:       {stats['github']:4d} 个项目")
         print(f"  • Hugging Face: {stats['huggingface']:4d} 个模型")
         print(f"  • ProductHunt:  {stats['producthunt']:4d} 个产品")
+        print(f"  • Hacker News:  {stats['hackernews']:4d} 个发布")
         print(f"  • AI Tools:     {stats['aitools']:4d} 个工具")
         print("-" * 40)
         print(f"  ✓ 总计 (去重后): {stats['total']:4d} 个产品")

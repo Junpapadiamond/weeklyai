@@ -3,10 +3,10 @@ ProductHunt AI 产品爬虫
 使用多种策略获取 ProductHunt 上热门的 AI 产品
 """
 
-import re
-import json
 import time
 import random
+from datetime import datetime, timedelta, timezone
+from email.utils import parsedate_to_datetime
 from typing import List, Dict, Any
 from bs4 import BeautifulSoup
 from .base_spider import BaseSpider
@@ -43,13 +43,14 @@ class ProductHuntSpider(BaseSpider):
         """爬取 ProductHunt AI 产品"""
         products = []
         seen_products = set()
+        days_back = 7
         
         print("  [ProductHunt] 尝试多种获取策略...")
         
         # 策略 1: 使用 Algolia 搜索 API
         print("  [ProductHunt] 策略1: Algolia API...")
         try:
-            algolia_products = self._fetch_via_algolia()
+            algolia_products = self._fetch_via_algolia(days_back=days_back)
             for p in algolia_products:
                 name = p.get('name', '')
                 if name and name not in seen_products:
@@ -62,7 +63,7 @@ class ProductHuntSpider(BaseSpider):
         # 策略 2: 解析 RSS Feed
         print("  [ProductHunt] 策略2: RSS Feed...")
         try:
-            rss_products = self._fetch_via_rss()
+            rss_products = self._fetch_via_rss(days_back=days_back)
             for p in rss_products:
                 name = p.get('name', '')
                 if name and name not in seen_products:
@@ -72,22 +73,13 @@ class ProductHuntSpider(BaseSpider):
         except Exception as e:
             print(f"    ✗ RSS 失败: {e}")
         
-        # 策略 3: 使用预定义的热门 AI 产品列表
-        print("  [ProductHunt] 策略3: 热门产品库...")
-        predefined = self._get_predefined_products()
-        for p in predefined:
-            name = p.get('name', '')
-            if name and name not in seen_products:
-                products.append(p)
-                seen_products.add(name)
-        print(f"    ✓ 预定义: {len(predefined)} 个产品")
-        
         print(f"  [ProductHunt] 共获取 {len(products)} 个产品")
         return products
     
-    def _fetch_via_algolia(self) -> List[Dict[str, Any]]:
+    def _fetch_via_algolia(self, days_back: int = 7) -> List[Dict[str, Any]]:
         """通过 Algolia 搜索 API 获取数据"""
         products = []
+        since_ts = int((datetime.utcnow() - timedelta(days=days_back)).timestamp())
         
         search_queries = [
             "artificial intelligence",
@@ -110,7 +102,8 @@ class ProductHuntSpider(BaseSpider):
                     "hitsPerPage": 20,
                     "page": 0,
                     "filters": "",
-                    "facets": ["topics.name"]
+                    "facets": ["topics.name"],
+                    "numericFilters": [f"created_at_i>{since_ts}"]
                 }
                 
                 response = self.session.post(
@@ -125,7 +118,7 @@ class ProductHuntSpider(BaseSpider):
                     hits = data.get('hits', [])
                     
                     for hit in hits:
-                        product = self._parse_algolia_hit(hit)
+                        product = self._parse_algolia_hit(hit, since_ts)
                         if product:
                             products.append(product)
                 
@@ -136,7 +129,7 @@ class ProductHuntSpider(BaseSpider):
         
         return products
     
-    def _parse_algolia_hit(self, hit: Dict) -> Dict[str, Any]:
+    def _parse_algolia_hit(self, hit: Dict, since_ts: int) -> Dict[str, Any]:
         """解析 Algolia 搜索结果"""
         name = hit.get('name', '')
         if not name:
@@ -152,6 +145,15 @@ class ProductHuntSpider(BaseSpider):
         if not any(kw in text for kw in ai_keywords):
             return None
         
+        created_at_i = hit.get('created_at_i')
+        if created_at_i is not None:
+            try:
+                created_at_i = int(created_at_i)
+            except (TypeError, ValueError):
+                created_at_i = None
+        if created_at_i and created_at_i < since_ts:
+            return None
+
         # 获取信息
         slug = hit.get('slug', '')
         website = f"{self.BASE_URL}/posts/{slug}" if slug else ''
@@ -180,7 +182,13 @@ class ProductHuntSpider(BaseSpider):
         if isinstance(thumbnail, dict):
             logo_url = thumbnail.get('url', '')
         
-        trending_score = min(100, votes // 10 + 50)
+        trending_score = min(100, int(45 + votes / 12))
+        if created_at_i:
+            age_days = max(1, int((datetime.utcnow().timestamp() - created_at_i) / 86400))
+            if age_days <= 3:
+                trending_score = min(100, trending_score + 10)
+            elif age_days <= 7:
+                trending_score = min(100, trending_score + 5)
         
         return self.create_product(
             name=name,
@@ -192,18 +200,20 @@ class ProductHuntSpider(BaseSpider):
             weekly_users=votes * 50,
             trending_score=trending_score,
             source='producthunt',
+            published_at=hit.get('created_at'),
             extra={
                 'votes': votes,
                 'slug': slug
             }
         )
     
-    def _fetch_via_rss(self) -> List[Dict[str, Any]]:
+    def _fetch_via_rss(self, days_back: int = 7) -> List[Dict[str, Any]]:
         """通过 RSS Feed 获取数据"""
         products = []
         
         # ProductHunt 有 RSS feed
         rss_url = "https://www.producthunt.com/feed"
+        since = datetime.utcnow() - timedelta(days=days_back)
         
         try:
             response = self.session.get(rss_url, timeout=10)
@@ -232,11 +242,29 @@ class ProductHuntSpider(BaseSpider):
                     if not any(kw in text for kw in ai_keywords):
                         continue
                     
+                    pub_date_elem = item.find('pubDate')
+                    pub_date = None
+                    if pub_date_elem:
+                        try:
+                            pub_date = parsedate_to_datetime(pub_date_elem.get_text(strip=True))
+                            if pub_date.tzinfo:
+                                pub_date = pub_date.astimezone(timezone.utc).replace(tzinfo=None)
+                        except Exception:
+                            pub_date = None
+                    if pub_date and pub_date < since:
+                        continue
+
                     link_elem = item.find('link')
                     website = link_elem.get_text(strip=True) if link_elem else ''
                     
                     categories = self._infer_categories(f"{name} {description}")
                     
+                    extra_kwargs = {
+                        'source': 'producthunt_rss',
+                    }
+                    if pub_date:
+                        extra_kwargs['published_at'] = pub_date.isoformat()
+
                     product = self.create_product(
                         name=name,
                         description=description[:200] if description else '',
@@ -244,7 +272,7 @@ class ProductHuntSpider(BaseSpider):
                         website=website,
                         categories=categories if categories else ['other'],
                         trending_score=70,
-                        source='producthunt_rss'
+                        **extra_kwargs
                     )
                     products.append(product)
                     
@@ -253,133 +281,6 @@ class ProductHuntSpider(BaseSpider):
             
         except Exception as e:
             pass
-        
-        return products
-    
-    def _get_predefined_products(self) -> List[Dict[str, Any]]:
-        """预定义的热门 AI 产品（来自 ProductHunt 历史热门）"""
-        predefined = [
-            {
-                'name': 'ChatGPT',
-                'description': 'OpenAI开发的AI对话助手，能进行自然对话、写作、编程辅助等。',
-                'website': 'https://chat.openai.com',
-                'categories': ['coding', 'writing'],
-                'votes': 10000,
-            },
-            {
-                'name': 'Notion AI',
-                'description': '集成在Notion中的AI写作助手，帮助头脑风暴和内容创作。',
-                'website': 'https://notion.so/product/ai',
-                'categories': ['writing'],
-                'votes': 5000,
-            },
-            {
-                'name': 'Jasper',
-                'description': '企业级AI内容创作平台，生成营销文案和商业内容。',
-                'website': 'https://jasper.ai',
-                'categories': ['writing'],
-                'votes': 4500,
-            },
-            {
-                'name': 'Copy.ai',
-                'description': 'AI驱动的营销文案生成工具，快速创建广告和社交媒体内容。',
-                'website': 'https://copy.ai',
-                'categories': ['writing'],
-                'votes': 4000,
-            },
-            {
-                'name': 'Descript',
-                'description': '全能音视频编辑工具，支持AI转录和声音克隆。',
-                'website': 'https://descript.com',
-                'categories': ['video', 'voice'],
-                'votes': 3500,
-            },
-            {
-                'name': 'Loom AI',
-                'description': 'AI增强的视频录制工具，自动生成摘要和标题。',
-                'website': 'https://loom.com',
-                'categories': ['video'],
-                'votes': 3000,
-            },
-            {
-                'name': 'Otter.ai',
-                'description': 'AI会议助手，实时转录和生成会议记录。',
-                'website': 'https://otter.ai',
-                'categories': ['voice', 'writing'],
-                'votes': 2800,
-            },
-            {
-                'name': 'Tome',
-                'description': 'AI驱动的演示文稿创作工具，自动生成PPT内容。',
-                'website': 'https://tome.app',
-                'categories': ['writing', 'image'],
-                'votes': 2500,
-            },
-            {
-                'name': 'Synthesia',
-                'description': 'AI视频生成平台，用虚拟人物创建培训和营销视频。',
-                'website': 'https://synthesia.io',
-                'categories': ['video'],
-                'votes': 2400,
-            },
-            {
-                'name': 'Runway',
-                'description': '创意AI工具套件，提供视频生成和编辑功能。',
-                'website': 'https://runwayml.com',
-                'categories': ['video', 'image'],
-                'votes': 2300,
-            },
-            {
-                'name': 'Pika',
-                'description': '简单易用的AI视频生成工具，文本转视频。',
-                'website': 'https://pika.art',
-                'categories': ['video'],
-                'votes': 2200,
-            },
-            {
-                'name': 'Krisp',
-                'description': 'AI降噪工具，消除通话中的背景噪音。',
-                'website': 'https://krisp.ai',
-                'categories': ['voice'],
-                'votes': 2100,
-            },
-            {
-                'name': 'Gamma',
-                'description': 'AI驱动的文档和演示文稿创作工具。',
-                'website': 'https://gamma.app',
-                'categories': ['writing'],
-                'votes': 2000,
-            },
-            {
-                'name': 'Mem',
-                'description': 'AI知识管理工具，自动组织和连接你的笔记。',
-                'website': 'https://mem.ai',
-                'categories': ['writing'],
-                'votes': 1900,
-            },
-            {
-                'name': 'Replit AI',
-                'description': '云端IDE集成AI编程助手，支持对话式编程。',
-                'website': 'https://replit.com',
-                'categories': ['coding'],
-                'votes': 1800,
-            },
-        ]
-        
-        products = []
-        for item in predefined:
-            product = self.create_product(
-                name=item['name'],
-                description=item['description'],
-                logo_url='',
-                website=item['website'],
-                categories=item['categories'],
-                rating=4.5,
-                weekly_users=item['votes'] * 100,
-                trending_score=min(100, item['votes'] // 50 + 60),
-                source='producthunt_curated'
-            )
-            products.append(product)
         
         return products
     
