@@ -23,7 +23,69 @@ from spiders.aitool_spider import AIToolSpider
 from spiders.hardware_spider import AIHardwareSpider
 from spiders.exhibition_spider import ExhibitionSpider
 from spiders.company_spider import CompanySpider
+from spiders.tech_news_spider import TechNewsSpider
 from utils.image_utils import get_best_logo
+
+# Well-known base products to filter (only show if they have NEW features/updates)
+# These are famous products that everyone knows - we want NEW things instead
+WELL_KNOWN_PRODUCTS = {
+    # LLM Chatbots (base products)
+    'chatgpt', 'claude', 'gemini', 'bard', 'copilot', 'bing chat', 'perplexity',
+    # Image Generation (base products)
+    'midjourney', 'dall-e', 'dalle', 'stable diffusion', 'imagen',
+    # Code Assistants (base products)
+    'github copilot', 'cursor', 'tabnine', 'codewhisperer',
+    # Voice (base products)
+    'whisper', 'elevenlabs', 'eleven labs',
+    # Video (base products)
+    'runway', 'pika', 'sora',
+    # Frameworks (too generic)
+    'tensorflow', 'pytorch', 'keras', 'huggingface transformers', 'langchain',
+    # Companies (not products)
+    'openai', 'anthropic', 'google deepmind', 'meta ai', 'microsoft',
+}
+
+# Keywords that indicate a NEW feature/update (allow these even for well-known products)
+NEW_FEATURE_KEYWORDS = [
+    'launch', 'release', 'update', 'new', 'announce', 'introduce', 'beta',
+    'feature', 'version', 'v2', 'v3', 'v4', 'v5', '2.0', '3.0', '4.0', '5.0', 'pro', 'plus',
+    'api', 'sdk', 'plugin', 'extension', 'integration', 'upgrade', 'preview',
+    # Claude models (2024-2026)
+    'claude 4', 'claude 4.5', 'claude code', 'claude skill', 'cowork', 'artifacts', 'computer use',
+    'sonnet 4', 'opus 4', 'opus 4.5', 'haiku 4',
+    # OpenAI models (2024-2026)
+    'gpt-4o', 'gpt-4.5', 'gpt-5', 'o1', 'o1-mini', 'o3', 'o3-mini', 'o4',
+    # Google models (2024-2026)
+    'gemini 2.0', 'gemini 2.5', 'gemini ultra', 'gemini flash', 'gemini pro',
+    # Open source models (2024-2026)
+    'llama 4', 'llama 3.3', 'deepseek v3', 'deepseek r1', 'qwen 2.5', 'qwen 3',
+    'mistral large 2', 'command r+', 'phi-4', 'grok-2',
+    # Hardware (2025-2026)
+    'rubin', 'vera rubin', 'blackwell', 'mi455', 'mi500', 'helios',
+    # Generic modifiers
+    'turbo', 'mini', 'nano', 'flash', 'ultra', 'max',
+]
+
+# AI relevance keywords - products matching these get higher scores
+AI_RELEVANCE_KEYWORDS = {
+    'high': [
+        'llm', 'large language model', 'gpt', 'chatbot', 'ai assistant',
+        'generative ai', 'gen ai', 'machine learning', 'deep learning',
+        'neural network', 'transformer', 'diffusion', 'text-to-image',
+        'text-to-video', 'text-to-speech', 'speech-to-text', 'nlp',
+        'computer vision', 'embedding', 'vector', 'rag', 'retrieval',
+        'ai agent', 'autonomous', 'prompt', 'fine-tune', 'inference',
+    ],
+    'medium': [
+        'ai', 'artificial intelligence', 'ml', 'model', 'training',
+        'dataset', 'benchmark', 'evaluation', 'api', 'automation',
+        'intelligent', 'smart', 'cognitive', 'prediction', 'classification',
+    ],
+    'low': [
+        'tool', 'app', 'platform', 'service', 'software', 'framework',
+        'library', 'sdk', 'cli', 'dashboard', 'analytics',
+    ],
+}
 
 
 class CrawlerManager:
@@ -57,8 +119,10 @@ class CrawlerManager:
             'huggingface': 0,
             'producthunt': 0,
             'hackernews': 0,
+            'tech_news': 0,
             'hardware': 0,
             'aitools': 0,
+            'filtered_wellknown': 0,
             'total': 0,
             'errors': []
         }
@@ -155,7 +219,7 @@ class CrawlerManager:
             print(f"✗ Hacker News 爬取失败: {e}")
 
         # 8. AI 工具导航站
-        print("\n🛠️ [8/8] AI 工具导航网站")
+        print("\n🛠️ [8/9] AI 工具导航网站")
         print("-" * 40)
         try:
             spider = AIToolSpider()
@@ -166,18 +230,37 @@ class CrawlerManager:
         except Exception as e:
             stats['errors'].append(f"AITools: {str(e)}")
             print(f"✗ AI Tools 爬取失败: {e}")
-        
+
+        # 9. Tech News (Verge, TechCrunch, etc.)
+        print("\n📰 [9/9] Tech News AI 动态")
+        print("-" * 40)
+        try:
+            spider = TechNewsSpider()
+            products = spider.crawl()
+            all_products.extend(products)
+            stats['tech_news'] = len(products)
+            print(f"✓ Tech News: 获取 {len(products)} 个新闻产品")
+        except Exception as e:
+            stats['errors'].append(f"TechNews: {str(e)}")
+            print(f"✗ Tech News 爬取失败: {e}")
+
         # 数据处理
         print("\n🔄 处理数据...")
         print("  • 去重...")
         unique_products = self._deduplicate_products(all_products)
+        print("  • 过滤知名老产品...")
+        filtered_products, filtered_count = self._filter_wellknown_products(unique_products)
+        stats['filtered_wellknown'] = filtered_count
+        print(f"    (过滤 {filtered_count} 个知名老产品，保留新功能/更新)")
+        print("  • 规范化描述...")
+        normalized_products = self._normalize_descriptions(filtered_products)
         print("  • 优化Logo...")
-        enhanced_products = self._enhance_logos(unique_products)
+        enhanced_products = self._enhance_logos(normalized_products)
         print("  • 更新历史/动量字段...")
         self._apply_history(enhanced_products)
         print("  • 计算排名...")
         ranked_products = self._calculate_rankings(enhanced_products)
-        
+
         stats['total'] = len(ranked_products)
         self.all_products = ranked_products
         
@@ -186,20 +269,70 @@ class CrawlerManager:
         
         return ranked_products
     
+    def _normalize_descriptions(self, products: List[Dict]) -> List[Dict]:
+        """Normalize descriptions to be cleaner and more readable."""
+        import re
+
+        for product in products:
+            desc = product.get('description', '') or ''
+            original_desc = desc
+
+            # Remove technical noise patterns
+            # Pattern: "Hugging Face 模型: X | 下载量: Y"
+            desc = re.sub(r'Hugging Face (模型|Space): [^\|]+\|?', '', desc)
+            desc = re.sub(r'\|\s*下载量:\s*[\d.]+[MKB]?\+?', '', desc)
+
+            # Pattern: "| ⭐ 193K+ Stars | 技术: X"
+            desc = re.sub(r'\|\s*⭐\s*[\d.]+K?\+?\s*Stars?', '', desc)
+            desc = re.sub(r'\|\s*技术:\s*.+$', '', desc)
+
+            # Pattern: "(使用 docker)" etc
+            desc = re.sub(r'\(使用\s+\w+\)', '', desc)
+
+            # Remove source prefixes
+            desc = re.sub(r'^(GitHub|Hugging Face|ProductHunt|HackerNews):\s*', '', desc, flags=re.IGNORECASE)
+
+            # Clean up leftover pipes and extra whitespace
+            desc = re.sub(r'\s*\|\s*', ' ', desc)
+            desc = re.sub(r'\s+', ' ', desc)
+            desc = desc.strip(' |·')
+
+            # If description is now too short, try to use name-based description
+            if len(desc) < 10:
+                name = product.get('name', '')
+                source = product.get('source', '')
+                categories = product.get('categories', [])
+                cat_str = ', '.join(categories[:2]) if categories else 'AI'
+                desc = f"{name} - {cat_str}相关的AI工具"
+
+            # Truncate if too long
+            if len(desc) > 200:
+                desc = desc[:197] + '...'
+
+            product['description'] = desc
+
+            # Store original if significantly different
+            if len(original_desc) > len(desc) + 20:
+                extra = product.get('extra', {}) or {}
+                extra['original_description'] = original_desc
+                product['extra'] = extra
+
+        return products
+
     def _enhance_logos(self, products: List[Dict]) -> List[Dict]:
         """优化产品Logo"""
         enhanced = []
-        
+
         for product in products:
             website = product.get('website', '')
             current_logo = product.get('logo_url', '')
-            
+
             # 获取更好的Logo
             better_logo = get_best_logo(website, current_logo)
             product['logo_url'] = better_logo
-            
+
             enhanced.append(product)
-        
+
         return enhanced
     
     def _deduplicate_products(self, products: List[Dict]) -> List[Dict]:
@@ -232,6 +365,60 @@ class CrawlerManager:
                 unique.append(product)
         
         return unique
+
+    def _filter_wellknown_products(self, products: List[Dict]) -> tuple:
+        """Filter out well-known base products unless they have new features/updates."""
+        filtered = []
+        filtered_count = 0
+
+        for product in products:
+            name = product.get('name', '').lower().strip()
+            name_normalized = self._normalize_name(name)
+            description = (product.get('description', '') or '').lower()
+
+            # Check if this is a well-known product
+            is_wellknown = False
+            for known in WELL_KNOWN_PRODUCTS:
+                known_normalized = self._normalize_name(known)
+                if known_normalized == name_normalized or known in name:
+                    is_wellknown = True
+                    break
+
+            if is_wellknown:
+                # Check if it has new feature keywords (allow it if yes)
+                has_new_feature = False
+                text_to_check = f"{name} {description}"
+                for keyword in NEW_FEATURE_KEYWORDS:
+                    if keyword.lower() in text_to_check:
+                        has_new_feature = True
+                        break
+
+                # Also allow if it's very recent (within 7 days)
+                is_recent = self._is_recent_product(product)
+
+                if has_new_feature or is_recent:
+                    # Mark it as a feature update
+                    if 'extra' not in product:
+                        product['extra'] = {}
+                    product['extra']['is_feature_update'] = True
+                    filtered.append(product)
+                else:
+                    filtered_count += 1
+                    continue
+            else:
+                filtered.append(product)
+
+        return filtered, filtered_count
+
+    def _is_recent_product(self, product: Dict) -> bool:
+        """Check if product was published/updated in last 7 days."""
+        published_at = product.get('published_at') or product.get('extra', {}).get('published_at')
+        if published_at:
+            parsed = self._parse_datetime(published_at)
+            if parsed:
+                days = (datetime.utcnow() - parsed).days
+                return days <= 7
+        return False
 
     @staticmethod
     def _normalize_name(name: str) -> str:
@@ -385,6 +572,31 @@ class CrawlerManager:
         return min(1.0, math.log10(1 + value) / cap)
 
     @staticmethod
+    def _calculate_ai_relevance(product: Dict) -> float:
+        """Calculate AI relevance score (0-1) based on keywords."""
+        text = f"{product.get('name', '')} {product.get('description', '')}".lower()
+        extra = product.get('extra', {}) or {}
+        tags = extra.get('tags', []) or extra.get('topics', []) or []
+        if tags:
+            text += ' ' + ' '.join(str(t).lower() for t in tags)
+
+        # Check for high-relevance keywords
+        high_matches = sum(1 for kw in AI_RELEVANCE_KEYWORDS['high'] if kw in text)
+        medium_matches = sum(1 for kw in AI_RELEVANCE_KEYWORDS['medium'] if kw in text)
+        low_matches = sum(1 for kw in AI_RELEVANCE_KEYWORDS['low'] if kw in text)
+
+        # Calculate weighted score
+        score = (high_matches * 0.4 + medium_matches * 0.15 + low_matches * 0.05)
+        score = min(1.0, score)
+
+        # Boost for HuggingFace source (always AI-related)
+        source = product.get('source', '')
+        if source in ['huggingface', 'huggingface_spaces']:
+            score = max(score, 0.7)
+
+        return score
+
+    @staticmethod
     def _relative_log(value: float, max_value: float) -> float:
         """Normalize value within a source using log scale."""
         if not value or value <= 0:
@@ -499,13 +711,18 @@ class CrawlerManager:
                 else:
                     recency_score = 0.4
 
+        # AI relevance score
+        ai_relevance = self._calculate_ai_relevance(product)
+
         # Source bonus (small bias for curated sources)
         source_bonus_map = {
             'producthunt': 0.08,
             'producthunt_curated': 0.1,
             'github': 0.05,
-            'huggingface': 0.04,
+            'huggingface': 0.06,  # Higher - inherently AI
+            'huggingface_spaces': 0.06,
             'hackernews': 0.04,
+            'tech_news': 0.07,  # News about AI launches
             'ai_hardware': 0.06,
             'exhibition': 0.08,
             'aitools': 0.03,
@@ -514,6 +731,10 @@ class CrawlerManager:
         source_bonus = source_bonus_map.get(product.get('source', ''), 0.02)
         if product.get('is_hardware', False):
             source_bonus += 0.03
+
+        # Apply AI relevance penalty for low-relevance products
+        if ai_relevance < 0.3:
+            source_bonus -= 0.05
 
         hot_score = (
             0.50 * momentum_score +
@@ -549,8 +770,10 @@ class CrawlerManager:
         print(f"  • Hugging Face: {stats['huggingface']:4d} 个模型")
         print(f"  • ProductHunt:  {stats['producthunt']:4d} 个产品")
         print(f"  • Hacker News:  {stats['hackernews']:4d} 个发布")
+        print(f"  • Tech News:    {stats['tech_news']:4d} 个新闻")
         print(f"  • AI Tools:     {stats['aitools']:4d} 个工具")
         print("-" * 40)
+        print(f"  - 过滤知名老产品: {stats['filtered_wellknown']:4d} 个")
         print(f"  ✓ 总计 (去重后): {stats['total']:4d} 个产品")
         
         if stats['errors']:
@@ -619,10 +842,12 @@ def main():
         description='WeeklyAI 爬虫 - 采集全球热门 AI 产品 (增强版)',
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
-    
+
     parser.add_argument('--no-db', action='store_true', help='不使用数据库')
     parser.add_argument('--top', type=int, default=0, help='显示Top N产品')
     parser.add_argument('--interval-hours', type=float, default=0, help='每隔多少小时运行一次 (0=只运行一次)')
+    parser.add_argument('--slack', action='store_true', help='发送Slack通知')
+    parser.add_argument('--slack-top', type=int, default=10, help='Slack通知显示Top N产品')
     
     args = parser.parse_args()
 
@@ -640,6 +865,22 @@ def main():
                     score = p.get('top_score', p.get('final_score', p.get('trending_score', 0)))
                     hw_tag = " [硬件]" if p.get('is_hardware') else ""
                     print(f"  {i:2d}. {p['name']:<30} 分数:{score:3d}  {p.get('source', 'N/A'):<15}{hw_tag}")
+
+            # Send Slack notification if enabled
+            if args.slack:
+                try:
+                    from utils.slack_notifier import SlackNotifier
+                    notifier = SlackNotifier()
+                    if notifier.is_configured():
+                        print("\n📤 发送Slack通知...")
+                        if notifier.send_daily_digest(products, args.slack_top):
+                            print("✓ Slack通知已发送")
+                        else:
+                            print("⚠ Slack通知发送失败")
+                    else:
+                        print("⚠ Slack未配置，跳过通知")
+                except Exception as e:
+                    print(f"⚠ Slack通知错误: {e}")
 
             print("\n✅ 爬虫任务完成!")
 

@@ -229,14 +229,22 @@ function renderDiscoveryStack() {
 
 function createSwipeCard(product, position) {
     const categories = (product.categories || []).slice(0, 2).map(getCategoryName).join(' · ');
-    const rating = product.rating ? product.rating.toFixed(1) : 'N/A';
-    const users = formatNumber(product.weekly_users);
-    const description = product.description || '暂无描述';
     const website = product.website || '';
+
+    // Clean and truncate description - remove technical noise
+    let description = product.description || '暂无描述';
+    description = cleanDescription(description);
+
+    // Show source badge for new/trending items
+    const source = product.source || '';
+    const isNew = isRecentProduct(product);
+    const sourceBadge = getSourceBadge(source, isNew);
 
     const logoMarkup = product.logo_url
         ? `<img src="${product.logo_url}" alt="${product.name}" onerror="this.parentElement.innerHTML='<div class=\\'product-logo-placeholder\\'>${product.name.charAt(0)}</div>'">`
         : `<div class="product-logo-placeholder">${product.name.charAt(0)}</div>`;
+
+    const videoPreview = getVideoPreview(product);
 
     return `
         <div class="swipe-card ${position === 0 ? 'is-active' : ''}" data-pos="${position}" data-website="${website}">
@@ -246,14 +254,67 @@ function createSwipeCard(product, position) {
                     <h3>${product.name}</h3>
                     <p>${categories || '精选 AI 工具'}</p>
                 </div>
-                <div class="product-meta-item">⭐ ${rating}</div>
+                ${sourceBadge}
             </div>
             <p class="swipe-card-desc">${description}</p>
+            ${videoPreview}
             <div class="swipe-card-meta">
-                <span>👥 ${users}</span>
-                ${website ? `<a class="swipe-link" href="${website}" target="_blank" rel="noopener noreferrer">访问官网 →</a>` : ''}
+                ${website ? `<a class="swipe-link" href="${website}" target="_blank" rel="noopener noreferrer">了解更多 →</a>` : ''}
             </div>
         </div>
+    `;
+}
+
+function cleanDescription(desc) {
+    if (!desc) return '暂无描述';
+    // Remove technical noise patterns
+    return desc
+        .replace(/Hugging Face (模型|Space): [^\|]+\|/g, '')
+        .replace(/\| ⭐ [\d.]+K?\+? Stars/g, '')
+        .replace(/\| 技术: .+$/g, '')
+        .replace(/\| 下载量: .+$/g, '')
+        .replace(/^\s*[\|·]\s*/g, '')
+        .trim() || '暂无描述';
+}
+
+function isRecentProduct(product) {
+    if (!product.first_seen && !product.published_at) return false;
+    const dateStr = product.published_at || product.first_seen;
+    const productDate = new Date(dateStr);
+    const weekAgo = new Date();
+    weekAgo.setDate(weekAgo.getDate() - 7);
+    return productDate > weekAgo;
+}
+
+function getSourceBadge(source, isNew) {
+    if (isNew) {
+        return '<span class="swipe-badge swipe-badge--new">🆕 新上线</span>';
+    }
+    const badges = {
+        'producthunt': '<span class="swipe-badge">🚀 PH</span>',
+        'hackernews': '<span class="swipe-badge">🔶 HN</span>',
+        'github': '<span class="swipe-badge">⭐ GitHub</span>',
+        'huggingface': '<span class="swipe-badge">🤗 HF</span>',
+        'huggingface_spaces': '<span class="swipe-badge">🤗 Space</span>',
+        'tech_news': '<span class="swipe-badge">📰 News</span>'
+    };
+    return badges[source] || '';
+}
+
+function getVideoPreview(product) {
+    const extra = product.extra || {};
+    const videoUrl = extra.video_url;
+    const videoThumbnail = extra.video_thumbnail;
+
+    if (!videoUrl || !videoThumbnail) {
+        return '';
+    }
+
+    return `
+        <a class="video-preview" href="${videoUrl}" target="_blank" rel="noopener noreferrer">
+            <img src="${videoThumbnail}" alt="Video preview" loading="lazy">
+            <span class="video-play-icon">▶</span>
+        </a>
     `;
 }
 

@@ -145,7 +145,12 @@ def main() -> None:
         list_url = source.get("list_url")
         if not list_url:
             continue
-        html = fetch_url(list_url)
+        try:
+            html = fetch_url(list_url)
+        except Exception as exc:
+            event_label = source.get("event", "event")
+            print(f"Skipping {event_label} list_url {list_url}: {exc}")
+            continue
         exhibitors = extract_exhibitors(html, source)
         if args.limit:
             exhibitors = exhibitors[: args.limit]
