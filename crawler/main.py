@@ -15,8 +15,6 @@ from typing import List, Dict, Any
 # 添加项目路径
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from spiders.github_spider import GitHubSpider
-from spiders.huggingface_spider import HuggingFaceSpider
 from spiders.product_hunt_spider import ProductHuntSpider
 from spiders.hackernews_spider import HackerNewsSpider
 from spiders.aitool_spider import AIToolSpider
@@ -115,8 +113,6 @@ class CrawlerManager:
         stats = {
             'exhibition': 0,
             'company': 0,
-            'github': 0,
-            'huggingface': 0,
             'producthunt': 0,
             'hackernews': 0,
             'tech_news': 0,
@@ -128,7 +124,7 @@ class CrawlerManager:
         }
         
         # 1. 展会/发布会产品
-        print("\n🏟️ [1/8] 展会产品库")
+        print("\n🏟️ [1/7] 展会产品库")
         print("-" * 40)
         try:
             spider = ExhibitionSpider()
@@ -141,7 +137,7 @@ class CrawlerManager:
             print(f"✗ 展会爬取失败: {e}")
 
         # 2. 公司产品库
-        print("\n🏢 [2/8] 公司产品库")
+        print("\n🏢 [2/7] 公司产品库")
         print("-" * 40)
         try:
             spider = CompanySpider()
@@ -154,7 +150,7 @@ class CrawlerManager:
             print(f"✗ 公司爬取失败: {e}")
 
         # 3. AI 硬件产品
-        print("\n🔧 [3/8] AI 硬件产品")
+        print("\n🔧 [3/7] AI 硬件产品")
         print("-" * 40)
         try:
             spider = AIHardwareSpider()
@@ -166,34 +162,8 @@ class CrawlerManager:
             stats['errors'].append(f"Hardware: {str(e)}")
             print(f"✗ 硬件爬取失败: {e}")
         
-        # 4. GitHub Trending
-        print("\n📦 [4/8] GitHub Trending AI 项目")
-        print("-" * 40)
-        try:
-            spider = GitHubSpider()
-            products = spider.crawl()
-            all_products.extend(products)
-            stats['github'] = len(products)
-            print(f"✓ GitHub: 获取 {len(products)} 个项目")
-        except Exception as e:
-            stats['errors'].append(f"GitHub: {str(e)}")
-            print(f"✗ GitHub 爬取失败: {e}")
-        
-        # 5. Hugging Face
-        print("\n🤗 [5/8] Hugging Face 热门模型")
-        print("-" * 40)
-        try:
-            spider = HuggingFaceSpider()
-            products = spider.crawl()
-            all_products.extend(products)
-            stats['huggingface'] = len(products)
-            print(f"✓ Hugging Face: 获取 {len(products)} 个模型/Spaces")
-        except Exception as e:
-            stats['errors'].append(f"HuggingFace: {str(e)}")
-            print(f"✗ Hugging Face 爬取失败: {e}")
-        
-        # 6. ProductHunt
-        print("\n🔥 [6/8] ProductHunt AI 产品")
+        # 4. ProductHunt
+        print("\n🔥 [4/7] ProductHunt AI 产品")
         print("-" * 40)
         try:
             spider = ProductHuntSpider()
@@ -205,8 +175,8 @@ class CrawlerManager:
             stats['errors'].append(f"ProductHunt: {str(e)}")
             print(f"✗ ProductHunt 爬取失败: {e}")
         
-        # 7. Hacker News
-        print("\n🧠 [7/8] Hacker News 新发布")
+        # 5. Hacker News
+        print("\n🧠 [5/7] Hacker News 新发布")
         print("-" * 40)
         try:
             spider = HackerNewsSpider()
@@ -218,8 +188,8 @@ class CrawlerManager:
             stats['errors'].append(f"HackerNews: {str(e)}")
             print(f"✗ Hacker News 爬取失败: {e}")
 
-        # 8. AI 工具导航站
-        print("\n🛠️ [8/9] AI 工具导航网站")
+        # 6. AI 工具导航站
+        print("\n🛠️ [6/7] AI 工具导航网站")
         print("-" * 40)
         try:
             spider = AIToolSpider()
@@ -231,8 +201,8 @@ class CrawlerManager:
             stats['errors'].append(f"AITools: {str(e)}")
             print(f"✗ AI Tools 爬取失败: {e}")
 
-        # 9. Tech News (Verge, TechCrunch, etc.)
-        print("\n📰 [9/9] Tech News AI 动态")
+        # 7. Tech News (Verge, TechCrunch, etc.)
+        print("\n📰 [7/7] Tech News AI 动态")
         print("-" * 40)
         try:
             spider = TechNewsSpider()
@@ -296,14 +266,6 @@ class CrawlerManager:
             desc = re.sub(r'\s*\|\s*', ' ', desc)
             desc = re.sub(r'\s+', ' ', desc)
             desc = desc.strip(' |·')
-
-            # If description is now too short, try to use name-based description
-            if len(desc) < 10:
-                name = product.get('name', '')
-                source = product.get('source', '')
-                categories = product.get('categories', [])
-                cat_str = ', '.join(categories[:2]) if categories else 'AI'
-                desc = f"{name} - {cat_str}相关的AI工具"
 
             # Truncate if too long
             if len(desc) > 200:
@@ -589,11 +551,6 @@ class CrawlerManager:
         score = (high_matches * 0.4 + medium_matches * 0.15 + low_matches * 0.05)
         score = min(1.0, score)
 
-        # Boost for HuggingFace source (always AI-related)
-        source = product.get('source', '')
-        if source in ['huggingface', 'huggingface_spaces']:
-            score = max(score, 0.7)
-
         return score
 
     @staticmethod
@@ -718,9 +675,6 @@ class CrawlerManager:
         source_bonus_map = {
             'producthunt': 0.08,
             'producthunt_curated': 0.1,
-            'github': 0.05,
-            'huggingface': 0.06,  # Higher - inherently AI
-            'huggingface_spaces': 0.06,
             'hackernews': 0.04,
             'tech_news': 0.07,  # News about AI launches
             'ai_hardware': 0.06,
@@ -766,8 +720,6 @@ class CrawlerManager:
         print(f"  • 展会产品:     {stats['exhibition']:4d} 个产品")
         print(f"  • 公司产品:     {stats['company']:4d} 个产品")
         print(f"  • AI 硬件:      {stats['hardware']:4d} 个产品")
-        print(f"  • GitHub:       {stats['github']:4d} 个项目")
-        print(f"  • Hugging Face: {stats['huggingface']:4d} 个模型")
         print(f"  • ProductHunt:  {stats['producthunt']:4d} 个产品")
         print(f"  • Hacker News:  {stats['hackernews']:4d} 个发布")
         print(f"  • Tech News:    {stats['tech_news']:4d} 个新闻")

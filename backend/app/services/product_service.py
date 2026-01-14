@@ -23,6 +23,9 @@ CRAWLER_DATA_DIR = os.path.join(
 PRODUCTS_FEATURED_FILE = os.path.join(CRAWLER_DATA_DIR, 'products_featured.json')
 BLOGS_NEWS_FILE = os.path.join(CRAWLER_DATA_DIR, 'blogs_news.json')
 CRAWLER_DATA_FILE = os.path.join(CRAWLER_DATA_DIR, 'products_latest.json')
+DARK_HORSES_DIR = os.path.join(CRAWLER_DATA_DIR, 'dark_horses')
+BLOCKED_SOURCES = {'github', 'huggingface', 'huggingface_spaces'}
+BLOCKED_DOMAINS = ('github.com', 'huggingface.co')
 
 # MongoDB connection
 _mongo_client = None
@@ -92,15 +95,15 @@ SAMPLE_PRODUCTS = [
     },
     {
         '_id': '4',
-        'name': 'GitHub Copilot',
-        'description': 'GitHub与OpenAI合作开发的AI编程助手，提供智能代码补全和建议。',
-        'logo_url': 'https://github.githubassets.com/images/modules/site/copilot/copilot.png',
-        'website': 'https://github.com/features/copilot',
+        'name': 'Kiro',
+        'description': 'AWS 背景团队打造的规范驱动 AI 开发平台，强调稳定的工程化交付。',
+        'logo_url': 'https://kiro.dev/favicon.ico',
+        'website': 'https://kiro.dev',
         'categories': ['coding'],
-        'rating': 4.6,
-        'weekly_users': 950000,
-        'trending_score': 92,
-        'final_score': 92,
+        'rating': 4.7,
+        'weekly_users': 180000,
+        'trending_score': 90,
+        'final_score': 90,
         'is_hardware': False,
         'source': 'sample'
     },
@@ -190,15 +193,15 @@ SAMPLE_PRODUCTS = [
     },
     {
         '_id': '11',
-        'name': 'Hugging Face',
-        'description': '开源AI社区平台，提供模型托管、数据集和机器学习工具。',
-        'logo_url': 'https://huggingface.co/favicon.ico',
-        'website': 'https://huggingface.co',
-        'categories': ['coding', 'other'],
+        'name': 'Lovable',
+        'description': '欧洲最快增长的 AI 产品团队之一，8 个月从 0 到独角兽。',
+        'logo_url': 'https://lovable.dev/favicon.ico',
+        'website': 'https://lovable.dev',
+        'categories': ['other'],
         'rating': 4.8,
-        'weekly_users': 750000,
-        'trending_score': 90,
-        'final_score': 90,
+        'weekly_users': 120000,
+        'trending_score': 88,
+        'final_score': 88,
         'is_hardware': False,
         'source': 'sample'
     },
@@ -267,6 +270,107 @@ class ProductService:
     _cached_products = None
     _cache_time = None
     _cache_duration = 300  # 5分钟缓存
+
+    @staticmethod
+    def _build_product_key(product: Dict[str, Any]) -> str:
+        """Normalize a product key for dedupe/merge."""
+        website = (product.get('website') or '').strip().lower()
+        if website:
+            return website
+        name_key = (product.get('name') or '').strip().lower()
+        return ''.join(ch for ch in name_key if ch.isalnum())
+
+    @staticmethod
+    def _is_blocked(product: Dict[str, Any]) -> bool:
+        """Filter non-end-user sources/domains."""
+        source = (product.get('source') or '').strip().lower()
+        if source in BLOCKED_SOURCES:
+            return True
+        website = (product.get('website') or '').strip().lower()
+        return any(domain in website for domain in BLOCKED_DOMAINS)
+
+    @staticmethod
+    def _normalize_curated_product(product: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """Map curated dark-horse fields into standard product fields."""
+        if not isinstance(product, dict):
+            return None
+        normalized = product.copy()
+        if not normalized.get('logo_url'):
+            normalized['logo_url'] = normalized.get('logo') or normalized.get('logoUrl') or ''
+        if not normalized.get('categories'):
+            category = normalized.get('category')
+            if category:
+                normalized['categories'] = [category]
+        if not normalized.get('source'):
+            normalized['source'] = 'curated'
+        if 'is_hardware' not in normalized:
+            normalized['is_hardware'] = False
+        return normalized
+
+    @classmethod
+    def _load_curated_dark_horses(cls) -> List[Dict[str, Any]]:
+        """Load manually curated dark-horse products."""
+        if not os.path.isdir(DARK_HORSES_DIR):
+            return []
+
+        curated: List[Dict[str, Any]] = []
+        for filename in sorted(os.listdir(DARK_HORSES_DIR)):
+            if not filename.endswith('.json'):
+                continue
+            if filename == 'template.json':
+                continue
+            path = os.path.join(DARK_HORSES_DIR, filename)
+            try:
+                with open(path, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                if isinstance(data, dict):
+                    data = [data]
+                if isinstance(data, list):
+                    curated.extend(item for item in data if isinstance(item, dict))
+            except Exception:
+                continue
+        return curated
+
+    @classmethod
+    def _merge_curated_products(cls, products: List[Dict[str, Any]],
+                                curated: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Merge curated products into base list (prefer curated fields)."""
+        if not curated:
+            return products
+
+        by_key = {cls._build_product_key(p): p for p in products if p}
+        for item in curated:
+            normalized = cls._normalize_curated_product(item)
+            if not normalized or cls._is_blocked(normalized):
+                continue
+            key = cls._build_product_key(normalized)
+            if not key:
+                continue
+            if key in by_key:
+                target = by_key[key]
+                for field, value in normalized.items():
+                    if value not in (None, '', [], {}):
+                        target[field] = value
+                continue
+            products.append(normalized)
+            by_key[key] = normalized
+        return products
+
+    @classmethod
+    def _normalize_products(cls, products: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Normalize products and drop blocked sources/domains."""
+        normalized = []
+        for idx, product in enumerate(products):
+            if not product or cls._is_blocked(product):
+                continue
+            if not product.get('logo_url'):
+                logo = product.get('logo') or product.get('logoUrl')
+                if logo:
+                    product['logo_url'] = logo
+            if '_id' not in product:
+                product['_id'] = str(idx + 1)
+            normalized.append(product)
+        return normalized
     
     @classmethod
     def _load_products(cls) -> List[Dict]:
@@ -290,6 +394,13 @@ class ProductService:
         if not products:
             products = SAMPLE_PRODUCTS.copy()
 
+        # 4. 合并手动策展黑马产品
+        curated = cls._load_curated_dark_horses()
+        products = cls._merge_curated_products(products, curated)
+
+        # 5. 统一字段 & 过滤
+        products = cls._normalize_products(products)
+
         # 更新缓存
         cls._cached_products = products
         cls._cache_time = now
@@ -305,16 +416,20 @@ class ProductService:
 
         try:
             collection = db.products
+            blocked_sources = list(BLOCKED_SOURCES)
             # 获取产品，排除 content_type='blog' 和 content_type='filtered'
             products = list(collection.find(
-                {'content_type': {'$nin': ['blog', 'filtered']}},
+                {
+                    'content_type': {'$nin': ['blog', 'filtered']},
+                    'source': {'$nin': blocked_sources}
+                },
                 {'_id': 0}
             ).sort('final_score', -1))
 
             # 如果没有 content_type 字段，获取所有产品
             if not products:
                 products = list(collection.find(
-                    {},
+                    {'source': {'$nin': blocked_sources}},
                     {'_id': 0}
                 ).sort('final_score', -1))
 
@@ -578,3 +693,30 @@ class ProductService:
         ]
 
         return filtered[:limit]
+
+    @staticmethod
+    def get_dark_horse_products(limit: int = 6, min_index: int = 4) -> List[Dict]:
+        """获取黑马产品 - 高潜力新兴产品
+
+        参数:
+        - limit: 返回数量
+        - min_index: 最低黑马指数 (1-5)
+        """
+        products = ProductService._load_products()
+
+        # 筛选有 dark_horse_index 且 >= min_index 的产品
+        dark_horses = [
+            p for p in products
+            if p.get('dark_horse_index', 0) >= min_index
+        ]
+
+        # 按 dark_horse_index 降序，然后按 final_score 降序
+        dark_horses.sort(
+            key=lambda x: (
+                x.get('dark_horse_index', 0),
+                x.get('final_score', x.get('trending_score', 0))
+            ),
+            reverse=True
+        )
+
+        return dark_horses[:limit]

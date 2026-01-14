@@ -16,6 +16,11 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
+// 前端路由占位，避免直接访问 404
+app.get(['/blog', '/search', '/product/:id'], (req, res) => {
+    res.render('index');
+});
+
 // 启动服务器
 app.listen(PORT, () => {
     console.log(`🚀 WeeklyAI 前端运行在 http://localhost:${PORT}`);

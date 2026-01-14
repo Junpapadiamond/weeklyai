@@ -107,3 +107,23 @@ def get_blogs_news():
         }), 500
 
 
+@products_bp.route('/dark-horses', methods=['GET'])
+def get_dark_horse_products():
+    """获取本周黑马产品 - 高潜力新兴产品"""
+    try:
+        limit = request.args.get('limit', 6, type=int)
+        min_index = request.args.get('min_index', 4, type=int)
+        products = ProductService.get_dark_horse_products(limit=limit, min_index=min_index)
+        return jsonify({
+            'success': True,
+            'data': products,
+            'message': '获取黑马产品成功'
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'data': [],
+            'message': str(e)
+        }), 500
+
+

@@ -7,12 +7,11 @@ Separates products into:
 - filtered: Low-quality or irrelevant items
 
 Classification Rules:
-1. HackerNews: "Ask HN:", opinion pieces, blog URLs → blogs
-2. GitHub: "awesome-" lists, documentation repos → blogs
-3. Hugging Face: Foundation models older than 2 years → filtered
-4. Tech News: All news articles → blogs
-5. Reddit: All Reddit posts → blogs
-6. Exhibition: Items without real AI features → filtered
+1. GitHub/Hugging Face sources or domains → filtered
+2. HackerNews: "Ask HN:", opinion pieces, blog URLs → blogs
+3. Tech News: All news articles → blogs
+4. Reddit: All Reddit posts → blogs
+5. Exhibition: Items without real AI features → filtered
 """
 
 import re
@@ -55,41 +54,8 @@ DISCUSSION_PATTERNS = [
     r'monthly\s+thread',
 ]
 
-# GitHub "awesome" and list repos (not products themselves)
-AWESOME_LIST_PATTERNS = [
-    r'^awesome[-_]',
-    r'[-_]awesome$',
-    r'^curated[-_]list',
-    r'^list[-_]of[-_]',
-    r'^resources[-_]',
-    r'^papers[-_]',
-    r'^tutorials[-_]',
-    r'^learning[-_]',
-    r'^cheatsheet',
-]
-
-# Old foundational models (not new products)
-FOUNDATION_MODELS = {
-    'bert-base-uncased',
-    'bert-base-cased',
-    'bert-large-uncased',
-    'bert-large-cased',
-    'gpt2',
-    'gpt2-medium',
-    'gpt2-large',
-    'gpt2-xl',
-    'roberta-base',
-    'roberta-large',
-    'distilbert-base-uncased',
-    'albert-base-v2',
-    'xlnet-base-cased',
-    't5-small',
-    't5-base',
-    'bart-base',
-    'bart-large',
-    'electra-base-discriminator',
-    'xlm-roberta-base',
-}
+BLOCKED_SOURCES = {'github', 'huggingface', 'huggingface_spaces'}
+BLOCKED_DOMAINS = ('github.com', 'huggingface.co')
 
 # Real product indicators (keep these as products)
 REAL_PRODUCT_INDICATORS = [
@@ -127,6 +93,12 @@ def classify_product(product: Dict[str, Any]) -> str:
     extra = product.get('extra', {}) or {}
 
     text = f"{name} {description}"
+
+    # Hard block GitHub/HuggingFace sources/domains (non-end-user products)
+    if source in BLOCKED_SOURCES:
+        return 'filtered'
+    if any(domain in website for domain in BLOCKED_DOMAINS):
+        return 'filtered'
 
     # === Source-specific rules ===
 
@@ -169,45 +141,7 @@ def classify_product(product: Dict[str, Any]) -> str:
     if source == 'tech_news':
         return 'blog'
 
-    # 4. GitHub classification
-    if source == 'github':
-        # Awesome lists → blog (resources, not products)
-        for pattern in AWESOME_LIST_PATTERNS:
-            if re.search(pattern, name, re.IGNORECASE):
-                return 'blog'
-
-        # Very low stars → filtered
-        stars = extra.get('stars', 0) or 0
-        if stars < 100:
-            return 'filtered'
-
-        # Otherwise → product
-        return 'product'
-
-    # 5. Hugging Face classification
-    if source in ['huggingface', 'huggingface_spaces']:
-        # Foundational old models → filtered
-        model_id = extra.get('model_id', '') or name
-        model_name = model_id.split('/')[-1].lower() if '/' in model_id else model_id.lower()
-
-        if model_name in FOUNDATION_MODELS:
-            return 'filtered'
-
-        # Low engagement models → filtered
-        likes = extra.get('likes', 0) or 0
-        downloads = extra.get('downloads', 0) or 0
-
-        if likes < 50 and downloads < 10000:
-            return 'filtered'
-
-        # Spaces are usually products
-        if source == 'huggingface_spaces':
-            return 'product'
-
-        # Models with good engagement → product
-        return 'product'
-
-    # 6. Exhibition items
+    # 4. Exhibition items
     if source == 'exhibition':
         # Check for actual AI keywords
         ai_keywords = ['ai', 'machine learning', 'neural', 'smart', 'intelligent', 'automation']
