@@ -27,6 +27,17 @@ DARK_HORSES_DIR = os.path.join(CRAWLER_DATA_DIR, 'dark_horses')
 BLOCKED_SOURCES = {'github', 'huggingface', 'huggingface_spaces'}
 BLOCKED_DOMAINS = ('github.com', 'huggingface.co')
 
+# 著名产品黑名单 - 除非有新功能否则不显示
+WELL_KNOWN_PRODUCTS = {
+    'chatgpt', 'claude', 'gemini', 'bard', 'copilot', 'perplexity',
+    'midjourney', 'dall-e', 'stable diffusion', 'cursor', 'github copilot',
+    'whisper', 'elevenlabs', 'runway', 'pika', 'sora', 'openai', 'anthropic',
+    'notion ai', 'jasper', 'copy.ai', 'grammarly', 'nvidia h100', 'duolingo'
+}
+
+# 新功能关键词 - 允许著名产品显示
+NEW_FEATURE_KEYWORDS = {'发布', '推出', '更新', '新版', '新功能', 'launch', 'release', 'new feature', 'update', 'v2', 'v3', 'v4', 'announces', '宣布'}
+
 # MongoDB connection
 _mongo_client = None
 _mongo_db = None
@@ -49,216 +60,231 @@ def get_mongo_db():
         print(f"  ⚠ MongoDB connection failed: {e}, using JSON files")
         return None
 
-# 示例数据（当没有爬虫数据时使用）
+# 示例数据（当没有爬虫数据时使用）- 只包含黑马产品，不包含著名产品
 SAMPLE_PRODUCTS = [
     {
         '_id': '1',
-        'name': 'ChatGPT',
-        'description': 'OpenAI开发的大型语言模型，能够进行自然对话、写作、编程辅助等多种任务。',
-        'logo_url': 'https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg',
-        'website': 'https://chat.openai.com',
-        'categories': ['coding', 'writing'],
+        'name': 'Lovable',
+        'description': '欧洲最快增长的 AI 产品，8 个月从 0 到独角兽。非开发者也能快速构建全栈应用。',
+        'logo_url': 'https://lovable.dev/favicon.ico',
+        'website': 'https://lovable.dev',
+        'categories': ['coding'],
         'rating': 4.8,
-        'weekly_users': 1500000,
-        'trending_score': 98,
-        'final_score': 98,
+        'weekly_users': 120000,
+        'trending_score': 92,
+        'final_score': 92,
         'is_hardware': False,
+        'why_matters': '证明了 AI 原生产品可以极速获客，对想做 AI 创业的 PM 有重要参考价值。',
         'source': 'sample'
     },
     {
         '_id': '2',
-        'name': 'Claude',
-        'description': 'Anthropic开发的AI助手，以安全、有帮助和诚实为核心设计理念。',
-        'logo_url': 'https://www.anthropic.com/images/icons/apple-touch-icon.png',
-        'website': 'https://claude.ai',
-        'categories': ['coding', 'writing'],
+        'name': 'Devin',
+        'description': '全自主 AI 软件工程师，能够端到端处理需求拆解、代码实现与交付。Cognition Labs 出品。',
+        'logo_url': 'https://cognition.ai/favicon.ico',
+        'website': 'https://cognition.ai',
+        'categories': ['coding'],
         'rating': 4.7,
-        'weekly_users': 800000,
-        'trending_score': 95,
-        'final_score': 95,
+        'weekly_users': 160000,
+        'trending_score': 93,
+        'final_score': 93,
         'is_hardware': False,
+        'why_matters': '重新定义了「AI 工程师」边界，PM 需要思考如何与 AI 协作而非仅仅使用 AI。',
         'source': 'sample'
     },
     {
         '_id': '3',
-        'name': 'Midjourney',
-        'description': '强大的AI图像生成工具，通过文本描述生成高质量艺术图像。',
-        'logo_url': 'https://www.midjourney.com/apple-touch-icon.png',
-        'website': 'https://midjourney.com',
-        'categories': ['image'],
-        'rating': 4.9,
-        'weekly_users': 1200000,
-        'trending_score': 96,
-        'final_score': 96,
-        'is_hardware': False,
-        'source': 'sample'
-    },
-    {
-        '_id': '4',
         'name': 'Kiro',
-        'description': 'AWS 背景团队打造的规范驱动 AI 开发平台，强调稳定的工程化交付。',
+        'description': 'AWS 背景团队打造的规范驱动 AI 开发平台，强调稳定的工程化交付而非炫技。',
         'logo_url': 'https://kiro.dev/favicon.ico',
         'website': 'https://kiro.dev',
         'categories': ['coding'],
         'rating': 4.7,
-        'weekly_users': 180000,
+        'weekly_users': 85000,
         'trending_score': 90,
         'final_score': 90,
         'is_hardware': False,
+        'why_matters': '大厂背景创业，专注企业级可靠性，是 AI 编程工具的差异化方向。',
+        'source': 'sample'
+    },
+    {
+        '_id': '4',
+        'name': 'Emergent',
+        'description': '非开发者也能用 AI 代理构建全栈应用的建站产品，降低技术门槛。',
+        'logo_url': 'https://emergent.sh/favicon.ico',
+        'website': 'https://emergent.sh',
+        'categories': ['coding'],
+        'rating': 4.6,
+        'weekly_users': 45000,
+        'trending_score': 88,
+        'final_score': 88,
+        'is_hardware': False,
+        'why_matters': '面向非技术用户的 AI 开发工具，扩展了「谁能做产品」的边界。',
         'source': 'sample'
     },
     {
         '_id': '5',
-        'name': 'Eleven Labs',
-        'description': '领先的AI语音合成平台，提供逼真的文字转语音和语音克隆功能。',
-        'logo_url': 'https://elevenlabs.io/favicon.ico',
-        'website': 'https://elevenlabs.io',
-        'categories': ['voice'],
-        'rating': 4.7,
-        'weekly_users': 600000,
-        'trending_score': 89,
-        'final_score': 89,
+        'name': 'Bolt.new',
+        'description': 'StackBlitz 推出的浏览器内全栈 AI 开发环境，无需配置即可开始编码。',
+        'logo_url': 'https://bolt.new/favicon.ico',
+        'website': 'https://bolt.new',
+        'categories': ['coding'],
+        'rating': 4.8,
+        'weekly_users': 200000,
+        'trending_score': 91,
+        'final_score': 91,
         'is_hardware': False,
+        'why_matters': '零配置 + 浏览器内运行，大幅降低 AI 开发入门门槛。',
         'source': 'sample'
     },
     {
         '_id': '6',
-        'name': 'NVIDIA H100',
-        'description': 'NVIDIA最新一代AI加速器，专为大规模AI训练和推理设计。',
-        'logo_url': 'https://www.nvidia.com/favicon.ico',
-        'website': 'https://www.nvidia.com/en-us/data-center/h100/',
-        'categories': ['hardware'],
-        'rating': 4.9,
-        'weekly_users': 50000,
-        'trending_score': 94,
-        'final_score': 94,
-        'is_hardware': True,
+        'name': 'Windsurf',
+        'description': 'Codeium 推出的 Agentic IDE，强调 AI 代理主动参与开发流程。',
+        'logo_url': 'https://codeium.com/favicon.ico',
+        'website': 'https://codeium.com/windsurf',
+        'categories': ['coding'],
+        'rating': 4.6,
+        'weekly_users': 95000,
+        'trending_score': 87,
+        'final_score': 87,
+        'is_hardware': False,
+        'why_matters': 'Agentic IDE 概念的先行者，代表了 AI 编程工具的演进方向。',
         'source': 'sample'
     },
     {
         '_id': '7',
-        'name': 'Perplexity AI',
-        'description': 'AI驱动的搜索引擎，提供带引用来源的答案。',
-        'logo_url': 'https://www.perplexity.ai/favicon.ico',
-        'website': 'https://perplexity.ai',
-        'categories': ['other'],
+        'name': 'NEO (1X Technologies)',
+        'description': '挪威初创公司研发的人形机器人，定位家庭助手和轻工业场景。',
+        'logo_url': 'https://1x.tech/favicon.ico',
+        'website': 'https://1x.tech',
+        'categories': ['hardware'],
         'rating': 4.5,
-        'weekly_users': 700000,
-        'trending_score': 88,
-        'final_score': 88,
-        'is_hardware': False,
+        'weekly_users': 15000,
+        'trending_score': 85,
+        'final_score': 85,
+        'is_hardware': True,
+        'why_matters': '人形机器人赛道的黑马，融资后估值飙升，值得关注具身智能趋势。',
         'source': 'sample'
     },
     {
         '_id': '8',
-        'name': 'Runway ML',
-        'description': '创意AI工具套件，提供视频生成、编辑和特效功能。',
-        'logo_url': 'https://runwayml.com/favicon.ico',
-        'website': 'https://runwayml.com',
-        'categories': ['video', 'image'],
-        'rating': 4.6,
-        'weekly_users': 450000,
-        'trending_score': 87,
-        'final_score': 87,
-        'is_hardware': False,
+        'name': 'Rokid AR Studio',
+        'description': '中国 AR 眼镜厂商推出的 AI 开发平台，支持空间计算应用开发。',
+        'logo_url': 'https://www.rokid.com/favicon.ico',
+        'website': 'https://www.rokid.com',
+        'categories': ['hardware'],
+        'rating': 4.4,
+        'weekly_users': 25000,
+        'trending_score': 82,
+        'final_score': 82,
+        'is_hardware': True,
+        'why_matters': '国产 AR 眼镜 + AI 平台，空间计算赛道的本土玩家。',
         'source': 'sample'
     },
     {
         '_id': '9',
-        'name': 'Stable Diffusion',
-        'description': '开源的AI图像生成模型，支持本地部署和自定义训练。',
-        'logo_url': 'https://stability.ai/favicon.ico',
-        'website': 'https://stability.ai',
-        'categories': ['image'],
+        'name': 'DeepSeek',
+        'description': '中国 AI 研究公司，以高效开源模型著称，性价比极高。',
+        'logo_url': 'https://www.deepseek.com/favicon.ico',
+        'website': 'https://www.deepseek.com',
+        'categories': ['coding', 'writing'],
         'rating': 4.6,
-        'weekly_users': 890000,
-        'trending_score': 91,
-        'final_score': 91,
+        'weekly_users': 180000,
+        'trending_score': 89,
+        'final_score': 89,
         'is_hardware': False,
+        'why_matters': '开源大模型的性价比之王，训练成本仅为竞品的 1/10。',
         'source': 'sample'
     },
     {
         '_id': '10',
-        'name': 'Google Gemini',
-        'description': 'Google最新的多模态AI模型，整合文本、图像、音频理解能力。',
-        'logo_url': 'https://www.google.com/favicon.ico',
-        'website': 'https://gemini.google.com',
-        'categories': ['coding', 'writing', 'image'],
+        'name': 'Replit Agent',
+        'description': 'Replit 推出的 AI 代理，能自主完成从需求到部署的完整开发流程。',
+        'logo_url': 'https://replit.com/favicon.ico',
+        'website': 'https://replit.com',
+        'categories': ['coding'],
         'rating': 4.5,
-        'weekly_users': 1100000,
-        'trending_score': 93,
-        'final_score': 93,
+        'weekly_users': 150000,
+        'trending_score': 86,
+        'final_score': 86,
         'is_hardware': False,
+        'why_matters': '全流程 AI 开发代理，从 idea 到上线一站式完成。',
         'source': 'sample'
     },
     {
         '_id': '11',
-        'name': 'Lovable',
-        'description': '欧洲最快增长的 AI 产品团队之一，8 个月从 0 到独角兽。',
-        'logo_url': 'https://lovable.dev/favicon.ico',
-        'website': 'https://lovable.dev',
+        'name': 'Thinking Machines Lab',
+        'description': '菲律宾 AI 研究初创，专注东南亚本地化大语言模型研发。',
+        'logo_url': 'https://thinkingmachines.ph/favicon.ico',
+        'website': 'https://thinkingmachines.ph',
         'categories': ['other'],
-        'rating': 4.8,
-        'weekly_users': 120000,
-        'trending_score': 88,
-        'final_score': 88,
+        'rating': 4.3,
+        'weekly_users': 12000,
+        'trending_score': 78,
+        'final_score': 78,
         'is_hardware': False,
+        'why_matters': '东南亚本土 AI 研究力量，区域化 AI 的代表案例。',
         'source': 'sample'
     },
     {
         '_id': '12',
-        'name': 'Cursor',
-        'description': 'AI增强的代码编辑器，内置智能代码补全和对话式编程功能。',
-        'logo_url': 'https://cursor.sh/favicon.ico',
-        'website': 'https://cursor.sh',
-        'categories': ['coding'],
-        'rating': 4.8,
-        'weekly_users': 420000,
-        'trending_score': 94,
-        'final_score': 94,
+        'name': 'Poe',
+        'description': 'Quora 推出的多模型 AI 聊天平台，一站式访问多种 AI 模型。',
+        'logo_url': 'https://poe.com/favicon.ico',
+        'website': 'https://poe.com',
+        'categories': ['other'],
+        'rating': 4.5,
+        'weekly_users': 280000,
+        'trending_score': 84,
+        'final_score': 84,
         'is_hardware': False,
+        'why_matters': 'AI 模型聚合平台，让用户无需切换即可对比不同模型能力。',
         'source': 'sample'
     },
     {
         '_id': '13',
-        'name': 'Sora',
-        'description': 'OpenAI的文本到视频生成模型，能创建高质量的视频内容。',
-        'logo_url': 'https://openai.com/favicon.ico',
-        'website': 'https://openai.com/sora',
-        'categories': ['video'],
-        'rating': 4.8,
-        'weekly_users': 300000,
-        'trending_score': 97,
-        'final_score': 97,
+        'name': 'v0.dev',
+        'description': 'Vercel 推出的 AI UI 生成器，通过对话生成 React 组件代码。',
+        'logo_url': 'https://v0.dev/favicon.ico',
+        'website': 'https://v0.dev',
+        'categories': ['coding', 'image'],
+        'rating': 4.7,
+        'weekly_users': 175000,
+        'trending_score': 90,
+        'final_score': 90,
         'is_hardware': False,
+        'why_matters': '前端 AI 生成的标杆产品，设计师和开发者都能用。',
         'source': 'sample'
     },
     {
         '_id': '14',
-        'name': 'Whisper',
-        'description': 'OpenAI开源的语音识别模型，支持多语言转录和翻译。',
-        'logo_url': 'https://openai.com/favicon.ico',
-        'website': 'https://openai.com/research/whisper',
-        'categories': ['voice'],
-        'rating': 4.7,
-        'weekly_users': 520000,
+        'name': 'Kling AI',
+        'description': '快手推出的 AI 视频生成工具，支持文本/图片转视频。',
+        'logo_url': 'https://klingai.com/favicon.ico',
+        'website': 'https://klingai.com',
+        'categories': ['video'],
+        'rating': 4.4,
+        'weekly_users': 320000,
         'trending_score': 85,
         'final_score': 85,
         'is_hardware': False,
+        'why_matters': '国产视频生成 AI 的代表，在特定场景下效果不输海外竞品。',
         'source': 'sample'
     },
     {
         '_id': '15',
-        'name': 'Duolingo Max',
-        'description': '使用GPT-4增强的语言学习平台，提供AI对话练习功能。',
-        'logo_url': 'https://www.duolingo.com/favicon.ico',
-        'website': 'https://www.duolingo.com/max',
-        'categories': ['education'],
-        'rating': 4.6,
-        'weekly_users': 650000,
-        'trending_score': 84,
-        'final_score': 84,
+        'name': 'Glif',
+        'description': '可视化 AI 工作流构建平台，无需代码即可串联多个 AI 模型。',
+        'logo_url': 'https://glif.app/favicon.ico',
+        'website': 'https://glif.app',
+        'categories': ['image', 'other'],
+        'rating': 4.5,
+        'weekly_users': 45000,
+        'trending_score': 83,
+        'final_score': 83,
         'is_hardware': False,
+        'why_matters': 'AI 工作流的乐高积木，让创意人士无需写代码也能玩转 AI。',
         'source': 'sample'
     },
 ]
@@ -288,6 +314,28 @@ class ProductService:
             return True
         website = (product.get('website') or '').strip().lower()
         return any(domain in website for domain in BLOCKED_DOMAINS)
+
+    @staticmethod
+    def _is_well_known(product: Dict[str, Any]) -> bool:
+        """检查是否为著名产品（除非有新功能才显示）
+
+        返回 True 表示应该被过滤掉（是著名产品且没有新功能）
+        返回 False 表示可以显示（不是著名产品，或是著名产品但有新功能）
+        """
+        name = (product.get('name') or '').lower().strip()
+        # 检查是否匹配任何著名产品
+        is_famous = any(known in name for known in WELL_KNOWN_PRODUCTS)
+        if not is_famous:
+            return False  # 不是著名产品，可以显示
+
+        # 是著名产品，检查是否有新功能关键词
+        desc = (product.get('description') or '').lower()
+        title = (product.get('title') or '').lower()
+        text = f"{name} {desc} {title}"
+        has_new_feature = any(kw in text for kw in NEW_FEATURE_KEYWORDS)
+
+        # 如果有新功能，返回 False（可以显示）；否则返回 True（过滤掉）
+        return not has_new_feature
 
     @staticmethod
     def _normalize_curated_product(product: Dict[str, Any]) -> Optional[Dict[str, Any]]:
@@ -358,10 +406,10 @@ class ProductService:
 
     @classmethod
     def _normalize_products(cls, products: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Normalize products and drop blocked sources/domains."""
+        """Normalize products and drop blocked sources/domains + well-known products."""
         normalized = []
         for idx, product in enumerate(products):
-            if not product or cls._is_blocked(product):
+            if not product or cls._is_blocked(product) or cls._is_well_known(product):
                 continue
             if not product.get('logo_url'):
                 logo = product.get('logo') or product.get('logoUrl')
@@ -720,3 +768,58 @@ class ProductService:
         )
 
         return dark_horses[:limit]
+
+    @staticmethod
+    def get_todays_picks(limit: int = 10, hours: int = 48) -> List[Dict]:
+        """获取今日精选 - 仅返回最近48小时内的新产品
+
+        参数:
+        - limit: 返回数量 (默认10)
+        - hours: 时间窗口，默认48小时
+        """
+        products = ProductService._load_products()
+        now = datetime.now()
+
+        # 筛选最近 hours 小时内的产品
+        fresh_products = []
+        for p in products:
+            # 尝试多个日期字段
+            date_str = p.get('first_seen') or p.get('published_at') or p.get('discovered_at')
+            if not date_str:
+                continue
+
+            try:
+                # 处理不同日期格式
+                if isinstance(date_str, str):
+                    # ISO格式: 2026-01-14T10:30:00
+                    if 'T' in date_str:
+                        product_date = datetime.fromisoformat(date_str.replace('Z', '+00:00').split('+')[0])
+                    # 简单日期: 2026-01-14
+                    else:
+                        product_date = datetime.strptime(date_str[:10], '%Y-%m-%d')
+                else:
+                    continue
+
+                # 检查是否在时间窗口内
+                age_hours = (now - product_date).total_seconds() / 3600
+                if age_hours <= hours:
+                    p['_freshness_hours'] = age_hours  # 添加新鲜度标记
+                    fresh_products.append(p)
+            except (ValueError, TypeError):
+                continue
+
+        # 按 treasure_score > final_score > trending_score 排序
+        fresh_products.sort(
+            key=lambda x: (
+                x.get('treasure_score', 0),
+                x.get('final_score', x.get('trending_score', 0)),
+                -x.get('_freshness_hours', 999)  # 越新鲜越靠前
+            ),
+            reverse=True
+        )
+
+        # 清理临时字段
+        for p in fresh_products:
+            p.pop('_freshness_hours', None)
+
+        return ProductService._diversify_products(fresh_products, limit, max_per_category=3, max_per_source=3)

@@ -1111,84 +1111,89 @@ function animateListItems(container) {
     });
 }
 
-// ========== 模拟数据 (当API不可用时使用) ==========
+// ========== 模拟数据 (当API不可用时使用) - 只包含黑马产品 ==========
 function getMockTrendingProducts() {
     return [
         {
             _id: '1',
-            name: 'ChatGPT',
-            description: 'OpenAI开发的大型语言模型，能够进行自然对话、写作、编程辅助等多种任务。',
-            logo_url: 'https://cdn.openai.com/common/images/favicon.ico',
-            website: 'https://chat.openai.com',
-            categories: ['coding', 'writing'],
+            name: 'Lovable',
+            description: '欧洲最快增长的 AI 产品，8 个月从 0 到独角兽。非开发者也能快速构建全栈应用。',
+            logo_url: 'https://lovable.dev/favicon.ico',
+            website: 'https://lovable.dev',
+            categories: ['coding'],
             rating: 4.8,
-            weekly_users: 1500000,
-            trending_score: 98
-        },
-        {
-            _id: '3',
-            name: 'Midjourney',
-            description: '强大的AI图像生成工具，通过文本描述生成高质量艺术图像。',
-            logo_url: 'https://www.midjourney.com/apple-touch-icon.png',
-            website: 'https://midjourney.com',
-            categories: ['image'],
-            rating: 4.9,
-            weekly_users: 1200000,
-            trending_score: 96
+            weekly_users: 120000,
+            trending_score: 92,
+            why_matters: '证明了 AI 原生产品可以极速获客，对想做 AI 创业的 PM 有重要参考价值。'
         },
         {
             _id: '2',
-            name: 'Claude',
-            description: 'Anthropic开发的AI助手，以安全、有帮助和诚实为核心设计理念。',
-            logo_url: 'https://www.anthropic.com/images/icons/apple-touch-icon.png',
-            website: 'https://claude.ai',
-            categories: ['coding', 'writing'],
-            rating: 4.7,
-            weekly_users: 800000,
-            trending_score: 95
-        },
-        {
-            _id: '16',
             name: 'Devin',
-            description: '全自主 AI 软件工程师，能够端到端处理需求拆解与交付。',
+            description: '全自主 AI 软件工程师，能够端到端处理需求拆解、代码实现与交付。',
             logo_url: 'https://cognition.ai/favicon.ico',
             website: 'https://cognition.ai',
             categories: ['coding'],
             rating: 4.7,
             weekly_users: 160000,
-            trending_score: 93
+            trending_score: 93,
+            why_matters: '重新定义了「AI 工程师」边界，PM 需要思考如何与 AI 协作而非仅仅使用 AI。'
         },
         {
-            _id: '6',
-            name: 'NVIDIA H100',
-            description: 'NVIDIA最新一代AI加速器，专为大规模AI训练和推理设计。',
-            logo_url: 'https://www.nvidia.com/favicon.ico',
-            website: 'https://www.nvidia.com/en-us/data-center/h100/',
+            _id: '3',
+            name: 'Kiro',
+            description: 'AWS 背景团队打造的规范驱动 AI 开发平台，强调稳定的工程化交付。',
+            logo_url: 'https://kiro.dev/favicon.ico',
+            website: 'https://kiro.dev',
+            categories: ['coding'],
+            rating: 4.7,
+            weekly_users: 85000,
+            trending_score: 90,
+            why_matters: '大厂背景创业，专注企业级可靠性，是 AI 编程工具的差异化方向。'
+        },
+        {
+            _id: '4',
+            name: 'Bolt.new',
+            description: 'StackBlitz 推出的浏览器内全栈 AI 开发环境，无需配置即可开始编码。',
+            logo_url: 'https://bolt.new/favicon.ico',
+            website: 'https://bolt.new',
+            categories: ['coding'],
+            rating: 4.8,
+            weekly_users: 200000,
+            trending_score: 91,
+            why_matters: '零配置 + 浏览器内运行，大幅降低 AI 开发入门门槛。'
+        },
+        {
+            _id: '5',
+            name: 'NEO (1X Technologies)',
+            description: '挪威初创公司研发的人形机器人，定位家庭助手和轻工业场景。',
+            logo_url: 'https://1x.tech/favicon.ico',
+            website: 'https://1x.tech',
             categories: ['hardware'],
-            rating: 4.9,
-            weekly_users: 50000,
-            trending_score: 94
+            rating: 4.5,
+            weekly_users: 15000,
+            trending_score: 85,
+            why_matters: '人形机器人赛道的黑马，融资后估值飙升，值得关注具身智能趋势。'
         }
     ];
 }
 
 function getMockWeeklyProducts() {
     return [
-        { _id: '1', name: 'ChatGPT', description: 'OpenAI开发的大型语言模型，能够进行自然对话、写作、编程辅助等多种任务。', logo_url: 'https://cdn.openai.com/common/images/favicon.ico', website: 'https://chat.openai.com', categories: ['coding', 'writing'], rating: 4.8, weekly_users: 1500000 },
-        { _id: '3', name: 'Midjourney', description: '强大的AI图像生成工具，通过文本描述生成高质量艺术图像。', logo_url: 'https://www.midjourney.com/apple-touch-icon.png', website: 'https://midjourney.com', categories: ['image'], rating: 4.9, weekly_users: 1200000 },
-        { _id: '13', name: 'Google Gemini', description: 'Google最新的多模态AI模型，整合文本、图像、音频理解能力。', logo_url: 'https://www.google.com/favicon.ico', website: 'https://gemini.google.com', categories: ['coding', 'writing', 'image'], rating: 4.5, weekly_users: 1100000 },
-        { _id: '4', name: 'Kiro', description: 'AWS 背景团队打造的规范驱动 AI 开发平台，强调稳定交付。', logo_url: 'https://kiro.dev/favicon.ico', website: 'https://kiro.dev', categories: ['coding'], rating: 4.7, weekly_users: 180000 },
-        { _id: '12', name: 'Stable Diffusion', description: '开源的AI图像生成模型，支持本地部署和自定义训练。', logo_url: 'https://stability.ai/favicon.ico', website: 'https://stability.ai', categories: ['image'], rating: 4.6, weekly_users: 890000 },
-        { _id: '2', name: 'Claude', description: 'Anthropic开发的AI助手，以安全、有帮助和诚实为核心设计理念。', logo_url: 'https://www.anthropic.com/images/icons/apple-touch-icon.png', website: 'https://claude.ai', categories: ['coding', 'writing'], rating: 4.7, weekly_users: 800000 },
-        { _id: '14', name: 'Lovable', description: '欧洲最快增长的 AI 产品团队之一，8 个月从 0 到独角兽。', logo_url: 'https://lovable.dev/favicon.ico', website: 'https://lovable.dev', categories: ['other'], rating: 4.8, weekly_users: 120000 },
-        { _id: '7', name: 'Perplexity AI', description: 'AI驱动的搜索引擎，提供带引用来源的答案。', logo_url: 'https://www.perplexity.ai/favicon.ico', website: 'https://perplexity.ai', categories: ['other'], rating: 4.5, weekly_users: 700000 },
-        { _id: '19', name: 'Duolingo Max', description: '使用GPT-4增强的语言学习平台，提供AI对话练习功能。', logo_url: 'https://www.duolingo.com/favicon.ico', website: 'https://www.duolingo.com/max', categories: ['education'], rating: 4.6, weekly_users: 650000 },
-        { _id: '5', name: 'Eleven Labs', description: '领先的AI语音合成平台，提供逼真的文字转语音和语音克隆功能。', logo_url: 'https://elevenlabs.io/favicon.ico', website: 'https://elevenlabs.io', categories: ['voice'], rating: 4.7, weekly_users: 600000 },
-        { _id: '10', name: 'Whisper', description: 'OpenAI开源的语音识别模型，支持多语言转录和翻译。', logo_url: 'https://openai.com/favicon.ico', website: 'https://openai.com/research/whisper', categories: ['voice'], rating: 4.7, weekly_users: 520000 },
-        { _id: '8', name: 'Runway ML', description: '创意AI工具套件，提供视频生成、编辑和特效功能。', logo_url: 'https://runwayml.com/favicon.ico', website: 'https://runwayml.com', categories: ['video', 'image'], rating: 4.6, weekly_users: 450000 },
-        { _id: '16', name: 'Emergent', description: '非开发者也能用 AI 代理构建全栈应用的建站产品。', logo_url: 'https://emergent.sh/favicon.ico', website: 'https://emergent.sh', categories: ['other'], rating: 4.7, weekly_users: 140000 },
-        { _id: '9', name: 'Jasper AI', description: '企业级AI写作助手，帮助创建营销内容和商业文案。', logo_url: 'https://jasper.ai/favicon.ico', website: 'https://jasper.ai', categories: ['writing'], rating: 4.4, weekly_users: 380000 },
-        { _id: '20', name: 'Sora', description: 'OpenAI的文本到视频生成模型，能创建高质量的视频内容。', logo_url: 'https://openai.com/favicon.ico', website: 'https://openai.com/sora', categories: ['video'], rating: 4.8, weekly_users: 300000 }
+        { _id: '1', name: 'Lovable', description: '欧洲最快增长的 AI 产品，8 个月从 0 到独角兽。非开发者也能快速构建全栈应用。', logo_url: 'https://lovable.dev/favicon.ico', website: 'https://lovable.dev', categories: ['coding'], rating: 4.8, weekly_users: 120000, why_matters: '证明了 AI 原生产品可以极速获客' },
+        { _id: '2', name: 'Devin', description: '全自主 AI 软件工程师，能够端到端处理需求拆解、代码实现与交付。', logo_url: 'https://cognition.ai/favicon.ico', website: 'https://cognition.ai', categories: ['coding'], rating: 4.7, weekly_users: 160000, why_matters: '重新定义了 AI 工程师边界' },
+        { _id: '3', name: 'Kiro', description: 'AWS 背景团队打造的规范驱动 AI 开发平台，强调稳定交付。', logo_url: 'https://kiro.dev/favicon.ico', website: 'https://kiro.dev', categories: ['coding'], rating: 4.7, weekly_users: 85000, why_matters: '大厂背景创业，专注企业级可靠性' },
+        { _id: '4', name: 'Emergent', description: '非开发者也能用 AI 代理构建全栈应用的建站产品。', logo_url: 'https://emergent.sh/favicon.ico', website: 'https://emergent.sh', categories: ['coding'], rating: 4.6, weekly_users: 45000, why_matters: '面向非技术用户的 AI 开发工具' },
+        { _id: '5', name: 'Bolt.new', description: 'StackBlitz 推出的浏览器内全栈 AI 开发环境。', logo_url: 'https://bolt.new/favicon.ico', website: 'https://bolt.new', categories: ['coding'], rating: 4.8, weekly_users: 200000, why_matters: '零配置浏览器内 AI 开发' },
+        { _id: '6', name: 'Windsurf', description: 'Codeium 推出的 Agentic IDE，AI 代理主动参与开发流程。', logo_url: 'https://codeium.com/favicon.ico', website: 'https://codeium.com/windsurf', categories: ['coding'], rating: 4.6, weekly_users: 95000, why_matters: 'Agentic IDE 概念先行者' },
+        { _id: '7', name: 'NEO (1X)', description: '挪威初创公司研发的人形机器人，定位家庭助手。', logo_url: 'https://1x.tech/favicon.ico', website: 'https://1x.tech', categories: ['hardware'], rating: 4.5, weekly_users: 15000, why_matters: '人形机器人赛道黑马' },
+        { _id: '8', name: 'Rokid AR Studio', description: '中国 AR 眼镜厂商的 AI 开发平台。', logo_url: 'https://www.rokid.com/favicon.ico', website: 'https://www.rokid.com', categories: ['hardware'], rating: 4.4, weekly_users: 25000, why_matters: '国产 AR + AI 空间计算' },
+        { _id: '9', name: 'DeepSeek', description: '中国 AI 研究公司，以高效开源模型著称。', logo_url: 'https://www.deepseek.com/favicon.ico', website: 'https://www.deepseek.com', categories: ['coding', 'writing'], rating: 4.6, weekly_users: 180000, why_matters: '开源大模型性价比之王' },
+        { _id: '10', name: 'Replit Agent', description: 'Replit 的 AI 代理，自主完成从需求到部署。', logo_url: 'https://replit.com/favicon.ico', website: 'https://replit.com', categories: ['coding'], rating: 4.5, weekly_users: 150000, why_matters: '全流程 AI 开发代理' },
+        { _id: '11', name: 'v0.dev', description: 'Vercel 推出的 AI UI 生成器，对话生成 React 组件。', logo_url: 'https://v0.dev/favicon.ico', website: 'https://v0.dev', categories: ['coding', 'image'], rating: 4.7, weekly_users: 175000, why_matters: '前端 AI 生成标杆产品' },
+        { _id: '12', name: 'Kling AI', description: '快手推出的 AI 视频生成工具。', logo_url: 'https://klingai.com/favicon.ico', website: 'https://klingai.com', categories: ['video'], rating: 4.4, weekly_users: 320000, why_matters: '国产视频生成 AI 代表' },
+        { _id: '13', name: 'Poe', description: 'Quora 的多模型 AI 聊天平台，一站式访问多种模型。', logo_url: 'https://poe.com/favicon.ico', website: 'https://poe.com', categories: ['other'], rating: 4.5, weekly_users: 280000, why_matters: 'AI 模型聚合平台' },
+        { _id: '14', name: 'Glif', description: '可视化 AI 工作流构建平台，无需代码串联多个模型。', logo_url: 'https://glif.app/favicon.ico', website: 'https://glif.app', categories: ['image', 'other'], rating: 4.5, weekly_users: 45000, why_matters: 'AI 工作流乐高积木' },
+        { _id: '15', name: 'Thinking Machines Lab', description: '菲律宾 AI 研究初创，专注东南亚本地化大模型。', logo_url: 'https://thinkingmachines.ph/favicon.ico', website: 'https://thinkingmachines.ph', categories: ['other'], rating: 4.3, weekly_users: 12000, why_matters: '东南亚本土 AI 研究力量' }
     ];
 }
 

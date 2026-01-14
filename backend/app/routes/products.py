@@ -127,3 +127,30 @@ def get_dark_horse_products():
         }), 500
 
 
+@products_bp.route('/today', methods=['GET'])
+def get_todays_picks():
+    """获取今日精选 - 最近48小时内的新产品宝藏
+
+    Query参数:
+    - limit: 返回数量，默认10
+    - hours: 时间窗口（小时），默认48
+    """
+    try:
+        limit = request.args.get('limit', 10, type=int)
+        hours = request.args.get('hours', 48, type=int)
+        products = ProductService.get_todays_picks(limit=limit, hours=hours)
+        return jsonify({
+            'success': True,
+            'data': products,
+            'count': len(products),
+            'message': f'获取最近{hours}小时内的{len(products)}个新产品'
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'data': [],
+            'count': 0,
+            'message': str(e)
+        }), 500
+
+

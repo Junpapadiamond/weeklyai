@@ -22,7 +22,11 @@ from spiders.hardware_spider import AIHardwareSpider
 from spiders.exhibition_spider import ExhibitionSpider
 from spiders.company_spider import CompanySpider
 from spiders.tech_news_spider import TechNewsSpider
+from spiders.techcrunch_spider import TechCrunchSpider
+from spiders.futuretools_spider import FutureToolsSpider
+from spiders.yc_spider import YCSpider
 from utils.image_utils import get_best_logo
+from utils.insight_generator import InsightGenerator
 
 # Well-known base products to filter (only show if they have NEW features/updates)
 # These are famous products that everyone knows - we want NEW things instead
@@ -118,13 +122,16 @@ class CrawlerManager:
             'tech_news': 0,
             'hardware': 0,
             'aitools': 0,
+            'techcrunch': 0,
+            'futuretools': 0,
+            'ycombinator': 0,
             'filtered_wellknown': 0,
             'total': 0,
             'errors': []
         }
         
         # 1. 展会/发布会产品
-        print("\n🏟️ [1/7] 展会产品库")
+        print("\n🏟️ [1/10] 展会产品库")
         print("-" * 40)
         try:
             spider = ExhibitionSpider()
@@ -137,7 +144,7 @@ class CrawlerManager:
             print(f"✗ 展会爬取失败: {e}")
 
         # 2. 公司产品库
-        print("\n🏢 [2/7] 公司产品库")
+        print("\n🏢 [2/10] 公司产品库")
         print("-" * 40)
         try:
             spider = CompanySpider()
@@ -150,7 +157,7 @@ class CrawlerManager:
             print(f"✗ 公司爬取失败: {e}")
 
         # 3. AI 硬件产品
-        print("\n🔧 [3/7] AI 硬件产品")
+        print("\n🔧 [3/10] AI 硬件产品")
         print("-" * 40)
         try:
             spider = AIHardwareSpider()
@@ -163,7 +170,7 @@ class CrawlerManager:
             print(f"✗ 硬件爬取失败: {e}")
         
         # 4. ProductHunt
-        print("\n🔥 [4/7] ProductHunt AI 产品")
+        print("\n🔥 [4/10] ProductHunt AI 产品")
         print("-" * 40)
         try:
             spider = ProductHuntSpider()
@@ -176,7 +183,7 @@ class CrawlerManager:
             print(f"✗ ProductHunt 爬取失败: {e}")
         
         # 5. Hacker News
-        print("\n🧠 [5/7] Hacker News 新发布")
+        print("\n🧠 [5/10] Hacker News 新发布")
         print("-" * 40)
         try:
             spider = HackerNewsSpider()
@@ -189,7 +196,7 @@ class CrawlerManager:
             print(f"✗ Hacker News 爬取失败: {e}")
 
         # 6. AI 工具导航站
-        print("\n🛠️ [6/7] AI 工具导航网站")
+        print("\n🛠️ [6/10] AI 工具导航网站")
         print("-" * 40)
         try:
             spider = AIToolSpider()
@@ -202,7 +209,7 @@ class CrawlerManager:
             print(f"✗ AI Tools 爬取失败: {e}")
 
         # 7. Tech News (Verge, TechCrunch, etc.)
-        print("\n📰 [7/7] Tech News AI 动态")
+        print("\n📰 [7/10] Tech News AI 动态")
         print("-" * 40)
         try:
             spider = TechNewsSpider()
@@ -213,6 +220,45 @@ class CrawlerManager:
         except Exception as e:
             stats['errors'].append(f"TechNews: {str(e)}")
             print(f"✗ Tech News 爬取失败: {e}")
+
+        # 8. TechCrunch 融资新闻 (刚融资的 AI 初创公司)
+        print("\n💰 [8/10] TechCrunch 融资新闻")
+        print("-" * 40)
+        try:
+            spider = TechCrunchSpider()
+            products = spider.crawl()
+            all_products.extend(products)
+            stats['techcrunch'] = len(products)
+            print(f"✓ TechCrunch: 获取 {len(products)} 个融资产品")
+        except Exception as e:
+            stats['errors'].append(f"TechCrunch: {str(e)}")
+            print(f"✗ TechCrunch 爬取失败: {e}")
+
+        # 9. FutureTools.io AI 工具目录
+        print("\n🔮 [9/10] FutureTools.io AI 工具")
+        print("-" * 40)
+        try:
+            spider = FutureToolsSpider()
+            products = spider.crawl()
+            all_products.extend(products)
+            stats['futuretools'] = len(products)
+            print(f"✓ FutureTools: 获取 {len(products)} 个 AI 工具")
+        except Exception as e:
+            stats['errors'].append(f"FutureTools: {str(e)}")
+            print(f"✗ FutureTools 爬取失败: {e}")
+
+        # 10. Y Combinator AI 公司 (YC 投资的 AI 初创公司)
+        print("\n🚀 [10/10] Y Combinator AI 公司")
+        print("-" * 40)
+        try:
+            spider = YCSpider()
+            products = spider.crawl()
+            all_products.extend(products)
+            stats['ycombinator'] = len(products)
+            print(f"✓ Y Combinator: 获取 {len(products)} 个 YC 公司")
+        except Exception as e:
+            stats['errors'].append(f"YCombinator: {str(e)}")
+            print(f"✗ Y Combinator 爬取失败: {e}")
 
         # 数据处理
         print("\n🔄 处理数据...")
@@ -519,6 +565,7 @@ class CrawlerManager:
             scores = self._score_product(product, current_year, source_stats)
             product['hot_score'] = scores['hot_score']
             product['top_score'] = scores['top_score']
+            product['treasure_score'] = scores['treasure_score']
             product['final_score'] = product['top_score']
 
         # 按 Top Score 排序作为默认输出
@@ -707,9 +754,65 @@ class CrawlerManager:
             source_bonus
         )
 
+        # Treasure Score: identifies pre-viral, innovative, credible hidden gems
+        # High score = low volume + high growth + high recency + credibility signals
+
+        # Pre-viral score: lower volume is BETTER (hidden gem potential)
+        # Users < 1K = 1.0, < 10K = 0.8, < 50K = 0.5, < 100K = 0.3, 100K+ = 0.1
+        if volume_metric < 1000:
+            pre_viral_score = 1.0
+        elif volume_metric < 10000:
+            pre_viral_score = 0.8
+        elif volume_metric < 50000:
+            pre_viral_score = 0.5
+        elif volume_metric < 100000:
+            pre_viral_score = 0.3
+        else:
+            pre_viral_score = 0.1
+
+        # Growth signal: products with positive momentum get bonus
+        growth_signal = min(1.0, growth_score * 1.5) if growth_score > 0 else 0.0
+
+        # Credibility score: funding, notable source, curated
+        credibility_score = 0.0
+        funding = product.get('funding_total', '') or extra.get('funding_total', '')
+        if funding and '$' in str(funding):
+            credibility_score += 0.4
+        if product.get('dark_horse_index', 0) >= 3:
+            credibility_score += 0.3
+        if source in ('producthunt', 'tech_news', 'exhibition'):
+            credibility_score += 0.2
+        if product.get('founded_date'):
+            credibility_score += 0.1
+        credibility_score = min(1.0, credibility_score)
+
+        # Innovation score: AI relevance + unique categories
+        innovation_score = ai_relevance * 0.7
+        categories = product.get('categories', [])
+        # Bonus for less common categories (not just 'other' or 'coding')
+        niche_categories = {'hardware', 'healthcare', 'finance', 'education', 'voice'}
+        if any(cat in niche_categories for cat in categories):
+            innovation_score += 0.3
+        innovation_score = min(1.0, innovation_score)
+
+        # Combine into treasure score
+        # Weights: pre-viral (0.30) + growth (0.25) + recency (0.20) + credibility (0.15) + innovation (0.10)
+        treasure_score = (
+            0.30 * pre_viral_score +
+            0.25 * growth_signal +
+            0.20 * recency_score +
+            0.15 * credibility_score +
+            0.10 * innovation_score
+        )
+
+        # Bonus for very fresh products (< 7 days)
+        if recency_score >= 1.0:
+            treasure_score = min(1.0, treasure_score + 0.1)
+
         return {
             'hot_score': min(100, int(hot_score * 100)),
             'top_score': min(100, int(top_score * 100)),
+            'treasure_score': min(100, int(treasure_score * 100)),
         }
     
     def _print_stats(self, stats: Dict):
@@ -792,6 +895,14 @@ class CrawlerManager:
 
         print("\n📊 分类数据...")
         products_list, blogs_list, filtered_list = classify_all(products)
+
+        # Generate AI insights for products (not blogs)
+        print("\n🤖 生成 AI 洞察...")
+        try:
+            insight_gen = InsightGenerator()
+            products_list = insight_gen.batch_generate(products_list, max_api_calls=50)
+        except Exception as e:
+            print(f"  ⚠ 洞察生成失败: {e}")
 
         # Sort by score
         products_list.sort(key=lambda x: x.get('final_score', x.get('top_score', 0)), reverse=True)
