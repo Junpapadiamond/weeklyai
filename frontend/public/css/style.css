@@ -1293,3 +1293,152 @@ body::after {
     background: rgba(29, 78, 216, 0.2);
     color: var(--ink-900);
 }
+
+/* ========== Blog Section ========== */
+.blog-filters {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.blog-filter-btn {
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-pill);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ink-700);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.blog-filter-btn:hover {
+    border-color: rgba(29, 78, 216, 0.3);
+    background: rgba(29, 78, 216, 0.08);
+}
+
+.blog-filter-btn.active {
+    background: linear-gradient(135deg, var(--cobalt), var(--coral));
+    color: white;
+    border-color: transparent;
+    box-shadow: var(--shadow-sm);
+}
+
+.blogs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.blog-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(10px);
+}
+
+.blog-item:hover {
+    border-color: rgba(29, 78, 216, 0.3);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.blog-source {
+    flex-shrink: 0;
+    padding: 0.3rem 0.7rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    height: fit-content;
+    white-space: nowrap;
+}
+
+.blog-source.hackernews {
+    background: rgba(255, 102, 0, 0.15);
+    color: #ff6600;
+}
+
+.blog-source.tech_news {
+    background: rgba(29, 78, 216, 0.15);
+    color: var(--cobalt);
+}
+
+.blog-source.reddit {
+    background: rgba(255, 69, 0, 0.15);
+    color: #ff4500;
+}
+
+.blog-source.github {
+    background: rgba(36, 41, 46, 0.15);
+    color: #24292e;
+}
+
+.blog-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.blog-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink-900);
+    margin-bottom: 0.4rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.blog-desc {
+    font-size: 0.85rem;
+    color: var(--ink-700);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 0.6rem;
+}
+
+.blog-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.75rem;
+    color: var(--ink-500);
+}
+
+.blog-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.blog-date {
+    margin-left: auto;
+    color: var(--ink-300);
+}
+
+@media (max-width: 768px) {
+    .blog-filters {
+        justify-content: center;
+    }
+
+    .blog-item {
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+
+    .blog-source {
+        align-self: flex-start;
+    }
+}

@@ -25,6 +25,9 @@ const elements = {
     swipeStatus: document.getElementById('swipeStatus'),
     trendingSection: document.getElementById('trendingSection'),
     weeklySection: document.getElementById('weeklySection'),
+    blogsSection: document.getElementById('blogsSection'),
+    blogsList: document.getElementById('blogsList'),
+    blogFilters: document.getElementById('blogFilters'),
     searchSection: document.getElementById('searchSection'),
     trendingProducts: document.getElementById('trendingProducts'),
     weeklyProducts: document.getElementById('weeklyProducts'),
@@ -41,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initCategoryTags();
     initHeroGlow();
     initDiscovery();
+    initBlogFilters();
     loadTrendingProducts();
 });
 
@@ -72,22 +76,27 @@ function switchSection(section) {
     elements.navLinks.forEach(link => {
         link.classList.toggle('active', link.dataset.section === section);
     });
-    
+
     // 切换显示的区域
     elements.trendingSection.style.display = section === 'trending' ? 'block' : 'none';
     if (elements.discoverSection) {
         elements.discoverSection.style.display = section === 'trending' ? 'block' : 'none';
     }
     elements.weeklySection.style.display = section === 'weekly' ? 'block' : 'none';
+    if (elements.blogsSection) {
+        elements.blogsSection.style.display = section === 'blogs' ? 'block' : 'none';
+    }
     elements.searchSection.style.display = section === 'search' ? 'block' : 'none';
-    
+
     currentSection = section;
-    
+
     // 加载对应数据
     if (section === 'trending') {
         loadTrendingProducts();
     } else if (section === 'weekly') {
         loadWeeklyProducts();
+    } else if (section === 'blogs') {
+        loadBlogs();
     }
 }
 
@@ -549,11 +558,118 @@ async function loadWeeklyProducts() {
 }
 
 function renderWeeklyProducts(products) {
-    elements.weeklyProducts.innerHTML = products.map((product, index) => 
+    elements.weeklyProducts.innerHTML = products.map((product, index) =>
         createProductListItem(product, index + 1)
     ).join('');
-    
+
     animateListItems(elements.weeklyProducts);
+}
+
+// ========== 博客动态功能 ==========
+let currentBlogSource = '';
+
+function initBlogFilters() {
+    if (!elements.blogFilters) return;
+
+    const filterBtns = elements.blogFilters.querySelectorAll('.blog-filter-btn');
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentBlogSource = btn.dataset.source || '';
+            loadBlogs(currentBlogSource);
+        });
+    });
+}
+
+async function loadBlogs(source = '') {
+    if (!elements.blogsList) return;
+
+    elements.blogsList.innerHTML = `
+        <div class="loading-skeleton">
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+        </div>
+    `;
+
+    try {
+        const url = source
+            ? `${API_BASE_URL}/products/blogs?source=${source}&limit=30`
+            : `${API_BASE_URL}/products/blogs?limit=30`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data.success && data.data.length > 0) {
+            renderBlogs(data.data);
+        } else {
+            showEmptyState(elements.blogsList, '暂无博客动态');
+        }
+    } catch (error) {
+        console.error('加载博客失败:', error);
+        showEmptyState(elements.blogsList, '加载失败，请稍后重试');
+    }
+}
+
+function renderBlogs(blogs) {
+    elements.blogsList.innerHTML = blogs.map(blog => createBlogItem(blog)).join('');
+    animateListItems(elements.blogsList);
+}
+
+function createBlogItem(blog) {
+    const source = blog.source || 'unknown';
+    const sourceLabel = getSourceLabel(source);
+    const description = cleanDescription(blog.description || '');
+    const website = blog.website || '';
+    const extra = blog.extra || {};
+    const points = extra.points || extra.votes || 0;
+    const comments = extra.comments || 0;
+
+    // Format date
+    const dateStr = blog.published_at || blog.first_seen || '';
+    const dateLabel = dateStr ? formatDate(dateStr) : '';
+
+    return `
+        <div class="blog-item" onclick="openProduct('${website}')">
+            <div class="blog-source ${source}">${sourceLabel}</div>
+            <div class="blog-content">
+                <h3 class="blog-title">${blog.name}</h3>
+                <p class="blog-desc">${description}</p>
+                <div class="blog-meta">
+                    ${points ? `<span class="blog-stat">👍 ${points}</span>` : ''}
+                    ${comments ? `<span class="blog-stat">💬 ${comments}</span>` : ''}
+                    ${dateLabel ? `<span class="blog-date">${dateLabel}</span>` : ''}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function getSourceLabel(source) {
+    const labels = {
+        'hackernews': '🔶 HN',
+        'tech_news': '📰 News',
+        'reddit': '🔴 Reddit',
+        'github': '⭐ GitHub'
+    };
+    return labels[source] || '📄 Blog';
+}
+
+function formatDate(dateStr) {
+    try {
+        const date = new Date(dateStr);
+        const now = new Date();
+        const diffMs = now - date;
+        const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+        if (diffDays === 0) return '今天';
+        if (diffDays === 1) return '昨天';
+        if (diffDays < 7) return `${diffDays}天前`;
+        if (diffDays < 30) return `${Math.floor(diffDays / 7)}周前`;
+        return date.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
+    } catch {
+        return '';
+    }
 }
 
 // ========== 创建产品卡片 ==========

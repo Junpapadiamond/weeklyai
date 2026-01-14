@@ -8,11 +8,43 @@ from collections import defaultdict
 from datetime import datetime
 from typing import List, Dict, Any, Optional
 
+# MongoDB support
+try:
+    from pymongo import MongoClient
+    HAS_MONGO = True
+except ImportError:
+    HAS_MONGO = False
+
 # 爬虫数据文件路径
-CRAWLER_DATA_FILE = os.path.join(
-    os.path.dirname(__file__), 
-    '..', '..', '..', 'crawler', 'data', 'products_latest.json'
+CRAWLER_DATA_DIR = os.path.join(
+    os.path.dirname(__file__),
+    '..', '..', '..', 'crawler', 'data'
 )
+PRODUCTS_FEATURED_FILE = os.path.join(CRAWLER_DATA_DIR, 'products_featured.json')
+BLOGS_NEWS_FILE = os.path.join(CRAWLER_DATA_DIR, 'blogs_news.json')
+CRAWLER_DATA_FILE = os.path.join(CRAWLER_DATA_DIR, 'products_latest.json')
+
+# MongoDB connection
+_mongo_client = None
+_mongo_db = None
+
+def get_mongo_db():
+    """Get MongoDB connection (lazy initialization)"""
+    global _mongo_client, _mongo_db
+    if not HAS_MONGO:
+        return None
+    if _mongo_db is not None:
+        return _mongo_db
+    try:
+        mongo_uri = os.getenv('MONGO_URI', 'mongodb://localhost:27017/weeklyai')
+        _mongo_client = MongoClient(mongo_uri, serverSelectionTimeoutMS=3000)
+        _mongo_client.admin.command('ping')
+        _mongo_db = _mongo_client.get_database()
+        print("  ✓ Backend connected to MongoDB")
+        return _mongo_db
+    except Exception as e:
+        print(f"  ⚠ MongoDB connection failed: {e}, using JSON files")
+        return None
 
 # 示例数据（当没有爬虫数据时使用）
 SAMPLE_PRODUCTS = [
@@ -238,46 +270,114 @@ class ProductService:
     
     @classmethod
     def _load_products(cls) -> List[Dict]:
-        """加载产品数据（带缓存）"""
+        """加载产品数据（带缓存）- 优先使用MongoDB"""
         now = datetime.now()
-        
+
         # 检查缓存
         if cls._cached_products and cls._cache_time:
             age = (now - cls._cache_time).total_seconds()
             if age < cls._cache_duration:
                 return cls._cached_products
-        
-        # 尝试从爬虫数据文件加载
-        products = cls._load_from_crawler_file()
-        
-        # 如果没有爬虫数据，使用示例数据
+
+        # 1. 优先尝试从MongoDB加载
+        products = cls._load_from_mongodb()
+
+        # 2. 如果MongoDB没数据，尝试从JSON文件加载
+        if not products:
+            products = cls._load_from_crawler_file()
+
+        # 3. 如果都没有，使用示例数据
         if not products:
             products = SAMPLE_PRODUCTS.copy()
-        
+
         # 更新缓存
         cls._cached_products = products
         cls._cache_time = now
-        
+
         return products
-    
+
     @classmethod
-    def _load_from_crawler_file(cls) -> List[Dict]:
-        """从爬虫数据文件加载"""
-        if not os.path.exists(CRAWLER_DATA_FILE):
+    def _load_from_mongodb(cls) -> List[Dict]:
+        """从MongoDB加载产品数据"""
+        db = get_mongo_db()
+        if db is None:
             return []
-        
+
         try:
-            with open(CRAWLER_DATA_FILE, 'r', encoding='utf-8') as f:
-                products = json.load(f)
-            
+            collection = db.products
+            # 获取产品，排除 content_type='blog' 和 content_type='filtered'
+            products = list(collection.find(
+                {'content_type': {'$nin': ['blog', 'filtered']}},
+                {'_id': 0}
+            ).sort('final_score', -1))
+
+            # 如果没有 content_type 字段，获取所有产品
+            if not products:
+                products = list(collection.find(
+                    {},
+                    {'_id': 0}
+                ).sort('final_score', -1))
+
+            if products:
+                print(f"  ✓ Loaded {len(products)} products from MongoDB")
+
             # 添加 _id 字段
             for i, p in enumerate(products):
                 if '_id' not in p:
                     p['_id'] = str(i + 1)
-            
+                # Parse extra field if it's a string
+                if 'extra' in p and isinstance(p['extra'], str):
+                    try:
+                        p['extra'] = json.loads(p['extra'])
+                    except:
+                        pass
+
+            return products
+        except Exception as e:
+            print(f"  ⚠ MongoDB load failed: {e}")
+            return []
+    
+    @classmethod
+    def _load_from_crawler_file(cls) -> List[Dict]:
+        """从爬虫数据文件加载（优先使用 products_featured.json）"""
+        # 优先使用分类后的产品文件
+        data_file = PRODUCTS_FEATURED_FILE if os.path.exists(PRODUCTS_FEATURED_FILE) else CRAWLER_DATA_FILE
+
+        if not os.path.exists(data_file):
+            return []
+
+        try:
+            with open(data_file, 'r', encoding='utf-8') as f:
+                products = json.load(f)
+
+            # 添加 _id 字段
+            for i, p in enumerate(products):
+                if '_id' not in p:
+                    p['_id'] = str(i + 1)
+
             return products
         except Exception as e:
             print(f"加载爬虫数据失败: {e}")
+            return []
+
+    @classmethod
+    def _load_blogs(cls) -> List[Dict]:
+        """加载博客/新闻/讨论数据"""
+        if not os.path.exists(BLOGS_NEWS_FILE):
+            return []
+
+        try:
+            with open(BLOGS_NEWS_FILE, 'r', encoding='utf-8') as f:
+                blogs = json.load(f)
+
+            # 添加 _id 字段
+            for i, b in enumerate(blogs):
+                if '_id' not in b:
+                    b['_id'] = f"blog_{i + 1}"
+
+            return blogs
+        except Exception as e:
+            print(f"加载博客数据失败: {e}")
             return []
     
     @classmethod
@@ -446,10 +546,35 @@ class ProductService:
     def get_products_by_source(source: str, limit: int = 20) -> List[Dict]:
         """按来源获取产品"""
         products = ProductService._load_products()
-        
+
         filtered = [
-            p for p in products 
+            p for p in products
             if p.get('source', '') == source
         ]
-        
+
+        return filtered[:limit]
+
+    @staticmethod
+    def get_blogs_news(limit: int = 20) -> List[Dict]:
+        """获取博客/新闻/讨论内容"""
+        blogs = ProductService._load_blogs()
+
+        # 按分数排序
+        blogs.sort(
+            key=lambda x: x.get('final_score', x.get('trending_score', 0)),
+            reverse=True
+        )
+
+        return blogs[:limit]
+
+    @staticmethod
+    def get_blogs_by_source(source: str, limit: int = 20) -> List[Dict]:
+        """按来源获取博客内容"""
+        blogs = ProductService._load_blogs()
+
+        filtered = [
+            b for b in blogs
+            if b.get('source', '') == source
+        ]
+
         return filtered[:limit]

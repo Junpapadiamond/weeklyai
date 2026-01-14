@@ -98,7 +98,7 @@ class DatabaseHandler:
         保存产品到 MongoDB
         使用 upsert 避免重复
         """
-        if not self.mongo_db or not products:
+        if self.mongo_db is None or not products:
             return 0
         
         collection = self.mongo_db.products
@@ -144,7 +144,7 @@ class DatabaseHandler:
     
     def get_trending_products(self, limit: int = 5) -> List[Dict]:
         """获取热门产品"""
-        if not self.mongo_db:
+        if self.mongo_db is None:
             return self._get_from_file('trending', limit)
         
         collection = self.mongo_db.products
@@ -169,7 +169,7 @@ class DatabaseHandler:
     
     def get_weekly_top(self, limit: int = 15) -> List[Dict]:
         """获取本周Top产品"""
-        if not self.mongo_db:
+        if self.mongo_db is None:
             return self._get_from_file('weekly', limit)
         
         collection = self.mongo_db.products
@@ -183,7 +183,7 @@ class DatabaseHandler:
     def search_products(self, query: str = '', categories: List[str] = None,
                        limit: int = 20) -> List[Dict]:
         """搜索产品"""
-        if not self.mongo_db:
+        if self.mongo_db is None:
             return self._search_from_file(query, categories, limit)
         
         collection = self.mongo_db.products

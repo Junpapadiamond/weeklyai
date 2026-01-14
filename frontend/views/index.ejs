@@ -28,6 +28,7 @@
             <div class="nav-links">
                 <a href="#" class="nav-link active" data-section="trending">🔥 热门推荐</a>
                 <a href="#" class="nav-link" data-section="weekly">📈 本周榜单</a>
+                <a href="#" class="nav-link" data-section="blogs">📰 博客动态</a>
                 <a href="#" class="nav-link" data-section="search">🔍 搜索</a>
             </div>
         </div>
@@ -125,6 +126,26 @@
             </div>
             <div class="products-list" id="weeklyProducts">
                 <!-- 产品列表将通过 JS 动态加载 -->
+            </div>
+        </section>
+
+        <!-- 博客动态区 -->
+        <section class="section blogs-section" id="blogsSection" style="display: none;">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-icon">📰</span>
+                    博客 & 动态
+                </h2>
+                <p class="section-desc">来自 Hacker News、Reddit、Tech News 的 AI 讨论和文章</p>
+            </div>
+            <div class="blog-filters" id="blogFilters">
+                <button class="blog-filter-btn active" data-source="">全部</button>
+                <button class="blog-filter-btn" data-source="hackernews">🔶 Hacker News</button>
+                <button class="blog-filter-btn" data-source="tech_news">📰 Tech News</button>
+                <button class="blog-filter-btn" data-source="reddit">🔴 Reddit</button>
+            </div>
+            <div class="blogs-list" id="blogsList">
+                <!-- 博客列表将通过 JS 动态加载 -->
             </div>
         </section>
 

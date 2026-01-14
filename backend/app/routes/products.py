@@ -82,3 +82,28 @@ def get_categories():
     })
 
 
+@products_bp.route('/blogs', methods=['GET'])
+def get_blogs_news():
+    """获取博客/新闻/讨论内容"""
+    try:
+        limit = request.args.get('limit', 20, type=int)
+        source = request.args.get('source', '')
+
+        if source:
+            blogs = ProductService.get_blogs_by_source(source, limit=limit)
+        else:
+            blogs = ProductService.get_blogs_news(limit=limit)
+
+        return jsonify({
+            'success': True,
+            'data': blogs,
+            'message': '获取博客/新闻成功'
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'data': [],
+            'message': str(e)
+        }), 500
+
+

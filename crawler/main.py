@@ -803,29 +803,65 @@ class CrawlerManager:
         """保存到本地 JSON 文件"""
         output_dir = os.path.join(os.path.dirname(__file__), 'data')
         os.makedirs(output_dir, exist_ok=True)
-        
+
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         filename = os.path.join(output_dir, f'products_{timestamp}.json')
         latest_file = os.path.join(output_dir, 'products_latest.json')
-        
+
         data = []
         for product in self.all_products:
-            item = {k: v for k, v in product.items() 
+            item = {k: v for k, v in product.items()
                    if not callable(v) and k != '_id'}
             if 'created_at' in item:
                 item['created_at'] = str(item['created_at'])
             if 'updated_at' in item:
                 item['updated_at'] = str(item['updated_at'])
             data.append(item)
-        
+
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
-        
+
         with open(latest_file, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
-        
+
         print(f"✓ 已保存到 {filename}")
         print(f"✓ 已更新 {latest_file}")
+
+        # Classify and separate products vs blogs
+        self._classify_and_save(data, output_dir)
+
+    def _classify_and_save(self, products: List[Dict], output_dir: str):
+        """Classify products into products/blogs/filtered and save separately."""
+        try:
+            from tools.data_classifier import classify_all
+        except ImportError:
+            print("⚠ 分类器未找到，跳过数据分类")
+            return
+
+        print("\n📊 分类数据...")
+        products_list, blogs_list, filtered_list = classify_all(products)
+
+        # Sort by score
+        products_list.sort(key=lambda x: x.get('final_score', x.get('top_score', 0)), reverse=True)
+        blogs_list.sort(key=lambda x: x.get('final_score', x.get('top_score', 0)), reverse=True)
+
+        # Save files
+        products_file = os.path.join(output_dir, 'products_featured.json')
+        blogs_file = os.path.join(output_dir, 'blogs_news.json')
+        filtered_file = os.path.join(output_dir, 'filtered_items.json')
+
+        with open(products_file, 'w', encoding='utf-8') as f:
+            json.dump(products_list, f, ensure_ascii=False, indent=2)
+
+        with open(blogs_file, 'w', encoding='utf-8') as f:
+            json.dump(blogs_list, f, ensure_ascii=False, indent=2)
+
+        with open(filtered_file, 'w', encoding='utf-8') as f:
+            json.dump(filtered_list, f, ensure_ascii=False, indent=2)
+
+        print(f"  ✓ 产品: {len(products_list)} 个 (主显示)")
+        print(f"  ✓ 博客/新闻: {len(blogs_list)} 个")
+        print(f"  ✓ 已过滤: {len(filtered_list)} 个")
     
     def get_top_products(self, n: int = 15) -> List[Dict]:
         """获取热度最高的 n 个产品"""
