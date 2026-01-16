@@ -154,3 +154,80 @@ def get_todays_picks():
         }), 500
 
 
+@products_bp.route('/last-updated', methods=['GET'])
+def get_last_updated():
+    """获取最近一次数据更新时间"""
+    try:
+        info = ProductService.get_last_updated()
+        return jsonify({
+            'success': True,
+            'last_updated': info.get('last_updated'),
+            'hours_ago': info.get('hours_ago'),
+            'message': '获取数据更新时间成功'
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'last_updated': None,
+            'hours_ago': None,
+            'message': str(e)
+        }), 500
+
+
+@products_bp.route('/<product_id>/related', methods=['GET'])
+def get_related_products(product_id):
+    """获取相关产品 - 基于分类和标签的相似产品推荐
+
+    Query参数:
+    - limit: 返回数量，默认6
+    """
+    try:
+        limit = request.args.get('limit', 6, type=int)
+        related = ProductService.get_related_products(product_id, limit=limit)
+        return jsonify({
+            'success': True,
+            'data': related,
+            'count': len(related),
+            'message': f'获取{len(related)}个相关产品'
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'data': [],
+            'count': 0,
+            'message': str(e)
+        }), 500
+
+
+@products_bp.route('/analytics/summary', methods=['GET'])
+def get_analytics_summary():
+    """获取数据分析摘要 - 分类分布、趋势方向、热门产品"""
+    try:
+        summary = ProductService.get_analytics_summary()
+        return jsonify({
+            'success': True,
+            'data': summary,
+            'message': '获取分析摘要成功'
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'data': None,
+            'message': str(e)
+        }), 500
+
+
+@products_bp.route('/feed/rss', methods=['GET'])
+def get_rss_feed():
+    """获取RSS订阅源 - 最新产品的XML feed"""
+    try:
+        from flask import Response
+        rss_xml = ProductService.generate_rss_feed()
+        return Response(rss_xml, mimetype='application/rss+xml')
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'message': str(e)
+        }), 500
+
+

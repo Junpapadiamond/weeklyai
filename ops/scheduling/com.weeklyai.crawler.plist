@@ -7,17 +7,20 @@
     <key>ProgramArguments</key>
     <array>
       <string>/bin/zsh</string>
-      <string>/Users/jun/Desktop/WeeklyAI/ops/scheduling/run_crawler.sh</string>
+      <string>/Users/jun/Desktop/Projects/WeeklyAI/ops/scheduling/daily_update.sh</string>
     </array>
     <key>WorkingDirectory</key>
-    <string>/Users/jun/Desktop/WeeklyAI</string>
-    <key>StartInterval</key>
-    <integer>43200</integer>
-    <key>RunAtLoad</key>
-    <true/>
+    <string>/Users/jun/Desktop/Projects/WeeklyAI</string>
+    <key>StartCalendarInterval</key>
+    <dict>
+      <key>Hour</key>
+      <integer>3</integer>
+      <key>Minute</key>
+      <integer>0</integer>
+    </dict>
     <key>StandardOutPath</key>
-    <string>/Users/jun/Desktop/WeeklyAI/crawler/logs/launchd.out.log</string>
+    <string>/Users/jun/Desktop/Projects/WeeklyAI/crawler/logs/launchd.out.log</string>
     <key>StandardErrorPath</key>
-    <string>/Users/jun/Desktop/WeeklyAI/crawler/logs/launchd.err.log</string>
+    <string>/Users/jun/Desktop/Projects/WeeklyAI/crawler/logs/launchd.err.log</string>
   </dict>
 </plist>

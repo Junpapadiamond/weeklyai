@@ -49,6 +49,7 @@
                         <span class="gradient-text">AI 产品</span>
                     </h1>
                     <p class="hero-subtitle">每周更新 · 软件 & 硬件 · 专业筛选</p>
+                    <div class="data-freshness" id="dataFreshness" aria-live="polite">📡 数据更新中...</div>
                     <!-- 搜索框 -->
                     <div class="search-container">
                         <div class="search-box">
@@ -121,6 +122,30 @@
                     热门推荐
                 </h2>
                 <p class="section-desc">实时更新的 Top 5 AI 产品</p>
+            </div>
+            <!-- Sort/Filter Controls -->
+            <div class="list-controls" id="trendingControls">
+                <div class="sort-control">
+                    <label for="sortBy">排序:</label>
+                    <select id="sortBy" class="sort-select">
+                        <option value="score">🔥 热度</option>
+                        <option value="users">👥 用户数</option>
+                        <option value="date">🕐 最新</option>
+                        <option value="rating">⭐ 评分</option>
+                    </select>
+                </div>
+                <div class="filter-control">
+                    <label for="typeFilter">类型:</label>
+                    <select id="typeFilter" class="filter-select">
+                        <option value="all">全部</option>
+                        <option value="software">💻 软件</option>
+                        <option value="hardware">🔧 硬件</option>
+                    </select>
+                </div>
+                <button class="favorites-toggle" id="showFavoritesBtn" title="显示收藏">
+                    <span class="favorites-icon">❤️</span>
+                    <span class="favorites-count" id="favoritesCount">0</span>
+                </button>
             </div>
             <div class="products-grid" id="trendingProducts">
                 <!-- 产品卡片将通过 JS 动态加载 -->
@@ -204,8 +229,32 @@
         </div>
     </footer>
 
+    <!-- Product Detail Modal -->
+    <div class="modal-overlay" id="productModal" aria-hidden="true">
+        <div class="modal-container" role="dialog" aria-labelledby="modalTitle">
+            <button class="modal-close" id="modalClose" aria-label="关闭">×</button>
+            <div class="modal-content" id="modalContent">
+                <!-- Content loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Favorites Panel -->
+    <div class="favorites-panel" id="favoritesPanel" aria-hidden="true">
+        <div class="favorites-header">
+            <h3>❤️ 我的收藏</h3>
+            <button class="favorites-close" id="favoritesClose">×</button>
+        </div>
+        <div class="favorites-list" id="favoritesList">
+            <!-- Favorites loaded dynamically -->
+        </div>
+        <div class="favorites-empty" id="favoritesEmpty">
+            <p>还没有收藏任何产品</p>
+            <p class="favorites-hint">点击产品卡片上的 ❤️ 按钮添加收藏</p>
+        </div>
+    </div>
+
     <script src="/js/hero-art.js"></script>
     <script src="/js/main.js"></script>
 </body>
 </html>
-

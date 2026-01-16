@@ -1,0 +1,13 @@
+# This directory stores product candidates awaiting human review.
+#
+# Files:
+#   pending_review.json   - Products discovered by crawler, waiting for approval
+#   approved_archive.json - Log of approved candidates
+#   candidates_*.json     - Archived previous candidate batches
+#
+# Workflow:
+#   1. Run: python main.py --generate-candidates
+#   2. Review: python tools/list_candidates.py
+#   3. Approve: python tools/approve_candidate.py "ProductName"
+#
+# Approved products are moved to data/products_featured.json

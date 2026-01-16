@@ -23,6 +23,7 @@ CRAWLER_DATA_DIR = os.path.join(
 PRODUCTS_FEATURED_FILE = os.path.join(CRAWLER_DATA_DIR, 'products_featured.json')
 BLOGS_NEWS_FILE = os.path.join(CRAWLER_DATA_DIR, 'blogs_news.json')
 CRAWLER_DATA_FILE = os.path.join(CRAWLER_DATA_DIR, 'products_latest.json')
+LAST_UPDATED_FILE = os.path.join(CRAWLER_DATA_DIR, 'last_updated.json')
 DARK_HORSES_DIR = os.path.join(CRAWLER_DATA_DIR, 'dark_horses')
 BLOCKED_SOURCES = {'github', 'huggingface', 'huggingface_spaces'}
 BLOCKED_DOMAINS = ('github.com', 'huggingface.co')
@@ -422,7 +423,11 @@ class ProductService:
     
     @classmethod
     def _load_products(cls) -> List[Dict]:
-        """加载产品数据（带缓存）- 优先使用MongoDB"""
+        """加载产品数据（带缓存）- 只从 products_featured.json 加载策展产品
+
+        重要: 产品数据只来自手动策展的 JSON 文件，不从 MongoDB 或爬虫输出加载。
+        这确保了产品列表的高质量和人工审核。
+        """
         now = datetime.now()
 
         # 检查缓存
@@ -431,22 +436,18 @@ class ProductService:
             if age < cls._cache_duration:
                 return cls._cached_products
 
-        # 1. 优先尝试从MongoDB加载
-        products = cls._load_from_mongodb()
+        # 1. 只从 products_featured.json 加载（策展产品）
+        products = cls._load_from_crawler_file()
 
-        # 2. 如果MongoDB没数据，尝试从JSON文件加载
-        if not products:
-            products = cls._load_from_crawler_file()
-
-        # 3. 如果都没有，使用示例数据
+        # 2. 如果没有策展文件，使用示例数据
         if not products:
             products = SAMPLE_PRODUCTS.copy()
 
-        # 4. 合并手动策展黑马产品
+        # 3. 合并手动策展黑马产品 (dark_horses/ 目录)
         curated = cls._load_curated_dark_horses()
         products = cls._merge_curated_products(products, curated)
 
-        # 5. 统一字段 & 过滤
+        # 4. 统一字段 & 过滤
         products = cls._normalize_products(products)
 
         # 更新缓存
@@ -502,15 +503,18 @@ class ProductService:
     
     @classmethod
     def _load_from_crawler_file(cls) -> List[Dict]:
-        """从爬虫数据文件加载（优先使用 products_featured.json）"""
-        # 优先使用分类后的产品文件
-        data_file = PRODUCTS_FEATURED_FILE if os.path.exists(PRODUCTS_FEATURED_FILE) else CRAWLER_DATA_FILE
+        """从策展产品文件加载 (products_featured.json)
 
-        if not os.path.exists(data_file):
+        这是唯一的产品数据源，包含人工审核的高质量产品。
+        不会加载爬虫的原始输出 (products_latest.json)。
+        """
+        # 只加载策展产品文件
+        if not os.path.exists(PRODUCTS_FEATURED_FILE):
+            print("  ⚠ products_featured.json 不存在，将使用示例数据")
             return []
 
         try:
-            with open(data_file, 'r', encoding='utf-8') as f:
+            with open(PRODUCTS_FEATURED_FILE, 'r', encoding='utf-8') as f:
                 products = json.load(f)
 
             # 添加 _id 字段
@@ -518,9 +522,10 @@ class ProductService:
                 if '_id' not in p:
                     p['_id'] = str(i + 1)
 
+            print(f"  ✓ 加载 {len(products)} 个策展产品")
             return products
         except Exception as e:
-            print(f"加载爬虫数据失败: {e}")
+            print(f"  ⚠ 加载策展产品失败: {e}")
             return []
 
     @classmethod
@@ -548,6 +553,30 @@ class ProductService:
         """强制刷新缓存"""
         cls._cached_products = None
         cls._cache_time = None
+
+    @staticmethod
+    def get_last_updated() -> Dict[str, Any]:
+        """获取最近一次数据更新时间."""
+        if not os.path.exists(LAST_UPDATED_FILE):
+            return {'last_updated': None, 'hours_ago': None}
+
+        try:
+            with open(LAST_UPDATED_FILE, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+        except Exception:
+            return {'last_updated': None, 'hours_ago': None}
+
+        last_updated = data.get('last_updated')
+        if not last_updated:
+            return {'last_updated': None, 'hours_ago': None}
+
+        try:
+            parsed = datetime.fromisoformat(str(last_updated).replace('Z', '+00:00'))
+            hours_ago = round((datetime.now(parsed.tzinfo) - parsed).total_seconds() / 3600, 1)
+        except Exception:
+            hours_ago = None
+
+        return {'last_updated': last_updated, 'hours_ago': hours_ago}
 
     @staticmethod
     def _diversify_products(products: List[Dict], limit: int, max_per_category: int, max_per_source: int) -> List[Dict]:
@@ -823,3 +852,143 @@ class ProductService:
             p.pop('_freshness_hours', None)
 
         return ProductService._diversify_products(fresh_products, limit, max_per_category=3, max_per_source=3)
+
+    @staticmethod
+    def get_related_products(product_id: str, limit: int = 6) -> List[Dict]:
+        """获取相关产品 - 基于分类和标签的相似产品推荐"""
+        products = ProductService._load_products()
+
+        # Find the target product
+        target = None
+        for p in products:
+            if str(p.get('_id', '')) == product_id or p.get('name', '').lower() == product_id.lower():
+                target = p
+                break
+
+        if not target:
+            return []
+
+        target_categories = set(target.get('categories', []))
+        target_name = target.get('name', '')
+
+        # Score all other products by similarity
+        scored = []
+        for p in products:
+            if p.get('name') == target_name:
+                continue
+
+            score = 0
+            p_categories = set(p.get('categories', []))
+
+            # Category overlap (primary factor)
+            overlap = len(target_categories & p_categories)
+            score += overlap * 10
+
+            # Same hardware/software type
+            if p.get('is_hardware') == target.get('is_hardware'):
+                score += 3
+
+            # Recency bonus
+            if p.get('first_seen'):
+                score += 2
+
+            if score > 0:
+                scored.append((score, p))
+
+        # Sort by score descending
+        scored.sort(key=lambda x: (-x[0], -(x[1].get('final_score', 0) or 0)))
+
+        return [p for _, p in scored[:limit]]
+
+    @staticmethod
+    def get_analytics_summary() -> Dict[str, Any]:
+        """获取数据分析摘要"""
+        products = ProductService._load_products()
+        blogs = ProductService._load_blogs()
+
+        # Category distribution
+        category_counts = defaultdict(int)
+        for p in products:
+            for cat in p.get('categories', ['other']):
+                category_counts[cat] += 1
+
+        # Top categories
+        top_categories = sorted(
+            category_counts.items(),
+            key=lambda x: x[1],
+            reverse=True
+        )[:5]
+
+        # Trending direction (compare scores)
+        avg_score = sum(p.get('final_score', 0) or 0 for p in products) / max(len(products), 1)
+
+        # Top movers (highest scoring products)
+        top_movers = sorted(
+            products,
+            key=lambda x: x.get('hot_score', x.get('final_score', 0)) or 0,
+            reverse=True
+        )[:5]
+
+        # Hardware vs Software split
+        hardware_count = sum(1 for p in products if p.get('is_hardware'))
+        software_count = len(products) - hardware_count
+
+        return {
+            'total_products': len(products),
+            'total_blogs': len(blogs),
+            'category_distribution': dict(category_counts),
+            'top_categories': [{'name': cat, 'count': count} for cat, count in top_categories],
+            'average_score': round(avg_score, 1),
+            'top_movers': [
+                {'name': p.get('name'), 'score': p.get('hot_score', p.get('final_score', 0))}
+                for p in top_movers
+            ],
+            'hardware_count': hardware_count,
+            'software_count': software_count,
+            'last_updated': ProductService.get_last_updated().get('last_updated')
+        }
+
+    @staticmethod
+    def generate_rss_feed() -> str:
+        """生成RSS订阅源XML"""
+        products = ProductService._load_products()
+
+        # Sort by recency
+        products_sorted = sorted(
+            products,
+            key=lambda x: x.get('first_seen', x.get('published_at', '')),
+            reverse=True
+        )[:20]
+
+        items = []
+        for p in products_sorted:
+            name = p.get('name', '未命名')
+            description = p.get('description', '')
+            website = p.get('website', '')
+            pub_date = p.get('first_seen', p.get('published_at', ''))
+            categories = p.get('categories', [])
+
+            item = f"""    <item>
+      <title><![CDATA[{name}]]></title>
+      <link>{website}</link>
+      <description><![CDATA[{description}]]></description>
+      <pubDate>{pub_date}</pubDate>
+      {''.join(f'<category>{cat}</category>' for cat in categories)}
+    </item>"""
+            items.append(item)
+
+        items_xml = '\n'.join(items)
+
+        rss = f"""<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>WeeklyAI - 每周 AI 产品精选</title>
+    <link>https://weeklyai.com</link>
+    <description>发现最新、最热门的 AI 产品和工具</description>
+    <language>zh-CN</language>
+    <lastBuildDate>{datetime.now().isoformat()}</lastBuildDate>
+{items_xml}
+  </channel>
+</rss>"""
+
+        return rss

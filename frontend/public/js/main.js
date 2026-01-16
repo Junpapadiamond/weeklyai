@@ -11,8 +11,17 @@ const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-re
 let selectedCategories = new Set();
 
 // 当前显示的section
-let currentSection = 'trending';
 let hasDarkhorseData = true;
+
+// Sort and filter state
+let currentSort = 'score';
+let currentTypeFilter = 'all';
+
+// Favorites stored in localStorage
+const FAVORITES_KEY = 'weeklyai_favorites';
+
+// All products cache for sorting/filtering
+let allProductsCache = [];
 
 // ========== DOM 元素 ==========
 const elements = {
@@ -35,11 +44,25 @@ const elements = {
     productSection: document.getElementById('productSection'),
     productDetail: document.getElementById('productDetail'),
     productDetailSubtitle: document.getElementById('productDetailSubtitle'),
+    dataFreshness: document.getElementById('dataFreshness'),
     trendingProducts: document.getElementById('trendingProducts'),
     weeklyProducts: document.getElementById('weeklyProducts'),
     searchResults: document.getElementById('searchResults'),
     searchResultInfo: document.getElementById('searchResultInfo'),
-    navLinks: document.querySelectorAll('.nav-link')
+    navLinks: document.querySelectorAll('.nav-link'),
+    // Sort/Filter controls
+    sortBy: document.getElementById('sortBy'),
+    typeFilter: document.getElementById('typeFilter'),
+    showFavoritesBtn: document.getElementById('showFavoritesBtn'),
+    favoritesCount: document.getElementById('favoritesCount'),
+    // Modal
+    productModal: document.getElementById('productModal'),
+    modalClose: document.getElementById('modalClose'),
+    modalContent: document.getElementById('modalContent'),
+    // Favorites panel
+    favoritesPanel: document.getElementById('favoritesPanel'),
+    favoritesClose: document.getElementById('favoritesClose'),
+    favoritesList: document.getElementById('favoritesList')
 };
 
 // ========== 初始化 ==========
@@ -51,9 +74,14 @@ document.addEventListener('DOMContentLoaded', () => {
     initHeroGlow();
     initDiscovery();
     initBlogFilters();
+    initSortFilter();
+    initFavorites();
+    initModal();
+    loadDataFreshness();
     loadDarkHorseProducts();
     loadTrendingProducts();
     handleInitialRoute();
+    updateFavoritesCount();
 });
 
 // ========== 导航功能 ==========
@@ -103,8 +131,6 @@ function switchSection(section) {
         elements.productSection.style.display = section === 'product' ? 'block' : 'none';
     }
 
-    currentSection = section;
-
     // 加载对应数据
     if (section === 'trending') {
         loadTrendingProducts();
@@ -132,6 +158,33 @@ function handleInitialRoute() {
     if (productMatch) {
         const productId = decodeURIComponent(productMatch[1]);
         loadProductDetail(productId);
+    }
+}
+
+async function loadDataFreshness() {
+    if (!elements.dataFreshness) return;
+
+    try {
+        const res = await fetch(`${API_BASE_URL}/products/last-updated`);
+        const data = await res.json();
+        if (!data || !data.last_updated) {
+            elements.dataFreshness.textContent = '📡 数据更新时间未知';
+            return;
+        }
+
+        const hours = Number(data.hours_ago);
+        if (Number.isFinite(hours)) {
+            if (hours < 1) {
+                elements.dataFreshness.textContent = '📡 数据更新于 1 小时内';
+            } else {
+                elements.dataFreshness.textContent = `📡 数据更新于 ${hours.toFixed(1)} 小时前`;
+            }
+        } else {
+            elements.dataFreshness.textContent = '📡 数据更新时间未知';
+        }
+    } catch (error) {
+        console.error('加载数据更新时间失败:', error);
+        elements.dataFreshness.textContent = '📡 数据更新时间未知';
     }
 }
 
@@ -312,11 +365,11 @@ function cleanDescription(desc) {
     if (!desc) return '暂无描述';
     // Remove technical noise patterns
     return desc
-        .replace(/Hugging Face (模型|Space): [^\|]+\|/g, '')
-        .replace(/\| ⭐ [\d.]+K?\+? Stars/g, '')
-        .replace(/\| 技术: .+$/g, '')
-        .replace(/\| 下载量: .+$/g, '')
-        .replace(/^\s*[\|·]\s*/g, '')
+        .replace(/Hugging Face (模型|Space): [^|]+[|]/g, '')
+        .replace(/[|] ⭐ [\d.]+K?\+? Stars/g, '')
+        .replace(/[|] 技术: .+$/g, '')
+        .replace(/[|] 下载量: .+$/g, '')
+        .replace(/^\s*[|·]\s*/g, '')
         .trim() || '暂无描述';
 }
 
@@ -551,9 +604,16 @@ function initCategoryTags() {
 // ========== 加载热门产品 ==========
 async function loadTrendingProducts() {
     try {
+        // Load weekly-top for the full product cache (for sorting/filtering)
+        const weeklyResponse = await fetch(`${API_BASE_URL}/products/weekly-top`);
+        const weeklyData = await weeklyResponse.json();
+        if (weeklyData.success && weeklyData.data) {
+            allProductsCache = weeklyData.data;
+        }
+
         const response = await fetch(`${API_BASE_URL}/products/trending`);
         const data = await response.json();
-        
+
         if (data.success) {
             renderTrendingProducts(data.data);
         }
@@ -565,8 +625,13 @@ async function loadTrendingProducts() {
 }
 
 function renderTrendingProducts(products) {
+    // Cache all products for sorting/filtering
+    if (products.length > 0 && allProductsCache.length === 0) {
+        allProductsCache = [...products];
+    }
+
     elements.trendingProducts.innerHTML = products.map(product =>
-        createProductCard(product, true)
+        createProductCardWithFavorite(product, true)
     ).join('');
 
     animateCards(elements.trendingProducts);
@@ -931,6 +996,7 @@ function buildLogoMarkup(product) {
     return `<div class="product-logo-placeholder">${initial}</div>`;
 }
 
+/* exported handleLogoError, openProduct */
 function handleLogoError(img) {
     if (!img) return;
     const fallbackSrc = img.dataset.fallback || '';
@@ -1199,25 +1265,446 @@ function getMockWeeklyProducts() {
 
 function getMockSearchResults(keyword, categories) {
     let allProducts = getMockWeeklyProducts();
-    
+
     // 关键词筛选
     if (keyword) {
         const keywordLower = keyword.toLowerCase();
-        allProducts = allProducts.filter(p => 
+        allProducts = allProducts.filter(p =>
             p.name.toLowerCase().includes(keywordLower) ||
             p.description.toLowerCase().includes(keywordLower)
         );
     }
-    
+
     // 分类筛选
     if (categories.length > 0) {
-        allProducts = allProducts.filter(p => 
+        allProducts = allProducts.filter(p =>
             p.categories.some(cat => categories.includes(cat))
         );
     }
-    
+
     return {
         products: allProducts,
         total: allProducts.length
     };
+}
+
+// ========== Sort/Filter Controls ==========
+function initSortFilter() {
+    if (elements.sortBy) {
+        elements.sortBy.addEventListener('change', (e) => {
+            currentSort = e.target.value;
+            applyFiltersAndSort();
+        });
+    }
+
+    if (elements.typeFilter) {
+        elements.typeFilter.addEventListener('change', (e) => {
+            currentTypeFilter = e.target.value;
+            applyFiltersAndSort();
+        });
+    }
+}
+
+function applyFiltersAndSort() {
+    let products = [...allProductsCache];
+
+    // Apply type filter
+    if (currentTypeFilter === 'software') {
+        products = products.filter(p => !p.is_hardware);
+    } else if (currentTypeFilter === 'hardware') {
+        products = products.filter(p => p.is_hardware);
+    }
+
+    // Apply sort
+    products.sort((a, b) => {
+        switch (currentSort) {
+            case 'users':
+                return (b.weekly_users || 0) - (a.weekly_users || 0);
+            case 'date':
+                const dateA = new Date(a.first_seen || a.published_at || 0);
+                const dateB = new Date(b.first_seen || b.published_at || 0);
+                return dateB - dateA;
+            case 'rating':
+                return (b.rating || 0) - (a.rating || 0);
+            case 'score':
+            default:
+                return (b.hot_score || b.final_score || b.trending_score || 0) -
+                       (a.hot_score || a.final_score || a.trending_score || 0);
+        }
+    });
+
+    renderTrendingProducts(products.slice(0, 5));
+}
+
+// ========== Favorites ==========
+function initFavorites() {
+    if (elements.showFavoritesBtn) {
+        elements.showFavoritesBtn.addEventListener('click', toggleFavoritesPanel);
+    }
+
+    if (elements.favoritesClose) {
+        elements.favoritesClose.addEventListener('click', closeFavoritesPanel);
+    }
+
+    // Close panel when clicking outside
+    document.addEventListener('click', (e) => {
+        if (elements.favoritesPanel?.classList.contains('is-open')) {
+            if (!elements.favoritesPanel.contains(e.target) &&
+                !elements.showFavoritesBtn?.contains(e.target)) {
+                closeFavoritesPanel();
+            }
+        }
+    });
+}
+
+function getFavorites() {
+    try {
+        const stored = localStorage.getItem(FAVORITES_KEY);
+        return stored ? JSON.parse(stored) : [];
+    } catch {
+        return [];
+    }
+}
+
+function saveFavorites(favorites) {
+    try {
+        localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+    } catch (e) {
+        console.error('Failed to save favorites:', e);
+    }
+}
+
+function isFavorited(productKey) {
+    const favorites = getFavorites();
+    return favorites.some(f => f.key === productKey);
+}
+
+function toggleFavorite(product, event) {
+    if (event) {
+        event.stopPropagation();
+    }
+
+    const productKey = getProductKey(product);
+    let favorites = getFavorites();
+
+    if (isFavorited(productKey)) {
+        favorites = favorites.filter(f => f.key !== productKey);
+    } else {
+        favorites.push({
+            key: productKey,
+            name: product.name,
+            logo_url: product.logo_url,
+            website: product.website,
+            categories: product.categories,
+            addedAt: new Date().toISOString()
+        });
+    }
+
+    saveFavorites(favorites);
+    updateFavoritesCount();
+    updateFavoriteButtons(productKey);
+    renderFavoritesList();
+}
+
+function getProductKey(product) {
+    return product.website || product.name || '';
+}
+
+function updateFavoritesCount() {
+    const count = getFavorites().length;
+    if (elements.favoritesCount) {
+        elements.favoritesCount.textContent = count;
+    }
+}
+
+function updateFavoriteButtons(productKey) {
+    const isFav = isFavorited(productKey);
+    document.querySelectorAll(`[data-product-key="${productKey}"]`).forEach(btn => {
+        btn.classList.toggle('is-favorited', isFav);
+        btn.innerHTML = isFav ? '❤️' : '🤍';
+    });
+}
+
+function toggleFavoritesPanel() {
+    const panel = elements.favoritesPanel;
+    if (!panel) return;
+
+    const isOpen = panel.classList.contains('is-open');
+    if (isOpen) {
+        closeFavoritesPanel();
+    } else {
+        openFavoritesPanel();
+    }
+}
+
+function openFavoritesPanel() {
+    if (!elements.favoritesPanel) return;
+    elements.favoritesPanel.classList.add('is-open');
+    renderFavoritesList();
+}
+
+function closeFavoritesPanel() {
+    if (!elements.favoritesPanel) return;
+    elements.favoritesPanel.classList.remove('is-open');
+}
+
+function renderFavoritesList() {
+    if (!elements.favoritesList) return;
+
+    const favorites = getFavorites();
+    const panel = elements.favoritesPanel;
+
+    if (favorites.length === 0) {
+        panel?.classList.add('is-empty');
+        elements.favoritesList.innerHTML = '';
+        return;
+    }
+
+    panel?.classList.remove('is-empty');
+
+    elements.favoritesList.innerHTML = favorites.map(fav => {
+        const categories = (fav.categories || []).slice(0, 2).map(getCategoryName).join(' · ');
+        const logoMarkup = fav.logo_url
+            ? `<img src="${fav.logo_url}" alt="${fav.name}" onerror="this.style.display='none'">`
+            : `<div class="product-logo-placeholder">${getInitial(fav.name)}</div>`;
+
+        return `
+            <div class="favorite-item" onclick="openProduct('${fav.website}')">
+                <div class="favorite-item-logo">${logoMarkup}</div>
+                <div class="favorite-item-info">
+                    <div class="favorite-item-name">${fav.name}</div>
+                    <div class="favorite-item-category">${categories || '精选 AI 工具'}</div>
+                </div>
+                <button class="favorite-item-remove" onclick="removeFavoriteFromPanel('${fav.key}', event)" title="移除收藏">×</button>
+            </div>
+        `;
+    }).join('');
+}
+
+/* exported removeFavoriteFromPanel */
+function removeFavoriteFromPanel(productKey, event) {
+    if (event) {
+        event.stopPropagation();
+    }
+
+    let favorites = getFavorites();
+    favorites = favorites.filter(f => f.key !== productKey);
+    saveFavorites(favorites);
+    updateFavoritesCount();
+    updateFavoriteButtons(productKey);
+    renderFavoritesList();
+}
+
+// ========== Product Modal ==========
+function initModal() {
+    if (elements.modalClose) {
+        elements.modalClose.addEventListener('click', closeModal);
+    }
+
+    if (elements.productModal) {
+        elements.productModal.addEventListener('click', (e) => {
+            if (e.target === elements.productModal) {
+                closeModal();
+            }
+        });
+    }
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && elements.productModal?.classList.contains('is-open')) {
+            closeModal();
+        }
+    });
+}
+
+function openModal(product) {
+    if (!elements.productModal || !elements.modalContent) return;
+
+    const name = product.name || '未命名';
+    const description = product.description || '暂无描述';
+    const website = product.website || '';
+    const categories = (product.categories || []).map(getCategoryName);
+    const rating = product.rating ? product.rating.toFixed(1) : 'N/A';
+    const users = formatNumber(product.weekly_users);
+    const whyMatters = product.why_matters || '';
+    const fundingTotal = product.funding_total || '';
+    const valuation = product.valuation || '';
+    const foundedDate = product.founded_date || '';
+    const pricing = product.pricing || '';
+    const productKey = getProductKey(product);
+    const isFav = isFavorited(productKey);
+
+    const logoMarkup = buildLogoMarkup(product);
+
+    const categoriesHtml = categories.map(cat =>
+        `<span class="modal-category">${cat}</span>`
+    ).join('');
+
+    let statsHtml = '';
+    if (rating !== 'N/A' || users !== '0') {
+        statsHtml = `
+            <div class="modal-stats">
+                ${rating !== 'N/A' ? `<div class="modal-stat"><div class="modal-stat-value">⭐ ${rating}</div><div class="modal-stat-label">评分</div></div>` : ''}
+                ${users !== '0' ? `<div class="modal-stat"><div class="modal-stat-value">👥 ${users}</div><div class="modal-stat-label">周活跃</div></div>` : ''}
+                ${fundingTotal ? `<div class="modal-stat"><div class="modal-stat-value">💰 ${fundingTotal}</div><div class="modal-stat-label">融资</div></div>` : ''}
+            </div>
+        `;
+    }
+
+    let detailsHtml = '';
+    const details = [];
+    if (foundedDate) details.push({ label: '成立时间', value: foundedDate });
+    if (valuation) details.push({ label: '估值', value: valuation });
+    if (pricing) details.push({ label: '定价', value: pricing });
+
+    if (details.length > 0) {
+        detailsHtml = `
+            <div class="modal-details">
+                ${details.map(d => `
+                    <div class="modal-detail-row">
+                        <span class="modal-detail-label">${d.label}</span>
+                        <span class="modal-detail-value">${d.value}</span>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    elements.modalContent.innerHTML = `
+        <div class="modal-header">
+            <div class="modal-logo">${logoMarkup}</div>
+            <div class="modal-title-block">
+                <h2 class="modal-title" id="modalTitle">${name}</h2>
+                <div class="modal-categories">${categoriesHtml}</div>
+            </div>
+            <button class="modal-favorite-btn ${isFav ? 'is-favorited' : ''}"
+                    data-product-key="${productKey}"
+                    onclick="toggleFavoriteFromModal(event)">
+                ${isFav ? '❤️ 已收藏' : '🤍 收藏'}
+            </button>
+        </div>
+
+        <p class="modal-description">${description}</p>
+
+        ${whyMatters ? `
+            <div class="modal-why-matters">
+                <div class="modal-why-matters-title">💡 为什么值得关注</div>
+                <div class="modal-why-matters-text">${whyMatters}</div>
+            </div>
+        ` : ''}
+
+        ${statsHtml}
+        ${detailsHtml}
+
+        <div class="modal-actions">
+            ${website ? `<a class="modal-action-btn modal-action-btn--primary" href="${website}" target="_blank" rel="noopener noreferrer">访问官网 →</a>` : ''}
+            <button class="modal-action-btn modal-action-btn--secondary" onclick="closeModal()">关闭</button>
+        </div>
+    `;
+
+    // Store current product for favorite toggle
+    elements.modalContent._currentProduct = product;
+
+    elements.productModal.classList.add('is-open');
+    elements.productModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    if (!elements.productModal) return;
+    elements.productModal.classList.remove('is-open');
+    elements.productModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+}
+
+/* exported toggleFavoriteFromModal */
+function toggleFavoriteFromModal(event) {
+    event.stopPropagation();
+    const product = elements.modalContent?._currentProduct;
+    if (product) {
+        toggleFavorite(product, event);
+        // Update modal button
+        const btn = event.target.closest('.modal-favorite-btn');
+        if (btn) {
+            const isFav = isFavorited(getProductKey(product));
+            btn.classList.toggle('is-favorited', isFav);
+            btn.innerHTML = isFav ? '❤️ 已收藏' : '🤍 收藏';
+        }
+    }
+}
+
+// ========== Updated Product Card with Favorite Button ==========
+function createProductCardWithFavorite(product, showBadge = false) {
+    const categories = product.categories || [];
+    const categoryTags = categories.slice(0, 2).map(cat =>
+        `<span class="product-tag">${getCategoryName(cat)}</span>`
+    ).join('');
+
+    const name = product.name || '未命名';
+    const fundingTotal = product.funding_total || '';
+    const whyMatters = product.why_matters || '';
+    const description = product.description || '暂无描述';
+    const rating = product.rating ? product.rating.toFixed(1) : 'N/A';
+    const users = formatNumber(product.weekly_users);
+    const cardClass = showBadge ? 'product-card product-card--hot' : 'product-card';
+    const logoMarkup = buildLogoMarkup(product);
+    const productKey = getProductKey(product);
+    const isFav = isFavorited(productKey);
+
+    return `
+        <div class="${cardClass}" onclick="handleProductClick(event, '${encodeURIComponent(JSON.stringify(product).replace(/'/g, "\\'"))}')">
+            <button class="product-favorite-btn ${isFav ? 'is-favorited' : ''}"
+                    data-product-key="${productKey}"
+                    onclick="handleFavoriteClick(event, '${encodeURIComponent(JSON.stringify(product).replace(/'/g, "\\'"))}')">
+                ${isFav ? '❤️' : '🤍'}
+            </button>
+            <div class="product-logo">
+                ${logoMarkup}
+            </div>
+            <div class="product-info">
+                <div class="product-header">
+                    <h3 class="product-name">${name}</h3>
+                    ${showBadge ? `<span class="product-badge">🔥 热门</span>` : ''}
+                </div>
+                <p class="product-description">${description}</p>
+                ${(whyMatters || fundingTotal) ? `
+                <div class="product-insights">
+                    ${whyMatters ? `<div class="product-insight">💡 ${whyMatters}</div>` : ''}
+                    ${fundingTotal ? `<div class="product-insight product-insight--funding">💰 ${fundingTotal}</div>` : ''}
+                </div>` : ''}
+                <div class="product-meta">
+                    <span class="product-meta-item">⭐ ${rating}</span>
+                    <span class="product-meta-item">👥 ${users}</span>
+                </div>
+                <div class="product-tags">
+                    ${categoryTags}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+/* exported handleProductClick, handleFavoriteClick */
+function handleProductClick(event, encodedProduct) {
+    // Don't open modal if clicking on favorite button
+    if (event.target.closest('.product-favorite-btn')) {
+        return;
+    }
+
+    try {
+        const product = JSON.parse(decodeURIComponent(encodedProduct));
+        openModal(product);
+    } catch (e) {
+        console.error('Failed to parse product data:', e);
+    }
+}
+
+function handleFavoriteClick(event, encodedProduct) {
+    event.stopPropagation();
+    try {
+        const product = JSON.parse(decodeURIComponent(encodedProduct));
+        toggleFavorite(product, event);
+    } catch (e) {
+        console.error('Failed to parse product data:', e);
+    }
 }
