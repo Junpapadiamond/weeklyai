@@ -23,6 +23,20 @@ const FAVORITES_KEY = 'weeklyai_favorites';
 // All products cache for sorting/filtering
 let allProductsCache = [];
 
+// Dark horse products cache
+let darkHorseCache = [];
+let darkHorseFilter = 'all'; // all, hardware, software
+
+// Discover filter
+let discoverFilter = 'all';
+
+// Tier filter for trending section
+let currentTier = 'all'; // all, darkhorse, rising
+
+// Pagination
+let currentPage = 1;
+const PRODUCTS_PER_PAGE = 12;
+
 // Industry leaders
 const LEADERS_CATEGORY_ORDER = [
     '通用大模型',
@@ -97,6 +111,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initSortFilter();
     initFavorites();
     initModal();
+    initDarkhorseFilters();
+    initDiscoverFilters();
+    initTierTabs();
+    initLoadMore();
     loadDataFreshness();
     loadDarkHorseProducts();
     loadTrendingProducts();
@@ -605,6 +623,8 @@ function renderSearchResults(products, total, keyword) {
 
 // ========== 分类标签 ==========
 function initCategoryTags() {
+    if (!elements.categoryTags) return; // 已移除该区域
+    
     const tagButtons = elements.categoryTags.querySelectorAll('.tag-btn');
     
     tagButtons.forEach(btn => {
@@ -630,22 +650,49 @@ function initCategoryTags() {
 // ========== 加载热门产品 ==========
 async function loadTrendingProducts() {
     try {
-        // Load weekly-top for the full product cache (for sorting/filtering)
-        const weeklyResponse = await fetch(`${API_BASE_URL}/products/weekly-top`);
-        const weeklyData = await weeklyResponse.json();
+        // 加载所有产品（黑马 + 潜力股）
+        const [darkHorsesRes, risingStarsRes, weeklyRes] = await Promise.all([
+            fetch(`${API_BASE_URL}/products/dark-horses?limit=50`),
+            fetch(`${API_BASE_URL}/products/rising-stars?limit=50`).catch(() => ({ json: () => ({ success: false, data: [] }) })),
+            fetch(`${API_BASE_URL}/products/weekly-top`)
+        ]);
+        
+        const darkHorsesData = await darkHorsesRes.json();
+        const risingStarsData = await risingStarsRes.json();
+        const weeklyData = await weeklyRes.json();
+        
+        // 合并所有产品
+        const allProducts = [];
+        
+        if (darkHorsesData.success && darkHorsesData.data) {
+            allProducts.push(...darkHorsesData.data);
+        }
+        
+        if (risingStarsData.success && risingStarsData.data) {
+            // 避免重复
+            const existingNames = new Set(allProducts.map(p => p.name?.toLowerCase()));
+            risingStarsData.data.forEach(p => {
+                if (!existingNames.has(p.name?.toLowerCase())) {
+                    allProducts.push(p);
+                }
+            });
+        }
+        
         if (weeklyData.success && weeklyData.data) {
-            allProductsCache = weeklyData.data;
+            const existingNames = new Set(allProducts.map(p => p.name?.toLowerCase()));
+            weeklyData.data.forEach(p => {
+                if (!existingNames.has(p.name?.toLowerCase())) {
+                    allProducts.push(p);
+                }
+            });
         }
-
-        const response = await fetch(`${API_BASE_URL}/products/trending`);
-        const data = await response.json();
-
-        if (data.success) {
-            renderTrendingProducts(data.data);
-        }
+        
+        allProductsCache = allProducts;
+        currentPage = 1;
+        applyFiltersAndRender();
+        
     } catch (error) {
-        console.error('加载热门产品失败:', error);
-        // 使用模拟数据
+        console.error('加载产品失败:', error);
         renderTrendingProducts(getMockTrendingProducts());
     }
 }
@@ -663,17 +710,19 @@ function renderTrendingProducts(products) {
     animateCards(elements.trendingProducts);
 }
 
-// ========== 加载黑马产品 ==========
+// ========== 加载黑马产品 (4-5分) ==========
 async function loadDarkHorseProducts() {
     if (!elements.darkhorseProducts) return;
 
     try {
-        const response = await fetch(`${API_BASE_URL}/products/dark-horses?limit=6`);
+        // 加载 4-5 分的黑马产品
+        const response = await fetch(`${API_BASE_URL}/products/dark-horses?limit=12&min_index=4`);
         const data = await response.json();
 
         hasDarkhorseData = Boolean(data.success && data.data.length > 0);
         if (hasDarkhorseData) {
-            renderDarkHorseProducts(data.data);
+            darkHorseCache = data.data;
+            renderDarkHorseProducts(filterDarkHorseByType(darkHorseCache, darkHorseFilter));
         } else {
             // 如果没有数据，隐藏整个黑马区域
             if (elements.darkhorseSection) {
@@ -689,12 +738,202 @@ async function loadDarkHorseProducts() {
     }
 }
 
+function filterDarkHorseByType(products, type) {
+    if (type === 'all') return products;
+    return products.filter(p => {
+        const categories = p.categories || [];
+        const isHardware = categories.includes('hardware') || 
+                          p.category === 'hardware' ||
+                          (p.description && p.description.toLowerCase().includes('chip')) ||
+                          (p.description && p.description.toLowerCase().includes('robot'));
+        return type === 'hardware' ? isHardware : !isHardware;
+    });
+}
+
 function renderDarkHorseProducts(products) {
+    if (products.length === 0) {
+        elements.darkhorseProducts.innerHTML = `
+            <div class="empty-state">
+                <p>暂无符合条件的黑马产品</p>
+            </div>
+        `;
+        return;
+    }
+    
     elements.darkhorseProducts.innerHTML = products.map(product =>
         createDarkHorseCard(product)
     ).join('');
 
     animateDarkHorseCards(elements.darkhorseProducts);
+}
+
+// ========== 黑马筛选初始化 ==========
+function initDarkhorseFilters() {
+    const filterBtns = document.querySelectorAll('.darkhorse-filters .filter-btn');
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            darkHorseFilter = btn.dataset.type;
+            renderDarkHorseProducts(filterDarkHorseByType(darkHorseCache, darkHorseFilter));
+        });
+    });
+}
+
+// ========== 快速发现筛选初始化 ==========
+function initDiscoverFilters() {
+    const filterBtns = document.querySelectorAll('.discover-filter-btn');
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            discoverFilter = btn.dataset.category;
+            // 重新加载发现卡片
+            loadDiscoveryCards();
+        });
+    });
+}
+
+// ========== Tier Tabs 初始化 ==========
+function initTierTabs() {
+    const tierTabs = document.querySelectorAll('.tier-tab');
+    tierTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tierTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            currentTier = tab.dataset.tier;
+            currentPage = 1;
+            applyFiltersAndRender();
+        });
+    });
+}
+
+// ========== 加载更多 ==========
+function initLoadMore() {
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', () => {
+            currentPage++;
+            applyFiltersAndRender(true); // append mode
+        });
+    }
+}
+
+function applyFiltersAndRender(append = false) {
+    let products = [...allProductsCache];
+    
+    // 按 tier 筛选
+    if (currentTier === 'darkhorse') {
+        products = products.filter(p => (p.dark_horse_index || 0) >= 4);
+    } else if (currentTier === 'rising') {
+        products = products.filter(p => {
+            const score = p.dark_horse_index || 0;
+            return score >= 2 && score <= 3;
+        });
+    }
+    
+    // 按类型筛选
+    if (currentTypeFilter !== 'all') {
+        products = products.filter(p => {
+            const categories = p.categories || [];
+            const isHardware = categories.includes('hardware') || p.category === 'hardware';
+            return currentTypeFilter === 'hardware' ? isHardware : !isHardware;
+        });
+    }
+    
+    // 排序
+    products = sortProducts(products, currentSort);
+    
+    // 分页
+    const start = 0;
+    const end = currentPage * PRODUCTS_PER_PAGE;
+    const paginatedProducts = products.slice(start, end);
+    
+    // 渲染
+    if (append) {
+        const newCards = paginatedProducts.slice((currentPage - 1) * PRODUCTS_PER_PAGE);
+        const container = elements.trendingProducts;
+        newCards.forEach(product => {
+            container.insertAdjacentHTML('beforeend', createProductCardWithFavorite(product, true));
+        });
+        animateCards(container);
+    } else {
+        renderTrendingProducts(paginatedProducts);
+    }
+    
+    // 更新加载更多按钮状态
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    if (loadMoreBtn) {
+        loadMoreBtn.style.display = end >= products.length ? 'none' : 'block';
+    }
+}
+
+function sortProducts(products, sortBy) {
+    return products.sort((a, b) => {
+        switch (sortBy) {
+            case 'date':
+                return new Date(b.discovered_at || 0) - new Date(a.discovered_at || 0);
+            case 'funding':
+                return parseFunding(b.funding_total) - parseFunding(a.funding_total);
+            case 'score':
+            default:
+                // 排序规则: 评分 > 融资金额 > 用户数/估值
+                
+                // 1. 首先按评分排序 (5分 > 4分 > 3分...)
+                const scoreA = a.dark_horse_index || 0;
+                const scoreB = b.dark_horse_index || 0;
+                if (scoreB !== scoreA) {
+                    return scoreB - scoreA;
+                }
+                
+                // 2. 同分时按融资金额排序
+                const fundingA = parseFunding(a.funding_total);
+                const fundingB = parseFunding(b.funding_total);
+                if (fundingB !== fundingA) {
+                    return fundingB - fundingA;
+                }
+                
+                // 3. 融资相同时按用户数/估值排序
+                const valuationA = parseValuation(a);
+                const valuationB = parseValuation(b);
+                return valuationB - valuationA;
+        }
+    });
+}
+
+function parseFunding(funding) {
+    if (!funding || funding === 'unknown') return 0;
+    const match = funding.match(/\$?([\d.]+)\s*(M|B|K)?/i);
+    if (!match) return 0;
+    let value = parseFloat(match[1]);
+    const unit = (match[2] || '').toUpperCase();
+    if (unit === 'B') value *= 1000;
+    if (unit === 'K') value /= 1000;
+    return value;
+}
+
+function parseValuation(product) {
+    // 优先使用估值
+    const valuation = product.valuation || product.market_cap || '';
+    if (valuation) {
+        const match = valuation.toString().match(/\$?([\d.]+)\s*(M|B|K)?/i);
+        if (match) {
+            let value = parseFloat(match[1]);
+            const unit = (match[2] || '').toUpperCase();
+            if (unit === 'B') value *= 1000;
+            if (unit === 'K') value /= 1000;
+            return value * 10; // 估值权重更高
+        }
+    }
+    
+    // 其次使用用户数
+    const users = product.weekly_users || product.users || product.monthly_users || 0;
+    if (users > 0) {
+        return users / 10000; // 转换为万用户
+    }
+    
+    // 最后使用热度分数
+    return product.hot_score || product.trending_score || product.final_score || 0;
 }
 
 function createDarkHorseCard(product) {
@@ -704,11 +943,40 @@ function createDarkHorseCard(product) {
     const description = product.description || '暂无描述';
     const website = product.website || '';
     const categories = product.categories || [];
+    const whyMatters = product.why_matters || '';
+    const funding = product.funding_total || '';
+    const latestNews = product.latest_news || '';
+    const region = product.region || '';
+    
+    // 判断是否为硬件产品
+    const isHardware = categories.includes('hardware') || 
+                       product.category === 'hardware' ||
+                       (description && description.toLowerCase().includes('chip')) ||
+                       (description && description.toLowerCase().includes('robot'));
+    
     const categoryTags = categories.slice(0, 2).map(cat =>
         `<span class="darkhorse-tag">${getCategoryName(cat)}</span>`
     ).join('');
 
     const logoMarkup = buildLogoMarkup(product);
+    
+    // 构建 meta 标签
+    let metaTags = '';
+    if (funding && funding !== 'unknown') {
+        metaTags += `<span class="darkhorse-meta-tag darkhorse-meta-tag--funding">
+            <span class="meta-icon">💰</span>${funding}
+        </span>`;
+    }
+    if (isHardware) {
+        metaTags += `<span class="darkhorse-meta-tag darkhorse-meta-tag--hardware">
+            <span class="meta-icon">🔧</span>硬件
+        </span>`;
+    }
+    if (region) {
+        metaTags += `<span class="darkhorse-meta-tag">
+            <span class="meta-icon">${region}</span>
+        </span>`;
+    }
 
     return `
         <div class="darkhorse-card" onclick="openProduct('${website}')">
@@ -722,8 +990,16 @@ function createDarkHorseCard(product) {
                 </div>
             </div>
             <p class="darkhorse-description">${description}</p>
-            <div class="darkhorse-tags">
-                ${categoryTags}
+            ${whyMatters ? `<div class="darkhorse-why">${whyMatters}</div>` : ''}
+            <div class="darkhorse-meta">
+                ${metaTags}
+            </div>
+            ${latestNews ? `<div class="darkhorse-news">
+                <span class="news-icon">📰</span>
+                <span>${latestNews}</span>
+            </div>` : ''}
+            <div class="darkhorse-cta">
+                <span class="darkhorse-link">了解更多 →</span>
             </div>
         </div>
     `;
@@ -1287,47 +1563,23 @@ function initSortFilter() {
     if (elements.sortBy) {
         elements.sortBy.addEventListener('change', (e) => {
             currentSort = e.target.value;
-            applyFiltersAndSort();
+            currentPage = 1;
+            applyFiltersAndRender();
         });
     }
 
     if (elements.typeFilter) {
         elements.typeFilter.addEventListener('change', (e) => {
             currentTypeFilter = e.target.value;
-            applyFiltersAndSort();
+            currentPage = 1;
+            applyFiltersAndRender();
         });
     }
 }
 
+// Legacy function for backward compatibility
 function applyFiltersAndSort() {
-    let products = [...allProductsCache];
-
-    // Apply type filter
-    if (currentTypeFilter === 'software') {
-        products = products.filter(p => !p.is_hardware);
-    } else if (currentTypeFilter === 'hardware') {
-        products = products.filter(p => p.is_hardware);
-    }
-
-    // Apply sort
-    products.sort((a, b) => {
-        switch (currentSort) {
-            case 'users':
-                return (b.weekly_users || 0) - (a.weekly_users || 0);
-            case 'date':
-                const dateA = new Date(a.first_seen || a.published_at || 0);
-                const dateB = new Date(b.first_seen || b.published_at || 0);
-                return dateB - dateA;
-            case 'rating':
-                return (b.rating || 0) - (a.rating || 0);
-            case 'score':
-            default:
-                return (b.hot_score || b.final_score || b.trending_score || 0) -
-                       (a.hot_score || a.final_score || a.trending_score || 0);
-        }
-    });
-
-    renderTrendingProducts(products.slice(0, 5));
+    applyFiltersAndRender();
 }
 
 // ========== Favorites ==========

@@ -34,9 +34,12 @@ crawler/data/
 
 | 文件 | 职责 |
 |------|------|
-| `crawler/tools/auto_discover.py` | Web Search + GLM 自动发现 |
+| `crawler/tools/auto_discover.py` | Web Search + GLM/Perplexity 自动发现 |
 | `crawler/tools/add_product.py` | 手动添加产品 |
 | `crawler/tools/dark_horse_detector.py` | 黑马评分计算 |
+| `crawler/prompts/search_prompts.py` | 🔍 搜索 Prompt 模块 |
+| `crawler/prompts/analysis_prompts.py` | 📊 分析 Prompt 模块 |
+| `crawler/utils/perplexity_client.py` | Perplexity SDK 封装 |
 | `backend/app/routes/products.py` | 产品 API |
 | `frontend/views/index.ejs` | 首页模板 |
 
@@ -50,6 +53,11 @@ cd crawler
 python3 tools/auto_discover.py --region us     # 美国
 python3 tools/auto_discover.py --region cn     # 中国
 python3 tools/auto_discover.py --region all    # 全球
+
+# 硬件/软件分离搜索
+python3 tools/auto_discover.py --type hardware  # 只搜硬件 (40%配额)
+python3 tools/auto_discover.py --type software  # 只搜软件
+python3 tools/auto_discover.py --type mixed     # 混合模式 (默认)
 
 # 手动添加
 python3 tools/add_product.py --quick "Name" "URL" "Desc"
@@ -174,11 +182,20 @@ Base URL: `http://localhost:5000/api/v1`
 | `/products/trending` | GET | 热门 Top 5 |
 | `/products/weekly-top` | GET | 本周 Top 15 |
 | `/products/dark-horses` | GET | 黑马产品 (`limit`, `min_index`) |
+| `/products/rising-stars` | GET | **潜力股产品 (2-3分)** |
 | `/products/today` | GET | 今日精选 (`limit`, `hours`) |
 | `/products/<id>` | GET | 产品详情 |
 | `/products/categories` | GET | 分类列表 |
 | `/products/blogs` | GET | 博客/新闻 (`limit`, `source`) |
 | `/search?q=xxx` | GET | 搜索 (`categories`, `type`, `sort`, `page`) |
+
+### 排序规则
+
+| 优先级 | 条件 |
+|--------|------|
+| 1️⃣ | **评分** (5分 > 4分 > 3分) |
+| 2️⃣ | **融资金额** |
+| 3️⃣ | **估值/用户数** |
 
 ---
 
@@ -209,4 +226,4 @@ Base URL: `http://localhost:5000/api/v1`
 
 ---
 
-*更新: 2026-01-19*
+*更新: 2026-01-19 (硬件配额+排序优化)*

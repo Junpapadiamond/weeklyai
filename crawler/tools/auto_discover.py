@@ -26,6 +26,18 @@ import requests
 from datetime import datetime, timezone
 from urllib.parse import urlparse
 import subprocess
+from typing import Optional
+
+# 加载 .env 文件（如果存在）
+try:
+    from dotenv import load_dotenv
+    # 查找 .env 文件（在 crawler 目录下）
+    env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.env')
+    if os.path.exists(env_path):
+        load_dotenv(env_path)
+        print(f"✅ Loaded .env from {env_path}")
+except ImportError:
+    pass  # dotenv 未安装，使用系统环境变量
 
 # 智谱 AI 配置
 API_RATE_LIMIT_DELAY = 3  # 每次 API 调用后等待秒数
@@ -71,13 +83,17 @@ MAX_ATTEMPTS = 3  # 最大搜索轮数
 # ============================================
 # 多语言关键词库（原生语言搜索效果更好）
 # ============================================
-KEYWORDS_BY_REGION = {
+
+# 软件 AI 关键词
+KEYWORDS_SOFTWARE = {
     "us": [
         "AI startup funding 2026",
         "YC AI companies winter 2026",
         "AI Series A 2026",
         "artificial intelligence company raised funding",
         "AI unicorn startup valuation 2026",
+        "AI agent startup funding",
+        "generative AI startup Series A",
     ],
     "cn": [
         "AI融资 2026",
@@ -86,6 +102,7 @@ KEYWORDS_BY_REGION = {
         "大模型创业",
         "AI创业公司 A轮 B轮",
         "人工智能 独角兽 估值",
+        "AI Agent 创业公司",
     ],
     "eu": [
         "European AI startup funding 2026",
@@ -112,6 +129,54 @@ KEYWORDS_BY_REGION = {
         "Tech in Asia artificial intelligence",
     ],
 }
+
+# 硬件 AI 关键词（专门搜索硬件产品）
+KEYWORDS_HARDWARE = {
+    "us": [
+        "AI chip startup funding 2026",
+        "humanoid robot company funding",
+        "AI hardware startup Series A",
+        "AI semiconductor startup investment",
+        "robotics AI company raised funding",
+        "AI accelerator chip startup",
+        "edge AI hardware startup",
+        "AI inference chip company",
+    ],
+    "cn": [
+        "AI芯片 创业公司 融资",
+        "人形机器人 创业公司",
+        "AI硬件 融资 2026",
+        "智能机器人 创业公司 A轮",
+        "AI芯片 独角兽",
+        "具身智能 创业公司",
+        "边缘AI芯片 融资",
+    ],
+    "eu": [
+        "European AI chip startup funding",
+        "robotics startup Europe funding",
+        "AI hardware company Germany UK",
+        "semiconductor AI startup Europe",
+    ],
+    "jp": [
+        "AI半導体 スタートアップ 資金調達",
+        "ロボット AI企業 日本",
+        "Japan robotics AI startup",
+        "AI chip startup Japan",
+    ],
+    "kr": [
+        "AI 반도체 스타트업 투자",
+        "로봇 AI 기업 한국",
+        "Korean AI chip startup",
+    ],
+    "sea": [
+        "AI hardware startup Singapore",
+        "robotics company Southeast Asia",
+        "AI chip startup Asia",
+    ],
+}
+
+# 兼容旧代码的别名
+KEYWORDS_BY_REGION = KEYWORDS_SOFTWARE
 
 # ============================================
 # 站点定向搜索（直接搜索目标媒体）
@@ -146,33 +211,59 @@ SITE_SEARCHES = {
     ],
 }
 
-def get_keywords_for_today(region: str) -> list:
+def get_keywords_for_today(region: str, product_type: str = "mixed") -> list:
     """
     根据日期轮换关键词池
+    
+    Args:
+        region: 地区代码 (us/cn/eu/jp/kr/sea)
+        product_type: 产品类型 ("software"/"hardware"/"mixed")
 
-    Day 0,3,6 (Mon/Thu/Sun): 通用关键词
-    Day 1,4 (Tue/Fri): 站点定向搜索
-    Day 2,5 (Wed/Sat): 原生语言深度搜索
+    策略：
+    - mixed 模式下硬件:软件 = 40%:60%
+    - 每天轮换不同的关键词组合
     """
     day = datetime.now().weekday()
-    pool_type = day % 3
 
-    if pool_type == 0:
-        # 通用关键词
-        keywords = KEYWORDS_BY_REGION.get(region, KEYWORDS_BY_REGION["us"])
-    elif pool_type == 1:
-        # 站点定向
-        keywords = SITE_SEARCHES.get(region, SITE_SEARCHES["us"])
+    if product_type == "hardware":
+        # 只返回硬件关键词
+        keywords = KEYWORDS_HARDWARE.get(region, KEYWORDS_HARDWARE["us"])
+    elif product_type == "software":
+        # 只返回软件关键词
+        keywords = KEYWORDS_SOFTWARE.get(region, KEYWORDS_SOFTWARE["us"])
     else:
-        # 原生语言 + 补充通用
-        native = KEYWORDS_BY_REGION.get(region, [])
-        general = KEYWORDS_BY_REGION.get("us", [])[:2]
-        keywords = native + general
+        # mixed 模式：40% 硬件 + 60% 软件
+        hw_keywords = KEYWORDS_HARDWARE.get(region, KEYWORDS_HARDWARE["us"])
+        sw_keywords = KEYWORDS_SOFTWARE.get(region, KEYWORDS_SOFTWARE["us"])
+        site_searches = SITE_SEARCHES.get(region, [])
+        
+        # 计算数量：硬件 40%，软件 60%
+        hw_count = max(2, len(hw_keywords) * 2 // 5)  # 至少 2 个硬件关键词
+        sw_count = max(3, len(sw_keywords) * 3 // 5)  # 至少 3 个软件关键词
+        
+        # 根据星期几轮换
+        hw_start = (day * 2) % max(1, len(hw_keywords))
+        sw_start = (day * 2) % max(1, len(sw_keywords))
+        
+        hw_selected = (hw_keywords[hw_start:] + hw_keywords[:hw_start])[:hw_count]
+        sw_selected = (sw_keywords[sw_start:] + sw_keywords[:sw_start])[:sw_count]
+        
+        keywords = hw_selected + sw_selected + site_searches[:1]
 
     # 随机打乱顺序
     shuffled = keywords.copy()
     random.shuffle(shuffled)
     return shuffled
+
+
+def get_hardware_keywords(region: str) -> list:
+    """获取硬件专用关键词"""
+    return KEYWORDS_HARDWARE.get(region, KEYWORDS_HARDWARE["us"])
+
+
+def get_software_keywords(region: str) -> list:
+    """获取软件专用关键词"""
+    return KEYWORDS_SOFTWARE.get(region, KEYWORDS_SOFTWARE["us"])
 
 def get_region_order() -> list:
     """随机化地区搜索顺序，避免固定偏差"""
@@ -239,163 +330,129 @@ REGION_CONFIG = {
 }
 
 # ============================================
-# 专业 Prompts (双语版 - 合并提取+评分)
+# 项目路径设置 (必须在导入 prompts 之前)
+# ============================================
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, PROJECT_ROOT)
+
+# ============================================
+# Prompt 模块 (独立优化的搜索和分析 Prompt)
 # ============================================
 
-# 英文版 Prompt (us/eu/jp/kr/sea)
-PROMPT_EXTRACTION_EN = """You are WeeklyAI's AI Product Analyst. Extract and score AI products from search results.
+# 导入模块化 Prompt
+try:
+    from prompts.search_prompts import (
+        generate_search_queries,
+        generate_discovery_query,
+        get_search_params,
+        SEARCH_QUERIES_BY_REGION,
+    )
+    from prompts.analysis_prompts import (
+        ANALYSIS_PROMPT_EN,
+        ANALYSIS_PROMPT_CN,
+        SCORING_PROMPT,
+        get_analysis_prompt,
+        get_scoring_prompt,
+        WELL_KNOWN_PRODUCTS as PROMPT_WELL_KNOWN,
+        GENERIC_WHY_MATTERS as PROMPT_GENERIC,
+    )
+    USE_MODULAR_PROMPTS = True
+    print("✅ Loaded modular prompts from prompts/")
+except ImportError as e:
+    USE_MODULAR_PROMPTS = False
+    print(f"⚠️ prompts/ module not found: {e}")
+
+# Fallback: 内联 Prompt（当模块未加载时使用）
+if not USE_MODULAR_PROMPTS:
+    # 英文版 Prompt (us/eu/jp/kr/sea)
+    ANALYSIS_PROMPT_EN = """You are WeeklyAI's AI Product Analyst. Extract and score AI products from search results.
 
 ## Search Results
 {search_results}
 
 ## STRICT EXCLUSIONS (Never Include):
-### Well-Known Products
-- ChatGPT, Claude, Gemini, Copilot, DALL-E, Sora, Midjourney
-- Cursor, Perplexity, ElevenLabs, Synthesia, Runway, Pika, Bolt.new, v0.dev
+- Well-Known: ChatGPT, Claude, Gemini, Copilot, DALL-E, Sora, Midjourney, Cursor, Perplexity
+- Not Products: LangChain, PyTorch, papers only, tool directories
+- Big Tech: Google Gemini, Meta Llama, Microsoft Copilot
 
-### Not Products
-- Dev libraries: LangChain, PyTorch, TensorFlow, HuggingFace models
-- Papers only, demos only, GitHub repos without product
-- Tool directories: "Best AI tools for X"
-
-### Big Tech Products
-- Google Gemini, Meta Llama, OpenAI products, Microsoft Copilot
-
-## DARK HORSE CRITERIA (Score 4-5) - MUST meet at least 2:
-| Dimension | Signal |
-|-----------|--------|
-| growth_anomaly | Fast funding, ARR growth >100%/yr |
-| founder_background | Ex-OpenAI/Google/Meta exec |
-| funding_signal | Seed >$50M, valuation >3x growth |
-| category_innovation | First of its kind |
-| community_buzz | HN/Reddit viral but still small |
+## DARK HORSE (4-5) - Must meet ≥2:
+| growth_anomaly | founder_background | funding_signal | category_innovation | community_buzz |
 
 **5 points**: Funding >$100M OR Top-tier founder OR Category creator
 **4 points**: Funding >$30M OR YC/a16z backed OR ARR >$10M
 
-## RISING STAR CRITERIA (Score 2-3) - Need only 1:
+## RISING STAR (2-3) - Need 1:
 **3 points**: Funding $1M-$5M OR ProductHunt top 10
 **2 points**: Just launched, clear innovation
 
-## CRITICAL: why_matters Requirements
-Products with generic descriptions will be REJECTED.
-
-✅ GOOD: "Sequoia领投$50M，8个月ARR从0到$10M，首个AI原生代码编辑器"
+## CRITICAL: why_matters must have specific numbers!
+✅ GOOD: "Sequoia领投$50M，8个月ARR从0到$10M"
 ❌ BAD: "This is a promising AI product"
 
 ## Output (JSON only)
 ```json
-[
-  {{
-    "name": "Product name",
-    "website": "https://...",
-    "description": "一句话产品描述（中文，20字以上）",
-    "category": "coding/image/video/voice/writing/hardware/finance/education/healthcare/other",
-    "region": "{region}",
-    "funding_total": "$50M Series A",
-    "dark_horse_index": 4,
-    "criteria_met": ["funding_signal", "category_innovation"],
-    "why_matters": "具体数字+具体差异化（中文）",
-    "latest_news": "2026-01: Event",
-    "source": "Source",
-    "confidence": 0.85
-  }}
-]
+[{{"name": "...", "website": "https://...", "description": "中文描述(>20字)", "category": "coding|image|video|...", "region": "{region}", "funding_total": "$50M", "dark_horse_index": 4, "criteria_met": ["funding_signal"], "why_matters": "具体数字+差异化", "source": "...", "confidence": 0.85}}]
 ```
 
-Quota: Dark Horses (4-5): {quota_dark_horses} | Rising Stars (2-3): {quota_rising_stars}
-Return empty array [] if no qualifying products found. Quality over quantity."""
+Quota: Dark Horses: {quota_dark_horses} | Rising Stars: {quota_rising_stars}
+Return [] if nothing qualifies."""
 
-# 中文版 Prompt (cn)
-PROMPT_EXTRACTION_CN = """你是 WeeklyAI 的 AI 产品分析师。从搜索结果中提取并评分 AI 产品。
+    # 中文版 Prompt (cn)
+    ANALYSIS_PROMPT_CN = """你是 WeeklyAI 的 AI 产品分析师。从搜索结果中提取并评分 AI 产品。
 
 ## 搜索结果
 {search_results}
 
 ## 严格排除：
-### 已经人尽皆知
-- ChatGPT, Claude, Gemini, Copilot, DALL-E, Sora, Midjourney
-- Cursor, Perplexity, Kimi, 豆包, 通义千问, 文心一言
+- 已知名: ChatGPT, Claude, Gemini, Cursor, Kimi, 豆包, 通义千问, 文心一言
+- 非产品: LangChain, PyTorch, 只有论文/demo
+- 大厂: Google Gemini, 百度文心, 阿里通义
 
-### 不是产品
-- 开发库: LangChain, PyTorch, TensorFlow, HuggingFace models
-- 只有论文/demo/GitHub项目
-- 工具聚合: "xxx AI工具合集"
-
-### 大厂产品
-- Google Gemini, Meta Llama, OpenAI, 百度文心, 阿里通义
-
-## 黑马标准 (4-5分) - 必须满足至少2条：
-| 维度 | 信号 |
-|------|------|
-| growth_anomaly | 融资速度快、ARR年增长>100% |
-| founder_background | 大厂高管出走 (前OpenAI/Google/Meta) |
-| funding_signal | 种子轮>$50M、估值增长>3x |
-| category_innovation | 首创新品类 |
-| community_buzz | HN/Reddit爆火但产品还小 |
+## 黑马 (4-5分) - 满足≥2条:
+| growth_anomaly | founder_background | funding_signal | category_innovation | community_buzz |
 
 **5分**: 融资>$100M 或 顶级创始人 或 品类开创者
 **4分**: 融资>$30M 或 YC/a16z背书 或 ARR>$10M
 
-## 潜力股标准 (2-3分) - 只需1条：
+## 潜力股 (2-3分) - 满足1条:
 **3分**: 融资$1M-$5M 或 ProductHunt Top 10
 **2分**: 刚发布但有明显创新
 
-## why_matters 要求（极重要！）
-泛化描述会被过滤。
-
-✅ GOOD: "Sequoia领投$50M，8个月ARR从0到$10M，首个AI原生代码编辑器"
+## why_matters 必须有具体数字!
+✅ GOOD: "Sequoia领投$50M，8个月ARR从0到$10M"
 ❌ BAD: "这是一个很有潜力的AI产品"
 
-## 输出（只返回JSON）
+## 输出 (仅JSON)
 ```json
-[
-  {{
-    "name": "产品名",
-    "website": "https://...",
-    "description": "一句话产品描述（中文，20字以上）",
-    "category": "coding/image/video/...",
-    "region": "{region}",
-    "funding_total": "$50M Series A",
-    "dark_horse_index": 4,
-    "criteria_met": ["funding_signal", "category_innovation"],
-    "why_matters": "具体数字+具体差异化",
-    "latest_news": "2026-01: 事件",
-    "source": "来源",
-    "confidence": 0.85
-  }}
-]
+[{{"name": "产品名", "website": "https://...", "description": "中文描述(>20字)", "category": "coding|image|video|...", "region": "{region}", "funding_total": "$50M", "dark_horse_index": 4, "criteria_met": ["funding_signal"], "why_matters": "具体数字+差异化", "source": "...", "confidence": 0.85}}]
 ```
 
-配额: 黑马 (4-5): {quota_dark_horses} | 潜力股 (2-3): {quota_rising_stars}
-如果没有符合条件的产品，返回空数组 []。优先质量，宁缺毋滥。"""
+配额: 黑马: {quota_dark_horses} | 潜力股: {quota_rising_stars}
+没有符合条件的返回 []。"""
 
-# 保留旧的评分 prompt 用于兼容（可选，单独评分时使用）
-PROMPT_DARK_HORSE_SCORING = """评估产品的"黑马指数"(1-5分)：
+    # 评分 Prompt
+    SCORING_PROMPT = """评估产品的"黑马指数"(1-5分)：
 
 ## 产品
 {product}
 
 ## 评分标准
-5分: 融资>$100M 或 顶级创始人背景 或 品类开创者 或 ARR>$50M
-4分: 融资>$30M 或 YC/a16z投资 或 估值增长>3x 或 ARR>$10M
-3分: 融资$5M-$30M 或 ProductHunt Top 5 或 本地市场热度高
-2分: 有创新点但数据不足 或 早期产品有潜力
-1分: 边缘产品 或 待验证 或 信息太少
+5分: 融资>$100M 或 顶级创始人背景 或 品类开创者
+4分: 融资>$30M 或 YC/a16z投资 或 ARR>$10M
+3分: 融资$5M-$30M 或 ProductHunt Top 5
+2分: 有创新点但数据不足
+1分: 边缘产品或待验证
 
-## 返回格式（只返回 JSON，不要其他内容）
+## 返回格式（仅JSON）
 ```json
-{{
-  "dark_horse_index": 4,
-  "reason": "评分理由（具体说明依据）"
-}}
+{{"dark_horse_index": 4, "criteria_met": ["funding_signal"], "reason": "评分理由"}}
 ```"""
 
 
 def get_extraction_prompt(region_key: str) -> str:
     """
-    根据地区选择合适的 prompt
-
+    根据地区选择合适的分析 prompt
+    
     Args:
         region_key: 地区代码 (cn/us/eu/jp/kr/sea)
 
@@ -403,13 +460,15 @@ def get_extraction_prompt(region_key: str) -> str:
         对应地区的 prompt 模板
     """
     if region_key == "cn":
-        return PROMPT_EXTRACTION_CN
+        return ANALYSIS_PROMPT_CN
     else:
-        return PROMPT_EXTRACTION_EN
+        return ANALYSIS_PROMPT_EN
 
 
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, PROJECT_ROOT)
+# 别名：兼容旧代码
+PROMPT_EXTRACTION_EN = ANALYSIS_PROMPT_EN if not USE_MODULAR_PROMPTS else ANALYSIS_PROMPT_EN
+PROMPT_EXTRACTION_CN = ANALYSIS_PROMPT_CN if not USE_MODULAR_PROMPTS else ANALYSIS_PROMPT_CN
+PROMPT_DARK_HORSE_SCORING = SCORING_PROMPT if not USE_MODULAR_PROMPTS else SCORING_PROMPT
 
 # 数据文件路径
 DARK_HORSES_DIR = os.path.join(PROJECT_ROOT, 'data', 'dark_horses')
@@ -573,6 +632,44 @@ def normalize_url(url: str) -> str:
         return url.lower()
 
 
+def verify_url_exists(url: str, timeout: int = 5) -> bool:
+    """
+    验证 URL 是否真实存在（可访问）
+    
+    Args:
+        url: 要验证的 URL
+        timeout: 超时时间（秒）
+        
+    Returns:
+        True 如果 URL 可访问，False 否则
+    """
+    if not url or url.lower() == "unknown":
+        return False
+    
+    try:
+        # 确保有协议
+        if not url.startswith(("http://", "https://")):
+            url = f"https://{url}"
+        
+        # 禁用 SSL 警告（LibreSSL 版本问题）
+        import urllib3
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+        
+        # 发送 GET 请求（HEAD 有时被拒绝）
+        response = requests.get(
+            url,
+            timeout=timeout,
+            allow_redirects=True,
+            headers={"User-Agent": "Mozilla/5.0 (compatible; WeeklyAI Bot)"},
+            verify=False,  # 禁用 SSL 验证（LibreSSL 兼容性）
+            stream=True  # 不下载内容
+        )
+        response.close()
+        return response.status_code < 400
+    except requests.exceptions.RequestException:
+        return False
+
+
 def is_duplicate_domain(product: dict, existing_domains: set) -> bool:
     """检查域名是否已存在"""
     domain = normalize_url(product.get("website", ""))
@@ -641,15 +738,24 @@ def validate_product(product: dict) -> tuple[bool, str]:
     # 1. 检查必填字段
     if not name:
         return False, "missing name"
-    if not website:
-        return False, "missing website"
     if not description:
         return False, "missing description"
     if not why_matters:
         return False, "missing why_matters"
 
-    # 2. 检查 website 是否是有效 URL
-    if not website.startswith(("http://", "https://")):
+    # 2. 检查 website
+    if not website:
+        return False, "missing website"
+    
+    # 修复缺少协议的 URL
+    if not website.startswith(("http://", "https://")) and "." in website:
+        website = f"https://{website}"
+        product["website"] = website
+    
+    if website.lower() == "unknown":
+        # 允许 unknown，但后续需要人工验证
+        product["needs_verification"] = True
+    elif not website.startswith(("http://", "https://")):
         return False, "invalid website URL"
 
     # 3. 检查 description 长度
@@ -685,11 +791,16 @@ def validate_product(product: dict) -> tuple[bool, str]:
         if known in name_lower or name_lower in known:
             return False, f"well-known product match: {known}"
 
-    # 8. 检查黑马(4-5分)是否满足至少2条标准
+    # 8. 检查黑马(4-5分)是否满足至少1条标准（放宽要求）
+    # 注：原来要求 ≥2 条标准太严格，导致产出太少
     score = product.get("dark_horse_index", 0)
     criteria = product.get("criteria_met", [])
-    if score >= 4 and len(criteria) < 2:
-        return False, f"dark_horse needs ≥2 criteria (has {len(criteria)})"
+    if score >= 5 and len(criteria) < 2:
+        # 5分黑马需要 ≥2 条标准
+        return False, f"5-star dark_horse needs ≥2 criteria (has {len(criteria)})"
+    if score == 4 and len(criteria) < 1:
+        # 4分黑马只需要 ≥1 条标准
+        return False, f"4-star dark_horse needs ≥1 criteria (has {len(criteria)})"
 
     # 9. 检查置信度（如果有）
     confidence = product.get("confidence", 1.0)
@@ -731,67 +842,67 @@ def get_zhipu_client():
 
 
 def get_perplexity_client():
-    """Get Perplexity API client (uses requests)"""
-    if not PERPLEXITY_API_KEY:
-        print("  Error: PERPLEXITY_API_KEY not set")
-        return None
-    return {"api_key": PERPLEXITY_API_KEY, "model": PERPLEXITY_MODEL}
-
-
-def perplexity_search(query: str, count: int = 10) -> list:
     """
-    Use Perplexity Search API for web search
+    获取 Perplexity 客户端
+    
+    Returns:
+        PerplexityClient 实例或 None
+    """
+    if not PERPLEXITY_API_KEY:
+        print("  ⚠️ PERPLEXITY_API_KEY not set")
+        return None
+    
+    try:
+        from utils.perplexity_client import PerplexityClient
+        client = PerplexityClient(api_key=PERPLEXITY_API_KEY)
+        if client.is_available():
+            return client
+        return None
+    except ImportError as e:
+        print(f"  ⚠️ perplexity_client module not found: {e}")
+        return None
 
-    Returns: [{"title": "", "url": "", "content": ""}, ...]
+
+def perplexity_search(
+    query: str,
+    count: int = 10,
+    region: Optional[str] = None,
+    domain_filter: Optional[list] = None
+) -> list:
+    """
+    使用 Perplexity Search API 进行实时 Web 搜索
+    
+    Args:
+        query: 搜索查询
+        count: 结果数量
+        region: 地区代码 (us/cn/eu/jp/kr/sea)
+        domain_filter: 域名过滤 (["techcrunch.com", "-reddit.com"] 等)
+    
+    Returns:
+        [{"title": "", "url": "", "content": ""}, ...]
     """
     client = get_perplexity_client()
     if not client:
         return []
-
+    
     try:
-        print(f"  🔍 Perplexity Search: {query[:50]}...")
-
-        response = requests.post(
-            "https://api.perplexity.ai/chat/completions",
-            headers={
-                "Authorization": f"Bearer {client['api_key']}",
-                "Content-Type": "application/json"
-            },
-            json={
-                "model": client['model'],
-                "messages": [{"role": "user", "content": f"Search for: {query}"}],
-                "search_domain_filter": [],  # No domain filter
-                "return_citations": True,
-                "return_related_questions": False
-            },
-            timeout=30
-        )
-        response.raise_for_status()
-        data = response.json()
-
-        # Extract citations as search results
-        results = []
-        if 'citations' in data:
-            for citation in data['citations'][:count]:
-                results.append({
-                    "title": citation.get('title', ''),
-                    "url": citation.get('url', ''),
-                    "content": citation.get('snippet', '')
-                })
-
-        # Also extract from content if no citations
-        if not results and data.get('choices'):
-            content = data['choices'][0]['message']['content']
-            results = [{"title": "Search Results", "url": "", "content": content}]
-
-        print(f"  ✅ Found {len(results)} results")
-        return results
-
+        if region:
+            results = client.search_by_region(
+                query,
+                region=region,
+                max_results=count
+            )
+        else:
+            results = client.search(
+                query,
+                max_results=count,
+                domain_filter=domain_filter
+            )
+        return [r.to_dict() for r in results]
+    
     except Exception as e:
         print(f"  ❌ Perplexity Search Error: {e}")
         return []
-    finally:
-        time.sleep(API_RATE_LIMIT_DELAY)
 
 
 def web_search_mcp(query: str, search_engine: str = "bing", count: int = 10) -> list:
@@ -943,25 +1054,29 @@ def analyze_with_glm(content: str, task: str = "extract", region: str = "🇺�
 def analyze_with_perplexity(content: str, task: str = "extract", region: str = "🇺🇸",
                             quota_remaining: dict = None, region_key: str = "us") -> dict:
     """
-    Use Perplexity Sonar for content analysis (extraction/scoring)
-    Same interface as analyze_with_glm()
-
+    使用 Perplexity Sonar 模型分析内容
+    
+    与 analyze_with_glm() 接口相同，用于产品提取和评分。
+    
     Args:
-        content: 要分析的内容
+        content: 要分析的内容（搜索结果文本）
         task: 任务类型 (extract/score)
         region: 地区标识 (emoji flag)
-        quota_remaining: 剩余配额
+        quota_remaining: 剩余配额 {"dark_horses": n, "rising_stars": m}
         region_key: 地区代码 (cn/us/eu/jp/kr/sea) 用于选择 prompt 语言
+        
+    Returns:
+        解析后的 JSON（产品列表或评分结果）
     """
     client = get_perplexity_client()
     if not client:
         return {}
-
+    
     if quota_remaining is None:
         quota_remaining = DAILY_QUOTA.copy()
-
+    
+    # 构建 prompt
     if task == "extract":
-        # 使用双语 prompt 选择器（合并提取+评分）
         prompt_template = get_extraction_prompt(region_key)
         prompt = prompt_template.format(
             search_results=content[:10000],
@@ -970,47 +1085,24 @@ def analyze_with_perplexity(content: str, task: str = "extract", region: str = "
             quota_rising_stars=quota_remaining.get("rising_stars", 10)
         )
     elif task == "score":
-        # 保留单独评分功能（用于 fallback）
-        prompt = PROMPT_DARK_HORSE_SCORING.format(
+        prompt = SCORING_PROMPT.format(
             product=json.dumps(content, ensure_ascii=False, indent=2)
-        )
+        ) if 'SCORING_PROMPT' in dir() else f"Score this product: {content}"
     else:
         return {}
-
+    
     try:
-        response = requests.post(
-            "https://api.perplexity.ai/chat/completions",
-            headers={
-                "Authorization": f"Bearer {client['api_key']}",
-                "Content-Type": "application/json"
-            },
-            json={
-                "model": client['model'],
-                "messages": [{"role": "user", "content": prompt}],
-                "temperature": 0.7,
-                "max_tokens": 4096
-            },
-            timeout=60
+        # 使用 analyze 方法 (Sonar Chat Completions)
+        result = client.analyze(
+            prompt=prompt,
+            temperature=0.3,  # 低温度获得更稳定输出
+            max_tokens=4096
         )
-        response.raise_for_status()
-        data = response.json()
-
-        result_text = data['choices'][0]['message']['content']
-
-        # Extract JSON (same logic as GLM)
-        json_match = re.search(r'```json\s*([\s\S]*?)\s*```', result_text)
-        if json_match:
-            return json.loads(json_match.group(1))
-        try:
-            return json.loads(result_text)
-        except:
-            return {}
-
+        return result if isinstance(result, (dict, list)) else {}
+    
     except Exception as e:
-        print(f"  Perplexity Error: {e}")
+        print(f"  ❌ Perplexity Analysis Error: {e}")
         return {}
-    finally:
-        time.sleep(API_RATE_LIMIT_DELAY)
 
 
 # ============================================
@@ -1284,11 +1376,70 @@ def save_product(product: dict, dry_run: bool = False):
     # 添加新产品
     products.append(product)
 
-    # 保存
+    # 保存到分类文件
     with open(target_file, 'w', encoding='utf-8') as f:
         json.dump(products, f, ensure_ascii=False, indent=2)
 
     print(f"  Saved to: {target_file}")
+    
+    # 同时同步到 products_featured.json（前端数据源）
+    sync_to_featured(product)
+
+
+def sync_to_featured(product: dict):
+    """
+    同步产品到 products_featured.json（前端数据源）
+    
+    这样发现的产品可以直接在前端显示
+    """
+    featured_file = os.path.join(PROJECT_ROOT, 'data', 'products_featured.json')
+    
+    try:
+        # 加载现有数据
+        if os.path.exists(featured_file):
+            with open(featured_file, 'r', encoding='utf-8') as f:
+                featured = json.load(f)
+        else:
+            featured = []
+        
+        # 检查是否已存在（按 website 去重）
+        existing_websites = {normalize_url(p.get('website', '')) for p in featured}
+        product_domain = normalize_url(product.get('website', ''))
+        
+        if product_domain and product_domain in existing_websites:
+            print(f"  📋 Already in featured: {product.get('name')}")
+            return
+        
+        # 转换字段格式（适配前端）
+        featured_product = {
+            'name': product.get('name'),
+            'description': product.get('description'),
+            'website': product.get('website'),
+            'logo_url': product.get('logo', ''),
+            'categories': [product.get('category', 'other')],
+            'dark_horse_index': product.get('dark_horse_index', 2),
+            'why_matters': product.get('why_matters', ''),
+            'funding_total': product.get('funding_total', ''),
+            'region': product.get('region', '🌍'),
+            'source': product.get('source', 'auto_discover'),
+            'discovered_at': product.get('discovered_at', datetime.utcnow().strftime('%Y-%m-%d')),
+            'first_seen': datetime.utcnow().isoformat() + 'Z',
+            # 计算分数（用于排序）
+            'final_score': product.get('dark_horse_index', 2) * 20,
+            'trending_score': product.get('dark_horse_index', 2) * 18,
+        }
+        
+        # 添加到列表开头（最新的在前面）
+        featured.insert(0, featured_product)
+        
+        # 保存
+        with open(featured_file, 'w', encoding='utf-8') as f:
+            json.dump(featured, f, ensure_ascii=False, indent=2)
+        
+        print(f"  ✅ Synced to featured: {product.get('name')}")
+        
+    except Exception as e:
+        print(f"  ⚠️ Failed to sync to featured: {e}")
 
 
 def discover_from_source(source_key: str, dry_run: bool = False):
@@ -1336,13 +1487,14 @@ def discover_all(dry_run: bool = False, tier: int = None):
 # 新增：基于地区的 Web Search 发现
 # ============================================
 
-def discover_by_region(region_key: str, dry_run: bool = False) -> dict:
+def discover_by_region(region_key: str, dry_run: bool = False, product_type: str = "mixed") -> dict:
     """
     使用 Web Search MCP 按地区发现 AI 产品（增强版：带质量过滤和关键词轮换）
 
     Args:
         region_key: 地区代码 (us/cn/eu/jp/kr/sea)
         dry_run: 预览模式
+        product_type: 产品类型 (software/hardware/mixed)
 
     Returns:
         统计信息
@@ -1356,16 +1508,19 @@ def discover_by_region(region_key: str, dry_run: bool = False) -> dict:
     region_name = config['name']
     search_engine = config['search_engine']
 
-    # 使用关键词轮换
-    keywords = get_keywords_for_today(region_key)
+    # 使用关键词轮换（支持产品类型）
+    keywords = get_keywords_for_today(region_key, product_type)
 
     # Get provider for this region
     provider = get_provider_for_region(region_key)
 
+    type_label = {"software": "💻 软件", "hardware": "🔧 硬件", "mixed": "📊 混合(40%硬件+60%软件)"}.get(product_type, "混合")
+    
     print(f"\n{'='*60}")
     print(f"  🌍 Discovering AI Products: {region_name}")
     print(f"  📡 Search Engine: {search_engine}")
     print(f"  🤖 Provider: {provider}")
+    print(f"  📦 Product Type: {type_label}")
     print(f"  🔑 Keywords: {len(keywords)} queries (day {datetime.now().weekday()})")
     print(f"{'='*60}")
 
@@ -1471,7 +1626,15 @@ def discover_by_region(region_key: str, dry_run: bool = False) -> dict:
             criteria = product.get('criteria_met', [])
             print(f"    📈 Score: {score}/5 | Criteria: {criteria}")
 
-            # 5. 保存产品
+            # 5. URL 验证（可选，跳过 dry_run 模式）
+            website = product.get('website', '')
+            if not dry_run and website and website.lower() != 'unknown':
+                if not verify_url_exists(website, timeout=5):
+                    print(f"    ⚠️ URL not accessible: {website}")
+                    product['needs_verification'] = True
+                    # 不拒绝，但标记需要人工验证
+
+            # 6. 保存产品
             save_product(product, dry_run)
             stats["products_saved"] += 1
 
@@ -1509,13 +1672,17 @@ def discover_by_region(region_key: str, dry_run: bool = False) -> dict:
     return stats
 
 
-def discover_all_regions(dry_run: bool = False) -> dict:
+def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> dict:
     """
     带配额系统的全球 AI 产品发现
 
     目标配额：
     - 黑马 (4-5分): 5 个/天
     - 潜力股 (2-3分): 10 个/天
+    
+    Args:
+        dry_run: 预览模式
+        product_type: 产品类型 (software/hardware/mixed)
 
     Returns:
         详细的发现报告
@@ -1523,10 +1690,13 @@ def discover_all_regions(dry_run: bool = False) -> dict:
     start_time = datetime.now()
     today_str = start_time.strftime('%Y-%m-%d')
 
+    type_label = {"software": "💻 软件", "hardware": "🔧 硬件", "mixed": "📊 混合(40%硬件+60%软件)"}.get(product_type, "混合")
+    
     print("\n" + "═"*70)
     print(f"  🌍 Daily AI Product Discovery - {today_str}")
     print("═"*70)
     print(f"  📊 Quota: {DAILY_QUOTA['dark_horses']} Dark Horses + {DAILY_QUOTA['rising_stars']} Rising Stars")
+    print(f"  📦 Product Type: {type_label}")
     print(f"  🔄 Max Attempts: {MAX_ATTEMPTS} rounds")
     print(f"  📅 Keyword Pool: Day {datetime.now().weekday()} (0=Mon)")
     print(f"  🤖 Perplexity: {'enabled' if USE_PERPLEXITY else 'disabled'}")
@@ -1577,8 +1747,8 @@ def discover_all_regions(dry_run: bool = False) -> dict:
             region_name = config['name']
             search_engine = config['search_engine']
 
-            # 获取今日关键词（带轮换）
-            keywords = get_keywords_for_today(region_key)
+            # 获取今日关键词（带轮换，支持产品类型）
+            keywords = get_keywords_for_today(region_key, product_type)
             # 每轮只取部分关键词，避免重复
             keywords_this_round = keywords[:2] if attempts > 1 else keywords
 
@@ -1757,7 +1927,7 @@ def discover_all_regions(dry_run: bool = False) -> dict:
 def test_web_search():
     """测试 Web Search MCP 连接"""
     print("\n" + "="*60)
-    print("  🔍 Testing Web Search MCP")
+    print("  🔍 Testing Web Search MCP (Zhipu)")
     print("="*60)
 
     test_queries = [
@@ -1775,6 +1945,54 @@ def test_web_search():
                 print(f"    {i}. {r.get('title', 'No Title')[:50]}...")
         else:
             print(f"  ⚠️ No results (may fallback to GLM knowledge)")
+
+
+def test_perplexity():
+    """测试 Perplexity Search API 连接"""
+    print("\n" + "="*60)
+    print("  🔍 Testing Perplexity Search API")
+    print("="*60)
+    
+    # 检查 API Key
+    if not PERPLEXITY_API_KEY:
+        print("\n  ❌ PERPLEXITY_API_KEY not set")
+        print("  Set it with: export PERPLEXITY_API_KEY=pplx_xxx")
+        return
+    
+    print(f"  API Key: {PERPLEXITY_API_KEY[:12]}...")
+    print(f"  Model: {PERPLEXITY_MODEL}")
+    print(f"  USE_PERPLEXITY: {USE_PERPLEXITY}")
+    
+    # 尝试导入新模块
+    try:
+        from utils.perplexity_client import PerplexityClient
+        client = PerplexityClient()
+        print(f"  Client Status: {client.get_status()}")
+    except ImportError as e:
+        print(f"  ⚠️ SDK not installed: {e}")
+        print("  Install with: pip install perplexityai")
+    
+    # 测试搜索
+    test_queries = [
+        ("us", "AI startup funding 2026"),
+        ("cn", "AI融资 2026"),
+    ]
+    
+    for region, query in test_queries:
+        print(f"\n  📍 Testing region={region}: {query}")
+        results = perplexity_search(query, count=3, region=region)
+        
+        if results:
+            print(f"  ✅ Found {len(results)} results")
+            for i, r in enumerate(results[:2], 1):
+                title = r.get('title', 'No Title')[:50]
+                url = r.get('url', 'N/A')[:60]
+                print(f"    {i}. {title}...")
+                print(f"       URL: {url}")
+        else:
+            print(f"  ⚠️ No results")
+    
+    print("\n  ✅ Perplexity test completed!")
 
 
 def setup_schedule():
@@ -1847,6 +2065,12 @@ def main():
     parser.add_argument('--region', '-r',
                         choices=['us', 'cn', 'eu', 'jp', 'sea', 'all'],
                         help='按地区搜索 (us/cn/eu/jp/sea/all)')
+    
+    # 新增：产品类型参数
+    parser.add_argument('--type', '-T',
+                        choices=['software', 'hardware', 'mixed'],
+                        default='mixed',
+                        help='产品类型 (software/hardware/mixed，默认 mixed=40%%硬件+60%%软件)')
 
     # 原有参数
     parser.add_argument('--source', '-s', help='指定渠道 (e.g., 36kr, producthunt)')
@@ -1855,8 +2079,10 @@ def main():
     parser.add_argument('--schedule', action='store_true', help='设置定时任务')
     parser.add_argument('--list-sources', action='store_true', help='列出所有渠道')
     parser.add_argument('--list-regions', action='store_true', help='列出所有地区')
+    parser.add_argument('--list-keywords', action='store_true', help='列出关键词（按类型）')
     parser.add_argument('--test', action='store_true', help='测试 GLM-4.7 连接')
-    parser.add_argument('--test-search', action='store_true', help='测试 Web Search MCP')
+    parser.add_argument('--test-search', action='store_true', help='测试 Web Search MCP (Zhipu)')
+    parser.add_argument('--test-perplexity', action='store_true', help='测试 Perplexity Search API')
 
     args = parser.parse_args()
 
@@ -1867,6 +2093,10 @@ def main():
 
     if args.test_search:
         test_web_search()
+        return
+    
+    if args.test_perplexity:
+        test_perplexity()
         return
 
     # 列表功能
@@ -1883,6 +2113,21 @@ def main():
         for key, config in REGION_CONFIG.items():
             print(f"  {key:5} {config['name']:15} 权重:{config['weight']:2}% 搜索引擎:{config['search_engine']}")
         return
+    
+    if args.list_keywords:
+        region = args.region or 'us'
+        print(f"\n关键词列表 (地区: {region})：")
+        print("-" * 60)
+        print("\n🔧 硬件关键词:")
+        for kw in get_hardware_keywords(region):
+            print(f"  - {kw}")
+        print("\n💻 软件关键词:")
+        for kw in get_software_keywords(region):
+            print(f"  - {kw}")
+        print(f"\n📊 Mixed 模式关键词 (40%硬件 + 60%软件):")
+        for kw in get_keywords_for_today(region, "mixed"):
+            print(f"  - {kw}")
+        return
 
     if args.schedule:
         setup_schedule()
@@ -1891,10 +2136,11 @@ def main():
     # 发现功能
     if args.region:
         # 新方式：按地区搜索
+        product_type = getattr(args, 'type', 'mixed')
         if args.region == 'all':
-            discover_all_regions(args.dry_run)
+            discover_all_regions(args.dry_run, product_type)
         else:
-            discover_by_region(args.region, args.dry_run)
+            discover_by_region(args.region, args.dry_run, product_type)
     elif args.source:
         # 旧方式：按渠道搜索
         discover_from_source(args.source, args.dry_run)

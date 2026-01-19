@@ -624,15 +624,15 @@ class ProductService:
     
     @staticmethod
     def get_weekly_top_products(limit: int = 15) -> List[Dict]:
-        """获取本周Top产品"""
+        """获取本周Top产品
+        
+        排序规则: 评分 > 融资金额 > 用户数/估值
+        """
         products = ProductService._load_products()
         
-        # 按 top_score 或 final_score 排序
-        sorted_products = sorted(
-            products,
-            key=lambda x: x.get('top_score', x.get('final_score', x.get('trending_score', 0))),
-            reverse=True
-        )
+        # 排序: 评分 > 融资 > 估值/用户数
+        sorted_products = ProductService._sort_by_score_funding_valuation(products)
+        
         return ProductService._diversify_products(sorted_products, limit, max_per_category=4, max_per_source=5)
     
     @staticmethod
@@ -772,12 +772,69 @@ class ProductService:
         return filtered[:limit]
 
     @staticmethod
+    def _parse_funding(funding: str) -> float:
+        """解析融资金额字符串为数值（单位：百万美元）"""
+        import re
+        if not funding or funding == 'unknown':
+            return 0
+        match = re.match(r'\$?([\d.]+)\s*(M|B|K)?', str(funding), re.IGNORECASE)
+        if not match:
+            return 0
+        value = float(match.group(1))
+        unit = (match.group(2) or '').upper()
+        if unit == 'B':
+            value *= 1000
+        elif unit == 'K':
+            value /= 1000
+        return value
+
+    @staticmethod
+    def _get_valuation_score(product: Dict) -> float:
+        """获取估值/用户数综合分数"""
+        import re
+        # 优先使用估值
+        valuation = product.get('valuation') or product.get('market_cap') or ''
+        if valuation:
+            match = re.match(r'\$?([\d.]+)\s*(M|B|K)?', str(valuation), re.IGNORECASE)
+            if match:
+                value = float(match.group(1))
+                unit = (match.group(2) or '').upper()
+                if unit == 'B':
+                    value *= 1000
+                elif unit == 'K':
+                    value /= 1000
+                return value * 10  # 估值权重更高
+        
+        # 其次使用用户数
+        users = product.get('weekly_users') or product.get('users') or product.get('monthly_users') or 0
+        if users > 0:
+            return users / 10000  # 转换为万用户
+        
+        # 最后使用热度分数
+        return product.get('hot_score') or product.get('trending_score') or product.get('final_score') or 0
+
+    @staticmethod
+    def _sort_by_score_funding_valuation(products: List[Dict]) -> List[Dict]:
+        """按评分 > 融资 > 估值/用户数排序"""
+        return sorted(
+            products,
+            key=lambda x: (
+                x.get('dark_horse_index', 0),
+                ProductService._parse_funding(x.get('funding_total', '')),
+                ProductService._get_valuation_score(x)
+            ),
+            reverse=True
+        )
+
+    @staticmethod
     def get_dark_horse_products(limit: int = 6, min_index: int = 4) -> List[Dict]:
         """获取黑马产品 - 高潜力新兴产品
 
         参数:
         - limit: 返回数量
         - min_index: 最低黑马指数 (1-5)
+        
+        排序规则: 评分 > 融资金额 > 用户数/估值
         """
         products = ProductService._load_products()
 
@@ -787,16 +844,32 @@ class ProductService:
             if p.get('dark_horse_index', 0) >= min_index
         ]
 
-        # 按 dark_horse_index 降序，然后按 final_score 降序
-        dark_horses.sort(
-            key=lambda x: (
-                x.get('dark_horse_index', 0),
-                x.get('final_score', x.get('trending_score', 0))
-            ),
-            reverse=True
-        )
+        # 排序: 评分 > 融资 > 估值/用户数
+        dark_horses = ProductService._sort_by_score_funding_valuation(dark_horses)
 
         return dark_horses[:limit]
+
+    @staticmethod
+    def get_rising_star_products(limit: int = 20) -> List[Dict]:
+        """获取潜力股产品 - 2-3分的有潜力产品
+
+        参数:
+        - limit: 返回数量
+        
+        排序规则: 评分 > 融资金额 > 用户数/估值
+        """
+        products = ProductService._load_products()
+
+        # 筛选 dark_horse_index 为 2-3 的产品
+        rising_stars = [
+            p for p in products
+            if 2 <= p.get('dark_horse_index', 0) <= 3
+        ]
+
+        # 排序: 评分 > 融资 > 估值/用户数
+        rising_stars = ProductService._sort_by_score_funding_valuation(rising_stars)
+
+        return rising_stars[:limit]
 
     @staticmethod
     def get_todays_picks(limit: int = 10, hours: int = 48) -> List[Dict]:

@@ -38,6 +38,9 @@ crawler/data/
 | `crawler/tools/auto_discover.py` | Web Search + GLM/Perplexity 自动发现 |
 | `crawler/tools/add_product.py` | 手动添加产品 |
 | `crawler/tools/dark_horse_detector.py` | 黑马评分计算 |
+| `crawler/prompts/search_prompts.py` | 🔍 搜索 Prompt 模块 |
+| `crawler/prompts/analysis_prompts.py` | 📊 分析 Prompt 模块 |
+| `crawler/utils/perplexity_client.py` | Perplexity SDK 封装 |
 | `backend/app/routes/products.py` | 产品 API |
 | `frontend/views/index.ejs` | 首页模板 |
 
@@ -51,6 +54,12 @@ cd crawler
 python3 tools/auto_discover.py --region us     # 美国
 python3 tools/auto_discover.py --region cn     # 中国
 python3 tools/auto_discover.py --region all    # 全球
+
+# 硬件/软件分离搜索 (新增)
+python3 tools/auto_discover.py --region all --type hardware  # 只搜硬件
+python3 tools/auto_discover.py --region all --type software  # 只搜软件
+python3 tools/auto_discover.py --region all --type mixed     # 混合 (40%硬件+60%软件)
+python3 tools/auto_discover.py --list-keywords --region us   # 查看关键词
 
 # 手动添加
 python3 tools/add_product.py --quick "Name" "URL" "Desc"
@@ -213,6 +222,21 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 | 🇰🇷 韩国 | 2 |
 | 🇸🇬 东南亚 | 2 |
 
+### 硬件/软件关键词系统
+
+| 类型 | 关键词示例 | 配额占比 |
+|------|------------|----------|
+| 🔧 **硬件** | AI芯片、人形机器人、具身智能、边缘AI | **40%** |
+| 💻 **软件** | AI融资、AI Agent、AIGC、大模型 | **60%** |
+
+**硬件关键词** (`KEYWORDS_HARDWARE`):
+- `AI chip startup funding 2026`
+- `humanoid robot company funding`
+- `AI semiconductor startup investment`
+- `AI芯片 创业公司 融资`
+- `人形机器人 创业公司`
+- `具身智能 创业公司`
+
 ### 关键词轮换策略
 
 根据星期几自动切换关键词池：
@@ -231,22 +255,42 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 | `PERPLEXITY_API_KEY` | Perplexity API Key | (optional) |
 | `PERPLEXITY_MODEL` | Perplexity 模型 | `sonar` |
 | `USE_PERPLEXITY` | 启用 Perplexity | `false` |
+| `API_RATE_LIMIT_DELAY` | API 调用间隔(秒) | `2` |
 
 **Provider 路由:**
 - `cn` → 始终使用 GLM（中文覆盖更稳）
 - `us/eu/jp/kr/sea` → 根据 `USE_PERPLEXITY` 选择
 
-**启用 Perplexity:**
+**启用 Perplexity (推荐):**
 ```bash
+# 1. 安装 SDK
+pip install perplexityai
+
+# 2. 设置环境变量
 export PERPLEXITY_API_KEY=pplx_xxx
 export USE_PERPLEXITY=true
+
+# 3. 测试连接
+python3 tools/auto_discover.py --test-perplexity
+
+# 4. 运行发现
 python3 tools/auto_discover.py --region us --dry-run
 ```
+
+**Perplexity Search API 特性:**
+- 实时 Web 搜索（排名结果 + 内容提取）
+- 支持地区/语言/域名过滤
+- 多查询批量搜索（最多 5 个）
+- 官方 SDK 支持
 
 **成本估算 (Perplexity):**
 - Search API: $5 / 1K requests
 - Sonar: $3 / 1M input, $15 / 1M output
 - 预计月成本: $20-$35
+
+**相关文件:**
+- `crawler/utils/perplexity_client.py` - Perplexity SDK 封装
+- `crawler/tools/auto_discover.py` - 自动发现（集成 Perplexity）
 
 ### 质量过滤规则
 
@@ -305,11 +349,22 @@ Base URL: `http://localhost:5000/api/v1`
 | `/products/trending` | GET | 热门 Top 5 |
 | `/products/weekly-top` | GET | 本周 Top 15 |
 | `/products/dark-horses` | GET | 黑马产品 (`limit`, `min_index`) |
+| `/products/rising-stars` | GET | **潜力股产品 (2-3分)** (`limit`) |
 | `/products/today` | GET | 今日精选 (`limit`, `hours`) |
 | `/products/<id>` | GET | 产品详情 |
 | `/products/categories` | GET | 分类列表 |
 | `/products/blogs` | GET | 博客/新闻 (`limit`, `source`) |
 | `/search?q=xxx` | GET | 搜索 (`categories`, `type`, `sort`, `page`) |
+
+### 排序规则
+
+所有产品列表按以下优先级排序：
+
+| 优先级 | 条件 | 说明 |
+|--------|------|------|
+| 1️⃣ | **评分** | 5分 > 4分 > 3分 > 2分 |
+| 2️⃣ | **融资金额** | 同分时，$500M > $100M |
+| 3️⃣ | **估值/用户数** | 融资相同时，估值 > 用户数 |
 
 ---
 
@@ -340,4 +395,4 @@ Base URL: `http://localhost:5000/api/v1`
 
 ---
 
-*更新: 2026-01-19*
+*更新: 2026-01-19 (硬件配额+前端布局+排序优化)*

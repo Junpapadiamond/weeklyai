@@ -1832,13 +1832,201 @@ body::after {
     }
 }
 
-/* ========== Sort/Filter Controls ========== */
+/* ========== Score Badge ========== */
+.score-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.6rem;
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+    border-radius: var(--radius-pill);
+    margin-left: 0.5rem;
+    vertical-align: middle;
+}
+
+/* ========== Darkhorse Filters ========== */
+.darkhorse-filters {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+}
+
+.darkhorse-filters .filter-btn {
+    padding: 0.5rem 1rem;
+    background: var(--glass);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-pill);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ink-700);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.darkhorse-filters .filter-btn:hover {
+    background: rgba(168, 85, 247, 0.1);
+    border-color: rgba(168, 85, 247, 0.3);
+}
+
+.darkhorse-filters .filter-btn.active {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(236, 72, 153, 0.15));
+    border-color: rgba(168, 85, 247, 0.4);
+    color: #a855f7;
+    font-weight: 600;
+}
+
+/* ========== Discover Filters ========== */
+.discover-filters {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.discover-filter-btn {
+    padding: 0.45rem 0.9rem;
+    background: var(--glass);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-pill);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--ink-700);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.discover-filter-btn:hover {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.discover-filter-btn.active {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+    border-color: rgba(59, 130, 246, 0.4);
+    color: var(--coral);
+    font-weight: 600;
+}
+
+/* ========== Tier Tabs ========== */
+.tier-tabs {
+    display: flex;
+    gap: 0.5rem;
+    background: var(--glass);
+    padding: 0.3rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border-soft);
+}
+
+.tier-tab {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-pill);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ink-500);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.tier-tab:hover {
+    color: var(--ink-700);
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.tier-tab.active {
+    background: white;
+    color: var(--ink-900);
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.tier-tab[data-tier="darkhorse"].active {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(236, 72, 153, 0.15));
+    color: #a855f7;
+}
+
+.tier-tab[data-tier="rising"].active {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.15));
+    color: #059669;
+}
+
+/* ========== Controls Layout ========== */
 .list-controls {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 1rem;
     margin-bottom: 1.2rem;
     flex-wrap: wrap;
+}
+
+.controls-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* ========== Load More ========== */
+.load-more-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.load-more-btn {
+    padding: 0.8rem 2rem;
+    background: var(--glass);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-pill);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--ink-700);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.load-more-btn:hover {
+    background: var(--coral);
+    color: white;
+    border-color: var(--coral);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.load-more-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+@media (max-width: 768px) {
+    .list-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .tier-tabs {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .controls-right {
+        justify-content: center;
+    }
+    
+    .discover-filters {
+        gap: 0.4rem;
+    }
+    
+    .discover-filter-btn {
+        padding: 0.4rem 0.7rem;
+        font-size: 0.75rem;
+    }
 }
 
 .sort-control,

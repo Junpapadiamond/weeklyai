@@ -59,32 +59,56 @@
                                 <span>搜索</span>
                             </button>
                         </div>
-                        
-                        <!-- 分类标签 -->
-                        <div class="category-tags" id="categoryTags">
-                            <button class="tag-btn" data-category="coding">💻 编程开发</button>
-                            <button class="tag-btn" data-category="voice">🎤 语音识别</button>
-                            <button class="tag-btn" data-category="finance">💰 金融科技</button>
-                            <button class="tag-btn" data-category="image">🖼️ 图像处理</button>
-                            <button class="tag-btn" data-category="video">🎬 视频生成</button>
-                            <button class="tag-btn" data-category="writing">✍️ 写作助手</button>
-                            <button class="tag-btn" data-category="healthcare">🏥 医疗健康</button>
-                            <button class="tag-btn" data-category="education">📚 教育学习</button>
-                            <button class="tag-btn" data-category="hardware">🔧 硬件设备</button>
-                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 快速发现区 -->
+        <!-- ========== 上：本周黑马 (4-5分精选) ========== -->
+        <section class="section darkhorse-section" id="darkhorseSection">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-icon">🦄</span>
+                    本周黑马
+                    <span class="score-badge">4-5分</span>
+                </h2>
+                <p class="section-desc">本周最值得关注的高潜力 AI 产品</p>
+            </div>
+            <!-- 硬件/软件筛选 -->
+            <div class="darkhorse-filters" id="darkhorseFilters">
+                <button class="filter-btn active" data-type="all">全部</button>
+                <button class="filter-btn" data-type="hardware">🔧 硬件</button>
+                <button class="filter-btn" data-type="software">💻 软件</button>
+            </div>
+            <div class="darkhorse-grid" id="darkhorseProducts">
+                <!-- 黑马产品将通过 JS 动态加载 -->
+                <div class="loading-skeleton">
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== 中：快速发现 (分类筛选) ========== -->
         <section class="section discovery-section" id="discoverSection">
             <div class="section-header">
                 <h2 class="section-title">
-                    <span class="title-icon">✨</span>
+                    <span class="title-icon">⚡</span>
                     快速发现
                 </h2>
                 <p class="section-desc">向右收藏 · 向左跳过 · 推荐会自然收敛</p>
+            </div>
+            <!-- 分类筛选标签 -->
+            <div class="discover-filters" id="discoverFilters">
+                <button class="discover-filter-btn active" data-category="all">全部</button>
+                <button class="discover-filter-btn" data-category="hardware">🔧 硬件</button>
+                <button class="discover-filter-btn" data-category="coding">💻 编程</button>
+                <button class="discover-filter-btn" data-category="agent">🤖 Agent</button>
+                <button class="discover-filter-btn" data-category="image">🖼️ 图像</button>
+                <button class="discover-filter-btn" data-category="video">🎬 视频</button>
+                <button class="discover-filter-btn" data-category="voice">🎤 语音</button>
             </div>
             <div class="discover-shell">
                 <div class="swipe-stack" id="swipeStack" aria-live="polite"></div>
@@ -96,57 +120,44 @@
             </div>
         </section>
 
-        <!-- 本周黑马区 -->
-        <section class="section darkhorse-section" id="darkhorseSection">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <span class="title-icon">🦄</span>
-                    本周黑马
-                </h2>
-                <p class="section-desc">高速成长的新兴独角兽与前沿硬件</p>
-            </div>
-            <div class="darkhorse-grid" id="darkhorseProducts">
-                <!-- 黑马产品将通过 JS 动态加载 -->
-                <div class="loading-skeleton">
-                    <div class="skeleton-card"></div>
-                    <div class="skeleton-card"></div>
-                    <div class="skeleton-card"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 黑马推荐区 -->
+        <!-- ========== 下：更多推荐 (黑马 + 潜力股) ========== -->
         <section class="section trending-section" id="trendingSection">
             <div class="section-header">
                 <h2 class="section-title">
-                    <span class="title-icon">🦄</span>
-                    黑马推荐
+                    <span class="title-icon">📈</span>
+                    更多推荐
                 </h2>
-                <p class="section-desc">高速成长的新兴 AI 产品，发现下一个独角兽</p>
+                <p class="section-desc">黑马 (4-5分) + 潜力股 (2-3分)</p>
             </div>
             <!-- Sort/Filter Controls -->
             <div class="list-controls" id="trendingControls">
-                <div class="sort-control">
-                    <label for="sortBy">排序:</label>
-                    <select id="sortBy" class="sort-select">
-                        <option value="score">🔥 热度</option>
-                        <option value="users">👥 用户数</option>
-                        <option value="date">🕐 最新</option>
-                        <option value="rating">⭐ 评分</option>
-                    </select>
+                <div class="tier-tabs" id="tierTabs">
+                    <button class="tier-tab active" data-tier="all">全部</button>
+                    <button class="tier-tab" data-tier="darkhorse">🦄 黑马 (4-5分)</button>
+                    <button class="tier-tab" data-tier="rising">⭐ 潜力股 (2-3分)</button>
                 </div>
-                <div class="filter-control">
-                    <label for="typeFilter">类型:</label>
-                    <select id="typeFilter" class="filter-select">
-                        <option value="all">全部</option>
-                        <option value="software">💻 软件</option>
-                        <option value="hardware">🔧 硬件</option>
-                    </select>
+                <div class="controls-right">
+                    <div class="sort-control">
+                        <label for="sortBy">排序:</label>
+                        <select id="sortBy" class="sort-select">
+                            <option value="score">🔥 热度</option>
+                            <option value="date">🕐 最新</option>
+                            <option value="funding">💰 融资</option>
+                        </select>
+                    </div>
+                    <div class="filter-control">
+                        <label for="typeFilter">类型:</label>
+                        <select id="typeFilter" class="filter-select">
+                            <option value="all">全部</option>
+                            <option value="software">💻 软件</option>
+                            <option value="hardware">🔧 硬件</option>
+                        </select>
+                    </div>
+                    <button class="favorites-toggle" id="showFavoritesBtn" title="显示收藏">
+                        <span class="favorites-icon">❤️</span>
+                        <span class="favorites-count" id="favoritesCount">0</span>
+                    </button>
                 </div>
-                <button class="favorites-toggle" id="showFavoritesBtn" title="显示收藏">
-                    <span class="favorites-icon">❤️</span>
-                    <span class="favorites-count" id="favoritesCount">0</span>
-                </button>
             </div>
             <div class="products-grid" id="trendingProducts">
                 <!-- 产品卡片将通过 JS 动态加载 -->
@@ -157,6 +168,10 @@
                     <div class="skeleton-card"></div>
                     <div class="skeleton-card"></div>
                 </div>
+            </div>
+            <!-- 加载更多 -->
+            <div class="load-more-container" id="loadMoreContainer">
+                <button class="load-more-btn" id="loadMoreBtn">加载更多</button>
             </div>
         </section>
 

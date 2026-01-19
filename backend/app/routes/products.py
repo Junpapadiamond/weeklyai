@@ -127,6 +127,25 @@ def get_dark_horse_products():
         }), 500
 
 
+@products_bp.route('/rising-stars', methods=['GET'])
+def get_rising_star_products():
+    """获取潜力股产品 - 2-3分的有潜力产品"""
+    try:
+        limit = request.args.get('limit', 20, type=int)
+        products = ProductService.get_rising_star_products(limit=limit)
+        return jsonify({
+            'success': True,
+            'data': products,
+            'message': '获取潜力股产品成功'
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'data': [],
+            'message': str(e)
+        }), 500
+
+
 @products_bp.route('/today', methods=['GET'])
 def get_todays_picks():
     """获取今日精选 - 最近48小时内的新产品宝藏
