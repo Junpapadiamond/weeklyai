@@ -23,6 +23,22 @@ const FAVORITES_KEY = 'weeklyai_favorites';
 // All products cache for sorting/filtering
 let allProductsCache = [];
 
+// Industry leaders
+const LEADERS_CATEGORY_ORDER = [
+    '通用大模型',
+    '中国大模型',
+    '搜索引擎',
+    '写作助手',
+    '图像生成',
+    '视频生成',
+    '语音合成',
+    '代码开发',
+    '开发者工具',
+    'AI角色/伴侣'
+];
+let leadersCategoriesData = null;
+let leadersActiveFilter = 'all';
+
 // ========== DOM 元素 ==========
 const elements = {
     searchInput: document.getElementById('searchInput'),
@@ -62,7 +78,11 @@ const elements = {
     // Favorites panel
     favoritesPanel: document.getElementById('favoritesPanel'),
     favoritesClose: document.getElementById('favoritesClose'),
-    favoritesList: document.getElementById('favoritesList')
+    favoritesList: document.getElementById('favoritesList'),
+    // Industry leaders
+    leadersSection: document.getElementById('leadersSection'),
+    leadersFilters: document.getElementById('leadersFilters'),
+    leadersCategories: document.getElementById('leadersCategories')
 };
 
 // ========== 初始化 ==========
@@ -80,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadDataFreshness();
     loadDarkHorseProducts();
     loadTrendingProducts();
+    loadIndustryLeaders();
     handleInitialRoute();
     updateFavoritesCount();
 });
@@ -126,6 +147,9 @@ function switchSection(section) {
     if (elements.blogsSection) {
         elements.blogsSection.style.display = section === 'blogs' ? 'block' : 'none';
     }
+    if (elements.leadersSection) {
+        elements.leadersSection.style.display = section === 'leaders' ? 'block' : 'none';
+    }
     elements.searchSection.style.display = section === 'search' ? 'block' : 'none';
     if (elements.productSection) {
         elements.productSection.style.display = section === 'product' ? 'block' : 'none';
@@ -138,6 +162,8 @@ function switchSection(section) {
         loadWeeklyProducts();
     } else if (section === 'blogs') {
         loadBlogs();
+    } else if (section === 'leaders') {
+        loadIndustryLeaders();
     } else if (section === 'product') {
         // product detail is loaded by route handler
     }
@@ -675,27 +701,14 @@ function createDarkHorseCard(product) {
     const name = product.name || '未命名';
     const darkHorseIndex = product.dark_horse_index || 0;
     const stars = '★'.repeat(darkHorseIndex) + '☆'.repeat(5 - darkHorseIndex);
-    const foundedDate = product.founded_date || '';
-    const fundingTotal = product.funding_total || '';
-    const valuation = product.valuation || '';
-    const whyMatters = product.why_matters || '';
-    const latestNews = product.latest_news || '';
-    const isHardware = product.is_hardware || false;
+    const description = product.description || '暂无描述';
     const website = product.website || '';
+    const categories = product.categories || [];
+    const categoryTags = categories.slice(0, 2).map(cat =>
+        `<span class="darkhorse-tag">${getCategoryName(cat)}</span>`
+    ).join('');
 
     const logoMarkup = buildLogoMarkup(product);
-
-    // Build metadata tags
-    let metaTags = '';
-    if (foundedDate) {
-        metaTags += `<span class="darkhorse-meta-tag"><span class="meta-icon">📅</span> ${foundedDate}</span>`;
-    }
-    if (fundingTotal) {
-        metaTags += `<span class="darkhorse-meta-tag darkhorse-meta-tag--funding"><span class="meta-icon">💰</span> ${fundingTotal}</span>`;
-    }
-    if (isHardware) {
-        metaTags += `<span class="darkhorse-meta-tag darkhorse-meta-tag--hardware"><span class="meta-icon">🤖</span> 硬件</span>`;
-    }
 
     return `
         <div class="darkhorse-card" onclick="openProduct('${website}')">
@@ -708,14 +721,9 @@ function createDarkHorseCard(product) {
                     </div>
                 </div>
             </div>
-            ${whyMatters ? `<p class="darkhorse-why">${whyMatters}</p>` : ''}
-            <div class="darkhorse-meta">
-                ${metaTags}
-            </div>
-            ${valuation ? `<div class="darkhorse-valuation">估值: ${valuation}</div>` : ''}
-            ${latestNews ? `<div class="darkhorse-news"><span class="news-icon">📰</span> ${latestNews}</div>` : ''}
-            <div class="darkhorse-cta">
-                <span class="darkhorse-link">了解更多 →</span>
+            <p class="darkhorse-description">${description}</p>
+            <div class="darkhorse-tags">
+                ${categoryTags}
             </div>
         </div>
     `;
@@ -1017,19 +1025,15 @@ function handleLogoError(img) {
 // ========== 创建产品卡片 ==========
 function createProductCard(product, showBadge = false) {
     const categories = product.categories || [];
-    const categoryTags = categories.slice(0, 2).map(cat => 
+    const categoryTags = categories.slice(0, 2).map(cat =>
         `<span class="product-tag">${getCategoryName(cat)}</span>`
     ).join('');
-    
+
     const name = product.name || '未命名';
-    const fundingTotal = product.funding_total || '';
-    const whyMatters = product.why_matters || '';
     const description = product.description || '暂无描述';
-    const rating = product.rating ? product.rating.toFixed(1) : 'N/A';
-    const users = formatNumber(product.weekly_users);
     const cardClass = showBadge ? 'product-card product-card--hot' : 'product-card';
     const logoMarkup = buildLogoMarkup(product);
-    
+
     return `
         <div class="${cardClass}" onclick="openProduct('${product.website}')">
             <div class="product-logo">
@@ -1038,18 +1042,8 @@ function createProductCard(product, showBadge = false) {
             <div class="product-info">
                 <div class="product-header">
                     <h3 class="product-name">${name}</h3>
-                    ${showBadge ? `<span class="product-badge">🔥 热门</span>` : ''}
                 </div>
                 <p class="product-description">${description}</p>
-                ${(whyMatters || fundingTotal) ? `
-                <div class="product-insights">
-                    ${whyMatters ? `<div class="product-insight">💡 ${whyMatters}</div>` : ''}
-                    ${fundingTotal ? `<div class="product-insight product-insight--funding">💰 ${fundingTotal}</div>` : ''}
-                </div>` : ''}
-                <div class="product-meta">
-                    <span class="product-meta-item">⭐ ${rating}</span>
-                    <span class="product-meta-item">👥 ${users}</span>
-                </div>
                 <div class="product-tags">
                     ${categoryTags}
                 </div>
@@ -1707,4 +1701,159 @@ function handleFavoriteClick(event, encodedProduct) {
     } catch (e) {
         console.error('Failed to parse product data:', e);
     }
+}
+
+// ========== 行业领军 ==========
+async function loadIndustryLeaders() {
+    if (!elements.leadersCategories) return;
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/products/industry-leaders`);
+        const result = await response.json();
+
+        if (result.success && result.data && result.data.categories) {
+            leadersCategoriesData = result.data.categories;
+            leadersActiveFilter = 'all';
+            setupLeadersFilters(leadersCategoriesData);
+            renderIndustryLeaders();
+        } else {
+            elements.leadersCategories.innerHTML = '<p class="no-data">暂无数据</p>';
+        }
+    } catch (error) {
+        console.error('Error loading industry leaders:', error);
+        elements.leadersCategories.innerHTML = '<p class="error">加载失败</p>';
+    }
+}
+
+function orderLeaderCategories(categories) {
+    const ordered = [];
+    const remaining = new Map(Object.entries(categories));
+
+    LEADERS_CATEGORY_ORDER.forEach((name) => {
+        if (remaining.has(name)) {
+            ordered.push([name, remaining.get(name)]);
+            remaining.delete(name);
+        }
+    });
+
+    for (const entry of remaining.entries()) {
+        ordered.push(entry);
+    }
+
+    return ordered;
+}
+
+function setupLeadersFilters(categories) {
+    if (!elements.leadersFilters) return;
+    const orderedNames = orderLeaderCategories(categories).map(([name]) => name);
+    const filters = ['全部', ...orderedNames];
+
+    elements.leadersFilters.innerHTML = filters.map((label) => {
+        const key = label === '全部' ? 'all' : label;
+        return `<button class="leaders-filter" data-filter="${key}">${label}</button>`;
+    }).join('');
+
+    elements.leadersFilters.querySelectorAll('.leaders-filter').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            leadersActiveFilter = btn.dataset.filter || 'all';
+            updateLeadersFilterSelection();
+            renderIndustryLeaders();
+        });
+    });
+
+    updateLeadersFilterSelection();
+}
+
+function updateLeadersFilterSelection() {
+    if (!elements.leadersFilters) return;
+    elements.leadersFilters.querySelectorAll('.leaders-filter').forEach((btn) => {
+        const isActive = (btn.dataset.filter || 'all') === leadersActiveFilter;
+        btn.classList.toggle('active', isActive);
+    });
+}
+
+function renderIndustryLeaders() {
+    if (!elements.leadersCategories || !leadersCategoriesData) return;
+
+    let entries = orderLeaderCategories(leadersCategoriesData);
+    if (leadersActiveFilter !== 'all') {
+        entries = entries.filter(([name]) => name === leadersActiveFilter);
+    }
+
+    if (!entries.length) {
+        elements.leadersCategories.innerHTML = '<p class="no-data">暂无数据</p>';
+        return;
+    }
+
+    let html = '';
+    for (const [categoryName, categoryData] of entries) {
+        const icon = categoryData.icon || '📦';
+        const products = categoryData.products || [];
+        const description = categoryData.description || '';
+
+        html += `
+            <div class="leaders-category">
+                <div class="category-header">
+                    <span class="category-icon">${icon}</span>
+                    <h3 class="category-name">${categoryName}</h3>
+                    <span class="category-count">${products.length} 个产品</span>
+                </div>
+                <p class="category-desc">${description}</p>
+                <div class="leaders-grid">
+                    ${products.map(p => renderLeaderCard(p)).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    elements.leadersCategories.innerHTML = html;
+    animateLeaderCards(elements.leadersCategories);
+}
+
+function animateLeaderCards(container) {
+    const cards = container.querySelectorAll('.leader-card');
+    if (prefersReducedMotion) {
+        cards.forEach((card) => {
+            card.style.opacity = '1';
+            card.style.transform = 'none';
+        });
+        return;
+    }
+    cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(16px)';
+        setTimeout(() => {
+            card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 40);
+    });
+}
+
+function renderLeaderCard(product) {
+    const logoSrc = product.logo || '';
+    const initial = getInitial(product.name);
+    const logoMarkup = logoSrc
+        ? `<img src="${logoSrc}" alt="${product.name}" onerror="this.parentElement.innerHTML='<div class=\\'leader-logo-placeholder\\'>${initial}</div>'">`
+        : `<div class="leader-logo-placeholder">${initial}</div>`;
+
+    return `
+        <div class="leader-card" onclick="window.open('${product.website}', '_blank')">
+            <div class="leader-header">
+                <div class="leader-logo">${logoMarkup}</div>
+                <div class="leader-title">
+                    <h4 class="leader-name">${product.name}</h4>
+                    <p class="leader-company">${product.company || ''}</p>
+                </div>
+                <span class="leader-region">${product.region || '🌍'}</span>
+            </div>
+            <p class="leader-desc">${product.description || ''}</p>
+            <div class="leader-stats">
+                ${product.funding ? `<span class="stat">💰 ${product.funding}</span>` : ''}
+                ${product.valuation ? `<span class="stat">📈 ${product.valuation}</span>` : ''}
+                ${product.users ? `<span class="stat">👥 ${product.users}</span>` : ''}
+            </div>
+            <p class="leader-why">💡 ${product.why_famous || ''}</p>
+        </div>
+    `;
 }

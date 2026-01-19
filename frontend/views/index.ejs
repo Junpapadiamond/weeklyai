@@ -26,8 +26,9 @@
                 <span class="logo-text">WeeklyAI</span>
             </div>
             <div class="nav-links">
-                <a href="#" class="nav-link active" data-section="trending">🔥 热门推荐</a>
+                <a href="#" class="nav-link active" data-section="trending">🦄 黑马推荐</a>
                 <a href="#" class="nav-link" data-section="weekly">📈 本周榜单</a>
+                <a href="#" class="nav-link" data-section="leaders">🏆 行业领军</a>
                 <a href="#" class="nav-link" data-section="blogs">📰 博客动态</a>
                 <a href="#" class="nav-link" data-section="search">🔍 搜索</a>
             </div>
@@ -114,14 +115,14 @@
             </div>
         </section>
 
-        <!-- 热门推荐区 -->
+        <!-- 黑马推荐区 -->
         <section class="section trending-section" id="trendingSection">
             <div class="section-header">
                 <h2 class="section-title">
-                    <span class="title-icon">🔥</span>
-                    热门推荐
+                    <span class="title-icon">🦄</span>
+                    黑马推荐
                 </h2>
-                <p class="section-desc">实时更新的 Top 5 AI 产品</p>
+                <p class="section-desc">高速成长的新兴 AI 产品，发现下一个独角兽</p>
             </div>
             <!-- Sort/Filter Controls -->
             <div class="list-controls" id="trendingControls">
@@ -190,6 +191,31 @@
             </div>
             <div class="blogs-list" id="blogsList">
                 <!-- 博客列表将通过 JS 动态加载 -->
+            </div>
+        </section>
+
+        <!-- 行业领军区 -->
+        <section class="section leaders-section" id="leadersSection" style="display: none;">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-icon">🏆</span>
+                    行业领军
+                </h2>
+                <p class="section-desc">已经广为人知的成熟 AI 产品，供不熟悉 AI 领域的人参考学习</p>
+            </div>
+            <div class="leaders-note">
+                <span class="note-icon">💡</span>
+                <span>这些产品不会出现在黑马/潜力股列表中，但了解它们有助于理解 AI 行业格局</span>
+            </div>
+            <div class="leaders-filters" id="leadersFilters">
+                <!-- 行业领军筛选项将通过 JS 动态加载 -->
+            </div>
+            <div class="leaders-categories" id="leadersCategories">
+                <!-- 行业领军分类将通过 JS 动态加载 -->
+                <div class="loading-skeleton">
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                </div>
             </div>
         </section>
 

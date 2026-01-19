@@ -231,3 +231,21 @@ def get_rss_feed():
         }), 500
 
 
+@products_bp.route('/industry-leaders', methods=['GET'])
+def get_industry_leaders():
+    """获取行业领军产品 - 已知名的成熟 AI 产品参考列表"""
+    try:
+        data = ProductService.get_industry_leaders()
+        return jsonify({
+            'success': True,
+            'data': data,
+            'message': '获取行业领军产品成功'
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'data': None,
+            'message': str(e)
+        }), 500
+
+

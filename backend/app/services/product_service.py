@@ -992,3 +992,18 @@ class ProductService:
 </rss>"""
 
         return rss
+
+    @staticmethod
+    def get_industry_leaders() -> Dict:
+        """获取行业领军产品 - 已知名的成熟 AI 产品参考列表"""
+        industry_leaders_file = os.path.join(CRAWLER_DATA_DIR, 'industry_leaders.json')
+
+        if os.path.exists(industry_leaders_file):
+            try:
+                with open(industry_leaders_file, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+            except Exception as e:
+                print(f"Error loading industry leaders: {e}")
+                return {"categories": {}}
+
+        return {"categories": {}}
