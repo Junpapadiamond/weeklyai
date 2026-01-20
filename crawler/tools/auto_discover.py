@@ -141,6 +141,10 @@ KEYWORDS_HARDWARE = {
         "AI accelerator chip startup",
         "edge AI hardware startup",
         "AI inference chip company",
+        # 新增: 从 Product Hunt/Kickstarter 发现
+        "AI wearable device startup 2026",
+        "AI smart glasses startup funding",
+        "AI robot kickstarter 2026",
     ],
     "cn": [
         "AI芯片 创业公司 融资",
@@ -150,12 +154,17 @@ KEYWORDS_HARDWARE = {
         "AI芯片 独角兽",
         "具身智能 创业公司",
         "边缘AI芯片 融资",
+        # 新增: 从 36氪 发现
+        "AI智能眼镜 创业公司",
+        "AI可穿戴设备 融资 2026",
     ],
     "eu": [
         "European AI chip startup funding",
         "robotics startup Europe funding",
         "AI hardware company Germany UK",
         "semiconductor AI startup Europe",
+        # 新增
+        "AI robot startup Europe 2026",
     ],
     "jp": [
         "AI半導体 スタートアップ 資金調達",
@@ -186,20 +195,30 @@ SITE_SEARCHES = {
         "site:techcrunch.com AI startup funding",
         "site:producthunt.com AI launch 2026",
         "site:venturebeat.com AI funding",
+        # 硬件站点 (新增)
+        "site:producthunt.com AI hardware robot device 2026",
+        "site:kickstarter.com AI robot wearable 2026",
     ],
     "cn": [
         "site:36kr.com AI融资",
         "site:tmtpost.com 人工智能",
         "site:jiqizhixin.com 融资",
+        # 硬件站点 (新增)
+        "site:36kr.com AI硬件 机器人 2026",
+        "site:36kr.com 具身智能 人形机器人 2026",
     ],
     "eu": [
         "site:sifted.eu AI funding",
         "site:tech.eu AI startup",
         "site:eu-startups.com AI",
+        # 硬件站点 (新增)
+        "site:kickstarter.com AI robot Europe 2026",
     ],
     "jp": [
         "site:thebridge.jp AI startup",
         "site:jp.techcrunch.com AI",
+        # 硬件站点 (新增)
+        "site:kickstarter.com AI robot Japan 2026",
     ],
     "kr": [
         "site:platum.kr AI 스타트업",
@@ -208,6 +227,8 @@ SITE_SEARCHES = {
     "sea": [
         "site:e27.co AI startup",
         "site:techinasia.com AI funding",
+        # 硬件站点 (新增)
+        "site:kickstarter.com AI hardware Singapore 2026",
     ],
 }
 
@@ -1392,6 +1413,9 @@ def sync_to_featured(product: dict):
     
     这样发现的产品可以直接在前端显示
     """
+    if product.get('dark_horse_index', 0) < 2:
+        print(f"  ⏭️ Skip featured (score < 2): {product.get('name')}")
+        return
     featured_file = os.path.join(PROJECT_ROOT, 'data', 'products_featured.json')
     
     try:

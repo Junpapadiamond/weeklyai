@@ -6,7 +6,7 @@
     <string>com.weeklyai.crawler</string>
     <key>ProgramArguments</key>
     <array>
-      <string>/bin/zsh</string>
+      <string>/bin/bash</string>
       <string>/Users/jun/Desktop/Projects/WeeklyAI/ops/scheduling/daily_update.sh</string>
     </array>
     <key>WorkingDirectory</key>
@@ -17,6 +17,13 @@
       <integer>3</integer>
       <key>Minute</key>
       <integer>0</integer>
+    </dict>
+    <key>EnvironmentVariables</key>
+    <dict>
+      <key>PATH</key>
+      <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+      <key>HOME</key>
+      <string>/Users/jun</string>
     </dict>
     <key>StandardOutPath</key>
     <string>/Users/jun/Desktop/Projects/WeeklyAI/crawler/logs/launchd.out.log</string>

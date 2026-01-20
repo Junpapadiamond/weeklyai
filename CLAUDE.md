@@ -39,10 +39,25 @@ crawler/data/
 | `crawler/tools/add_product.py` | 手动添加产品 |
 | `crawler/tools/dark_horse_detector.py` | 黑马评分计算 |
 | `crawler/prompts/search_prompts.py` | 🔍 搜索 Prompt 模块 |
-| `crawler/prompts/analysis_prompts.py` | 📊 分析 Prompt 模块 |
+| `crawler/prompts/analysis_prompts.py` | 📊 分析 Prompt 模块 (含硬件评判体系) |
 | `crawler/utils/perplexity_client.py` | Perplexity SDK 封装 |
 | `backend/app/routes/products.py` | 产品 API |
 | `frontend/views/index.ejs` | 首页模板 |
+
+---
+
+## 🔧 硬件站点搜索源 (3个优质来源)
+
+| 站点 | 说明 | 搜索模式 |
+|------|------|----------|
+| **Product Hunt** | 全球硬件首发地，发现最早期创新产品 | `site:producthunt.com AI hardware` |
+| **Kickstarter** | 众筹平台，最前沿硬件创意 | `site:kickstarter.com AI robot` |
+| **36氪** | 中国最权威 AI/硬件媒体 | `site:36kr.com AI硬件` |
+
+使用硬件搜索：
+```bash
+python3 tools/auto_discover.py --region all --type hardware
+```
 
 ---
 
@@ -102,6 +117,31 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 | **⭐ 潜力股** | 2-3 分 | 有潜力/潜伏期 | 灵感库/发现页 |
 | **📦 观察** | 1 分 | 待验证 | 候选池 |
 | **🏆 行业领军** | N/A | 已人尽皆知 | 参考列表 |
+
+---
+
+## 数据入库与首页展示规则
+
+### 自动入库
+
+- auto_discover 产出 **2-5 分** 产品，完成评判体系评分 + 去重（按 website）后，全部写入后端数据源（当前为 `products_featured.json`）。
+- **2-5 分全量库**即前端“更多推荐”的完整数据源。
+
+### 首页三段展示
+
+- **本周黑马**（首页第一区块）：
+  - 上限 10 个，优先 **4-5 分**（软件 + 硬件）。
+  - 时间优先级：`discovered_at` **7 天内优先**，优秀产品可放宽至 **14 天**。
+  - 超过 14 天自动移出本周黑马，但**保留在更多推荐**。
+- **硬件补位**：
+  - 若当周硬件 **无 4-5 分**，可补入 **2-3 分硬件**。
+  - 补位数量 **≤ 当周 4-5 分软件数量**。
+  - 补位硬件不受时间限制；如有 4-5 分硬件则直接放入本周黑马。
+- **Swipe card**（首页第二区块）：
+  - 使用 **2-5 分全量库**，用户可以一直刷到全部刷完。
+  - 卡片尽量展示更多信息（如 `why_matters` / `funding_total` / `latest_news`）。
+- **更多推荐**（首页第三区块）：
+  - 展示全部 2-5 分产品（包含从本周黑马移出的旧产品）。
 
 ---
 
@@ -187,6 +227,89 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 | **3分** | 值得关注: 融资 $1M-$5M / ProductHunt 上榜 / 本地热度高 |
 | **2分** | 观察中: 刚发布/数据不足 但有明显创新点 |
 | **1分** | 边缘: 勉强符合，待更多验证 |
+
+---
+
+## 🔧 硬件产品评判体系 (Hardware Index)
+
+> **核心理念：硬件产品重在「创新性」和「灵感启发」，而非严格的融资门槛**
+
+硬件创业门槛高、周期长，很多创新产品来自小团队。我们收录硬件产品的目的是：
+- ✅ 发现有趣的 AI 硬件形态
+- ✅ 获得产品灵感和趋势洞察
+- ✅ 关注技术创新而非商业规模
+- ❌ 不强求融资金额或量产数据
+
+### 硬件类别
+
+| 代码 | 类别 | 示例产品 |
+|------|------|----------|
+| `ai_chip` | AI 芯片/加速器 | Etched, Groq, Cerebras, Tenstorrent |
+| `robotics` | 机器人/人形机器人 | Figure, Unitree, 1X |
+| `edge_ai` | 边缘 AI 设备 | Nvidia Jetson, Google Coral |
+| `smart_glasses` | AI 眼镜/AR 设备 | Brilliant Labs Frame, Ray-Ban Meta |
+| `wearables` | AI 可穿戴设备 | Rabbit R1, Limitless Pendant, Humane Pin |
+| `smart_home` | 智能家居 AI | Samsung Ballie |
+| `automotive` | 智能汽车/自动驾驶 | - |
+| `drone` | AI 无人机 | - |
+| `medical_device` | AI 医疗设备 | - |
+
+### 硬件评分标准（宽松版）
+
+#### 5分 - 硬件明星
+
+满足以下**任意 1 条**即可：
+- 💰 融资 >$100M（硬件烧钱，这个门槛已经很高）
+- 🏆 获得 CES/MWC 等行业大奖
+- 🏭 已实现规模量产 (>1000台)
+- 🤝 与大厂达成战略合作
+
+#### 4分 - 硬件黑马
+
+满足以下**任意 1 条**即可：
+- 🚀 有实际工作的产品演示（不只是概念）
+- 📺 在 CES/MWC/ProductHunt 获得曝光
+- 💵 获得任何机构融资（硬件能融到钱就不容易）
+- 👤 创始人有硬件行业背景
+
+#### 3分 - 硬件潜力
+
+满足以下**任意 1 条**即可：
+- 💡 产品形态有创新（新的 AI 交互方式）
+- 🎯 解决了明确的用户痛点
+- 🔧 有工作原型或 demo 视频
+- 🌐 在众筹平台表现不错
+
+#### 2分 - 硬件观察
+
+- 概念阶段但想法有趣
+- 早期团队但方向清晰
+- 技术有亮点但产品未成型
+- 值得持续关注
+
+### 硬件 why_matters 要求（宽松版）
+
+```
+✅ GOOD (说清楚创新点即可):
+- "首款开源 AI 眼镜，支持多种 LLM 集成，开发者友好"
+- "掌上 AI 助手，用 LAM 模型直接操作 App，交互方式新颖"
+- "AI 录音吊坠，自动生成会议摘要，$99 极致性价比"
+- "人形机器人，步态控制创新，成本是竞品 1/3"
+
+❌ BAD (太泛化):
+- "创新的 AI 硬件"
+- "下一代智能设备"
+```
+
+### 已知名硬件排除名单
+
+不收录以下已广为人知的硬件（但其**新产品线**可以收录）：
+- **芯片**: Nvidia GPU, Intel, AMD, Qualcomm
+- **AR/VR**: Apple Vision Pro, Meta Quest
+- **机器人**: Boston Dynamics Spot/Atlas
+- **消费电子**: iPhone, Echo, HomePod
+- **汽车**: Tesla FSD, Waymo
+- **无人机**: DJI
 
 ---
 
@@ -395,4 +518,4 @@ Base URL: `http://localhost:5000/api/v1`
 
 ---
 
-*更新: 2026-01-19 (硬件配额+前端布局+排序优化)*
+*更新: 2026-01-20 (硬件评判体系+CES硬件产品+去重优化)*

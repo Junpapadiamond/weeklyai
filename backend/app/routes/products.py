@@ -24,7 +24,8 @@ def get_trending_products():
 def get_weekly_top_products():
     """获取本周Top 15产品"""
     try:
-        products = ProductService.get_weekly_top_products(limit=15)
+        limit = request.args.get('limit', 15, type=int)
+        products = ProductService.get_weekly_top_products(limit=limit)
         return jsonify({
             'success': True,
             'data': products,
@@ -111,7 +112,7 @@ def get_blogs_news():
 def get_dark_horse_products():
     """获取本周黑马产品 - 高潜力新兴产品"""
     try:
-        limit = request.args.get('limit', 6, type=int)
+        limit = request.args.get('limit', 10, type=int)
         min_index = request.args.get('min_index', 4, type=int)
         products = ProductService.get_dark_horse_products(limit=limit, min_index=min_index)
         return jsonify({

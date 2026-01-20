@@ -54,6 +54,48 @@ EXCLUDE_TERMS = {
 
 
 # ─────────────────────────────────────────────────────────────────────────────
+# 硬件产品专用站点搜索 (3 个优质来源)
+# ─────────────────────────────────────────────────────────────────────────────
+
+HARDWARE_SITE_SEARCHES = {
+    "global": [
+        # Product Hunt - 全球硬件首发地，发现最早期创新产品
+        "site:producthunt.com AI hardware {year}",
+        "site:producthunt.com AI wearable device {year}",
+        "site:producthunt.com AI gadget robot {year}",
+        
+        # Kickstarter - 众筹平台，最前沿硬件创意
+        "site:kickstarter.com AI robot {year}",
+        "site:kickstarter.com AI wearable smart {year}",
+        "site:kickstarter.com AI device gadget {year}",
+    ],
+    "cn": [
+        # 36氪 - 中国最权威 AI/硬件媒体
+        "site:36kr.com AI硬件 {year}",
+        "site:36kr.com AI机器人 融资 {year}",
+        "site:36kr.com AI芯片 创业 {year}",
+        "site:36kr.com 智能硬件 AI {year}",
+        "site:36kr.com 具身智能 {year}",
+    ],
+}
+
+# 硬件产品关键词
+KEYWORDS_HARDWARE = {
+    "en": [
+        "AI chip", "AI hardware", "AI robot", "humanoid robot",
+        "AI glasses", "smart glasses", "AI wearable",
+        "AI device", "edge AI", "AI accelerator",
+        "embodied AI", "robotics startup",
+    ],
+    "zh": [
+        "AI芯片", "AI硬件", "人形机器人", "具身智能",
+        "智能眼镜", "AI可穿戴", "智能硬件",
+        "边缘计算", "AI加速器", "机器人创业",
+    ],
+}
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 # 地区搜索查询模板
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -68,7 +110,7 @@ SEARCH_QUERIES_BY_REGION = {
             "AI unicorn startup valuation {year}",
             # YC/顶级 VC 定向
             "YC AI startup demo day {year}",
-            "a]z Sequoia AI investment {year}",
+            "a16z Sequoia AI investment {year}",
             # 品类定向
             "AI coding assistant startup funding",
             "AI agent company raised {year}",
@@ -79,6 +121,12 @@ SEARCH_QUERIES_BY_REGION = {
             "site:venturebeat.com AI raises",
             "site:producthunt.com AI launch {month}",
             "site:news.ycombinator.com AI startup",
+        ],
+        # 硬件专用站点搜索
+        "hardware_site_searches": [
+            "site:producthunt.com AI hardware robot device {year}",
+            "site:kickstarter.com AI robot wearable {year}",
+            "site:techcrunch.com AI chip hardware startup {year}",
         ],
     },
     
@@ -101,6 +149,12 @@ SEARCH_QUERIES_BY_REGION = {
             "site:tmtpost.com 人工智能 融资",
             "site:jiqizhixin.com 融资",
             "site:itjuzi.com AI",
+        ],
+        # 硬件专用站点搜索 (36氪为主)
+        "hardware_site_searches": [
+            "site:36kr.com AI硬件 机器人 {year}",
+            "site:36kr.com AI芯片 创业 {year}",
+            "site:36kr.com 具身智能 人形机器人 {year}",
         ],
     },
     
@@ -175,16 +229,18 @@ def generate_search_queries(
     region: str,
     query_type: str = "general",
     limit: int = 5,
-    include_sites: bool = True
+    include_sites: bool = True,
+    product_type: str = "mixed"
 ) -> list[str]:
     """
     生成优化的搜索查询列表
     
     Args:
         region: 地区代码 (us/cn/eu/jp/kr/sea)
-        query_type: 查询类型 (general/sites/mixed)
+        query_type: 查询类型 (general/sites/mixed/hardware)
         limit: 返回查询数量
         include_sites: 是否包含站点定向搜索
+        product_type: 产品类型 (software/hardware/mixed)
         
     Returns:
         优化后的搜索查询列表
@@ -199,10 +255,36 @@ def generate_search_queries(
     def fill_template(q: str) -> str:
         return q.format(year=year, month=month)
     
-    if query_type == "general" or query_type == "mixed":
-        queries.extend([fill_template(q) for q in config["queries"]])
+    # 硬件搜索模式：使用3个优质站点 (Product Hunt, Kickstarter, 36氪)
+    if query_type == "hardware" or product_type == "hardware":
+        # 添加硬件专用站点搜索
+        hardware_sites = config.get("hardware_site_searches", [])
+        queries.extend([fill_template(q) for q in hardware_sites])
+        
+        # 添加全球硬件站点搜索
+        global_hardware = HARDWARE_SITE_SEARCHES.get("global", [])
+        queries.extend([fill_template(q) for q in global_hardware])
+        
+        # 中国区额外添加36氪硬件搜索
+        if region == "cn":
+            cn_hardware = HARDWARE_SITE_SEARCHES.get("cn", [])
+            queries.extend([fill_template(q) for q in cn_hardware])
+        
+        # 添加硬件关键词通用搜索
+        lang = config.get("language", "en")
+        hw_keywords = KEYWORDS_HARDWARE.get(lang, KEYWORDS_HARDWARE["en"])
+        for kw in hw_keywords[:3]:  # 取前3个关键词
+            queries.append(f"{kw} startup funding {year}")
     
-    if (query_type == "sites" or query_type == "mixed") and include_sites:
+    # 常规软件/混合搜索
+    elif query_type == "general" or query_type == "mixed" or product_type == "software":
+        queries.extend([fill_template(q) for q in config["queries"]])
+        
+        if (query_type == "sites" or query_type == "mixed") and include_sites:
+            queries.extend([fill_template(q) for q in config.get("site_searches", [])])
+    
+    # 仅站点搜索
+    elif query_type == "sites":
         queries.extend([fill_template(q) for q in config.get("site_searches", [])])
     
     # 随机打乱并限制数量
@@ -396,6 +478,8 @@ def get_funding_search_params(region: str) -> dict:
 
 __all__ = [
     "SEARCH_QUERIES_BY_REGION",
+    "HARDWARE_SITE_SEARCHES",
+    "KEYWORDS_HARDWARE",
     "generate_search_queries",
     "generate_discovery_query",
     "get_search_params",

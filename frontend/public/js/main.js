@@ -20,8 +20,13 @@ let currentTypeFilter = 'all';
 // Favorites stored in localStorage
 const FAVORITES_KEY = 'weeklyai_favorites';
 
+// Swiped products tracking (to avoid duplicates)
+const SWIPED_KEY = 'weeklyai_swiped';
+const SWIPED_EXPIRY_DAYS = 7; // Reset swiped history after 7 days
+
 // All products cache for sorting/filtering
 let allProductsCache = [];
+let discoveryAllProducts = [];
 
 // Dark horse products cache
 let darkHorseCache = [];
@@ -101,6 +106,8 @@ const elements = {
 
 // ========== 初始化 ==========
 document.addEventListener('DOMContentLoaded', () => {
+    initLucide();
+    initThemeToggle();
     initNavigation();
     initNavScroll();
     initSearch();
@@ -122,6 +129,52 @@ document.addEventListener('DOMContentLoaded', () => {
     handleInitialRoute();
     updateFavoritesCount();
 });
+
+// ========== Lucide Icons ==========
+function initLucide() {
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+}
+
+// ========== Theme Toggle ==========
+const THEME_KEY = 'weeklyai_theme';
+
+function initThemeToggle() {
+    const toggle = document.getElementById('themeToggle');
+    if (!toggle) return;
+
+    // Load saved theme or respect system preference
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+
+    setTheme(initialTheme);
+
+    toggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        setTheme(newTheme);
+        localStorage.setItem(THEME_KEY, newTheme);
+    });
+}
+
+function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+
+    const lightIcon = document.querySelector('.theme-icon-light');
+    const darkIcon = document.querySelector('.theme-icon-dark');
+
+    if (lightIcon && darkIcon) {
+        if (theme === 'dark') {
+            lightIcon.style.display = 'none';
+            darkIcon.style.display = 'block';
+        } else {
+            lightIcon.style.display = 'block';
+            darkIcon.style.display = 'none';
+        }
+    }
+}
 
 // ========== 导航功能 ==========
 function initNavigation() {
@@ -250,9 +303,7 @@ const discoveryState = {
     pool: [],
     stack: [],
     liked: 0,
-    skipped: 0,
-    leftStreak: 0,
-    categoryWeights: {}
+    skipped: 0
 };
 
 function initDiscovery() {
@@ -267,22 +318,19 @@ async function loadDiscoveryProducts() {
     elements.swipeStack.innerHTML = '<div class="skeleton-card"></div>';
 
     try {
-        const [trendingRes, weeklyRes] = await Promise.all([
-            fetch(`${API_BASE_URL}/products/trending`),
-            fetch(`${API_BASE_URL}/products/weekly-top`)
-        ]);
-        const trendingData = await trendingRes.json();
-        const weeklyData = await weeklyRes.json();
+        const response = await fetch(`${API_BASE_URL}/products/weekly-top?limit=0`);
+        const data = await response.json();
 
         const products = mergeUniqueProducts([
-            ...(trendingData.success ? trendingData.data : []),
-            ...(weeklyData.success ? weeklyData.data : [])
+            ...(data.success ? data.data : [])
         ]);
 
-        buildDiscoveryDeck(products.length ? products : getMockWeeklyProducts());
+        discoveryAllProducts = products.length ? products : getMockWeeklyProducts();
+        loadDiscoveryCards();
     } catch (error) {
         console.error('加载发现产品失败:', error);
-        buildDiscoveryDeck(getMockWeeklyProducts());
+        discoveryAllProducts = getMockWeeklyProducts();
+        loadDiscoveryCards();
     }
 }
 
@@ -296,13 +344,101 @@ function mergeUniqueProducts(products) {
     });
 }
 
+function filterDiscoveryProducts(products) {
+    if (discoverFilter === 'all') return products;
+    return products.filter(product => {
+        const categories = product.categories || [];
+        const category = product.category;
+        if (discoverFilter === 'hardware') {
+            return categories.includes('hardware') || category === 'hardware' || product.is_hardware;
+        }
+        return categories.includes(discoverFilter) || category === discoverFilter;
+    });
+}
+
+function loadDiscoveryCards() {
+    const filtered = filterDiscoveryProducts(discoveryAllProducts);
+    if (discoveryAllProducts.length === 0) {
+        buildDiscoveryDeck(getMockWeeklyProducts());
+        return;
+    }
+    buildDiscoveryDeck(filtered);
+}
+
+function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+// ========== Swiped Products Tracking ==========
+function getSwipedProducts() {
+    try {
+        const stored = localStorage.getItem(SWIPED_KEY);
+        if (!stored) return { keys: [], timestamp: Date.now() };
+        const data = JSON.parse(stored);
+        // Check if expired (older than SWIPED_EXPIRY_DAYS)
+        const expiryMs = SWIPED_EXPIRY_DAYS * 24 * 60 * 60 * 1000;
+        if (Date.now() - data.timestamp > expiryMs) {
+            clearSwipedProducts();
+            return { keys: [], timestamp: Date.now() };
+        }
+        return data;
+    } catch {
+        return { keys: [], timestamp: Date.now() };
+    }
+}
+
+function addSwipedProduct(productKey) {
+    if (!productKey) return;
+    const data = getSwipedProducts();
+    if (!data.keys.includes(productKey)) {
+        data.keys.push(productKey);
+        saveSwipedProducts(data);
+    }
+}
+
+function saveSwipedProducts(data) {
+    try {
+        localStorage.setItem(SWIPED_KEY, JSON.stringify(data));
+    } catch (e) {
+        console.error('Failed to save swiped products:', e);
+    }
+}
+
+function clearSwipedProducts() {
+    try {
+        localStorage.removeItem(SWIPED_KEY);
+    } catch (e) {
+        console.error('Failed to clear swiped products:', e);
+    }
+}
+
+function isProductSwiped(productKey) {
+    const data = getSwipedProducts();
+    return data.keys.includes(productKey);
+}
+
 function buildDiscoveryDeck(products) {
-    discoveryState.pool = [...products];
+    // Filter out already-swiped products
+    let availableProducts = products.filter(p => {
+        const key = getProductKey(p);
+        return key && !isProductSwiped(key);
+    });
+
+    // If all products have been swiped, reset and start fresh
+    if (availableProducts.length === 0) {
+        clearSwipedProducts();
+        availableProducts = [...products];
+    }
+
+    discoveryState.pool = shuffleArray([...availableProducts]);
     discoveryState.stack = [];
     discoveryState.liked = 0;
     discoveryState.skipped = 0;
-    discoveryState.leftStreak = 0;
-    discoveryState.categoryWeights = {};
 
     refillDiscoveryStack();
     renderDiscoveryStack();
@@ -319,28 +455,8 @@ function refillDiscoveryStack() {
 
 function pickNextDiscoveryProduct() {
     if (discoveryState.pool.length === 0) return null;
-
-    const scored = discoveryState.pool.map(product => ({
-        product,
-        score: scoreDiscoveryProduct(product)
-    }));
-
-    scored.sort((a, b) => b.score - a.score);
-    const pickWindow = Math.min(6, scored.length);
-    const pickIndex = Math.floor(Math.random() * pickWindow);
-    const chosen = scored[pickIndex].product;
-
-    discoveryState.pool = discoveryState.pool.filter(item => item !== chosen);
-    return chosen;
-}
-
-function scoreDiscoveryProduct(product) {
-    let score = product.final_score || product.trending_score || 0;
-    const categories = product.categories || [];
-    categories.forEach(category => {
-        score += discoveryState.categoryWeights[category] || 0;
-    });
-    return score + Math.random() * 0.3;
+    // Simply take the first product (pool is already shuffled in buildDiscoveryDeck)
+    return discoveryState.pool.shift();
 }
 
 function renderDiscoveryStack() {
@@ -386,6 +502,20 @@ function createSwipeCard(product, position) {
 
     const videoPreview = getVideoPreview(product);
 
+    const highlights = [];
+    if (product.why_matters) {
+        highlights.push(`💡 ${product.why_matters}`);
+    }
+    if (product.funding_total) {
+        highlights.push(`💰 ${product.funding_total}`);
+    }
+    if (product.latest_news) {
+        highlights.push(`📰 ${product.latest_news}`);
+    }
+    const highlightsMarkup = highlights.length
+        ? `<div class="swipe-card-highlights">${highlights.slice(0, 2).map(item => `<div class="swipe-card-highlight">${item}</div>`).join('')}</div>`
+        : '';
+
     return `
         <div class="swipe-card ${position === 0 ? 'is-active' : ''}" data-pos="${position}" data-website="${website}">
             <div class="swipe-card-header">
@@ -397,6 +527,7 @@ function createSwipeCard(product, position) {
                 ${sourceBadge}
             </div>
             <p class="swipe-card-desc">${description}</p>
+            ${highlightsMarkup}
             ${videoPreview}
             <div class="swipe-card-meta">
                 ${website ? `<a class="swipe-link" href="${website}" target="_blank" rel="noopener noreferrer">了解更多 →</a>` : ''}
@@ -525,21 +656,31 @@ function handleSwipe(direction) {
 }
 
 function updateDiscoveryPreferences(product, direction) {
-    const categories = product.categories || [];
+    const productKey = getProductKey(product);
+
+    // Track as swiped (both left and right) to avoid showing again
+    addSwipedProduct(productKey);
+
     if (direction === 'right') {
         discoveryState.liked += 1;
-        discoveryState.leftStreak = 0;
-        categories.forEach(category => {
-            discoveryState.categoryWeights[category] = (discoveryState.categoryWeights[category] || 0) + 2;
-        });
+        // Add to favorites (avoid duplicates)
+        if (productKey && !isFavorited(productKey)) {
+            const favorites = getFavorites();
+            favorites.push({
+                key: productKey,
+                name: product.name,
+                logo_url: product.logo_url,
+                website: product.website,
+                categories: product.categories,
+                addedAt: new Date().toISOString()
+            });
+            saveFavorites(favorites);
+            updateFavoritesCount();
+            updateFavoriteButtons(productKey);
+            renderFavoritesList();
+        }
     } else {
         discoveryState.skipped += 1;
-        discoveryState.leftStreak += 1;
-        if (discoveryState.leftStreak >= 4) {
-            categories.forEach(category => {
-                discoveryState.categoryWeights[category] = (discoveryState.categoryWeights[category] || 0) - 0.5;
-            });
-        }
     }
 }
 
@@ -650,44 +791,10 @@ function initCategoryTags() {
 // ========== 加载热门产品 ==========
 async function loadTrendingProducts() {
     try {
-        // 加载所有产品（黑马 + 潜力股）
-        const [darkHorsesRes, risingStarsRes, weeklyRes] = await Promise.all([
-            fetch(`${API_BASE_URL}/products/dark-horses?limit=50`),
-            fetch(`${API_BASE_URL}/products/rising-stars?limit=50`).catch(() => ({ json: () => ({ success: false, data: [] }) })),
-            fetch(`${API_BASE_URL}/products/weekly-top`)
-        ]);
-        
-        const darkHorsesData = await darkHorsesRes.json();
-        const risingStarsData = await risingStarsRes.json();
-        const weeklyData = await weeklyRes.json();
-        
-        // 合并所有产品
-        const allProducts = [];
-        
-        if (darkHorsesData.success && darkHorsesData.data) {
-            allProducts.push(...darkHorsesData.data);
-        }
-        
-        if (risingStarsData.success && risingStarsData.data) {
-            // 避免重复
-            const existingNames = new Set(allProducts.map(p => p.name?.toLowerCase()));
-            risingStarsData.data.forEach(p => {
-                if (!existingNames.has(p.name?.toLowerCase())) {
-                    allProducts.push(p);
-                }
-            });
-        }
-        
-        if (weeklyData.success && weeklyData.data) {
-            const existingNames = new Set(allProducts.map(p => p.name?.toLowerCase()));
-            weeklyData.data.forEach(p => {
-                if (!existingNames.has(p.name?.toLowerCase())) {
-                    allProducts.push(p);
-                }
-            });
-        }
-        
-        allProductsCache = allProducts;
+        const response = await fetch(`${API_BASE_URL}/products/weekly-top?limit=0`);
+        const data = await response.json();
+
+        allProductsCache = data.success ? data.data : getMockTrendingProducts();
         currentPage = 1;
         applyFiltersAndRender();
         
@@ -716,7 +823,7 @@ async function loadDarkHorseProducts() {
 
     try {
         // 加载 4-5 分的黑马产品
-        const response = await fetch(`${API_BASE_URL}/products/dark-horses?limit=12&min_index=4`);
+        const response = await fetch(`${API_BASE_URL}/products/dark-horses?limit=10&min_index=4`);
         const data = await response.json();
 
         hasDarkhorseData = Boolean(data.success && data.data.length > 0);
@@ -1006,6 +1113,11 @@ function createDarkHorseCard(product) {
 }
 
 function animateDarkHorseCards(container) {
+    // Reinitialize Lucide icons for dynamically added content
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+
     const cards = container.querySelectorAll('.darkhorse-card');
     if (prefersReducedMotion) {
         cards.forEach((card) => {
@@ -1028,7 +1140,7 @@ function animateDarkHorseCards(container) {
 // ========== 加载本周榜单 ==========
 async function loadWeeklyProducts() {
     try {
-        const response = await fetch(`${API_BASE_URL}/products/weekly-top`);
+        const response = await fetch(`${API_BASE_URL}/products/weekly-top?limit=15`);
         const data = await response.json();
         
         if (data.success) {
@@ -1408,6 +1520,11 @@ function openProduct(url) {
 
 // ========== 动画效果 ==========
 function animateCards(container) {
+    // Reinitialize Lucide icons for dynamically added content
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+
     const cards = container.querySelectorAll('.product-card');
     if (prefersReducedMotion) {
         cards.forEach((card) => {
@@ -1428,6 +1545,11 @@ function animateCards(container) {
 }
 
 function animateListItems(container) {
+    // Reinitialize Lucide icons for dynamically added content
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+
     const items = container.querySelectorAll('.product-list-item');
     if (prefersReducedMotion) {
         items.forEach((item) => {
@@ -1897,6 +2019,28 @@ function createProductCardWithFavorite(product, showBadge = false) {
     const productKey = getProductKey(product);
     const isFav = isFavorited(productKey);
 
+    // Score badge based on dark_horse_index
+    const score = product.dark_horse_index || 0;
+    let scoreBadge = '';
+    if (score >= 5) {
+        scoreBadge = '<span class="score-badge score-badge--5">5分</span>';
+    } else if (score >= 4) {
+        scoreBadge = '<span class="score-badge score-badge--4">4分</span>';
+    } else if (score >= 3) {
+        scoreBadge = '<span class="score-badge score-badge--3">3分</span>';
+    } else if (score >= 2) {
+        scoreBadge = '<span class="score-badge score-badge--2">2分</span>';
+    }
+
+    // Category pill for hardware/software
+    const isHardware = categories.includes('hardware') ||
+                      product.category === 'hardware' ||
+                      (product.description && product.description.toLowerCase().includes('chip')) ||
+                      (product.description && product.description.toLowerCase().includes('robot'));
+    const categoryPill = isHardware
+        ? '<span class="category-pill category-pill--hardware"><i data-lucide="cpu" style="width:12px;height:12px;"></i> 硬件</span>'
+        : '<span class="category-pill category-pill--software"><i data-lucide="code" style="width:12px;height:12px;"></i> 软件</span>';
+
     return `
         <div class="${cardClass}" onclick="handleProductClick(event, '${encodeURIComponent(JSON.stringify(product).replace(/'/g, "\\'"))}')">
             <button class="product-favorite-btn ${isFav ? 'is-favorited' : ''}"
@@ -1910,7 +2054,7 @@ function createProductCardWithFavorite(product, showBadge = false) {
             <div class="product-info">
                 <div class="product-header">
                     <h3 class="product-name">${name}</h3>
-                    ${showBadge ? `<span class="product-badge">🔥 热门</span>` : ''}
+                    ${scoreBadge}
                 </div>
                 <p class="product-description">${description}</p>
                 ${(whyMatters || fundingTotal) ? `
@@ -1919,6 +2063,7 @@ function createProductCardWithFavorite(product, showBadge = false) {
                     ${fundingTotal ? `<div class="product-insight product-insight--funding">💰 ${fundingTotal}</div>` : ''}
                 </div>` : ''}
                 <div class="product-meta">
+                    ${categoryPill}
                     <span class="product-meta-item">⭐ ${rating}</span>
                     <span class="product-meta-item">👥 ${users}</span>
                 </div>
@@ -2063,6 +2208,11 @@ function renderIndustryLeaders() {
 }
 
 function animateLeaderCards(container) {
+    // Reinitialize Lucide icons for dynamically added content
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+
     const cards = container.querySelectorAll('.leader-card');
     if (prefersReducedMotion) {
         cards.forEach((card) => {

@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 # WeeklyAI Daily Update Script
 # Runs AI global search and news updates daily
 
@@ -25,6 +25,14 @@ if $PYTHON_BIN crawler/tools/auto_discover.py --region all >> "$LOG_DIR/daily_up
     echo "[$(date +%H:%M:%S)] auto_discover.py completed successfully" >> "$LOG_DIR/daily_update.log"
 else
     echo "[$(date +%H:%M:%S)] auto_discover.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
+fi
+
+# 1.5 Auto publish to products_featured.json
+echo "[$(date +%H:%M:%S)] Running auto_publish.py..." >> "$LOG_DIR/daily_update.log"
+if $PYTHON_BIN crawler/tools/auto_publish.py >> "$LOG_DIR/daily_update.log" 2>&1; then
+    echo "[$(date +%H:%M:%S)] auto_publish.py completed successfully" >> "$LOG_DIR/daily_update.log"
+else
+    echo "[$(date +%H:%M:%S)] auto_publish.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
 fi
 
 # 2. Update news (optional, continues even if auto_discover fails)

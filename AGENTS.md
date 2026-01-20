@@ -20,11 +20,11 @@
 ```
 crawler/data/
 ├── dark_horses/          # 黑马产品 (4-5分)
-│   └── week_2026_03.json
+│   └── week_2026_04.json
 ├── rising_stars/         # 潜力股 (2-3分)
-│   └── global_2026_03.json
+│   └── global_2026_04.json
 ├── candidates/           # 待审核
-├── products_featured.json # 精选产品
+├── products_featured.json # 精选产品 (前端数据源)
 └── products_history.json  # 历史数据
 ```
 
@@ -38,7 +38,7 @@ crawler/data/
 | `crawler/tools/add_product.py` | 手动添加产品 |
 | `crawler/tools/dark_horse_detector.py` | 黑马评分计算 |
 | `crawler/prompts/search_prompts.py` | 🔍 搜索 Prompt 模块 |
-| `crawler/prompts/analysis_prompts.py` | 📊 分析 Prompt 模块 |
+| `crawler/prompts/analysis_prompts.py` | 📊 分析 Prompt 模块 (含硬件评判体系) |
 | `crawler/utils/perplexity_client.py` | Perplexity SDK 封装 |
 | `backend/app/routes/products.py` | 产品 API |
 | `frontend/views/index.ejs` | 首页模板 |
@@ -55,9 +55,12 @@ python3 tools/auto_discover.py --region cn     # 中国
 python3 tools/auto_discover.py --region all    # 全球
 
 # 硬件/软件分离搜索
-python3 tools/auto_discover.py --type hardware  # 只搜硬件 (40%配额)
+python3 tools/auto_discover.py --type hardware  # 只搜硬件
 python3 tools/auto_discover.py --type software  # 只搜软件
-python3 tools/auto_discover.py --type mixed     # 混合模式 (默认)
+python3 tools/auto_discover.py --type mixed     # 混合模式 (默认: 40%硬件+60%软件)
+
+# 查看关键词
+python3 tools/auto_discover.py --list-keywords --region us
 
 # 手动添加
 python3 tools/add_product.py --quick "Name" "URL" "Desc"
@@ -83,13 +86,6 @@ tail -f crawler/logs/daily_update.log       # 查看日志
 **执行内容**: `auto_discover.py --region all` → `main.py --news-only`
 **日志位置**: `crawler/logs/daily_update.log`
 
-安装命令:
-```bash
-launchctl unload ~/Library/LaunchAgents/com.weeklyai.crawler.plist 2>/dev/null
-cp ops/scheduling/com.weeklyai.crawler.plist ~/Library/LaunchAgents/
-launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
-```
-
 ---
 
 ## 产品分层体系
@@ -102,7 +98,32 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 
 ---
 
-## 黑马判断标准 (4-5分)
+## 数据入库与首页展示规则
+
+### 自动入库
+
+- auto_discover 产出 **2-5 分** 产品，完成评判体系评分 + 去重（按 website）后，全部写入后端数据源（当前为 `products_featured.json`）。
+- **2-5 分全量库**即前端“更多推荐”的完整数据源。
+
+### 首页三段展示
+
+- **本周黑马**（首页第一区块）：
+  - 上限 10 个，优先 **4-5 分**（软件 + 硬件）。
+  - 时间优先级：`discovered_at` **7 天内优先**，优秀产品可放宽至 **14 天**。
+  - 超过 14 天自动移出本周黑马，但**保留在更多推荐**。
+- **硬件补位**：
+  - 若当周硬件 **无 4-5 分**，可补入 **2-3 分硬件**。
+  - 补位数量 **≤ 当周 4-5 分软件数量**。
+  - 补位硬件不受时间限制；如有 4-5 分硬件则直接放入本周黑马。
+- **Swipe card**（首页第二区块）：
+  - 使用 **2-5 分全量库**，用户可以一直刷到全部刷完。
+  - 卡片尽量展示更多信息（如 `why_matters` / `funding_total` / `latest_news`）。
+- **更多推荐**（首页第三区块）：
+  - 展示全部 2-5 分产品（包含从本周黑马移出的旧产品）。
+
+---
+
+## 软件黑马标准 (4-5分)
 
 ### 什么是"黑马"？
 
@@ -126,7 +147,7 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 - ❌ **大厂产品**: Google Gemini, Meta Llama（除非是独立子产品）
 - ❌ **工具目录产品**: "xxx 相关的 AI 工具集合"
 
-### 黑马评分详解
+### 软件评分详解
 
 | 分数 | 标准 |
 |------|------|
@@ -135,9 +156,51 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 
 ---
 
-## 潜力股标准 (2-3分)
+## 🔧 硬件产品评判体系 (宽松版)
 
-### 什么是"潜力股"？
+> **核心理念：硬件产品重在「创新性」和「灵感启发」，而非严格的融资门槛**
+
+硬件创业门槛高、周期长，很多创新产品来自小团队。我们收录硬件产品的目的是：
+- ✅ 发现有趣的 AI 硬件形态
+- ✅ 获得产品灵感和趋势洞察
+- ✅ 关注技术创新而非商业规模
+- ❌ 不强求融资金额或量产数据
+
+### 硬件类别
+
+| 代码 | 类别 | 示例产品 |
+|------|------|----------|
+| `ai_chip` | AI 芯片/加速器 | Etched, Groq, Cerebras, Tenstorrent |
+| `robotics` | 机器人/人形机器人 | Figure, Unitree, 1X |
+| `smart_glasses` | AI 眼镜/AR 设备 | Brilliant Labs Frame |
+| `wearables` | AI 可穿戴设备 | Rabbit R1, Limitless Pendant |
+| `smart_home` | 智能家居 AI | Samsung Ballie |
+
+### 硬件评分标准
+
+| 分数 | 标准 | 门槛 |
+|------|------|------|
+| **5分** | 硬件明星 | 满足任意 1 条：融资>$100M / CES大奖 / 规模量产 / 大厂合作 |
+| **4分** | 硬件黑马 | 满足任意 1 条：有工作演示 / 获得曝光 / 有融资 / 硬件背景创始人 |
+| **3分** | 硬件潜力 | 满足任意 1 条：形态创新 / 解决痛点 / 有原型 / 众筹表现好 |
+| **2分** | 硬件观察 | 概念有趣 / 方向清晰 / 技术有亮点 |
+
+### 硬件 why_matters 要求
+
+```
+✅ GOOD (说清楚创新点即可):
+- "首款开源 AI 眼镜，支持多种 LLM 集成，开发者友好"
+- "掌上 AI 助手，用 LAM 模型直接操作 App，交互方式新颖"
+- "AI 录音吊坠，自动生成会议摘要，$99 极致性价比"
+
+❌ BAD (太泛化):
+- "创新的 AI 硬件"
+- "下一代智能设备"
+```
+
+---
+
+## 潜力股标准 (2-3分)
 
 **潜力股 = 有创新 + 早期阶段 + 值得观察**
 
@@ -151,13 +214,10 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 | 🔧 **垂直领域深耕** | 专注细分赛道 | 医疗 AI、法律 AI |
 | 🎨 **产品体验好** | 设计/交互有亮点 | 虽小但精致 |
 
-### 潜力股评分详解
-
 | 分数 | 标准 |
 |------|------|
 | **3分** | 值得关注: 融资 $1M-$5M / ProductHunt 上榜 / 本地热度高 |
 | **2分** | 观察中: 刚发布/数据不足 但有明显创新点 |
-| **1分** | 边缘: 勉强符合，待更多验证 |
 
 ---
 
@@ -180,22 +240,21 @@ Base URL: `http://localhost:5000/api/v1`
 | 端点 | 方法 | 说明 |
 |------|------|------|
 | `/products/trending` | GET | 热门 Top 5 |
-| `/products/weekly-top` | GET | 本周 Top 15 |
-| `/products/dark-horses` | GET | 黑马产品 (`limit`, `min_index`) |
-| `/products/rising-stars` | GET | **潜力股产品 (2-3分)** |
+| `/products/weekly-top` | GET | 本周 Top 15 (按评分→融资排序) |
+| `/products/dark-horses` | GET | 黑马产品 (`limit`, `min_index`, `max_index`) |
+| `/products/rising-stars` | GET | 潜力股产品 (2-3分) |
 | `/products/today` | GET | 今日精选 (`limit`, `hours`) |
 | `/products/<id>` | GET | 产品详情 |
 | `/products/categories` | GET | 分类列表 |
-| `/products/blogs` | GET | 博客/新闻 (`limit`, `source`) |
 | `/search?q=xxx` | GET | 搜索 (`categories`, `type`, `sort`, `page`) |
 
 ### 排序规则
 
-| 优先级 | 条件 |
-|--------|------|
-| 1️⃣ | **评分** (5分 > 4分 > 3分) |
-| 2️⃣ | **融资金额** |
-| 3️⃣ | **估值/用户数** |
+| 优先级 | 条件 | 说明 |
+|--------|------|------|
+| 1️⃣ | **评分** | 5分 > 4分 > 3分 > 2分 |
+| 2️⃣ | **融资金额** | 同分时，$500M > $100M |
+| 3️⃣ | **估值/用户数** | 融资相同时的 tiebreaker |
 
 ---
 
@@ -205,25 +264,29 @@ Base URL: `http://localhost:5000/api/v1`
 {
   "name": "Etched AI",
   "slug": "etched-ai",
-  "website": "https://etched.com",
+  "website": "https://etched.ai",
   "logo": "https://...",
   "description": "AI chip startup building Sohu processor for transformers",
   "category": "hardware",
+  "hardware_category": "ai_chip",
   "region": "🇺🇸",
   "founded_date": "2022",
   "funding_total": "$500M",
   "dark_horse_index": 5,
-  "why_matters": "Peter Thiel 领投，估值 $5B，Sohu 芯片挑战 Nvidia 垄断",
+  "criteria_met": ["hardware_funding", "category_innovation"],
+  "why_matters": "获$500M融资，估值$5B，Stripes领投，AI芯片挑战Nvidia垄断",
   "latest_news": "2026-01: Stripes 领投新一轮融资",
   "discovered_at": "2026-01-16",
-  "source": "TechCrunch"
+  "source": "TechCrunch",
+  "is_hardware": true
 }
 ```
 
 **必填字段**: `name`, `website`, `description`, `why_matters`, `dark_horse_index`
 **重要字段**: `funding_total`, `latest_news`, `category`
-**有效分类**: coding, image, video, voice, writing, hardware, finance, education, healthcare, other
+**有效分类**: coding, image, video, voice, writing, hardware, finance, education, healthcare, agent, other
+**硬件类别**: ai_chip, robotics, edge_ai, smart_glasses, wearables, smart_home, automotive, drone, medical_device
 
 ---
 
-*更新: 2026-01-19 (硬件配额+排序优化)*
+*更新: 2026-01-20 (硬件评判体系宽松版+CES硬件产品+排序优化)*

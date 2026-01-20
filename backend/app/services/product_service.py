@@ -5,7 +5,7 @@
 import os
 import json
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
 
 # MongoDB support
@@ -15,8 +15,11 @@ try:
 except ImportError:
     HAS_MONGO = False
 
-# 爬虫数据文件路径
-CRAWLER_DATA_DIR = os.path.join(
+# 导入配置
+from config import Config
+
+# 爬虫数据文件路径 (支持环境变量配置，Docker 部署时使用 /data)
+CRAWLER_DATA_DIR = Config.DATA_PATH if os.path.exists(Config.DATA_PATH) else os.path.join(
     os.path.dirname(__file__),
     '..', '..', '..', 'crawler', 'data'
 )
@@ -579,40 +582,94 @@ class ProductService:
         return {'last_updated': last_updated, 'hours_ago': hours_ago}
 
     @staticmethod
-    def _diversify_products(products: List[Dict], limit: int, max_per_category: int, max_per_source: int) -> List[Dict]:
-        """限制单一类别与来源占比，保证榜单更均衡。"""
+    def _diversify_products(
+        products: List[Dict], 
+        limit: int, 
+        max_per_category: int = 4, 
+        max_per_source: int = 5,
+        hardware_ratio: float = 0.4,
+        max_per_hw_category: int = 3
+    ) -> List[Dict]:
+        """
+        多样化选择算法，保证榜单均衡
+        
+        参数:
+        - limit: 选择数量
+        - max_per_category: 每个软件类别最大数量
+        - max_per_source: 每个来源最大数量
+        - hardware_ratio: 硬件最大占比 (默认 40%)
+        - max_per_hw_category: 每个硬件子类别最大数量 (避免全是 drone)
+        """
         selected = []
         category_counts = defaultdict(int)
         source_counts = defaultdict(int)
+        hw_category_counts = defaultdict(int)
+        hw_count = 0
+        sw_count = 0
+        
+        hw_limit = int(limit * hardware_ratio)
+        sw_limit = limit - hw_limit
+
+        def is_hardware(p):
+            return p.get('is_hardware') or p.get('category') == 'hardware' or p.get('hardware_category')
 
         for product in products:
-            categories = product.get('categories') or ['other']
-            primary = categories[0] if categories else 'other'
-            source = product.get('source', 'unknown')
-            if category_counts[primary] >= max_per_category:
+            if len(selected) >= limit:
+                break
+                
+            # 检查硬件/软件配额
+            is_hw = is_hardware(product)
+            if is_hw and hw_count >= hw_limit:
                 continue
+            if not is_hw and sw_count >= sw_limit:
+                continue
+            
+            # 检查硬件子类别配额 (避免全是 drone/ai_chip)
+            if is_hw:
+                hw_cat = product.get('hardware_category', 'hardware_other')
+                if hw_category_counts[hw_cat] >= max_per_hw_category:
+                    continue
+            
+            # 检查软件类别配额
+            categories = product.get('categories') or [product.get('category', 'other')]
+            primary = categories[0] if categories else 'other'
+            if not is_hw and category_counts[primary] >= max_per_category:
+                continue
+            
+            # 检查来源配额
+            source = product.get('source', 'unknown')
             if source_counts[source] >= max_per_source:
                 continue
+            
+            # 添加产品
             selected.append(product)
             category_counts[primary] += 1
             source_counts[source] += 1
-            if len(selected) >= limit:
-                return selected
+            if is_hw:
+                hw_count += 1
+                hw_cat = product.get('hardware_category', 'hardware_other')
+                hw_category_counts[hw_cat] += 1
+            else:
+                sw_count += 1
 
-        # 如果不足，再补齐剩余
+        # 如果不足，放宽限制再补齐
         for product in products:
+            if len(selected) >= limit:
+                break
             if product in selected:
                 continue
             selected.append(product)
-            if len(selected) >= limit:
-                break
 
         return selected
     
     @staticmethod
     def get_trending_products(limit: int = 5) -> List[Dict]:
-        """获取热门推荐产品"""
+        """获取热门推荐产品 (多样化)"""
         products = ProductService._load_products()
+        products = [
+            p for p in products
+            if p.get('dark_horse_index', 0) >= 2
+        ]
         
         # 按 hot_score 或 final_score 排序
         sorted_products = sorted(
@@ -620,20 +677,43 @@ class ProductService:
             key=lambda x: x.get('hot_score', x.get('final_score', x.get('trending_score', 0))),
             reverse=True
         )
-        return ProductService._diversify_products(sorted_products, limit, max_per_category=2, max_per_source=2)
+        return ProductService._diversify_products(
+            sorted_products, 
+            limit, 
+            max_per_category=2, 
+            max_per_source=2,
+            hardware_ratio=0.4,
+            max_per_hw_category=2
+        )
     
     @staticmethod
     def get_weekly_top_products(limit: int = 15) -> List[Dict]:
         """获取本周Top产品
         
         排序规则: 评分 > 融资金额 > 用户数/估值
+        多样化规则: 硬件 ≤40%, 每个硬件子类别 ≤3, 每个软件类别 ≤4
         """
         products = ProductService._load_products()
+        products = [
+            p for p in products
+            if p.get('dark_horse_index', 0) >= 2
+        ]
         
         # 排序: 评分 > 融资 > 估值/用户数
         sorted_products = ProductService._sort_by_score_funding_valuation(products)
+
+        if limit <= 0:
+            return sorted_products
         
-        return ProductService._diversify_products(sorted_products, limit, max_per_category=4, max_per_source=5)
+        # 多样化选择: 硬件 ≤40%, 每个硬件子类别 ≤3 (避免全是 drone)
+        return ProductService._diversify_products(
+            sorted_products, 
+            limit, 
+            max_per_category=4,      # 每个软件类别最多 4 个
+            max_per_source=5,        # 每个来源最多 5 个
+            hardware_ratio=0.4,      # 硬件最多占 40%
+            max_per_hw_category=3    # 每个硬件子类别最多 3 个
+        )
     
     @staticmethod
     def get_product_by_id(product_id: str) -> Optional[Dict]:
@@ -814,6 +894,44 @@ class ProductService:
         return product.get('hot_score') or product.get('trending_score') or product.get('final_score') or 0
 
     @staticmethod
+    def _parse_date(value: Any) -> Optional[datetime]:
+        """Parse ISO or YYYY-MM-DD dates safely."""
+        if not value:
+            return None
+        if isinstance(value, datetime):
+            return value
+        if not isinstance(value, str):
+            return None
+        try:
+            if 'T' in value:
+                return datetime.fromisoformat(value.replace('Z', '+00:00').split('+')[0])
+            return datetime.strptime(value, '%Y-%m-%d')
+        except Exception:
+            return None
+
+    @staticmethod
+    def _get_product_date(product: Dict[str, Any]) -> Optional[datetime]:
+        """Pick a comparable date field for freshness checks."""
+        return ProductService._parse_date(
+            product.get('discovered_at') or product.get('first_seen') or product.get('published_at')
+        )
+
+    @staticmethod
+    def _is_hardware(product: Dict[str, Any]) -> bool:
+        if product.get('is_hardware'):
+            return True
+        categories = product.get('categories') or []
+        if isinstance(categories, str):
+            categories = [categories]
+        if 'hardware' in categories:
+            return True
+        if product.get('category') == 'hardware':
+            return True
+        if product.get('hardware_category'):
+            return True
+        return False
+
+    @staticmethod
     def _sort_by_score_funding_valuation(products: List[Dict]) -> List[Dict]:
         """按评分 > 融资 > 估值/用户数排序"""
         return sorted(
@@ -827,27 +945,82 @@ class ProductService:
         )
 
     @staticmethod
-    def get_dark_horse_products(limit: int = 6, min_index: int = 4) -> List[Dict]:
+    def get_dark_horse_products(limit: int = 10, min_index: int = 4) -> List[Dict]:
         """获取黑马产品 - 高潜力新兴产品
 
         参数:
         - limit: 返回数量
         - min_index: 最低黑马指数 (1-5)
+        - 优先 7 天内，允许 14 天内的优秀产品
         
         排序规则: 评分 > 融资金额 > 用户数/估值
         """
         products = ProductService._load_products()
+        now = datetime.now()
+        one_week_ago = now - timedelta(days=7)
+        two_weeks_ago = now - timedelta(days=14)
 
         # 筛选有 dark_horse_index 且 >= min_index 的产品
-        dark_horses = [
-            p for p in products
-            if p.get('dark_horse_index', 0) >= min_index
-        ]
+        def is_recent_candidate(product: Dict[str, Any]) -> bool:
+            if product.get('dark_horse_index', 0) < min_index:
+                return False
+            product_date = ProductService._get_product_date(product)
+            if not product_date or product_date < two_weeks_ago:
+                return False
+            return True
 
-        # 排序: 评分 > 融资 > 估值/用户数
-        dark_horses = ProductService._sort_by_score_funding_valuation(dark_horses)
+        def recency_rank(product: Dict[str, Any]) -> int:
+            product_date = ProductService._get_product_date(product)
+            if product_date and product_date >= one_week_ago:
+                return 0
+            return 1
 
-        return dark_horses[:limit]
+        def sort_key(product: Dict[str, Any]):
+            product_date = ProductService._get_product_date(product) or datetime(1970, 1, 1)
+            return (
+                recency_rank(product),
+                -product_date.timestamp(),
+                -(product.get('dark_horse_index', 0) or 0),
+                -ProductService._parse_funding(product.get('funding_total', '')),
+                -ProductService._get_valuation_score(product)
+            )
+
+        candidates = [p for p in products if is_recent_candidate(p)]
+        candidates.sort(key=sort_key)
+
+        selected = candidates[:limit]
+
+        hardware_4_5_exists = any(ProductService._is_hardware(p) for p in candidates)
+
+        if not hardware_4_5_exists and len(selected) < limit:
+            software_count = sum(1 for p in selected if not ProductService._is_hardware(p))
+            fill_limit = min(software_count, limit - len(selected))
+
+            if fill_limit > 0:
+                hardware_candidates = [
+                    p for p in products
+                    if 2 <= p.get('dark_horse_index', 0) <= 3
+                    and ProductService._is_hardware(p)
+                ]
+                hardware_candidates = ProductService._sort_by_score_funding_valuation(hardware_candidates)
+
+                existing_keys = {
+                    (p.get('website') or '').strip().lower()
+                    for p in selected
+                    if p.get('website')
+                }
+
+                for product in hardware_candidates:
+                    if len(selected) >= limit:
+                        break
+                    website = (product.get('website') or '').strip().lower()
+                    if website and website in existing_keys:
+                        continue
+                    selected.append(product)
+                    if website:
+                        existing_keys.add(website)
+
+        return selected
 
     @staticmethod
     def get_rising_star_products(limit: int = 20) -> List[Dict]:
