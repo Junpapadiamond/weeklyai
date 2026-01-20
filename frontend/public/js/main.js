@@ -11,8 +11,52 @@ const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-re
 let selectedCategories = new Set();
 
 // 当前显示的section
-let currentSection = 'trending';
 let hasDarkhorseData = true;
+
+// Sort and filter state
+let currentSort = 'score';
+let currentTypeFilter = 'all';
+
+// Favorites stored in localStorage
+const FAVORITES_KEY = 'weeklyai_favorites';
+
+// Swiped products tracking (to avoid duplicates)
+const SWIPED_KEY = 'weeklyai_swiped';
+const SWIPED_EXPIRY_DAYS = 7; // Reset swiped history after 7 days
+
+// All products cache for sorting/filtering
+let allProductsCache = [];
+let discoveryAllProducts = [];
+
+// Dark horse products cache
+let darkHorseCache = [];
+let darkHorseFilter = 'all'; // all, hardware, software
+
+// Discover filter
+let discoverFilter = 'all';
+
+// Tier filter for trending section
+let currentTier = 'all'; // all, darkhorse, rising
+
+// Pagination
+let currentPage = 1;
+const PRODUCTS_PER_PAGE = 12;
+
+// Industry leaders
+const LEADERS_CATEGORY_ORDER = [
+    '通用大模型',
+    '中国大模型',
+    '搜索引擎',
+    '写作助手',
+    '图像生成',
+    '视频生成',
+    '语音合成',
+    '代码开发',
+    '开发者工具',
+    'AI角色/伴侣'
+];
+let leadersCategoriesData = null;
+let leadersActiveFilter = 'all';
 
 // ========== DOM 元素 ==========
 const elements = {
@@ -35,15 +79,35 @@ const elements = {
     productSection: document.getElementById('productSection'),
     productDetail: document.getElementById('productDetail'),
     productDetailSubtitle: document.getElementById('productDetailSubtitle'),
+    dataFreshness: document.getElementById('dataFreshness'),
     trendingProducts: document.getElementById('trendingProducts'),
     weeklyProducts: document.getElementById('weeklyProducts'),
     searchResults: document.getElementById('searchResults'),
     searchResultInfo: document.getElementById('searchResultInfo'),
-    navLinks: document.querySelectorAll('.nav-link')
+    navLinks: document.querySelectorAll('.nav-link'),
+    // Sort/Filter controls
+    sortBy: document.getElementById('sortBy'),
+    typeFilter: document.getElementById('typeFilter'),
+    showFavoritesBtn: document.getElementById('showFavoritesBtn'),
+    favoritesCount: document.getElementById('favoritesCount'),
+    // Modal
+    productModal: document.getElementById('productModal'),
+    modalClose: document.getElementById('modalClose'),
+    modalContent: document.getElementById('modalContent'),
+    // Favorites panel
+    favoritesPanel: document.getElementById('favoritesPanel'),
+    favoritesClose: document.getElementById('favoritesClose'),
+    favoritesList: document.getElementById('favoritesList'),
+    // Industry leaders
+    leadersSection: document.getElementById('leadersSection'),
+    leadersFilters: document.getElementById('leadersFilters'),
+    leadersCategories: document.getElementById('leadersCategories')
 };
 
 // ========== 初始化 ==========
 document.addEventListener('DOMContentLoaded', () => {
+    initLucide();
+    initThemeToggle();
     initNavigation();
     initNavScroll();
     initSearch();
@@ -51,10 +115,66 @@ document.addEventListener('DOMContentLoaded', () => {
     initHeroGlow();
     initDiscovery();
     initBlogFilters();
+    initSortFilter();
+    initFavorites();
+    initModal();
+    initDarkhorseFilters();
+    initDiscoverFilters();
+    initTierTabs();
+    initLoadMore();
+    loadDataFreshness();
     loadDarkHorseProducts();
     loadTrendingProducts();
+    loadIndustryLeaders();
     handleInitialRoute();
+    updateFavoritesCount();
 });
+
+// ========== Lucide Icons ==========
+function initLucide() {
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+}
+
+// ========== Theme Toggle ==========
+const THEME_KEY = 'weeklyai_theme';
+
+function initThemeToggle() {
+    const toggle = document.getElementById('themeToggle');
+    if (!toggle) return;
+
+    // Load saved theme or respect system preference
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+
+    setTheme(initialTheme);
+
+    toggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        setTheme(newTheme);
+        localStorage.setItem(THEME_KEY, newTheme);
+    });
+}
+
+function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+
+    const lightIcon = document.querySelector('.theme-icon-light');
+    const darkIcon = document.querySelector('.theme-icon-dark');
+
+    if (lightIcon && darkIcon) {
+        if (theme === 'dark') {
+            lightIcon.style.display = 'none';
+            darkIcon.style.display = 'block';
+        } else {
+            lightIcon.style.display = 'block';
+            darkIcon.style.display = 'none';
+        }
+    }
+}
 
 // ========== 导航功能 ==========
 function initNavigation() {
@@ -98,12 +218,13 @@ function switchSection(section) {
     if (elements.blogsSection) {
         elements.blogsSection.style.display = section === 'blogs' ? 'block' : 'none';
     }
+    if (elements.leadersSection) {
+        elements.leadersSection.style.display = section === 'leaders' ? 'block' : 'none';
+    }
     elements.searchSection.style.display = section === 'search' ? 'block' : 'none';
     if (elements.productSection) {
         elements.productSection.style.display = section === 'product' ? 'block' : 'none';
     }
-
-    currentSection = section;
 
     // 加载对应数据
     if (section === 'trending') {
@@ -112,6 +233,8 @@ function switchSection(section) {
         loadWeeklyProducts();
     } else if (section === 'blogs') {
         loadBlogs();
+    } else if (section === 'leaders') {
+        loadIndustryLeaders();
     } else if (section === 'product') {
         // product detail is loaded by route handler
     }
@@ -135,6 +258,33 @@ function handleInitialRoute() {
     }
 }
 
+async function loadDataFreshness() {
+    if (!elements.dataFreshness) return;
+
+    try {
+        const res = await fetch(`${API_BASE_URL}/products/last-updated`);
+        const data = await res.json();
+        if (!data || !data.last_updated) {
+            elements.dataFreshness.textContent = '📡 数据更新时间未知';
+            return;
+        }
+
+        const hours = Number(data.hours_ago);
+        if (Number.isFinite(hours)) {
+            if (hours < 1) {
+                elements.dataFreshness.textContent = '📡 数据更新于 1 小时内';
+            } else {
+                elements.dataFreshness.textContent = `📡 数据更新于 ${hours.toFixed(1)} 小时前`;
+            }
+        } else {
+            elements.dataFreshness.textContent = '📡 数据更新时间未知';
+        }
+    } catch (error) {
+        console.error('加载数据更新时间失败:', error);
+        elements.dataFreshness.textContent = '📡 数据更新时间未知';
+    }
+}
+
 // ========== 搜索功能 ==========
 function initSearch() {
     // 搜索按钮点击
@@ -153,9 +303,7 @@ const discoveryState = {
     pool: [],
     stack: [],
     liked: 0,
-    skipped: 0,
-    leftStreak: 0,
-    categoryWeights: {}
+    skipped: 0
 };
 
 function initDiscovery() {
@@ -170,22 +318,19 @@ async function loadDiscoveryProducts() {
     elements.swipeStack.innerHTML = '<div class="skeleton-card"></div>';
 
     try {
-        const [trendingRes, weeklyRes] = await Promise.all([
-            fetch(`${API_BASE_URL}/products/trending`),
-            fetch(`${API_BASE_URL}/products/weekly-top`)
-        ]);
-        const trendingData = await trendingRes.json();
-        const weeklyData = await weeklyRes.json();
+        const response = await fetch(`${API_BASE_URL}/products/weekly-top?limit=0`);
+        const data = await response.json();
 
         const products = mergeUniqueProducts([
-            ...(trendingData.success ? trendingData.data : []),
-            ...(weeklyData.success ? weeklyData.data : [])
+            ...(data.success ? data.data : [])
         ]);
 
-        buildDiscoveryDeck(products.length ? products : getMockWeeklyProducts());
+        discoveryAllProducts = products.length ? products : getMockWeeklyProducts();
+        loadDiscoveryCards();
     } catch (error) {
         console.error('加载发现产品失败:', error);
-        buildDiscoveryDeck(getMockWeeklyProducts());
+        discoveryAllProducts = getMockWeeklyProducts();
+        loadDiscoveryCards();
     }
 }
 
@@ -199,13 +344,101 @@ function mergeUniqueProducts(products) {
     });
 }
 
+function filterDiscoveryProducts(products) {
+    if (discoverFilter === 'all') return products;
+    return products.filter(product => {
+        const categories = product.categories || [];
+        const category = product.category;
+        if (discoverFilter === 'hardware') {
+            return categories.includes('hardware') || category === 'hardware' || product.is_hardware;
+        }
+        return categories.includes(discoverFilter) || category === discoverFilter;
+    });
+}
+
+function loadDiscoveryCards() {
+    const filtered = filterDiscoveryProducts(discoveryAllProducts);
+    if (discoveryAllProducts.length === 0) {
+        buildDiscoveryDeck(getMockWeeklyProducts());
+        return;
+    }
+    buildDiscoveryDeck(filtered);
+}
+
+function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+// ========== Swiped Products Tracking ==========
+function getSwipedProducts() {
+    try {
+        const stored = localStorage.getItem(SWIPED_KEY);
+        if (!stored) return { keys: [], timestamp: Date.now() };
+        const data = JSON.parse(stored);
+        // Check if expired (older than SWIPED_EXPIRY_DAYS)
+        const expiryMs = SWIPED_EXPIRY_DAYS * 24 * 60 * 60 * 1000;
+        if (Date.now() - data.timestamp > expiryMs) {
+            clearSwipedProducts();
+            return { keys: [], timestamp: Date.now() };
+        }
+        return data;
+    } catch {
+        return { keys: [], timestamp: Date.now() };
+    }
+}
+
+function addSwipedProduct(productKey) {
+    if (!productKey) return;
+    const data = getSwipedProducts();
+    if (!data.keys.includes(productKey)) {
+        data.keys.push(productKey);
+        saveSwipedProducts(data);
+    }
+}
+
+function saveSwipedProducts(data) {
+    try {
+        localStorage.setItem(SWIPED_KEY, JSON.stringify(data));
+    } catch (e) {
+        console.error('Failed to save swiped products:', e);
+    }
+}
+
+function clearSwipedProducts() {
+    try {
+        localStorage.removeItem(SWIPED_KEY);
+    } catch (e) {
+        console.error('Failed to clear swiped products:', e);
+    }
+}
+
+function isProductSwiped(productKey) {
+    const data = getSwipedProducts();
+    return data.keys.includes(productKey);
+}
+
 function buildDiscoveryDeck(products) {
-    discoveryState.pool = [...products];
+    // Filter out already-swiped products
+    let availableProducts = products.filter(p => {
+        const key = getProductKey(p);
+        return key && !isProductSwiped(key);
+    });
+
+    // If all products have been swiped, reset and start fresh
+    if (availableProducts.length === 0) {
+        clearSwipedProducts();
+        availableProducts = [...products];
+    }
+
+    discoveryState.pool = shuffleArray([...availableProducts]);
     discoveryState.stack = [];
     discoveryState.liked = 0;
     discoveryState.skipped = 0;
-    discoveryState.leftStreak = 0;
-    discoveryState.categoryWeights = {};
 
     refillDiscoveryStack();
     renderDiscoveryStack();
@@ -222,28 +455,8 @@ function refillDiscoveryStack() {
 
 function pickNextDiscoveryProduct() {
     if (discoveryState.pool.length === 0) return null;
-
-    const scored = discoveryState.pool.map(product => ({
-        product,
-        score: scoreDiscoveryProduct(product)
-    }));
-
-    scored.sort((a, b) => b.score - a.score);
-    const pickWindow = Math.min(6, scored.length);
-    const pickIndex = Math.floor(Math.random() * pickWindow);
-    const chosen = scored[pickIndex].product;
-
-    discoveryState.pool = discoveryState.pool.filter(item => item !== chosen);
-    return chosen;
-}
-
-function scoreDiscoveryProduct(product) {
-    let score = product.final_score || product.trending_score || 0;
-    const categories = product.categories || [];
-    categories.forEach(category => {
-        score += discoveryState.categoryWeights[category] || 0;
-    });
-    return score + Math.random() * 0.3;
+    // Simply take the first product (pool is already shuffled in buildDiscoveryDeck)
+    return discoveryState.pool.shift();
 }
 
 function renderDiscoveryStack() {
@@ -289,6 +502,20 @@ function createSwipeCard(product, position) {
 
     const videoPreview = getVideoPreview(product);
 
+    const highlights = [];
+    if (product.why_matters) {
+        highlights.push(`💡 ${product.why_matters}`);
+    }
+    if (product.funding_total) {
+        highlights.push(`💰 ${product.funding_total}`);
+    }
+    if (product.latest_news) {
+        highlights.push(`📰 ${product.latest_news}`);
+    }
+    const highlightsMarkup = highlights.length
+        ? `<div class="swipe-card-highlights">${highlights.slice(0, 2).map(item => `<div class="swipe-card-highlight">${item}</div>`).join('')}</div>`
+        : '';
+
     return `
         <div class="swipe-card ${position === 0 ? 'is-active' : ''}" data-pos="${position}" data-website="${website}">
             <div class="swipe-card-header">
@@ -300,6 +527,7 @@ function createSwipeCard(product, position) {
                 ${sourceBadge}
             </div>
             <p class="swipe-card-desc">${description}</p>
+            ${highlightsMarkup}
             ${videoPreview}
             <div class="swipe-card-meta">
                 ${website ? `<a class="swipe-link" href="${website}" target="_blank" rel="noopener noreferrer">了解更多 →</a>` : ''}
@@ -312,11 +540,11 @@ function cleanDescription(desc) {
     if (!desc) return '暂无描述';
     // Remove technical noise patterns
     return desc
-        .replace(/Hugging Face (模型|Space): [^\|]+\|/g, '')
-        .replace(/\| ⭐ [\d.]+K?\+? Stars/g, '')
-        .replace(/\| 技术: .+$/g, '')
-        .replace(/\| 下载量: .+$/g, '')
-        .replace(/^\s*[\|·]\s*/g, '')
+        .replace(/Hugging Face (模型|Space): [^|]+[|]/g, '')
+        .replace(/[|] ⭐ [\d.]+K?\+? Stars/g, '')
+        .replace(/[|] 技术: .+$/g, '')
+        .replace(/[|] 下载量: .+$/g, '')
+        .replace(/^\s*[|·]\s*/g, '')
         .trim() || '暂无描述';
 }
 
@@ -428,21 +656,31 @@ function handleSwipe(direction) {
 }
 
 function updateDiscoveryPreferences(product, direction) {
-    const categories = product.categories || [];
+    const productKey = getProductKey(product);
+
+    // Track as swiped (both left and right) to avoid showing again
+    addSwipedProduct(productKey);
+
     if (direction === 'right') {
         discoveryState.liked += 1;
-        discoveryState.leftStreak = 0;
-        categories.forEach(category => {
-            discoveryState.categoryWeights[category] = (discoveryState.categoryWeights[category] || 0) + 2;
-        });
+        // Add to favorites (avoid duplicates)
+        if (productKey && !isFavorited(productKey)) {
+            const favorites = getFavorites();
+            favorites.push({
+                key: productKey,
+                name: product.name,
+                logo_url: product.logo_url,
+                website: product.website,
+                categories: product.categories,
+                addedAt: new Date().toISOString()
+            });
+            saveFavorites(favorites);
+            updateFavoritesCount();
+            updateFavoriteButtons(productKey);
+            renderFavoritesList();
+        }
     } else {
         discoveryState.skipped += 1;
-        discoveryState.leftStreak += 1;
-        if (discoveryState.leftStreak >= 4) {
-            categories.forEach(category => {
-                discoveryState.categoryWeights[category] = (discoveryState.categoryWeights[category] || 0) - 0.5;
-            });
-        }
     }
 }
 
@@ -526,6 +764,8 @@ function renderSearchResults(products, total, keyword) {
 
 // ========== 分类标签 ==========
 function initCategoryTags() {
+    if (!elements.categoryTags) return; // 已移除该区域
+    
     const tagButtons = elements.categoryTags.querySelectorAll('.tag-btn');
     
     tagButtons.forEach(btn => {
@@ -551,38 +791,45 @@ function initCategoryTags() {
 // ========== 加载热门产品 ==========
 async function loadTrendingProducts() {
     try {
-        const response = await fetch(`${API_BASE_URL}/products/trending`);
+        const response = await fetch(`${API_BASE_URL}/products/weekly-top?limit=0`);
         const data = await response.json();
+
+        allProductsCache = data.success ? data.data : getMockTrendingProducts();
+        currentPage = 1;
+        applyFiltersAndRender();
         
-        if (data.success) {
-            renderTrendingProducts(data.data);
-        }
     } catch (error) {
-        console.error('加载热门产品失败:', error);
-        // 使用模拟数据
+        console.error('加载产品失败:', error);
         renderTrendingProducts(getMockTrendingProducts());
     }
 }
 
 function renderTrendingProducts(products) {
+    // Cache all products for sorting/filtering
+    if (products.length > 0 && allProductsCache.length === 0) {
+        allProductsCache = [...products];
+    }
+
     elements.trendingProducts.innerHTML = products.map(product =>
-        createProductCard(product, true)
+        createProductCardWithFavorite(product, true)
     ).join('');
 
     animateCards(elements.trendingProducts);
 }
 
-// ========== 加载黑马产品 ==========
+// ========== 加载黑马产品 (4-5分) ==========
 async function loadDarkHorseProducts() {
     if (!elements.darkhorseProducts) return;
 
     try {
-        const response = await fetch(`${API_BASE_URL}/products/dark-horses?limit=6`);
+        // 加载 4-5 分的黑马产品
+        const response = await fetch(`${API_BASE_URL}/products/dark-horses?limit=10&min_index=4`);
         const data = await response.json();
 
         hasDarkhorseData = Boolean(data.success && data.data.length > 0);
         if (hasDarkhorseData) {
-            renderDarkHorseProducts(data.data);
+            darkHorseCache = data.data;
+            renderDarkHorseProducts(filterDarkHorseByType(darkHorseCache, darkHorseFilter));
         } else {
             // 如果没有数据，隐藏整个黑马区域
             if (elements.darkhorseSection) {
@@ -598,7 +845,28 @@ async function loadDarkHorseProducts() {
     }
 }
 
+function filterDarkHorseByType(products, type) {
+    if (type === 'all') return products;
+    return products.filter(p => {
+        const categories = p.categories || [];
+        const isHardware = categories.includes('hardware') || 
+                          p.category === 'hardware' ||
+                          (p.description && p.description.toLowerCase().includes('chip')) ||
+                          (p.description && p.description.toLowerCase().includes('robot'));
+        return type === 'hardware' ? isHardware : !isHardware;
+    });
+}
+
 function renderDarkHorseProducts(products) {
+    if (products.length === 0) {
+        elements.darkhorseProducts.innerHTML = `
+            <div class="empty-state">
+                <p>暂无符合条件的黑马产品</p>
+            </div>
+        `;
+        return;
+    }
+    
     elements.darkhorseProducts.innerHTML = products.map(product =>
         createDarkHorseCard(product)
     ).join('');
@@ -606,30 +874,215 @@ function renderDarkHorseProducts(products) {
     animateDarkHorseCards(elements.darkhorseProducts);
 }
 
+// ========== 黑马筛选初始化 ==========
+function initDarkhorseFilters() {
+    const filterBtns = document.querySelectorAll('.darkhorse-filters .filter-btn');
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            darkHorseFilter = btn.dataset.type;
+            renderDarkHorseProducts(filterDarkHorseByType(darkHorseCache, darkHorseFilter));
+        });
+    });
+}
+
+// ========== 快速发现筛选初始化 ==========
+function initDiscoverFilters() {
+    const filterBtns = document.querySelectorAll('.discover-filter-btn');
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            discoverFilter = btn.dataset.category;
+            // 重新加载发现卡片
+            loadDiscoveryCards();
+        });
+    });
+}
+
+// ========== Tier Tabs 初始化 ==========
+function initTierTabs() {
+    const tierTabs = document.querySelectorAll('.tier-tab');
+    tierTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tierTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            currentTier = tab.dataset.tier;
+            currentPage = 1;
+            applyFiltersAndRender();
+        });
+    });
+}
+
+// ========== 加载更多 ==========
+function initLoadMore() {
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', () => {
+            currentPage++;
+            applyFiltersAndRender(true); // append mode
+        });
+    }
+}
+
+function applyFiltersAndRender(append = false) {
+    let products = [...allProductsCache];
+    
+    // 按 tier 筛选
+    if (currentTier === 'darkhorse') {
+        products = products.filter(p => (p.dark_horse_index || 0) >= 4);
+    } else if (currentTier === 'rising') {
+        products = products.filter(p => {
+            const score = p.dark_horse_index || 0;
+            return score >= 2 && score <= 3;
+        });
+    }
+    
+    // 按类型筛选
+    if (currentTypeFilter !== 'all') {
+        products = products.filter(p => {
+            const categories = p.categories || [];
+            const isHardware = categories.includes('hardware') || p.category === 'hardware';
+            return currentTypeFilter === 'hardware' ? isHardware : !isHardware;
+        });
+    }
+    
+    // 排序
+    products = sortProducts(products, currentSort);
+    
+    // 分页
+    const start = 0;
+    const end = currentPage * PRODUCTS_PER_PAGE;
+    const paginatedProducts = products.slice(start, end);
+    
+    // 渲染
+    if (append) {
+        const newCards = paginatedProducts.slice((currentPage - 1) * PRODUCTS_PER_PAGE);
+        const container = elements.trendingProducts;
+        newCards.forEach(product => {
+            container.insertAdjacentHTML('beforeend', createProductCardWithFavorite(product, true));
+        });
+        animateCards(container);
+    } else {
+        renderTrendingProducts(paginatedProducts);
+    }
+    
+    // 更新加载更多按钮状态
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    if (loadMoreBtn) {
+        loadMoreBtn.style.display = end >= products.length ? 'none' : 'block';
+    }
+}
+
+function sortProducts(products, sortBy) {
+    return products.sort((a, b) => {
+        switch (sortBy) {
+            case 'date':
+                return new Date(b.discovered_at || 0) - new Date(a.discovered_at || 0);
+            case 'funding':
+                return parseFunding(b.funding_total) - parseFunding(a.funding_total);
+            case 'score':
+            default:
+                // 排序规则: 评分 > 融资金额 > 用户数/估值
+                
+                // 1. 首先按评分排序 (5分 > 4分 > 3分...)
+                const scoreA = a.dark_horse_index || 0;
+                const scoreB = b.dark_horse_index || 0;
+                if (scoreB !== scoreA) {
+                    return scoreB - scoreA;
+                }
+                
+                // 2. 同分时按融资金额排序
+                const fundingA = parseFunding(a.funding_total);
+                const fundingB = parseFunding(b.funding_total);
+                if (fundingB !== fundingA) {
+                    return fundingB - fundingA;
+                }
+                
+                // 3. 融资相同时按用户数/估值排序
+                const valuationA = parseValuation(a);
+                const valuationB = parseValuation(b);
+                return valuationB - valuationA;
+        }
+    });
+}
+
+function parseFunding(funding) {
+    if (!funding || funding === 'unknown') return 0;
+    const match = funding.match(/\$?([\d.]+)\s*(M|B|K)?/i);
+    if (!match) return 0;
+    let value = parseFloat(match[1]);
+    const unit = (match[2] || '').toUpperCase();
+    if (unit === 'B') value *= 1000;
+    if (unit === 'K') value /= 1000;
+    return value;
+}
+
+function parseValuation(product) {
+    // 优先使用估值
+    const valuation = product.valuation || product.market_cap || '';
+    if (valuation) {
+        const match = valuation.toString().match(/\$?([\d.]+)\s*(M|B|K)?/i);
+        if (match) {
+            let value = parseFloat(match[1]);
+            const unit = (match[2] || '').toUpperCase();
+            if (unit === 'B') value *= 1000;
+            if (unit === 'K') value /= 1000;
+            return value * 10; // 估值权重更高
+        }
+    }
+    
+    // 其次使用用户数
+    const users = product.weekly_users || product.users || product.monthly_users || 0;
+    if (users > 0) {
+        return users / 10000; // 转换为万用户
+    }
+    
+    // 最后使用热度分数
+    return product.hot_score || product.trending_score || product.final_score || 0;
+}
+
 function createDarkHorseCard(product) {
     const name = product.name || '未命名';
     const darkHorseIndex = product.dark_horse_index || 0;
     const stars = '★'.repeat(darkHorseIndex) + '☆'.repeat(5 - darkHorseIndex);
-    const foundedDate = product.founded_date || '';
-    const fundingTotal = product.funding_total || '';
-    const valuation = product.valuation || '';
-    const whyMatters = product.why_matters || '';
-    const latestNews = product.latest_news || '';
-    const isHardware = product.is_hardware || false;
+    const description = product.description || '暂无描述';
     const website = product.website || '';
+    const categories = product.categories || [];
+    const whyMatters = product.why_matters || '';
+    const funding = product.funding_total || '';
+    const latestNews = product.latest_news || '';
+    const region = product.region || '';
+    
+    // 判断是否为硬件产品
+    const isHardware = categories.includes('hardware') || 
+                       product.category === 'hardware' ||
+                       (description && description.toLowerCase().includes('chip')) ||
+                       (description && description.toLowerCase().includes('robot'));
+    
+    const categoryTags = categories.slice(0, 2).map(cat =>
+        `<span class="darkhorse-tag">${getCategoryName(cat)}</span>`
+    ).join('');
 
     const logoMarkup = buildLogoMarkup(product);
-
-    // Build metadata tags
+    
+    // 构建 meta 标签
     let metaTags = '';
-    if (foundedDate) {
-        metaTags += `<span class="darkhorse-meta-tag"><span class="meta-icon">📅</span> ${foundedDate}</span>`;
-    }
-    if (fundingTotal) {
-        metaTags += `<span class="darkhorse-meta-tag darkhorse-meta-tag--funding"><span class="meta-icon">💰</span> ${fundingTotal}</span>`;
+    if (funding && funding !== 'unknown') {
+        metaTags += `<span class="darkhorse-meta-tag darkhorse-meta-tag--funding">
+            <span class="meta-icon">💰</span>${funding}
+        </span>`;
     }
     if (isHardware) {
-        metaTags += `<span class="darkhorse-meta-tag darkhorse-meta-tag--hardware"><span class="meta-icon">🤖</span> 硬件</span>`;
+        metaTags += `<span class="darkhorse-meta-tag darkhorse-meta-tag--hardware">
+            <span class="meta-icon">🔧</span>硬件
+        </span>`;
+    }
+    if (region) {
+        metaTags += `<span class="darkhorse-meta-tag">
+            <span class="meta-icon">${region}</span>
+        </span>`;
     }
 
     return `
@@ -643,12 +1096,15 @@ function createDarkHorseCard(product) {
                     </div>
                 </div>
             </div>
-            ${whyMatters ? `<p class="darkhorse-why">${whyMatters}</p>` : ''}
+            <p class="darkhorse-description">${description}</p>
+            ${whyMatters ? `<div class="darkhorse-why">${whyMatters}</div>` : ''}
             <div class="darkhorse-meta">
                 ${metaTags}
             </div>
-            ${valuation ? `<div class="darkhorse-valuation">估值: ${valuation}</div>` : ''}
-            ${latestNews ? `<div class="darkhorse-news"><span class="news-icon">📰</span> ${latestNews}</div>` : ''}
+            ${latestNews ? `<div class="darkhorse-news">
+                <span class="news-icon">📰</span>
+                <span>${latestNews}</span>
+            </div>` : ''}
             <div class="darkhorse-cta">
                 <span class="darkhorse-link">了解更多 →</span>
             </div>
@@ -657,6 +1113,11 @@ function createDarkHorseCard(product) {
 }
 
 function animateDarkHorseCards(container) {
+    // Reinitialize Lucide icons for dynamically added content
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+
     const cards = container.querySelectorAll('.darkhorse-card');
     if (prefersReducedMotion) {
         cards.forEach((card) => {
@@ -679,7 +1140,7 @@ function animateDarkHorseCards(container) {
 // ========== 加载本周榜单 ==========
 async function loadWeeklyProducts() {
     try {
-        const response = await fetch(`${API_BASE_URL}/products/weekly-top`);
+        const response = await fetch(`${API_BASE_URL}/products/weekly-top?limit=15`);
         const data = await response.json();
         
         if (data.success) {
@@ -931,6 +1392,7 @@ function buildLogoMarkup(product) {
     return `<div class="product-logo-placeholder">${initial}</div>`;
 }
 
+/* exported handleLogoError, openProduct */
 function handleLogoError(img) {
     if (!img) return;
     const fallbackSrc = img.dataset.fallback || '';
@@ -951,19 +1413,15 @@ function handleLogoError(img) {
 // ========== 创建产品卡片 ==========
 function createProductCard(product, showBadge = false) {
     const categories = product.categories || [];
-    const categoryTags = categories.slice(0, 2).map(cat => 
+    const categoryTags = categories.slice(0, 2).map(cat =>
         `<span class="product-tag">${getCategoryName(cat)}</span>`
     ).join('');
-    
+
     const name = product.name || '未命名';
-    const fundingTotal = product.funding_total || '';
-    const whyMatters = product.why_matters || '';
     const description = product.description || '暂无描述';
-    const rating = product.rating ? product.rating.toFixed(1) : 'N/A';
-    const users = formatNumber(product.weekly_users);
     const cardClass = showBadge ? 'product-card product-card--hot' : 'product-card';
     const logoMarkup = buildLogoMarkup(product);
-    
+
     return `
         <div class="${cardClass}" onclick="openProduct('${product.website}')">
             <div class="product-logo">
@@ -972,18 +1430,8 @@ function createProductCard(product, showBadge = false) {
             <div class="product-info">
                 <div class="product-header">
                     <h3 class="product-name">${name}</h3>
-                    ${showBadge ? `<span class="product-badge">🔥 热门</span>` : ''}
                 </div>
                 <p class="product-description">${description}</p>
-                ${(whyMatters || fundingTotal) ? `
-                <div class="product-insights">
-                    ${whyMatters ? `<div class="product-insight">💡 ${whyMatters}</div>` : ''}
-                    ${fundingTotal ? `<div class="product-insight product-insight--funding">💰 ${fundingTotal}</div>` : ''}
-                </div>` : ''}
-                <div class="product-meta">
-                    <span class="product-meta-item">⭐ ${rating}</span>
-                    <span class="product-meta-item">👥 ${users}</span>
-                </div>
                 <div class="product-tags">
                     ${categoryTags}
                 </div>
@@ -1072,6 +1520,11 @@ function openProduct(url) {
 
 // ========== 动画效果 ==========
 function animateCards(container) {
+    // Reinitialize Lucide icons for dynamically added content
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+
     const cards = container.querySelectorAll('.product-card');
     if (prefersReducedMotion) {
         cards.forEach((card) => {
@@ -1092,6 +1545,11 @@ function animateCards(container) {
 }
 
 function animateListItems(container) {
+    // Reinitialize Lucide icons for dynamically added content
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+
     const items = container.querySelectorAll('.product-list-item');
     if (prefersReducedMotion) {
         items.forEach((item) => {
@@ -1111,108 +1569,693 @@ function animateListItems(container) {
     });
 }
 
-// ========== 模拟数据 (当API不可用时使用) ==========
+// ========== 模拟数据 (当API不可用时使用) - 只包含黑马产品 ==========
 function getMockTrendingProducts() {
     return [
         {
             _id: '1',
-            name: 'ChatGPT',
-            description: 'OpenAI开发的大型语言模型，能够进行自然对话、写作、编程辅助等多种任务。',
-            logo_url: 'https://cdn.openai.com/common/images/favicon.ico',
-            website: 'https://chat.openai.com',
-            categories: ['coding', 'writing'],
+            name: 'Lovable',
+            description: '欧洲最快增长的 AI 产品，8 个月从 0 到独角兽。非开发者也能快速构建全栈应用。',
+            logo_url: 'https://lovable.dev/favicon.ico',
+            website: 'https://lovable.dev',
+            categories: ['coding'],
             rating: 4.8,
-            weekly_users: 1500000,
-            trending_score: 98
-        },
-        {
-            _id: '3',
-            name: 'Midjourney',
-            description: '强大的AI图像生成工具，通过文本描述生成高质量艺术图像。',
-            logo_url: 'https://www.midjourney.com/apple-touch-icon.png',
-            website: 'https://midjourney.com',
-            categories: ['image'],
-            rating: 4.9,
-            weekly_users: 1200000,
-            trending_score: 96
+            weekly_users: 120000,
+            trending_score: 92,
+            why_matters: '证明了 AI 原生产品可以极速获客，对想做 AI 创业的 PM 有重要参考价值。'
         },
         {
             _id: '2',
-            name: 'Claude',
-            description: 'Anthropic开发的AI助手，以安全、有帮助和诚实为核心设计理念。',
-            logo_url: 'https://www.anthropic.com/images/icons/apple-touch-icon.png',
-            website: 'https://claude.ai',
-            categories: ['coding', 'writing'],
-            rating: 4.7,
-            weekly_users: 800000,
-            trending_score: 95
-        },
-        {
-            _id: '16',
             name: 'Devin',
-            description: '全自主 AI 软件工程师，能够端到端处理需求拆解与交付。',
+            description: '全自主 AI 软件工程师，能够端到端处理需求拆解、代码实现与交付。',
             logo_url: 'https://cognition.ai/favicon.ico',
             website: 'https://cognition.ai',
             categories: ['coding'],
             rating: 4.7,
             weekly_users: 160000,
-            trending_score: 93
+            trending_score: 93,
+            why_matters: '重新定义了「AI 工程师」边界，PM 需要思考如何与 AI 协作而非仅仅使用 AI。'
         },
         {
-            _id: '6',
-            name: 'NVIDIA H100',
-            description: 'NVIDIA最新一代AI加速器，专为大规模AI训练和推理设计。',
-            logo_url: 'https://www.nvidia.com/favicon.ico',
-            website: 'https://www.nvidia.com/en-us/data-center/h100/',
+            _id: '3',
+            name: 'Kiro',
+            description: 'AWS 背景团队打造的规范驱动 AI 开发平台，强调稳定的工程化交付。',
+            logo_url: 'https://kiro.dev/favicon.ico',
+            website: 'https://kiro.dev',
+            categories: ['coding'],
+            rating: 4.7,
+            weekly_users: 85000,
+            trending_score: 90,
+            why_matters: '大厂背景创业，专注企业级可靠性，是 AI 编程工具的差异化方向。'
+        },
+        {
+            _id: '4',
+            name: 'Bolt.new',
+            description: 'StackBlitz 推出的浏览器内全栈 AI 开发环境，无需配置即可开始编码。',
+            logo_url: 'https://bolt.new/favicon.ico',
+            website: 'https://bolt.new',
+            categories: ['coding'],
+            rating: 4.8,
+            weekly_users: 200000,
+            trending_score: 91,
+            why_matters: '零配置 + 浏览器内运行，大幅降低 AI 开发入门门槛。'
+        },
+        {
+            _id: '5',
+            name: 'NEO (1X Technologies)',
+            description: '挪威初创公司研发的人形机器人，定位家庭助手和轻工业场景。',
+            logo_url: 'https://1x.tech/favicon.ico',
+            website: 'https://1x.tech',
             categories: ['hardware'],
-            rating: 4.9,
-            weekly_users: 50000,
-            trending_score: 94
+            rating: 4.5,
+            weekly_users: 15000,
+            trending_score: 85,
+            why_matters: '人形机器人赛道的黑马，融资后估值飙升，值得关注具身智能趋势。'
         }
     ];
 }
 
 function getMockWeeklyProducts() {
     return [
-        { _id: '1', name: 'ChatGPT', description: 'OpenAI开发的大型语言模型，能够进行自然对话、写作、编程辅助等多种任务。', logo_url: 'https://cdn.openai.com/common/images/favicon.ico', website: 'https://chat.openai.com', categories: ['coding', 'writing'], rating: 4.8, weekly_users: 1500000 },
-        { _id: '3', name: 'Midjourney', description: '强大的AI图像生成工具，通过文本描述生成高质量艺术图像。', logo_url: 'https://www.midjourney.com/apple-touch-icon.png', website: 'https://midjourney.com', categories: ['image'], rating: 4.9, weekly_users: 1200000 },
-        { _id: '13', name: 'Google Gemini', description: 'Google最新的多模态AI模型，整合文本、图像、音频理解能力。', logo_url: 'https://www.google.com/favicon.ico', website: 'https://gemini.google.com', categories: ['coding', 'writing', 'image'], rating: 4.5, weekly_users: 1100000 },
-        { _id: '4', name: 'Kiro', description: 'AWS 背景团队打造的规范驱动 AI 开发平台，强调稳定交付。', logo_url: 'https://kiro.dev/favicon.ico', website: 'https://kiro.dev', categories: ['coding'], rating: 4.7, weekly_users: 180000 },
-        { _id: '12', name: 'Stable Diffusion', description: '开源的AI图像生成模型，支持本地部署和自定义训练。', logo_url: 'https://stability.ai/favicon.ico', website: 'https://stability.ai', categories: ['image'], rating: 4.6, weekly_users: 890000 },
-        { _id: '2', name: 'Claude', description: 'Anthropic开发的AI助手，以安全、有帮助和诚实为核心设计理念。', logo_url: 'https://www.anthropic.com/images/icons/apple-touch-icon.png', website: 'https://claude.ai', categories: ['coding', 'writing'], rating: 4.7, weekly_users: 800000 },
-        { _id: '14', name: 'Lovable', description: '欧洲最快增长的 AI 产品团队之一，8 个月从 0 到独角兽。', logo_url: 'https://lovable.dev/favicon.ico', website: 'https://lovable.dev', categories: ['other'], rating: 4.8, weekly_users: 120000 },
-        { _id: '7', name: 'Perplexity AI', description: 'AI驱动的搜索引擎，提供带引用来源的答案。', logo_url: 'https://www.perplexity.ai/favicon.ico', website: 'https://perplexity.ai', categories: ['other'], rating: 4.5, weekly_users: 700000 },
-        { _id: '19', name: 'Duolingo Max', description: '使用GPT-4增强的语言学习平台，提供AI对话练习功能。', logo_url: 'https://www.duolingo.com/favicon.ico', website: 'https://www.duolingo.com/max', categories: ['education'], rating: 4.6, weekly_users: 650000 },
-        { _id: '5', name: 'Eleven Labs', description: '领先的AI语音合成平台，提供逼真的文字转语音和语音克隆功能。', logo_url: 'https://elevenlabs.io/favicon.ico', website: 'https://elevenlabs.io', categories: ['voice'], rating: 4.7, weekly_users: 600000 },
-        { _id: '10', name: 'Whisper', description: 'OpenAI开源的语音识别模型，支持多语言转录和翻译。', logo_url: 'https://openai.com/favicon.ico', website: 'https://openai.com/research/whisper', categories: ['voice'], rating: 4.7, weekly_users: 520000 },
-        { _id: '8', name: 'Runway ML', description: '创意AI工具套件，提供视频生成、编辑和特效功能。', logo_url: 'https://runwayml.com/favicon.ico', website: 'https://runwayml.com', categories: ['video', 'image'], rating: 4.6, weekly_users: 450000 },
-        { _id: '16', name: 'Emergent', description: '非开发者也能用 AI 代理构建全栈应用的建站产品。', logo_url: 'https://emergent.sh/favicon.ico', website: 'https://emergent.sh', categories: ['other'], rating: 4.7, weekly_users: 140000 },
-        { _id: '9', name: 'Jasper AI', description: '企业级AI写作助手，帮助创建营销内容和商业文案。', logo_url: 'https://jasper.ai/favicon.ico', website: 'https://jasper.ai', categories: ['writing'], rating: 4.4, weekly_users: 380000 },
-        { _id: '20', name: 'Sora', description: 'OpenAI的文本到视频生成模型，能创建高质量的视频内容。', logo_url: 'https://openai.com/favicon.ico', website: 'https://openai.com/sora', categories: ['video'], rating: 4.8, weekly_users: 300000 }
+        { _id: '1', name: 'Lovable', description: '欧洲最快增长的 AI 产品，8 个月从 0 到独角兽。非开发者也能快速构建全栈应用。', logo_url: 'https://lovable.dev/favicon.ico', website: 'https://lovable.dev', categories: ['coding'], rating: 4.8, weekly_users: 120000, why_matters: '证明了 AI 原生产品可以极速获客' },
+        { _id: '2', name: 'Devin', description: '全自主 AI 软件工程师，能够端到端处理需求拆解、代码实现与交付。', logo_url: 'https://cognition.ai/favicon.ico', website: 'https://cognition.ai', categories: ['coding'], rating: 4.7, weekly_users: 160000, why_matters: '重新定义了 AI 工程师边界' },
+        { _id: '3', name: 'Kiro', description: 'AWS 背景团队打造的规范驱动 AI 开发平台，强调稳定交付。', logo_url: 'https://kiro.dev/favicon.ico', website: 'https://kiro.dev', categories: ['coding'], rating: 4.7, weekly_users: 85000, why_matters: '大厂背景创业，专注企业级可靠性' },
+        { _id: '4', name: 'Emergent', description: '非开发者也能用 AI 代理构建全栈应用的建站产品。', logo_url: 'https://emergent.sh/favicon.ico', website: 'https://emergent.sh', categories: ['coding'], rating: 4.6, weekly_users: 45000, why_matters: '面向非技术用户的 AI 开发工具' },
+        { _id: '5', name: 'Bolt.new', description: 'StackBlitz 推出的浏览器内全栈 AI 开发环境。', logo_url: 'https://bolt.new/favicon.ico', website: 'https://bolt.new', categories: ['coding'], rating: 4.8, weekly_users: 200000, why_matters: '零配置浏览器内 AI 开发' },
+        { _id: '6', name: 'Windsurf', description: 'Codeium 推出的 Agentic IDE，AI 代理主动参与开发流程。', logo_url: 'https://codeium.com/favicon.ico', website: 'https://codeium.com/windsurf', categories: ['coding'], rating: 4.6, weekly_users: 95000, why_matters: 'Agentic IDE 概念先行者' },
+        { _id: '7', name: 'NEO (1X)', description: '挪威初创公司研发的人形机器人，定位家庭助手。', logo_url: 'https://1x.tech/favicon.ico', website: 'https://1x.tech', categories: ['hardware'], rating: 4.5, weekly_users: 15000, why_matters: '人形机器人赛道黑马' },
+        { _id: '8', name: 'Rokid AR Studio', description: '中国 AR 眼镜厂商的 AI 开发平台。', logo_url: 'https://www.rokid.com/favicon.ico', website: 'https://www.rokid.com', categories: ['hardware'], rating: 4.4, weekly_users: 25000, why_matters: '国产 AR + AI 空间计算' },
+        { _id: '9', name: 'DeepSeek', description: '中国 AI 研究公司，以高效开源模型著称。', logo_url: 'https://www.deepseek.com/favicon.ico', website: 'https://www.deepseek.com', categories: ['coding', 'writing'], rating: 4.6, weekly_users: 180000, why_matters: '开源大模型性价比之王' },
+        { _id: '10', name: 'Replit Agent', description: 'Replit 的 AI 代理，自主完成从需求到部署。', logo_url: 'https://replit.com/favicon.ico', website: 'https://replit.com', categories: ['coding'], rating: 4.5, weekly_users: 150000, why_matters: '全流程 AI 开发代理' },
+        { _id: '11', name: 'v0.dev', description: 'Vercel 推出的 AI UI 生成器，对话生成 React 组件。', logo_url: 'https://v0.dev/favicon.ico', website: 'https://v0.dev', categories: ['coding', 'image'], rating: 4.7, weekly_users: 175000, why_matters: '前端 AI 生成标杆产品' },
+        { _id: '12', name: 'Kling AI', description: '快手推出的 AI 视频生成工具。', logo_url: 'https://klingai.com/favicon.ico', website: 'https://klingai.com', categories: ['video'], rating: 4.4, weekly_users: 320000, why_matters: '国产视频生成 AI 代表' },
+        { _id: '13', name: 'Poe', description: 'Quora 的多模型 AI 聊天平台，一站式访问多种模型。', logo_url: 'https://poe.com/favicon.ico', website: 'https://poe.com', categories: ['other'], rating: 4.5, weekly_users: 280000, why_matters: 'AI 模型聚合平台' },
+        { _id: '14', name: 'Glif', description: '可视化 AI 工作流构建平台，无需代码串联多个模型。', logo_url: 'https://glif.app/favicon.ico', website: 'https://glif.app', categories: ['image', 'other'], rating: 4.5, weekly_users: 45000, why_matters: 'AI 工作流乐高积木' },
+        { _id: '15', name: 'Thinking Machines Lab', description: '菲律宾 AI 研究初创，专注东南亚本地化大模型。', logo_url: 'https://thinkingmachines.ph/favicon.ico', website: 'https://thinkingmachines.ph', categories: ['other'], rating: 4.3, weekly_users: 12000, why_matters: '东南亚本土 AI 研究力量' }
     ];
 }
 
 function getMockSearchResults(keyword, categories) {
     let allProducts = getMockWeeklyProducts();
-    
+
     // 关键词筛选
     if (keyword) {
         const keywordLower = keyword.toLowerCase();
-        allProducts = allProducts.filter(p => 
+        allProducts = allProducts.filter(p =>
             p.name.toLowerCase().includes(keywordLower) ||
             p.description.toLowerCase().includes(keywordLower)
         );
     }
-    
+
     // 分类筛选
     if (categories.length > 0) {
-        allProducts = allProducts.filter(p => 
+        allProducts = allProducts.filter(p =>
             p.categories.some(cat => categories.includes(cat))
         );
     }
-    
+
     return {
         products: allProducts,
         total: allProducts.length
     };
+}
+
+// ========== Sort/Filter Controls ==========
+function initSortFilter() {
+    if (elements.sortBy) {
+        elements.sortBy.addEventListener('change', (e) => {
+            currentSort = e.target.value;
+            currentPage = 1;
+            applyFiltersAndRender();
+        });
+    }
+
+    if (elements.typeFilter) {
+        elements.typeFilter.addEventListener('change', (e) => {
+            currentTypeFilter = e.target.value;
+            currentPage = 1;
+            applyFiltersAndRender();
+        });
+    }
+}
+
+// Legacy function for backward compatibility
+function applyFiltersAndSort() {
+    applyFiltersAndRender();
+}
+
+// ========== Favorites ==========
+function initFavorites() {
+    if (elements.showFavoritesBtn) {
+        elements.showFavoritesBtn.addEventListener('click', toggleFavoritesPanel);
+    }
+
+    if (elements.favoritesClose) {
+        elements.favoritesClose.addEventListener('click', closeFavoritesPanel);
+    }
+
+    // Close panel when clicking outside
+    document.addEventListener('click', (e) => {
+        if (elements.favoritesPanel?.classList.contains('is-open')) {
+            if (!elements.favoritesPanel.contains(e.target) &&
+                !elements.showFavoritesBtn?.contains(e.target)) {
+                closeFavoritesPanel();
+            }
+        }
+    });
+}
+
+function getFavorites() {
+    try {
+        const stored = localStorage.getItem(FAVORITES_KEY);
+        return stored ? JSON.parse(stored) : [];
+    } catch {
+        return [];
+    }
+}
+
+function saveFavorites(favorites) {
+    try {
+        localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+    } catch (e) {
+        console.error('Failed to save favorites:', e);
+    }
+}
+
+function isFavorited(productKey) {
+    const favorites = getFavorites();
+    return favorites.some(f => f.key === productKey);
+}
+
+function toggleFavorite(product, event) {
+    if (event) {
+        event.stopPropagation();
+    }
+
+    const productKey = getProductKey(product);
+    let favorites = getFavorites();
+
+    if (isFavorited(productKey)) {
+        favorites = favorites.filter(f => f.key !== productKey);
+    } else {
+        favorites.push({
+            key: productKey,
+            name: product.name,
+            logo_url: product.logo_url,
+            website: product.website,
+            categories: product.categories,
+            addedAt: new Date().toISOString()
+        });
+    }
+
+    saveFavorites(favorites);
+    updateFavoritesCount();
+    updateFavoriteButtons(productKey);
+    renderFavoritesList();
+}
+
+function getProductKey(product) {
+    return product.website || product.name || '';
+}
+
+function updateFavoritesCount() {
+    const count = getFavorites().length;
+    if (elements.favoritesCount) {
+        elements.favoritesCount.textContent = count;
+    }
+}
+
+function updateFavoriteButtons(productKey) {
+    const isFav = isFavorited(productKey);
+    document.querySelectorAll(`[data-product-key="${productKey}"]`).forEach(btn => {
+        btn.classList.toggle('is-favorited', isFav);
+        btn.innerHTML = isFav ? '❤️' : '🤍';
+    });
+}
+
+function toggleFavoritesPanel() {
+    const panel = elements.favoritesPanel;
+    if (!panel) return;
+
+    const isOpen = panel.classList.contains('is-open');
+    if (isOpen) {
+        closeFavoritesPanel();
+    } else {
+        openFavoritesPanel();
+    }
+}
+
+function openFavoritesPanel() {
+    if (!elements.favoritesPanel) return;
+    elements.favoritesPanel.classList.add('is-open');
+    renderFavoritesList();
+}
+
+function closeFavoritesPanel() {
+    if (!elements.favoritesPanel) return;
+    elements.favoritesPanel.classList.remove('is-open');
+}
+
+function renderFavoritesList() {
+    if (!elements.favoritesList) return;
+
+    const favorites = getFavorites();
+    const panel = elements.favoritesPanel;
+
+    if (favorites.length === 0) {
+        panel?.classList.add('is-empty');
+        elements.favoritesList.innerHTML = '';
+        return;
+    }
+
+    panel?.classList.remove('is-empty');
+
+    elements.favoritesList.innerHTML = favorites.map(fav => {
+        const categories = (fav.categories || []).slice(0, 2).map(getCategoryName).join(' · ');
+        const logoMarkup = fav.logo_url
+            ? `<img src="${fav.logo_url}" alt="${fav.name}" onerror="this.style.display='none'">`
+            : `<div class="product-logo-placeholder">${getInitial(fav.name)}</div>`;
+
+        return `
+            <div class="favorite-item" onclick="openProduct('${fav.website}')">
+                <div class="favorite-item-logo">${logoMarkup}</div>
+                <div class="favorite-item-info">
+                    <div class="favorite-item-name">${fav.name}</div>
+                    <div class="favorite-item-category">${categories || '精选 AI 工具'}</div>
+                </div>
+                <button class="favorite-item-remove" onclick="removeFavoriteFromPanel('${fav.key}', event)" title="移除收藏">×</button>
+            </div>
+        `;
+    }).join('');
+}
+
+/* exported removeFavoriteFromPanel */
+function removeFavoriteFromPanel(productKey, event) {
+    if (event) {
+        event.stopPropagation();
+    }
+
+    let favorites = getFavorites();
+    favorites = favorites.filter(f => f.key !== productKey);
+    saveFavorites(favorites);
+    updateFavoritesCount();
+    updateFavoriteButtons(productKey);
+    renderFavoritesList();
+}
+
+// ========== Product Modal ==========
+function initModal() {
+    if (elements.modalClose) {
+        elements.modalClose.addEventListener('click', closeModal);
+    }
+
+    if (elements.productModal) {
+        elements.productModal.addEventListener('click', (e) => {
+            if (e.target === elements.productModal) {
+                closeModal();
+            }
+        });
+    }
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && elements.productModal?.classList.contains('is-open')) {
+            closeModal();
+        }
+    });
+}
+
+function openModal(product) {
+    if (!elements.productModal || !elements.modalContent) return;
+
+    const name = product.name || '未命名';
+    const description = product.description || '暂无描述';
+    const website = product.website || '';
+    const categories = (product.categories || []).map(getCategoryName);
+    const rating = product.rating ? product.rating.toFixed(1) : 'N/A';
+    const users = formatNumber(product.weekly_users);
+    const whyMatters = product.why_matters || '';
+    const fundingTotal = product.funding_total || '';
+    const valuation = product.valuation || '';
+    const foundedDate = product.founded_date || '';
+    const pricing = product.pricing || '';
+    const productKey = getProductKey(product);
+    const isFav = isFavorited(productKey);
+
+    const logoMarkup = buildLogoMarkup(product);
+
+    const categoriesHtml = categories.map(cat =>
+        `<span class="modal-category">${cat}</span>`
+    ).join('');
+
+    let statsHtml = '';
+    if (rating !== 'N/A' || users !== '0') {
+        statsHtml = `
+            <div class="modal-stats">
+                ${rating !== 'N/A' ? `<div class="modal-stat"><div class="modal-stat-value">⭐ ${rating}</div><div class="modal-stat-label">评分</div></div>` : ''}
+                ${users !== '0' ? `<div class="modal-stat"><div class="modal-stat-value">👥 ${users}</div><div class="modal-stat-label">周活跃</div></div>` : ''}
+                ${fundingTotal ? `<div class="modal-stat"><div class="modal-stat-value">💰 ${fundingTotal}</div><div class="modal-stat-label">融资</div></div>` : ''}
+            </div>
+        `;
+    }
+
+    let detailsHtml = '';
+    const details = [];
+    if (foundedDate) details.push({ label: '成立时间', value: foundedDate });
+    if (valuation) details.push({ label: '估值', value: valuation });
+    if (pricing) details.push({ label: '定价', value: pricing });
+
+    if (details.length > 0) {
+        detailsHtml = `
+            <div class="modal-details">
+                ${details.map(d => `
+                    <div class="modal-detail-row">
+                        <span class="modal-detail-label">${d.label}</span>
+                        <span class="modal-detail-value">${d.value}</span>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    elements.modalContent.innerHTML = `
+        <div class="modal-header">
+            <div class="modal-logo">${logoMarkup}</div>
+            <div class="modal-title-block">
+                <h2 class="modal-title" id="modalTitle">${name}</h2>
+                <div class="modal-categories">${categoriesHtml}</div>
+            </div>
+            <button class="modal-favorite-btn ${isFav ? 'is-favorited' : ''}"
+                    data-product-key="${productKey}"
+                    onclick="toggleFavoriteFromModal(event)">
+                ${isFav ? '❤️ 已收藏' : '🤍 收藏'}
+            </button>
+        </div>
+
+        <p class="modal-description">${description}</p>
+
+        ${whyMatters ? `
+            <div class="modal-why-matters">
+                <div class="modal-why-matters-title">💡 为什么值得关注</div>
+                <div class="modal-why-matters-text">${whyMatters}</div>
+            </div>
+        ` : ''}
+
+        ${statsHtml}
+        ${detailsHtml}
+
+        <div class="modal-actions">
+            ${website ? `<a class="modal-action-btn modal-action-btn--primary" href="${website}" target="_blank" rel="noopener noreferrer">访问官网 →</a>` : ''}
+            <button class="modal-action-btn modal-action-btn--secondary" onclick="closeModal()">关闭</button>
+        </div>
+    `;
+
+    // Store current product for favorite toggle
+    elements.modalContent._currentProduct = product;
+
+    elements.productModal.classList.add('is-open');
+    elements.productModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    if (!elements.productModal) return;
+    elements.productModal.classList.remove('is-open');
+    elements.productModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+}
+
+/* exported toggleFavoriteFromModal */
+function toggleFavoriteFromModal(event) {
+    event.stopPropagation();
+    const product = elements.modalContent?._currentProduct;
+    if (product) {
+        toggleFavorite(product, event);
+        // Update modal button
+        const btn = event.target.closest('.modal-favorite-btn');
+        if (btn) {
+            const isFav = isFavorited(getProductKey(product));
+            btn.classList.toggle('is-favorited', isFav);
+            btn.innerHTML = isFav ? '❤️ 已收藏' : '🤍 收藏';
+        }
+    }
+}
+
+// ========== Updated Product Card with Favorite Button ==========
+function createProductCardWithFavorite(product, showBadge = false) {
+    const categories = product.categories || [];
+    const categoryTags = categories.slice(0, 2).map(cat =>
+        `<span class="product-tag">${getCategoryName(cat)}</span>`
+    ).join('');
+
+    const name = product.name || '未命名';
+    const fundingTotal = product.funding_total || '';
+    const whyMatters = product.why_matters || '';
+    const description = product.description || '暂无描述';
+    const rating = product.rating ? product.rating.toFixed(1) : 'N/A';
+    const users = formatNumber(product.weekly_users);
+    const cardClass = showBadge ? 'product-card product-card--hot' : 'product-card';
+    const logoMarkup = buildLogoMarkup(product);
+    const productKey = getProductKey(product);
+    const isFav = isFavorited(productKey);
+
+    // Score badge based on dark_horse_index
+    const score = product.dark_horse_index || 0;
+    let scoreBadge = '';
+    if (score >= 5) {
+        scoreBadge = '<span class="score-badge score-badge--5">5分</span>';
+    } else if (score >= 4) {
+        scoreBadge = '<span class="score-badge score-badge--4">4分</span>';
+    } else if (score >= 3) {
+        scoreBadge = '<span class="score-badge score-badge--3">3分</span>';
+    } else if (score >= 2) {
+        scoreBadge = '<span class="score-badge score-badge--2">2分</span>';
+    }
+
+    // Category pill for hardware/software
+    const isHardware = categories.includes('hardware') ||
+                      product.category === 'hardware' ||
+                      (product.description && product.description.toLowerCase().includes('chip')) ||
+                      (product.description && product.description.toLowerCase().includes('robot'));
+    const categoryPill = isHardware
+        ? '<span class="category-pill category-pill--hardware"><i data-lucide="cpu" style="width:12px;height:12px;"></i> 硬件</span>'
+        : '<span class="category-pill category-pill--software"><i data-lucide="code" style="width:12px;height:12px;"></i> 软件</span>';
+
+    return `
+        <div class="${cardClass}" onclick="handleProductClick(event, '${encodeURIComponent(JSON.stringify(product).replace(/'/g, "\\'"))}')">
+            <button class="product-favorite-btn ${isFav ? 'is-favorited' : ''}"
+                    data-product-key="${productKey}"
+                    onclick="handleFavoriteClick(event, '${encodeURIComponent(JSON.stringify(product).replace(/'/g, "\\'"))}')">
+                ${isFav ? '❤️' : '🤍'}
+            </button>
+            <div class="product-logo">
+                ${logoMarkup}
+            </div>
+            <div class="product-info">
+                <div class="product-header">
+                    <h3 class="product-name">${name}</h3>
+                    ${scoreBadge}
+                </div>
+                <p class="product-description">${description}</p>
+                ${(whyMatters || fundingTotal) ? `
+                <div class="product-insights">
+                    ${whyMatters ? `<div class="product-insight">💡 ${whyMatters}</div>` : ''}
+                    ${fundingTotal ? `<div class="product-insight product-insight--funding">💰 ${fundingTotal}</div>` : ''}
+                </div>` : ''}
+                <div class="product-meta">
+                    ${categoryPill}
+                    <span class="product-meta-item">⭐ ${rating}</span>
+                    <span class="product-meta-item">👥 ${users}</span>
+                </div>
+                <div class="product-tags">
+                    ${categoryTags}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+/* exported handleProductClick, handleFavoriteClick */
+function handleProductClick(event, encodedProduct) {
+    // Don't open modal if clicking on favorite button
+    if (event.target.closest('.product-favorite-btn')) {
+        return;
+    }
+
+    try {
+        const product = JSON.parse(decodeURIComponent(encodedProduct));
+        openModal(product);
+    } catch (e) {
+        console.error('Failed to parse product data:', e);
+    }
+}
+
+function handleFavoriteClick(event, encodedProduct) {
+    event.stopPropagation();
+    try {
+        const product = JSON.parse(decodeURIComponent(encodedProduct));
+        toggleFavorite(product, event);
+    } catch (e) {
+        console.error('Failed to parse product data:', e);
+    }
+}
+
+// ========== 行业领军 ==========
+async function loadIndustryLeaders() {
+    if (!elements.leadersCategories) return;
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/products/industry-leaders`);
+        const result = await response.json();
+
+        if (result.success && result.data && result.data.categories) {
+            leadersCategoriesData = result.data.categories;
+            leadersActiveFilter = 'all';
+            setupLeadersFilters(leadersCategoriesData);
+            renderIndustryLeaders();
+        } else {
+            elements.leadersCategories.innerHTML = '<p class="no-data">暂无数据</p>';
+        }
+    } catch (error) {
+        console.error('Error loading industry leaders:', error);
+        elements.leadersCategories.innerHTML = '<p class="error">加载失败</p>';
+    }
+}
+
+function orderLeaderCategories(categories) {
+    const ordered = [];
+    const remaining = new Map(Object.entries(categories));
+
+    LEADERS_CATEGORY_ORDER.forEach((name) => {
+        if (remaining.has(name)) {
+            ordered.push([name, remaining.get(name)]);
+            remaining.delete(name);
+        }
+    });
+
+    for (const entry of remaining.entries()) {
+        ordered.push(entry);
+    }
+
+    return ordered;
+}
+
+function setupLeadersFilters(categories) {
+    if (!elements.leadersFilters) return;
+    const orderedNames = orderLeaderCategories(categories).map(([name]) => name);
+    const filters = ['全部', ...orderedNames];
+
+    elements.leadersFilters.innerHTML = filters.map((label) => {
+        const key = label === '全部' ? 'all' : label;
+        return `<button class="leaders-filter" data-filter="${key}">${label}</button>`;
+    }).join('');
+
+    elements.leadersFilters.querySelectorAll('.leaders-filter').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            leadersActiveFilter = btn.dataset.filter || 'all';
+            updateLeadersFilterSelection();
+            renderIndustryLeaders();
+        });
+    });
+
+    updateLeadersFilterSelection();
+}
+
+function updateLeadersFilterSelection() {
+    if (!elements.leadersFilters) return;
+    elements.leadersFilters.querySelectorAll('.leaders-filter').forEach((btn) => {
+        const isActive = (btn.dataset.filter || 'all') === leadersActiveFilter;
+        btn.classList.toggle('active', isActive);
+    });
+}
+
+function renderIndustryLeaders() {
+    if (!elements.leadersCategories || !leadersCategoriesData) return;
+
+    let entries = orderLeaderCategories(leadersCategoriesData);
+    if (leadersActiveFilter !== 'all') {
+        entries = entries.filter(([name]) => name === leadersActiveFilter);
+    }
+
+    if (!entries.length) {
+        elements.leadersCategories.innerHTML = '<p class="no-data">暂无数据</p>';
+        return;
+    }
+
+    let html = '';
+    for (const [categoryName, categoryData] of entries) {
+        const icon = categoryData.icon || '📦';
+        const products = categoryData.products || [];
+        const description = categoryData.description || '';
+
+        html += `
+            <div class="leaders-category">
+                <div class="category-header">
+                    <span class="category-icon">${icon}</span>
+                    <h3 class="category-name">${categoryName}</h3>
+                    <span class="category-count">${products.length} 个产品</span>
+                </div>
+                <p class="category-desc">${description}</p>
+                <div class="leaders-grid">
+                    ${products.map(p => renderLeaderCard(p)).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    elements.leadersCategories.innerHTML = html;
+    animateLeaderCards(elements.leadersCategories);
+}
+
+function animateLeaderCards(container) {
+    // Reinitialize Lucide icons for dynamically added content
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+
+    const cards = container.querySelectorAll('.leader-card');
+    if (prefersReducedMotion) {
+        cards.forEach((card) => {
+            card.style.opacity = '1';
+            card.style.transform = 'none';
+        });
+        return;
+    }
+    cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(16px)';
+        setTimeout(() => {
+            card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 40);
+    });
+}
+
+function renderLeaderCard(product) {
+    const logoSrc = product.logo || '';
+    const initial = getInitial(product.name);
+    const logoMarkup = logoSrc
+        ? `<img src="${logoSrc}" alt="${product.name}" onerror="this.parentElement.innerHTML='<div class=\\'leader-logo-placeholder\\'>${initial}</div>'">`
+        : `<div class="leader-logo-placeholder">${initial}</div>`;
+
+    return `
+        <div class="leader-card" onclick="window.open('${product.website}', '_blank')">
+            <div class="leader-header">
+                <div class="leader-logo">${logoMarkup}</div>
+                <div class="leader-title">
+                    <h4 class="leader-name">${product.name}</h4>
+                    <p class="leader-company">${product.company || ''}</p>
+                </div>
+                <span class="leader-region">${product.region || '🌍'}</span>
+            </div>
+            <p class="leader-desc">${product.description || ''}</p>
+            <div class="leader-stats">
+                ${product.funding ? `<span class="stat">💰 ${product.funding}</span>` : ''}
+                ${product.valuation ? `<span class="stat">📈 ${product.valuation}</span>` : ''}
+                ${product.users ? `<span class="stat">👥 ${product.users}</span>` : ''}
+            </div>
+            <p class="leader-why">💡 ${product.why_famous || ''}</p>
+        </div>
+    `;
 }

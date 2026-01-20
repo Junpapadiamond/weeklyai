@@ -1,0 +1,511 @@
+{
+  "_meta": {
+    "description": "AI 行业领军企业 - 已经广为人知的成熟产品，供不熟悉 AI 领域的人参考",
+    "note": "这些产品不会出现在黑马/潜力股列表中，因为它们已经是行业标杆",
+    "last_updated": "2026-01-19"
+  },
+  "categories": {
+    "通用大模型": {
+      "icon": "🧠",
+      "description": "提供通用 AI 对话和推理能力的基础模型",
+      "products": [
+        {
+          "name": "ChatGPT",
+          "company": "OpenAI",
+          "website": "https://chat.openai.com",
+          "logo": "/logos/industry-leaders/chatgpt.png",
+          "region": "🇺🇸",
+          "description": "全球最知名的 AI 聊天机器人，开创了大模型对话交互时代",
+          "founded": "2022-11",
+          "funding": ">$10B",
+          "valuation": "$157B (2024)",
+          "users": "200M+ 周活",
+          "why_famous": "2022年发布即爆火，2个月破亿用户，定义了大模型产品形态"
+        },
+        {
+          "name": "Claude",
+          "company": "Anthropic",
+          "website": "https://claude.ai",
+          "logo": "/logos/industry-leaders/claude.png",
+          "region": "🇺🇸",
+          "description": "以安全和长上下文著称的 AI 助手，OpenAI 前员工创立",
+          "founded": "2023-03",
+          "funding": "$7.6B",
+          "valuation": "$60B (2024)",
+          "users": "未公开",
+          "why_famous": "Dario/Daniela Amodei (前OpenAI VP) 创立，200K上下文窗口，企业级安全"
+        },
+        {
+          "name": "Gemini",
+          "company": "Google DeepMind",
+          "website": "https://gemini.google.com",
+          "logo": "/logos/industry-leaders/gemini.png",
+          "region": "🇺🇸",
+          "description": "Google 的多模态 AI 模型，整合进 Google 全系产品",
+          "founded": "2023-12",
+          "funding": "Google 内部",
+          "valuation": "Google 子产品",
+          "users": "未公开",
+          "why_famous": "Google 整合 Bard + DeepMind 后的主力模型，原生多模态"
+        },
+        {
+          "name": "Copilot",
+          "company": "Microsoft",
+          "website": "https://copilot.microsoft.com",
+          "logo": "/logos/industry-leaders/copilot.jpg",
+          "region": "🇺🇸",
+          "description": "Microsoft 的 AI 助手品牌，整合进 Windows/Office/Edge",
+          "founded": "2023-02",
+          "funding": "Microsoft 内部",
+          "valuation": "Microsoft 子产品",
+          "users": "未公开",
+          "why_famous": "基于 OpenAI 技术，整合进微软全系产品"
+        }
+      ]
+    },
+    "中国大模型": {
+      "icon": "🇨🇳",
+      "description": "中国本土 AI 大模型产品",
+      "products": [
+        {
+          "name": "Kimi",
+          "company": "月之暗面 (Moonshot AI)",
+          "website": "https://kimi.moonshot.cn",
+          "logo": "/logos/industry-leaders/kimi-moonshot-cn.png",
+          "region": "🇨🇳",
+          "description": "长上下文著称的中文 AI 助手，200万字上下文",
+          "founded": "2023-03",
+          "funding": "$1B+",
+          "valuation": "$3B (2024)",
+          "users": "未公开",
+          "why_famous": "中国最火 AI 产品之一，长上下文技术领先"
+        },
+        {
+          "name": "豆包",
+          "company": "字节跳动",
+          "website": "https://doubao.com",
+          "logo": "/logos/industry-leaders/doubao-com.png",
+          "region": "🇨🇳",
+          "description": "字节跳动的 AI 聊天助手，多模态能力",
+          "founded": "2023-08",
+          "funding": "字节内部",
+          "valuation": "字节子产品",
+          "users": "未公开",
+          "why_famous": "字节系 AI 产品，整合抖音生态"
+        },
+        {
+          "name": "通义千问",
+          "company": "阿里云",
+          "website": "https://tongyi.aliyun.com",
+          "logo": "/logos/industry-leaders/tongyi-aliyun-com.svg",
+          "region": "🇨🇳",
+          "description": "阿里云的大语言模型产品，企业级能力",
+          "founded": "2023-04",
+          "funding": "阿里内部",
+          "valuation": "阿里子产品",
+          "users": "未公开",
+          "why_famous": "阿里云主力 AI 产品，Qwen 模型开源影响大"
+        },
+        {
+          "name": "文心一言",
+          "company": "百度",
+          "website": "https://yiyan.baidu.com",
+          "logo": "/logos/industry-leaders/yiyan-baidu-com.ico",
+          "region": "🇨🇳",
+          "description": "百度的 AI 对话产品，中国最早发布的大模型之一",
+          "founded": "2023-03",
+          "funding": "百度内部",
+          "valuation": "百度子产品",
+          "users": "100M+ 用户",
+          "why_famous": "中国最早发布的大模型产品之一"
+        },
+        {
+          "name": "智谱清言",
+          "company": "智谱AI",
+          "website": "https://chatglm.cn",
+          "logo": "/logos/industry-leaders/chatglm-cn.png",
+          "region": "🇨🇳",
+          "description": "清华系 AI 公司，GLM 系列模型开发者",
+          "founded": "2019",
+          "funding": "$400M+",
+          "valuation": "$3B (2024)",
+          "users": "未公开",
+          "why_famous": "清华技术背景，GLM 系列开源模型影响大"
+        },
+        {
+          "name": "讯飞星火",
+          "company": "科大讯飞",
+          "website": "https://xinghuo.xfyun.cn",
+          "logo": "/logos/industry-leaders/xinghuo-xfyun-cn.ico",
+          "region": "🇨🇳",
+          "description": "科大讯飞的大模型产品，语音 AI 技术领先",
+          "founded": "2023-05",
+          "funding": "讯飞内部",
+          "valuation": "讯飞子产品",
+          "users": "未公开",
+          "why_famous": "语音识别老牌厂商，技术积累深厚"
+        },
+        {
+          "name": "MiniMax",
+          "company": "MiniMax",
+          "website": "https://minimaxi.com",
+          "logo": "/logos/industry-leaders/minimaxi-com.ico",
+          "region": "🇨🇳",
+          "description": "多模态 AI 公司，ABAB 系列模型，Talkie 角色 AI",
+          "founded": "2021-12",
+          "funding": "$600M+",
+          "valuation": "$2.5B (2024)",
+          "users": "未公开",
+          "why_famous": "前商汤副总裁创立，Talkie 海外爆火"
+        }
+      ]
+    },
+    "搜索引擎": {
+      "icon": "🔍",
+      "description": "AI 增强的搜索和问答引擎",
+      "products": [
+        {
+          "name": "Perplexity",
+          "company": "Perplexity AI",
+          "website": "https://perplexity.ai",
+          "logo": "/logos/industry-leaders/perplexity.svg",
+          "region": "🇺🇸",
+          "description": "AI 原生搜索引擎，对话式搜索+实时引用",
+          "founded": "2022-08",
+          "funding": "$500M",
+          "valuation": "$9B (2024)",
+          "users": "100M+ 月访问",
+          "why_famous": "挑战 Google 的 AI 搜索，Jeff Bezos 投资"
+        }
+      ]
+    },
+    "写作助手": {
+      "icon": "✍️",
+      "description": "AI 写作和内容创作工具",
+      "products": [
+        {
+          "name": "Jasper",
+          "company": "Jasper AI",
+          "website": "https://jasper.ai",
+          "logo": "/logos/industry-leaders/jasper.png",
+          "region": "🇺🇸",
+          "description": "企业级 AI 写作和营销内容生成平台",
+          "founded": "2021-01",
+          "funding": "$125M",
+          "valuation": "$1.5B (2022)",
+          "users": "100K+ 企业用户",
+          "why_famous": "AI 写作工具早期独角兽，营销内容生成先驱"
+        },
+        {
+          "name": "Grammarly",
+          "company": "Grammarly",
+          "website": "https://grammarly.com",
+          "logo": "/logos/industry-leaders/grammarly.png",
+          "region": "🇺🇸",
+          "description": "AI 写作助手，语法检查和风格优化",
+          "founded": "2009",
+          "funding": "$400M",
+          "valuation": "$13B (2021)",
+          "users": "30M+ 日活",
+          "why_famous": "写作助手品类王者，AI 增强后更强大"
+        },
+        {
+          "name": "Copy.ai",
+          "company": "Copy.ai",
+          "website": "https://copy.ai",
+          "logo": "/logos/industry-leaders/copy-ai.png",
+          "region": "🇺🇸",
+          "description": "AI 营销文案生成工具",
+          "founded": "2020-10",
+          "funding": "$13.9M",
+          "valuation": "未公开",
+          "users": "10M+ 用户",
+          "why_famous": "营销文案生成先驱，早期 GPT-3 应用代表"
+        },
+        {
+          "name": "Notion AI",
+          "company": "Notion",
+          "website": "https://notion.so/product/ai",
+          "logo": "/logos/industry-leaders/notion-ai.png",
+          "region": "🇺🇸",
+          "description": "Notion 的内置 AI 写作和总结功能",
+          "founded": "2023-02",
+          "funding": "Notion 内部",
+          "valuation": "Notion 子产品",
+          "users": "Notion 用户可用",
+          "why_famous": "生产力工具 + AI 的成功整合案例"
+        }
+      ]
+    },
+    "图像生成": {
+      "icon": "🎨",
+      "description": "AI 图像创作和编辑工具",
+      "products": [
+        {
+          "name": "Midjourney",
+          "company": "Midjourney",
+          "website": "https://midjourney.com",
+          "logo": "/logos/industry-leaders/midjourney.png",
+          "region": "🇺🇸",
+          "description": "最受欢迎的 AI 艺术生成工具，以高质量美学著称",
+          "founded": "2022-07",
+          "funding": "自负盈亏",
+          "valuation": "未融资",
+          "users": "16M+ 用户",
+          "why_famous": "无融资盈利神话，ARR $200M+，Discord 社区爆火"
+        },
+        {
+          "name": "DALL-E",
+          "company": "OpenAI",
+          "website": "https://openai.com/dall-e-3",
+          "logo": "/logos/industry-leaders/dall-e.png",
+          "region": "🇺🇸",
+          "description": "OpenAI 的图像生成模型，集成在 ChatGPT",
+          "founded": "2021-01",
+          "funding": "OpenAI 内部",
+          "valuation": "OpenAI 子产品",
+          "users": "ChatGPT 用户可用",
+          "why_famous": "开创了文字生成图像的 AI 品类"
+        },
+        {
+          "name": "Stable Diffusion",
+          "company": "Stability AI",
+          "website": "https://stability.ai",
+          "logo": "/logos/industry-leaders/stable-diffusion.png",
+          "region": "🇬🇧",
+          "description": "开源图像生成模型，社区生态最丰富",
+          "founded": "2022-08",
+          "funding": "$173M",
+          "valuation": "$1B (peak)",
+          "users": "开源，无法统计",
+          "why_famous": "开源模型先驱，催生了整个 AI 图像开源生态"
+        }
+      ]
+    },
+    "视频生成": {
+      "icon": "🎬",
+      "description": "AI 视频创作和编辑工具",
+      "products": [
+        {
+          "name": "Sora",
+          "company": "OpenAI",
+          "website": "https://openai.com/sora",
+          "logo": "/logos/industry-leaders/sora.png",
+          "region": "🇺🇸",
+          "description": "OpenAI 的视频生成模型，60秒高质量视频",
+          "founded": "2024-02",
+          "funding": "OpenAI 内部",
+          "valuation": "OpenAI 子产品",
+          "users": "邀请制",
+          "why_famous": "发布 demo 即引爆全网，视频生成质量标杆"
+        },
+        {
+          "name": "Runway",
+          "company": "Runway",
+          "website": "https://runwayml.com",
+          "logo": "/logos/industry-leaders/runway.png",
+          "region": "🇺🇸",
+          "description": "AI 视频编辑和生成平台，好莱坞级工具",
+          "founded": "2018",
+          "funding": "$237M",
+          "valuation": "$1.5B (2023)",
+          "users": "未公开",
+          "why_famous": "Gen-2 视频模型，被好莱坞工作室广泛采用"
+        },
+        {
+          "name": "Pika",
+          "company": "Pika Labs",
+          "website": "https://pika.art",
+          "logo": "/logos/industry-leaders/pika.png",
+          "region": "🇺🇸",
+          "description": "AI 视频生成工具，以易用性和速度著称",
+          "founded": "2023-04",
+          "funding": "$135M",
+          "valuation": "$470M (2023)",
+          "users": "未公开",
+          "why_famous": "斯坦福 PhD 创立，Pika 1.0 发布时爆火"
+        },
+        {
+          "name": "Synthesia",
+          "company": "Synthesia",
+          "website": "https://synthesia.io",
+          "logo": "/logos/industry-leaders/synthesia.png",
+          "region": "🇬🇧",
+          "description": "AI 数字人视频生成，企业培训视频首选",
+          "founded": "2017",
+          "funding": "$156M",
+          "valuation": "$1B (2023)",
+          "users": "50K+ 企业客户",
+          "why_famous": "企业级 AI 视频先驱，Fortune 500 广泛采用"
+        }
+      ]
+    },
+    "语音合成": {
+      "icon": "🎤",
+      "description": "AI 语音克隆和合成工具",
+      "products": [
+        {
+          "name": "ElevenLabs",
+          "company": "ElevenLabs",
+          "website": "https://elevenlabs.io",
+          "logo": "/logos/industry-leaders/elevenlabs.png",
+          "region": "🇺🇸",
+          "description": "最逼真的 AI 语音克隆和合成平台",
+          "founded": "2022-01",
+          "funding": "$180M",
+          "valuation": "$1.1B (2024)",
+          "users": "1M+ 用户",
+          "why_famous": "语音克隆质量业界第一，音频行业变革者"
+        }
+      ]
+    },
+    "代码开发": {
+      "icon": "💻",
+      "description": "AI 辅助编程和代码生成工具",
+      "products": [
+        {
+          "name": "Cursor",
+          "company": "Anysphere",
+          "website": "https://cursor.com",
+          "logo": "/logos/industry-leaders/cursor-logo.jpg",
+          "region": "🇺🇸",
+          "description": "AI 原生代码编辑器，基于 VS Code fork",
+          "founded": "2023-01",
+          "funding": "$400M",
+          "valuation": "$2.5B (2024)",
+          "users": "未公开",
+          "why_famous": "AI first IDE 开创者，8个月 ARR $100M，程序员人手必备"
+        },
+        {
+          "name": "GitHub Copilot",
+          "company": "GitHub/Microsoft",
+          "website": "https://github.com/features/copilot",
+          "logo": "/logos/industry-leaders/github-copilot.png",
+          "region": "🇺🇸",
+          "description": "AI 代码补全和生成工具，集成在各大 IDE",
+          "founded": "2021-06",
+          "funding": "Microsoft 内部",
+          "valuation": "GitHub 子产品",
+          "users": "1.8M+ 付费用户",
+          "why_famous": "第一个大规模商用的 AI 编程助手，定义了 AI 辅助编程品类"
+        },
+        {
+          "name": "Replit",
+          "company": "Replit",
+          "website": "https://replit.com",
+          "logo": "/logos/industry-leaders/replit.png",
+          "region": "🇺🇸",
+          "description": "云端 IDE + AI 编程助手，支持多语言在线开发",
+          "founded": "2016",
+          "funding": "$222M",
+          "valuation": "$1.16B (2023)",
+          "users": "25M+ 用户",
+          "why_famous": "云端编程先驱，Ghostwriter AI 助手，教育市场强势"
+        },
+        {
+          "name": "v0.dev",
+          "company": "Vercel",
+          "website": "https://v0.dev",
+          "logo": "/logos/industry-leaders/v0-dev.png",
+          "region": "🇺🇸",
+          "description": "AI 生成前端 UI 组件，自然语言转 React 代码",
+          "founded": "2023-09",
+          "funding": "Vercel 内部",
+          "valuation": "Vercel 子产品",
+          "users": "未公开",
+          "why_famous": "前端开发者圈爆火，极大提升 UI 开发效率"
+        },
+        {
+          "name": "Bolt.new",
+          "company": "StackBlitz",
+          "website": "https://bolt.new",
+          "logo": "/logos/industry-leaders/bolt-new.png",
+          "region": "🇺🇸",
+          "description": "AI 全栈应用生成器，自然语言一键部署",
+          "founded": "2024",
+          "funding": "StackBlitz 内部",
+          "valuation": "StackBlitz 子产品",
+          "users": "未公开",
+          "why_famous": "全栈应用开发新范式，从 prompt 到部署一气呵成"
+        }
+      ]
+    },
+    "开发者工具": {
+      "icon": "🛠️",
+      "description": "AI 应用开发框架和工具",
+      "products": [
+        {
+          "name": "LangChain",
+          "company": "LangChain",
+          "website": "https://langchain.com",
+          "logo": "/logos/industry-leaders/langchain.png",
+          "region": "🇺🇸",
+          "description": "最流行的 LLM 应用开发框架",
+          "founded": "2022-10",
+          "funding": "$35M",
+          "valuation": "$200M (2023)",
+          "users": "80K+ GitHub stars",
+          "why_famous": "LLM 应用开发标准框架，开发者生态最大"
+        },
+        {
+          "name": "Hugging Face",
+          "company": "Hugging Face",
+          "website": "https://huggingface.co",
+          "logo": "/logos/industry-leaders/hugging-face.svg",
+          "region": "🇺🇸",
+          "description": "AI 模型和数据集的 GitHub，开源 AI 社区中心",
+          "founded": "2016",
+          "funding": "$395M",
+          "valuation": "$4.5B (2023)",
+          "users": "500K+ 模型",
+          "why_famous": "AI 开源社区的绝对中心，Transformers 库开创者"
+        },
+        {
+          "name": "Together AI",
+          "company": "Together AI",
+          "website": "https://together.ai",
+          "logo": "/logos/industry-leaders/together-ai.png",
+          "region": "🇺🇸",
+          "description": "开源模型云平台，提供推理和微调服务",
+          "founded": "2022-06",
+          "funding": "$225M",
+          "valuation": "$1.25B (2024)",
+          "users": "未公开",
+          "why_famous": "开源模型托管平台领导者，Llama 等模型首选"
+        },
+        {
+          "name": "Groq",
+          "company": "Groq",
+          "website": "https://groq.com",
+          "logo": "/logos/industry-leaders/groq.png",
+          "region": "🇺🇸",
+          "description": "超快 LLM 推理芯片和云服务",
+          "founded": "2016",
+          "funding": "$640M",
+          "valuation": "$2.8B (2024)",
+          "users": "未公开",
+          "why_famous": "LPU 芯片推理速度碾压 GPU，500 tokens/秒"
+        }
+      ]
+    },
+    "AI角色/伴侣": {
+      "icon": "💬",
+      "description": "AI 角色扮演和虚拟伴侣产品",
+      "products": [
+        {
+          "name": "Character.AI",
+          "company": "Character.AI",
+          "website": "https://character.ai",
+          "logo": "/logos/industry-leaders/character-ai.png",
+          "region": "🇺🇸",
+          "description": "AI 角色聊天平台，可创建和对话各种 AI 人格",
+          "founded": "2021-11",
+          "funding": "$150M",
+          "valuation": "$1B (被 Google 收购团队)",
+          "users": "20M+ 月活",
+          "why_famous": "AI 角色扮演品类开创者，Z世代超爱"
+        }
+      ]
+    }
+  }
+}
