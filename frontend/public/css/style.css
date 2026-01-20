@@ -134,29 +134,67 @@ body::after {
 }
 
 @keyframes floaty {
-    0%, 100% { transform: translate3d(0, 0, 0); }
-    50% { transform: translate3d(18px, -22px, 0) scale(1.02); }
+
+    0%,
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    50% {
+        transform: translate3d(18px, -22px, 0) scale(1.02);
+    }
 }
 
 @keyframes rise {
-    from { opacity: 0; transform: translateY(18px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes slide-down {
-    from { opacity: 0; transform: translateY(-12px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 0.6; }
-    50% { transform: scale(1.25); opacity: 1; }
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: scale(1.25);
+        opacity: 1;
+    }
 }
 
 @keyframes bar-dance {
-    0% { transform: scaleY(0.6); }
-    50% { transform: scaleY(1.1); }
-    100% { transform: scaleY(0.7); }
+    0% {
+        transform: scaleY(0.6);
+    }
+
+    50% {
+        transform: scaleY(1.1);
+    }
+
+    100% {
+        transform: scaleY(0.7);
+    }
 }
 
 /* ========== Navigation ========== */
@@ -196,7 +234,7 @@ body::after {
     pointer-events: none;
 }
 
-.nav-container > * {
+.nav-container>* {
     position: relative;
     z-index: 1;
 }
@@ -944,11 +982,13 @@ body::after {
     align-items: center;
     gap: 0.6rem;
     margin-bottom: 0.4rem;
-    flex-wrap: nowrap; /* 确保不换行 */
+    flex-wrap: nowrap;
+    /* 确保不换行 */
 }
 
 .product-header .score-badge {
-    flex-shrink: 0; /* badge 不压缩 */
+    flex-shrink: 0;
+    /* badge 不压缩 */
     white-space: nowrap;
 }
 
@@ -959,7 +999,8 @@ body::after {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: calc(100% - 60px); /* 留出 badge 空间 */
+    max-width: calc(100% - 60px);
+    /* 留出 badge 空间 */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1318,8 +1359,13 @@ body::after {
 }
 
 @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
 }
 
 /* ========== Empty State ========== */
@@ -1635,60 +1681,79 @@ body::after {
 }
 
 .darkhorse-section .section-header::after {
-    background: linear-gradient(90deg, rgba(168, 85, 247, 0.7), rgba(236, 72, 153, 0.7));
+    background: linear-gradient(90deg, #1a1a1a 0%, #d4af37 50%, #1a1a1a 100%);
 }
 
 .darkhorse-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.2rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.4rem;
 }
 
+/* ========== Premium Black Horse Card ========== */
 .darkhorse-card {
     position: relative;
-    padding: 1.5rem;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(250, 245, 255, 0.92));
-    border: 1px solid rgba(168, 85, 247, 0.2);
+    padding: 1.6rem;
+    background: linear-gradient(145deg, #0d0d0d 0%, #1a1a1a 50%, #0d0d0d 100%);
+    border: 1px solid rgba(212, 175, 55, 0.25);
     border-radius: var(--radius-lg);
     cursor: pointer;
-    transition: all var(--transition-normal);
-    box-shadow: 0 8px 24px rgba(168, 85, 247, 0.08);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: 0.85rem;
+    gap: 0.9rem;
 }
 
+/* Top gold accent bar */
 .darkhorse-card::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #a855f7, #ec4899, #f97316);
-    opacity: 0.85;
+    height: 3px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            #d4af37 20%,
+            #f5deb3 50%,
+            #d4af37 80%,
+            transparent 100%);
+    opacity: 0.9;
 }
 
+/* Black Horse Silhouette - Galloping Stallion */
 .darkhorse-card::after {
-    content: "🦄";
+    content: "";
     position: absolute;
-    top: 12px;
-    right: 12px;
-    font-size: 1.4rem;
-    opacity: 0.3;
-    transition: all var(--transition-fast);
+    top: 10px;
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%23d4af37' fill-opacity='0.15' d='M58.2 28.1c-1.2-2.3-3.8-3.1-5.4-2.4-.4-1.8-1.6-3.2-3.2-3.8.2-2.1-.8-4.2-2.8-5.2-1.4-.7-3-.6-4.3.1l-2.1-3.5c-.8-1.3-2.4-1.8-3.8-1.2l-1.8.8c-1.1-1.4-2.8-2.2-4.6-2.2-1.2 0-2.3.3-3.3 1l-6.4-1.3c-2.1-.4-4.2.6-5.1 2.5l-2.4 5.1c-2.2.4-4 2-4.6 4.2l-1.2 4.3c-2.1 1.2-3.2 3.6-2.6 5.9l.8 3.2c-1.8 2.1-2.1 5.1-.6 7.4l2.4 3.8c-.2 2.4.8 4.7 2.8 6.1l14.2 10.1c1.4 1 3.1 1.3 4.7.9l8.4-2.1c1.8-.5 3.2-1.8 3.8-3.5l1.4-4c1.6-.2 3-1 4-2.2 1.4.4 2.9.2 4.1-.6l3.2-2.1c1.8-1.2 2.6-3.4 2-5.4l5.6-8.2c1.3-1.9 1.2-4.4-.4-6.2l-2.8-3.6z'/%3E%3Cpath fill='%23d4af37' fill-opacity='0.35' d='M52 32c-2.5-1-4.2-2.8-5.2-4.8-.6 0-1.2.1-1.8.3-1.8-2.4-4.6-3.8-7.6-3.6l-3.2-4.8c-.6-.9-1.8-1.1-2.7-.5l-3.2 2.1c-1.8-.8-3.8-.8-5.6 0L19 17.2c-1.2-.8-2.8-.4-3.5.8l-2.1 3.6c-1.4.6-2.4 1.8-2.8 3.2l-1 3.2c-1.2.8-2 2.2-2 3.8v4c-1 1.4-1.2 3.2-.4 4.8l1.6 3.2c0 1.8.8 3.4 2.2 4.4l10.4 7.6c1 .7 2.2 1 3.4.8l6.8-1.2c1.4-.2 2.6-1.1 3.2-2.4l1.8-4c1.2.2 2.4 0 3.4-.6l2.4-1.4c1.4-.8 2.2-2.4 2-4l4.8-6.8c1-1.4.8-3.2-.2-4.4L52 32z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.2));
 }
 
 .darkhorse-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(168, 85, 247, 0.18);
-    border-color: rgba(168, 85, 247, 0.4);
+    transform: translateY(-6px);
+    box-shadow:
+        0 24px 48px rgba(0, 0, 0, 0.6),
+        0 0 40px rgba(212, 175, 55, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    border-color: rgba(212, 175, 55, 0.5);
 }
 
 .darkhorse-card:hover::after {
-    opacity: 0.8;
-    transform: scale(1.2) rotate(10deg);
+    opacity: 0.85;
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.4));
 }
 
 .darkhorse-card-header {
@@ -1702,18 +1767,20 @@ body::after {
     width: 56px;
     height: 56px;
     border-radius: var(--radius-md);
-    background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(236, 72, 153, 0.15));
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    border: 1px solid rgba(168, 85, 247, 0.25);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .darkhorse-logo img {
     width: 38px;
     height: 38px;
     object-fit: contain;
+    filter: brightness(1.1);
 }
 
 .darkhorse-title-block {
@@ -1722,10 +1789,11 @@ body::after {
 }
 
 .darkhorse-name {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: 700;
-    color: var(--ink-900);
+    color: #f5f5f5;
     margin-bottom: 0.25rem;
+    letter-spacing: -0.01em;
 }
 
 .darkhorse-rating {
@@ -1735,14 +1803,15 @@ body::after {
 }
 
 .darkhorse-stars {
-    color: #f59e0b;
+    color: #d4af37;
     font-size: 0.85rem;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
+    text-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
 }
 
 .darkhorse-description {
     font-size: 0.85rem;
-    color: var(--ink-700);
+    color: #9a9a9a;
     line-height: 1.55;
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -1758,24 +1827,26 @@ body::after {
 }
 
 .darkhorse-tag {
-    padding: 0.2rem 0.55rem;
-    background: rgba(168, 85, 247, 0.12);
+    padding: 0.22rem 0.6rem;
+    background: rgba(212, 175, 55, 0.08);
     border-radius: var(--radius-pill);
     font-size: 0.68rem;
-    color: var(--ink-700);
+    color: #b8a060;
     font-weight: 500;
-    border: 1px solid rgba(168, 85, 247, 0.2);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .darkhorse-why {
-    font-size: 0.92rem;
-    color: var(--ink-700);
+    font-size: 0.9rem;
+    color: #c0c0c0;
     line-height: 1.55;
     font-weight: 500;
-    padding: 0.6rem 0.8rem;
-    background: rgba(168, 85, 247, 0.06);
+    padding: 0.7rem 0.9rem;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.06) 0%, rgba(212, 175, 55, 0.02) 100%);
     border-radius: var(--radius-sm);
-    border-left: 3px solid rgba(168, 85, 247, 0.5);
+    border-left: 3px solid #d4af37;
 }
 
 .darkhorse-meta {
@@ -1788,22 +1859,25 @@ body::after {
     display: inline-flex;
     align-items: center;
     gap: 0.3rem;
-    padding: 0.3rem 0.7rem;
-    background: rgba(168, 85, 247, 0.1);
+    padding: 0.32rem 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
     border-radius: var(--radius-pill);
     font-size: 0.78rem;
     font-weight: 600;
-    color: var(--ink-700);
+    color: #a0a0a0;
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .darkhorse-meta-tag--funding {
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.15));
-    color: #047857;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.12) 0%, rgba(184, 134, 11, 0.08) 100%);
+    color: #d4af37;
+    border-color: rgba(212, 175, 55, 0.25);
 }
 
 .darkhorse-meta-tag--hardware {
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(29, 78, 216, 0.15));
-    color: var(--cobalt);
+    background: linear-gradient(135deg, rgba(100, 149, 237, 0.12) 0%, rgba(65, 105, 225, 0.08) 100%);
+    color: #87CEEB;
+    border-color: rgba(100, 149, 237, 0.25);
 }
 
 .meta-icon {
@@ -1813,22 +1887,22 @@ body::after {
 .darkhorse-valuation {
     font-size: 0.85rem;
     font-weight: 700;
-    color: #047857;
+    color: #d4af37;
     padding: 0.4rem 0.7rem;
-    background: rgba(16, 185, 129, 0.1);
+    background: rgba(212, 175, 55, 0.1);
     border-radius: var(--radius-sm);
     width: fit-content;
 }
 
 .darkhorse-news {
     font-size: 0.82rem;
-    color: var(--ink-500);
+    color: #808080;
     line-height: 1.5;
     display: flex;
     align-items: flex-start;
     gap: 0.4rem;
     padding-top: 0.5rem;
-    border-top: 1px dashed rgba(168, 85, 247, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .news-icon {
@@ -1843,12 +1917,14 @@ body::after {
 .darkhorse-link {
     font-size: 0.88rem;
     font-weight: 600;
-    color: #a855f7;
-    transition: color var(--transition-fast);
+    color: #d4af37;
+    transition: all 0.2s ease;
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0);
 }
 
 .darkhorse-card:hover .darkhorse-link {
-    color: #ec4899;
+    color: #f5deb3;
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
 }
 
 @media (max-width: 768px) {
@@ -1857,21 +1933,24 @@ body::after {
     }
 }
 
-/* ========== Score Badge ========== */
+/* ========== Score Badge - Premium Gold ========== */
 .score-badge {
     display: inline-flex;
     align-items: center;
-    padding: 0.25rem 0.6rem;
-    background: linear-gradient(135deg, #a855f7, #ec4899);
-    color: white;
-    font-size: 0.7rem;
-    font-weight: 600;
+    padding: 0.28rem 0.65rem;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    color: #d4af37;
+    font-size: 0.72rem;
+    font-weight: 700;
     border-radius: var(--radius-pill);
     margin-left: 0.5rem;
     vertical-align: middle;
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    text-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+    letter-spacing: 0.5px;
 }
 
-/* ========== Darkhorse Filters ========== */
+/* ========== Darkhorse Filters - Dark Theme ========== */
 .darkhorse-filters {
     display: flex;
     gap: 0.5rem;
@@ -1881,27 +1960,29 @@ body::after {
 
 .darkhorse-filters .filter-btn {
     padding: 0.5rem 1rem;
-    background: var(--glass);
-    border: 1px solid var(--border-soft);
+    background: rgba(26, 26, 26, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--radius-pill);
     font-size: 0.85rem;
     font-weight: 500;
-    color: var(--ink-700);
+    color: #a0a0a0;
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: all 0.2s ease;
 }
 
 .darkhorse-filters .filter-btn:hover {
-    background: rgba(168, 85, 247, 0.1);
-    border-color: rgba(168, 85, 247, 0.3);
+    background: rgba(212, 175, 55, 0.1);
+    border-color: rgba(212, 175, 55, 0.3);
+    color: #d4af37;
 }
 
 .darkhorse-filters .filter-btn.active {
-    background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(236, 72, 153, 0.15));
-    border-color: rgba(168, 85, 247, 0.4);
-    color: #a855f7;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(184, 134, 11, 0.1) 100%);
+    border-color: rgba(212, 175, 55, 0.5);
+    color: #d4af37;
     font-weight: 600;
 }
+
 
 /* ========== Discover Filters ========== */
 .discover-filters {
@@ -2034,20 +2115,20 @@ body::after {
         flex-direction: column;
         align-items: stretch;
     }
-    
+
     .tier-tabs {
         width: 100%;
         justify-content: center;
     }
-    
+
     .controls-right {
         justify-content: center;
     }
-    
+
     .discover-filters {
         gap: 0.4rem;
     }
-    
+
     .discover-filter-btn {
         padding: 0.4rem 0.7rem;
         font-size: 0.75rem;
@@ -3164,16 +3245,12 @@ body::after {
 
 [data-theme="dark"] .hero::before {
     background:
-        radial-gradient(
-            circle at var(--glow-x, 50%) var(--glow-y, 50%),
+        radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 50%),
             rgba(56, 189, 248, 0.25),
-            transparent 60%
-        ),
-        radial-gradient(
-            circle at calc(var(--glow-x, 50%) + 25%) calc(var(--glow-y, 50%) + 20%),
+            transparent 60%),
+        radial-gradient(circle at calc(var(--glow-x, 50%) + 25%) calc(var(--glow-y, 50%) + 20%),
             rgba(139, 92, 246, 0.20),
-            transparent 55%
-        );
+            transparent 55%);
     opacity: 1;
 }
 

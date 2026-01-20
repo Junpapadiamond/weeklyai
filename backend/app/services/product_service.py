@@ -946,7 +946,7 @@ class ProductService:
 
     @staticmethod
     def get_dark_horse_products(limit: int = 10, min_index: int = 4) -> List[Dict]:
-        """获取黑马产品 - 高潜力新兴产品
+        """获取黑马产品 - 高潜力新兴产品 (多样化)
 
         参数:
         - limit: 返回数量
@@ -954,6 +954,7 @@ class ProductService:
         - 优先 7 天内，允许 14 天内的优秀产品
         
         排序规则: 评分 > 融资金额 > 用户数/估值
+        多样化规则: 硬件 ≤40%, 每个硬件子类别 ≤3
         """
         products = ProductService._load_products()
         now = datetime.now()
@@ -961,64 +962,39 @@ class ProductService:
         two_weeks_ago = now - timedelta(days=14)
 
         # 筛选有 dark_horse_index 且 >= min_index 的产品
-        def is_recent_candidate(product: Dict[str, Any]) -> bool:
-            if product.get('dark_horse_index', 0) < min_index:
-                return False
-            product_date = ProductService._get_product_date(product)
-            if not product_date or product_date < two_weeks_ago:
-                return False
-            return True
+        def is_candidate(product: Dict[str, Any]) -> bool:
+            return product.get('dark_horse_index', 0) >= min_index
 
         def recency_rank(product: Dict[str, Any]) -> int:
             product_date = ProductService._get_product_date(product)
             if product_date and product_date >= one_week_ago:
                 return 0
-            return 1
+            if product_date and product_date >= two_weeks_ago:
+                return 1
+            return 2
 
         def sort_key(product: Dict[str, Any]):
             product_date = ProductService._get_product_date(product) or datetime(1970, 1, 1)
             return (
                 recency_rank(product),
-                -product_date.timestamp(),
                 -(product.get('dark_horse_index', 0) or 0),
                 -ProductService._parse_funding(product.get('funding_total', '')),
                 -ProductService._get_valuation_score(product)
             )
 
-        candidates = [p for p in products if is_recent_candidate(p)]
+        # 筛选候选产品
+        candidates = [p for p in products if is_candidate(p)]
         candidates.sort(key=sort_key)
 
-        selected = candidates[:limit]
-
-        hardware_4_5_exists = any(ProductService._is_hardware(p) for p in candidates)
-
-        if not hardware_4_5_exists and len(selected) < limit:
-            software_count = sum(1 for p in selected if not ProductService._is_hardware(p))
-            fill_limit = min(software_count, limit - len(selected))
-
-            if fill_limit > 0:
-                hardware_candidates = [
-                    p for p in products
-                    if 2 <= p.get('dark_horse_index', 0) <= 3
-                    and ProductService._is_hardware(p)
-                ]
-                hardware_candidates = ProductService._sort_by_score_funding_valuation(hardware_candidates)
-
-                existing_keys = {
-                    (p.get('website') or '').strip().lower()
-                    for p in selected
-                    if p.get('website')
-                }
-
-                for product in hardware_candidates:
-                    if len(selected) >= limit:
-                        break
-                    website = (product.get('website') or '').strip().lower()
-                    if website and website in existing_keys:
-                        continue
-                    selected.append(product)
-                    if website:
-                        existing_keys.add(website)
+        # 使用多样化算法选择产品 (硬件 ≤40%, 每个硬件子类别 ≤3)
+        selected = ProductService._diversify_products(
+            candidates,
+            limit,
+            max_per_category=4,
+            max_per_source=5,
+            hardware_ratio=0.4,
+            max_per_hw_category=3
+        )
 
         return selected
 

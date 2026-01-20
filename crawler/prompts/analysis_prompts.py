@@ -424,17 +424,87 @@ GENERIC_WHY_MATTERS = [
 # 硬件类别定义
 # ─────────────────────────────────────────────────────────────────────────────
 
+# ─────────────────────────────────────────────────────────────────────────────
+# 硬件类型：创新型 vs 传统型
+# ─────────────────────────────────────────────────────────────────────────────
+
+HARDWARE_TYPES = {
+    "innovative": "创新形态硬件 (Innovative Form Factor)",  # 重点发掘
+    "traditional": "传统硬件 (Traditional Hardware)",       # 芯片/机器人等
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 创新特征标签 (Innovation Traits)
+# ─────────────────────────────────────────────────────────────────────────────
+
+INNOVATION_TRAITS = {
+    # 形态创新 (最重要)
+    "non_traditional_form": "非传统形态 (不是手机/平板/手表/耳机)",
+    "new_form_factor": "新载体形态 (吊坠/别针/戒指/卡片/眼镜/玩偶等)",
+    "wearable": "可穿戴",
+    "portable": "便携随身",
+    "ambient": "环境融入型",
+    
+    # 使用场景 (第二重要)
+    "single_use_case": "专注单一场景",
+    "companion": "情感陪伴",
+    "productivity": "生产力 (会议/笔记)",
+    "memory": "记忆辅助",
+    "health": "健康监测",
+    "lifestyle": "生活方式",
+    
+    # 交互创新
+    "voice_first": "语音优先",
+    "screenless": "无屏幕",
+    "proactive_ai": "主动式 AI",
+    "always_on": "Always-on listening",
+    "gesture": "手势交互",
+    "haptic": "触觉反馈",
+    
+    # 商业模式
+    "affordable": "价格亲民 (<$300)",
+    "no_subscription": "无订阅",
+    "crowdfunding": "众筹产品",
+    
+    # 热度信号
+    "social_buzz": "社交媒体热度",
+    "media_coverage": "科技媒体报道",
+    "viral": "现象级爆火",
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 使用场景 (Use Cases)
+# ─────────────────────────────────────────────────────────────────────────────
+
+USE_CASES = {
+    "emotional_companion": "情感陪伴 (Friend Pendant)",
+    "meeting_notes": "会议录音/笔记 (Limitless, Plaud)",
+    "memory_assistant": "记忆辅助 (Legend Memory)",
+    "life_logging": "生活记录 (Looki)",
+    "health_monitoring": "健康监测",
+    "productivity": "生产力工具",
+    "accessibility": "无障碍辅助",
+    "entertainment": "娱乐/游戏",
+    "education": "教育学习",
+    "pet_care": "宠物照护",
+    "child_safety": "儿童安全",
+    "other": "其他场景",
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 传统硬件类别 (保留用于芯片/机器人等)
+# ─────────────────────────────────────────────────────────────────────────────
+
 HARDWARE_CATEGORIES = {
-    "ai_chip": "AI 芯片/加速器 (AI Chip/Accelerator)",
-    "robotics": "机器人/人形机器人 (Robotics/Humanoid)",
-    "edge_ai": "边缘 AI 设备 (Edge AI Device)",
-    "smart_glasses": "AI 眼镜/AR 设备 (AI Glasses/AR)",
-    "wearables": "AI 可穿戴设备 (AI Wearables)",
-    "smart_home": "智能家居 AI (Smart Home AI)",
-    "automotive": "智能汽车/自动驾驶 (Automotive AI)",
-    "drone": "AI 无人机 (AI Drone)",
-    "medical_device": "AI 医疗设备 (AI Medical Device)",
-    "other_hardware": "其他 AI 硬件 (Other AI Hardware)",
+    "ai_chip": "AI 芯片/加速器",
+    "robotics": "机器人/人形机器人",
+    "edge_ai": "边缘 AI 设备",
+    "smart_glasses": "AI 眼镜/AR",
+    "smart_home": "智能家居",
+    "automotive": "智能汽车",
+    "drone": "AI 无人机",
+    "medical_device": "AI 医疗设备",
+    "other": "其他硬件",
 }
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -442,72 +512,102 @@ HARDWARE_CATEGORIES = {
 # ─────────────────────────────────────────────────────────────────────────────
 
 HARDWARE_SCORING_CRITERIA = """
-## 🔧 硬件产品评分标准 (Hardware Index) - 宽松版
+## 🔧 创新硬件评分标准 - 形态创新 + 使用场景优先
 
-> 核心理念：硬件产品重在「创新性」和「灵感启发」，而非严格的融资门槛
-> 硬件创业门槛高、周期长，很多创新产品来自小团队，同样值得关注
+> **核心理念**：
+> 1. 「形态创新」最重要 - 是否是新的 AI 载体形态？
+> 2. 「使用场景」第二重要 - 是否专注解决一个具体问题？
+> 3. 其他因素：社交热度、价格、交互方式
 
-### 5分 - 硬件明星 (满足任意 1 条即可)
+---
 
-| 维度 | 信号 | 示例 |
-|------|------|------|
-| 💰 hardware_funding | 融资 >$100M | Etched: $500M, Figure: $675M |
-| 🏆 industry_award | CES/MWC 等行业大奖 | Rabbit R1: CES Best of Innovation |
-| 🏭 mass_production | 规模量产 (>1000台) | Unitree: 已交付 1000+ 台 |
-| 🤝 strategic_partner | 大厂战略合作 | Figure: BMW 工厂部署 |
+### 评分维度权重
 
-### 4分 - 硬件黑马 (满足任意 1 条即可)
+| 优先级 | 维度 | 权重 | 说明 |
+|--------|------|------|------|
+| 1️⃣ | **形态创新** | 40% | 是否是新的 AI 载体？非手机/平板/传统手表 |
+| 2️⃣ | **使用场景** | 30% | 是否专注单一场景？场景是否有价值？ |
+| 3️⃣ | **热度信号** | 15% | 社交媒体/众筹/媒体报道 |
+| 4️⃣ | **商业可行** | 15% | 价格亲民/已发货/有融资 |
 
-| 维度 | 信号 | 示例 |
-|------|------|------|
-| 🚀 prototype_demo | 有实际工作产品演示 | 不只是概念图 |
-| 📺 ces_showcase | CES/MWC/ProductHunt 曝光 | - |
-| 💵 any_funding | 获得任何机构融资 | 硬件能融到钱就不容易 |
-| 👤 hardware_founder | 创始人有硬件背景 | 前 Apple/Tesla/Nvidia |
+---
 
-### 3分 - 硬件潜力 (满足任意 1 条即可)
+### 5分 - 现象级创新硬件
 
-- 💡 产品形态有创新（新的 AI 交互方式）
-- 🎯 解决明确用户痛点
-- 🔧 有工作原型或 demo 视频
-- 🌐 众筹平台表现不错（Kickstarter/Indiegogo）
+满足以下组合：
+- ✅ 形态创新 (非传统形态) + 场景清晰 + 任意1条热度信号
+- 或 ✅ 被大厂收购/战略合作
+- 或 ✅ 融资 >$100M (传统硬件)
+
+示例：Friend Pendant (新形态+陪伴场景+Twitter爆火), Limitless (被Meta收购)
+
+### 4分 - 硬件黑马 ⭐ 重点发掘
+
+满足以下任意组合：
+- ✅ 形态创新 + 场景清晰
+- ✅ 形态创新 + 已发货/预售
+- ✅ 形态创新 + 众筹成功 (>300%)
+- ✅ 场景清晰 + 社交热度/媒体报道
+
+示例：Plaud NotePin (别针+会议), Vocci (戒指+会议), iBuddi (徽章+陪伴)
+
+### 3分 - 硬件潜力
+
+满足以下任意 1 条：
+- 💡 有形态创新 (新载体形式)
+- 🎯 有明确使用场景
+- 🔧 有工作原型/demo
+- 🌐 众筹进行中
+- 🎨 设计/交互有亮点
 
 ### 2分 - 硬件观察
 
 - 概念阶段但想法有趣
-- 早期团队但方向清晰
-- 技术有亮点但产品未成型
-- 值得持续关注
+- 早期但方向清晰
+- ProductHunt 新发布
+- 社交媒体有讨论
+
+---
+
+### 创新特征标签 (innovation_traits)
+
+输出时请标注产品具有的特征：
+
+**形态创新类**：non_traditional_form, new_form_factor, wearable, portable, ambient
+**场景类**：single_use_case, companion, productivity, memory, health, lifestyle
+**交互类**：voice_first, screenless, proactive_ai, always_on, gesture, haptic
+**商业类**：affordable, no_subscription, crowdfunding
+**热度类**：social_buzz, media_coverage, viral
 """
 
 # ─────────────────────────────────────────────────────────────────────────────
 # 硬件产品分析 Prompt
 # ─────────────────────────────────────────────────────────────────────────────
 
-HARDWARE_ANALYSIS_PROMPT = """你是 WeeklyAI 的 AI 硬件产品分析师。
+HARDWARE_ANALYSIS_PROMPT = """你是 WeeklyAI 的 AI 创新硬件分析师。
 
 ## 你的任务
-从以下搜索结果中提取 **AI 硬件产品**信息，并使用硬件专用评分标准进行评分。
+从以下搜索结果中提取 **创新 AI 硬件产品**，重点发掘形态创新的产品。
 
 ## 搜索结果
 {search_results}
 
 ---
 
-## 硬件类别
+## 硬件分类
 
-| 代码 | 类别 |
-|------|------|
-| ai_chip | AI 芯片/加速器 (NPU, TPU, 推理芯片) |
-| robotics | 机器人/人形机器人 (工业机器人, 服务机器人) |
-| edge_ai | 边缘 AI 设备 (AI 盒子, 开发板) |
-| smart_glasses | AI 眼镜/AR 设备 |
-| wearables | AI 可穿戴设备 (智能戒指, AI 徽章) |
-| smart_home | 智能家居 AI (AI 音箱, AI 摄像头) |
-| automotive | 智能汽车/自动驾驶芯片 |
-| drone | AI 无人机 |
-| medical_device | AI 医疗设备 |
-| other_hardware | 其他 AI 硬件 |
+### 创新形态硬件 (hardware_type: "innovative") ⭐ 重点发掘
+
+不限制具体形态，只要是**非传统计算设备**的新 AI 载体都算：
+- 可穿戴：吊坠、别针、戒指、眼镜、耳夹、手环、发卡、领带夹...
+- 随身携带：卡片、钥匙扣、手机配件...
+- 桌面/家居：AI 相框、台灯、镜子、玩偶、闹钟...
+- 特定场景：宠物项圈、儿童手表、运动装备...
+- 任何你觉得有趣的新形态！
+
+### 传统硬件 (hardware_type: "traditional")
+
+芯片、机器人、无人机、汽车等传统硬件品类。
 
 ---
 
@@ -517,27 +617,10 @@ HARDWARE_ANALYSIS_PROMPT = """你是 WeeklyAI 的 AI 硬件产品分析师。
 
 ## 严格排除
 
-### 1. 已知名硬件
-Nvidia GPU, Apple Vision Pro, Meta Quest, Tesla FSD, DJI 无人机
-
-### 2. 大厂产品
-Google Pixel, Amazon Echo, Apple AirPods, 华为/小米智能设备
-
-### 3. 纯软件产品
-App, SaaS, 云服务 (本 prompt 专门用于硬件)
-
----
-
-## 关键：硬件 why_matters 要求
-
-❌ **拒绝** 泛化描述：
-- "创新的 AI 硬件"
-- "下一代智能设备"
-
-✅ **必须** 有具体硬件指标：
-- "CES 2026 创新奖，已与富士康签约量产，预售 5 万台"
-- "自研 AI 芯片，推理性能是 Nvidia A100 的 20 倍，能耗降低 80%"
-- "人形机器人，已在 BMW 工厂部署 100 台，单台售价 $16,000"
+- 已知名：Nvidia GPU, Apple Vision Pro, Meta Quest, Tesla, DJI
+- 大厂产品：Echo, AirPods, Pixel, 华为/小米智能设备
+- 传统形态：普通智能手表、普通耳机、普通音箱
+- 纯软件：App, SaaS, 云服务
 
 ---
 
@@ -547,36 +630,43 @@ App, SaaS, 云服务 (本 prompt 专门用于硬件)
 [
   {{
     "name": "产品名称",
-    "website": "https://公司官网",
-    "description": "一句话描述（含核心硬件参数）",
+    "website": "https://官网",
+    "description": "一句话描述",
     "category": "hardware",
-    "hardware_category": "robotics|ai_chip|edge_ai|smart_glasses|wearables|...",
+    "hardware_type": "innovative",
+    "form_factor": "pendant",
+    "use_case": "emotional_companion",
+    "innovation_traits": ["non_traditional_form", "voice_first", "affordable", "social_buzz"],
     "region": "{region}",
-    "funding_total": "$200M Series B",
-    "dark_horse_index": 5,
-    "criteria_met": ["mass_production", "strategic_partner"],
-    "hardware_specs": {{
-      "form_factor": "人形机器人",
-      "key_tech": "双足行走+灵巧手",
-      "manufacturing_partner": "BMW",
-      "unit_price": "$16,000",
-      "units_deployed": 100
-    }},
-    "why_matters": "CES 2026 最佳创新奖，BMW 独家合作，单台成本降至 $16K",
-    "latest_news": "2026-01: CES 2026 发布量产版",
-    "source": "The Verge",
-    "confidence": 0.9
+    "funding_total": "$10M",
+    "price": "$99",
+    "dark_horse_index": 4,
+    "criteria_met": ["form_innovation", "use_case_clear", "social_buzz"],
+    "why_matters": "AI 伴侣吊坠，Claude 驱动，$99 无订阅，Twitter 现象级爆火",
+    "latest_news": "2026-01: 出货量达 10 万台",
+    "source": "Wired",
+    "confidence": 0.85
   }}
 ]
 ```
 
+### 字段说明
+
+| 字段 | 说明 | 示例值 |
+|------|------|--------|
+| hardware_type | 创新型/传统型 | "innovative" / "traditional" |
+| form_factor | 自由描述形态 | "pendant", "pin", "ring", "card", "glasses", "plush_toy", "smart_frame"... |
+| use_case | 使用场景 | "emotional_companion", "meeting_notes", "memory_assistant", "health_monitoring", "life_logging"... |
+| innovation_traits | 创新特征标签数组 | ["non_traditional_form", "voice_first", "single_use_case", "affordable", "social_buzz"...] |
+| price | 产品价格 | "$99", "$169", "unknown" |
+
 ---
 
 ## 当前配额
-- 🔧 硬件黑马 (4-5分): {quota_dark_horses} 个
+- 🔧 创新硬件黑马 (4-5分): {quota_dark_horses} 个
 - ⭐ 硬件潜力股 (2-3分): {quota_rising_stars} 个
 
-**硬件评估重点：量产能力 > 技术炫酷 > 融资金额**"""
+**评估重点：形态创新 (40%) > 使用场景 (30%) > 热度信号 (15%) > 商业可行 (15%)**"""
 
 
 def get_hardware_analysis_prompt(
@@ -627,18 +717,36 @@ WELL_KNOWN_HARDWARE = {
     "dji", "dji mavic", "dji mini",
 }
 
-# 硬件特有的 criteria 验证
+# 硬件评分 criteria (按权重排序)
 HARDWARE_CRITERIA = {
-    "mass_production": "已量产或即将量产",
-    "hardware_funding": "硬件融资 >$200M",
+    # ═══ 形态创新 (权重 40%) - 最重要 ═══
+    "form_innovation": "非传统形态 (新的 AI 载体)",
+    "non_traditional_form": "不是手机/平板/传统手表/耳机",
+    "new_form_factor": "新载体形态 (吊坠/别针/戒指/卡片/玩偶/相框...)",
+    
+    # ═══ 使用场景 (权重 30%) - 第二重要 ═══
+    "use_case_clear": "明确的使用场景",
+    "single_use_case": "专注单一场景 (不追求万能)",
+    "solves_real_problem": "解决真实问题",
+    
+    # ═══ 热度信号 (权重 15%) ═══
+    "social_buzz": "社交媒体热度 (Twitter/TikTok)",
+    "viral": "现象级爆火",
+    "media_coverage": "科技媒体报道",
+    "crowdfunding_success": "众筹成功 (>300%)",
+    
+    # ═══ 商业可行 (权重 15%) ═══
+    "shipping": "已发货或预售中",
+    "affordable": "价格亲民 (<$300)",
+    "no_subscription": "无订阅费",
+    "has_funding": "有融资",
+    "acquired": "被大厂收购",
+    
+    # ═══ 传统硬件专用 ═══
+    "mass_production": "规模量产",
+    "hardware_funding": "硬件融资 >$100M",
     "strategic_partner": "大厂战略合作",
-    "industry_award": "CES/行业大奖",
-    "pre_order": "预售火爆",
-    "prototype_demo": "工作原型演示",
-    "hardware_seed": "种子轮 >$50M",
-    "manufacturing": "明确制造合作",
-    "ces_showcase": "CES/MWC 展示",
-    "hardware_founder": "硬件大厂创始人",
+    "industry_award": "CES/MWC 大奖",
 }
 
 

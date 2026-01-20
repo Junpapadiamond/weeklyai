@@ -28,6 +28,17 @@ from urllib.parse import urlparse
 import subprocess
 from typing import Optional
 
+# 添加父目录到路径（用于导入 utils）
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# 导入新的去重模块
+try:
+    from utils.dedup import DuplicateChecker, get_domain_key, normalize_name
+    USE_NEW_DEDUP = True
+except ImportError:
+    USE_NEW_DEDUP = False
+    print("⚠️  新去重模块未加载，使用旧逻辑")
+
 # 加载 .env 文件（如果存在）
 try:
     from dotenv import load_dotenv
@@ -131,56 +142,63 @@ KEYWORDS_SOFTWARE = {
 }
 
 # 硬件 AI 关键词（专门搜索硬件产品）
+# 分为两类：传统硬件（芯片/机器人）+ 创新形态（可穿戴/新形态）
 KEYWORDS_HARDWARE = {
     "us": [
+        # 传统硬件：芯片/机器人
         "AI chip startup funding 2026",
         "humanoid robot company funding",
-        "AI hardware startup Series A",
         "AI semiconductor startup investment",
         "robotics AI company raised funding",
-        "AI accelerator chip startup",
-        "edge AI hardware startup",
-        "AI inference chip company",
-        # 新增: 从 Product Hunt/Kickstarter 发现
-        "AI wearable device startup 2026",
-        "AI smart glasses startup funding",
-        "AI robot kickstarter 2026",
+        # 创新形态硬件：可穿戴/新形态 (Friend Pendant 类)
+        "AI pendant necklace wearable 2026",
+        "AI companion device startup",
+        "AI pin badge wearable assistant",
+        "AI ring wearable startup",
+        "AI glasses startup 2026",
+        "AI wearable gadget viral",
+        "AI hardware kickstarter indiegogo 2026",
+        "AI assistant device form factor innovative",
+        "screenless AI device wearable",
     ],
     "cn": [
+        # 传统硬件
         "AI芯片 创业公司 融资",
         "人形机器人 创业公司",
-        "AI硬件 融资 2026",
-        "智能机器人 创业公司 A轮",
-        "AI芯片 独角兽",
         "具身智能 创业公司",
-        "边缘AI芯片 融资",
-        # 新增: 从 36氪 发现
+        # 创新形态硬件
         "AI智能眼镜 创业公司",
-        "AI可穿戴设备 融资 2026",
+        "AI可穿戴设备 创业公司 2026",
+        "AI项链 吊坠 智能设备",
+        "AI戒指 智能穿戴",
+        "AI硬件 众筹 创新",
+        "AI随身设备 助手",
     ],
     "eu": [
         "European AI chip startup funding",
         "robotics startup Europe funding",
-        "AI hardware company Germany UK",
-        "semiconductor AI startup Europe",
-        # 新增
-        "AI robot startup Europe 2026",
+        # 创新形态
+        "AI wearable startup Europe 2026",
+        "AI glasses pendant Europe startup",
     ],
     "jp": [
         "AI半導体 スタートアップ 資金調達",
         "ロボット AI企業 日本",
-        "Japan robotics AI startup",
-        "AI chip startup Japan",
+        # 创新形态
+        "AIウェアラブル スタートアップ 日本",
+        "AIメガネ デバイス 日本",
     ],
     "kr": [
         "AI 반도체 스타트업 투자",
         "로봇 AI 기업 한국",
-        "Korean AI chip startup",
+        # 创新形态
+        "AI 웨어러블 스타트업 한국",
     ],
     "sea": [
         "AI hardware startup Singapore",
         "robotics company Southeast Asia",
-        "AI chip startup Asia",
+        # 创新形态
+        "AI wearable device startup Asia 2026",
     ],
 }
 
@@ -192,33 +210,40 @@ KEYWORDS_BY_REGION = KEYWORDS_SOFTWARE
 # ============================================
 SITE_SEARCHES = {
     "us": [
+        # 科技媒体
         "site:techcrunch.com AI startup funding",
-        "site:producthunt.com AI launch 2026",
         "site:venturebeat.com AI funding",
-        # 硬件站点 (新增)
-        "site:producthunt.com AI hardware robot device 2026",
-        "site:kickstarter.com AI robot wearable 2026",
+        "site:wired.com AI hardware device",
+        "site:theverge.com AI wearable gadget",
+        # 产品发现平台 (创新形态硬件重点)
+        "site:producthunt.com AI hardware wearable pendant 2026",
+        "site:producthunt.com AI device companion assistant 2026",
+        # 众筹平台 (早期创新硬件)
+        "site:kickstarter.com AI wearable pendant necklace 2026",
+        "site:kickstarter.com AI glasses ring device 2026",
+        "site:indiegogo.com AI wearable assistant 2026",
     ],
     "cn": [
         "site:36kr.com AI融资",
         "site:tmtpost.com 人工智能",
         "site:jiqizhixin.com 融资",
-        # 硬件站点 (新增)
-        "site:36kr.com AI硬件 机器人 2026",
+        # 硬件创新
+        "site:36kr.com AI硬件 可穿戴 智能设备 2026",
         "site:36kr.com 具身智能 人形机器人 2026",
+        "site:36kr.com AI眼镜 智能穿戴 2026",
     ],
     "eu": [
         "site:sifted.eu AI funding",
         "site:tech.eu AI startup",
         "site:eu-startups.com AI",
-        # 硬件站点 (新增)
-        "site:kickstarter.com AI robot Europe 2026",
+        # 创新硬件
+        "site:kickstarter.com AI wearable Europe 2026",
     ],
     "jp": [
         "site:thebridge.jp AI startup",
         "site:jp.techcrunch.com AI",
-        # 硬件站点 (新增)
-        "site:kickstarter.com AI robot Japan 2026",
+        # 创新硬件
+        "site:kickstarter.com AI wearable Japan 2026",
     ],
     "kr": [
         "site:platum.kr AI 스타트업",
@@ -227,8 +252,7 @@ SITE_SEARCHES = {
     "sea": [
         "site:e27.co AI startup",
         "site:techinasia.com AI funding",
-        # 硬件站点 (新增)
-        "site:kickstarter.com AI hardware Singapore 2026",
+        "site:kickstarter.com AI wearable Asia 2026",
     ],
 }
 
@@ -633,7 +657,11 @@ def load_existing_products():
 
 
 def is_duplicate(name: str, website: str, existing: set) -> bool:
-    """检查是否重复"""
+    """
+    检查是否重复（基础版本）
+    
+    使用名称和网站的精确匹配
+    """
     return name.lower() in existing or website.lower() in existing
 
 
@@ -651,6 +679,94 @@ def normalize_url(url: str) -> str:
         return domain.lower()
     except:
         return url.lower()
+
+
+# ============================================
+# 增强去重检查器（使用新模块）
+# ============================================
+
+class EnhancedDuplicateChecker:
+    """
+    增强的去重检查器
+    
+    结合新的 dedup 模块和旧的逻辑
+    """
+    
+    def __init__(self, existing_products: list):
+        """
+        初始化检查器
+        
+        Args:
+            existing_products: 已有产品列表
+        """
+        self.existing_products = existing_products
+        
+        # 使用新模块
+        if USE_NEW_DEDUP:
+            self.checker = DuplicateChecker(
+                existing_products,
+                similarity_threshold=0.90,
+                check_similarity=True
+            )
+        else:
+            self.checker = None
+        
+        # 旧索引（作为 fallback）
+        self.existing_names = set()
+        self.existing_domains = set()
+        
+        for p in existing_products:
+            name = p.get('name', '').lower().strip()
+            if name:
+                self.existing_names.add(name)
+            
+            website = p.get('website', '')
+            if website:
+                domain = normalize_url(website)
+                if domain:
+                    self.existing_domains.add(domain)
+    
+    def is_duplicate(self, product: dict) -> tuple:
+        """
+        检查产品是否重复
+        
+        Returns:
+            (是否重复, 重复原因)
+        """
+        name = product.get('name', '')
+        website = product.get('website', '')
+        
+        # 优先使用新模块
+        if self.checker:
+            return self.checker.is_duplicate(product)
+        
+        # Fallback 到旧逻辑
+        name_lower = name.lower().strip()
+        if name_lower in self.existing_names:
+            return True, f"名称重复: {name}"
+        
+        if website:
+            domain = normalize_url(website)
+            if domain and domain in self.existing_domains:
+                return True, f"域名重复: {domain}"
+        
+        return False, None
+    
+    def add_product(self, product: dict):
+        """添加新产品到索引"""
+        if self.checker:
+            self.checker.add_product(product)
+        
+        # 同时更新旧索引
+        name = product.get('name', '').lower().strip()
+        if name:
+            self.existing_names.add(name)
+        
+        website = product.get('website', '')
+        if website:
+            domain = normalize_url(website)
+            if domain:
+                self.existing_domains.add(domain)
 
 
 def verify_url_exists(url: str, timeout: int = 5) -> bool:
@@ -1548,8 +1664,14 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
     print(f"  🔑 Keywords: {len(keywords)} queries (day {datetime.now().weekday()})")
     print(f"{'='*60}")
 
-    existing_names = load_existing_products()
-    existing_domains = load_existing_domains()
+    # 使用增强去重检查器
+    featured_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "products_featured.json")
+    existing_products = []
+    if os.path.exists(featured_path):
+        with open(featured_path, 'r', encoding='utf-8') as f:
+            existing_products = json.load(f)
+    
+    dedup_checker = EnhancedDuplicateChecker(existing_products)
     all_products = []
     quality_rejections = []
 
@@ -1611,17 +1733,11 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
             if not name:
                 continue
 
-            # 域名去重
-            domain = normalize_url(product.get('website', ''))
-            if domain and domain in existing_domains:
+            # 使用增强去重检查器
+            is_dup, dup_reason = dedup_checker.is_duplicate(product)
+            if is_dup:
                 stats["duplicates_skipped"] += 1
-                print(f"    ⏭️ Skip duplicate domain: {domain}")
-                continue
-
-            # 名称去重
-            if is_duplicate(name, product.get('website', ''), existing_names):
-                stats["duplicates_skipped"] += 1
-                print(f"    ⏭️ Skip duplicate name: {name}")
+                print(f"    ⏭️ Skip duplicate: {dup_reason}")
                 continue
 
             # 质量验证
@@ -1667,9 +1783,8 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
             else:
                 stats["rising_stars"] += 1
 
-            existing_names.add(name.lower())
-            if domain:
-                existing_domains.add(domain)
+            # 更新去重索引
+            dedup_checker.add_product(product)
             all_products.append(product)
 
     # 打印统计
@@ -1730,14 +1845,18 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
     found = {"dark_horses": 0, "rising_stars": 0}
     region_yield = {k: 0 for k in REGION_CONFIG.keys()}
     provider_stats = {"glm": 0, "perplexity": 0}  # Track provider usage
-    unique_domains = set()
     duplicates_skipped = 0
     quality_rejections = []
     attempts = 0
 
-    # 加载已存在的域名
-    existing_domains = load_existing_domains()
-    existing_names = load_existing_products()
+    # 使用增强去重检查器
+    featured_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "products_featured.json")
+    existing_products = []
+    if os.path.exists(featured_path):
+        with open(featured_path, 'r', encoding='utf-8') as f:
+            existing_products = json.load(f)
+    
+    dedup_checker = EnhancedDuplicateChecker(existing_products)
 
     def quotas_met():
         return (found["dark_horses"] >= DAILY_QUOTA["dark_horses"] and
@@ -1841,17 +1960,11 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
                     if not name:
                         continue
 
-                    # 域名去重
-                    domain = normalize_url(product.get('website', ''))
-                    if domain in existing_domains or domain in unique_domains:
+                    # 使用增强去重检查器
+                    is_dup, dup_reason = dedup_checker.is_duplicate(product)
+                    if is_dup:
                         duplicates_skipped += 1
-                        print(f"    ⏭️ Dup domain: {domain}")
-                        continue
-
-                    # 名称去重
-                    if is_duplicate(name, product.get('website', ''), existing_names):
-                        duplicates_skipped += 1
-                        print(f"    ⏭️ Dup name: {name}")
+                        print(f"    ⏭️ Skip: {dup_reason}")
                         continue
 
                     # 质量验证
@@ -1890,12 +2003,11 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
                     # 保存
                     save_product(product, dry_run)
 
-                    # 更新计数
+                    # 更新计数和去重索引
                     found[category] += 1
                     region_yield[region_key] += 1
                     provider_stats[provider] += 1  # Track provider usage
-                    unique_domains.add(domain)
-                    existing_names.add(name.lower())
+                    dedup_checker.add_product(product)
 
                     status_icon = "🦄" if category == "dark_horses" else "⭐"
                     print(f"    {status_icon} SAVED: {name} (score={score}, {category}, {provider})")
@@ -1917,7 +2029,7 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
     print(f"  Duration:   {duration:.1f} seconds")
     print(f"  Regions:    {', '.join(f'{k}: {v}' for k, v in region_yield.items() if v > 0)}")
     print(f"  Providers:  {', '.join(f'{k}: {v}' for k, v in provider_stats.items() if v > 0)}")
-    print(f"  Unique domains found: {len(unique_domains)}")
+    print(f"  Total saved: {found['dark_horses'] + found['rising_stars']}")
     print(f"  Duplicates skipped: {duplicates_skipped}")
     print(f"  Quality rejections: {len(quality_rejections)}")
 

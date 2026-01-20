@@ -20,11 +20,11 @@
 ```
 crawler/data/
 ├── dark_horses/          # 黑马产品 (4-5分)
-│   └── week_2026_03.json
+│   └── week_2026_04.json
 ├── rising_stars/         # 潜力股 (2-3分)
-│   └── global_2026_03.json
+│   └── global_2026_04.json
 ├── candidates/           # 待审核
-├── products_featured.json # 精选产品
+├── products_featured.json # 精选产品 (前端数据源)
 ├── products_history.json  # 历史数据
 └── industry_leaders.json  # 🏆 行业领军（已知名产品参考）
 ```
@@ -171,7 +171,7 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 
 ---
 
-## 黑马判断标准 (4-5分)
+## 软件黑马标准 (4-5分)
 
 ### 什么是"黑马"？
 
@@ -195,7 +195,7 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 - ❌ **大厂产品**: Google Gemini, Meta Llama（除非是独立子产品）
 - ❌ **工具目录产品**: "xxx 相关的 AI 工具集合"
 
-### 黑马评分详解
+### 软件评分详解
 
 | 分数 | 标准 |
 |------|------|
@@ -205,8 +205,6 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 ---
 
 ## 潜力股标准 (2-3分)
-
-### 什么是"潜力股"？
 
 **潜力股 = 有创新 + 早期阶段 + 值得观察**
 
@@ -220,8 +218,6 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 | 🔧 **垂直领域深耕** | 专注细分赛道 | 医疗 AI、法律 AI |
 | 🎨 **产品体验好** | 设计/交互有亮点 | 虽小但精致 |
 
-### 潜力股评分详解
-
 | 分数 | 标准 |
 |------|------|
 | **3分** | 值得关注: 融资 $1M-$5M / ProductHunt 上榜 / 本地热度高 |
@@ -230,7 +226,7 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 
 ---
 
-## 🔧 硬件产品评判体系 (Hardware Index)
+## 🔧 硬件产品评判体系 (宽松版)
 
 > **核心理念：硬件产品重在「创新性」和「灵感启发」，而非严格的融资门槛**
 
@@ -240,52 +236,94 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 - ✅ 关注技术创新而非商业规模
 - ❌ 不强求融资金额或量产数据
 
-### 硬件类别
+### 硬件分类
 
-| 代码 | 类别 | 示例产品 |
+#### 硬件类型 (hardware_type)
+
+| 类型 | 说明 | 优先级 |
+|------|------|--------|
+| `innovative` | **创新形态硬件** - 非传统计算设备的新 AI 载体 | ⭐ 重点发掘 |
+| `traditional` | 传统硬件 - 芯片/机器人/无人机等 | 正常评估 |
+
+#### 形态不限制 (form_factor)
+
+创新形态硬件**不限制具体形态**，用 `form_factor` 字段自由描述：
+
+| 形态类别 | 示例 |
+|----------|------|
+| 可穿戴 | pendant, pin, ring, glasses, earclip, bracelet, hairpin... |
+| 随身携带 | card, keychain, phone_case... |
+| 桌面/家居 | smart_frame, lamp, mirror, plush_toy, alarm... |
+| 特定场景 | pet_collar, kids_watch, sports_gear... |
+
+#### 创新特征标签 (innovation_traits)
+
+| 标签 | 说明 |
+|------|------|
+| **形态创新类** | `non_traditional_form`, `new_form_factor`, `wearable`, `portable`, `ambient` |
+| **场景类** | `single_use_case`, `companion`, `productivity`, `memory`, `health`, `lifestyle` |
+| **交互类** | `voice_first`, `screenless`, `proactive_ai`, `always_on`, `gesture`, `haptic` |
+| **商业类** | `affordable`, `no_subscription`, `crowdfunding` |
+| **热度类** | `social_buzz`, `media_coverage`, `viral` |
+
+#### 使用场景 (use_case)
+
+| 场景 | 说明 | 示例产品 |
 |------|------|----------|
-| `ai_chip` | AI 芯片/加速器 | Etched, Groq, Cerebras, Tenstorrent |
-| `robotics` | 机器人/人形机器人 | Figure, Unitree, 1X |
-| `edge_ai` | 边缘 AI 设备 | Nvidia Jetson, Google Coral |
-| `smart_glasses` | AI 眼镜/AR 设备 | Brilliant Labs Frame, Ray-Ban Meta |
-| `wearables` | AI 可穿戴设备 | Rabbit R1, Limitless Pendant, Humane Pin |
-| `smart_home` | 智能家居 AI | Samsung Ballie |
-| `automotive` | 智能汽车/自动驾驶 | - |
-| `drone` | AI 无人机 | - |
-| `medical_device` | AI 医疗设备 | - |
+| `emotional_companion` | 情感陪伴 | Friend Pendant |
+| `meeting_notes` | 会议录音/笔记 | Limitless, Plaud |
+| `memory_assistant` | 记忆辅助 | Legend Memory |
+| `life_logging` | 生活记录 | Looki |
+| `health_monitoring` | 健康监测 | - |
+| `productivity` | 生产力工具 | - |
+| `accessibility` | 无障碍辅助 | - |
 
-### 硬件评分标准（宽松版）
+### 创新硬件评分标准
 
-#### 5分 - 硬件明星
+> **核心理念**：形态创新 (40%) > 使用场景 (30%) > 热度信号 (15%) > 商业可行 (15%)
 
-满足以下**任意 1 条**即可：
-- 💰 融资 >$100M（硬件烧钱，这个门槛已经很高）
-- 🏆 获得 CES/MWC 等行业大奖
-- 🏭 已实现规模量产 (>1000台)
-- 🤝 与大厂达成战略合作
+#### 评分维度权重
 
-#### 4分 - 硬件黑马
+| 优先级 | 维度 | 权重 | 关键问题 |
+|--------|------|------|----------|
+| 1️⃣ | **形态创新** | 40% | 是否是新的 AI 载体？非手机/平板/传统手表？ |
+| 2️⃣ | **使用场景** | 30% | 是否专注单一场景？场景是否有真实价值？ |
+| 3️⃣ | **热度信号** | 15% | 社交媒体/众筹/媒体报道？ |
+| 4️⃣ | **商业可行** | 15% | 价格亲民/已发货/有融资？ |
 
-满足以下**任意 1 条**即可：
-- 🚀 有实际工作的产品演示（不只是概念）
-- 📺 在 CES/MWC/ProductHunt 获得曝光
-- 💵 获得任何机构融资（硬件能融到钱就不容易）
-- 👤 创始人有硬件行业背景
+#### 5分 - 现象级创新硬件
+
+满足组合：**形态创新 + 场景清晰 + 热度信号**
+- 或被大厂收购/战略合作
+- 或融资 >$100M (传统硬件)
+
+示例：Friend Pendant, Limitless (被Meta收购)
+
+#### 4分 - 硬件黑马 ⭐ 重点发掘
+
+满足以下**任意组合**：
+- ✅ 形态创新 + 场景清晰
+- ✅ 形态创新 + 已发货/预售
+- ✅ 形态创新 + 众筹成功 (>300%)
+- ✅ 场景清晰 + 社交热度/媒体报道
+
+示例：Plaud NotePin, Vocci, iBuddi
 
 #### 3分 - 硬件潜力
 
-满足以下**任意 1 条**即可：
-- 💡 产品形态有创新（新的 AI 交互方式）
-- 🎯 解决了明确的用户痛点
-- 🔧 有工作原型或 demo 视频
-- 🌐 在众筹平台表现不错
+满足以下**任意 1 条**：
+- 💡 有形态创新 (任何新载体形式)
+- 🎯 有明确使用场景
+- 🔧 有工作原型/demo
+- 🌐 众筹进行中
+- 🎨 设计/交互有亮点
 
 #### 2分 - 硬件观察
 
 - 概念阶段但想法有趣
-- 早期团队但方向清晰
-- 技术有亮点但产品未成型
-- 值得持续关注
+- ProductHunt 新发布
+- 社交媒体有讨论
+- 早期但方向清晰
 
 ### 硬件 why_matters 要求（宽松版）
 
@@ -471,7 +509,7 @@ Base URL: `http://localhost:5000/api/v1`
 |------|------|------|
 | `/products/trending` | GET | 热门 Top 5 |
 | `/products/weekly-top` | GET | 本周 Top 15 |
-| `/products/dark-horses` | GET | 黑马产品 (`limit`, `min_index`) |
+| `/products/dark-horses` | GET | 黑马产品 (`limit`, `min_index`, `max_index`) |
 | `/products/rising-stars` | GET | **潜力股产品 (2-3分)** (`limit`) |
 | `/products/today` | GET | 今日精选 (`limit`, `hours`) |
 | `/products/<id>` | GET | 产品详情 |
@@ -493,28 +531,58 @@ Base URL: `http://localhost:5000/api/v1`
 
 ## 数据模板
 
+### 创新硬件数据模板
+
+```json
+{
+  "name": "Friend Pendant",
+  "slug": "friend-pendant",
+  "website": "https://friend.com",
+  "description": "AI 伴侣项链，Claude 驱动的 always-on 情感陪伴设备",
+  "category": "hardware",
+  "hardware_type": "innovative",
+  "form_factor": "pendant",
+  "use_case": "emotional_companion",
+  "innovation_traits": ["non_traditional_form", "voice_first", "affordable", "no_subscription", "social_buzz"],
+  "region": "🇺🇸",
+  "price": "$99",
+  "funding_total": "$10M",
+  "dark_horse_index": 5,
+  "criteria_met": ["form_innovation", "use_case_clear", "viral"],
+  "why_matters": "AI 伴侣吊坠，Claude 驱动，$99 无订阅，Twitter 现象级爆火",
+  "latest_news": "2026-01: 出货量达 10 万台",
+  "discovered_at": "2026-01-20",
+  "source": "Wired",
+  "is_hardware": true
+}
+```
+
+### 传统硬件数据模板
+
 ```json
 {
   "name": "Etched AI",
   "slug": "etched-ai",
-  "website": "https://etched.com",
-  "logo": "https://...",
+  "website": "https://etched.ai",
   "description": "AI chip startup building Sohu processor for transformers",
   "category": "hardware",
+  "hardware_type": "traditional",
+  "hardware_category": "ai_chip",
   "region": "🇺🇸",
-  "founded_date": "2022",
   "funding_total": "$500M",
   "dark_horse_index": 5,
-  "why_matters": "Peter Thiel 领投，估值 $5B，Sohu 芯片挑战 Nvidia 垄断",
+  "criteria_met": ["hardware_funding", "mass_production"],
+  "why_matters": "获$500M融资，估值$5B，Stripes领投，AI芯片挑战Nvidia垄断",
   "latest_news": "2026-01: Stripes 领投新一轮融资",
   "discovered_at": "2026-01-16",
-  "source": "TechCrunch"
+  "source": "TechCrunch",
+  "is_hardware": true
 }
 ```
 
 **必填字段**: `name`, `website`, `description`, `why_matters`, `dark_horse_index`
-**重要字段**: `funding_total`, `latest_news`, `category`
-**有效分类**: coding, image, video, voice, writing, hardware, finance, education, healthcare, other
+**创新硬件字段**: `hardware_type`, `form_factor`, `use_case`, `innovation_traits`, `price`
+**有效分类**: coding, image, video, voice, writing, hardware, finance, education, healthcare, agent, other
 
 ---
 

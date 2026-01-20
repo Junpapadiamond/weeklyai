@@ -25,7 +25,8 @@ crawler/data/
 │   └── global_2026_04.json
 ├── candidates/           # 待审核
 ├── products_featured.json # 精选产品 (前端数据源)
-└── products_history.json  # 历史数据
+├── products_history.json  # 历史数据
+└── industry_leaders.json  # 🏆 行业领军（已知名产品参考）
 ```
 
 ---
@@ -42,6 +43,21 @@ crawler/data/
 | `crawler/utils/perplexity_client.py` | Perplexity SDK 封装 |
 | `backend/app/routes/products.py` | 产品 API |
 | `frontend/views/index.ejs` | 首页模板 |
+
+---
+
+## 🔧 硬件站点搜索源 (3个优质来源)
+
+| 站点 | 说明 | 搜索模式 |
+|------|------|----------|
+| **Product Hunt** | 全球硬件首发地，发现最早期创新产品 | `site:producthunt.com AI hardware` |
+| **Kickstarter** | 众筹平台，最前沿硬件创意 | `site:kickstarter.com AI robot` |
+| **36氪** | 中国最权威 AI/硬件媒体 | `site:36kr.com AI硬件` |
+
+使用硬件搜索：
+```bash
+python3 tools/auto_discover.py --region all --type hardware
+```
 
 ---
 
@@ -86,6 +102,13 @@ tail -f crawler/logs/daily_update.log       # 查看日志
 **执行内容**: `auto_discover.py --region all` → `main.py --news-only`
 **日志位置**: `crawler/logs/daily_update.log`
 
+安装命令:
+```bash
+launchctl unload ~/Library/LaunchAgents/com.weeklyai.crawler.plist 2>/dev/null
+cp ops/scheduling/com.weeklyai.crawler.plist ~/Library/LaunchAgents/
+launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
+```
+
 ---
 
 ## 产品分层体系
@@ -95,6 +118,7 @@ tail -f crawler/logs/daily_update.log       # 查看日志
 | **🦄 黑马** | 4-5 分 | 高潜力 + 低曝光 | 首页重点推荐 |
 | **⭐ 潜力股** | 2-3 分 | 有潜力/潜伏期 | 灵感库/发现页 |
 | **📦 观察** | 1 分 | 待验证 | 候选池 |
+| **🏆 行业领军** | N/A | 已人尽皆知 | 参考列表 |
 
 ---
 
@@ -166,32 +190,103 @@ tail -f crawler/logs/daily_update.log       # 查看日志
 - ✅ 关注技术创新而非商业规模
 - ❌ 不强求融资金额或量产数据
 
-### 硬件类别
+### 硬件分类
 
-| 代码 | 类别 | 示例产品 |
+#### 硬件类型 (hardware_type)
+
+| 类型 | 说明 | 优先级 |
+|------|------|--------|
+| `innovative` | **创新形态硬件** - 非传统计算设备的新 AI 载体 | ⭐ 重点发掘 |
+| `traditional` | 传统硬件 - 芯片/机器人/无人机等 | 正常评估 |
+
+#### 形态不限制 (form_factor)
+
+创新形态硬件**不限制具体形态**，用 `form_factor` 字段自由描述：
+
+| 形态类别 | 示例 |
+|----------|------|
+| 可穿戴 | pendant, pin, ring, glasses, earclip, bracelet, hairpin... |
+| 随身携带 | card, keychain, phone_case... |
+| 桌面/家居 | smart_frame, lamp, mirror, plush_toy, alarm... |
+| 特定场景 | pet_collar, kids_watch, sports_gear... |
+
+#### 创新特征标签 (innovation_traits)
+
+| 标签 | 说明 |
+|------|------|
+| **形态创新类** | `non_traditional_form`, `new_form_factor`, `wearable`, `portable`, `ambient` |
+| **场景类** | `single_use_case`, `companion`, `productivity`, `memory`, `health`, `lifestyle` |
+| **交互类** | `voice_first`, `screenless`, `proactive_ai`, `always_on`, `gesture`, `haptic` |
+| **商业类** | `affordable`, `no_subscription`, `crowdfunding` |
+| **热度类** | `social_buzz`, `media_coverage`, `viral` |
+
+#### 使用场景 (use_case)
+
+| 场景 | 说明 | 示例产品 |
 |------|------|----------|
-| `ai_chip` | AI 芯片/加速器 | Etched, Groq, Cerebras, Tenstorrent |
-| `robotics` | 机器人/人形机器人 | Figure, Unitree, 1X |
-| `smart_glasses` | AI 眼镜/AR 设备 | Brilliant Labs Frame |
-| `wearables` | AI 可穿戴设备 | Rabbit R1, Limitless Pendant |
-| `smart_home` | 智能家居 AI | Samsung Ballie |
+| `emotional_companion` | 情感陪伴 | Friend Pendant |
+| `meeting_notes` | 会议录音/笔记 | Limitless, Plaud |
+| `memory_assistant` | 记忆辅助 | Legend Memory |
+| `life_logging` | 生活记录 | Looki |
+| `health_monitoring` | 健康监测 | - |
+| `productivity` | 生产力工具 | - |
+| `accessibility` | 无障碍辅助 | - |
 
-### 硬件评分标准
+### 创新硬件评分标准
 
-| 分数 | 标准 | 门槛 |
-|------|------|------|
-| **5分** | 硬件明星 | 满足任意 1 条：融资>$100M / CES大奖 / 规模量产 / 大厂合作 |
-| **4分** | 硬件黑马 | 满足任意 1 条：有工作演示 / 获得曝光 / 有融资 / 硬件背景创始人 |
-| **3分** | 硬件潜力 | 满足任意 1 条：形态创新 / 解决痛点 / 有原型 / 众筹表现好 |
-| **2分** | 硬件观察 | 概念有趣 / 方向清晰 / 技术有亮点 |
+> **核心理念**：形态创新 (40%) > 使用场景 (30%) > 热度信号 (15%) > 商业可行 (15%)
 
-### 硬件 why_matters 要求
+#### 评分维度权重
+
+| 优先级 | 维度 | 权重 | 关键问题 |
+|--------|------|------|----------|
+| 1️⃣ | **形态创新** | 40% | 是否是新的 AI 载体？非手机/平板/传统手表？ |
+| 2️⃣ | **使用场景** | 30% | 是否专注单一场景？场景是否有真实价值？ |
+| 3️⃣ | **热度信号** | 15% | 社交媒体/众筹/媒体报道？ |
+| 4️⃣ | **商业可行** | 15% | 价格亲民/已发货/有融资？ |
+
+#### 5分 - 现象级创新硬件
+
+满足组合：**形态创新 + 场景清晰 + 热度信号**
+- 或被大厂收购/战略合作
+- 或融资 >$100M (传统硬件)
+
+示例：Friend Pendant, Limitless (被Meta收购)
+
+#### 4分 - 硬件黑马 ⭐ 重点发掘
+
+满足以下**任意组合**：
+- ✅ 形态创新 + 场景清晰
+- ✅ 形态创新 + 已发货/预售
+- ✅ 形态创新 + 众筹成功 (>300%)
+- ✅ 场景清晰 + 社交热度/媒体报道
+
+示例：Plaud NotePin, Vocci, iBuddi
+
+#### 3分 - 硬件潜力
+
+满足以下**任意 1 条**：
+- 💡 有形态创新 (任何新载体形式)
+- 🎯 有明确使用场景
+- 🔧 有工作原型/demo
+- 🌐 众筹进行中
+- 🎨 设计/交互有亮点
+
+#### 2分 - 硬件观察
+
+- 概念阶段但想法有趣
+- ProductHunt 新发布
+- 社交媒体有讨论
+- 早期但方向清晰
+
+### 硬件 why_matters 要求（宽松版）
 
 ```
 ✅ GOOD (说清楚创新点即可):
 - "首款开源 AI 眼镜，支持多种 LLM 集成，开发者友好"
 - "掌上 AI 助手，用 LAM 模型直接操作 App，交互方式新颖"
 - "AI 录音吊坠，自动生成会议摘要，$99 极致性价比"
+- "人形机器人，步态控制创新，成本是竞品 1/3"
 
 ❌ BAD (太泛化):
 - "创新的 AI 硬件"
@@ -218,6 +313,43 @@ tail -f crawler/logs/daily_update.log       # 查看日志
 |------|------|
 | **3分** | 值得关注: 融资 $1M-$5M / ProductHunt 上榜 / 本地热度高 |
 | **2分** | 观察中: 刚发布/数据不足 但有明显创新点 |
+| **1分** | 边缘: 勉强符合，待更多验证 |
+
+---
+
+## 🏆 行业领军（排除名单）
+
+**文件**: `crawler/data/industry_leaders.json`
+
+这些产品**不会**出现在黑马/潜力股列表中，因为它们已经广为人知。
+但对于不熟悉 AI 领域的人，可以作为参考学习。
+
+**分类概览**:
+
+| 类别 | 代表产品 |
+|------|----------|
+| 通用大模型 | ChatGPT, Claude, Gemini, Copilot |
+| 代码开发 | Cursor, GitHub Copilot, Replit, v0.dev, Bolt.new |
+| 图像生成 | Midjourney, DALL-E, Stable Diffusion |
+| 视频生成 | Sora, Runway, Pika, Synthesia |
+| 语音合成 | ElevenLabs |
+| 搜索引擎 | Perplexity |
+| 中国大模型 | Kimi, 豆包, 通义千问, 文心一言, 智谱清言, 讯飞星火, MiniMax |
+| 开发者工具 | LangChain, Hugging Face, Together AI, Groq |
+| AI角色/伴侣 | Character.AI |
+| 写作助手 | Jasper, Grammarly, Copy.ai, Notion AI |
+
+> 💡 **注意**: 如果这些公司发布**全新的子产品**（不是主产品更新），仍可作为黑马收录
+
+### 已知名硬件排除名单
+
+不收录以下已广为人知的硬件（但其**新产品线**可以收录）：
+- **芯片**: Nvidia GPU, Intel, AMD, Qualcomm
+- **AR/VR**: Apple Vision Pro, Meta Quest
+- **机器人**: Boston Dynamics Spot/Atlas
+- **消费电子**: iPhone, Echo, HomePod
+- **汽车**: Tesla FSD, Waymo
+- **无人机**: DJI
 
 ---
 
@@ -230,6 +362,144 @@ tail -f crawler/logs/daily_update.log       # 查看日志
 | 🇪🇺 欧洲 | 15% | Bing |
 | 🇯🇵🇰🇷 日韩 | 10% | Bing |
 | 🇸🇬 东南亚 | 10% | Bing |
+
+---
+
+## 自动发现配置
+
+### 每日配额
+
+| 类别 | 目标数量 | 说明 |
+|------|----------|------|
+| 🦄 **黑马** | 5 个/天 | 4-5 分产品 |
+| ⭐ **潜力股** | 10 个/天 | 2-3 分产品 |
+
+### 地区配额（防止单一地区主导）
+
+| 地区 | 最大数量 |
+|------|----------|
+| 🇺🇸 美国 | 6 |
+| 🇨🇳 中国 | 4 |
+| 🇪🇺 欧洲 | 3 |
+| 🇯🇵 日本 | 2 |
+| 🇰🇷 韩国 | 2 |
+| 🇸🇬 东南亚 | 2 |
+
+### 硬件/软件关键词系统
+
+| 类型 | 关键词示例 | 配额占比 |
+|------|------------|----------|
+| 🔧 **硬件** | AI芯片、人形机器人、具身智能、边缘AI | **40%** |
+| 💻 **软件** | AI融资、AI Agent、AIGC、大模型 | **60%** |
+
+**硬件关键词** (`KEYWORDS_HARDWARE`):
+- `AI chip startup funding 2026`
+- `humanoid robot company funding`
+- `AI semiconductor startup investment`
+- `AI芯片 创业公司 融资`
+- `人形机器人 创业公司`
+- `具身智能 创业公司`
+
+### 关键词轮换策略
+
+根据星期几自动切换关键词池：
+
+| 日期 | 关键词类型 | 说明 |
+|------|------------|------|
+| 周一/周四/周日 | 通用关键词 | `AI startup funding 2026`, `AI融资 2026` |
+| 周二/周五 | 站点定向搜索 | `site:techcrunch.com`, `site:36kr.com` |
+| 周三/周六 | 原生语言深度搜索 | 日语、韩语、德语关键词 |
+
+### Provider 配置
+
+| 环境变量 | 说明 | 默认值 |
+|----------|------|--------|
+| `ZHIPU_API_KEY` | 智谱 API Key | (required for cn) |
+| `PERPLEXITY_API_KEY` | Perplexity API Key | (optional) |
+| `PERPLEXITY_MODEL` | Perplexity 模型 | `sonar` |
+| `USE_PERPLEXITY` | 启用 Perplexity | `false` |
+| `API_RATE_LIMIT_DELAY` | API 调用间隔(秒) | `2` |
+
+**Provider 路由:**
+- `cn` → 始终使用 GLM（中文覆盖更稳）
+- `us/eu/jp/kr/sea` → 根据 `USE_PERPLEXITY` 选择
+
+**启用 Perplexity (推荐):**
+```bash
+# 1. 安装 SDK
+pip install perplexityai
+
+# 2. 设置环境变量
+export PERPLEXITY_API_KEY=pplx_xxx
+export USE_PERPLEXITY=true
+
+# 3. 测试连接
+python3 tools/auto_discover.py --test-perplexity
+
+# 4. 运行发现
+python3 tools/auto_discover.py --region us --dry-run
+```
+
+**Perplexity Search API 特性:**
+- 实时 Web 搜索（排名结果 + 内容提取）
+- 支持地区/语言/域名过滤
+- 多查询批量搜索（最多 5 个）
+- 官方 SDK 支持
+
+**成本估算 (Perplexity):**
+- Search API: $5 / 1K requests
+- Sonar: $3 / 1M input, $15 / 1M output
+- 预计月成本: $20-$35
+
+**相关文件:**
+- `crawler/utils/perplexity_client.py` - Perplexity SDK 封装
+- `crawler/tools/auto_discover.py` - 自动发现（集成 Perplexity）
+
+### 质量过滤规则
+
+产品必须通过以下验证才会被保存：
+
+1. **必填字段**：`name`, `website`, `description`, `why_matters`
+2. **URL 验证**：必须是有效的 `http://` 或 `https://` URL
+3. **描述长度**：`description` 必须 >20 字符
+4. **why_matters 质量**：
+   - ✅ 必须包含具体数字（融资金额/ARR/用户数）
+   - ✅ 必须包含具体差异化（首创/背景/技术）
+   - ❌ 禁止泛化描述："很有潜力"、"值得关注"、"融资情况良好"
+
+### why_matters 示例
+
+```
+✅ GOOD:
+- "Sequoia领投$50M，8个月ARR从0到$10M，首个AI原生代码编辑器"
+- "前OpenAI联创，专注安全AGI，首轮融资即$1B估值"
+- "日本本土AI独角兽，ARR $30M，主打日语企业市场"
+
+❌ BAD:
+- "这是一个很有潜力的AI产品"
+- "融资情况良好，团队背景不错"
+- "值得关注的新兴公司"
+```
+
+### 运行报告示例
+
+```
+═══════════════════════════════════════════════════════════════════════
+Daily Discovery Report - 2026-01-19
+═══════════════════════════════════════════════════════════════════════
+Quotas:     Dark Horses: 4/5 ⚠️  Rising Stars: 10/10 ✅
+Attempts:   3 rounds
+Duration:   245.3 seconds
+Regions:    us: 4, cn: 3, eu: 2, jp: 1
+Providers:  glm: 3, perplexity: 7
+Unique domains found: 15
+Duplicates skipped: 3
+Quality rejections: 2
+
+Quality rejection reasons:
+  - why_matters lacks specific details: 2
+═══════════════════════════════════════════════════════════════════════
+```
 
 ---
 
@@ -246,6 +516,7 @@ Base URL: `http://localhost:5000/api/v1`
 | `/products/today` | GET | 今日精选 (`limit`, `hours`) |
 | `/products/<id>` | GET | 产品详情 |
 | `/products/categories` | GET | 分类列表 |
+| `/products/blogs` | GET | 博客/新闻 (`limit`, `source`) |
 | `/search?q=xxx` | GET | 搜索 (`categories`, `type`, `sort`, `page`) |
 
 ### 排序规则
@@ -260,20 +531,47 @@ Base URL: `http://localhost:5000/api/v1`
 
 ## 数据模板
 
+### 创新硬件数据模板
+
+```json
+{
+  "name": "Friend Pendant",
+  "slug": "friend-pendant",
+  "website": "https://friend.com",
+  "description": "AI 伴侣项链，Claude 驱动的 always-on 情感陪伴设备",
+  "category": "hardware",
+  "hardware_type": "innovative",
+  "form_factor": "pendant",
+  "use_case": "emotional_companion",
+  "innovation_traits": ["non_traditional_form", "voice_first", "affordable", "no_subscription", "social_buzz"],
+  "region": "🇺🇸",
+  "price": "$99",
+  "funding_total": "$10M",
+  "dark_horse_index": 5,
+  "criteria_met": ["form_innovation", "use_case_clear", "viral"],
+  "why_matters": "AI 伴侣吊坠，Claude 驱动，$99 无订阅，Twitter 现象级爆火",
+  "latest_news": "2026-01: 出货量达 10 万台",
+  "discovered_at": "2026-01-20",
+  "source": "Wired",
+  "is_hardware": true
+}
+```
+
+### 传统硬件数据模板
+
 ```json
 {
   "name": "Etched AI",
   "slug": "etched-ai",
   "website": "https://etched.ai",
-  "logo": "https://...",
   "description": "AI chip startup building Sohu processor for transformers",
   "category": "hardware",
+  "hardware_type": "traditional",
   "hardware_category": "ai_chip",
   "region": "🇺🇸",
-  "founded_date": "2022",
   "funding_total": "$500M",
   "dark_horse_index": 5,
-  "criteria_met": ["hardware_funding", "category_innovation"],
+  "criteria_met": ["hardware_funding", "mass_production"],
   "why_matters": "获$500M融资，估值$5B，Stripes领投，AI芯片挑战Nvidia垄断",
   "latest_news": "2026-01: Stripes 领投新一轮融资",
   "discovered_at": "2026-01-16",
@@ -283,9 +581,8 @@ Base URL: `http://localhost:5000/api/v1`
 ```
 
 **必填字段**: `name`, `website`, `description`, `why_matters`, `dark_horse_index`
-**重要字段**: `funding_total`, `latest_news`, `category`
+**创新硬件字段**: `hardware_type`, `form_factor`, `use_case`, `innovation_traits`, `price`
 **有效分类**: coding, image, video, voice, writing, hardware, finance, education, healthcare, agent, other
-**硬件类别**: ai_chip, robotics, edge_ai, smart_glasses, wearables, smart_home, automotive, drone, medical_device
 
 ---
 
