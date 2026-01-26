@@ -1,741 +1,187 @@
 """
-产品服务 - 支持从数据库或爬虫数据文件加载
+产品服务 - 高级业务逻辑层
+
+本模块只包含高级业务逻辑，底层实现委托给:
+- product_repository: 数据加载、文件I/O、缓存
+- product_filters: 过滤和验证逻辑
+- product_sorting: 排序和多样化选择
 """
 
-import os
-import json
 from collections import defaultdict
 from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
 
-# MongoDB support
-try:
-    from pymongo import MongoClient
-    HAS_MONGO = True
-except ImportError:
-    HAS_MONGO = False
-
 # 导入配置
 from config import Config
 
-# 爬虫数据文件路径 (支持环境变量配置，Docker 部署时使用 /data)
-CRAWLER_DATA_DIR = Config.DATA_PATH if os.path.exists(Config.DATA_PATH) else os.path.join(
-    os.path.dirname(__file__),
-    '..', '..', '..', 'crawler', 'data'
-)
-PRODUCTS_FEATURED_FILE = os.path.join(CRAWLER_DATA_DIR, 'products_featured.json')
-BLOGS_NEWS_FILE = os.path.join(CRAWLER_DATA_DIR, 'blogs_news.json')
-CRAWLER_DATA_FILE = os.path.join(CRAWLER_DATA_DIR, 'products_latest.json')
-LAST_UPDATED_FILE = os.path.join(CRAWLER_DATA_DIR, 'last_updated.json')
-DARK_HORSES_DIR = os.path.join(CRAWLER_DATA_DIR, 'dark_horses')
-BLOCKED_SOURCES = {'github', 'huggingface', 'huggingface_spaces'}
-BLOCKED_DOMAINS = ('github.com', 'huggingface.co')
-
-# 著名产品黑名单 - 除非有新功能否则不显示
-WELL_KNOWN_PRODUCTS = {
-    'chatgpt', 'claude', 'gemini', 'bard', 'copilot', 'perplexity',
-    'midjourney', 'dall-e', 'stable diffusion', 'cursor', 'github copilot',
-    'whisper', 'elevenlabs', 'runway', 'pika', 'sora', 'openai', 'anthropic',
-    'notion ai', 'jasper', 'copy.ai', 'grammarly', 'nvidia h100', 'duolingo'
-}
-
-# 新功能关键词 - 允许著名产品显示
-NEW_FEATURE_KEYWORDS = {'发布', '推出', '更新', '新版', '新功能', 'launch', 'release', 'new feature', 'update', 'v2', 'v3', 'v4', 'announces', '宣布'}
-
-# MongoDB connection
-_mongo_client = None
-_mongo_db = None
-
-def get_mongo_db():
-    """Get MongoDB connection (lazy initialization)"""
-    global _mongo_client, _mongo_db
-    if not HAS_MONGO:
-        return None
-    if _mongo_db is not None:
-        return _mongo_db
-    try:
-        mongo_uri = os.getenv('MONGO_URI', 'mongodb://localhost:27017/weeklyai')
-        _mongo_client = MongoClient(mongo_uri, serverSelectionTimeoutMS=3000)
-        _mongo_client.admin.command('ping')
-        _mongo_db = _mongo_client.get_database()
-        print("  ✓ Backend connected to MongoDB")
-        return _mongo_db
-    except Exception as e:
-        print(f"  ⚠ MongoDB connection failed: {e}, using JSON files")
-        return None
-
-# 示例数据（当没有爬虫数据时使用）- 只包含黑马产品，不包含著名产品
-SAMPLE_PRODUCTS = [
-    {
-        '_id': '1',
-        'name': 'Lovable',
-        'description': '欧洲最快增长的 AI 产品，8 个月从 0 到独角兽。非开发者也能快速构建全栈应用。',
-        'logo_url': 'https://lovable.dev/favicon.ico',
-        'website': 'https://lovable.dev',
-        'categories': ['coding'],
-        'rating': 4.8,
-        'weekly_users': 120000,
-        'trending_score': 92,
-        'final_score': 92,
-        'is_hardware': False,
-        'why_matters': '证明了 AI 原生产品可以极速获客，对想做 AI 创业的 PM 有重要参考价值。',
-        'source': 'sample'
-    },
-    {
-        '_id': '2',
-        'name': 'Devin',
-        'description': '全自主 AI 软件工程师，能够端到端处理需求拆解、代码实现与交付。Cognition Labs 出品。',
-        'logo_url': 'https://cognition.ai/favicon.ico',
-        'website': 'https://cognition.ai',
-        'categories': ['coding'],
-        'rating': 4.7,
-        'weekly_users': 160000,
-        'trending_score': 93,
-        'final_score': 93,
-        'is_hardware': False,
-        'why_matters': '重新定义了「AI 工程师」边界，PM 需要思考如何与 AI 协作而非仅仅使用 AI。',
-        'source': 'sample'
-    },
-    {
-        '_id': '3',
-        'name': 'Kiro',
-        'description': 'AWS 背景团队打造的规范驱动 AI 开发平台，强调稳定的工程化交付而非炫技。',
-        'logo_url': 'https://kiro.dev/favicon.ico',
-        'website': 'https://kiro.dev',
-        'categories': ['coding'],
-        'rating': 4.7,
-        'weekly_users': 85000,
-        'trending_score': 90,
-        'final_score': 90,
-        'is_hardware': False,
-        'why_matters': '大厂背景创业，专注企业级可靠性，是 AI 编程工具的差异化方向。',
-        'source': 'sample'
-    },
-    {
-        '_id': '4',
-        'name': 'Emergent',
-        'description': '非开发者也能用 AI 代理构建全栈应用的建站产品，降低技术门槛。',
-        'logo_url': 'https://emergent.sh/favicon.ico',
-        'website': 'https://emergent.sh',
-        'categories': ['coding'],
-        'rating': 4.6,
-        'weekly_users': 45000,
-        'trending_score': 88,
-        'final_score': 88,
-        'is_hardware': False,
-        'why_matters': '面向非技术用户的 AI 开发工具，扩展了「谁能做产品」的边界。',
-        'source': 'sample'
-    },
-    {
-        '_id': '5',
-        'name': 'Bolt.new',
-        'description': 'StackBlitz 推出的浏览器内全栈 AI 开发环境，无需配置即可开始编码。',
-        'logo_url': 'https://bolt.new/favicon.ico',
-        'website': 'https://bolt.new',
-        'categories': ['coding'],
-        'rating': 4.8,
-        'weekly_users': 200000,
-        'trending_score': 91,
-        'final_score': 91,
-        'is_hardware': False,
-        'why_matters': '零配置 + 浏览器内运行，大幅降低 AI 开发入门门槛。',
-        'source': 'sample'
-    },
-    {
-        '_id': '6',
-        'name': 'Windsurf',
-        'description': 'Codeium 推出的 Agentic IDE，强调 AI 代理主动参与开发流程。',
-        'logo_url': 'https://codeium.com/favicon.ico',
-        'website': 'https://codeium.com/windsurf',
-        'categories': ['coding'],
-        'rating': 4.6,
-        'weekly_users': 95000,
-        'trending_score': 87,
-        'final_score': 87,
-        'is_hardware': False,
-        'why_matters': 'Agentic IDE 概念的先行者，代表了 AI 编程工具的演进方向。',
-        'source': 'sample'
-    },
-    {
-        '_id': '7',
-        'name': 'NEO (1X Technologies)',
-        'description': '挪威初创公司研发的人形机器人，定位家庭助手和轻工业场景。',
-        'logo_url': 'https://1x.tech/favicon.ico',
-        'website': 'https://1x.tech',
-        'categories': ['hardware'],
-        'rating': 4.5,
-        'weekly_users': 15000,
-        'trending_score': 85,
-        'final_score': 85,
-        'is_hardware': True,
-        'why_matters': '人形机器人赛道的黑马，融资后估值飙升，值得关注具身智能趋势。',
-        'source': 'sample'
-    },
-    {
-        '_id': '8',
-        'name': 'Rokid AR Studio',
-        'description': '中国 AR 眼镜厂商推出的 AI 开发平台，支持空间计算应用开发。',
-        'logo_url': 'https://www.rokid.com/favicon.ico',
-        'website': 'https://www.rokid.com',
-        'categories': ['hardware'],
-        'rating': 4.4,
-        'weekly_users': 25000,
-        'trending_score': 82,
-        'final_score': 82,
-        'is_hardware': True,
-        'why_matters': '国产 AR 眼镜 + AI 平台，空间计算赛道的本土玩家。',
-        'source': 'sample'
-    },
-    {
-        '_id': '9',
-        'name': 'DeepSeek',
-        'description': '中国 AI 研究公司，以高效开源模型著称，性价比极高。',
-        'logo_url': 'https://www.deepseek.com/favicon.ico',
-        'website': 'https://www.deepseek.com',
-        'categories': ['coding', 'writing'],
-        'rating': 4.6,
-        'weekly_users': 180000,
-        'trending_score': 89,
-        'final_score': 89,
-        'is_hardware': False,
-        'why_matters': '开源大模型的性价比之王，训练成本仅为竞品的 1/10。',
-        'source': 'sample'
-    },
-    {
-        '_id': '10',
-        'name': 'Replit Agent',
-        'description': 'Replit 推出的 AI 代理，能自主完成从需求到部署的完整开发流程。',
-        'logo_url': 'https://replit.com/favicon.ico',
-        'website': 'https://replit.com',
-        'categories': ['coding'],
-        'rating': 4.5,
-        'weekly_users': 150000,
-        'trending_score': 86,
-        'final_score': 86,
-        'is_hardware': False,
-        'why_matters': '全流程 AI 开发代理，从 idea 到上线一站式完成。',
-        'source': 'sample'
-    },
-    {
-        '_id': '11',
-        'name': 'Thinking Machines Lab',
-        'description': '菲律宾 AI 研究初创，专注东南亚本地化大语言模型研发。',
-        'logo_url': 'https://thinkingmachines.ph/favicon.ico',
-        'website': 'https://thinkingmachines.ph',
-        'categories': ['other'],
-        'rating': 4.3,
-        'weekly_users': 12000,
-        'trending_score': 78,
-        'final_score': 78,
-        'is_hardware': False,
-        'why_matters': '东南亚本土 AI 研究力量，区域化 AI 的代表案例。',
-        'source': 'sample'
-    },
-    {
-        '_id': '12',
-        'name': 'Poe',
-        'description': 'Quora 推出的多模型 AI 聊天平台，一站式访问多种 AI 模型。',
-        'logo_url': 'https://poe.com/favicon.ico',
-        'website': 'https://poe.com',
-        'categories': ['other'],
-        'rating': 4.5,
-        'weekly_users': 280000,
-        'trending_score': 84,
-        'final_score': 84,
-        'is_hardware': False,
-        'why_matters': 'AI 模型聚合平台，让用户无需切换即可对比不同模型能力。',
-        'source': 'sample'
-    },
-    {
-        '_id': '13',
-        'name': 'v0.dev',
-        'description': 'Vercel 推出的 AI UI 生成器，通过对话生成 React 组件代码。',
-        'logo_url': 'https://v0.dev/favicon.ico',
-        'website': 'https://v0.dev',
-        'categories': ['coding', 'image'],
-        'rating': 4.7,
-        'weekly_users': 175000,
-        'trending_score': 90,
-        'final_score': 90,
-        'is_hardware': False,
-        'why_matters': '前端 AI 生成的标杆产品，设计师和开发者都能用。',
-        'source': 'sample'
-    },
-    {
-        '_id': '14',
-        'name': 'Kling AI',
-        'description': '快手推出的 AI 视频生成工具，支持文本/图片转视频。',
-        'logo_url': 'https://klingai.com/favicon.ico',
-        'website': 'https://klingai.com',
-        'categories': ['video'],
-        'rating': 4.4,
-        'weekly_users': 320000,
-        'trending_score': 85,
-        'final_score': 85,
-        'is_hardware': False,
-        'why_matters': '国产视频生成 AI 的代表，在特定场景下效果不输海外竞品。',
-        'source': 'sample'
-    },
-    {
-        '_id': '15',
-        'name': 'Glif',
-        'description': '可视化 AI 工作流构建平台，无需代码即可串联多个 AI 模型。',
-        'logo_url': 'https://glif.app/favicon.ico',
-        'website': 'https://glif.app',
-        'categories': ['image', 'other'],
-        'rating': 4.5,
-        'weekly_users': 45000,
-        'trending_score': 83,
-        'final_score': 83,
-        'is_hardware': False,
-        'why_matters': 'AI 工作流的乐高积木，让创意人士无需写代码也能玩转 AI。',
-        'source': 'sample'
-    },
-]
+# 导入底层模块
+from . import product_filters as filters
+from . import product_sorting as sorting
+from .product_repository import ProductRepository
 
 
 class ProductService:
-    """产品服务类"""
-    
-    _cached_products = None
-    _cache_time = None
-    _cache_duration = 300  # 5分钟缓存
+    """产品服务类 - 高级业务逻辑"""
 
-    @staticmethod
-    def _build_product_key(product: Dict[str, Any]) -> str:
-        """Normalize a product key for dedupe/merge."""
-        website = (product.get('website') or '').strip().lower()
-        if website:
-            return website
-        name_key = (product.get('name') or '').strip().lower()
-        return ''.join(ch for ch in name_key if ch.isalnum())
-
-    @staticmethod
-    def _is_blocked(product: Dict[str, Any]) -> bool:
-        """Filter non-end-user sources/domains."""
-        source = (product.get('source') or '').strip().lower()
-        if source in BLOCKED_SOURCES:
-            return True
-        website = (product.get('website') or '').strip().lower()
-        return any(domain in website for domain in BLOCKED_DOMAINS)
-
-    @staticmethod
-    def _is_well_known(product: Dict[str, Any]) -> bool:
-        """检查是否为著名产品（除非有新功能才显示）
-
-        返回 True 表示应该被过滤掉（是著名产品且没有新功能）
-        返回 False 表示可以显示（不是著名产品，或是著名产品但有新功能）
-        """
-        name = (product.get('name') or '').lower().strip()
-        # 检查是否匹配任何著名产品
-        is_famous = any(known in name for known in WELL_KNOWN_PRODUCTS)
-        if not is_famous:
-            return False  # 不是著名产品，可以显示
-
-        # 是著名产品，检查是否有新功能关键词
-        desc = (product.get('description') or '').lower()
-        title = (product.get('title') or '').lower()
-        text = f"{name} {desc} {title}"
-        has_new_feature = any(kw in text for kw in NEW_FEATURE_KEYWORDS)
-
-        # 如果有新功能，返回 False（可以显示）；否则返回 True（过滤掉）
-        return not has_new_feature
-
-    @staticmethod
-    def _normalize_curated_product(product: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Map curated dark-horse fields into standard product fields."""
-        if not isinstance(product, dict):
-            return None
-        normalized = product.copy()
-        if not normalized.get('logo_url'):
-            normalized['logo_url'] = normalized.get('logo') or normalized.get('logoUrl') or ''
-        if not normalized.get('categories'):
-            category = normalized.get('category')
-            if category:
-                normalized['categories'] = [category]
-        if not normalized.get('source'):
-            normalized['source'] = 'curated'
-        if 'is_hardware' not in normalized:
-            normalized['is_hardware'] = False
-        return normalized
+    # ========== 缓存管理 (委托给 Repository) ==========
 
     @classmethod
-    def _load_curated_dark_horses(cls) -> List[Dict[str, Any]]:
-        """Load manually curated dark-horse products."""
-        if not os.path.isdir(DARK_HORSES_DIR):
-            return []
+    def refresh_cache(cls):
+        """强制刷新缓存"""
+        ProductRepository.refresh_cache()
 
-        curated: List[Dict[str, Any]] = []
-        for filename in sorted(os.listdir(DARK_HORSES_DIR)):
-            if not filename.endswith('.json'):
-                continue
-            if filename == 'template.json':
-                continue
-            path = os.path.join(DARK_HORSES_DIR, filename)
-            try:
-                with open(path, 'r', encoding='utf-8') as f:
-                    data = json.load(f)
-                if isinstance(data, dict):
-                    data = [data]
-                if isinstance(data, list):
-                    curated.extend(item for item in data if isinstance(item, dict))
-            except Exception:
-                continue
-        return curated
-
-    @classmethod
-    def _merge_curated_products(cls, products: List[Dict[str, Any]],
-                                curated: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Merge curated products into base list (prefer curated fields)."""
-        if not curated:
-            return products
-
-        by_key = {cls._build_product_key(p): p for p in products if p}
-        for item in curated:
-            normalized = cls._normalize_curated_product(item)
-            if not normalized or cls._is_blocked(normalized):
-                continue
-            key = cls._build_product_key(normalized)
-            if not key:
-                continue
-            if key in by_key:
-                target = by_key[key]
-                for field, value in normalized.items():
-                    if value not in (None, '', [], {}):
-                        target[field] = value
-                continue
-            products.append(normalized)
-            by_key[key] = normalized
-        return products
-
-    @classmethod
-    def _normalize_products(cls, products: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Normalize products and drop blocked sources/domains + well-known products."""
-        normalized = []
-        for idx, product in enumerate(products):
-            if not product or cls._is_blocked(product) or cls._is_well_known(product):
-                continue
-            if not product.get('logo_url'):
-                logo = product.get('logo') or product.get('logoUrl')
-                if logo:
-                    product['logo_url'] = logo
-            if '_id' not in product:
-                product['_id'] = str(idx + 1)
-            normalized.append(product)
-        return normalized
-    
     @classmethod
     def _load_products(cls) -> List[Dict]:
-        """加载产品数据（带缓存）- 只从 products_featured.json 加载策展产品
-
-        重要: 产品数据只来自手动策展的 JSON 文件，不从 MongoDB 或爬虫输出加载。
-        这确保了产品列表的高质量和人工审核。
-        """
-        now = datetime.now()
-
-        # 检查缓存
-        if cls._cached_products and cls._cache_time:
-            age = (now - cls._cache_time).total_seconds()
-            if age < cls._cache_duration:
-                return cls._cached_products
-
-        # 1. 只从 products_featured.json 加载（策展产品）
-        products = cls._load_from_crawler_file()
-
-        # 2. 如果没有策展文件，使用示例数据
-        if not products:
-            products = SAMPLE_PRODUCTS.copy()
-
-        # 3. 合并手动策展黑马产品 (dark_horses/ 目录)
-        curated = cls._load_curated_dark_horses()
-        products = cls._merge_curated_products(products, curated)
-
-        # 4. 统一字段 & 过滤
-        products = cls._normalize_products(products)
-
-        # 更新缓存
-        cls._cached_products = products
-        cls._cache_time = now
-
-        return products
-
-    @classmethod
-    def _load_from_mongodb(cls) -> List[Dict]:
-        """从MongoDB加载产品数据"""
-        db = get_mongo_db()
-        if db is None:
-            return []
-
-        try:
-            collection = db.products
-            blocked_sources = list(BLOCKED_SOURCES)
-            # 获取产品，排除 content_type='blog' 和 content_type='filtered'
-            products = list(collection.find(
-                {
-                    'content_type': {'$nin': ['blog', 'filtered']},
-                    'source': {'$nin': blocked_sources}
-                },
-                {'_id': 0}
-            ).sort('final_score', -1))
-
-            # 如果没有 content_type 字段，获取所有产品
-            if not products:
-                products = list(collection.find(
-                    {'source': {'$nin': blocked_sources}},
-                    {'_id': 0}
-                ).sort('final_score', -1))
-
-            if products:
-                print(f"  ✓ Loaded {len(products)} products from MongoDB")
-
-            # 添加 _id 字段
-            for i, p in enumerate(products):
-                if '_id' not in p:
-                    p['_id'] = str(i + 1)
-                # Parse extra field if it's a string
-                if 'extra' in p and isinstance(p['extra'], str):
-                    try:
-                        p['extra'] = json.loads(p['extra'])
-                    except:
-                        pass
-
-            return products
-        except Exception as e:
-            print(f"  ⚠ MongoDB load failed: {e}")
-            return []
-    
-    @classmethod
-    def _load_from_crawler_file(cls) -> List[Dict]:
-        """从策展产品文件加载 (products_featured.json)
-
-        这是唯一的产品数据源，包含人工审核的高质量产品。
-        不会加载爬虫的原始输出 (products_latest.json)。
-        """
-        # 只加载策展产品文件
-        if not os.path.exists(PRODUCTS_FEATURED_FILE):
-            print("  ⚠ products_featured.json 不存在，将使用示例数据")
-            return []
-
-        try:
-            with open(PRODUCTS_FEATURED_FILE, 'r', encoding='utf-8') as f:
-                products = json.load(f)
-
-            # 添加 _id 字段
-            for i, p in enumerate(products):
-                if '_id' not in p:
-                    p['_id'] = str(i + 1)
-
-            print(f"  ✓ 加载 {len(products)} 个策展产品")
-            return products
-        except Exception as e:
-            print(f"  ⚠ 加载策展产品失败: {e}")
-            return []
+        """加载产品数据（带缓存）"""
+        return ProductRepository.load_products(filters_module=filters)
 
     @classmethod
     def _load_blogs(cls) -> List[Dict]:
         """加载博客/新闻/讨论数据"""
-        if not os.path.exists(BLOGS_NEWS_FILE):
-            return []
+        return ProductRepository.load_blogs()
 
-        try:
-            with open(BLOGS_NEWS_FILE, 'r', encoding='utf-8') as f:
-                blogs = json.load(f)
-
-            # 添加 _id 字段
-            for i, b in enumerate(blogs):
-                if '_id' not in b:
-                    b['_id'] = f"blog_{i + 1}"
-
-            return blogs
-        except Exception as e:
-            print(f"加载博客数据失败: {e}")
-            return []
-    
-    @classmethod
-    def refresh_cache(cls):
-        """强制刷新缓存"""
-        cls._cached_products = None
-        cls._cache_time = None
+    # ========== 排序工具方法 (委托给 sorting 模块) ==========
 
     @staticmethod
-    def get_last_updated() -> Dict[str, Any]:
-        """获取最近一次数据更新时间."""
-        if not os.path.exists(LAST_UPDATED_FILE):
-            return {'last_updated': None, 'hours_ago': None}
+    def _parse_funding(funding: str) -> float:
+        """解析融资金额字符串为数值（单位：百万美元）"""
+        return sorting.parse_funding(funding)
 
-        try:
-            with open(LAST_UPDATED_FILE, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-        except Exception:
-            return {'last_updated': None, 'hours_ago': None}
+    @staticmethod
+    def _get_valuation_score(product: Dict) -> float:
+        """获取估值/用户数综合分数"""
+        return sorting.get_valuation_score(product)
 
-        last_updated = data.get('last_updated')
-        if not last_updated:
-            return {'last_updated': None, 'hours_ago': None}
+    @staticmethod
+    def _parse_date(value: Any) -> Optional[datetime]:
+        """Parse ISO or YYYY-MM-DD dates safely."""
+        return sorting.parse_date(value)
 
-        try:
-            parsed = datetime.fromisoformat(str(last_updated).replace('Z', '+00:00'))
-            hours_ago = round((datetime.now(parsed.tzinfo) - parsed).total_seconds() / 3600, 1)
-        except Exception:
-            hours_ago = None
+    @staticmethod
+    def _get_product_date(product: Dict[str, Any]) -> Optional[datetime]:
+        """Pick a comparable date field for freshness checks."""
+        return sorting.get_product_date(product)
 
-        return {'last_updated': last_updated, 'hours_ago': hours_ago}
+    @staticmethod
+    def _sort_by_score_funding_valuation(products: List[Dict]) -> List[Dict]:
+        """按评分 > 融资 > 估值/用户数排序"""
+        return sorting.sort_by_score_funding_valuation(products)
 
     @staticmethod
     def _diversify_products(
-        products: List[Dict], 
-        limit: int, 
-        max_per_category: int = 4, 
+        products: List[Dict],
+        limit: int,
+        max_per_category: int = 4,
         max_per_source: int = 5,
         hardware_ratio: float = 0.4,
         max_per_hw_category: int = 3
     ) -> List[Dict]:
-        """
-        多样化选择算法，保证榜单均衡
-        
-        参数:
-        - limit: 选择数量
-        - max_per_category: 每个软件类别最大数量
-        - max_per_source: 每个来源最大数量
-        - hardware_ratio: 硬件最大占比 (默认 40%)
-        - max_per_hw_category: 每个硬件子类别最大数量 (避免全是 drone)
-        """
-        selected = []
-        category_counts = defaultdict(int)
-        source_counts = defaultdict(int)
-        hw_category_counts = defaultdict(int)
-        hw_count = 0
-        sw_count = 0
-        
-        hw_limit = int(limit * hardware_ratio)
-        sw_limit = limit - hw_limit
+        """多样化选择算法，保证榜单均衡"""
+        return sorting.diversify_products(
+            products, limit, max_per_category, max_per_source,
+            hardware_ratio, max_per_hw_category
+        )
 
-        def is_hardware(p):
-            return p.get('is_hardware') or p.get('category') == 'hardware' or p.get('hardware_category')
+    # ========== 过滤工具方法 (委托给 filters 模块) ==========
 
-        for product in products:
-            if len(selected) >= limit:
-                break
-                
-            # 检查硬件/软件配额
-            is_hw = is_hardware(product)
-            if is_hw and hw_count >= hw_limit:
-                continue
-            if not is_hw and sw_count >= sw_limit:
-                continue
-            
-            # 检查硬件子类别配额 (避免全是 drone/ai_chip)
-            if is_hw:
-                hw_cat = product.get('hardware_category', 'hardware_other')
-                if hw_category_counts[hw_cat] >= max_per_hw_category:
-                    continue
-            
-            # 检查软件类别配额
-            categories = product.get('categories') or [product.get('category', 'other')]
-            primary = categories[0] if categories else 'other'
-            if not is_hw and category_counts[primary] >= max_per_category:
-                continue
-            
-            # 检查来源配额
-            source = product.get('source', 'unknown')
-            if source_counts[source] >= max_per_source:
-                continue
-            
-            # 添加产品
-            selected.append(product)
-            category_counts[primary] += 1
-            source_counts[source] += 1
-            if is_hw:
-                hw_count += 1
-                hw_cat = product.get('hardware_category', 'hardware_other')
-                hw_category_counts[hw_cat] += 1
-            else:
-                sw_count += 1
+    @staticmethod
+    def _build_product_key(product: Dict[str, Any]) -> str:
+        """Normalize a product key for dedupe/merge."""
+        return filters.build_product_key(product)
 
-        # 如果不足，放宽限制再补齐
-        for product in products:
-            if len(selected) >= limit:
-                break
-            if product in selected:
-                continue
-            selected.append(product)
+    @staticmethod
+    def _is_blocked(product: Dict[str, Any]) -> bool:
+        """Filter non-end-user sources/domains."""
+        return filters.is_blocked(product)
 
-        return selected
-    
+    @staticmethod
+    def _is_well_known(product: Dict[str, Any]) -> bool:
+        """检查是否为著名产品（除非有新功能才显示）"""
+        return filters.is_well_known(product)
+
+    @staticmethod
+    def _normalize_products(products: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Normalize products and drop blocked sources/domains + well-known products."""
+        return filters.normalize_products(products)
+
+    @staticmethod
+    def _is_hardware(product: Dict[str, Any]) -> bool:
+        """判断产品是否为硬件"""
+        return filters.is_hardware(product)
+
+    # ========== 数据仓库方法 (委托给 Repository) ==========
+
+    @staticmethod
+    def get_last_updated() -> Dict[str, Any]:
+        """获取最近一次数据更新时间."""
+        return ProductRepository.get_last_updated()
+
+    # ========== 业务逻辑方法 ==========
+
     @staticmethod
     def get_trending_products(limit: int = 5) -> List[Dict]:
         """获取热门推荐产品 (多样化)"""
         products = ProductService._load_products()
-        products = [
-            p for p in products
-            if p.get('dark_horse_index', 0) >= 2
-        ]
-        
+        products = filters.filter_by_dark_horse_index(products, min_index=2)
+
         # 按 hot_score 或 final_score 排序
-        sorted_products = sorted(
-            products,
-            key=lambda x: x.get('hot_score', x.get('final_score', x.get('trending_score', 0))),
-            reverse=True
-        )
-        return ProductService._diversify_products(
-            sorted_products, 
-            limit, 
-            max_per_category=2, 
+        sorted_products = sorting.sort_by_trending(products)
+        return sorting.diversify_products(
+            sorted_products,
+            limit,
+            max_per_category=2,
             max_per_source=2,
             hardware_ratio=0.4,
             max_per_hw_category=2
         )
-    
+
     @staticmethod
     def get_weekly_top_products(limit: int = 15) -> List[Dict]:
         """获取本周Top产品
-        
+
         排序规则: 评分 > 融资金额 > 用户数/估值
         多样化规则: 硬件 ≤40%, 每个硬件子类别 ≤3, 每个软件类别 ≤4
         """
         products = ProductService._load_products()
-        products = [
-            p for p in products
-            if p.get('dark_horse_index', 0) >= 2
-        ]
-        
+        products = filters.filter_by_dark_horse_index(products, min_index=2)
+
         # 排序: 评分 > 融资 > 估值/用户数
-        sorted_products = ProductService._sort_by_score_funding_valuation(products)
+        sorted_products = sorting.sort_by_score_funding_valuation(products)
 
         if limit <= 0:
             return sorted_products
-        
+
         # 多样化选择: 硬件 ≤40%, 每个硬件子类别 ≤3 (避免全是 drone)
-        return ProductService._diversify_products(
-            sorted_products, 
-            limit, 
-            max_per_category=4,      # 每个软件类别最多 4 个
-            max_per_source=5,        # 每个来源最多 5 个
-            hardware_ratio=0.4,      # 硬件最多占 40%
-            max_per_hw_category=3    # 每个硬件子类别最多 3 个
+        return sorting.diversify_products(
+            sorted_products,
+            limit,
+            max_per_category=4,
+            max_per_source=5,
+            hardware_ratio=0.4,
+            max_per_hw_category=3
         )
-    
+
     @staticmethod
     def get_product_by_id(product_id: str) -> Optional[Dict]:
         """根据ID获取产品"""
         products = ProductService._load_products()
-        
+
         for product in products:
             if str(product.get('_id', '')) == product_id:
                 return product
             # 也支持按名称查找
             if product.get('name', '').lower() == product_id.lower():
                 return product
-        
+
         return None
-    
+
     @staticmethod
-    def search_products(keyword: str = '', categories: List[str] = None, 
-                       product_type: str = 'all', sort_by: str = 'trending',
-                       page: int = 1, limit: int = 15) -> Dict:
+    def search_products(keyword: str = '', categories: List[str] = None,
+                        product_type: str = 'all', sort_by: str = 'trending',
+                        page: int = 1, limit: int = 15) -> Dict:
         """
         搜索产品
-        
+
         参数:
         - keyword: 搜索关键词
         - categories: 分类列表
@@ -746,84 +192,55 @@ class ProductService:
         """
         products = ProductService._load_products()
         results = products.copy()
-        
+
         # 关键词筛选
-        if keyword:
-            keyword_lower = keyword.lower()
-            results = [
-                p for p in results 
-                if keyword_lower in p.get('name', '').lower() 
-                or keyword_lower in p.get('description', '').lower()
-            ]
-        
+        results = filters.filter_by_keyword(results, keyword)
+
         # 分类筛选（支持多选，OR逻辑）
-        if categories:
-            results = [
-                p for p in results 
-                if any(cat in p.get('categories', []) for cat in categories)
-            ]
-        
+        results = filters.filter_by_categories(results, categories)
+
         # 类型筛选
-        if product_type == 'software':
-            results = [p for p in results if not p.get('is_hardware', False)]
-        elif product_type == 'hardware':
-            results = [p for p in results if p.get('is_hardware', False)]
-        
+        results = filters.filter_by_type(results, product_type)
+
         # 排序
         if sort_by == 'trending':
-            results.sort(
-                key=lambda x: x.get('hot_score', x.get('final_score', x.get('trending_score', 0))),
-                reverse=True
-            )
+            results = sorting.sort_by_trending(results)
         elif sort_by == 'rating':
-            results.sort(key=lambda x: x.get('rating', 0), reverse=True)
+            results = sorting.sort_by_rating(results)
         elif sort_by == 'users':
-            results.sort(key=lambda x: x.get('weekly_users', 0), reverse=True)
-        
+            results = sorting.sort_by_users(results)
+
         # 分页
         total = len(results)
         start = (page - 1) * limit
         end = start + limit
         paginated_results = results[start:end]
-        
+
         return {
             'products': paginated_results,
             'total': total
         }
-    
+
     @staticmethod
     def get_all_products() -> List[Dict]:
         """获取所有产品"""
         return ProductService._load_products()
-    
+
     @staticmethod
     def get_products_by_category(category: str, limit: int = 20) -> List[Dict]:
         """按分类获取产品"""
         products = ProductService._load_products()
-        
-        filtered = [
-            p for p in products 
-            if category in p.get('categories', [])
-        ]
-        
+        filtered = filters.filter_by_category(products, category)
+
         # 按热度排序
-        filtered.sort(
-            key=lambda x: x.get('final_score', x.get('trending_score', 0)),
-            reverse=True
-        )
-        
+        filtered = sorting.sort_by_trending(filtered)
         return filtered[:limit]
-    
+
     @staticmethod
     def get_products_by_source(source: str, limit: int = 20) -> List[Dict]:
         """按来源获取产品"""
         products = ProductService._load_products()
-
-        filtered = [
-            p for p in products
-            if p.get('source', '') == source
-        ]
-
+        filtered = filters.filter_by_source(products, source)
         return filtered[:limit]
 
     @staticmethod
@@ -832,117 +249,15 @@ class ProductService:
         blogs = ProductService._load_blogs()
 
         # 按分数排序
-        blogs.sort(
-            key=lambda x: x.get('final_score', x.get('trending_score', 0)),
-            reverse=True
-        )
-
+        blogs = sorting.sort_by_trending(blogs)
         return blogs[:limit]
 
     @staticmethod
     def get_blogs_by_source(source: str, limit: int = 20) -> List[Dict]:
         """按来源获取博客内容"""
         blogs = ProductService._load_blogs()
-
-        filtered = [
-            b for b in blogs
-            if b.get('source', '') == source
-        ]
-
+        filtered = filters.filter_by_source(blogs, source)
         return filtered[:limit]
-
-    @staticmethod
-    def _parse_funding(funding: str) -> float:
-        """解析融资金额字符串为数值（单位：百万美元）"""
-        import re
-        if not funding or funding == 'unknown':
-            return 0
-        match = re.match(r'\$?([\d.]+)\s*(M|B|K)?', str(funding), re.IGNORECASE)
-        if not match:
-            return 0
-        value = float(match.group(1))
-        unit = (match.group(2) or '').upper()
-        if unit == 'B':
-            value *= 1000
-        elif unit == 'K':
-            value /= 1000
-        return value
-
-    @staticmethod
-    def _get_valuation_score(product: Dict) -> float:
-        """获取估值/用户数综合分数"""
-        import re
-        # 优先使用估值
-        valuation = product.get('valuation') or product.get('market_cap') or ''
-        if valuation:
-            match = re.match(r'\$?([\d.]+)\s*(M|B|K)?', str(valuation), re.IGNORECASE)
-            if match:
-                value = float(match.group(1))
-                unit = (match.group(2) or '').upper()
-                if unit == 'B':
-                    value *= 1000
-                elif unit == 'K':
-                    value /= 1000
-                return value * 10  # 估值权重更高
-        
-        # 其次使用用户数
-        users = product.get('weekly_users') or product.get('users') or product.get('monthly_users') or 0
-        if users > 0:
-            return users / 10000  # 转换为万用户
-        
-        # 最后使用热度分数
-        return product.get('hot_score') or product.get('trending_score') or product.get('final_score') or 0
-
-    @staticmethod
-    def _parse_date(value: Any) -> Optional[datetime]:
-        """Parse ISO or YYYY-MM-DD dates safely."""
-        if not value:
-            return None
-        if isinstance(value, datetime):
-            return value
-        if not isinstance(value, str):
-            return None
-        try:
-            if 'T' in value:
-                return datetime.fromisoformat(value.replace('Z', '+00:00').split('+')[0])
-            return datetime.strptime(value, '%Y-%m-%d')
-        except Exception:
-            return None
-
-    @staticmethod
-    def _get_product_date(product: Dict[str, Any]) -> Optional[datetime]:
-        """Pick a comparable date field for freshness checks."""
-        return ProductService._parse_date(
-            product.get('discovered_at') or product.get('first_seen') or product.get('published_at')
-        )
-
-    @staticmethod
-    def _is_hardware(product: Dict[str, Any]) -> bool:
-        if product.get('is_hardware'):
-            return True
-        categories = product.get('categories') or []
-        if isinstance(categories, str):
-            categories = [categories]
-        if 'hardware' in categories:
-            return True
-        if product.get('category') == 'hardware':
-            return True
-        if product.get('hardware_category'):
-            return True
-        return False
-
-    @staticmethod
-    def _sort_by_score_funding_valuation(products: List[Dict]) -> List[Dict]:
-        """按评分 > 融资 > 估值/用户数排序"""
-        return sorted(
-            products,
-            key=lambda x: (
-                x.get('dark_horse_index', 0),
-                ProductService._parse_funding(x.get('funding_total', '')),
-                ProductService._get_valuation_score(x)
-            ),
-            reverse=True
-        )
 
     @staticmethod
     def get_dark_horse_products(limit: int = 10, min_index: int = 4) -> List[Dict]:
@@ -951,44 +266,81 @@ class ProductService:
         参数:
         - limit: 返回数量
         - min_index: 最低黑马指数 (1-5)
-        - 优先 7 天内，允许 14 天内的优秀产品
-        
+
+        刷新规则 (保持本周黑马新鲜度):
+        - 大部分产品: 严格 5 天后移出本周黑马 → 更多推荐
+        - TOP 1 产品 (最高评分+融资): 可保留 10 天
+        - 如果 latest_news 更新, 重置计时器
+        - 空状态回退: 按评分显示 top 10
+
         排序规则: 评分 > 融资金额 > 用户数/估值
         多样化规则: 硬件 ≤40%, 每个硬件子类别 ≤3
         """
         products = ProductService._load_products()
         now = datetime.now()
-        one_week_ago = now - timedelta(days=7)
-        two_weeks_ago = now - timedelta(days=14)
+        fresh_cutoff = now - timedelta(days=Config.DARK_HORSE_FRESH_DAYS)  # 5 days
+        sticky_cutoff = now - timedelta(days=Config.DARK_HORSE_STICKY_DAYS)  # 10 days
 
         # 筛选有 dark_horse_index 且 >= min_index 的产品
-        def is_candidate(product: Dict[str, Any]) -> bool:
-            return product.get('dark_horse_index', 0) >= min_index
+        all_candidates = filters.filter_by_dark_horse_index(products, min_index=min_index)
 
-        def recency_rank(product: Dict[str, Any]) -> int:
-            product_date = ProductService._get_product_date(product)
-            if product_date and product_date >= one_week_ago:
-                return 0
-            if product_date and product_date >= two_weeks_ago:
-                return 1
-            return 2
+        if not all_candidates:
+            return []
+
+        # 找到 TOP 1 产品 (最高评分+融资, 可保留 10 天)
+        top_product = max(all_candidates, key=sorting.product_score_key)
+        top_product_date = sorting.get_effective_date(top_product)
+        top_product_eligible = (
+            top_product_date and top_product_date >= sticky_cutoff
+        )
+
+        # 筛选新鲜产品 (5 天内)
+        fresh_candidates = []
+        for p in all_candidates:
+            effective_date = sorting.get_effective_date(p)
+            if effective_date and effective_date >= fresh_cutoff:
+                fresh_candidates.append(p)
+
+        # 如果 TOP 1 产品不在新鲜列表但仍在 10 天内, 添加到候选
+        if top_product_eligible and top_product not in fresh_candidates:
+            fresh_candidates.append(top_product)
+
+        # 如果新鲜产品不足, 回退到按评分排序的 top 产品
+        if len(fresh_candidates) < limit:
+            # 按评分+融资排序所有候选
+            all_candidates_sorted = sorted(
+                all_candidates,
+                key=lambda x: (
+                    -(x.get('dark_horse_index', 0) or 0),
+                    -sorting.parse_funding(x.get('funding_total', '')),
+                    -sorting.get_valuation_score(x)
+                )
+            )
+            # 补充不在新鲜列表中的产品
+            for p in all_candidates_sorted:
+                if p not in fresh_candidates:
+                    fresh_candidates.append(p)
+                if len(fresh_candidates) >= limit:
+                    break
 
         def sort_key(product: Dict[str, Any]):
-            product_date = ProductService._get_product_date(product) or datetime(1970, 1, 1)
+            """排序: 新鲜度优先, 然后评分 > 融资"""
+            effective_date = sorting.get_effective_date(product) or datetime(1970, 1, 1)
+            is_fresh = effective_date >= fresh_cutoff
+            is_top_sticky = (product == top_product and top_product_eligible)
+
             return (
-                recency_rank(product),
+                0 if (is_fresh or is_top_sticky) else 1,  # 新鲜/置顶优先
                 -(product.get('dark_horse_index', 0) or 0),
-                -ProductService._parse_funding(product.get('funding_total', '')),
-                -ProductService._get_valuation_score(product)
+                -sorting.parse_funding(product.get('funding_total', '')),
+                -sorting.get_valuation_score(product)
             )
 
-        # 筛选候选产品
-        candidates = [p for p in products if is_candidate(p)]
-        candidates.sort(key=sort_key)
+        fresh_candidates.sort(key=sort_key)
 
         # 使用多样化算法选择产品 (硬件 ≤40%, 每个硬件子类别 ≤3)
-        selected = ProductService._diversify_products(
-            candidates,
+        selected = sorting.diversify_products(
+            fresh_candidates,
             limit,
             max_per_category=4,
             max_per_source=5,
@@ -1004,19 +356,16 @@ class ProductService:
 
         参数:
         - limit: 返回数量
-        
+
         排序规则: 评分 > 融资金额 > 用户数/估值
         """
         products = ProductService._load_products()
 
         # 筛选 dark_horse_index 为 2-3 的产品
-        rising_stars = [
-            p for p in products
-            if 2 <= p.get('dark_horse_index', 0) <= 3
-        ]
+        rising_stars = filters.filter_by_dark_horse_index(products, min_index=2, max_index=3)
 
         # 排序: 评分 > 融资 > 估值/用户数
-        rising_stars = ProductService._sort_by_score_funding_valuation(rising_stars)
+        rising_stars = sorting.sort_by_score_funding_valuation(rising_stars)
 
         return rising_stars[:limit]
 
@@ -1073,7 +422,7 @@ class ProductService:
         for p in fresh_products:
             p.pop('_freshness_hours', None)
 
-        return ProductService._diversify_products(fresh_products, limit, max_per_category=3, max_per_source=3)
+        return sorting.diversify_products(fresh_products, limit, max_per_category=3, max_per_source=3)
 
     @staticmethod
     def get_related_products(product_id: str, limit: int = 6) -> List[Dict]:
@@ -1176,11 +525,7 @@ class ProductService:
         products = ProductService._load_products()
 
         # Sort by recency
-        products_sorted = sorted(
-            products,
-            key=lambda x: x.get('first_seen', x.get('published_at', '')),
-            reverse=True
-        )[:20]
+        products_sorted = sorting.sort_by_recency(products)[:20]
 
         items = []
         for p in products_sorted:
@@ -1218,14 +563,4 @@ class ProductService:
     @staticmethod
     def get_industry_leaders() -> Dict:
         """获取行业领军产品 - 已知名的成熟 AI 产品参考列表"""
-        industry_leaders_file = os.path.join(CRAWLER_DATA_DIR, 'industry_leaders.json')
-
-        if os.path.exists(industry_leaders_file):
-            try:
-                with open(industry_leaders_file, 'r', encoding='utf-8') as f:
-                    return json.load(f)
-            except Exception as e:
-                print(f"Error loading industry leaders: {e}")
-                return {"categories": {}}
-
-        return {"categories": {}}
+        return ProductRepository.load_industry_leaders()

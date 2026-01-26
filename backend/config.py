@@ -29,4 +29,10 @@ class Config:
     # Flask 环境
     FLASK_ENV = os.getenv('FLASK_ENV', 'development')
 
+    # Dark Horse rotation settings (days)
+    # FRESH_DAYS: Most products leave Weekly Black Horse after this many days
+    # STICKY_DAYS: Top 1 product (highest score+funding) can stay this long
+    DARK_HORSE_FRESH_DAYS = int(os.getenv('DARK_HORSE_FRESH_DAYS', '5'))
+    DARK_HORSE_STICKY_DAYS = int(os.getenv('DARK_HORSE_STICKY_DAYS', '10'))
+
 

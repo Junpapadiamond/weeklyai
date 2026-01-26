@@ -131,10 +131,33 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ========== Lucide Icons ==========
+// Debounced icon refresh to avoid multiple rapid createIcons calls
+let lucideRefreshTimer = null;
+let lucideInitialized = false;
+
 function initLucide() {
-    if (typeof lucide !== 'undefined') {
+    if (typeof lucide !== 'undefined' && !lucideInitialized) {
         lucide.createIcons();
+        lucideInitialized = true;
     }
+}
+
+/**
+ * Debounced function to refresh Lucide icons after DOM updates.
+ * Call this after dynamically adding content with Lucide icons.
+ * Uses a 50ms debounce to batch rapid updates.
+ */
+function refreshIcons() {
+    if (typeof lucide === 'undefined') return;
+
+    if (lucideRefreshTimer) {
+        clearTimeout(lucideRefreshTimer);
+    }
+
+    lucideRefreshTimer = setTimeout(() => {
+        lucide.createIcons();
+        lucideRefreshTimer = null;
+    }, 50);
 }
 
 // ========== Theme Toggle ==========
@@ -289,7 +312,7 @@ async function loadDataFreshness() {
 function initSearch() {
     // 搜索按钮点击
     elements.searchBtn.addEventListener('click', performSearch);
-    
+
     // 回车搜索
     elements.searchInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
@@ -401,12 +424,28 @@ function addSwipedProduct(productKey) {
     }
 }
 
+// Debounced localStorage writes to batch rapid updates
+let swipedSaveTimer = null;
+let pendingSwipedData = null;
+
 function saveSwipedProducts(data) {
-    try {
-        localStorage.setItem(SWIPED_KEY, JSON.stringify(data));
-    } catch (e) {
-        console.error('Failed to save swiped products:', e);
+    pendingSwipedData = data;
+
+    if (swipedSaveTimer) {
+        clearTimeout(swipedSaveTimer);
     }
+
+    swipedSaveTimer = setTimeout(() => {
+        try {
+            if (pendingSwipedData) {
+                localStorage.setItem(SWIPED_KEY, JSON.stringify(pendingSwipedData));
+                pendingSwipedData = null;
+            }
+        } catch (e) {
+            console.error('Failed to save swiped products:', e);
+        }
+        swipedSaveTimer = null;
+    }, 500);
 }
 
 function clearSwipedProducts() {
@@ -580,7 +619,7 @@ function getVideoPreview(product) {
 
     return `
         <a class="video-preview" href="${videoUrl}" target="_blank" rel="noopener noreferrer">
-            <img src="${videoThumbnail}" alt="Video preview" loading="lazy">
+            <img src="${videoThumbnail}" alt="Video preview" width="280" height="158" loading="lazy">
             <span class="video-play-icon">▶</span>
         </a>
     `;
@@ -711,10 +750,10 @@ function initHeroGlow() {
 async function performSearch() {
     const keyword = elements.searchInput.value.trim();
     const categories = Array.from(selectedCategories).join(',');
-    
+
     // 切换到搜索结果区
     switchSection('search');
-    
+
     // 显示加载状态
     elements.searchResults.innerHTML = `
         <div class="loading-skeleton">
@@ -723,13 +762,13 @@ async function performSearch() {
             <div class="skeleton-card"></div>
         </div>
     `;
-    
+
     try {
         const response = await fetch(
             `${API_BASE_URL}/search/?q=${encodeURIComponent(keyword)}&categories=${categories}`
         );
         const data = await response.json();
-        
+
         if (data.success) {
             renderSearchResults(data.data, data.pagination.total, keyword);
         } else {
@@ -744,20 +783,20 @@ async function performSearch() {
 }
 
 function renderSearchResults(products, total, keyword) {
-    const searchInfo = keyword 
+    const searchInfo = keyword
         ? `搜索 "${keyword}" 找到 ${total} 个相关产品`
         : `找到 ${total} 个相关产品`;
     elements.searchResultInfo.textContent = searchInfo;
-    
+
     if (products.length === 0) {
         showEmptyState(elements.searchResults, '没有找到匹配的产品，换个关键词试试？');
         return;
     }
-    
-    elements.searchResults.innerHTML = products.map(product => 
+
+    elements.searchResults.innerHTML = products.map(product =>
         createProductCard(product)
     ).join('');
-    
+
     // 添加动画
     animateCards(elements.searchResults);
 }
@@ -765,13 +804,13 @@ function renderSearchResults(products, total, keyword) {
 // ========== 分类标签 ==========
 function initCategoryTags() {
     if (!elements.categoryTags) return; // 已移除该区域
-    
+
     const tagButtons = elements.categoryTags.querySelectorAll('.tag-btn');
-    
+
     tagButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const category = btn.dataset.category;
-            
+
             if (selectedCategories.has(category)) {
                 selectedCategories.delete(category);
                 btn.classList.remove('active');
@@ -779,7 +818,7 @@ function initCategoryTags() {
                 selectedCategories.add(category);
                 btn.classList.add('active');
             }
-            
+
             // 如果有选中分类，自动触发搜索
             if (selectedCategories.size > 0) {
                 performSearch();
@@ -797,7 +836,7 @@ async function loadTrendingProducts() {
         allProductsCache = data.success ? data.data : getMockTrendingProducts();
         currentPage = 1;
         applyFiltersAndRender();
-        
+
     } catch (error) {
         console.error('加载产品失败:', error);
         renderTrendingProducts(getMockTrendingProducts());
@@ -849,10 +888,10 @@ function filterDarkHorseByType(products, type) {
     if (type === 'all') return products;
     return products.filter(p => {
         const categories = p.categories || [];
-        const isHardware = categories.includes('hardware') || 
-                          p.category === 'hardware' ||
-                          (p.description && p.description.toLowerCase().includes('chip')) ||
-                          (p.description && p.description.toLowerCase().includes('robot'));
+        const isHardware = categories.includes('hardware') ||
+            p.category === 'hardware' ||
+            (p.description && p.description.toLowerCase().includes('chip')) ||
+            (p.description && p.description.toLowerCase().includes('robot'));
         return type === 'hardware' ? isHardware : !isHardware;
     });
 }
@@ -866,7 +905,7 @@ function renderDarkHorseProducts(products) {
         `;
         return;
     }
-    
+
     elements.darkhorseProducts.innerHTML = products.map(product =>
         createDarkHorseCard(product)
     ).join('');
@@ -928,7 +967,7 @@ function initLoadMore() {
 
 function applyFiltersAndRender(append = false) {
     let products = [...allProductsCache];
-    
+
     // 按 tier 筛选
     if (currentTier === 'darkhorse') {
         products = products.filter(p => (p.dark_horse_index || 0) >= 4);
@@ -938,7 +977,7 @@ function applyFiltersAndRender(append = false) {
             return score >= 2 && score <= 3;
         });
     }
-    
+
     // 按类型筛选
     if (currentTypeFilter !== 'all') {
         products = products.filter(p => {
@@ -947,15 +986,15 @@ function applyFiltersAndRender(append = false) {
             return currentTypeFilter === 'hardware' ? isHardware : !isHardware;
         });
     }
-    
+
     // 排序
     products = sortProducts(products, currentSort);
-    
+
     // 分页
     const start = 0;
     const end = currentPage * PRODUCTS_PER_PAGE;
     const paginatedProducts = products.slice(start, end);
-    
+
     // 渲染
     if (append) {
         const newCards = paginatedProducts.slice((currentPage - 1) * PRODUCTS_PER_PAGE);
@@ -967,7 +1006,7 @@ function applyFiltersAndRender(append = false) {
     } else {
         renderTrendingProducts(paginatedProducts);
     }
-    
+
     // 更新加载更多按钮状态
     const loadMoreBtn = document.getElementById('loadMoreBtn');
     if (loadMoreBtn) {
@@ -985,21 +1024,21 @@ function sortProducts(products, sortBy) {
             case 'score':
             default:
                 // 排序规则: 评分 > 融资金额 > 用户数/估值
-                
+
                 // 1. 首先按评分排序 (5分 > 4分 > 3分...)
                 const scoreA = a.dark_horse_index || 0;
                 const scoreB = b.dark_horse_index || 0;
                 if (scoreB !== scoreA) {
                     return scoreB - scoreA;
                 }
-                
+
                 // 2. 同分时按融资金额排序
                 const fundingA = parseFunding(a.funding_total);
                 const fundingB = parseFunding(b.funding_total);
                 if (fundingB !== fundingA) {
                     return fundingB - fundingA;
                 }
-                
+
                 // 3. 融资相同时按用户数/估值排序
                 const valuationA = parseValuation(a);
                 const valuationB = parseValuation(b);
@@ -1032,13 +1071,13 @@ function parseValuation(product) {
             return value * 10; // 估值权重更高
         }
     }
-    
+
     // 其次使用用户数
     const users = product.weekly_users || product.users || product.monthly_users || 0;
     if (users > 0) {
         return users / 10000; // 转换为万用户
     }
-    
+
     // 最后使用热度分数
     return product.hot_score || product.trending_score || product.final_score || 0;
 }
@@ -1054,19 +1093,19 @@ function createDarkHorseCard(product) {
     const funding = product.funding_total || '';
     const latestNews = product.latest_news || '';
     const region = product.region || '';
-    
+
     // 判断是否为硬件产品
-    const isHardware = categories.includes('hardware') || 
-                       product.category === 'hardware' ||
-                       (description && description.toLowerCase().includes('chip')) ||
-                       (description && description.toLowerCase().includes('robot'));
-    
+    const isHardware = categories.includes('hardware') ||
+        product.category === 'hardware' ||
+        (description && description.toLowerCase().includes('chip')) ||
+        (description && description.toLowerCase().includes('robot'));
+
     const categoryTags = categories.slice(0, 2).map(cat =>
         `<span class="darkhorse-tag">${getCategoryName(cat)}</span>`
     ).join('');
 
     const logoMarkup = buildLogoMarkup(product);
-    
+
     // 构建 meta 标签
     let metaTags = '';
     if (funding && funding !== 'unknown') {
@@ -1114,9 +1153,7 @@ function createDarkHorseCard(product) {
 
 function animateDarkHorseCards(container) {
     // Reinitialize Lucide icons for dynamically added content
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
+    refreshIcons();
 
     const cards = container.querySelectorAll('.darkhorse-card');
     if (prefersReducedMotion) {
@@ -1142,7 +1179,7 @@ async function loadWeeklyProducts() {
     try {
         const response = await fetch(`${API_BASE_URL}/products/weekly-top?limit=15`);
         const data = await response.json();
-        
+
         if (data.success) {
             renderWeeklyProducts(data.data);
         }
@@ -1377,17 +1414,18 @@ function getFaviconUrl(website) {
     }
 }
 
-function buildLogoMarkup(product) {
+function buildLogoMarkup(product, options = {}) {
     const name = product.name || 'AI';
     const initial = getInitial(name);
     const logoSrc = getLogoSource(product);
     const fallbackSrc = getFaviconUrl(product.website || '');
+    const { width = 48, height = 48 } = options;
 
     if (logoSrc) {
-        return `<img src="${logoSrc}" alt="${name}" data-fallback="${fallbackSrc}" data-initial="${initial}" onerror="handleLogoError(this)">`;
+        return `<img src="${logoSrc}" alt="${name}" width="${width}" height="${height}" loading="lazy" data-fallback="${fallbackSrc}" data-initial="${initial}" onerror="handleLogoError(this)">`;
     }
     if (fallbackSrc) {
-        return `<img src="${fallbackSrc}" alt="${name}" data-initial="${initial}" onerror="handleLogoError(this)">`;
+        return `<img src="${fallbackSrc}" alt="${name}" width="${width}" height="${height}" loading="lazy" data-initial="${initial}" onerror="handleLogoError(this)">`;
     }
     return `<div class="product-logo-placeholder">${initial}</div>`;
 }
@@ -1448,7 +1486,7 @@ function createProductListItem(product, rank) {
     const fundingTotal = product.funding_total || '';
     const whyMatters = product.why_matters || '';
     const logoMarkup = buildLogoMarkup(product);
-    
+
     return `
         <div class="product-list-item" onclick="openProduct('${product.website}')">
             <div class="product-rank ${rank <= 3 ? 'top-3' : ''}">${rank}</div>
@@ -1521,9 +1559,7 @@ function openProduct(url) {
 // ========== 动画效果 ==========
 function animateCards(container) {
     // Reinitialize Lucide icons for dynamically added content
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
+    refreshIcons();
 
     const cards = container.querySelectorAll('.product-card');
     if (prefersReducedMotion) {
@@ -1546,9 +1582,7 @@ function animateCards(container) {
 
 function animateListItems(container) {
     // Reinitialize Lucide icons for dynamically added content
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
+    refreshIcons();
 
     const items = container.querySelectorAll('.product-list-item');
     if (prefersReducedMotion) {
@@ -1734,12 +1768,28 @@ function getFavorites() {
     }
 }
 
+// Debounced favorites localStorage write
+let favoritesSaveTimer = null;
+let pendingFavoritesData = null;
+
 function saveFavorites(favorites) {
-    try {
-        localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
-    } catch (e) {
-        console.error('Failed to save favorites:', e);
+    pendingFavoritesData = favorites;
+
+    if (favoritesSaveTimer) {
+        clearTimeout(favoritesSaveTimer);
     }
+
+    favoritesSaveTimer = setTimeout(() => {
+        try {
+            if (pendingFavoritesData) {
+                localStorage.setItem(FAVORITES_KEY, JSON.stringify(pendingFavoritesData));
+                pendingFavoritesData = null;
+            }
+        } catch (e) {
+            console.error('Failed to save favorites:', e);
+        }
+        favoritesSaveTimer = null;
+    }, 500);
 }
 
 function isFavorited(productKey) {
@@ -1833,7 +1883,7 @@ function renderFavoritesList() {
     elements.favoritesList.innerHTML = favorites.map(fav => {
         const categories = (fav.categories || []).slice(0, 2).map(getCategoryName).join(' · ');
         const logoMarkup = fav.logo_url
-            ? `<img src="${fav.logo_url}" alt="${fav.name}" onerror="this.style.display='none'">`
+            ? `<img src="${fav.logo_url}" alt="${fav.name}" width="40" height="40" loading="lazy" onerror="this.style.display='none'">`
             : `<div class="product-logo-placeholder">${getInitial(fav.name)}</div>`;
 
         return `
@@ -2034,9 +2084,9 @@ function createProductCardWithFavorite(product, showBadge = false) {
 
     // Category pill for hardware/software
     const isHardware = categories.includes('hardware') ||
-                      product.category === 'hardware' ||
-                      (product.description && product.description.toLowerCase().includes('chip')) ||
-                      (product.description && product.description.toLowerCase().includes('robot'));
+        product.category === 'hardware' ||
+        (product.description && product.description.toLowerCase().includes('chip')) ||
+        (product.description && product.description.toLowerCase().includes('robot'));
     const categoryPill = isHardware
         ? '<span class="category-pill category-pill--hardware"><i data-lucide="cpu" style="width:12px;height:12px;"></i> 硬件</span>'
         : '<span class="category-pill category-pill--software"><i data-lucide="code" style="width:12px;height:12px;"></i> 软件</span>';
@@ -2209,9 +2259,7 @@ function renderIndustryLeaders() {
 
 function animateLeaderCards(container) {
     // Reinitialize Lucide icons for dynamically added content
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
+    refreshIcons();
 
     const cards = container.querySelectorAll('.leader-card');
     if (prefersReducedMotion) {
@@ -2236,7 +2284,7 @@ function renderLeaderCard(product) {
     const logoSrc = product.logo || '';
     const initial = getInitial(product.name);
     const logoMarkup = logoSrc
-        ? `<img src="${logoSrc}" alt="${product.name}" onerror="this.parentElement.innerHTML='<div class=\\'leader-logo-placeholder\\'>${initial}</div>'">`
+        ? `<img src="${logoSrc}" alt="${product.name}" width="40" height="40" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'leader-logo-placeholder\\'>${initial}</div>'">`
         : `<div class="leader-logo-placeholder">${initial}</div>`;
 
     return `

@@ -30,7 +30,6 @@ echo "📂 Data path: /data"
 # 打印环境变量（隐藏敏感信息）
 echo "🔑 API Keys configured:"
 [ -n "$PERPLEXITY_API_KEY" ] && echo "  - PERPLEXITY_API_KEY: ****${PERPLEXITY_API_KEY: -4}"
-[ -n "$ZHIPU_API_KEY" ] && echo "  - ZHIPU_API_KEY: ****${ZHIPU_API_KEY: -4}"
 
 # 启动 cron 并保持前台运行
 cron -f

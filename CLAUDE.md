@@ -35,7 +35,7 @@ crawler/data/
 
 | 文件 | 职责 |
 |------|------|
-| `crawler/tools/auto_discover.py` | Web Search + GLM/Perplexity 自动发现 |
+| `crawler/tools/auto_discover.py` | Perplexity Search 自动发现 |
 | `crawler/tools/add_product.py` | 手动添加产品 |
 | `crawler/tools/dark_horse_detector.py` | 黑马评分计算 |
 | `crawler/prompts/search_prompts.py` | 🔍 搜索 Prompt 模块 |
@@ -131,8 +131,12 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 
 - **本周黑马**（首页第一区块）：
   - 上限 10 个，优先 **4-5 分**（软件 + 硬件）。
-  - 时间优先级：`discovered_at` **7 天内优先**，优秀产品可放宽至 **14 天**。
-  - 超过 14 天自动移出本周黑马，但**保留在更多推荐**。
+  - **刷新规则** (保持新鲜度):
+    - 大部分产品：严格 **5 天后移出** → 更多推荐
+    - TOP 1 产品 (最高评分+融资)：可保留 **10 天**
+    - 如果 `news_updated_at` 更新，重置计时器
+    - 空状态回退：按评分显示 top 10
+  - 配置: `DARK_HORSE_FRESH_DAYS=5`, `DARK_HORSE_STICKY_DAYS=10`
 - **硬件补位**：
   - 若当周硬件 **无 4-5 分**，可补入 **2-3 分硬件**。
   - 补位数量 **≤ 当周 4-5 分软件数量**。
@@ -412,15 +416,11 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 
 | 环境变量 | 说明 | 默认值 |
 |----------|------|--------|
-| `ZHIPU_API_KEY` | 智谱 API Key | (required for cn) |
-| `PERPLEXITY_API_KEY` | Perplexity API Key | (optional) |
+| `PERPLEXITY_API_KEY` | Perplexity API Key | (required) |
 | `PERPLEXITY_MODEL` | Perplexity 模型 | `sonar` |
-| `USE_PERPLEXITY` | 启用 Perplexity | `false` |
-| `API_RATE_LIMIT_DELAY` | API 调用间隔(秒) | `2` |
 
-**Provider 路由:**
-- `cn` → 始终使用 GLM（中文覆盖更稳）
-- `us/eu/jp/kr/sea` → 根据 `USE_PERPLEXITY` 选择
+**Provider:**
+- 仅使用 Perplexity Search
 
 **启用 Perplexity (推荐):**
 ```bash
@@ -429,7 +429,6 @@ pip install perplexityai
 
 # 2. 设置环境变量
 export PERPLEXITY_API_KEY=pplx_xxx
-export USE_PERPLEXITY=true
 
 # 3. 测试连接
 python3 tools/auto_discover.py --test-perplexity
@@ -489,7 +488,7 @@ Quotas:     Dark Horses: 4/5 ⚠️  Rising Stars: 10/10 ✅
 Attempts:   3 rounds
 Duration:   245.3 seconds
 Regions:    us: 4, cn: 3, eu: 2, jp: 1
-Providers:  glm: 3, perplexity: 7
+Providers:  perplexity: 10
 Unique domains found: 15
 Duplicates skipped: 3
 Quality rejections: 2

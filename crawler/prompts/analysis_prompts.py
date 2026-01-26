@@ -218,7 +218,6 @@ LangChain, PyTorch, TensorFlow, HuggingFace 模型, 只有 GitHub 没有产品,
 
 示例：
 - "月之暗面" → website: "https://moonshot.cn"
-- "智谱AI" → website: "https://zhipuai.cn"
 - "百川智能" → website: "https://baichuan-ai.com"
 
 ⚠️ 如果无法确定有效官网，仍然收录但设置：
@@ -403,7 +402,7 @@ WELL_KNOWN_PRODUCTS = {
     # 中国
     "kimi", "月之暗面", "moonshot", "doubao", "豆包", "字节跳动",
     "tongyi", "通义千问", "通义", "qwen", "wenxin", "文心一言", "文心",
-    "ernie", "百度", "baidu", "智谱", "zhipu", "chatglm", "glm",
+    "ernie", "百度", "baidu",
     "讯飞星火", "星火", "spark", "minimax", "abab",
 }
 

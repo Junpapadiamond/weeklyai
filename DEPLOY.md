@@ -78,7 +78,6 @@ docker-compose down -v  # 同时删除数据卷
 | Secret | 说明 |
 |--------|------|
 | `PERPLEXITY_API_KEY` | Perplexity API Key |
-| `ZHIPU_API_KEY` | 智谱 AI API Key |
 | `SERVER_HOST` | 服务器地址 (可选) |
 | `SERVER_USER` | SSH 用户名 (可选) |
 | `SERVER_SSH_KEY` | SSH 私钥 (可选) |
