@@ -35,12 +35,13 @@ crawler/data/
 
 | 文件 | 职责 |
 |------|------|
-| `crawler/tools/auto_discover.py` | Perplexity Search 自动发现 |
+| `crawler/tools/auto_discover.py` | 自动发现 (Provider 路由: cn→GLM, 其他→Perplexity) |
 | `crawler/tools/add_product.py` | 手动添加产品 |
 | `crawler/tools/dark_horse_detector.py` | 黑马评分计算 |
 | `crawler/prompts/search_prompts.py` | 🔍 搜索 Prompt 模块 |
 | `crawler/prompts/analysis_prompts.py` | 📊 分析 Prompt 模块 (含硬件评判体系) |
-| `crawler/utils/perplexity_client.py` | Perplexity SDK 封装 |
+| `crawler/utils/perplexity_client.py` | Perplexity SDK 封装 (美国/欧洲/日韩) |
+| `crawler/utils/glm_client.py` | 智谱 GLM SDK 封装 (中国区) |
 | `backend/app/routes/products.py` | 产品 API |
 | `frontend/views/index.ejs` | 首页模板 |
 
@@ -70,13 +71,11 @@ python3 tools/auto_discover.py --region us     # 美国
 python3 tools/auto_discover.py --region cn     # 中国
 python3 tools/auto_discover.py --region all    # 全球
 
-# 硬件/软件分离搜索
-python3 tools/auto_discover.py --type hardware  # 只搜硬件
-python3 tools/auto_discover.py --type software  # 只搜软件
-python3 tools/auto_discover.py --type mixed     # 混合模式 (默认: 40%硬件+60%软件)
-
-# 查看关键词
-python3 tools/auto_discover.py --list-keywords --region us
+# 硬件/软件分离搜索 (新增)
+python3 tools/auto_discover.py --region all --type hardware  # 只搜硬件
+python3 tools/auto_discover.py --region all --type software  # 只搜软件
+python3 tools/auto_discover.py --region all --type mixed     # 混合 (40%硬件+60%软件)
+python3 tools/auto_discover.py --list-keywords --region us   # 查看关键词
 
 # 手动添加
 python3 tools/add_product.py --quick "Name" "URL" "Desc"
@@ -133,8 +132,12 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 
 - **本周黑马**（首页第一区块）：
   - 上限 10 个，优先 **4-5 分**（软件 + 硬件）。
-  - 时间优先级：`discovered_at` **7 天内优先**，优秀产品可放宽至 **14 天**。
-  - 超过 14 天自动移出本周黑马，但**保留在更多推荐**。
+  - **刷新规则** (保持新鲜度):
+    - 大部分产品：严格 **5 天后移出** → 更多推荐
+    - TOP 1 产品 (最高评分+融资)：可保留 **10 天**
+    - 如果 `news_updated_at` 更新，重置计时器
+    - 空状态回退：按评分显示 top 10
+  - 配置: `DARK_HORSE_FRESH_DAYS=5`, `DARK_HORSE_STICKY_DAYS=10`
 - **硬件补位**：
   - 若当周硬件 **无 4-5 分**，可补入 **2-3 分硬件**。
   - 补位数量 **≤ 当周 4-5 分软件数量**。
@@ -144,6 +147,32 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
   - 卡片尽量展示更多信息（如 `why_matters` / `funding_total` / `latest_news`）。
 - **更多推荐**（首页第三区块）：
   - 展示全部 2-5 分产品（包含从本周黑马移出的旧产品）。
+
+---
+
+## 🏆 行业领军（排除名单）
+
+**文件**: `crawler/data/industry_leaders.json`
+
+这些产品**不会**出现在黑马/潜力股列表中，因为它们已经广为人知。
+但对于不熟悉 AI 领域的人，可以作为参考学习。
+
+**分类概览**:
+
+| 类别 | 代表产品 |
+|------|----------|
+| 通用大模型 | ChatGPT, Claude, Gemini, Copilot |
+| 代码开发 | Cursor, GitHub Copilot, Replit, v0.dev, Bolt.new |
+| 图像生成 | Midjourney, DALL-E, Stable Diffusion |
+| 视频生成 | Sora, Runway, Pika, Synthesia |
+| 语音合成 | ElevenLabs |
+| 搜索引擎 | Perplexity |
+| 中国大模型 | Kimi, 豆包, 通义千问, 文心一言, 智谱清言, 讯飞星火, MiniMax |
+| 开发者工具 | LangChain, Hugging Face, Together AI, Groq |
+| AI角色/伴侣 | Character.AI |
+| 写作助手 | Jasper, Grammarly, Copy.ai, Notion AI |
+
+> 💡 **注意**: 如果这些公司发布**全新的子产品**（不是主产品更新），仍可作为黑马收录
 
 ---
 
@@ -177,6 +206,28 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 |------|------|
 | **5分** | 必须收录: 融资 >$100M / 创始人顶级背景 / 品类开创者 |
 | **4分** | 强烈推荐: 融资 >$30M / ARR >$10M / YC/顶级 VC 背书 |
+
+---
+
+## 潜力股标准 (2-3分)
+
+**潜力股 = 有创新 + 早期阶段 + 值得观察**
+
+只要有以下**任意 1 条**即可收录：
+
+| 维度 | 潜力股信号 | 示例 |
+|------|------------|------|
+| 💡 **创新点明确** | 解决真实问题、技术有特色 | 新型 AI 应用方式 |
+| 🌱 **早期但有热度** | ProductHunt 上榜、社区讨论 | 小众但口碑好 |
+| 🏠 **本地市场验证** | 在某个地区已有用户 | 中国/日本本土热门 |
+| 🔧 **垂直领域深耕** | 专注细分赛道 | 医疗 AI、法律 AI |
+| 🎨 **产品体验好** | 设计/交互有亮点 | 虽小但精致 |
+
+| 分数 | 标准 |
+|------|------|
+| **3分** | 值得关注: 融资 $1M-$5M / ProductHunt 上榜 / 本地热度高 |
+| **2分** | 观察中: 刚发布/数据不足 但有明显创新点 |
+| **1分** | 边缘: 勉强符合，待更多验证 |
 
 ---
 
@@ -293,54 +344,6 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 - "下一代智能设备"
 ```
 
----
-
-## 潜力股标准 (2-3分)
-
-**潜力股 = 有创新 + 早期阶段 + 值得观察**
-
-只要有以下**任意 1 条**即可收录：
-
-| 维度 | 潜力股信号 | 示例 |
-|------|------------|------|
-| 💡 **创新点明确** | 解决真实问题、技术有特色 | 新型 AI 应用方式 |
-| 🌱 **早期但有热度** | ProductHunt 上榜、社区讨论 | 小众但口碑好 |
-| 🏠 **本地市场验证** | 在某个地区已有用户 | 中国/日本本土热门 |
-| 🔧 **垂直领域深耕** | 专注细分赛道 | 医疗 AI、法律 AI |
-| 🎨 **产品体验好** | 设计/交互有亮点 | 虽小但精致 |
-
-| 分数 | 标准 |
-|------|------|
-| **3分** | 值得关注: 融资 $1M-$5M / ProductHunt 上榜 / 本地热度高 |
-| **2分** | 观察中: 刚发布/数据不足 但有明显创新点 |
-| **1分** | 边缘: 勉强符合，待更多验证 |
-
----
-
-## 🏆 行业领军（排除名单）
-
-**文件**: `crawler/data/industry_leaders.json`
-
-这些产品**不会**出现在黑马/潜力股列表中，因为它们已经广为人知。
-但对于不熟悉 AI 领域的人，可以作为参考学习。
-
-**分类概览**:
-
-| 类别 | 代表产品 |
-|------|----------|
-| 通用大模型 | ChatGPT, Claude, Gemini, Copilot |
-| 代码开发 | Cursor, GitHub Copilot, Replit, v0.dev, Bolt.new |
-| 图像生成 | Midjourney, DALL-E, Stable Diffusion |
-| 视频生成 | Sora, Runway, Pika, Synthesia |
-| 语音合成 | ElevenLabs |
-| 搜索引擎 | Perplexity |
-| 中国大模型 | Kimi, 豆包, 通义千问, 文心一言, 智谱清言, 讯飞星火, MiniMax |
-| 开发者工具 | LangChain, Hugging Face, Together AI, Groq |
-| AI角色/伴侣 | Character.AI |
-| 写作助手 | Jasper, Grammarly, Copy.ai, Notion AI |
-
-> 💡 **注意**: 如果这些公司发布**全新的子产品**（不是主产品更新），仍可作为黑马收录
-
 ### 已知名硬件排除名单
 
 不收录以下已广为人知的硬件（但其**新产品线**可以收录）：
@@ -412,15 +415,32 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 
 ### Provider 配置
 
+**区域路由架构:**
+```
+auto_discover.py
+       │
+       ▼
+┌──────────────────┐
+│ get_provider()   │
+│  cn → GLM        │
+│  us/eu/jp → Pplx │
+└──────────────────┘
+       │
+   ┌───┴───┐
+   ▼       ▼
+┌─────┐  ┌─────────┐
+│ GLM │  │Perplexity│
+└─────┘  └─────────┘
+```
+
+#### Perplexity (美国/欧洲/日韩/东南亚)
+
 | 环境变量 | 说明 | 默认值 |
 |----------|------|--------|
 | `PERPLEXITY_API_KEY` | Perplexity API Key | (required) |
 | `PERPLEXITY_MODEL` | Perplexity 模型 | `sonar` |
 
-**Provider:**
-- 仅使用 Perplexity Search
-
-**启用 Perplexity (推荐):**
+**启用 Perplexity:**
 ```bash
 # 1. 安装 SDK
 pip install perplexityai
@@ -435,20 +455,88 @@ python3 tools/auto_discover.py --test-perplexity
 python3 tools/auto_discover.py --region us --dry-run
 ```
 
-**Perplexity Search API 特性:**
+**Perplexity 特性:**
 - 实时 Web 搜索（排名结果 + 内容提取）
 - 支持地区/语言/域名过滤
-- 多查询批量搜索（最多 5 个）
 - 官方 SDK 支持
 
-**成本估算 (Perplexity):**
-- Search API: $5 / 1K requests
-- Sonar: $3 / 1M input, $15 / 1M output
-- 预计月成本: $20-$35
+**成本估算:** $20-$35/月
+
+#### GLM 智谱 (中国区)
+
+| 环境变量 | 说明 | 默认值 |
+|----------|------|--------|
+| `ZHIPU_API_KEY` | 智谱 API Key | (required for cn) |
+| `GLM_MODEL` | GLM 模型 | `glm-4.7` |
+| `GLM_SEARCH_ENGINE` | 搜索引擎 | `search_pro` |
+| `USE_GLM_FOR_CN` | 中国区启用 GLM | `true` |
+
+**搜索引擎选项:**
+
+| 引擎 | 价格 | 说明 |
+|------|------|------|
+| `search_pro` | ¥0.03/次 | 智谱自研高阶版 (推荐) |
+| `search_pro_sogou` | ¥0.05/次 | 腾讯生态+知乎 |
+| `search_std` | ¥0.01/次 | 基础搜索 |
+
+**启用 GLM (中国区):**
+```bash
+# 1. 安装 SDK
+pip install zhipuai
+
+# 2. 设置环境变量 (在 crawler/.env)
+ZHIPU_API_KEY=your-api-key
+GLM_MODEL=glm-4.7
+GLM_SEARCH_ENGINE=search_pro
+USE_GLM_FOR_CN=true
+
+# 3. 测试连接
+python3 tools/auto_discover.py --test-glm
+
+# 4. 测试路由
+python3 tools/auto_discover.py --test-routing
+
+# 5. 运行中国区发现
+python3 tools/auto_discover.py --region cn --dry-run
+```
+
+**GLM-4.7 特性:**
+- 智谱自研联网搜索（优化中文内容）
+- 最大上下文 200K，最大输出 128K
+- 支持深度思考 (thinking)
+- 支持多搜索引擎切换
+- 官方 SDK 支持
+
+**成本估算:** ¥30-50/月
+
+**⚠️ 限流处理:**
+- GLM API 有并发限制，429 错误表示 "并发数过高"
+- 自动重试机制：遇到 429 会等待后重试
+- 如果频繁限流，可联系智谱客服增加限额
+- 或者设置 `USE_GLM_FOR_CN=false` 临时回退到 Perplexity
+
+**中国权威 AI 媒体源:**
+
+| 媒体 | 域名 | 优先级 |
+|------|------|--------|
+| 36氪 | 36kr.com | Tier 1 |
+| 机器之心 | jiqizhixin.com | Tier 1 |
+| IT桔子 | itjuzi.com | Tier 1 |
+| 钛媒体 | tmtpost.com | Tier 1 |
+| 量子位 | qbitai.com | Tier 2 |
+| 雷锋网 | leiphone.com | Tier 2 |
+
+#### 回滚方案
+
+如果 GLM 集成出现问题：
+1. 设置 `USE_GLM_FOR_CN=false`
+2. 中国区自动回退到 Perplexity
+3. 无需代码修改
 
 **相关文件:**
 - `crawler/utils/perplexity_client.py` - Perplexity SDK 封装
-- `crawler/tools/auto_discover.py` - 自动发现（集成 Perplexity）
+- `crawler/utils/glm_client.py` - GLM SDK 封装
+- `crawler/tools/auto_discover.py` - 自动发现（Provider 路由）
 
 ### 质量过滤规则
 
@@ -505,9 +593,9 @@ Base URL: `http://localhost:5000/api/v1`
 | 端点 | 方法 | 说明 |
 |------|------|------|
 | `/products/trending` | GET | 热门 Top 5 |
-| `/products/weekly-top` | GET | 本周 Top 15 (按评分→融资排序) |
+| `/products/weekly-top` | GET | 本周 Top 15 |
 | `/products/dark-horses` | GET | 黑马产品 (`limit`, `min_index`, `max_index`) |
-| `/products/rising-stars` | GET | 潜力股产品 (2-3分) |
+| `/products/rising-stars` | GET | **潜力股产品 (2-3分)** (`limit`) |
 | `/products/today` | GET | 今日精选 (`limit`, `hours`) |
 | `/products/<id>` | GET | 产品详情 |
 | `/products/categories` | GET | 分类列表 |
@@ -516,11 +604,13 @@ Base URL: `http://localhost:5000/api/v1`
 
 ### 排序规则
 
+所有产品列表按以下优先级排序：
+
 | 优先级 | 条件 | 说明 |
 |--------|------|------|
 | 1️⃣ | **评分** | 5分 > 4分 > 3分 > 2分 |
 | 2️⃣ | **融资金额** | 同分时，$500M > $100M |
-| 3️⃣ | **估值/用户数** | 融资相同时的 tiebreaker |
+| 3️⃣ | **估值/用户数** | 融资相同时，估值 > 用户数 |
 
 ---
 
@@ -581,4 +671,28 @@ Base URL: `http://localhost:5000/api/v1`
 
 ---
 
-*更新: 2026-01-20 (硬件评判体系宽松版+CES硬件产品+排序优化)*
+*更新: 2026-01-20 (硬件评判体系+CES硬件产品+去重优化)*
+
+---
+
+## 近期调整（2026-01-28）
+
+### 本次会话改动与结论（简要）
+
+- **并发/限流处理**：为避免 GLM 429 并发限流，加入单实例锁与节流（关键词数限制 + GLM cooldown），并在 GLM 客户端加入重试退避。
+- **硬件规则落地**：混合模式按关键词路由硬件/软件 prompt；硬件用 `HARDWARE_ANALYSIS_PROMPT` + `validate_hardware_product`，确保创新硬件不被“必须有融资数字”规则误伤。
+- **website/去重改进**：unknown 网站不再触发“域名重复”去重；硬件 prompt 明确禁止 placeholder 域名。
+- **thinking 开关**：GLM 调用支持 `GLM_THINKING_TYPE` / `GLM_CLEAR_THINKING` 环境变量（默认 disabled）。
+- **logo 修复工具**：`fix_logos.py` 修复为使用 `logo_url` 字段；HEAD→GET fallback；新增 favicon/html icon 解析路径。
+
+### 为什么 logo 缺失 / URL 易错（根因）
+
+- **搜索结果不含官网**：GLM/Perplexity 多为新闻/帖子 URL，模型只能“猜官网”，容易错。
+- **模型幻觉/占位域名**：模型会输出 example.com 等占位域名，导致 logo 全部失效。
+- **网站阻止 HEAD/无 favicon**：部分站点拒绝 HEAD 或无 icon，logo 自动修复失败。
+
+### 当前推荐做法（温和版）
+
+- 官网不确定 → `website: "unknown"` + `needs_verification: true`（保留产品，后续人工补）。
+- 不直接硬拒绝 unknown，但禁止 placeholder 域名。
+- 先用 `tools/fix_logos.py` 补 logo；缺失则标记人工验证。

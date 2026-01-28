@@ -5,6 +5,29 @@
 
 const Utils = {
     /**
+     * Normalize website URL (ensure http/https, reject placeholders)
+     */
+    normalizeWebsite(url) {
+        if (!url) return '';
+        const trimmed = String(url).trim();
+        if (!trimmed) return '';
+        const lower = trimmed.toLowerCase();
+        if (['unknown', 'n/a', 'na', 'none', 'null', 'undefined', ''].includes(lower)) return '';
+        if (!/^https?:\/\//i.test(trimmed) && trimmed.includes('.')) {
+            return `https://${trimmed}`;
+        }
+        return trimmed;
+    },
+
+    /**
+     * Check if website URL is usable
+     */
+    isValidWebsite(url) {
+        const normalized = this.normalizeWebsite(url);
+        if (!normalized) return false;
+        return /^https?:\/\//i.test(normalized);
+    },
+    /**
      * Debounce function execution
      */
     debounce(func, wait) {
@@ -127,9 +150,10 @@ const Utils = {
      * Get favicon URL for a domain
      */
     getFaviconUrl(website) {
-        if (!website) return null;
+        if (!this.isValidWebsite(website)) return null;
         try {
-            const domain = new URL(website).hostname;
+            const normalized = this.normalizeWebsite(website);
+            const domain = new URL(normalized).hostname;
             return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
         } catch {
             return null;
@@ -149,7 +173,8 @@ const Utils = {
      * Generate unique key for product
      */
     getProductKey(product) {
-        return product.website || product.name || product.slug || Math.random().toString(36);
+        const website = this.normalizeWebsite(product.website || '');
+        return website || product.name || product.slug || Math.random().toString(36);
     },
 
     /**

@@ -316,6 +316,10 @@ class DuplicateChecker:
         # 域名 key（包含路径）
         website = product.get('website', '')
         if website:
+            website_lower = website.lower().strip()
+            if website_lower in {"unknown", "n/a", "na", "none"}:
+                website = ""
+        if website:
             domain_key = get_domain_key(website)
             if domain_key:
                 self.domain_keys.add(domain_key)
@@ -343,6 +347,10 @@ class DuplicateChecker:
         category = product.get('category', '')
         
         # 1. 域名 + 路径检查
+        if website:
+            website_lower = website.lower().strip()
+            if website_lower in {"unknown", "n/a", "na", "none"}:
+                website = ""
         if website:
             domain_key = get_domain_key(website)
             if domain_key and domain_key in self.domain_keys:

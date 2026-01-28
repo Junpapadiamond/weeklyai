@@ -198,7 +198,13 @@ const Favorites = {
             return;
         }
 
-        list.innerHTML = favorites.map(fav => `
+        list.innerHTML = favorites.map(fav => {
+            const website = Utils.normalizeWebsite(fav.website);
+            const hasWebsite = Utils.isValidWebsite(website);
+            const linkMarkup = hasWebsite
+                ? `<a href="${website}" target="_blank" class="favorite-link" title="访问">🔗</a>`
+                : `<span class="favorite-link favorite-link--pending" title="官网待验证">🔎</span>`;
+            return `
             <div class="favorite-item" data-key="${fav.key}">
                 <div class="favorite-logo">
                     <img src="${fav.logo_url || Utils.getFaviconUrl(fav.website) || ''}"
@@ -215,11 +221,11 @@ const Favorites = {
                     </div>
                 </div>
                 <div class="favorite-actions">
-                    <a href="${fav.website}" target="_blank" class="favorite-link" title="访问">🔗</a>
+                    ${linkMarkup}
                     <button class="favorite-remove" data-key="${fav.key}" title="移除">✕</button>
                 </div>
             </div>
-        `).join('');
+        `}).join('');
 
         // Remove button handlers
         list.querySelectorAll('.favorite-remove').forEach(btn => {
@@ -237,8 +243,8 @@ const Favorites = {
             item.addEventListener('click', (e) => {
                 if (!e.target.closest('.favorite-actions')) {
                     const fav = favorites.find(f => f.key === item.dataset.key);
-                    if (fav?.website) {
-                        window.open(fav.website, '_blank');
+                    if (fav?.website && Utils.isValidWebsite(fav.website)) {
+                        window.open(Utils.normalizeWebsite(fav.website), '_blank');
                     }
                 }
             });

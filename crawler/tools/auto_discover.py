@@ -21,6 +21,7 @@ import sys
 import argparse
 import re
 import requests
+import time
 from datetime import datetime
 from urllib.parse import urlparse
 from typing import Optional
@@ -51,8 +52,14 @@ except ImportError:
 PERPLEXITY_API_KEY = os.environ.get('PERPLEXITY_API_KEY', '')
 PERPLEXITY_MODEL = os.environ.get('PERPLEXITY_MODEL', 'sonar')  # sonar or sonar-pro
 
-# Provider routing
-PROVIDER_NAME = "perplexity"
+# 智谱 GLM API 配置 (中国区)
+ZHIPU_API_KEY = os.environ.get('ZHIPU_API_KEY', '')
+GLM_MODEL = os.environ.get('GLM_MODEL', 'glm-4.7')  # 最新: glm-4.7 (200K context, 128K output)
+GLM_SEARCH_ENGINE = os.environ.get('GLM_SEARCH_ENGINE', 'search_pro')
+USE_GLM_FOR_CN = os.environ.get('USE_GLM_FOR_CN', 'true').lower() == 'true'
+
+# Provider routing (动态选择)
+PROVIDER_NAME = "perplexity"  # 默认 provider，实际按区域动态选择
 
 # ============================================
 # 每日配额系统
@@ -70,6 +77,11 @@ REGION_MAX = {
 }
 
 MAX_ATTEMPTS = 3  # 最大搜索轮数
+
+# GLM 并发/节流配置（中国区）
+GLM_KEYWORD_DELAY = float(os.environ.get('GLM_KEYWORD_DELAY', '3'))  # 每个关键词之间的额外等待秒数
+MAX_KEYWORDS_CN = int(os.environ.get('AUTO_DISCOVER_MAX_KEYWORDS_CN', '4'))  # 0=不限制
+MAX_KEYWORDS_DEFAULT = int(os.environ.get('AUTO_DISCOVER_MAX_KEYWORDS', '0'))  # 0=不限制
 
 # ============================================
 # 多语言关键词库（原生语言搜索效果更好）
@@ -286,6 +298,28 @@ def get_hardware_keywords(region: str) -> list:
     return KEYWORDS_HARDWARE.get(region, KEYWORDS_HARDWARE["us"])
 
 
+def is_hardware_query_text(query: str) -> bool:
+    """基于关键词判断是否为硬件查询（混合模式路由用）"""
+    q = query.lower()
+    hardware_terms = [
+        "hardware", "robot", "robotics", "chip", "semiconductor", "wearable",
+        "glasses", "ring", "pendant", "device", "gadget", "embodied", "edge",
+        "smart glasses", "kickstarter", "indiegogo", "crowdfunding",
+        "硬件", "机器人", "人形机器人", "芯片", "半导体", "具身智能", "智能眼镜",
+        "可穿戴", "吊坠", "戒指", "设备", "众筹",
+    ]
+    return any(term in q for term in hardware_terms)
+
+
+def resolve_keyword_type(keyword: str, region_key: str, product_type: str) -> str:
+    """混合模式下按关键词路由硬件/软件 prompt"""
+    if product_type != "mixed":
+        return product_type
+    hw_keywords = set(get_hardware_keywords(region_key))
+    if keyword in hw_keywords or is_hardware_query_text(keyword):
+        return "hardware"
+    return "software"
+
 def get_software_keywords(region: str) -> list:
     """获取软件专用关键词"""
     return KEYWORDS_SOFTWARE.get(region, KEYWORDS_SOFTWARE["us"])
@@ -359,6 +393,10 @@ REGION_CONFIG = {
 # ============================================
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, PROJECT_ROOT)
+AUTO_DISCOVER_LOCK_FILE = os.environ.get(
+    'AUTO_DISCOVER_LOCK_FILE',
+    os.path.join(PROJECT_ROOT, 'logs', 'auto_discover.lock')
+)
 
 # ============================================
 # Prompt 模块 (独立优化的搜索和分析 Prompt)
@@ -378,6 +416,8 @@ try:
         SCORING_PROMPT,
         get_analysis_prompt,
         get_scoring_prompt,
+        get_hardware_analysis_prompt,
+        validate_hardware_product,
         WELL_KNOWN_PRODUCTS as PROMPT_WELL_KNOWN,
         GENERIC_WHY_MATTERS as PROMPT_GENERIC,
     )
@@ -499,6 +539,27 @@ PROMPT_DARK_HORSE_SCORING = SCORING_PROMPT if not USE_MODULAR_PROMPTS else SCORI
 DARK_HORSES_DIR = os.path.join(PROJECT_ROOT, 'data', 'dark_horses')
 RISING_STARS_DIR = os.path.join(PROJECT_ROOT, 'data', 'rising_stars')
 CANDIDATES_DIR = os.path.join(PROJECT_ROOT, 'data', 'candidates')
+
+
+def acquire_process_lock(lock_path: str):
+    """单实例锁，避免并发运行导致 API 并发超限"""
+    try:
+        import fcntl
+    except ImportError:
+        print("⚠️ fcntl not available; skipping process lock")
+        return None, True
+
+    os.makedirs(os.path.dirname(lock_path), exist_ok=True)
+    lock_file = open(lock_path, 'w')
+    try:
+        fcntl.flock(lock_file, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError:
+        lock_file.close()
+        return None, False
+
+    lock_file.write(f"{os.getpid()}\n{datetime.utcnow().isoformat()}Z\n")
+    lock_file.flush()
+    return lock_file, True
 
 # 渠道配置
 SOURCES = {
@@ -911,7 +972,14 @@ def validate_product(product: dict) -> tuple[bool, str]:
     # 8. 检查黑马(4-5分)是否满足至少1条标准（放宽要求）
     # 注：原来要求 ≥2 条标准太严格，导致产出太少
     score = product.get("dark_horse_index", 0)
+    if isinstance(score, str):
+        try:
+            score = int(float(score))
+        except ValueError:
+            score = 0
     criteria = product.get("criteria_met", [])
+    if not isinstance(criteria, list):
+        criteria = [criteria] if criteria else []
     if score >= 5 and len(criteria) < 2:
         # 5分黑马需要 ≥2 条标准
         return False, f"5-star dark_horse needs ≥2 criteria (has {len(criteria)})"
@@ -951,14 +1019,14 @@ def load_existing_domains() -> set:
 def get_perplexity_client():
     """
     获取 Perplexity 客户端
-    
+
     Returns:
         PerplexityClient 实例或 None
     """
     if not PERPLEXITY_API_KEY:
         print("  ⚠️ PERPLEXITY_API_KEY not set")
         return None
-    
+
     try:
         from utils.perplexity_client import PerplexityClient
         client = PerplexityClient(api_key=PERPLEXITY_API_KEY)
@@ -968,6 +1036,47 @@ def get_perplexity_client():
     except ImportError as e:
         print(f"  ⚠️ perplexity_client module not found: {e}")
         return None
+
+
+def get_glm_client():
+    """
+    获取 GLM (智谱) 客户端
+
+    Returns:
+        GLMClient 实例或 None
+    """
+    if not ZHIPU_API_KEY:
+        print("  ⚠️ ZHIPU_API_KEY not set")
+        return None
+
+    try:
+        from utils.glm_client import GLMClient
+        client = GLMClient(api_key=ZHIPU_API_KEY)
+        if client.is_available():
+            return client
+        return None
+    except ImportError as e:
+        print(f"  ⚠️ glm_client module not found: {e}")
+        return None
+
+
+def get_provider_for_region(region_key: str) -> str:
+    """
+    根据地区返回搜索 provider
+
+    路由规则:
+    - cn (中国) → GLM (如果可用且启用)
+    - 其他地区 → Perplexity
+
+    Args:
+        region_key: 地区代码 (us/cn/eu/jp/kr/sea)
+
+    Returns:
+        provider 名称 ("glm" 或 "perplexity")
+    """
+    if region_key == "cn" and ZHIPU_API_KEY and USE_GLM_FOR_CN:
+        return "glm"
+    return "perplexity"
 
 
 def perplexity_search(
@@ -1013,45 +1122,62 @@ def perplexity_search(
 
 
 def analyze_with_perplexity(content: str, task: str = "extract", region: str = "🇺🇸",
-                            quota_remaining: dict = None, region_key: str = "us") -> dict:
+                            quota_remaining: dict = None, region_key: str = "us",
+                            product_type: str = "mixed") -> dict:
     """
     使用 Perplexity Sonar 模型分析内容
-    
+
     用于产品提取和评分。
-    
+
     Args:
         content: 要分析的内容（搜索结果文本）
         task: 任务类型 (extract/score)
         region: 地区标识 (emoji flag)
         quota_remaining: 剩余配额 {"dark_horses": n, "rising_stars": m}
         region_key: 地区代码 (cn/us/eu/jp/kr/sea) 用于选择 prompt 语言
-        
+
     Returns:
         解析后的 JSON（产品列表或评分结果）
     """
     client = get_perplexity_client()
     if not client:
         return {}
-    
+
     if quota_remaining is None:
         quota_remaining = DAILY_QUOTA.copy()
-    
+
     # 构建 prompt
     if task == "extract":
-        prompt_template = get_extraction_prompt(region_key)
-        prompt = prompt_template.format(
-            search_results=content[:10000],
-            region=region,
-            quota_dark_horses=quota_remaining.get("dark_horses", 5),
-            quota_rising_stars=quota_remaining.get("rising_stars", 10)
-        )
+        if USE_MODULAR_PROMPTS and product_type == "hardware":
+            prompt = get_hardware_analysis_prompt(
+                search_results=content[:10000],
+                region=region,
+                quota_dark_horses=quota_remaining.get("dark_horses", 5),
+                quota_rising_stars=quota_remaining.get("rising_stars", 10)
+            )
+        elif USE_MODULAR_PROMPTS:
+            prompt = get_analysis_prompt(
+                region_key=region_key,
+                search_results=content[:10000],
+                quota_dark_horses=quota_remaining.get("dark_horses", 5),
+                quota_rising_stars=quota_remaining.get("rising_stars", 10),
+                region_flag=region
+            )
+        else:
+            prompt_template = get_extraction_prompt(region_key)
+            prompt = prompt_template.format(
+                search_results=content[:10000],
+                region=region,
+                quota_dark_horses=quota_remaining.get("dark_horses", 5),
+                quota_rising_stars=quota_remaining.get("rising_stars", 10)
+            )
     elif task == "score":
         prompt = SCORING_PROMPT.format(
             product=json.dumps(content, ensure_ascii=False, indent=2)
         ) if 'SCORING_PROMPT' in dir() else f"Score this product: {content}"
     else:
         return {}
-    
+
     try:
         # 使用 analyze 方法 (Sonar Chat Completions)
         result = client.analyze(
@@ -1060,9 +1186,114 @@ def analyze_with_perplexity(content: str, task: str = "extract", region: str = "
             max_tokens=4096
         )
         return result if isinstance(result, (dict, list)) else {}
-    
+
     except Exception as e:
         print(f"  ❌ Perplexity Analysis Error: {e}")
+        return {}
+
+
+# ============================================
+# GLM (智谱) 搜索和分析函数 (中国区)
+# ============================================
+
+def glm_search(
+    query: str,
+    count: int = 10,
+    region: Optional[str] = None,
+) -> list:
+    """
+    使用 GLM 联网搜索 API 进行中国区搜索
+
+    Args:
+        query: 搜索查询
+        count: 结果数量
+        region: 地区代码 (主要用于 cn)
+
+    Returns:
+        [{"title": "", "url": "", "content": ""}, ...]
+    """
+    client = get_glm_client()
+    if not client:
+        return []
+
+    try:
+        results = client.search_by_region(
+            query,
+            region=region or "cn",
+            max_results=count
+        )
+        return [r.to_dict() for r in results]
+
+    except Exception as e:
+        print(f"  ❌ GLM Search Error: {e}")
+        return []
+
+
+def analyze_with_glm(content: str, task: str = "extract", region: str = "🇨🇳",
+                     quota_remaining: dict = None, region_key: str = "cn",
+                     product_type: str = "mixed") -> dict:
+    """
+    使用 GLM 模型分析内容 (中国区)
+
+    Args:
+        content: 要分析的内容（搜索结果文本）
+        task: 任务类型 (extract/score)
+        region: 地区标识 (emoji flag)
+        quota_remaining: 剩余配额 {"dark_horses": n, "rising_stars": m}
+        region_key: 地区代码
+
+    Returns:
+        解析后的 JSON（产品列表或评分结果）
+    """
+    client = get_glm_client()
+    if not client:
+        return {}
+
+    if quota_remaining is None:
+        quota_remaining = DAILY_QUOTA.copy()
+
+    # 构建 prompt (中国区使用中文 prompt)
+    if task == "extract":
+        if USE_MODULAR_PROMPTS and product_type == "hardware":
+            prompt = get_hardware_analysis_prompt(
+                search_results=content[:10000],
+                region=region,
+                quota_dark_horses=quota_remaining.get("dark_horses", 5),
+                quota_rising_stars=quota_remaining.get("rising_stars", 10)
+            )
+        elif USE_MODULAR_PROMPTS:
+            prompt = get_analysis_prompt(
+                region_key=region_key,
+                search_results=content[:10000],
+                quota_dark_horses=quota_remaining.get("dark_horses", 5),
+                quota_rising_stars=quota_remaining.get("rising_stars", 10),
+                region_flag=region
+            )
+        else:
+            prompt_template = get_extraction_prompt("cn")
+            prompt = prompt_template.format(
+                search_results=content[:10000],
+                region=region,
+                quota_dark_horses=quota_remaining.get("dark_horses", 5),
+                quota_rising_stars=quota_remaining.get("rising_stars", 10)
+            )
+    elif task == "score":
+        prompt = SCORING_PROMPT.format(
+            product=json.dumps(content, ensure_ascii=False, indent=2)
+        ) if 'SCORING_PROMPT' in dir() else f"评分产品: {content}"
+    else:
+        return {}
+
+    try:
+        result = client.analyze(
+            prompt=prompt,
+            temperature=0.3,
+            max_tokens=4096
+        )
+        return result if isinstance(result, (dict, list)) else {}
+
+    except Exception as e:
+        print(f"  ❌ GLM Analysis Error: {e}")
         return {}
 
 
@@ -1071,14 +1302,56 @@ def analyze_with_perplexity(content: str, task: str = "extract", region: str = "
 # ============================================
 
 def search_with_provider(query: str, region_key: str, search_engine: str = "bing") -> list:
-    """Route search to Perplexity Search API"""
-    return perplexity_search(query, region=region_key)
+    """
+    根据地区路由搜索请求
+
+    路由规则:
+    - cn (中国) → GLM 联网搜索 (如果可用)
+    - 其他地区 → Perplexity Search API
+
+    Args:
+        query: 搜索查询
+        region_key: 地区代码 (us/cn/eu/jp/kr/sea)
+        search_engine: 搜索引擎 (已弃用，保留兼容)
+
+    Returns:
+        搜索结果列表
+    """
+    provider = get_provider_for_region(region_key)
+
+    if provider == "glm":
+        print(f"    🔍 Using GLM for {region_key}")
+        return glm_search(query, region=region_key)
+    else:
+        print(f"    🔍 Using Perplexity for {region_key}")
+        return perplexity_search(query, region=region_key)
 
 
 def analyze_with_provider(content, task: str, region_key: str, region_flag: str = "🇺🇸",
-                          quota_remaining: dict = None):
-    """Route analysis to Perplexity."""
-    return analyze_with_perplexity(content, task, region_flag, quota_remaining, region_key)
+                          quota_remaining: dict = None, product_type: str = "mixed"):
+    """
+    根据地区路由分析请求
+
+    路由规则:
+    - cn (中国) → GLM 模型分析 (如果可用)
+    - 其他地区 → Perplexity Sonar 分析
+
+    Args:
+        content: 要分析的内容
+        task: 任务类型 (extract/score)
+        region_key: 地区代码 (us/cn/eu/jp/kr/sea)
+        region_flag: 地区标识 (emoji)
+        quota_remaining: 剩余配额
+
+    Returns:
+        分析结果
+    """
+    provider = get_provider_for_region(region_key)
+
+    if provider == "glm":
+        return analyze_with_glm(content, task, region_flag, quota_remaining, region_key, product_type)
+    else:
+        return analyze_with_perplexity(content, task, region_flag, quota_remaining, region_key, product_type)
 
 
 def fetch_url_content(url: str) -> str:
@@ -1103,13 +1376,74 @@ def fetch_url_content(url: str) -> str:
         return ""
 
 
-def fetch_with_perplexity(source_config: dict, limit: int = 10) -> list:
+def _normalize_match_text(text: str) -> str:
+    if not text:
+        return ""
+    return re.sub(r'\s+', '', text.lower())
+
+
+def _score_search_result_for_name(name: str, result: dict) -> int:
+    name_norm = _normalize_match_text(name)
+    if not name_norm or len(name_norm) < 3:
+        return -1
+
+    title = _normalize_match_text(result.get('title', ''))
+    content = _normalize_match_text(result.get('content') or result.get('snippet', ''))
+    url = (result.get('url', '') or '').lower()
+
+    score = 0
+    if name_norm in title:
+        score += 5
+    if name_norm in content:
+        score += 3
+    if name_norm in url:
+        score += 2
+
+    tokens = re.findall(r'[a-z0-9]{3,}', name.lower())
+    for token in tokens:
+        if token in title:
+            score += 2
+        elif token in content:
+            score += 1
+        elif token in url:
+            score += 1
+
+    return score
+
+
+def attach_source_url(product: dict, search_results: list, min_score: int = 4) -> None:
+    """为产品匹配搜索结果 URL (用于后续官网解析)"""
+    if product.get('source_url'):
+        return
+
+    name = product.get('name', '').strip()
+    if not name or not search_results:
+        return
+
+    best_result = None
+    best_score = -1
+    for result in search_results:
+        score = _score_search_result_for_name(name, result)
+        if score > best_score:
+            best_score = score
+            best_result = result
+
+    if best_result and best_score >= min_score:
+        url = best_result.get('url', '')
+        if url:
+            product['source_url'] = url
+        title = best_result.get('title', '')
+        if title:
+            product['source_title'] = title
+
+
+def fetch_with_provider(source_config: dict, limit: int = 10) -> list:
     """
-    使用 Perplexity 分析来源页面内容
+    使用 Provider 路由分析来源页面内容
 
     策略：
     1. 先尝试抓取网页
-    2. 用 Perplexity 提取并评分
+    2. 根据地区选择 Provider (cn→GLM, 其他→Perplexity) 提取并评分
     """
     source_name = source_config['name']
     region_flag = source_config['region']
@@ -1120,6 +1454,7 @@ def fetch_with_perplexity(source_config: dict, limit: int = 10) -> list:
         '🇯🇵': 'jp', '🇰🇷': 'kr', '🇸🇬': 'sea'
     }
     region_key = region_key_map.get(region_flag, 'us')
+    provider = get_provider_for_region(region_key)
 
     print(f"  Fetching: {url}")
 
@@ -1128,8 +1463,8 @@ def fetch_with_perplexity(source_config: dict, limit: int = 10) -> list:
     products = []
 
     if content and len(content) > 500:
-        print("  Analyzing page content with Perplexity...")
-        products = analyze_with_perplexity(content, task="extract", region=region_flag, region_key=region_key)
+        print(f"  Analyzing page content with {provider}...")
+        products = analyze_with_provider(content, task="extract", region_key=region_key, region_flag=region_flag)
         if not isinstance(products, list):
             products = []
 
@@ -1142,8 +1477,10 @@ def fetch_with_perplexity(source_config: dict, limit: int = 10) -> list:
         p['source'] = source_name
         p['region'] = region_flag
         p['discovered_at'] = datetime.utcnow().strftime('%Y-%m-%d')
+        if url and not p.get('source_url'):
+            p['source_url'] = url
 
-        score_result = analyze_with_perplexity(p, task="score", region=region_flag, region_key=region_key)
+        score_result = analyze_with_provider(p, task="score", region_key=region_key, region_flag=region_flag)
         if isinstance(score_result, dict) and score_result:
             p['dark_horse_index'] = score_result.get('score', p.get('dark_horse_index', 2))
             if 'reason' in score_result:
@@ -1155,6 +1492,10 @@ def fetch_with_perplexity(source_config: dict, limit: int = 10) -> list:
         result.append(p)
 
     return result
+
+
+# 保持向后兼容的别名
+fetch_with_perplexity = fetch_with_provider
 
 
 def analyze_and_score(product: dict) -> dict:
@@ -1285,6 +1626,9 @@ def sync_to_featured(product: dict):
             'funding_total': product.get('funding_total', ''),
             'region': product.get('region', '🌍'),
             'source': product.get('source', 'auto_discover'),
+            'source_url': product.get('source_url', ''),
+            'source_title': product.get('source_title', ''),
+            'website_source': product.get('website_source', ''),
             'discovered_at': product.get('discovered_at', datetime.utcnow().strftime('%Y-%m-%d')),
             'first_seen': datetime.utcnow().isoformat() + 'Z',
             # 计算分数（用于排序）
@@ -1370,18 +1714,28 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
     config = REGION_CONFIG[region_key]
     region_name = config['name']
     search_engine = config['search_engine']
+    current_provider = get_provider_for_region(region_key)
 
     # 使用关键词轮换（支持产品类型）
     keywords = get_keywords_for_today(region_key, product_type)
+    keyword_limit = 0
+    if region_key == "cn" and MAX_KEYWORDS_CN > 0:
+        keyword_limit = MAX_KEYWORDS_CN
+    elif MAX_KEYWORDS_DEFAULT > 0:
+        keyword_limit = MAX_KEYWORDS_DEFAULT
+    if keyword_limit and len(keywords) > keyword_limit:
+        keywords = keywords[:keyword_limit]
 
     type_label = {"software": "💻 软件", "hardware": "🔧 硬件", "mixed": "📊 混合(40%硬件+60%软件)"}.get(product_type, "混合")
-    
+
     print(f"\n{'='*60}")
     print(f"  🌍 Discovering AI Products: {region_name}")
     print(f"  📡 Search Engine: {search_engine}")
-    print(f"  🤖 Provider: {PROVIDER_NAME}")
+    print(f"  🤖 Provider: {current_provider}")
     print(f"  📦 Product Type: {type_label}")
     print(f"  🔑 Keywords: {len(keywords)} queries (day {datetime.now().weekday()})")
+    if keyword_limit:
+        print(f"  🧯 Keyword limit: {keyword_limit}")
     print(f"{'='*60}")
 
     # 使用增强去重检查器
@@ -1410,6 +1764,7 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
     # 对每个关键词进行搜索
     for i, keyword in enumerate(keywords, 1):
         print(f"\n  [{i}/{len(keywords)}] Searching: {keyword[:50]}...")
+        keyword_type = resolve_keyword_type(keyword, region_key, product_type)
 
         # 1. Search using provider routing
         search_results = search_with_provider(keyword, region_key, search_engine)
@@ -1430,7 +1785,8 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
             continue
 
         # 2. Extract products using provider routing
-        print(f"    📊 Extracting products with {PROVIDER_NAME}...")
+        current_provider = get_provider_for_region(region_key)
+        print(f"    📊 Extracting products with {current_provider}...")
 
         region_flag_map = {
             'us': '🇺🇸', 'cn': '🇨🇳', 'eu': '🇪🇺',
@@ -1438,7 +1794,13 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
         }
         region_flag = region_flag_map.get(region_key, '🌍')
 
-        products = analyze_with_provider(search_text, "extract", region_key, region_flag)
+        products = analyze_with_provider(
+            search_text,
+            "extract",
+            region_key,
+            region_flag,
+            product_type=keyword_type
+        )
 
         if not isinstance(products, list):
             products = []
@@ -1459,8 +1821,22 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
                 print(f"    ⏭️ Skip duplicate: {dup_reason}")
                 continue
 
+            # 绑定 source_url（用于后续解析官网）
+            attach_source_url(product, search_results)
+
             # 质量验证
-            is_valid, reason = validate_product(product)
+            is_hardware = (
+                keyword_type == "hardware" or
+                product.get("category") == "hardware" or
+                product.get("is_hardware", False)
+            )
+            if is_hardware:
+                product.setdefault("category", "hardware")
+                product["is_hardware"] = True
+            if is_hardware and USE_MODULAR_PROMPTS:
+                is_valid, reason = validate_hardware_product(product)
+            else:
+                is_valid, reason = validate_product(product)
             if not is_valid:
                 stats["quality_rejections"] += 1
                 quality_rejections.append({"name": name, "reason": reason})
@@ -1470,7 +1846,7 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
             # 补充信息
             product['region'] = region_flag
             product['discovered_at'] = datetime.utcnow().strftime('%Y-%m-%d')
-            product['discovery_method'] = f'{PROVIDER_NAME}_search'
+            product['discovery_method'] = f'{current_provider}_search'
             product['search_keyword'] = keyword
 
             # 4. 使用合并 prompt 的评分（无需额外 API 调用）
@@ -1505,6 +1881,11 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
             # 更新去重索引
             dedup_checker.add_product(product)
             all_products.append(product)
+
+        # GLM 额外节流，避免并发/频率过高
+        if current_provider == "glm" and GLM_KEYWORD_DELAY > 0 and i < len(keywords):
+            print(f"  ⏳ GLM cooldown: sleeping {GLM_KEYWORD_DELAY:.1f}s")
+            time.sleep(GLM_KEYWORD_DELAY)
 
     # 打印统计
     print(f"\n{'='*60}")
@@ -1557,16 +1938,19 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
     print(f"  📦 Product Type: {type_label}")
     print(f"  🔄 Max Attempts: {MAX_ATTEMPTS} rounds")
     print(f"  📅 Keyword Pool: Day {datetime.now().weekday()} (0=Mon)")
-    print(f"  🤖 Provider: {PROVIDER_NAME} ({'enabled' if PERPLEXITY_API_KEY else 'missing key'})")
+    glm_status = 'enabled' if (ZHIPU_API_KEY and USE_GLM_FOR_CN) else 'disabled'
+    pplx_status = 'enabled' if PERPLEXITY_API_KEY else 'missing key'
+    print(f"  🤖 Provider: Perplexity ({pplx_status}) | GLM-cn ({glm_status})")
     print("═"*70)
 
     # 初始化跟踪
     found = {"dark_horses": 0, "rising_stars": 0}
     region_yield = {k: 0 for k in REGION_CONFIG.keys()}
-    provider_stats = {PROVIDER_NAME: 0}
+    provider_stats = {"perplexity": 0, "glm": 0}  # 跟踪两个 provider
     duplicates_skipped = 0
     quality_rejections = []
     attempts = 0
+    unique_domains = set()  # 跟踪唯一域名
 
     # 使用增强去重检查器
     featured_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "products_featured.json")
@@ -1608,13 +1992,14 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
             config = REGION_CONFIG[region_key]
             region_name = config['name']
             search_engine = config['search_engine']
+            current_provider = get_provider_for_region(region_key)
 
             # 获取今日关键词（带轮换，支持产品类型）
             keywords = get_keywords_for_today(region_key, product_type)
             # 每轮只取部分关键词，避免重复
             keywords_this_round = keywords[:2] if attempts > 1 else keywords
 
-            print(f"\n  📍 {region_name} | Provider: {PROVIDER_NAME} | Keywords: {len(keywords_this_round)}")
+            print(f"\n  📍 {region_name} | Provider: {current_provider} | Keywords: {len(keywords_this_round)}")
 
             # 计算剩余配额（传给 prompt）
             quota_remaining = {
@@ -1627,6 +2012,7 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
                     break
 
                 print(f"\n    🔍 Searching: {keyword[:50]}...")
+                keyword_type = resolve_keyword_type(keyword, region_key, product_type)
 
                 # 1. Search using provider routing
                 search_results = search_with_provider(keyword, region_key, search_engine)
@@ -1657,7 +2043,8 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
                     "extract",
                     region_key,
                     region_flag,
-                    quota_remaining
+                    quota_remaining,
+                    product_type=keyword_type
                 )
 
                 if not isinstance(products, list):
@@ -1682,7 +2069,18 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
                         continue
 
                     # 质量验证
-                    is_valid, reason = validate_product(product)
+                    is_hardware = (
+                        keyword_type == "hardware" or
+                        product.get("category") == "hardware" or
+                        product.get("is_hardware", False)
+                    )
+                    if is_hardware:
+                        product.setdefault("category", "hardware")
+                        product["is_hardware"] = True
+                    if is_hardware and USE_MODULAR_PROMPTS:
+                        is_valid, reason = validate_hardware_product(product)
+                    else:
+                        is_valid, reason = validate_product(product)
                     if not is_valid:
                         quality_rejections.append({"name": name, "reason": reason})
                         print(f"    ❌ Quality fail: {name} ({reason})")
@@ -1691,7 +2089,7 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
                     # 补充元信息
                     product['region'] = region_flag
                     product['discovered_at'] = datetime.utcnow().strftime('%Y-%m-%d')
-                    product['discovery_method'] = f'{PROVIDER_NAME}_search'
+                    product['discovery_method'] = f'{current_provider}_search'
                     product['search_keyword'] = keyword
 
                     # 使用合并 prompt 的评分（无需额外 API 调用）
@@ -1720,11 +2118,17 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
                     # 更新计数和去重索引
                     found[category] += 1
                     region_yield[region_key] += 1
-                    provider_stats[PROVIDER_NAME] += 1  # Track provider usage
+                    current_provider = get_provider_for_region(region_key)
+                    provider_stats[current_provider] = provider_stats.get(current_provider, 0) + 1
                     dedup_checker.add_product(product)
 
+                    # 跟踪唯一域名
+                    website = product.get('website', '')
+                    if website:
+                        unique_domains.add(normalize_url(website))
+
                     status_icon = "🦄" if category == "dark_horses" else "⭐"
-                    print(f"    {status_icon} SAVED: {name} (score={score}, {category}, {PROVIDER_NAME})")
+                    print(f"    {status_icon} SAVED: {name} (score={score}, {category}, {current_provider})")
 
     # ═══════════════════════════════════════════════════════════════════
     # 生成详细报告
@@ -1779,13 +2183,13 @@ def test_perplexity():
     print("\n" + "="*60)
     print("  🔍 Testing Perplexity Search API")
     print("="*60)
-    
+
     # 检查 API Key
     if not PERPLEXITY_API_KEY:
         print("\n  ❌ PERPLEXITY_API_KEY not set")
         print("  Set it with: export PERPLEXITY_API_KEY=pplx_xxx")
         return
-    
+
     print(f"  API Key: {PERPLEXITY_API_KEY[:12]}...")
     print(f"  Model: {PERPLEXITY_MODEL}")
     # 尝试导入新模块
@@ -1796,17 +2200,17 @@ def test_perplexity():
     except ImportError as e:
         print(f"  ⚠️ SDK not installed: {e}")
         print("  Install with: pip install perplexityai")
-    
+
     # 测试搜索
     test_queries = [
         ("us", "AI startup funding 2026"),
         ("cn", "AI融资 2026"),
     ]
-    
+
     for region, query in test_queries:
         print(f"\n  📍 Testing region={region}: {query}")
         results = perplexity_search(query, count=3, region=region)
-        
+
         if results:
             print(f"  ✅ Found {len(results)} results")
             for i, r in enumerate(results[:2], 1):
@@ -1816,8 +2220,85 @@ def test_perplexity():
                 print(f"       URL: {url}")
         else:
             print(f"  ⚠️ No results")
-    
+
     print("\n  ✅ Perplexity test completed!")
+
+
+def test_glm():
+    """测试 GLM (智谱) 联网搜索 API 连接"""
+    print("\n" + "="*60)
+    print("  🔍 Testing GLM (智谱) Web Search API")
+    print("="*60)
+
+    # 检查 API Key
+    if not ZHIPU_API_KEY:
+        print("\n  ❌ ZHIPU_API_KEY not set")
+        print("  Set it with: export ZHIPU_API_KEY=your-api-key")
+        return
+
+    print(f"  API Key: {ZHIPU_API_KEY[:12]}...")
+    print(f"  Model: {GLM_MODEL}")
+    print(f"  Search Engine: {GLM_SEARCH_ENGINE}")
+    print(f"  USE_GLM_FOR_CN: {USE_GLM_FOR_CN}")
+
+    # 尝试导入模块
+    try:
+        from utils.glm_client import GLMClient
+        client = GLMClient()
+        print(f"  Client Status: {client.get_status()}")
+    except ImportError as e:
+        print(f"  ⚠️ glm_client module not found: {e}")
+        print("  Make sure utils/glm_client.py exists")
+        print("  Install SDK with: pip install zhipuai")
+        return
+
+    if not client.is_available():
+        print("\n  ❌ GLM client not available")
+        print("  Install SDK with: pip install zhipuai")
+        return
+
+    # 测试搜索
+    test_queries = [
+        "AI创业公司 融资 2026",
+        "AI芯片 独角兽",
+    ]
+
+    for query in test_queries:
+        print(f"\n  📍 Testing: {query}")
+        results = glm_search(query, count=3)
+
+        if results:
+            print(f"  ✅ Found {len(results)} results")
+            for i, r in enumerate(results[:2], 1):
+                title = r.get('title', 'No Title')[:50]
+                url = r.get('url', 'N/A')[:60]
+                print(f"    {i}. {title}...")
+                print(f"       URL: {url}")
+        else:
+            print(f"  ⚠️ No results")
+
+    print("\n  ✅ GLM test completed!")
+
+
+def test_provider_routing():
+    """测试 Provider 路由逻辑"""
+    print("\n" + "="*60)
+    print("  🔀 Testing Provider Routing")
+    print("="*60)
+
+    regions = ['us', 'cn', 'eu', 'jp', 'kr', 'sea']
+
+    print("\n  Provider routing results:")
+    print(f"  ZHIPU_API_KEY set: {bool(ZHIPU_API_KEY)}")
+    print(f"  USE_GLM_FOR_CN: {USE_GLM_FOR_CN}")
+    print()
+
+    for region in regions:
+        provider = get_provider_for_region(region)
+        icon = "🇨🇳" if provider == "glm" else "🌐"
+        print(f"    {region:5} → {provider:12} {icon}")
+
+    print("\n  ✅ Routing test completed!")
 
 
 def setup_schedule():
@@ -1878,12 +2359,23 @@ def main():
     parser.add_argument('--list-regions', action='store_true', help='列出所有地区')
     parser.add_argument('--list-keywords', action='store_true', help='列出关键词（按类型）')
     parser.add_argument('--test-perplexity', action='store_true', help='测试 Perplexity Search API')
+    parser.add_argument('--test-glm', action='store_true', help='测试 GLM (智谱) 联网搜索 API')
+    parser.add_argument('--test-routing', action='store_true', help='测试 Provider 路由逻辑')
+    parser.add_argument('--no-lock', action='store_true', help='禁用单实例锁（不建议）')
 
     args = parser.parse_args()
 
     # 测试功能
     if args.test_perplexity:
         test_perplexity()
+        return
+
+    if args.test_glm:
+        test_glm()
+        return
+
+    if args.test_routing:
+        test_provider_routing()
         return
 
     # 列表功能
@@ -1919,6 +2411,19 @@ def main():
     if args.schedule:
         setup_schedule()
         return
+
+    should_lock = not (
+        args.list_sources or args.list_regions or args.list_keywords or
+        args.test_perplexity or args.test_glm or args.test_routing or
+        args.schedule
+    )
+    if should_lock and not args.no_lock:
+        _lock_handle, acquired = acquire_process_lock(AUTO_DISCOVER_LOCK_FILE)
+        if not acquired:
+            print(f"\n⛔ Another auto_discover process is running.")
+            print(f"   Lock file: {AUTO_DISCOVER_LOCK_FILE}")
+            print("   If you are sure it's stale, delete the lock file and retry.")
+            return
 
     # 发现功能
     if args.region:

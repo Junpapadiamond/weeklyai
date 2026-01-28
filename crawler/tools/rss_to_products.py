@@ -31,6 +31,7 @@ sys.path.insert(0, PROJECT_ROOT)
 
 from dotenv import load_dotenv
 load_dotenv(os.path.join(PROJECT_ROOT, '.env'))
+from utils.website_resolver import extract_official_website_from_source, is_placeholder_url
 
 # ============================================
 # 配置
@@ -264,8 +265,17 @@ def validate_product(product: Dict, article: Dict, llm_client: Any = None) -> Op
     if not why_matters or len(why_matters) < 10:
         return None  # 没有说明为什么重要
     
-    # 获取网站 (先从产品提取，没有则搜索补充)
-    website = product.get('website', '')
+    # 获取网站 (优先从 source_url 解析，避免模型猜官网)
+    website = (product.get('website', '') or '').strip()
+    if website and is_placeholder_url(website):
+        website = ""
+
+    if (not website or website.lower() == "unknown") and article.get('link'):
+        resolved = extract_official_website_from_source(article.get('link', ''), name)
+        if resolved:
+            website = resolved
+            product['website_source'] = "source_url"
+
     if not website and llm_client:
         website = search_website(name, product.get('category', ''), llm_client)
     
@@ -315,6 +325,9 @@ def validate_product(product: Dict, article: Dict, llm_client: Any = None) -> Op
         "source_url": article.get('link', ''),
         "source_title": article.get('title', ''),
     }
+
+    if product.get('website_source'):
+        standardized['website_source'] = product['website_source']
     
     return standardized
 

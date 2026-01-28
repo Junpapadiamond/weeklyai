@@ -24,6 +24,9 @@ const FAVORITES_KEY = 'weeklyai_favorites';
 const SWIPED_KEY = 'weeklyai_swiped';
 const SWIPED_EXPIRY_DAYS = 7; // Reset swiped history after 7 days
 
+const INVALID_WEBSITE_VALUES = new Set(['unknown', 'n/a', 'na', 'none', 'null', 'undefined', '']);
+const PLACEHOLDER_VALUES = new Set(['unknown', 'n/a', 'na', 'none', 'tbd', '暂无', '未公开', '待定', 'unknown.', 'n/a.']);
+
 // All products cache for sorting/filtering
 let allProductsCache = [];
 let discoveryAllProducts = [];
@@ -57,6 +60,32 @@ const LEADERS_CATEGORY_ORDER = [
 ];
 let leadersCategoriesData = null;
 let leadersActiveFilter = 'all';
+
+function normalizeWebsite(url) {
+    if (!url) return '';
+    const trimmed = String(url).trim();
+    if (!trimmed) return '';
+    const lower = trimmed.toLowerCase();
+    if (INVALID_WEBSITE_VALUES.has(lower)) return '';
+    if (!/^https?:\/\//i.test(trimmed) && trimmed.includes('.')) {
+        return `https://${trimmed}`;
+    }
+    return trimmed;
+}
+
+function isValidWebsite(url) {
+    const normalized = normalizeWebsite(url);
+    if (!normalized) return false;
+    if (!/^https?:\/\//i.test(normalized)) return false;
+    return true;
+}
+
+function isPlaceholderValue(value) {
+    if (!value) return true;
+    const normalized = String(value).trim().toLowerCase();
+    if (!normalized) return true;
+    return PLACEHOLDER_VALUES.has(normalized);
+}
 
 // ========== DOM 元素 ==========
 const elements = {
@@ -526,7 +555,8 @@ function renderDiscoveryStack() {
 function createSwipeCard(product, position) {
     const name = product.name || '未命名';
     const categories = (product.categories || []).slice(0, 2).map(getCategoryName).join(' · ');
-    const website = product.website || '';
+    const website = normalizeWebsite(product.website || '');
+    const hasWebsite = isValidWebsite(website);
 
     // Clean and truncate description - remove technical noise
     let description = product.description || '暂无描述';
@@ -545,18 +575,20 @@ function createSwipeCard(product, position) {
     if (product.why_matters) {
         highlights.push(`💡 ${product.why_matters}`);
     }
-    if (product.funding_total) {
+    if (product.funding_total && !isPlaceholderValue(product.funding_total)) {
         highlights.push(`💰 ${product.funding_total}`);
     }
-    if (product.latest_news) {
+    if (product.latest_news && !isPlaceholderValue(product.latest_news)) {
         highlights.push(`📰 ${product.latest_news}`);
     }
     const highlightsMarkup = highlights.length
         ? `<div class="swipe-card-highlights">${highlights.slice(0, 2).map(item => `<div class="swipe-card-highlight">${item}</div>`).join('')}</div>`
         : '';
 
+    const pendingBadge = hasWebsite ? '' : '<span class="swipe-link swipe-link--pending">官网待验证</span>';
+
     return `
-        <div class="swipe-card ${position === 0 ? 'is-active' : ''}" data-pos="${position}" data-website="${website}">
+        <div class="swipe-card ${position === 0 ? 'is-active' : ''} ${hasWebsite ? '' : 'swipe-card--no-link'}" data-pos="${position}" data-website="${website}">
             <div class="swipe-card-header">
                 <div class="swipe-card-logo">${logoMarkup}</div>
                 <div class="swipe-card-title">
@@ -569,7 +601,7 @@ function createSwipeCard(product, position) {
             ${highlightsMarkup}
             ${videoPreview}
             <div class="swipe-card-meta">
-                ${website ? `<a class="swipe-link" href="${website}" target="_blank" rel="noopener noreferrer">了解更多 →</a>` : ''}
+                ${hasWebsite ? `<a class="swipe-link" href="${website}" target="_blank" rel="noopener noreferrer">了解更多 →</a>` : pendingBadge}
             </div>
         </div>
     `;
@@ -709,7 +741,7 @@ function updateDiscoveryPreferences(product, direction) {
                 key: productKey,
                 name: product.name,
                 logo_url: product.logo_url,
-                website: product.website,
+                website: normalizeWebsite(product.website || ''),
                 categories: product.categories,
                 addedAt: new Date().toISOString()
             });
@@ -1048,7 +1080,7 @@ function sortProducts(products, sortBy) {
 }
 
 function parseFunding(funding) {
-    if (!funding || funding === 'unknown') return 0;
+    if (!funding || isPlaceholderValue(funding)) return 0;
     const match = funding.match(/\$?([\d.]+)\s*(M|B|K)?/i);
     if (!match) return 0;
     let value = parseFloat(match[1]);
@@ -1087,7 +1119,8 @@ function createDarkHorseCard(product) {
     const darkHorseIndex = product.dark_horse_index || 0;
     const stars = '★'.repeat(darkHorseIndex) + '☆'.repeat(5 - darkHorseIndex);
     const description = product.description || '暂无描述';
-    const website = product.website || '';
+    const website = normalizeWebsite(product.website || '');
+    const hasWebsite = isValidWebsite(website);
     const categories = product.categories || [];
     const whyMatters = product.why_matters || '';
     const funding = product.funding_total || '';
@@ -1108,7 +1141,7 @@ function createDarkHorseCard(product) {
 
     // 构建 meta 标签
     let metaTags = '';
-    if (funding && funding !== 'unknown') {
+    if (funding && !isPlaceholderValue(funding)) {
         metaTags += `<span class="darkhorse-meta-tag darkhorse-meta-tag--funding">
             <span class="meta-icon">💰</span>${funding}
         </span>`;
@@ -1123,9 +1156,16 @@ function createDarkHorseCard(product) {
             <span class="meta-icon">${region}</span>
         </span>`;
     }
+    if (!hasWebsite) {
+        metaTags += `<span class="darkhorse-meta-tag darkhorse-meta-tag--verify">
+            <span class="meta-icon">🔎</span>官网待验证
+        </span>`;
+    }
+
+    const clickAttr = hasWebsite ? `onclick="openProduct('${website}')"` : '';
 
     return `
-        <div class="darkhorse-card" onclick="openProduct('${website}')">
+        <div class="darkhorse-card ${hasWebsite ? '' : 'darkhorse-card--no-link'}" ${clickAttr}>
             <div class="darkhorse-card-header">
                 <div class="darkhorse-logo">${logoMarkup}</div>
                 <div class="darkhorse-title-block">
@@ -1145,7 +1185,9 @@ function createDarkHorseCard(product) {
                 <span>${latestNews}</span>
             </div>` : ''}
             <div class="darkhorse-cta">
-                <span class="darkhorse-link">了解更多 →</span>
+                <span class="darkhorse-link ${hasWebsite ? '' : 'darkhorse-link--pending'}">
+                    ${hasWebsite ? '了解更多 →' : '官网待验证'}
+                </span>
             </div>
         </div>
     `;
@@ -1230,7 +1272,8 @@ async function loadProductDetail(productId) {
 function renderProductDetail(product) {
     const name = product.name || '未命名';
     const description = product.description || '暂无描述';
-    const website = product.website || '';
+    const website = normalizeWebsite(product.website || '');
+    const hasWebsite = isValidWebsite(website);
     const categories = (product.categories || []).map(getCategoryName).join(' · ');
     const rating = product.rating ? product.rating.toFixed(1) : '';
     const users = product.weekly_users ? formatNumber(product.weekly_users) : '';
@@ -1244,7 +1287,7 @@ function renderProductDetail(product) {
     if (rating) metaItems.push(`⭐ ${rating}`);
     if (users) metaItems.push(`👥 ${users}`);
     if (foundedDate) metaItems.push(`📅 ${foundedDate}`);
-    if (fundingTotal) metaItems.push(`💰 ${fundingTotal}`);
+    if (fundingTotal && !isPlaceholderValue(fundingTotal)) metaItems.push(`💰 ${fundingTotal}`);
 
     if (elements.productDetailSubtitle) {
         elements.productDetailSubtitle.textContent = categories ? `类别 · ${categories}` : '来自本周精选';
@@ -1257,7 +1300,7 @@ function renderProductDetail(product) {
                 <a class="product-detail-link" href="/" data-action="back">← 返回首页</a>
                 <h3>${name}</h3>
                 <p class="product-detail-description">${description}</p>
-                ${website ? `<a class="product-detail-link" href="${website}" target="_blank" rel="noopener noreferrer">${website}</a>` : ''}
+                ${hasWebsite ? `<a class="product-detail-link" href="${website}" target="_blank" rel="noopener noreferrer">${website}</a>` : '<span class="product-detail-link product-detail-link--pending">官网待验证</span>'}
                 ${metaItems.length ? `<div class="product-detail-meta">${metaItems.map(item => `<span>${item}</span>`).join('')}</div>` : ''}
                 ${whyMatters ? `<div class="product-detail-why">💡 ${whyMatters}</div>` : ''}
             </div>
@@ -1403,9 +1446,9 @@ function getLogoSource(product) {
 }
 
 function getFaviconUrl(website) {
-    if (!website) return '';
+    if (!isValidWebsite(website)) return '';
     try {
-        const normalized = website.startsWith('http') ? website : `https://${website}`;
+        const normalized = normalizeWebsite(website);
         const host = new URL(normalized).hostname;
         if (!host) return '';
         return `https://www.google.com/s2/favicons?domain=${host}&sz=128`;
@@ -1457,11 +1500,15 @@ function createProductCard(product, showBadge = false) {
 
     const name = product.name || '未命名';
     const description = product.description || '暂无描述';
-    const cardClass = showBadge ? 'product-card product-card--hot' : 'product-card';
+    const website = normalizeWebsite(product.website || '');
+    const hasWebsite = isValidWebsite(website);
+    const cardClass = `${showBadge ? 'product-card product-card--hot' : 'product-card'}${hasWebsite ? '' : ' product-card--no-link'}`;
     const logoMarkup = buildLogoMarkup(product);
+    const pendingTag = hasWebsite ? '' : '<span class="product-tag product-tag--pending">待验证</span>';
+    const clickAttr = hasWebsite ? `onclick="openProduct('${website}')"` : '';
 
     return `
-        <div class="${cardClass}" onclick="openProduct('${product.website}')">
+        <div class="${cardClass}" ${clickAttr}>
             <div class="product-logo">
                 ${logoMarkup}
             </div>
@@ -1472,6 +1519,7 @@ function createProductCard(product, showBadge = false) {
                 <p class="product-description">${description}</p>
                 <div class="product-tags">
                     ${categoryTags}
+                    ${pendingTag}
                 </div>
             </div>
         </div>
@@ -1486,9 +1534,13 @@ function createProductListItem(product, rank) {
     const fundingTotal = product.funding_total || '';
     const whyMatters = product.why_matters || '';
     const logoMarkup = buildLogoMarkup(product);
+    const website = normalizeWebsite(product.website || '');
+    const hasWebsite = isValidWebsite(website);
+    const clickAttr = hasWebsite ? `onclick="openProduct('${website}')"` : '';
+    const pendingTag = hasWebsite ? '' : '<span class="product-list-pending">🔎 官网待验证</span>';
 
     return `
-        <div class="product-list-item" onclick="openProduct('${product.website}')">
+        <div class="product-list-item ${hasWebsite ? '' : 'product-list-item--no-link'}" ${clickAttr}>
             <div class="product-rank ${rank <= 3 ? 'top-3' : ''}">${rank}</div>
             <div class="product-list-logo">
                 ${logoMarkup}
@@ -1496,11 +1548,12 @@ function createProductListItem(product, rank) {
             <div class="product-list-info">
                 <h3 class="product-list-name">${name}</h3>
                 <p class="product-list-desc">${description}</p>
-                ${(whyMatters || fundingTotal) ? `
+                ${(whyMatters || (fundingTotal && !isPlaceholderValue(fundingTotal))) ? `
                 <div class="product-list-extra">
                     ${whyMatters ? `<span>💡 ${whyMatters}</span>` : ''}
-                    ${fundingTotal ? `<span class="product-list-funding">💰 ${fundingTotal}</span>` : ''}
+                    ${fundingTotal && !isPlaceholderValue(fundingTotal) ? `<span class="product-list-funding">💰 ${fundingTotal}</span>` : ''}
                 </div>` : ''}
+                ${pendingTag}
             </div>
             <div class="product-list-stats">
                 <div class="stat-value">${users}</div>
@@ -1548,8 +1601,9 @@ function showEmptyState(container, message) {
 }
 
 function openProduct(url) {
-    if (url) {
-        const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+    const normalized = normalizeWebsite(url);
+    if (isValidWebsite(normalized)) {
+        const newWindow = window.open(normalized, '_blank', 'noopener,noreferrer');
         if (newWindow) {
             newWindow.opener = null;
         }
@@ -1812,7 +1866,7 @@ function toggleFavorite(product, event) {
             key: productKey,
             name: product.name,
             logo_url: product.logo_url,
-            website: product.website,
+            website: normalizeWebsite(product.website || ''),
             categories: product.categories,
             addedAt: new Date().toISOString()
         });
@@ -1825,7 +1879,8 @@ function toggleFavorite(product, event) {
 }
 
 function getProductKey(product) {
-    return product.website || product.name || '';
+    const website = normalizeWebsite(product.website || '');
+    return website || product.name || '';
 }
 
 function updateFavoritesCount() {
@@ -1885,13 +1940,18 @@ function renderFavoritesList() {
         const logoMarkup = fav.logo_url
             ? `<img src="${fav.logo_url}" alt="${fav.name}" width="40" height="40" loading="lazy" onerror="this.style.display='none'">`
             : `<div class="product-logo-placeholder">${getInitial(fav.name)}</div>`;
+        const website = normalizeWebsite(fav.website || '');
+        const hasWebsite = isValidWebsite(website);
+        const clickAttr = hasWebsite ? `onclick="openProduct('${website}')"` : '';
+        const pendingNote = hasWebsite ? '' : '<span class="favorite-item-pending">官网待验证</span>';
 
         return `
-            <div class="favorite-item" onclick="openProduct('${fav.website}')">
+            <div class="favorite-item ${hasWebsite ? '' : 'favorite-item--no-link'}" ${clickAttr}>
                 <div class="favorite-item-logo">${logoMarkup}</div>
                 <div class="favorite-item-info">
                     <div class="favorite-item-name">${fav.name}</div>
                     <div class="favorite-item-category">${categories || '精选 AI 工具'}</div>
+                    ${pendingNote}
                 </div>
                 <button class="favorite-item-remove" onclick="removeFavoriteFromPanel('${fav.key}', event)" title="移除收藏">×</button>
             </div>

@@ -13,6 +13,7 @@
 """
 
 from typing import Optional
+from urllib.parse import urlparse
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # 产品分析 Prompt (从搜索结果提取产品)
@@ -649,6 +650,18 @@ HARDWARE_ANALYSIS_PROMPT = """你是 WeeklyAI 的 AI 创新硬件分析师。
 ]
 ```
 
+## 关键：公司官网 URL 提取！
+
+上面的搜索结果是新闻/帖子 URL，不是公司官网。
+你必须从结果中提取公司的官方网站：
+
+1. 在 snippet 文本中查找公司官网（如"访问 example.com"）
+2. 对于常见模式：{{公司名}}.com / .ai / .io
+3. 如果不确定，设置：
+   "website": "unknown", "needs_verification": true
+
+⚠️ 禁止使用占位域名（example.com / test.com / placeholder），这些会被判为无效。
+
 ### 字段说明
 
 | 字段 | 说明 | 示例值 |
@@ -716,6 +729,12 @@ WELL_KNOWN_HARDWARE = {
     "dji", "dji mavic", "dji mini",
 }
 
+# 硬件官网占位域名（无效）
+PLACEHOLDER_DOMAINS = {
+    "example.com", "example.org", "example.net",
+    "test.com", "localhost", "example.cn", "example.ai",
+}
+
 # 硬件评分 criteria (按权重排序)
 HARDWARE_CRITERIA = {
     # ═══ 形态创新 (权重 40%) - 最重要 ═══
@@ -759,7 +778,37 @@ def validate_hardware_product(product: dict) -> tuple[bool, str]:
     Returns:
         (是否通过, 原因)
     """
-    name = product.get("name", "").lower()
+    name_raw = product.get("name", "").strip()
+    name = name_raw.lower()
+    description = product.get("description", "").strip()
+    why_matters = product.get("why_matters", "").strip()
+    website = product.get("website", "").strip()
+
+    # 基本必填字段
+    if not name_raw:
+        return False, "missing name"
+    if not description:
+        return False, "missing description"
+    if not why_matters:
+        return False, "missing why_matters"
+    if not website:
+        return False, "missing website"
+
+    # 修复缺少协议的 URL
+    if not website.startswith(("http://", "https://")) and "." in website:
+        website = f"https://{website}"
+        product["website"] = website
+
+    if website.lower() == "unknown":
+        product["needs_verification"] = True
+    elif not website.startswith(("http://", "https://")):
+        return False, "invalid website URL"
+    else:
+        domain = urlparse(website).netloc.lower()
+        if domain.startswith("www."):
+            domain = domain[4:]
+        if any(ph == domain or domain.endswith(f".{ph}") for ph in PLACEHOLDER_DOMAINS):
+            return False, f"invalid website domain: {domain}"
     
     # 检查是否是已知名硬件
     for known in WELL_KNOWN_HARDWARE:
@@ -783,9 +832,11 @@ def validate_hardware_product(product: dict) -> tuple[bool, str]:
     if score == 5 and len(criteria) < 1:
         return False, f"5-star hardware needs ≥1 criteria (has {len(criteria)})"
     
+    # 检查描述长度（硬件也需基本描述）
+    if len(description) < 20:
+        return False, f"description too short ({len(description)} chars)"
+
     # 检查 why_matters 是否说明了创新点（宽松版）
-    why_matters = product.get("why_matters", "")
-    
     # 硬件产品只需要有基本描述即可，不强求具体硬件指标
     if score >= 4 and len(why_matters) < 20:
         return False, "hardware why_matters too short (need >20 chars)"

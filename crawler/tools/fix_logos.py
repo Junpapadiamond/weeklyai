@@ -47,17 +47,67 @@ def extract_domain(url: str) -> str:
 
 
 def check_url_exists(url: str, timeout: int = TIMEOUT) -> bool:
-    """检查 URL 是否可访问"""
+    """检查 URL 是否可访问（部分站点不支持 HEAD）"""
+    headers = {"User-Agent": "Mozilla/5.0"}
     try:
         response = requests.head(
             url,
             timeout=timeout,
             allow_redirects=True,
-            headers={"User-Agent": "Mozilla/5.0"}
+            headers=headers
         )
-        return response.status_code == 200
+        if 200 <= response.status_code < 400:
+            return True
+    except Exception:
+        pass
+    try:
+        response = requests.get(
+            url,
+            timeout=timeout,
+            allow_redirects=True,
+            headers=headers,
+            stream=True
+        )
+        return 200 <= response.status_code < 400
     except Exception:
         return False
+
+
+def _absolute_url(base: str, href: str) -> str:
+    if href.startswith("//"):
+        return f"https:{href}"
+    if href.startswith("http://") or href.startswith("https://"):
+        return href
+    if href.startswith("/"):
+        return f"https://{base}{href}"
+    return f"https://{base}/{href}"
+
+
+def _extract_icon_from_html(domain: str) -> str:
+    """从主页 HTML 提取 favicon/icon 链接"""
+    try:
+        resp = requests.get(
+            f"https://{domain}",
+            timeout=TIMEOUT,
+            allow_redirects=True,
+            headers={"User-Agent": "Mozilla/5.0"}
+        )
+        if not (200 <= resp.status_code < 400):
+            return ""
+        html = resp.text
+        # 优先 apple-touch-icon，其次 icon/shortcut icon
+        patterns = [
+            r'rel=["\']apple-touch-icon["\'][^>]*href=["\']([^"\']+)["\']',
+            r'rel=["\']icon["\'][^>]*href=["\']([^"\']+)["\']',
+            r'rel=["\']shortcut icon["\'][^>]*href=["\']([^"\']+)["\']',
+        ]
+        for pat in patterns:
+            m = re.search(pat, html, re.IGNORECASE)
+            if m:
+                return _absolute_url(domain, m.group(1))
+    except Exception:
+        return ""
+    return ""
 
 
 def get_logo_url(domain: str) -> tuple:
@@ -85,6 +135,16 @@ def get_logo_url(domain: str) -> tuple:
     ddg_url = f"https://icons.duckduckgo.com/ip3/{domain}.ico"
     if check_url_exists(ddg_url):
         return ddg_url, "duckduckgo"
+
+    # 4. 直接 favicon.ico
+    direct_favicon = f"https://{domain}/favicon.ico"
+    if check_url_exists(direct_favicon):
+        return direct_favicon, "favicon"
+
+    # 5. 尝试从主页 HTML 提取
+    extracted = _extract_icon_from_html(domain)
+    if extracted and check_url_exists(extracted):
+        return extracted, "html"
     
     return None, None
 
@@ -93,7 +153,7 @@ def process_product(product: dict) -> dict:
     """处理单个产品，尝试获取 logo"""
     name = product.get('name', 'Unknown')
     website = product.get('website', '')
-    current_logo = product.get('logo', '')
+    current_logo = product.get('logo_url') or product.get('logo', '')
     
     # 检查是否需要修复
     needs_fix = False
@@ -110,6 +170,10 @@ def process_product(product: dict) -> dict:
         return product
     
     # 提取域名
+    if website and website.lower() == "unknown":
+        print(f"  ⚠️  {name}: website unknown")
+        return product
+
     domain = extract_domain(website)
     if not domain:
         print(f"  ⚠️  {name}: 无法提取域名")
@@ -119,7 +183,7 @@ def process_product(product: dict) -> dict:
     logo_url, source = get_logo_url(domain)
     
     if logo_url:
-        product['logo'] = logo_url
+        product['logo_url'] = logo_url
         product['logo_source'] = source
         print(f"  ✅ {name}: {source} ({domain})")
     else:
@@ -159,7 +223,7 @@ def fix_logos(input_path: str, output_path: str = None, dry_run: bool = False):
     # 找出需要修复的产品
     to_fix = []
     for p in products:
-        logo = p.get('logo', '')
+        logo = p.get('logo_url') or p.get('logo', '')
         if not logo:
             stats["no_logo"] += 1
             to_fix.append(p)
@@ -193,7 +257,8 @@ def fix_logos(input_path: str, output_path: str = None, dry_run: bool = False):
             try:
                 result = future.result()
                 name = result.get('name')
-                if result.get('logo') and result['logo'].startswith('http'):
+                logo_val = result.get('logo_url') or result.get('logo', '')
+                if logo_val and logo_val.startswith('http'):
                     fixed_products[name] = result
                     stats["fixed"] += 1
                 else:

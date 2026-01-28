@@ -35,12 +35,13 @@ crawler/data/
 
 | 文件 | 职责 |
 |------|------|
-| `crawler/tools/auto_discover.py` | Perplexity Search 自动发现 |
+| `crawler/tools/auto_discover.py` | 自动发现 (Provider 路由: cn→GLM, 其他→Perplexity) |
 | `crawler/tools/add_product.py` | 手动添加产品 |
 | `crawler/tools/dark_horse_detector.py` | 黑马评分计算 |
 | `crawler/prompts/search_prompts.py` | 🔍 搜索 Prompt 模块 |
 | `crawler/prompts/analysis_prompts.py` | 📊 分析 Prompt 模块 (含硬件评判体系) |
-| `crawler/utils/perplexity_client.py` | Perplexity SDK 封装 |
+| `crawler/utils/perplexity_client.py` | Perplexity SDK 封装 (美国/欧洲/日韩) |
+| `crawler/utils/glm_client.py` | 智谱 GLM SDK 封装 (中国区) |
 | `backend/app/routes/products.py` | 产品 API |
 | `frontend/views/index.ejs` | 首页模板 |
 
@@ -414,15 +415,32 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 
 ### Provider 配置
 
+**区域路由架构:**
+```
+auto_discover.py
+       │
+       ▼
+┌──────────────────┐
+│ get_provider()   │
+│  cn → GLM        │
+│  us/eu/jp → Pplx │
+└──────────────────┘
+       │
+   ┌───┴───┐
+   ▼       ▼
+┌─────┐  ┌─────────┐
+│ GLM │  │Perplexity│
+└─────┘  └─────────┘
+```
+
+#### Perplexity (美国/欧洲/日韩/东南亚)
+
 | 环境变量 | 说明 | 默认值 |
 |----------|------|--------|
 | `PERPLEXITY_API_KEY` | Perplexity API Key | (required) |
 | `PERPLEXITY_MODEL` | Perplexity 模型 | `sonar` |
 
-**Provider:**
-- 仅使用 Perplexity Search
-
-**启用 Perplexity (推荐):**
+**启用 Perplexity:**
 ```bash
 # 1. 安装 SDK
 pip install perplexityai
@@ -437,20 +455,88 @@ python3 tools/auto_discover.py --test-perplexity
 python3 tools/auto_discover.py --region us --dry-run
 ```
 
-**Perplexity Search API 特性:**
+**Perplexity 特性:**
 - 实时 Web 搜索（排名结果 + 内容提取）
 - 支持地区/语言/域名过滤
-- 多查询批量搜索（最多 5 个）
 - 官方 SDK 支持
 
-**成本估算 (Perplexity):**
-- Search API: $5 / 1K requests
-- Sonar: $3 / 1M input, $15 / 1M output
-- 预计月成本: $20-$35
+**成本估算:** $20-$35/月
+
+#### GLM 智谱 (中国区)
+
+| 环境变量 | 说明 | 默认值 |
+|----------|------|--------|
+| `ZHIPU_API_KEY` | 智谱 API Key | (required for cn) |
+| `GLM_MODEL` | GLM 模型 | `glm-4.7` |
+| `GLM_SEARCH_ENGINE` | 搜索引擎 | `search_pro` |
+| `USE_GLM_FOR_CN` | 中国区启用 GLM | `true` |
+
+**搜索引擎选项:**
+
+| 引擎 | 价格 | 说明 |
+|------|------|------|
+| `search_pro` | ¥0.03/次 | 智谱自研高阶版 (推荐) |
+| `search_pro_sogou` | ¥0.05/次 | 腾讯生态+知乎 |
+| `search_std` | ¥0.01/次 | 基础搜索 |
+
+**启用 GLM (中国区):**
+```bash
+# 1. 安装 SDK
+pip install zhipuai
+
+# 2. 设置环境变量 (在 crawler/.env)
+ZHIPU_API_KEY=your-api-key
+GLM_MODEL=glm-4.7
+GLM_SEARCH_ENGINE=search_pro
+USE_GLM_FOR_CN=true
+
+# 3. 测试连接
+python3 tools/auto_discover.py --test-glm
+
+# 4. 测试路由
+python3 tools/auto_discover.py --test-routing
+
+# 5. 运行中国区发现
+python3 tools/auto_discover.py --region cn --dry-run
+```
+
+**GLM-4.7 特性:**
+- 智谱自研联网搜索（优化中文内容）
+- 最大上下文 200K，最大输出 128K
+- 支持深度思考 (thinking)
+- 支持多搜索引擎切换
+- 官方 SDK 支持
+
+**成本估算:** ¥30-50/月
+
+**⚠️ 限流处理:**
+- GLM API 有并发限制，429 错误表示 "并发数过高"
+- 自动重试机制：遇到 429 会等待后重试
+- 如果频繁限流，可联系智谱客服增加限额
+- 或者设置 `USE_GLM_FOR_CN=false` 临时回退到 Perplexity
+
+**中国权威 AI 媒体源:**
+
+| 媒体 | 域名 | 优先级 |
+|------|------|--------|
+| 36氪 | 36kr.com | Tier 1 |
+| 机器之心 | jiqizhixin.com | Tier 1 |
+| IT桔子 | itjuzi.com | Tier 1 |
+| 钛媒体 | tmtpost.com | Tier 1 |
+| 量子位 | qbitai.com | Tier 2 |
+| 雷锋网 | leiphone.com | Tier 2 |
+
+#### 回滚方案
+
+如果 GLM 集成出现问题：
+1. 设置 `USE_GLM_FOR_CN=false`
+2. 中国区自动回退到 Perplexity
+3. 无需代码修改
 
 **相关文件:**
 - `crawler/utils/perplexity_client.py` - Perplexity SDK 封装
-- `crawler/tools/auto_discover.py` - 自动发现（集成 Perplexity）
+- `crawler/utils/glm_client.py` - GLM SDK 封装
+- `crawler/tools/auto_discover.py` - 自动发现（Provider 路由）
 
 ### 质量过滤规则
 

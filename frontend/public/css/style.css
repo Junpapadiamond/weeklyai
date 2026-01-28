@@ -818,6 +818,11 @@ body::after {
     color: var(--coral);
 }
 
+.swipe-link--pending {
+    color: var(--ink-500);
+    cursor: default;
+}
+
 .swipe-actions {
     display: flex;
     gap: 0.9rem;
@@ -932,6 +937,16 @@ body::after {
 .product-card--hot {
     border-color: rgba(29, 78, 216, 0.4);
     box-shadow: 0 24px 48px rgba(29, 78, 216, 0.16);
+}
+
+.product-card--no-link {
+    cursor: default;
+}
+
+.product-card--no-link:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+    border-color: var(--border-soft);
 }
 
 .product-logo {
@@ -1093,6 +1108,12 @@ body::after {
     border: 1px solid rgba(29, 78, 216, 0.16);
 }
 
+.product-tag--pending {
+    background: rgba(234, 179, 8, 0.14);
+    border-color: rgba(234, 179, 8, 0.28);
+    color: #a16207;
+}
+
 /* ========== Weekly List ========== */
 .products-list {
     display: flex;
@@ -1140,6 +1161,29 @@ body::after {
 
 .product-list-item:hover::before {
     opacity: 1;
+}
+
+.product-list-item--no-link {
+    cursor: default;
+}
+
+.product-list-item--no-link:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+    border-color: var(--border-soft);
+}
+
+.product-list-pending {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 0.4rem;
+    padding: 0.2rem 0.55rem;
+    background: rgba(234, 179, 8, 0.12);
+    border-radius: var(--radius-pill);
+    font-size: 0.72rem;
+    color: #a16207;
+    font-weight: 600;
 }
 
 .product-rank {
@@ -1341,6 +1385,12 @@ body::after {
 
 .product-detail-link:hover {
     text-decoration: underline;
+}
+
+.product-detail-link--pending {
+    color: var(--ink-500);
+    cursor: default;
+    text-decoration: none;
 }
 
 /* ========== Skeleton ========== */
@@ -1898,6 +1948,31 @@ body::after {
 .darkhorse-card:hover .darkhorse-link {
     color: #f5deb3;
     text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+}
+
+.darkhorse-card--no-link {
+    cursor: default;
+}
+
+.darkhorse-card--no-link:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.darkhorse-link--pending {
+    color: var(--ink-500);
+    text-shadow: none;
+}
+
+.darkhorse-card--no-link:hover .darkhorse-link--pending {
+    color: var(--ink-500);
+    text-shadow: none;
+}
+
+.darkhorse-meta-tag--verify {
+    background: rgba(234, 179, 8, 0.14);
+    color: #a16207;
 }
 
 @media (max-width: 768px) {
@@ -2548,6 +2623,14 @@ body::after {
     background: rgba(29, 78, 216, 0.1);
 }
 
+.favorite-item--no-link {
+    cursor: default;
+}
+
+.favorite-item--no-link:hover {
+    background: rgba(29, 78, 216, 0.04);
+}
+
 .favorite-item-logo {
     width: 40px;
     height: 40px;
@@ -2584,6 +2667,17 @@ body::after {
 .favorite-item-category {
     font-size: 0.75rem;
     color: var(--ink-500);
+}
+
+.favorite-item-pending {
+    display: inline-flex;
+    margin-top: 0.3rem;
+    padding: 0.18rem 0.5rem;
+    border-radius: var(--radius-pill);
+    background: rgba(234, 179, 8, 0.12);
+    color: #a16207;
+    font-size: 0.7rem;
+    font-weight: 600;
 }
 
 .favorite-item-remove {
