@@ -31,6 +31,7 @@ sys.path.insert(0, PROJECT_ROOT)
 
 from dotenv import load_dotenv
 load_dotenv(os.path.join(PROJECT_ROOT, '.env'))
+from utils.website_resolver import extract_official_website_from_source, is_placeholder_url
 
 # ============================================
 # 配置
@@ -106,29 +107,17 @@ EXCLUDE_TERMS = {
 # ============================================
 
 def get_llm_client():
-    """获取 LLM 客户端 (优先 Perplexity，其次 GLM)"""
-    
-    # 尝试 Perplexity
+    """获取 LLM 客户端 (Perplexity)"""
     perplexity_key = os.getenv('PERPLEXITY_API_KEY')
-    if perplexity_key:
-        try:
-            from utils.perplexity_client import PerplexityClient
-            client = PerplexityClient(api_key=perplexity_key)
-            if client.is_available():
-                return ("perplexity", client)
-        except Exception as e:
-            print(f"  ⚠️ Perplexity 初始化失败: {e}")
-    
-    # 尝试 GLM
-    glm_key = os.getenv('ZHIPU_API_KEY')
-    if glm_key:
-        try:
-            from zhipuai import ZhipuAI
-            client = ZhipuAI(api_key=glm_key)
-            return ("glm", client)
-        except Exception as e:
-            print(f"  ⚠️ GLM 初始化失败: {e}")
-    
+    if not perplexity_key:
+        return (None, None)
+    try:
+        from utils.perplexity_client import PerplexityClient
+        client = PerplexityClient(api_key=perplexity_key)
+        if client.is_available():
+            return ("perplexity", client)
+    except Exception as e:
+        print(f"  ⚠️ Perplexity 初始化失败: {e}")
     return (None, None)
 
 
@@ -204,29 +193,17 @@ def extract_products_with_llm(article: Dict, llm_type: str, llm_client: Any) -> 
     )
     
     try:
-        if llm_type == "perplexity":
-            response = llm_client.analyze(prompt=prompt)
-            # analyze 返回解析后的 JSON 或字符串
-            if isinstance(response, dict):
-                result_text = json.dumps(response)
-            elif isinstance(response, list):
-                result_text = json.dumps({"has_product": True, "products": response})
-            else:
-                result_text = str(response)
-        
-        elif llm_type == "glm":
-            response = llm_client.chat.completions.create(
-                model="glm-4-flash",
-                messages=[
-                    {"role": "system", "content": "你是一个 AI 产品分析师，专门从新闻中提取产品信息。只返回 JSON 格式。"},
-                    {"role": "user", "content": prompt}
-                ],
-                temperature=0.1,
-            )
-            result_text = response.choices[0].message.content
-        
-        else:
+        if llm_type != "perplexity":
             return []
+
+        response = llm_client.analyze(prompt=prompt)
+        # analyze 返回解析后的 JSON 或字符串
+        if isinstance(response, dict):
+            result_text = json.dumps(response)
+        elif isinstance(response, list):
+            result_text = json.dumps({"has_product": True, "products": response})
+        else:
+            result_text = str(response)
         
         # 解析 JSON
         json_match = re.search(r'\{[\s\S]*\}', result_text)
@@ -246,9 +223,9 @@ def extract_products_with_llm(article: Dict, llm_type: str, llm_client: Any) -> 
 # 产品验证和标准化
 # ============================================
 
-def search_website(name: str, category: str, llm_type: str, llm_client: Any) -> str:
+def search_website(name: str, category: str, llm_client: Any) -> str:
     """搜索产品官网"""
-    if llm_type != "perplexity":
+    if not llm_client:
         return ""
     
     try:
@@ -268,7 +245,7 @@ def search_website(name: str, category: str, llm_type: str, llm_client: Any) -> 
         return ""
 
 
-def validate_product(product: Dict, article: Dict, llm_type: str = None, llm_client: Any = None) -> Optional[Dict]:
+def validate_product(product: Dict, article: Dict, llm_client: Any = None) -> Optional[Dict]:
     """验证和标准化产品数据"""
     
     name = product.get('name', '').strip()
@@ -288,10 +265,19 @@ def validate_product(product: Dict, article: Dict, llm_type: str = None, llm_cli
     if not why_matters or len(why_matters) < 10:
         return None  # 没有说明为什么重要
     
-    # 获取网站 (先从产品提取，没有则搜索补充)
-    website = product.get('website', '')
+    # 获取网站 (优先从 source_url 解析，避免模型猜官网)
+    website = (product.get('website', '') or '').strip()
+    if website and is_placeholder_url(website):
+        website = ""
+
+    if (not website or website.lower() == "unknown") and article.get('link'):
+        resolved = extract_official_website_from_source(article.get('link', ''), name)
+        if resolved:
+            website = resolved
+            product['website_source'] = "source_url"
+
     if not website and llm_client:
-        website = search_website(name, product.get('category', ''), llm_type, llm_client)
+        website = search_website(name, product.get('category', ''), llm_client)
     
     # 检测并排除大公司产品 (Focus: 黑马和创业公司)
     name_lower = name.lower()
@@ -339,6 +325,9 @@ def validate_product(product: Dict, article: Dict, llm_type: str = None, llm_cli
         "source_url": article.get('link', ''),
         "source_title": article.get('title', ''),
     }
+
+    if product.get('website_source'):
+        standardized['website_source'] = product['website_source']
     
     return standardized
 
@@ -431,7 +420,7 @@ def process_articles(
         
         for product in products:
             # 验证 (传递 LLM 客户端用于搜索网站)
-            validated = validate_product(product, article, llm_type, llm_client)
+            validated = validate_product(product, article, llm_client)
             if not validated:
                 print(f"  ⏭️ {product.get('name', '?')} - 验证未通过")
                 continue
@@ -533,7 +522,7 @@ def main():
     
     if not llm_client:
         print("❌ 没有可用的 LLM 客户端")
-        print("请配置 PERPLEXITY_API_KEY 或 ZHIPU_API_KEY")
+        print("请配置 PERPLEXITY_API_KEY")
         return
     
     print(f"  ✅ 使用 {llm_type}")

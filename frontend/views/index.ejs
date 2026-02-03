@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WeeklyAI - 发现本周最热门的AI产品</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
+
 <body>
     <!-- 背景装饰 -->
     <div class="bg-decoration">
@@ -27,11 +30,16 @@
                 <span class="logo-text">WeeklyAI</span>
             </div>
             <div class="nav-links">
-                <a href="#" class="nav-link active" data-section="trending"><span class="nav-icon"><i data-lucide="flame"></i></span>黑马推荐</a>
-                <a href="#" class="nav-link" data-section="weekly"><span class="nav-icon"><i data-lucide="trending-up"></i></span>本周榜单</a>
-                <a href="#" class="nav-link" data-section="leaders"><span class="nav-icon"><i data-lucide="trophy"></i></span>行业领军</a>
-                <a href="#" class="nav-link" data-section="blogs"><span class="nav-icon"><i data-lucide="newspaper"></i></span>博客动态</a>
-                <a href="#" class="nav-link" data-section="search"><span class="nav-icon"><i data-lucide="search"></i></span>搜索</a>
+                <a href="#" class="nav-link active" data-section="trending"><span class="nav-icon"><i
+                            data-lucide="flame"></i></span>黑马推荐</a>
+                <a href="#" class="nav-link" data-section="weekly"><span class="nav-icon"><i
+                            data-lucide="trending-up"></i></span>本周榜单</a>
+                <a href="#" class="nav-link" data-section="leaders"><span class="nav-icon"><i
+                            data-lucide="trophy"></i></span>行业领军</a>
+                <a href="#" class="nav-link" data-section="blogs"><span class="nav-icon"><i
+                            data-lucide="newspaper"></i></span>博客动态</a>
+                <a href="#" class="nav-link" data-section="search"><span class="nav-icon"><i
+                            data-lucide="search"></i></span>搜索</a>
             </div>
             <button class="theme-toggle" id="themeToggle" title="切换主题" aria-label="切换深色/浅色模式">
                 <i data-lucide="sun" class="theme-icon-light"></i>
@@ -73,17 +81,19 @@
         <section class="section darkhorse-section" id="darkhorseSection">
             <div class="section-header">
                 <h2 class="section-title">
-                    <span class="title-icon" style="color: #d4af37;">🏇</span>
+                    <span class="title-icon"><i data-lucide="flame"></i></span>
                     本周黑马
                     <span class="score-badge score-badge--5">4-5分</span>
                 </h2>
-                <p class="section-desc" style="color: #a0a0a0;">本周最值得关注的高潜力 AI 产品</p>
+                <p class="section-desc">本周最值得关注的高潜力 AI 产品</p>
             </div>
             <!-- 硬件/软件筛选 -->
             <div class="darkhorse-filters" id="darkhorseFilters">
                 <button class="filter-btn active" data-type="all">全部</button>
-                <button class="filter-btn" data-type="hardware"><span class="nav-icon"><i data-lucide="cpu"></i></span>硬件</button>
-                <button class="filter-btn" data-type="software"><span class="nav-icon"><i data-lucide="code"></i></span>软件</button>
+                <button class="filter-btn" data-type="hardware"><span class="nav-icon"><i
+                            data-lucide="cpu"></i></span>硬件</button>
+                <button class="filter-btn" data-type="software"><span class="nav-icon"><i
+                            data-lucide="code"></i></span>软件</button>
             </div>
             <div class="darkhorse-grid" id="darkhorseProducts">
                 <!-- 黑马产品将通过 JS 动态加载 -->
@@ -108,12 +118,18 @@
             <!-- 分类筛选标签 -->
             <div class="discover-filters" id="discoverFilters">
                 <button class="discover-filter-btn active" data-category="all">全部</button>
-                <button class="discover-filter-btn" data-category="hardware"><span class="nav-icon"><i data-lucide="cpu"></i></span>硬件</button>
-                <button class="discover-filter-btn" data-category="coding"><span class="nav-icon"><i data-lucide="code"></i></span>编程</button>
-                <button class="discover-filter-btn" data-category="agent"><span class="nav-icon"><i data-lucide="bot"></i></span>Agent</button>
-                <button class="discover-filter-btn" data-category="image"><span class="nav-icon"><i data-lucide="image"></i></span>图像</button>
-                <button class="discover-filter-btn" data-category="video"><span class="nav-icon"><i data-lucide="film"></i></span>视频</button>
-                <button class="discover-filter-btn" data-category="voice"><span class="nav-icon"><i data-lucide="mic"></i></span>语音</button>
+                <button class="discover-filter-btn" data-category="hardware"><span class="nav-icon"><i
+                            data-lucide="cpu"></i></span>硬件</button>
+                <button class="discover-filter-btn" data-category="coding"><span class="nav-icon"><i
+                            data-lucide="code"></i></span>编程</button>
+                <button class="discover-filter-btn" data-category="agent"><span class="nav-icon"><i
+                            data-lucide="bot"></i></span>Agent</button>
+                <button class="discover-filter-btn" data-category="image"><span class="nav-icon"><i
+                            data-lucide="image"></i></span>图像</button>
+                <button class="discover-filter-btn" data-category="video"><span class="nav-icon"><i
+                            data-lucide="film"></i></span>视频</button>
+                <button class="discover-filter-btn" data-category="voice"><span class="nav-icon"><i
+                            data-lucide="mic"></i></span>语音</button>
             </div>
             <div class="discover-shell">
                 <div class="swipe-stack" id="swipeStack" aria-live="polite"></div>
@@ -138,8 +154,10 @@
             <div class="list-controls" id="trendingControls">
                 <div class="tier-tabs" id="tierTabs">
                     <button class="tier-tab active" data-tier="all">全部</button>
-                    <button class="tier-tab" data-tier="darkhorse"><span class="nav-icon"><i data-lucide="flame"></i></span>黑马 (4-5分)</button>
-                    <button class="tier-tab" data-tier="rising"><span class="nav-icon"><i data-lucide="star"></i></span>潜力股 (2-3分)</button>
+                    <button class="tier-tab" data-tier="darkhorse"><span class="nav-icon"><i
+                                data-lucide="flame"></i></span>黑马 (4-5分)</button>
+                    <button class="tier-tab" data-tier="rising"><span class="nav-icon"><i
+                                data-lucide="star"></i></span>潜力股 (2-3分)</button>
                 </div>
                 <div class="controls-right">
                     <div class="sort-control">
@@ -300,7 +318,40 @@
         </div>
     </div>
 
-    <script src="/js/hero-art.js"></script>
+    <!-- Using original main.js (modular version in /js/modules/ for future migration) -->
     <script src="/js/main.js"></script>
+    <!-- Lazy load p5.js and hero animation after page content is ready -->
+    <script>
+        (function() {
+            // Load p5.js only after DOMContentLoaded and requestIdleCallback
+            function loadP5AndHeroArt() {
+                var script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js';
+                script.onload = function() {
+                    var heroScript = document.createElement('script');
+                    heroScript.src = '/js/hero-art.js';
+                    document.body.appendChild(heroScript);
+                };
+                document.body.appendChild(script);
+            }
+
+            if (document.readyState === 'complete') {
+                if ('requestIdleCallback' in window) {
+                    requestIdleCallback(loadP5AndHeroArt, { timeout: 2000 });
+                } else {
+                    setTimeout(loadP5AndHeroArt, 100);
+                }
+            } else {
+                window.addEventListener('load', function() {
+                    if ('requestIdleCallback' in window) {
+                        requestIdleCallback(loadP5AndHeroArt, { timeout: 2000 });
+                    } else {
+                        setTimeout(loadP5AndHeroArt, 100);
+                    }
+                });
+            }
+        })();
+    </script>
 </body>
+
 </html>

@@ -24,6 +24,9 @@ const FAVORITES_KEY = 'weeklyai_favorites';
 const SWIPED_KEY = 'weeklyai_swiped';
 const SWIPED_EXPIRY_DAYS = 7; // Reset swiped history after 7 days
 
+const INVALID_WEBSITE_VALUES = new Set(['unknown', 'n/a', 'na', 'none', 'null', 'undefined', '']);
+const PLACEHOLDER_VALUES = new Set(['unknown', 'n/a', 'na', 'none', 'tbd', '暂无', '未公开', '待定', 'unknown.', 'n/a.']);
+
 // All products cache for sorting/filtering
 let allProductsCache = [];
 let discoveryAllProducts = [];
@@ -57,6 +60,32 @@ const LEADERS_CATEGORY_ORDER = [
 ];
 let leadersCategoriesData = null;
 let leadersActiveFilter = 'all';
+
+function normalizeWebsite(url) {
+    if (!url) return '';
+    const trimmed = String(url).trim();
+    if (!trimmed) return '';
+    const lower = trimmed.toLowerCase();
+    if (INVALID_WEBSITE_VALUES.has(lower)) return '';
+    if (!/^https?:\/\//i.test(trimmed) && trimmed.includes('.')) {
+        return `https://${trimmed}`;
+    }
+    return trimmed;
+}
+
+function isValidWebsite(url) {
+    const normalized = normalizeWebsite(url);
+    if (!normalized) return false;
+    if (!/^https?:\/\//i.test(normalized)) return false;
+    return true;
+}
+
+function isPlaceholderValue(value) {
+    if (!value) return true;
+    const normalized = String(value).trim().toLowerCase();
+    if (!normalized) return true;
+    return PLACEHOLDER_VALUES.has(normalized);
+}
 
 // ========== DOM 元素 ==========
 const elements = {
@@ -131,10 +160,33 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ========== Lucide Icons ==========
+// Debounced icon refresh to avoid multiple rapid createIcons calls
+let lucideRefreshTimer = null;
+let lucideInitialized = false;
+
 function initLucide() {
-    if (typeof lucide !== 'undefined') {
+    if (typeof lucide !== 'undefined' && !lucideInitialized) {
         lucide.createIcons();
+        lucideInitialized = true;
     }
+}
+
+/**
+ * Debounced function to refresh Lucide icons after DOM updates.
+ * Call this after dynamically adding content with Lucide icons.
+ * Uses a 50ms debounce to batch rapid updates.
+ */
+function refreshIcons() {
+    if (typeof lucide === 'undefined') return;
+
+    if (lucideRefreshTimer) {
+        clearTimeout(lucideRefreshTimer);
+    }
+
+    lucideRefreshTimer = setTimeout(() => {
+        lucide.createIcons();
+        lucideRefreshTimer = null;
+    }, 50);
 }
 
 // ========== Theme Toggle ==========
@@ -289,7 +341,7 @@ async function loadDataFreshness() {
 function initSearch() {
     // 搜索按钮点击
     elements.searchBtn.addEventListener('click', performSearch);
-    
+
     // 回车搜索
     elements.searchInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
@@ -401,12 +453,28 @@ function addSwipedProduct(productKey) {
     }
 }
 
+// Debounced localStorage writes to batch rapid updates
+let swipedSaveTimer = null;
+let pendingSwipedData = null;
+
 function saveSwipedProducts(data) {
-    try {
-        localStorage.setItem(SWIPED_KEY, JSON.stringify(data));
-    } catch (e) {
-        console.error('Failed to save swiped products:', e);
+    pendingSwipedData = data;
+
+    if (swipedSaveTimer) {
+        clearTimeout(swipedSaveTimer);
     }
+
+    swipedSaveTimer = setTimeout(() => {
+        try {
+            if (pendingSwipedData) {
+                localStorage.setItem(SWIPED_KEY, JSON.stringify(pendingSwipedData));
+                pendingSwipedData = null;
+            }
+        } catch (e) {
+            console.error('Failed to save swiped products:', e);
+        }
+        swipedSaveTimer = null;
+    }, 500);
 }
 
 function clearSwipedProducts() {
@@ -487,7 +555,8 @@ function renderDiscoveryStack() {
 function createSwipeCard(product, position) {
     const name = product.name || '未命名';
     const categories = (product.categories || []).slice(0, 2).map(getCategoryName).join(' · ');
-    const website = product.website || '';
+    const website = normalizeWebsite(product.website || '');
+    const hasWebsite = isValidWebsite(website);
 
     // Clean and truncate description - remove technical noise
     let description = product.description || '暂无描述';
@@ -506,18 +575,20 @@ function createSwipeCard(product, position) {
     if (product.why_matters) {
         highlights.push(`💡 ${product.why_matters}`);
     }
-    if (product.funding_total) {
+    if (product.funding_total && !isPlaceholderValue(product.funding_total)) {
         highlights.push(`💰 ${product.funding_total}`);
     }
-    if (product.latest_news) {
+    if (product.latest_news && !isPlaceholderValue(product.latest_news)) {
         highlights.push(`📰 ${product.latest_news}`);
     }
     const highlightsMarkup = highlights.length
         ? `<div class="swipe-card-highlights">${highlights.slice(0, 2).map(item => `<div class="swipe-card-highlight">${item}</div>`).join('')}</div>`
         : '';
 
+    const pendingBadge = hasWebsite ? '' : '<span class="swipe-link swipe-link--pending">官网待验证</span>';
+
     return `
-        <div class="swipe-card ${position === 0 ? 'is-active' : ''}" data-pos="${position}" data-website="${website}">
+        <div class="swipe-card ${position === 0 ? 'is-active' : ''} ${hasWebsite ? '' : 'swipe-card--no-link'}" data-pos="${position}" data-website="${website}">
             <div class="swipe-card-header">
                 <div class="swipe-card-logo">${logoMarkup}</div>
                 <div class="swipe-card-title">
@@ -530,7 +601,7 @@ function createSwipeCard(product, position) {
             ${highlightsMarkup}
             ${videoPreview}
             <div class="swipe-card-meta">
-                ${website ? `<a class="swipe-link" href="${website}" target="_blank" rel="noopener noreferrer">了解更多 →</a>` : ''}
+                ${hasWebsite ? `<a class="swipe-link" href="${website}" target="_blank" rel="noopener noreferrer">了解更多 →</a>` : pendingBadge}
             </div>
         </div>
     `;
@@ -580,7 +651,7 @@ function getVideoPreview(product) {
 
     return `
         <a class="video-preview" href="${videoUrl}" target="_blank" rel="noopener noreferrer">
-            <img src="${videoThumbnail}" alt="Video preview" loading="lazy">
+            <img src="${videoThumbnail}" alt="Video preview" width="280" height="158" loading="lazy">
             <span class="video-play-icon">▶</span>
         </a>
     `;
@@ -670,7 +741,7 @@ function updateDiscoveryPreferences(product, direction) {
                 key: productKey,
                 name: product.name,
                 logo_url: product.logo_url,
-                website: product.website,
+                website: normalizeWebsite(product.website || ''),
                 categories: product.categories,
                 addedAt: new Date().toISOString()
             });
@@ -711,10 +782,10 @@ function initHeroGlow() {
 async function performSearch() {
     const keyword = elements.searchInput.value.trim();
     const categories = Array.from(selectedCategories).join(',');
-    
+
     // 切换到搜索结果区
     switchSection('search');
-    
+
     // 显示加载状态
     elements.searchResults.innerHTML = `
         <div class="loading-skeleton">
@@ -723,13 +794,13 @@ async function performSearch() {
             <div class="skeleton-card"></div>
         </div>
     `;
-    
+
     try {
         const response = await fetch(
             `${API_BASE_URL}/search/?q=${encodeURIComponent(keyword)}&categories=${categories}`
         );
         const data = await response.json();
-        
+
         if (data.success) {
             renderSearchResults(data.data, data.pagination.total, keyword);
         } else {
@@ -744,20 +815,20 @@ async function performSearch() {
 }
 
 function renderSearchResults(products, total, keyword) {
-    const searchInfo = keyword 
+    const searchInfo = keyword
         ? `搜索 "${keyword}" 找到 ${total} 个相关产品`
         : `找到 ${total} 个相关产品`;
     elements.searchResultInfo.textContent = searchInfo;
-    
+
     if (products.length === 0) {
         showEmptyState(elements.searchResults, '没有找到匹配的产品，换个关键词试试？');
         return;
     }
-    
-    elements.searchResults.innerHTML = products.map(product => 
+
+    elements.searchResults.innerHTML = products.map(product =>
         createProductCard(product)
     ).join('');
-    
+
     // 添加动画
     animateCards(elements.searchResults);
 }
@@ -765,13 +836,13 @@ function renderSearchResults(products, total, keyword) {
 // ========== 分类标签 ==========
 function initCategoryTags() {
     if (!elements.categoryTags) return; // 已移除该区域
-    
+
     const tagButtons = elements.categoryTags.querySelectorAll('.tag-btn');
-    
+
     tagButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const category = btn.dataset.category;
-            
+
             if (selectedCategories.has(category)) {
                 selectedCategories.delete(category);
                 btn.classList.remove('active');
@@ -779,7 +850,7 @@ function initCategoryTags() {
                 selectedCategories.add(category);
                 btn.classList.add('active');
             }
-            
+
             // 如果有选中分类，自动触发搜索
             if (selectedCategories.size > 0) {
                 performSearch();
@@ -797,7 +868,7 @@ async function loadTrendingProducts() {
         allProductsCache = data.success ? data.data : getMockTrendingProducts();
         currentPage = 1;
         applyFiltersAndRender();
-        
+
     } catch (error) {
         console.error('加载产品失败:', error);
         renderTrendingProducts(getMockTrendingProducts());
@@ -849,10 +920,10 @@ function filterDarkHorseByType(products, type) {
     if (type === 'all') return products;
     return products.filter(p => {
         const categories = p.categories || [];
-        const isHardware = categories.includes('hardware') || 
-                          p.category === 'hardware' ||
-                          (p.description && p.description.toLowerCase().includes('chip')) ||
-                          (p.description && p.description.toLowerCase().includes('robot'));
+        const isHardware = categories.includes('hardware') ||
+            p.category === 'hardware' ||
+            (p.description && p.description.toLowerCase().includes('chip')) ||
+            (p.description && p.description.toLowerCase().includes('robot'));
         return type === 'hardware' ? isHardware : !isHardware;
     });
 }
@@ -866,7 +937,7 @@ function renderDarkHorseProducts(products) {
         `;
         return;
     }
-    
+
     elements.darkhorseProducts.innerHTML = products.map(product =>
         createDarkHorseCard(product)
     ).join('');
@@ -928,7 +999,7 @@ function initLoadMore() {
 
 function applyFiltersAndRender(append = false) {
     let products = [...allProductsCache];
-    
+
     // 按 tier 筛选
     if (currentTier === 'darkhorse') {
         products = products.filter(p => (p.dark_horse_index || 0) >= 4);
@@ -938,7 +1009,7 @@ function applyFiltersAndRender(append = false) {
             return score >= 2 && score <= 3;
         });
     }
-    
+
     // 按类型筛选
     if (currentTypeFilter !== 'all') {
         products = products.filter(p => {
@@ -947,15 +1018,15 @@ function applyFiltersAndRender(append = false) {
             return currentTypeFilter === 'hardware' ? isHardware : !isHardware;
         });
     }
-    
+
     // 排序
     products = sortProducts(products, currentSort);
-    
+
     // 分页
     const start = 0;
     const end = currentPage * PRODUCTS_PER_PAGE;
     const paginatedProducts = products.slice(start, end);
-    
+
     // 渲染
     if (append) {
         const newCards = paginatedProducts.slice((currentPage - 1) * PRODUCTS_PER_PAGE);
@@ -967,7 +1038,7 @@ function applyFiltersAndRender(append = false) {
     } else {
         renderTrendingProducts(paginatedProducts);
     }
-    
+
     // 更新加载更多按钮状态
     const loadMoreBtn = document.getElementById('loadMoreBtn');
     if (loadMoreBtn) {
@@ -985,21 +1056,21 @@ function sortProducts(products, sortBy) {
             case 'score':
             default:
                 // 排序规则: 评分 > 融资金额 > 用户数/估值
-                
+
                 // 1. 首先按评分排序 (5分 > 4分 > 3分...)
                 const scoreA = a.dark_horse_index || 0;
                 const scoreB = b.dark_horse_index || 0;
                 if (scoreB !== scoreA) {
                     return scoreB - scoreA;
                 }
-                
+
                 // 2. 同分时按融资金额排序
                 const fundingA = parseFunding(a.funding_total);
                 const fundingB = parseFunding(b.funding_total);
                 if (fundingB !== fundingA) {
                     return fundingB - fundingA;
                 }
-                
+
                 // 3. 融资相同时按用户数/估值排序
                 const valuationA = parseValuation(a);
                 const valuationB = parseValuation(b);
@@ -1009,7 +1080,7 @@ function sortProducts(products, sortBy) {
 }
 
 function parseFunding(funding) {
-    if (!funding || funding === 'unknown') return 0;
+    if (!funding || isPlaceholderValue(funding)) return 0;
     const match = funding.match(/\$?([\d.]+)\s*(M|B|K)?/i);
     if (!match) return 0;
     let value = parseFloat(match[1]);
@@ -1032,13 +1103,13 @@ function parseValuation(product) {
             return value * 10; // 估值权重更高
         }
     }
-    
+
     // 其次使用用户数
     const users = product.weekly_users || product.users || product.monthly_users || 0;
     if (users > 0) {
         return users / 10000; // 转换为万用户
     }
-    
+
     // 最后使用热度分数
     return product.hot_score || product.trending_score || product.final_score || 0;
 }
@@ -1048,28 +1119,29 @@ function createDarkHorseCard(product) {
     const darkHorseIndex = product.dark_horse_index || 0;
     const stars = '★'.repeat(darkHorseIndex) + '☆'.repeat(5 - darkHorseIndex);
     const description = product.description || '暂无描述';
-    const website = product.website || '';
+    const website = normalizeWebsite(product.website || '');
+    const hasWebsite = isValidWebsite(website);
     const categories = product.categories || [];
     const whyMatters = product.why_matters || '';
     const funding = product.funding_total || '';
     const latestNews = product.latest_news || '';
     const region = product.region || '';
-    
+
     // 判断是否为硬件产品
-    const isHardware = categories.includes('hardware') || 
-                       product.category === 'hardware' ||
-                       (description && description.toLowerCase().includes('chip')) ||
-                       (description && description.toLowerCase().includes('robot'));
-    
+    const isHardware = categories.includes('hardware') ||
+        product.category === 'hardware' ||
+        (description && description.toLowerCase().includes('chip')) ||
+        (description && description.toLowerCase().includes('robot'));
+
     const categoryTags = categories.slice(0, 2).map(cat =>
         `<span class="darkhorse-tag">${getCategoryName(cat)}</span>`
     ).join('');
 
     const logoMarkup = buildLogoMarkup(product);
-    
+
     // 构建 meta 标签
     let metaTags = '';
-    if (funding && funding !== 'unknown') {
+    if (funding && !isPlaceholderValue(funding)) {
         metaTags += `<span class="darkhorse-meta-tag darkhorse-meta-tag--funding">
             <span class="meta-icon">💰</span>${funding}
         </span>`;
@@ -1084,9 +1156,16 @@ function createDarkHorseCard(product) {
             <span class="meta-icon">${region}</span>
         </span>`;
     }
+    if (!hasWebsite) {
+        metaTags += `<span class="darkhorse-meta-tag darkhorse-meta-tag--verify">
+            <span class="meta-icon">🔎</span>官网待验证
+        </span>`;
+    }
+
+    const clickAttr = hasWebsite ? `onclick="openProduct('${website}')"` : '';
 
     return `
-        <div class="darkhorse-card" onclick="openProduct('${website}')">
+        <div class="darkhorse-card ${hasWebsite ? '' : 'darkhorse-card--no-link'}" ${clickAttr}>
             <div class="darkhorse-card-header">
                 <div class="darkhorse-logo">${logoMarkup}</div>
                 <div class="darkhorse-title-block">
@@ -1106,7 +1185,9 @@ function createDarkHorseCard(product) {
                 <span>${latestNews}</span>
             </div>` : ''}
             <div class="darkhorse-cta">
-                <span class="darkhorse-link">了解更多 →</span>
+                <span class="darkhorse-link ${hasWebsite ? '' : 'darkhorse-link--pending'}">
+                    ${hasWebsite ? '了解更多 →' : '官网待验证'}
+                </span>
             </div>
         </div>
     `;
@@ -1114,9 +1195,7 @@ function createDarkHorseCard(product) {
 
 function animateDarkHorseCards(container) {
     // Reinitialize Lucide icons for dynamically added content
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
+    refreshIcons();
 
     const cards = container.querySelectorAll('.darkhorse-card');
     if (prefersReducedMotion) {
@@ -1142,7 +1221,7 @@ async function loadWeeklyProducts() {
     try {
         const response = await fetch(`${API_BASE_URL}/products/weekly-top?limit=15`);
         const data = await response.json();
-        
+
         if (data.success) {
             renderWeeklyProducts(data.data);
         }
@@ -1193,7 +1272,8 @@ async function loadProductDetail(productId) {
 function renderProductDetail(product) {
     const name = product.name || '未命名';
     const description = product.description || '暂无描述';
-    const website = product.website || '';
+    const website = normalizeWebsite(product.website || '');
+    const hasWebsite = isValidWebsite(website);
     const categories = (product.categories || []).map(getCategoryName).join(' · ');
     const rating = product.rating ? product.rating.toFixed(1) : '';
     const users = product.weekly_users ? formatNumber(product.weekly_users) : '';
@@ -1207,7 +1287,7 @@ function renderProductDetail(product) {
     if (rating) metaItems.push(`⭐ ${rating}`);
     if (users) metaItems.push(`👥 ${users}`);
     if (foundedDate) metaItems.push(`📅 ${foundedDate}`);
-    if (fundingTotal) metaItems.push(`💰 ${fundingTotal}`);
+    if (fundingTotal && !isPlaceholderValue(fundingTotal)) metaItems.push(`💰 ${fundingTotal}`);
 
     if (elements.productDetailSubtitle) {
         elements.productDetailSubtitle.textContent = categories ? `类别 · ${categories}` : '来自本周精选';
@@ -1220,7 +1300,7 @@ function renderProductDetail(product) {
                 <a class="product-detail-link" href="/" data-action="back">← 返回首页</a>
                 <h3>${name}</h3>
                 <p class="product-detail-description">${description}</p>
-                ${website ? `<a class="product-detail-link" href="${website}" target="_blank" rel="noopener noreferrer">${website}</a>` : ''}
+                ${hasWebsite ? `<a class="product-detail-link" href="${website}" target="_blank" rel="noopener noreferrer">${website}</a>` : '<span class="product-detail-link product-detail-link--pending">官网待验证</span>'}
                 ${metaItems.length ? `<div class="product-detail-meta">${metaItems.map(item => `<span>${item}</span>`).join('')}</div>` : ''}
                 ${whyMatters ? `<div class="product-detail-why">💡 ${whyMatters}</div>` : ''}
             </div>
@@ -1366,28 +1446,29 @@ function getLogoSource(product) {
 }
 
 function getFaviconUrl(website) {
-    if (!website) return '';
+    if (!isValidWebsite(website)) return '';
     try {
-        const normalized = website.startsWith('http') ? website : `https://${website}`;
+        const normalized = normalizeWebsite(website);
         const host = new URL(normalized).hostname;
         if (!host) return '';
-        return `https://www.google.com/s2/favicons?domain=${host}&sz=128`;
+        return `https://favicon.bing.com/favicon.ico?url=${host}&size=128`;
     } catch {
         return '';
     }
 }
 
-function buildLogoMarkup(product) {
+function buildLogoMarkup(product, options = {}) {
     const name = product.name || 'AI';
     const initial = getInitial(name);
     const logoSrc = getLogoSource(product);
     const fallbackSrc = getFaviconUrl(product.website || '');
+    const { width = 48, height = 48 } = options;
 
     if (logoSrc) {
-        return `<img src="${logoSrc}" alt="${name}" data-fallback="${fallbackSrc}" data-initial="${initial}" onerror="handleLogoError(this)">`;
+        return `<img src="${logoSrc}" alt="${name}" width="${width}" height="${height}" loading="lazy" data-fallback="${fallbackSrc}" data-initial="${initial}" onerror="handleLogoError(this)">`;
     }
     if (fallbackSrc) {
-        return `<img src="${fallbackSrc}" alt="${name}" data-initial="${initial}" onerror="handleLogoError(this)">`;
+        return `<img src="${fallbackSrc}" alt="${name}" width="${width}" height="${height}" loading="lazy" data-initial="${initial}" onerror="handleLogoError(this)">`;
     }
     return `<div class="product-logo-placeholder">${initial}</div>`;
 }
@@ -1419,11 +1500,15 @@ function createProductCard(product, showBadge = false) {
 
     const name = product.name || '未命名';
     const description = product.description || '暂无描述';
-    const cardClass = showBadge ? 'product-card product-card--hot' : 'product-card';
+    const website = normalizeWebsite(product.website || '');
+    const hasWebsite = isValidWebsite(website);
+    const cardClass = `${showBadge ? 'product-card product-card--hot' : 'product-card'}${hasWebsite ? '' : ' product-card--no-link'}`;
     const logoMarkup = buildLogoMarkup(product);
+    const pendingTag = hasWebsite ? '' : '<span class="product-tag product-tag--pending">待验证</span>';
+    const clickAttr = hasWebsite ? `onclick="openProduct('${website}')"` : '';
 
     return `
-        <div class="${cardClass}" onclick="openProduct('${product.website}')">
+        <div class="${cardClass}" ${clickAttr}>
             <div class="product-logo">
                 ${logoMarkup}
             </div>
@@ -1434,6 +1519,7 @@ function createProductCard(product, showBadge = false) {
                 <p class="product-description">${description}</p>
                 <div class="product-tags">
                     ${categoryTags}
+                    ${pendingTag}
                 </div>
             </div>
         </div>
@@ -1448,9 +1534,13 @@ function createProductListItem(product, rank) {
     const fundingTotal = product.funding_total || '';
     const whyMatters = product.why_matters || '';
     const logoMarkup = buildLogoMarkup(product);
-    
+    const website = normalizeWebsite(product.website || '');
+    const hasWebsite = isValidWebsite(website);
+    const clickAttr = hasWebsite ? `onclick="openProduct('${website}')"` : '';
+    const pendingTag = hasWebsite ? '' : '<span class="product-list-pending">🔎 官网待验证</span>';
+
     return `
-        <div class="product-list-item" onclick="openProduct('${product.website}')">
+        <div class="product-list-item ${hasWebsite ? '' : 'product-list-item--no-link'}" ${clickAttr}>
             <div class="product-rank ${rank <= 3 ? 'top-3' : ''}">${rank}</div>
             <div class="product-list-logo">
                 ${logoMarkup}
@@ -1458,11 +1548,12 @@ function createProductListItem(product, rank) {
             <div class="product-list-info">
                 <h3 class="product-list-name">${name}</h3>
                 <p class="product-list-desc">${description}</p>
-                ${(whyMatters || fundingTotal) ? `
+                ${(whyMatters || (fundingTotal && !isPlaceholderValue(fundingTotal))) ? `
                 <div class="product-list-extra">
                     ${whyMatters ? `<span>💡 ${whyMatters}</span>` : ''}
-                    ${fundingTotal ? `<span class="product-list-funding">💰 ${fundingTotal}</span>` : ''}
+                    ${fundingTotal && !isPlaceholderValue(fundingTotal) ? `<span class="product-list-funding">💰 ${fundingTotal}</span>` : ''}
                 </div>` : ''}
+                ${pendingTag}
             </div>
             <div class="product-list-stats">
                 <div class="stat-value">${users}</div>
@@ -1510,8 +1601,9 @@ function showEmptyState(container, message) {
 }
 
 function openProduct(url) {
-    if (url) {
-        const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+    const normalized = normalizeWebsite(url);
+    if (isValidWebsite(normalized)) {
+        const newWindow = window.open(normalized, '_blank', 'noopener,noreferrer');
         if (newWindow) {
             newWindow.opener = null;
         }
@@ -1521,9 +1613,7 @@ function openProduct(url) {
 // ========== 动画效果 ==========
 function animateCards(container) {
     // Reinitialize Lucide icons for dynamically added content
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
+    refreshIcons();
 
     const cards = container.querySelectorAll('.product-card');
     if (prefersReducedMotion) {
@@ -1546,9 +1636,7 @@ function animateCards(container) {
 
 function animateListItems(container) {
     // Reinitialize Lucide icons for dynamically added content
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
+    refreshIcons();
 
     const items = container.querySelectorAll('.product-list-item');
     if (prefersReducedMotion) {
@@ -1734,12 +1822,28 @@ function getFavorites() {
     }
 }
 
+// Debounced favorites localStorage write
+let favoritesSaveTimer = null;
+let pendingFavoritesData = null;
+
 function saveFavorites(favorites) {
-    try {
-        localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
-    } catch (e) {
-        console.error('Failed to save favorites:', e);
+    pendingFavoritesData = favorites;
+
+    if (favoritesSaveTimer) {
+        clearTimeout(favoritesSaveTimer);
     }
+
+    favoritesSaveTimer = setTimeout(() => {
+        try {
+            if (pendingFavoritesData) {
+                localStorage.setItem(FAVORITES_KEY, JSON.stringify(pendingFavoritesData));
+                pendingFavoritesData = null;
+            }
+        } catch (e) {
+            console.error('Failed to save favorites:', e);
+        }
+        favoritesSaveTimer = null;
+    }, 500);
 }
 
 function isFavorited(productKey) {
@@ -1762,7 +1866,7 @@ function toggleFavorite(product, event) {
             key: productKey,
             name: product.name,
             logo_url: product.logo_url,
-            website: product.website,
+            website: normalizeWebsite(product.website || ''),
             categories: product.categories,
             addedAt: new Date().toISOString()
         });
@@ -1775,7 +1879,8 @@ function toggleFavorite(product, event) {
 }
 
 function getProductKey(product) {
-    return product.website || product.name || '';
+    const website = normalizeWebsite(product.website || '');
+    return website || product.name || '';
 }
 
 function updateFavoritesCount() {
@@ -1833,15 +1938,20 @@ function renderFavoritesList() {
     elements.favoritesList.innerHTML = favorites.map(fav => {
         const categories = (fav.categories || []).slice(0, 2).map(getCategoryName).join(' · ');
         const logoMarkup = fav.logo_url
-            ? `<img src="${fav.logo_url}" alt="${fav.name}" onerror="this.style.display='none'">`
+            ? `<img src="${fav.logo_url}" alt="${fav.name}" width="40" height="40" loading="lazy" onerror="this.style.display='none'">`
             : `<div class="product-logo-placeholder">${getInitial(fav.name)}</div>`;
+        const website = normalizeWebsite(fav.website || '');
+        const hasWebsite = isValidWebsite(website);
+        const clickAttr = hasWebsite ? `onclick="openProduct('${website}')"` : '';
+        const pendingNote = hasWebsite ? '' : '<span class="favorite-item-pending">官网待验证</span>';
 
         return `
-            <div class="favorite-item" onclick="openProduct('${fav.website}')">
+            <div class="favorite-item ${hasWebsite ? '' : 'favorite-item--no-link'}" ${clickAttr}>
                 <div class="favorite-item-logo">${logoMarkup}</div>
                 <div class="favorite-item-info">
                     <div class="favorite-item-name">${fav.name}</div>
                     <div class="favorite-item-category">${categories || '精选 AI 工具'}</div>
+                    ${pendingNote}
                 </div>
                 <button class="favorite-item-remove" onclick="removeFavoriteFromPanel('${fav.key}', event)" title="移除收藏">×</button>
             </div>
@@ -2034,9 +2144,9 @@ function createProductCardWithFavorite(product, showBadge = false) {
 
     // Category pill for hardware/software
     const isHardware = categories.includes('hardware') ||
-                      product.category === 'hardware' ||
-                      (product.description && product.description.toLowerCase().includes('chip')) ||
-                      (product.description && product.description.toLowerCase().includes('robot'));
+        product.category === 'hardware' ||
+        (product.description && product.description.toLowerCase().includes('chip')) ||
+        (product.description && product.description.toLowerCase().includes('robot'));
     const categoryPill = isHardware
         ? '<span class="category-pill category-pill--hardware"><i data-lucide="cpu" style="width:12px;height:12px;"></i> 硬件</span>'
         : '<span class="category-pill category-pill--software"><i data-lucide="code" style="width:12px;height:12px;"></i> 软件</span>';
@@ -2209,9 +2319,7 @@ function renderIndustryLeaders() {
 
 function animateLeaderCards(container) {
     // Reinitialize Lucide icons for dynamically added content
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
+    refreshIcons();
 
     const cards = container.querySelectorAll('.leader-card');
     if (prefersReducedMotion) {
@@ -2236,7 +2344,7 @@ function renderLeaderCard(product) {
     const logoSrc = product.logo || '';
     const initial = getInitial(product.name);
     const logoMarkup = logoSrc
-        ? `<img src="${logoSrc}" alt="${product.name}" onerror="this.parentElement.innerHTML='<div class=\\'leader-logo-placeholder\\'>${initial}</div>'">`
+        ? `<img src="${logoSrc}" alt="${product.name}" width="40" height="40" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'leader-logo-placeholder\\'>${initial}</div>'">`
         : `<div class="leader-logo-placeholder">${initial}</div>`;
 
     return `

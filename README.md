@@ -51,8 +51,7 @@ pip install -r requirements.txt
 cp crawler/.env.example crawler/.env
 
 # 编辑配置
-# ZHIPU_API_KEY=your_zhipu_key
-# PERPLEXITY_API_KEY=your_perplexity_key (可选)
+# PERPLEXITY_API_KEY=your_perplexity_key
 ```
 
 ### 启动
@@ -69,7 +68,7 @@ cd frontend && npm start
 
 ### 1. 自动发现
 
-每日自动搜索全球 AI 产品，使用 GLM/Perplexity 进行智能评分。
+每日自动搜索全球 AI 产品，使用 Perplexity 进行智能评分。
 
 ```bash
 cd crawler
@@ -245,7 +244,7 @@ tail -f crawler/logs/daily_update.log
 
 - **前端**: Express.js, EJS, Tailwind CSS
 - **后端**: Python, Flask
-- **AI**: 智谱 GLM-4, Perplexity Sonar
+- **AI**: Perplexity Sonar
 - **数据**: JSON 文件存储
 - **定时任务**: macOS launchd
 

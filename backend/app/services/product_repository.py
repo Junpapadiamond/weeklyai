@@ -1,0 +1,547 @@
+"""
+产品数据仓库 - 负责数据加载、文件I/O和缓存管理
+"""
+
+import os
+import json
+from datetime import datetime
+from typing import List, Dict, Any, Optional
+
+# MongoDB support
+try:
+    from pymongo import MongoClient
+    HAS_MONGO = True
+except ImportError:
+    HAS_MONGO = False
+
+# 导入配置
+from config import Config
+
+# 爬虫数据文件路径 (支持环境变量配置，Docker 部署时使用 /data)
+CRAWLER_DATA_DIR = Config.DATA_PATH if os.path.exists(Config.DATA_PATH) else os.path.join(
+    os.path.dirname(__file__),
+    '..', '..', '..', 'crawler', 'data'
+)
+PRODUCTS_FEATURED_FILE = os.path.join(CRAWLER_DATA_DIR, 'products_featured.json')
+BLOGS_NEWS_FILE = os.path.join(CRAWLER_DATA_DIR, 'blogs_news.json')
+CRAWLER_DATA_FILE = os.path.join(CRAWLER_DATA_DIR, 'products_latest.json')
+LAST_UPDATED_FILE = os.path.join(CRAWLER_DATA_DIR, 'last_updated.json')
+DARK_HORSES_DIR = os.path.join(CRAWLER_DATA_DIR, 'dark_horses')
+
+# MongoDB connection
+_mongo_client = None
+_mongo_db = None
+
+
+def get_mongo_db():
+    """Get MongoDB connection (lazy initialization)"""
+    global _mongo_client, _mongo_db
+    if not HAS_MONGO:
+        return None
+    if _mongo_db is not None:
+        return _mongo_db
+    try:
+        mongo_uri = os.getenv('MONGO_URI', 'mongodb://localhost:27017/weeklyai')
+        _mongo_client = MongoClient(mongo_uri, serverSelectionTimeoutMS=3000)
+        _mongo_client.admin.command('ping')
+        _mongo_db = _mongo_client.get_database()
+        print("  ✓ Backend connected to MongoDB")
+        return _mongo_db
+    except Exception as e:
+        print(f"  ⚠ MongoDB connection failed: {e}, using JSON files")
+        return None
+
+
+# 示例数据（当没有爬虫数据时使用）- 只包含黑马产品，不包含著名产品
+SAMPLE_PRODUCTS = [
+    {
+        '_id': '1',
+        'name': 'Lovable',
+        'description': '欧洲最快增长的 AI 产品，8 个月从 0 到独角兽。非开发者也能快速构建全栈应用。',
+        'logo_url': 'https://lovable.dev/favicon.ico',
+        'website': 'https://lovable.dev',
+        'categories': ['coding'],
+        'rating': 4.8,
+        'weekly_users': 120000,
+        'trending_score': 92,
+        'final_score': 92,
+        'is_hardware': False,
+        'why_matters': '证明了 AI 原生产品可以极速获客，对想做 AI 创业的 PM 有重要参考价值。',
+        'source': 'sample'
+    },
+    {
+        '_id': '2',
+        'name': 'Devin',
+        'description': '全自主 AI 软件工程师，能够端到端处理需求拆解、代码实现与交付。Cognition Labs 出品。',
+        'logo_url': 'https://cognition.ai/favicon.ico',
+        'website': 'https://cognition.ai',
+        'categories': ['coding'],
+        'rating': 4.7,
+        'weekly_users': 160000,
+        'trending_score': 93,
+        'final_score': 93,
+        'is_hardware': False,
+        'why_matters': '重新定义了「AI 工程师」边界，PM 需要思考如何与 AI 协作而非仅仅使用 AI。',
+        'source': 'sample'
+    },
+    {
+        '_id': '3',
+        'name': 'Kiro',
+        'description': 'AWS 背景团队打造的规范驱动 AI 开发平台，强调稳定的工程化交付而非炫技。',
+        'logo_url': 'https://kiro.dev/favicon.ico',
+        'website': 'https://kiro.dev',
+        'categories': ['coding'],
+        'rating': 4.7,
+        'weekly_users': 85000,
+        'trending_score': 90,
+        'final_score': 90,
+        'is_hardware': False,
+        'why_matters': '大厂背景创业，专注企业级可靠性，是 AI 编程工具的差异化方向。',
+        'source': 'sample'
+    },
+    {
+        '_id': '4',
+        'name': 'Emergent',
+        'description': '非开发者也能用 AI 代理构建全栈应用的建站产品，降低技术门槛。',
+        'logo_url': 'https://emergent.sh/favicon.ico',
+        'website': 'https://emergent.sh',
+        'categories': ['coding'],
+        'rating': 4.6,
+        'weekly_users': 45000,
+        'trending_score': 88,
+        'final_score': 88,
+        'is_hardware': False,
+        'why_matters': '面向非技术用户的 AI 开发工具，扩展了「谁能做产品」的边界。',
+        'source': 'sample'
+    },
+    {
+        '_id': '5',
+        'name': 'Bolt.new',
+        'description': 'StackBlitz 推出的浏览器内全栈 AI 开发环境，无需配置即可开始编码。',
+        'logo_url': 'https://bolt.new/favicon.ico',
+        'website': 'https://bolt.new',
+        'categories': ['coding'],
+        'rating': 4.8,
+        'weekly_users': 200000,
+        'trending_score': 91,
+        'final_score': 91,
+        'is_hardware': False,
+        'why_matters': '零配置 + 浏览器内运行，大幅降低 AI 开发入门门槛。',
+        'source': 'sample'
+    },
+    {
+        '_id': '6',
+        'name': 'Windsurf',
+        'description': 'Codeium 推出的 Agentic IDE，强调 AI 代理主动参与开发流程。',
+        'logo_url': 'https://codeium.com/favicon.ico',
+        'website': 'https://codeium.com/windsurf',
+        'categories': ['coding'],
+        'rating': 4.6,
+        'weekly_users': 95000,
+        'trending_score': 87,
+        'final_score': 87,
+        'is_hardware': False,
+        'why_matters': 'Agentic IDE 概念的先行者，代表了 AI 编程工具的演进方向。',
+        'source': 'sample'
+    },
+    {
+        '_id': '7',
+        'name': 'NEO (1X Technologies)',
+        'description': '挪威初创公司研发的人形机器人，定位家庭助手和轻工业场景。',
+        'logo_url': 'https://1x.tech/favicon.ico',
+        'website': 'https://1x.tech',
+        'categories': ['hardware'],
+        'rating': 4.5,
+        'weekly_users': 15000,
+        'trending_score': 85,
+        'final_score': 85,
+        'is_hardware': True,
+        'why_matters': '人形机器人赛道的黑马，融资后估值飙升，值得关注具身智能趋势。',
+        'source': 'sample'
+    },
+    {
+        '_id': '8',
+        'name': 'Rokid AR Studio',
+        'description': '中国 AR 眼镜厂商推出的 AI 开发平台，支持空间计算应用开发。',
+        'logo_url': 'https://www.rokid.com/favicon.ico',
+        'website': 'https://www.rokid.com',
+        'categories': ['hardware'],
+        'rating': 4.4,
+        'weekly_users': 25000,
+        'trending_score': 82,
+        'final_score': 82,
+        'is_hardware': True,
+        'why_matters': '国产 AR 眼镜 + AI 平台，空间计算赛道的本土玩家。',
+        'source': 'sample'
+    },
+    {
+        '_id': '9',
+        'name': 'DeepSeek',
+        'description': '中国 AI 研究公司，以高效开源模型著称，性价比极高。',
+        'logo_url': 'https://www.deepseek.com/favicon.ico',
+        'website': 'https://www.deepseek.com',
+        'categories': ['coding', 'writing'],
+        'rating': 4.6,
+        'weekly_users': 180000,
+        'trending_score': 89,
+        'final_score': 89,
+        'is_hardware': False,
+        'why_matters': '开源大模型的性价比之王，训练成本仅为竞品的 1/10。',
+        'source': 'sample'
+    },
+    {
+        '_id': '10',
+        'name': 'Replit Agent',
+        'description': 'Replit 推出的 AI 代理，能自主完成从需求到部署的完整开发流程。',
+        'logo_url': 'https://replit.com/favicon.ico',
+        'website': 'https://replit.com',
+        'categories': ['coding'],
+        'rating': 4.5,
+        'weekly_users': 150000,
+        'trending_score': 86,
+        'final_score': 86,
+        'is_hardware': False,
+        'why_matters': '全流程 AI 开发代理，从 idea 到上线一站式完成。',
+        'source': 'sample'
+    },
+    {
+        '_id': '11',
+        'name': 'Thinking Machines Lab',
+        'description': '菲律宾 AI 研究初创，专注东南亚本地化大语言模型研发。',
+        'logo_url': 'https://thinkingmachines.ph/favicon.ico',
+        'website': 'https://thinkingmachines.ph',
+        'categories': ['other'],
+        'rating': 4.3,
+        'weekly_users': 12000,
+        'trending_score': 78,
+        'final_score': 78,
+        'is_hardware': False,
+        'why_matters': '东南亚本土 AI 研究力量，区域化 AI 的代表案例。',
+        'source': 'sample'
+    },
+    {
+        '_id': '12',
+        'name': 'Poe',
+        'description': 'Quora 推出的多模型 AI 聊天平台，一站式访问多种 AI 模型。',
+        'logo_url': 'https://poe.com/favicon.ico',
+        'website': 'https://poe.com',
+        'categories': ['other'],
+        'rating': 4.5,
+        'weekly_users': 280000,
+        'trending_score': 84,
+        'final_score': 84,
+        'is_hardware': False,
+        'why_matters': 'AI 模型聚合平台，让用户无需切换即可对比不同模型能力。',
+        'source': 'sample'
+    },
+    {
+        '_id': '13',
+        'name': 'v0.dev',
+        'description': 'Vercel 推出的 AI UI 生成器，通过对话生成 React 组件代码。',
+        'logo_url': 'https://v0.dev/favicon.ico',
+        'website': 'https://v0.dev',
+        'categories': ['coding', 'image'],
+        'rating': 4.7,
+        'weekly_users': 175000,
+        'trending_score': 90,
+        'final_score': 90,
+        'is_hardware': False,
+        'why_matters': '前端 AI 生成的标杆产品，设计师和开发者都能用。',
+        'source': 'sample'
+    },
+    {
+        '_id': '14',
+        'name': 'Kling AI',
+        'description': '快手推出的 AI 视频生成工具，支持文本/图片转视频。',
+        'logo_url': 'https://klingai.com/favicon.ico',
+        'website': 'https://klingai.com',
+        'categories': ['video'],
+        'rating': 4.4,
+        'weekly_users': 320000,
+        'trending_score': 85,
+        'final_score': 85,
+        'is_hardware': False,
+        'why_matters': '国产视频生成 AI 的代表，在特定场景下效果不输海外竞品。',
+        'source': 'sample'
+    },
+    {
+        '_id': '15',
+        'name': 'Glif',
+        'description': '可视化 AI 工作流构建平台，无需代码即可串联多个 AI 模型。',
+        'logo_url': 'https://glif.app/favicon.ico',
+        'website': 'https://glif.app',
+        'categories': ['image', 'other'],
+        'rating': 4.5,
+        'weekly_users': 45000,
+        'trending_score': 83,
+        'final_score': 83,
+        'is_hardware': False,
+        'why_matters': 'AI 工作流的乐高积木，让创意人士无需写代码也能玩转 AI。',
+        'source': 'sample'
+    },
+]
+
+
+class ProductRepository:
+    """产品数据仓库类 - 管理数据加载和缓存"""
+
+    _cached_products = None
+    _cache_time = None
+    _cache_duration = 300  # 5分钟缓存
+
+    @classmethod
+    def refresh_cache(cls):
+        """强制刷新缓存"""
+        cls._cached_products = None
+        cls._cache_time = None
+
+    @classmethod
+    def load_products(cls, filters_module=None) -> List[Dict]:
+        """加载产品数据（带缓存）- 只从 products_featured.json 加载策展产品
+
+        重要: 产品数据只来自手动策展的 JSON 文件，不从 MongoDB 或爬虫输出加载。
+        这确保了产品列表的高质量和人工审核。
+
+        参数:
+        - filters_module: 可选的过滤模块，用于规范化和过滤产品
+        """
+        now = datetime.now()
+
+        # 检查缓存
+        if cls._cached_products and cls._cache_time:
+            age = (now - cls._cache_time).total_seconds()
+            if age < cls._cache_duration:
+                return cls._cached_products
+
+        # 1. 只从 products_featured.json 加载（策展产品）
+        products = cls._load_from_crawler_file()
+
+        # 2. 如果没有策展文件，使用示例数据
+        if not products:
+            products = SAMPLE_PRODUCTS.copy()
+
+        # 3. 合并手动策展黑马产品 (dark_horses/ 目录)
+        curated = cls._load_curated_dark_horses()
+        products = cls._merge_curated_products(products, curated, filters_module)
+
+        # 4. 统一字段 & 过滤
+        if filters_module:
+            products = filters_module.normalize_products(products)
+
+        # 更新缓存
+        cls._cached_products = products
+        cls._cache_time = now
+
+        return products
+
+    @classmethod
+    def _load_from_crawler_file(cls) -> List[Dict]:
+        """从策展产品文件加载 (products_featured.json)
+
+        这是唯一的产品数据源，包含人工审核的高质量产品。
+        不会加载爬虫的原始输出 (products_latest.json)。
+        """
+        # 只加载策展产品文件
+        if not os.path.exists(PRODUCTS_FEATURED_FILE):
+            print("  ⚠ products_featured.json 不存在，将使用示例数据")
+            return []
+
+        try:
+            with open(PRODUCTS_FEATURED_FILE, 'r', encoding='utf-8') as f:
+                products = json.load(f)
+
+            # 添加 _id 字段
+            for i, p in enumerate(products):
+                if '_id' not in p:
+                    p['_id'] = str(i + 1)
+
+            print(f"  ✓ 加载 {len(products)} 个策展产品")
+            return products
+        except Exception as e:
+            print(f"  ⚠ 加载策展产品失败: {e}")
+            return []
+
+    @classmethod
+    def _load_curated_dark_horses(cls) -> List[Dict[str, Any]]:
+        """Load manually curated dark-horse products."""
+        if not os.path.isdir(DARK_HORSES_DIR):
+            return []
+
+        curated: List[Dict[str, Any]] = []
+        for filename in sorted(os.listdir(DARK_HORSES_DIR)):
+            if not filename.endswith('.json'):
+                continue
+            if filename == 'template.json':
+                continue
+            path = os.path.join(DARK_HORSES_DIR, filename)
+            try:
+                with open(path, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                if isinstance(data, dict):
+                    data = [data]
+                if isinstance(data, list):
+                    curated.extend(item for item in data if isinstance(item, dict))
+            except Exception:
+                continue
+        return curated
+
+    @classmethod
+    def _merge_curated_products(cls, products: List[Dict[str, Any]],
+                                curated: List[Dict[str, Any]],
+                                filters_module=None) -> List[Dict[str, Any]]:
+        """Merge curated products into base list (prefer curated fields)."""
+        if not curated:
+            return products
+
+        by_key = {cls._build_product_key(p): p for p in products if p}
+        for item in curated:
+            normalized = cls._normalize_curated_product(item)
+            if not normalized:
+                continue
+            if filters_module and filters_module.is_blocked(normalized):
+                continue
+            key = cls._build_product_key(normalized)
+            if not key:
+                continue
+            if key in by_key:
+                target = by_key[key]
+                for field, value in normalized.items():
+                    if value not in (None, '', [], {}):
+                        target[field] = value
+                continue
+            products.append(normalized)
+            by_key[key] = normalized
+        return products
+
+    @staticmethod
+    def _build_product_key(product: Dict[str, Any]) -> str:
+        """Normalize a product key for dedupe/merge."""
+        website = (product.get('website') or '').strip().lower()
+        if website:
+            return website
+        name_key = (product.get('name') or '').strip().lower()
+        return ''.join(ch for ch in name_key if ch.isalnum())
+
+    @staticmethod
+    def _normalize_curated_product(product: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """Map curated dark-horse fields into standard product fields."""
+        if not isinstance(product, dict):
+            return None
+        normalized = product.copy()
+        if not normalized.get('logo_url'):
+            normalized['logo_url'] = normalized.get('logo') or normalized.get('logoUrl') or ''
+        if not normalized.get('categories'):
+            category = normalized.get('category')
+            if category:
+                normalized['categories'] = [category]
+        if not normalized.get('source'):
+            normalized['source'] = 'curated'
+        if 'is_hardware' not in normalized:
+            normalized['is_hardware'] = False
+        return normalized
+
+    @classmethod
+    def load_from_mongodb(cls) -> List[Dict]:
+        """从MongoDB加载产品数据"""
+        from .product_filters import BLOCKED_SOURCES
+
+        db = get_mongo_db()
+        if db is None:
+            return []
+
+        try:
+            collection = db.products
+            blocked_sources = list(BLOCKED_SOURCES)
+            # 获取产品，排除 content_type='blog' 和 content_type='filtered'
+            products = list(collection.find(
+                {
+                    'content_type': {'$nin': ['blog', 'filtered']},
+                    'source': {'$nin': blocked_sources}
+                },
+                {'_id': 0}
+            ).sort('final_score', -1))
+
+            # 如果没有 content_type 字段，获取所有产品
+            if not products:
+                products = list(collection.find(
+                    {'source': {'$nin': blocked_sources}},
+                    {'_id': 0}
+                ).sort('final_score', -1))
+
+            if products:
+                print(f"  ✓ Loaded {len(products)} products from MongoDB")
+
+            # 添加 _id 字段
+            for i, p in enumerate(products):
+                if '_id' not in p:
+                    p['_id'] = str(i + 1)
+                # Parse extra field if it's a string
+                if 'extra' in p and isinstance(p['extra'], str):
+                    try:
+                        p['extra'] = json.loads(p['extra'])
+                    except:
+                        pass
+
+            return products
+        except Exception as e:
+            print(f"  ⚠ MongoDB load failed: {e}")
+            return []
+
+    @classmethod
+    def load_blogs(cls) -> List[Dict]:
+        """加载博客/新闻/讨论数据"""
+        if not os.path.exists(BLOGS_NEWS_FILE):
+            return []
+
+        try:
+            with open(BLOGS_NEWS_FILE, 'r', encoding='utf-8') as f:
+                blogs = json.load(f)
+
+            # 添加 _id 字段
+            for i, b in enumerate(blogs):
+                if '_id' not in b:
+                    b['_id'] = f"blog_{i + 1}"
+
+            return blogs
+        except Exception as e:
+            print(f"加载博客数据失败: {e}")
+            return []
+
+    @staticmethod
+    def get_last_updated() -> Dict[str, Any]:
+        """获取最近一次数据更新时间."""
+        if not os.path.exists(LAST_UPDATED_FILE):
+            return {'last_updated': None, 'hours_ago': None}
+
+        try:
+            with open(LAST_UPDATED_FILE, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+        except Exception:
+            return {'last_updated': None, 'hours_ago': None}
+
+        last_updated = data.get('last_updated')
+        if not last_updated:
+            return {'last_updated': None, 'hours_ago': None}
+
+        try:
+            parsed = datetime.fromisoformat(str(last_updated).replace('Z', '+00:00'))
+            hours_ago = round((datetime.now(parsed.tzinfo) - parsed).total_seconds() / 3600, 1)
+        except Exception:
+            hours_ago = None
+
+        return {'last_updated': last_updated, 'hours_ago': hours_ago}
+
+    @staticmethod
+    def load_industry_leaders() -> Dict:
+        """获取行业领军产品 - 已知名的成熟 AI 产品参考列表"""
+        industry_leaders_file = os.path.join(CRAWLER_DATA_DIR, 'industry_leaders.json')
+
+        if os.path.exists(industry_leaders_file):
+            try:
+                with open(industry_leaders_file, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+            except Exception as e:
+                print(f"Error loading industry leaders: {e}")
+                return {"categories": {}}
+
+        return {"categories": {}}
