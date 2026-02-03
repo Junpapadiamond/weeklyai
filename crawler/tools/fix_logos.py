@@ -24,8 +24,12 @@ MAX_WORKERS = 10
 # Logo 来源优先级
 LOGO_SOURCES = {
     "clearbit": "https://logo.clearbit.com/{domain}",
-    "google_favicon": "https://www.google.com/s2/favicons?domain={domain}&sz=128",
+    "bing": "https://favicon.bing.com/favicon.ico?url={domain}&size=128",
+    "yandex": "https://favicon.yandex.net/favicon/{domain}",
+    "faviconkit": "https://api.faviconkit.com/{domain}/128",
     "duckduckgo": "https://icons.duckduckgo.com/ip3/{domain}.ico",
+    "google_favicon": "https://www.google.com/s2/favicons?domain={domain}&sz=128",
+    "iconhorse": "https://icon.horse/icon/{domain}",
 }
 
 
@@ -110,6 +114,25 @@ def _extract_icon_from_html(domain: str) -> str:
     return ""
 
 
+def _extract_logo_domain(logo_url: str) -> str:
+    if not logo_url:
+        return ""
+    try:
+        if "domain=" in logo_url:
+            m = re.search(r"domain=([^&]+)", logo_url)
+            return (m.group(1) if m else "").lower()
+        if "url=" in logo_url:
+            m = re.search(r"url=([^&]+)", logo_url)
+            return (m.group(1) if m else "").lower()
+        parsed = urlparse(logo_url)
+        host = (parsed.netloc or "").lower()
+        path = (parsed.path or "").lower()
+        if "logo.clearbit.com" in host:
+            return path.strip("/").split("/")[0]
+        return host
+    except Exception:
+        return ""
+
 def get_logo_url(domain: str) -> tuple:
     """
     获取产品 logo URL
@@ -119,29 +142,18 @@ def get_logo_url(domain: str) -> tuple:
     if not domain:
         return None, None
     
-    # 1. 尝试 Clearbit (最佳质量)
-    clearbit_url = f"https://logo.clearbit.com/{domain}"
-    if check_url_exists(clearbit_url):
-        return clearbit_url, "clearbit"
-    
-    # 2. 尝试 Google Favicon
-    google_url = f"https://www.google.com/s2/favicons?domain={domain}&sz=128"
-    # Google favicon 通常都存在，但可能是默认图标
-    # 我们先尝试，后面可以人工筛选
-    if check_url_exists(google_url):
-        return google_url, "google"
-    
-    # 3. 尝试 DuckDuckGo
-    ddg_url = f"https://icons.duckduckgo.com/ip3/{domain}.ico"
-    if check_url_exists(ddg_url):
-        return ddg_url, "duckduckgo"
+    # 尝试外部 Logo/Favicon 服务
+    for source, pattern in LOGO_SOURCES.items():
+        url = pattern.format(domain=domain)
+        if check_url_exists(url):
+            return url, source
 
-    # 4. 直接 favicon.ico
+    # 直接 favicon.ico
     direct_favicon = f"https://{domain}/favicon.ico"
     if check_url_exists(direct_favicon):
         return direct_favicon, "favicon"
 
-    # 5. 尝试从主页 HTML 提取
+    # 尝试从主页 HTML 提取
     extracted = _extract_icon_from_html(domain)
     if extracted and check_url_exists(extracted):
         return extracted, "html"
@@ -157,7 +169,7 @@ def process_product(product: dict) -> dict:
     
     # 检查是否需要修复
     needs_fix = False
-    
+
     if not current_logo:
         needs_fix = True
     elif not current_logo.startswith('http'):
@@ -165,6 +177,12 @@ def process_product(product: dict) -> dict:
     elif 'google.com/s2/favicons' in current_logo and 'sz=128' not in current_logo:
         # 升级低分辨率 favicon
         needs_fix = True
+    else:
+        # 如果 logo 域名与网站不匹配，强制更新
+        website_domain = extract_domain(website)
+        logo_domain = _extract_logo_domain(current_logo)
+        if website_domain and logo_domain and website_domain not in logo_domain:
+            needs_fix = True
     
     if not needs_fix:
         return product
@@ -230,6 +248,12 @@ def fix_logos(input_path: str, output_path: str = None, dry_run: bool = False):
         elif not logo.startswith('http'):
             stats["invalid_logo"] += 1
             to_fix.append(p)
+        else:
+            website = p.get('website', '')
+            website_domain = extract_domain(website)
+            logo_domain = _extract_logo_domain(logo)
+            if website_domain and logo_domain and website_domain not in logo_domain:
+                to_fix.append(p)
     
     print(f"\n📊 统计:")
     print(f"   无 logo: {stats['no_logo']}")

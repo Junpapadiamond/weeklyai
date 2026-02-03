@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>com.weeklyai.news</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>/bin/bash</string>
+      <string>/Users/jun/Desktop/Projects/WeeklyAI/ops/scheduling/news_update.sh</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/Users/jun/Desktop/Projects/WeeklyAI</string>
+    <key>StartInterval</key>
+    <integer>10800</integer>
+    <key>EnvironmentVariables</key>
+    <dict>
+      <key>PATH</key>
+      <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+      <key>HOME</key>
+      <string>/Users/jun</string>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>/Users/jun/Desktop/Projects/WeeklyAI/crawler/logs/news_update.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/jun/Desktop/Projects/WeeklyAI/crawler/logs/news_update.err.log</string>
+  </dict>
+</plist>

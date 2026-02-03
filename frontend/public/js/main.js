@@ -1451,7 +1451,7 @@ function getFaviconUrl(website) {
         const normalized = normalizeWebsite(website);
         const host = new URL(normalized).hostname;
         if (!host) return '';
-        return `https://www.google.com/s2/favicons?domain=${host}&sz=128`;
+        return `https://favicon.bing.com/favicon.ico?url=${host}&size=128`;
     } catch {
         return '';
     }

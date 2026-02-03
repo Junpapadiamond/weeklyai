@@ -35,6 +35,46 @@ else
     echo "[$(date +%H:%M:%S)] auto_publish.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
 fi
 
+# 1.6 Backfill source_url into featured (from weekly files)
+echo "[$(date +%H:%M:%S)] Running backfill_source_urls.py..." >> "$LOG_DIR/daily_update.log"
+if $PYTHON_BIN crawler/tools/backfill_source_urls.py >> "$LOG_DIR/daily_update.log" 2>&1; then
+    echo "[$(date +%H:%M:%S)] backfill_source_urls.py completed successfully" >> "$LOG_DIR/daily_update.log"
+else
+    echo "[$(date +%H:%M:%S)] backfill_source_urls.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
+fi
+
+# 1.7 Resolve missing websites from source_url (aggressive mode)
+echo "[$(date +%H:%M:%S)] Running resolve_websites.py..." >> "$LOG_DIR/daily_update.log"
+if $PYTHON_BIN crawler/tools/resolve_websites.py --input crawler/data/products_featured.json --aggressive >> "$LOG_DIR/daily_update.log" 2>&1; then
+    echo "[$(date +%H:%M:%S)] resolve_websites.py completed successfully" >> "$LOG_DIR/daily_update.log"
+else
+    echo "[$(date +%H:%M:%S)] resolve_websites.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
+fi
+
+# 1.8 Validate auto-resolved websites (avoid wrong domains)
+echo "[$(date +%H:%M:%S)] Running validate_websites.py..." >> "$LOG_DIR/daily_update.log"
+if $PYTHON_BIN crawler/tools/validate_websites.py >> "$LOG_DIR/daily_update.log" 2>&1; then
+    echo "[$(date +%H:%M:%S)] validate_websites.py completed successfully" >> "$LOG_DIR/daily_update.log"
+else
+    echo "[$(date +%H:%M:%S)] validate_websites.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
+fi
+
+# 1.9 Remove unknown websites + duplicates
+echo "[$(date +%H:%M:%S)] Running cleanup_unknowns_and_duplicates.py..." >> "$LOG_DIR/daily_update.log"
+if $PYTHON_BIN crawler/tools/cleanup_unknowns_and_duplicates.py >> "$LOG_DIR/daily_update.log" 2>&1; then
+    echo "[$(date +%H:%M:%S)] cleanup_unknowns_and_duplicates.py completed successfully" >> "$LOG_DIR/daily_update.log"
+else
+    echo "[$(date +%H:%M:%S)] cleanup_unknowns_and_duplicates.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
+fi
+
+# 1.10 Fix logos
+echo "[$(date +%H:%M:%S)] Running fix_logos.py..." >> "$LOG_DIR/daily_update.log"
+if $PYTHON_BIN crawler/tools/fix_logos.py --input data/products_featured.json >> "$LOG_DIR/daily_update.log" 2>&1; then
+    echo "[$(date +%H:%M:%S)] fix_logos.py completed successfully" >> "$LOG_DIR/daily_update.log"
+else
+    echo "[$(date +%H:%M:%S)] fix_logos.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
+fi
+
 # 2. Update news (optional, continues even if auto_discover fails)
 echo "[$(date +%H:%M:%S)] Running main.py --news-only..." >> "$LOG_DIR/daily_update.log"
 if $PYTHON_BIN crawler/main.py --news-only >> "$LOG_DIR/daily_update.log" 2>&1; then
