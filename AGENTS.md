@@ -696,3 +696,34 @@ Base URL: `http://localhost:5000/api/v1`
 - 官网不确定 → `website: "unknown"` + `needs_verification: true`（保留产品，后续人工补）。
 - 不直接硬拒绝 unknown，但禁止 placeholder 域名。
 - 先用 `tools/fix_logos.py` 补 logo；缺失则标记人工验证。
+
+---
+
+## 近期调整（2026-02-05）
+
+### 社交“一手信号引擎”（YouTube + X）
+- **新增 Spider**：`crawler/spiders/youtube_spider.py`（RSS）与 `crawler/spiders/x_spider.py`（Perplexity Search），输出 `source: youtube/x` 到动态流。
+- **接入主流程**：`crawler/main.py` 的 `run_all_spiders()` 增加 YouTube/X 步骤；`--news-only` 仍仅写 `blogs_news.json`。
+- **分类规则**：`crawler/tools/data_classifier.py` 对 `youtube/x` 强制归类为 `blog`。
+- **来源配置优先级**：`env > crawler/data/source_watchlists.json > 内置默认`（统一由 `crawler/utils/social_sources.py` 读取）。
+- **X 回退链路**：当 Perplexity 路径 0 产出时启用 account fallback（`r.jina.ai` timeline + `cdn.syndication.twimg.com` tweet payload）。
+- **信号→产品 enrich**：`crawler/tools/rss_to_products.py` 支持 `--enrich-featured`，且**先 enrich 再 duplicate 判断**，确保已存在产品也能刷新 `latest_news` / `news_updated_at` 并写入 `extra.signals`。
+- **质量门槛一致**：`rss_to_products.validate_product()` 强化为 `description>=20`、`why_matters` 具体、拒绝 placeholder URL，并**排除行业领军**（`industry_leaders.json`），但不阻断已存在 featured 的 enrich。
+- **YouTube 精度**：信号词需命中标题/描述前窗口；`github.com` 仅在有 “open source/开源” 文案时才算信号。
+- **X 召回**：支持更多 status URL 形态（`/status/`、`/i/web/status/`、`/i/status/`、`mobile.twitter.com`），扩展 query 模板并输出每 query 统计。
+- **年份硬闸门**：新增 `CONTENT_YEAR`（默认当前年），在 YouTube/X spider、`rss_to_products.filter_articles()`、`verify_social_signals.py`、`main.save_news_only()` 统一过滤**非指定年份**内容（当前要求仅 2026）。
+
+### 验收与测试
+- **验证脚本**：`crawler/tools/verify_social_signals.py`（不写入 repo 数据）校验 schema/分类/年份/新鲜度，并可输出 `/tmp` 子集供 dry-run。
+- **单元测试**：`tests/test_social_signals.py` 覆盖 X URL 解析与 enrich-before-duplicate 逻辑。
+- **建议命令**：
+  - `/usr/bin/python3 crawler/tools/verify_social_signals.py --hours 96 --limit 30 --write-subset /tmp/social_subset.json`
+  - `/usr/bin/python3 crawler/tools/rss_to_products.py --input /tmp/social_subset.json --sources youtube,x --enrich-featured --dry-run`
+
+### 新增/更新环境变量
+- `CONTENT_YEAR=2026`（仅保留该年份内容）
+- `SOCIAL_HOURS`（启动期建议 `96`） / `SOCIAL_TEXT_WINDOW` / `SOCIAL_SIGNAL_WINDOW`
+- `YOUTUBE_CHANNEL_IDS`
+- `SOCIAL_X_MAX_RESULTS` / `SOCIAL_X_LANGUAGES`
+- `X_SOURCE_MODE` / `X_ACCOUNTS`
+- `X_FALLBACK_MAX_STATUS_PER_ACCOUNT` / `X_FALLBACK_TIMEOUT`

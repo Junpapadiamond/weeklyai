@@ -4,7 +4,11 @@
  */
 
 // API 基础URL
-const API_BASE_URL = 'http://localhost:5000/api/v1';
+const API_BASE_URL = window.__API_BASE_URL__ || (
+    window.location.hostname === 'localhost'
+        ? 'http://localhost:5000/api/v1'
+        : '/api/v1'
+);
 const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // 当前选中的分类
@@ -664,6 +668,14 @@ function attachSwipeHandlers(card) {
     let currentY = 0;
     let isDragging = false;
 
+    const openWebsite = (event) => {
+        if (event?.target?.closest && event.target.closest('a')) return;
+        const website = card.dataset.website || '';
+        if (isValidWebsite(website)) {
+            window.open(website, '_blank', 'noopener,noreferrer');
+        }
+    };
+
     const onPointerMove = (event) => {
         if (!isDragging) return;
         currentX = event.clientX - startX;
@@ -678,6 +690,7 @@ function attachSwipeHandlers(card) {
         card.releasePointerCapture?.(event.pointerId);
 
         const threshold = 110;
+        const clickThreshold = 8;
         if (currentX > threshold) {
             handleSwipe('right');
         } else if (currentX < -threshold) {
@@ -685,6 +698,9 @@ function attachSwipeHandlers(card) {
         } else {
             card.style.transition = 'transform 0.25s ease';
             card.style.transform = '';
+            if (Math.abs(currentX) < clickThreshold && Math.abs(currentY) < clickThreshold) {
+                openWebsite(event);
+            }
         }
     };
 
@@ -1280,6 +1296,9 @@ function renderProductDetail(product) {
     const foundedDate = product.founded_date || '';
     const fundingTotal = product.funding_total || '';
     const whyMatters = product.why_matters || '';
+    const latestNews = product.latest_news || '';
+    const extra = product.extra || {};
+    const signalsRaw = Array.isArray(extra.signals) ? extra.signals : [];
     const logoMarkup = buildLogoMarkup(product);
 
     const metaItems = [];
@@ -1288,6 +1307,45 @@ function renderProductDetail(product) {
     if (users) metaItems.push(`👥 ${users}`);
     if (foundedDate) metaItems.push(`📅 ${foundedDate}`);
     if (fundingTotal && !isPlaceholderValue(fundingTotal)) metaItems.push(`💰 ${fundingTotal}`);
+
+    const signals = signalsRaw
+        .filter(s => s && (s.url || s.title))
+        .slice()
+        .sort((a, b) => {
+            const aDate = new Date(a.published_at || a.discovered_at || 0);
+            const bDate = new Date(b.published_at || b.discovered_at || 0);
+            return bDate - aDate;
+        })
+        .slice(0, 3);
+
+    const evidenceMarkup = signals.length ? `
+        <div class="product-detail-evidence">
+            <h4 class="product-detail-evidence-title">证据链</h4>
+            <div class="product-detail-evidence-list">
+                ${signals.map(s => {
+                    const platform = (s.platform || '').toLowerCase();
+                    const icon = platform === 'youtube' ? '📺' : (platform === 'x' ? '𝕏' : '🔗');
+                    const url = s.url || '#';
+                    const title = s.title || url;
+                    const author = s.author || '';
+                    const dateStr = s.published_at || '';
+                    const dateLabel = dateStr ? formatDate(dateStr) : '';
+                    const meta = [author, dateLabel].filter(Boolean).join(' · ');
+                    const snippet = s.snippet ? cleanDescription(s.snippet) : '';
+                    return `
+                        <div class="evidence-item">
+                            <div class="evidence-item-header">
+                                <span class="evidence-icon">${icon}</span>
+                                <a class="evidence-link" href="${url}" target="_blank" rel="noopener noreferrer">${title}</a>
+                            </div>
+                            ${meta ? `<div class="evidence-meta">${meta}</div>` : ''}
+                            ${snippet ? `<div class="evidence-snippet">${snippet}</div>` : ''}
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+        </div>
+    ` : '';
 
     if (elements.productDetailSubtitle) {
         elements.productDetailSubtitle.textContent = categories ? `类别 · ${categories}` : '来自本周精选';
@@ -1303,6 +1361,8 @@ function renderProductDetail(product) {
                 ${hasWebsite ? `<a class="product-detail-link" href="${website}" target="_blank" rel="noopener noreferrer">${website}</a>` : '<span class="product-detail-link product-detail-link--pending">官网待验证</span>'}
                 ${metaItems.length ? `<div class="product-detail-meta">${metaItems.map(item => `<span>${item}</span>`).join('')}</div>` : ''}
                 ${whyMatters ? `<div class="product-detail-why">💡 ${whyMatters}</div>` : ''}
+                ${latestNews ? `<div class="product-detail-latest">📰 ${latestNews}</div>` : ''}
+                ${evidenceMarkup}
             </div>
         </div>
     `;
@@ -1413,6 +1473,8 @@ function getSourceLabel(source) {
     const labels = {
         'hackernews': '🔶 HN',
         'tech_news': '📰 News',
+        'youtube': '📺 YouTube',
+        'x': '𝕏 X',
         'reddit': '🔴 Reddit'
     };
     return labels[source] || '📄 Blog';
@@ -1451,9 +1513,31 @@ function getFaviconUrl(website) {
         const normalized = normalizeWebsite(website);
         const host = new URL(normalized).hostname;
         if (!host) return '';
-        return `https://favicon.bing.com/favicon.ico?url=${host}&size=128`;
+        return `https://www.google.com/s2/favicons?domain=${host}&sz=128`;
     } catch {
         return '';
+    }
+}
+
+function getLogoFallbacks(website, sourceUrl = '') {
+    const primary = normalizeWebsite(website);
+    const fallbackSource = normalizeWebsite(sourceUrl);
+    const candidate = isValidWebsite(primary)
+        ? primary
+        : (isValidWebsite(fallbackSource) ? fallbackSource : '');
+    if (!candidate) return [];
+    try {
+        const host = new URL(candidate).hostname;
+        if (!host) return [];
+        return [
+            `https://logo.clearbit.com/${host}`,
+            `https://www.google.com/s2/favicons?domain=${host}&sz=128`,
+            `https://favicon.bing.com/favicon.ico?url=${host}&size=128`,
+            `https://icons.duckduckgo.com/ip3/${host}.ico`,
+            `https://icon.horse/icon/${host}`
+        ];
+    } catch {
+        return [];
     }
 }
 
@@ -1461,14 +1545,18 @@ function buildLogoMarkup(product, options = {}) {
     const name = product.name || 'AI';
     const initial = getInitial(name);
     const logoSrc = getLogoSource(product);
-    const fallbackSrc = getFaviconUrl(product.website || '');
     const { width = 48, height = 48 } = options;
+    const fallbacks = getLogoFallbacks(product.website || '', product.source_url || '');
+    const filtered = fallbacks.filter(url => url && url !== logoSrc);
+    const fallbackAttr = filtered.join('|');
 
     if (logoSrc) {
-        return `<img src="${logoSrc}" alt="${name}" width="${width}" height="${height}" loading="lazy" data-fallback="${fallbackSrc}" data-initial="${initial}" onerror="handleLogoError(this)">`;
+        return `<img src="${logoSrc}" alt="${name}" width="${width}" height="${height}" loading="lazy" data-fallbacks="${fallbackAttr}" data-initial="${initial}" onerror="handleLogoError(this)">`;
     }
-    if (fallbackSrc) {
-        return `<img src="${fallbackSrc}" alt="${name}" width="${width}" height="${height}" loading="lazy" data-initial="${initial}" onerror="handleLogoError(this)">`;
+    if (fallbackAttr) {
+        const first = filtered[0];
+        const rest = filtered.slice(1).join('|');
+        return `<img src="${first}" alt="${name}" width="${width}" height="${height}" loading="lazy" data-fallbacks="${rest}" data-initial="${initial}" onerror="handleLogoError(this)">`;
     }
     return `<div class="product-logo-placeholder">${initial}</div>`;
 }
@@ -1476,12 +1564,14 @@ function buildLogoMarkup(product, options = {}) {
 /* exported handleLogoError, openProduct */
 function handleLogoError(img) {
     if (!img) return;
-    const fallbackSrc = img.dataset.fallback || '';
+    const fallbackAttr = img.dataset.fallbacks || '';
     const initial = img.dataset.initial || '?';
+    const fallbacks = fallbackAttr ? fallbackAttr.split('|').filter(Boolean) : [];
+    const nextIndex = parseInt(img.dataset.fallbackIndex || '0', 10);
 
-    if (!img.dataset.fallbackTried && fallbackSrc && img.src !== fallbackSrc) {
-        img.dataset.fallbackTried = 'true';
-        img.src = fallbackSrc;
+    if (fallbacks.length > 0 && nextIndex < fallbacks.length) {
+        img.dataset.fallbackIndex = String(nextIndex + 1);
+        img.src = fallbacks[nextIndex];
         return;
     }
 

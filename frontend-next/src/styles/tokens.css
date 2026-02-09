@@ -1,0 +1,55 @@
+:root {
+  --bg: #f4f2ee;
+  --bg-elevated: #efe9df;
+  --surface: #fffdfa;
+  --surface-strong: #fffaf4;
+  --surface-tint: color-mix(in oklab, var(--surface) 84%, var(--primary) 16%);
+  --text: #1b2234;
+  --text-soft: #3a455f;
+  --text-muted: #69718a;
+
+  --primary: #6f72f6;
+  --accent: #f2b84b;
+  --punch: #e55b7a;
+  --line: #2a334a;
+  --border: color-mix(in oklab, var(--line) 22%, transparent);
+
+  --focus: 0 0 0 3px color-mix(in oklab, var(--primary) 44%, transparent);
+
+  --font-display: "Space Grotesk", "Noto Sans SC", sans-serif;
+  --font-body: "IBM Plex Sans", "Noto Sans SC", sans-serif;
+  --font-mono: "JetBrains Mono", "IBM Plex Sans", monospace;
+
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-xl: 30px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 6px 18px color-mix(in oklab, var(--line) 8%, transparent);
+  --shadow-md: 0 14px 32px color-mix(in oklab, var(--line) 12%, transparent);
+  --shadow-lg: 0 22px 52px color-mix(in oklab, var(--line) 14%, transparent);
+
+  --motion-fast: 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  --motion-normal: 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  --page-max-width: 1240px;
+  --page-padding: clamp(1rem, 2.6vw, 2.2rem);
+  --section-gap: clamp(1.8rem, 4vw, 3.2rem);
+}
+
+[data-theme="dark"] {
+  --bg: #101425;
+  --bg-elevated: #171d31;
+  --surface: #1b2338;
+  --surface-strong: #232d46;
+  --surface-tint: color-mix(in oklab, var(--surface) 84%, var(--primary) 16%);
+  --text: #eef2ff;
+  --text-soft: #c4d0ec;
+  --text-muted: #8e9cbc;
+
+  --line: #c4d0ec;
+  --border: color-mix(in oklab, var(--line) 24%, transparent);
+
+  color-scheme: dark;
+}

@@ -147,17 +147,49 @@ const Utils = {
     },
 
     /**
-     * Get favicon URL for a domain
+     * Get favicon URL for a domain (Google favicon service)
      */
     getFaviconUrl(website) {
         if (!this.isValidWebsite(website)) return null;
         try {
             const normalized = this.normalizeWebsite(website);
             const domain = new URL(normalized).hostname;
-            return `https://favicon.bing.com/favicon.ico?url=${domain}&size=64`;
+            return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
         } catch {
             return null;
         }
+    },
+
+    /**
+     * Get logo fallbacks (Clearbit -> Google -> Bing -> DuckDuckGo -> IconHorse)
+     */
+    getLogoFallbacks(website, sourceUrl = '') {
+        const primary = this.normalizeWebsite(website);
+        const fallbackSource = this.normalizeWebsite(sourceUrl);
+        const candidate = this.isValidWebsite(primary)
+            ? primary
+            : (this.isValidWebsite(fallbackSource) ? fallbackSource : '');
+        if (!candidate) return [];
+        try {
+            const domain = new URL(candidate).hostname;
+            if (!domain) return [];
+            return [
+                `https://logo.clearbit.com/${domain}`,
+                `https://www.google.com/s2/favicons?domain=${domain}&sz=128`,
+                `https://favicon.bing.com/favicon.ico?url=${domain}&size=128`,
+                `https://icons.duckduckgo.com/ip3/${domain}.ico`,
+                `https://icon.horse/icon/${domain}`
+            ];
+        } catch {
+            return [];
+        }
+    },
+
+    /**
+     * Get product logo source
+     */
+    getLogoSource(product) {
+        return product.logo_url || product.logo || product.logoUrl || '';
     },
 
     /**

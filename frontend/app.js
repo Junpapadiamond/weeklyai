@@ -11,14 +11,16 @@ app.set('views', path.join(__dirname, 'views'));
 // 静态文件
 app.use(express.static(path.join(__dirname, 'public')));
 
+const apiBaseUrl = process.env.API_BASE_URL || '';
+
 // 主页路由
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('index', { apiBaseUrl });
 });
 
 // 前端路由占位，避免直接访问 404
 app.get(['/blog', '/search', '/product/:id'], (req, res) => {
-    res.render('index');
+    res.render('index', { apiBaseUrl });
 });
 
 // 启动服务器

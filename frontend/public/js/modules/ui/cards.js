@@ -9,17 +9,25 @@ const Cards = {
      */
     buildLogoMarkup(product) {
         const name = Utils.escapeHtml(product.name || 'Product');
-        const logoUrl = product.logo_url || product.logo;
-        const faviconUrl = Utils.getFaviconUrl(product.website);
+        const logoUrl = Utils.getLogoSource(product);
         const initial = name.charAt(0).toUpperCase();
+        const fallbacks = Utils.getLogoFallbacks(product.website || '', product.source_url || '');
+        const filtered = fallbacks.filter(url => url && url !== logoUrl);
+        const fallbackAttr = filtered.join('|');
 
         if (logoUrl) {
             return `<img src="${logoUrl}" alt="${name}"
-                onerror="this.onerror=null; this.src='${faviconUrl || ''}'; if(!this.src) this.outerHTML='<div class=\\'product-logo-placeholder\\'>${initial}</div>'"
+                data-fallbacks="${fallbackAttr}"
+                data-initial="${initial}"
+                onerror="if(window.handleLogoError){handleLogoError(this);}else{this.outerHTML='<div class=\\'product-logo-placeholder\\'>${initial}</div>'}"
                 loading="lazy" width="48" height="48">`;
-        } else if (faviconUrl) {
-            return `<img src="${faviconUrl}" alt="${name}"
-                onerror="this.onerror=null; this.outerHTML='<div class=\\'product-logo-placeholder\\'>${initial}</div>'"
+        } else if (fallbackAttr) {
+            const first = filtered[0];
+            const rest = filtered.slice(1).join('|');
+            return `<img src="${first}" alt="${name}"
+                data-fallbacks="${rest}"
+                data-initial="${initial}"
+                onerror="if(window.handleLogoError){handleLogoError(this);}else{this.outerHTML='<div class=\\'product-logo-placeholder\\'>${initial}</div>'}"
                 loading="lazy" width="48" height="48">`;
         }
         return `<div class="product-logo-placeholder">${initial}</div>`;

@@ -106,46 +106,69 @@ def verify_logo_url(url: str, timeout: int = 5) -> bool:
         return False
 
 
+def _detect_logo_source(logo_url: str, override: bool = False) -> str:
+    if override:
+        return "override"
+    if not logo_url:
+        return ""
+    logo_lower = logo_url.lower()
+    if "logo.clearbit.com" in logo_lower:
+        return "clearbit"
+    if "google.com/s2/favicons" in logo_lower:
+        return "google"
+    if "favicon.bing.com" in logo_lower:
+        return "bing"
+    if "icons.duckduckgo.com" in logo_lower:
+        return "duckduckgo"
+    if "icon.horse" in logo_lower:
+        return "iconhorse"
+    return "other"
+
+
 def get_best_logo(website: str, current_logo: str, cache: Dict[str, str],
-                  verify: bool = True) -> str:
-    """Get the best available logo for a website."""
+                  verify: bool = True, replace_all: bool = False) -> tuple:
+    """Get the best available logo for a website.
+
+    Returns: (logo_url, logo_source)
+    """
     domain = get_domain(website)
     if not domain:
-        return current_logo or ''
+        return current_logo or '', _detect_logo_source(current_logo)
 
     # Check cache first
     cache_key = domain
     if cache_key in cache:
-        return cache[cache_key]
+        cached = cache[cache_key]
+        return cached, _detect_logo_source(cached)
 
     # Check for domain-specific overrides
     for override_domain, override_logo in LOGO_OVERRIDES.items():
         if override_domain in domain:
             cache[cache_key] = override_logo
-            return override_logo
+            return override_logo, _detect_logo_source(override_logo, override=True)
 
     # If current logo is good, keep it
-    if current_logo and not is_bad_logo(current_logo):
+    if not replace_all and current_logo and not is_bad_logo(current_logo):
         cache[cache_key] = current_logo
-        return current_logo
+        return current_logo, _detect_logo_source(current_logo)
 
     # Try Clearbit first (highest quality)
     clearbit_url = get_clearbit_logo(domain)
     if verify and clearbit_url:
         if verify_logo_url(clearbit_url):
             cache[cache_key] = clearbit_url
-            return clearbit_url
+            return clearbit_url, "clearbit"
     elif not verify and clearbit_url:
         # Without verification, prefer Clearbit for known tech domains
         tech_domains = ['ai', 'dev', 'io', 'tech', 'app', 'cloud']
         if any(td in domain for td in tech_domains):
             cache[cache_key] = clearbit_url
-            return clearbit_url
+            return clearbit_url, "clearbit"
 
     # Fall back to Google Favicon (always works)
     google_url = get_google_favicon(domain)
     cache[cache_key] = google_url
-    return google_url
+    return google_url, "google"
 
 
 def load_cache() -> Dict[str, str]:
@@ -169,7 +192,8 @@ def save_cache(cache: Dict[str, str]):
 
 
 def enhance_logos(items: List[Dict[str, Any]], cache: Dict[str, str],
-                  verify: bool = True, verbose: bool = True) -> tuple:
+                  verify: bool = True, verbose: bool = True,
+                  replace_all: bool = False) -> tuple:
     """Enhance logos for a list of items."""
     updated = 0
     skipped = 0
@@ -177,20 +201,33 @@ def enhance_logos(items: List[Dict[str, Any]], cache: Dict[str, str],
     for item in items:
         name = item.get('name', 'Unknown')
         website = item.get('website', '')
-        current_logo = item.get('logo_url', '')
+        current_logo = item.get('logo_url') or item.get('logo') or item.get('logoUrl') or ''
 
         if not website:
             skipped += 1
             continue
+        if str(website).strip().lower() == 'unknown':
+            skipped += 1
+            continue
 
-        new_logo = get_best_logo(website, current_logo, cache, verify=verify)
+        new_logo, logo_source = get_best_logo(
+            website,
+            current_logo,
+            cache,
+            verify=verify,
+            replace_all=replace_all
+        )
 
-        if new_logo != current_logo:
+        if new_logo and new_logo != current_logo:
             if verbose:
                 print(f"  ✓ {name}: {current_logo[:50]}... -> {new_logo[:50]}...")
             item['logo_url'] = new_logo
+            if logo_source:
+                item['logo_source'] = logo_source
             updated += 1
         else:
+            if logo_source and not item.get('logo_source'):
+                item['logo_source'] = logo_source
             skipped += 1
 
         # Rate limiting to be nice to APIs
@@ -207,6 +244,8 @@ def main():
     parser.add_argument('--dry-run', action='store_true', help='Preview changes without saving')
     parser.add_argument('--no-verify', action='store_true', help='Skip URL verification (faster)')
     parser.add_argument('--verbose', '-v', action='store_true', help='Show all changes')
+    parser.add_argument('--replace-all', action='store_true',
+                        help='Replace all existing logo_url values using Clearbit -> Google')
     args = parser.parse_args()
 
     if not HAS_REQUESTS:
@@ -231,7 +270,8 @@ def main():
             updated, skipped = enhance_logos(
                 products, cache,
                 verify=not args.no_verify,
-                verbose=args.verbose
+                verbose=args.verbose,
+                replace_all=args.replace_all
             )
             total_updated += updated
             total_skipped += skipped
@@ -255,7 +295,8 @@ def main():
             updated, skipped = enhance_logos(
                 blogs, cache,
                 verify=not args.no_verify,
-                verbose=args.verbose
+                verbose=args.verbose,
+                replace_all=args.replace_all
             )
             total_updated += updated
             total_skipped += skipped
