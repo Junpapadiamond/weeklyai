@@ -284,6 +284,23 @@ class ProductService:
         # 筛选有 dark_horse_index 且 >= min_index 的产品
         all_candidates = filters.filter_by_dark_horse_index(products, min_index=min_index)
 
+        # 黑马区优先展示“可展示质量”产品，避免 unknown 网站 + 占位 Logo 的低质体验。
+        def _is_presentable(product: Dict[str, Any]) -> bool:
+            website = str(product.get('website') or '').strip().lower()
+            has_usable_website = website not in {'', 'unknown', 'n/a', 'na', 'none', 'null'}
+            if has_usable_website:
+                return True
+            logo_url = str(product.get('logo_url') or '').strip()
+            needs_verification = bool(product.get('needs_verification'))
+            return bool(logo_url) and not needs_verification
+
+        presentable_candidates = [p for p in all_candidates if _is_presentable(p)]
+        if presentable_candidates:
+            # 如果有足够可展示产品，优先使用它们；否则回退到全量候选避免空列表。
+            min_presentable = min(limit, 5)
+            if len(presentable_candidates) >= min_presentable:
+                all_candidates = presentable_candidates
+
         if not all_candidates:
             return []
 
@@ -345,7 +362,7 @@ class ProductService:
             max_per_category=4,
             max_per_source=5,
             hardware_ratio=0.4,
-            max_per_hw_category=3
+            max_per_hw_category=2
         )
 
         return selected

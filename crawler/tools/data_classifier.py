@@ -17,7 +17,6 @@ Classification Rules:
 import re
 import json
 import os
-from datetime import datetime
 from typing import Dict, List, Tuple, Any
 
 
@@ -127,7 +126,7 @@ def classify_product(product: Dict[str, Any]) -> str:
             return 'blog'
 
         # Show HN with external link → product
-        if extra.get('is_show_hn') and not 'news.ycombinator.com' in website:
+        if extra.get('is_show_hn') and 'news.ycombinator.com' not in website:
             return 'product'
 
         # Default HN → blog (most are discussions)
@@ -139,6 +138,10 @@ def classify_product(product: Dict[str, Any]) -> str:
 
     # 3. Tech News → always blog
     if source == 'tech_news':
+        return 'blog'
+
+    # 3.5 Social signals → always blog
+    if source in ('youtube', 'x'):
         return 'blog'
 
     # 4. Exhibition items
@@ -235,8 +238,6 @@ def process_data_file(input_path: str, output_dir: str = None) -> Dict[str, int]
     blogs.sort(key=lambda x: x.get('final_score', x.get('top_score', 0)), reverse=True)
 
     # Save outputs
-    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-
     products_file = os.path.join(output_dir, 'products_featured.json')
     blogs_file = os.path.join(output_dir, 'blogs_news.json')
     filtered_file = os.path.join(output_dir, 'filtered_items.json')
@@ -265,7 +266,7 @@ def process_data_file(input_path: str, output_dir: str = None) -> Dict[str, int]
     print(f"  Blogs/News:      {stats['blogs']} (blog section)")
     print(f"  Filtered out:    {stats['filtered']} (hidden)")
     print(f"{'='*50}")
-    print(f"\nOutput files:")
+    print("\nOutput files:")
     print(f"  {products_file}")
     print(f"  {blogs_file}")
     print(f"  {filtered_file}")

@@ -2,7 +2,9 @@
 产品过滤器 - 负责过滤和验证逻辑
 """
 
+import re
 from typing import List, Dict, Any, Optional
+from urllib.parse import urlparse
 
 # 被屏蔽的来源和域名
 BLOCKED_SOURCES = {'github', 'huggingface', 'huggingface_spaces'}
@@ -24,11 +26,44 @@ NEW_FEATURE_KEYWORDS = {
 }
 
 
+def _normalize_domain(url: str, include_path: bool = False) -> str:
+    """Normalize domain for dedupe (strip scheme/www/port, optionally keep first path)."""
+    if not url:
+        return ""
+    raw = str(url).strip()
+    if not raw:
+        return ""
+    if not re.match(r'^https?://', raw, re.IGNORECASE) and '.' in raw:
+        raw = f"https://{raw}"
+    try:
+        parsed = urlparse(raw)
+        domain = (parsed.netloc or '').lower()
+        domain = re.sub(r'^www\.', '', domain)
+        domain = domain.split(':')[0]
+        if not domain:
+            return ""
+        if include_path:
+            path = (parsed.path or '').strip('/')
+            if path:
+                first = path.split('/')[0]
+                if len(first) > 1:
+                    return f"{domain}/{first}"
+        return domain
+    except Exception:
+        return raw.lower()
+
+
+def _get_domain_key(url: str) -> str:
+    """Return domain key (domain or domain/first-path) for dedupe."""
+    return _normalize_domain(url, include_path=True)
+
+
 def build_product_key(product: Dict[str, Any]) -> str:
     """Normalize a product key for dedupe/merge."""
-    website = (product.get('website') or '').strip().lower()
-    if website:
-        return website
+    website = product.get('website') or ''
+    domain_key = _get_domain_key(website)
+    if domain_key:
+        return domain_key
     name_key = (product.get('name') or '').strip().lower()
     return ''.join(ch for ch in name_key if ch.isalnum())
 
@@ -141,11 +176,53 @@ def filter_by_dark_horse_index(products: List[Dict], min_index: int = 2, max_ind
 
 
 def filter_by_source(products: List[Dict], source: str) -> List[Dict]:
-    """按来源筛选"""
-    return [
-        p for p in products
-        if p.get('source', '') == source
-    ]
+    """按来源筛选（支持来源别名 + URL 域名兜底）"""
+    target = (source or '').strip().lower()
+    if not target:
+        return products
+
+    def _norm(value: Any) -> str:
+        return str(value or '').strip().lower()
+
+    def _to_source_type(product: Dict[str, Any]) -> str:
+        extra = product.get('extra') or {}
+        if isinstance(extra, dict):
+            return _norm(extra.get('source_type'))
+        return ''
+
+    def _matches_alias(raw_source: str) -> bool:
+        if raw_source == target:
+            return True
+        aliases = {
+            'youtube': {'youtube', 'youtube_rss', 'yt'},
+            'x': {'x', 'twitter'},
+            'reddit': {'reddit'},
+        }
+        if target in aliases and raw_source in aliases[target]:
+            return True
+        return False
+
+    def _matches_domain(product: Dict[str, Any]) -> bool:
+        website = _norm(product.get('website'))
+        source_url = _norm(product.get('source_url'))
+        joined = f"{website} {source_url}"
+
+        if target == 'youtube':
+            return 'youtube.com' in joined or 'youtu.be' in joined
+        if target == 'x':
+            return any(domain in joined for domain in ('x.com', 'twitter.com', 'mobile.twitter.com'))
+        if target == 'reddit':
+            return 'reddit.com' in joined
+        return False
+
+    filtered: List[Dict] = []
+    for product in products:
+        raw_source = _norm(product.get('source'))
+        source_type = _to_source_type(product)
+        if _matches_alias(raw_source) or _matches_alias(source_type) or _matches_domain(product):
+            filtered.append(product)
+
+    return filtered
 
 
 def filter_by_category(products: List[Dict], category: str) -> List[Dict]:

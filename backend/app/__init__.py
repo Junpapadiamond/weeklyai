@@ -37,8 +37,12 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    # 启用 CORS
-    CORS(app, resources={r"/api/*": {"origins": "*"}})
+    # CORS: use explicit allowlist in production when provided.
+    cors_origins = app.config.get('CORS_ALLOWED_ORIGINS', [])
+    if cors_origins:
+        CORS(app, resources={r"/api/*": {"origins": cors_origins}})
+    else:
+        CORS(app, resources={r"/api/*": {"origins": "*"}})
 
     # 初始化 MongoDB
     mongo.init_app(app)

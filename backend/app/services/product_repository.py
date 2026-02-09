@@ -7,6 +7,9 @@ import json
 from datetime import datetime
 from typing import List, Dict, Any, Optional
 
+# Sorting helpers for merge decisions
+from . import product_sorting as sorting
+
 # MongoDB support
 try:
     from pymongo import MongoClient
@@ -328,6 +331,9 @@ class ProductRepository:
         if filters_module:
             products = filters_module.normalize_products(products)
 
+        # 5. 去重合并（避免重复展示）
+        products = cls._dedupe_products(products, filters_module)
+
         # 更新缓存
         cls._cached_products = products
         cls._cache_time = now
@@ -393,14 +399,19 @@ class ProductRepository:
         if not curated:
             return products
 
-        by_key = {cls._build_product_key(p): p for p in products if p}
+        def _key(p: Dict[str, Any]) -> str:
+            if filters_module and hasattr(filters_module, 'build_product_key'):
+                return filters_module.build_product_key(p)
+            return cls._build_product_key(p)
+
+        by_key = {_key(p): p for p in products if p}
         for item in curated:
             normalized = cls._normalize_curated_product(item)
             if not normalized:
                 continue
             if filters_module and filters_module.is_blocked(normalized):
                 continue
-            key = cls._build_product_key(normalized)
+            key = _key(normalized)
             if not key:
                 continue
             if key in by_key:
@@ -418,9 +429,181 @@ class ProductRepository:
         """Normalize a product key for dedupe/merge."""
         website = (product.get('website') or '').strip().lower()
         if website:
-            return website
+            # Normalize scheme/www/port and keep first path segment when available
+            try:
+                if not website.startswith(('http://', 'https://')) and '.' in website:
+                    website = f"https://{website}"
+                from urllib.parse import urlparse
+                parsed = urlparse(website)
+                domain = (parsed.netloc or '').lower()
+                if domain.startswith('www.'):
+                    domain = domain[4:]
+                domain = domain.split(':')[0]
+                path = (parsed.path or '').strip('/')
+                if path:
+                    first = path.split('/')[0]
+                    if len(first) > 1:
+                        return f"{domain}/{first}"
+                return domain
+            except Exception:
+                return website
         name_key = (product.get('name') or '').strip().lower()
         return ''.join(ch for ch in name_key if ch.isalnum())
+
+    @classmethod
+    def _merge_product_fields(cls, target: Dict[str, Any], source: Dict[str, Any]) -> None:
+        """Merge source fields into target with simple quality heuristics."""
+        if not source:
+            return
+
+        numeric_max_fields = {'dark_horse_index', 'final_score', 'hot_score', 'trending_score', 'rating'}
+        date_fields = {'discovered_at', 'first_seen', 'published_at', 'news_updated_at'}
+
+        for field, value in source.items():
+            if value in (None, '', [], {}):
+                continue
+
+            if field in numeric_max_fields:
+                try:
+                    current = target.get(field) or 0
+                    target[field] = max(float(current), float(value))
+                except Exception:
+                    if not target.get(field):
+                        target[field] = value
+                continue
+
+            if field == 'funding_total':
+                try:
+                    current = target.get(field) or ''
+                    if sorting.parse_funding(value) > sorting.parse_funding(current):
+                        target[field] = value
+                except Exception:
+                    if not target.get(field):
+                        target[field] = value
+                continue
+
+            if field in date_fields:
+                try:
+                    current = target.get(field)
+                    current_dt = sorting.parse_date(current)
+                    value_dt = sorting.parse_date(value)
+                    if value_dt and (not current_dt or value_dt > current_dt):
+                        target[field] = value
+                except Exception:
+                    if not target.get(field):
+                        target[field] = value
+                continue
+
+            # Prefer longer/denser text for narrative fields
+            if field in {'description', 'why_matters', 'latest_news'}:
+                current = str(target.get(field) or '')
+                candidate = str(value)
+                if len(candidate) > len(current):
+                    target[field] = value
+                continue
+
+            # Default: fill missing fields
+            if not target.get(field):
+                target[field] = value
+
+    @classmethod
+    def _dedupe_products(cls, products: List[Dict[str, Any]],
+                         filters_module=None) -> List[Dict[str, Any]]:
+        """Deduplicate products by normalized key, merging fields."""
+        if not products:
+            return []
+
+        def _key(p: Dict[str, Any]) -> str:
+            if filters_module and hasattr(filters_module, 'build_product_key'):
+                return filters_module.build_product_key(p)
+            return cls._build_product_key(p)
+
+        def _name_key(p: Dict[str, Any]) -> str:
+            raw_name = (p.get('name') or '').strip()
+            if not raw_name:
+                return ''
+            # If name contains non-ASCII, only dedupe on exact normalized name
+            if any(ord(ch) > 127 for ch in raw_name):
+                normalized = ''.join(raw_name.lower().split())
+                return normalized if len(normalized) >= 2 else ''
+
+            # ASCII name: normalize punctuation and require a minimum length
+            import re as _re
+            key = _re.sub(r'[^a-z0-9]+', '', raw_name.lower())
+            if len(key) < 4:
+                return ''
+            if not _re.search(r'[a-z0-9]', key):
+                return ''
+            return key
+
+        def _name_key_loose(p: Dict[str, Any]) -> str:
+            """Looser name key for near-duplicate variants like '* Smart Glasses'."""
+            raw_name = (p.get('name') or '').strip()
+            if not raw_name:
+                return ''
+            if any(ord(ch) > 127 for ch in raw_name):
+                return ''
+
+            import re as _re
+            tokens = _re.findall(r'[a-z0-9]+', raw_name.lower())
+            if not tokens:
+                return ''
+
+            stopwords = {
+                'ai', 'smart', 'intelligent', 'android', 'xr', 'ar', 'vr',
+                'glass', 'glasses', 'device', 'wearable', 'edition', 'version',
+                'model', 'pro', 'plus', 'ultra', 'new', 'first',
+            }
+            core = [t for t in tokens if t not in stopwords and len(t) > 1]
+            if len(core) < 2:
+                return ''
+            return ''.join(core[:4])
+
+        by_key: Dict[str, Dict[str, Any]] = {}
+        by_name: Dict[str, Dict[str, Any]] = {}
+        by_name_loose: Dict[str, Dict[str, Any]] = {}
+        ordered: List[Dict[str, Any]] = []
+
+        for product in products:
+            if not isinstance(product, dict):
+                continue
+            key = _key(product)
+            name_key = _name_key(product)
+            name_key_loose = _name_key_loose(product)
+
+            if key and key in by_key:
+                cls._merge_product_fields(by_key[key], product)
+                continue
+
+            if name_key and name_key in by_name:
+                target = by_name[name_key]
+                cls._merge_product_fields(target, product)
+                if key:
+                    by_key[key] = target
+                continue
+
+            if name_key_loose and name_key_loose in by_name_loose:
+                target = by_name_loose[name_key_loose]
+                cls._merge_product_fields(target, product)
+                if key:
+                    by_key[key] = target
+                if name_key:
+                    by_name[name_key] = target
+                continue
+
+            if key:
+                by_key[key] = product
+            if name_key:
+                by_name[name_key] = product
+            if name_key_loose:
+                by_name_loose[name_key_loose] = product
+            ordered.append(product)
+
+        # Re-assign _id to keep uniqueness after dedupe
+        for i, p in enumerate(ordered):
+            p['_id'] = str(i + 1)
+
+        return ordered
 
     @staticmethod
     def _normalize_curated_product(product: Dict[str, Any]) -> Optional[Dict[str, Any]]:

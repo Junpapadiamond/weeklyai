@@ -219,12 +219,14 @@
                     <span class="title-icon"><i data-lucide="newspaper"></i></span>
                     博客 & 动态
                 </h2>
-                <p class="section-desc">来自 Hacker News、Reddit、Tech News 的 AI 讨论和文章</p>
+                <p class="section-desc">来自 Hacker News、Reddit、Tech News、YouTube、X 的 AI 讨论和一手动态</p>
             </div>
             <div class="blog-filters" id="blogFilters">
                 <button class="blog-filter-btn active" data-source="">全部</button>
                 <button class="blog-filter-btn" data-source="hackernews">🔶 Hacker News</button>
                 <button class="blog-filter-btn" data-source="tech_news">📰 Tech News</button>
+                <button class="blog-filter-btn" data-source="youtube">📺 YouTube</button>
+                <button class="blog-filter-btn" data-source="x">𝕏 X</button>
                 <button class="blog-filter-btn" data-source="reddit">🔴 Reddit</button>
             </div>
             <div class="blogs-list" id="blogsList">
@@ -319,6 +321,9 @@
     </div>
 
     <!-- Using original main.js (modular version in /js/modules/ for future migration) -->
+    <script>
+        window.__API_BASE_URL__ = "<%= apiBaseUrl || '' %>";
+    </script>
     <script src="/js/main.js"></script>
     <!-- Lazy load p5.js and hero animation after page content is ready -->
     <script>

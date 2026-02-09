@@ -15,6 +15,17 @@ from typing import List, Dict, Any
 # 添加项目路径
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+# 加载 .env（兼容 repo 根目录与 crawler/.env）
+try:
+    from dotenv import load_dotenv
+
+    _crawler_dir = os.path.dirname(os.path.abspath(__file__))
+    _repo_dir = os.path.dirname(_crawler_dir)
+    load_dotenv(os.path.join(_repo_dir, ".env"))
+    load_dotenv(os.path.join(_crawler_dir, ".env"))
+except Exception:
+    pass
+
 from spiders.product_hunt_spider import ProductHuntSpider
 from spiders.hackernews_spider import HackerNewsSpider
 from spiders.aitool_spider import AIToolSpider
@@ -25,6 +36,9 @@ from spiders.tech_news_spider import TechNewsSpider
 from spiders.techcrunch_spider import TechCrunchSpider
 from spiders.futuretools_spider import FutureToolsSpider
 from spiders.yc_spider import YCSpider
+from spiders.youtube_spider import YouTubeSpider
+from spiders.x_spider import XSpider
+from spiders.reddit_spider import RedditSpider
 from utils.image_utils import get_best_logo
 from utils.insight_generator import InsightGenerator
 from tools.dark_horse_detector import detect_dark_horses
@@ -126,13 +140,16 @@ class CrawlerManager:
             'techcrunch': 0,
             'futuretools': 0,
             'ycombinator': 0,
+            'youtube': 0,
+            'x': 0,
+            'reddit': 0,
             'filtered_wellknown': 0,
             'total': 0,
             'errors': []
         }
         
         # 1. 展会/发布会产品
-        print("\n🏟️ [1/10] 展会产品库")
+        print("\n🏟️ [1/13] 展会产品库")
         print("-" * 40)
         try:
             spider = ExhibitionSpider()
@@ -145,7 +162,7 @@ class CrawlerManager:
             print(f"✗ 展会爬取失败: {e}")
 
         # 2. 公司产品库
-        print("\n🏢 [2/10] 公司产品库")
+        print("\n🏢 [2/13] 公司产品库")
         print("-" * 40)
         try:
             spider = CompanySpider()
@@ -158,7 +175,7 @@ class CrawlerManager:
             print(f"✗ 公司爬取失败: {e}")
 
         # 3. AI 硬件产品
-        print("\n🔧 [3/10] AI 硬件产品")
+        print("\n🔧 [3/13] AI 硬件产品")
         print("-" * 40)
         try:
             spider = AIHardwareSpider()
@@ -171,7 +188,7 @@ class CrawlerManager:
             print(f"✗ 硬件爬取失败: {e}")
         
         # 4. ProductHunt
-        print("\n🔥 [4/10] ProductHunt AI 产品")
+        print("\n🔥 [4/13] ProductHunt AI 产品")
         print("-" * 40)
         try:
             spider = ProductHuntSpider()
@@ -184,7 +201,7 @@ class CrawlerManager:
             print(f"✗ ProductHunt 爬取失败: {e}")
         
         # 5. Hacker News
-        print("\n🧠 [5/10] Hacker News 新发布")
+        print("\n🧠 [5/13] Hacker News 新发布")
         print("-" * 40)
         try:
             spider = HackerNewsSpider()
@@ -197,7 +214,7 @@ class CrawlerManager:
             print(f"✗ Hacker News 爬取失败: {e}")
 
         # 6. AI 工具导航站
-        print("\n🛠️ [6/10] AI 工具导航网站")
+        print("\n🛠️ [6/13] AI 工具导航网站")
         print("-" * 40)
         try:
             spider = AIToolSpider()
@@ -210,7 +227,7 @@ class CrawlerManager:
             print(f"✗ AI Tools 爬取失败: {e}")
 
         # 7. Tech News (Verge, TechCrunch, etc.)
-        print("\n📰 [7/10] Tech News AI 动态")
+        print("\n📰 [7/13] Tech News AI 动态")
         print("-" * 40)
         try:
             spider = TechNewsSpider()
@@ -223,7 +240,7 @@ class CrawlerManager:
             print(f"✗ Tech News 爬取失败: {e}")
 
         # 8. TechCrunch 融资新闻 (刚融资的 AI 初创公司)
-        print("\n💰 [8/10] TechCrunch 融资新闻")
+        print("\n💰 [8/13] TechCrunch 融资新闻")
         print("-" * 40)
         try:
             spider = TechCrunchSpider()
@@ -236,7 +253,7 @@ class CrawlerManager:
             print(f"✗ TechCrunch 爬取失败: {e}")
 
         # 9. FutureTools.io AI 工具目录
-        print("\n🔮 [9/10] FutureTools.io AI 工具")
+        print("\n🔮 [9/13] FutureTools.io AI 工具")
         print("-" * 40)
         try:
             spider = FutureToolsSpider()
@@ -249,7 +266,7 @@ class CrawlerManager:
             print(f"✗ FutureTools 爬取失败: {e}")
 
         # 10. Y Combinator AI 公司 (YC 投资的 AI 初创公司)
-        print("\n🚀 [10/10] Y Combinator AI 公司")
+        print("\n🚀 [10/13] Y Combinator AI 公司")
         print("-" * 40)
         try:
             spider = YCSpider()
@@ -260,6 +277,45 @@ class CrawlerManager:
         except Exception as e:
             stats['errors'].append(f"YCombinator: {str(e)}")
             print(f"✗ Y Combinator 爬取失败: {e}")
+
+        # 11. YouTube Signals
+        print("\n📺 [11/13] YouTube 一手信号")
+        print("-" * 40)
+        try:
+            spider = YouTubeSpider()
+            products = spider.crawl()
+            all_products.extend(products)
+            stats['youtube'] = len(products)
+            print(f"✓ YouTube: 获取 {len(products)} 条信号")
+        except Exception as e:
+            stats['errors'].append(f"YouTube: {str(e)}")
+            print(f"✗ YouTube 爬取失败: {e}")
+
+        # 12. X Signals
+        print("\n𝕏 [12/13] X 一手信号")
+        print("-" * 40)
+        try:
+            spider = XSpider()
+            products = spider.crawl()
+            all_products.extend(products)
+            stats['x'] = len(products)
+            print(f"✓ X: 获取 {len(products)} 条信号")
+        except Exception as e:
+            stats['errors'].append(f"X: {str(e)}")
+            print(f"✗ X 爬取失败: {e}")
+
+        # 13. Reddit Signals
+        print("\n👽 [13/13] Reddit 一手信号")
+        print("-" * 40)
+        try:
+            spider = RedditSpider()
+            products = spider.crawl()
+            all_products.extend(products)
+            stats['reddit'] = len(products)
+            print(f"✓ Reddit: 获取 {len(products)} 条信号")
+        except Exception as e:
+            stats['errors'].append(f"Reddit: {str(e)}")
+            print(f"✗ Reddit 爬取失败: {e}")
 
         # 数据处理
         print("\n🔄 处理数据...")
@@ -355,8 +411,15 @@ class CrawlerManager:
         unique = []
         
         for product in products:
-            # 使用名称的标准化版本作为key
-            name_key = self._normalize_name(product['name'])
+            source = (product.get('source') or '').lower().strip()
+            website = (product.get('website') or '').strip()
+
+            # Social/blog streams should be deduped by URL to avoid title collisions
+            if source in {'youtube', 'x', 'reddit'} and website:
+                name_key = f"{source}:{website.lower()}"
+            else:
+                # 使用名称的标准化版本作为key
+                name_key = self._normalize_name(product.get('name', ''))
             
             if name_key in seen:
                 # 合并信息：保留更高的分数和更完整的描述
@@ -832,6 +895,9 @@ class CrawlerManager:
         print(f"  • ProductHunt:  {stats['producthunt']:4d} 个产品")
         print(f"  • Hacker News:  {stats['hackernews']:4d} 个发布")
         print(f"  • Tech News:    {stats['tech_news']:4d} 个新闻")
+        print(f"  • YouTube:      {stats.get('youtube', 0):4d} 条信号")
+        print(f"  • X:            {stats.get('x', 0):4d} 条信号")
+        print(f"  • Reddit:       {stats.get('reddit', 0):4d} 条信号")
         print(f"  • AI Tools:     {stats['aitools']:4d} 个工具")
         print("-" * 40)
         print(f"  - 过滤知名老产品: {stats['filtered_wellknown']:4d} 个")
@@ -982,6 +1048,29 @@ class CrawlerManager:
 
         products_list, blogs_list, filtered_list = classify_all(data)
 
+        # Only keep current-year content (default: current year; override with CONTENT_YEAR)
+        try:
+            allowed_year = int(os.getenv("CONTENT_YEAR", str(datetime.now(timezone.utc).year)))
+        except Exception:
+            allowed_year = datetime.now(timezone.utc).year
+
+        def _item_year_ok(item: Dict[str, Any]) -> bool:
+            extra = item.get("extra") or {}
+            if not isinstance(extra, dict):
+                extra = {}
+            published_at = (
+                item.get("published_at")
+                or extra.get("published_at")
+                or item.get("discovered_at")
+                or item.get("first_seen")
+            )
+            parsed = self._parse_datetime(published_at)
+            return bool(parsed and getattr(parsed, "year", None) == allowed_year)
+
+        before_count = len(blogs_list)
+        blogs_list = [b for b in blogs_list if _item_year_ok(b)]
+        dropped = before_count - len(blogs_list)
+
         # Sort blogs by score
         blogs_list.sort(key=lambda x: x.get('final_score', x.get('top_score', 0)), reverse=True)
 
@@ -992,6 +1081,8 @@ class CrawlerManager:
             json.dump(blogs_list, f, ensure_ascii=False, indent=2)
 
         print(f"\n✓ 新闻/讨论: {len(blogs_list)} 条 → blogs_news.json")
+        if dropped:
+            print(f"  (丢弃 {dropped} 条非 {allowed_year} 年内容)")
         print(f"  (跳过 {len(products_list)} 个产品 - 使用手动策展)")
         print(f"  (过滤 {len(filtered_list)} 条低质量内容)")
         print("\n⚠ products_featured.json 未修改 (手动策展)")
@@ -1041,7 +1132,6 @@ class CrawlerManager:
             # Check quality signals
             dark_horse = p.get('dark_horse_index', 0) or 0
             trending = p.get('trending_score', 0) or 0
-            final_score = p.get('final_score', 0) or 0
 
             # High potential: dark_horse >= 3 OR trending >= 70 OR has funding info
             has_funding = bool(p.get('funding_total'))
