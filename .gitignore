@@ -3,9 +3,17 @@
 .env.*
 .codex/
 
+# Vercel
+.vercel/
+backend/.vercel/
+
 # Node
 node_modules/
 frontend/node_modules/
+
+# Next.js / build artifacts
+.next/
+frontend-next/
 
 # Python
 __pycache__/

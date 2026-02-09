@@ -1,0 +1,91 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  e2e:
+    name: Frontend E2E (Playwright)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install backend deps
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r backend/requirements.txt
+
+      - name: Install Playwright (Python)
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Install frontend deps
+        working-directory: frontend
+        run: npm ci
+
+      - name: Start backend
+        run: |
+          python -c "import sys; sys.path.insert(0, 'backend'); from app import create_app; app=create_app(); app.run(host='127.0.0.1', port=5000)" > backend.log 2>&1 &
+          echo $! > backend.pid
+
+      - name: Start frontend
+        run: |
+          API_BASE_URL="http://127.0.0.1:5000/api/v1" PORT=3000 node frontend/app.js > frontend.log 2>&1 &
+          echo $! > frontend.pid
+
+      - name: Wait for services
+        run: |
+          set -euo pipefail
+
+          for i in {1..60}; do
+            if curl -sf "http://127.0.0.1:5000/api/v1/products/trending" > /dev/null; then
+              echo "Backend is up"
+              break
+            fi
+            sleep 1
+          done
+
+          for i in {1..60}; do
+            if curl -sf "http://127.0.0.1:3000/" > /dev/null; then
+              echo "Frontend is up"
+              break
+            fi
+            sleep 1
+          done
+
+          curl -sf "http://127.0.0.1:5000/api/v1/products/trending" > /dev/null || (echo "Backend did not start" >&2; tail -n 200 backend.log || true; exit 1)
+          curl -sf "http://127.0.0.1:3000/" > /dev/null || (echo "Frontend did not start" >&2; tail -n 200 frontend.log || true; exit 1)
+
+      - name: Run E2E tests
+        run: python tests/test_frontend.py
+
+      - name: Upload screenshots (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: weeklyai-e2e-artifacts
+          path: |
+            /tmp/weeklyai_tests
+            backend.log
+            frontend.log
+

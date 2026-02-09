@@ -33,9 +33,20 @@ def test_homepage_loads(page):
     print("  ✓ Hero section visible")
 
     # Check navigation
-    nav_links = page.locator('.nav-link').all()
-    assert len(nav_links) == 3, f"Expected 3 nav links, got {len(nav_links)}"
-    print(f"  ✓ Navigation: {len(nav_links)} links found")
+    nav_links = page.locator('.nav-link')
+    nav_count = nav_links.count()
+    assert nav_count >= 4, f"Expected >=4 nav links, got {nav_count}"
+
+    sections = set()
+    for i in range(nav_count):
+        section = nav_links.nth(i).get_attribute('data-section')
+        if section:
+            sections.add(section)
+
+    for required in ("trending", "weekly", "blogs", "search"):
+        assert required in sections, f"Missing nav section '{required}' (found: {sorted(sections)})"
+
+    print(f"  ✓ Navigation: {nav_count} links found ({', '.join(sorted(sections))})")
 
     # Check swipe stack
     swipe_stack = page.locator('#swipeStack')

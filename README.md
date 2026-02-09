@@ -248,6 +248,31 @@ tail -f crawler/logs/daily_update.log
 - **数据**: JSON 文件存储
 - **定时任务**: macOS launchd
 
+## 前端 API 配置（部署必看）
+
+前端浏览器侧会按下面优先级选择 API Base URL：
+
+1. 如果页面注入了 `API_BASE_URL`（由 `frontend/app.js` 从环境变量 `API_BASE_URL` 注入 `window.__API_BASE_URL__`），则使用该值
+2. 如果是本地 `localhost`，使用 `http://localhost:5000/api/v1`
+3. 否则使用同源 `/api/v1`（适用于同域部署或反向代理）
+
+如果你把前端部署到 Vercel，但后端不在同域，请在 Vercel 项目里设置环境变量：
+
+- `API_BASE_URL=https://<your-backend-host>/api/v1`
+
+## CI / Tests
+
+- GitHub Actions workflow: `.github/workflows/ci.yml`
+- E2E 脚本: `tests/test_frontend.py`（Playwright，CI 会启动前后端后运行该脚本）
+
+本地运行 Playwright（只需安装一次）：
+
+```bash
+python3 -m pip install playwright
+python3 -m playwright install chromium
+python3 tests/test_frontend.py
+```
+
 ## License
 
 MIT

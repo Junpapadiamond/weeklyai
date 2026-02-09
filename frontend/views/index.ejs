@@ -322,7 +322,7 @@
 
     <!-- Using original main.js (modular version in /js/modules/ for future migration) -->
     <script>
-        window.__API_BASE_URL__ = "<%= apiBaseUrl || '' %>";
+        window.__API_BASE_URL__ = <%- JSON.stringify(apiBaseUrl || '') %>;
     </script>
     <script src="/js/main.js"></script>
     <!-- Lazy load p5.js and hero animation after page content is ready -->
@@ -358,5 +358,4 @@
         })();
     </script>
 </body>
-
 </html>
