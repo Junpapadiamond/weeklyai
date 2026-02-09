@@ -37,19 +37,31 @@ type FetchConfig = RequestInit & {
 async function fetchJson(path: string, config?: FetchConfig): Promise<unknown> {
   const baseUrl = resolveApiBaseUrl().replace(/\/$/, "");
   const url = `${baseUrl}${path}`;
-  const response = await fetch(url, {
-    ...config,
-    headers: {
-      Accept: "application/json",
-      ...(config?.headers || {}),
-    },
-  });
+  try {
+    const response = await fetch(url, {
+      ...config,
+      headers: {
+        Accept: "application/json",
+        ...(config?.headers || {}),
+      },
+    });
 
-  if (!response.ok) {
-    throw new Error(`API request failed: ${response.status} ${response.statusText} (${url})`);
+    if (!response.ok) {
+      if (typeof window !== "undefined") {
+        throw new Error(`API request failed: ${response.status} ${response.statusText} (${url})`);
+      }
+      console.warn(`API request failed: ${response.status} ${response.statusText} (${url})`);
+      return {};
+    }
+
+    return response.json();
+  } catch (error) {
+    if (typeof window !== "undefined") {
+      throw error;
+    }
+    console.warn(`API request error (${url})`, error);
+    return {};
   }
-
-  return response.json();
 }
 
 function safeParse<T>(schema: ZodType<T>, payload: unknown, fallback: T): T {

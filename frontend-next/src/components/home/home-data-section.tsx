@@ -1,7 +1,7 @@
 import { HomeClient } from "@/components/home/home-client";
 import { getDarkHorses, getLastUpdated, getWeeklyTop, parseLastUpdatedLabel } from "@/lib/api-client";
 
-const HOME_INITIAL_PRODUCTS_LIMIT = 24;
+const HOME_INITIAL_PRODUCTS_LIMIT = 0;
 
 export async function HomeDataSection() {
   const [darkHorses, allProducts, lastUpdated] = await Promise.all([
