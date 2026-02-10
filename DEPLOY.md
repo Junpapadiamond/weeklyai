@@ -1,5 +1,26 @@
 # WeeklyAI 部署指南
 
+## ▲ Vercel 部署 (推荐)
+
+本仓库是 **monorepo**，需要分别部署前端和后端两个 Project：
+
+- **Frontend (Next.js)**: Root Directory = `frontend-next`
+- **Backend (Flask)**: Root Directory = `backend`（使用 `backend/vercel.json`）
+
+前端需要配置 API 地址（Vercel Project → Settings → Environment Variables）：
+
+- `NEXT_PUBLIC_API_BASE_URL` = `https://<your-backend>.vercel.app/api/v1`
+- `API_BASE_URL_SERVER` = `https://<your-backend>.vercel.app/api/v1`
+
+后端建议配置 CORS allowlist（可选）：
+
+- `CORS_ALLOWED_ORIGINS` = `https://<your-frontend>.vercel.app`
+
+数据更新方式：
+
+- GitHub Actions 的 `Daily Data Update` 会定时更新 `crawler/data/`，并同步一份到 `backend/data/` 后自动提交到 `main`
+- 当 Vercel Project 连接到 GitHub 且 Production Branch = `main` 时，会自动随每次 commit 重新部署，从而让网站展示最新的 300+ 产品和博客数据
+
 ## 🐳 Docker 部署 (推荐)
 
 ### 前提条件
