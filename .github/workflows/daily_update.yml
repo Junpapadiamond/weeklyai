@@ -38,17 +38,17 @@ jobs:
       - name: Run discovery + news
         env:
           PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
-          PERPLEXITY_MODEL: ${{ secrets.PERPLEXITY_MODEL }}
+          PERPLEXITY_MODEL: ${{ secrets.PERPLEXITY_MODEL || 'sonar' }}
           ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
-          GLM_MODEL: ${{ secrets.GLM_MODEL }}
-          GLM_SEARCH_ENGINE: ${{ secrets.GLM_SEARCH_ENGINE }}
+          GLM_MODEL: ${{ secrets.GLM_MODEL || 'glm-4.7' }}
+          GLM_SEARCH_ENGINE: ${{ secrets.GLM_SEARCH_ENGINE || 'search_pro' }}
           USE_GLM_FOR_CN: ${{ secrets.ZHIPU_API_KEY && 'true' || 'false' }}
         run: |
           set -euo pipefail
           export CONTENT_YEAR="$(date -u +%Y)"
 
-          python crawler/tools/auto_discover.py --region all
-          python crawler/tools/auto_publish.py
+          python crawler/tools/auto_discover.py --region all || true
+          python crawler/tools/auto_publish.py || true
 
           # Quality / enrichment pipeline (best-effort, don't fail the whole run)
           python crawler/tools/backfill_source_urls.py || true
@@ -57,7 +57,7 @@ jobs:
           python crawler/tools/cleanup_unknowns_and_duplicates.py || true
           python crawler/tools/fix_logos.py --input crawler/data/products_featured.json || true
 
-          python crawler/main.py --news-only
+          python crawler/main.py --news-only || true
           python crawler/tools/rss_to_products.py --input crawler/data/blogs_news.json --sources youtube,x,xhs,wechat --enrich-featured || true
 
       - name: Sync snapshot for backend deployment
@@ -76,25 +76,25 @@ jobs:
       - name: Commit and push (if changed)
         run: |
           set -euo pipefail
-          if git status --porcelain | grep -q .; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-            git add \
-              crawler/data/products_featured.json \
-              crawler/data/blogs_news.json \
-              crawler/data/last_updated.json \
-              crawler/data/dark_horses \
-              crawler/data/rising_stars \
-              backend/data/products_featured.json \
-              backend/data/blogs_news.json \
-              backend/data/industry_leaders.json \
-              backend/data/last_updated.json \
-              backend/data/dark_horses
+          git add \
+            crawler/data/products_featured.json \
+            crawler/data/blogs_news.json \
+            crawler/data/last_updated.json \
+            crawler/data/dark_horses \
+            crawler/data/rising_stars \
+            backend/data/products_featured.json \
+            backend/data/blogs_news.json \
+            backend/data/industry_leaders.json \
+            backend/data/last_updated.json \
+            backend/data/dark_horses
 
-            git commit -m "chore(data): daily update"
-            git push
-          else
+          if git diff --cached --quiet; then
             echo "No data changes to commit."
+            exit 0
           fi
 
+          git commit -m "chore(data): daily update"
+          git push
