@@ -10,24 +10,28 @@ Usage:
     python tools/sync_to_mongodb.py --dry-run      # Show what would be synced
 """
 
+import argparse
 import json
 import os
+import re
 import sys
-import argparse
 from datetime import datetime, timezone
+from typing import Any, Dict, List, Optional
+from urllib.parse import urlparse
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, PROJECT_ROOT)
 
 # Data files
-PRODUCTS_FILE = os.path.join(PROJECT_ROOT, 'data', 'products_featured.json')
-BLOGS_FILE = os.path.join(PROJECT_ROOT, 'data', 'blogs_news.json')
-CANDIDATES_FILE = os.path.join(PROJECT_ROOT, 'data', 'candidates', 'pending_review.json')
+DATA_DIR = os.path.join(PROJECT_ROOT, "data")
+PRODUCTS_FILE = os.path.join(DATA_DIR, "products_featured.json")
+BLOGS_FILE = os.path.join(DATA_DIR, "blogs_news.json")
+CANDIDATES_FILE = os.path.join(DATA_DIR, "candidates", "pending_review.json")
+DARK_HORSES_DIR = os.path.join(DATA_DIR, "dark_horses")
 
 # MongoDB connection
 try:
-    from pymongo import MongoClient
-    from pymongo.errors import BulkWriteError
+    from pymongo import ASCENDING, DESCENDING, TEXT, MongoClient
     HAS_MONGO = True
 except ImportError:
     HAS_MONGO = False
@@ -36,18 +40,18 @@ except ImportError:
 def get_mongo_db():
     """Get MongoDB connection."""
     if not HAS_MONGO:
-        print("  ✗ pymongo not installed. Run: pip install pymongo")
+        print("  x pymongo not installed. Run: pip install pymongo")
         return None
 
-    mongo_uri = os.getenv('MONGO_URI', 'mongodb://localhost:27017/weeklyai')
+    mongo_uri = os.getenv("MONGO_URI", "mongodb://localhost:27017/weeklyai")
     try:
         client = MongoClient(mongo_uri, serverSelectionTimeoutMS=5000)
-        client.admin.command('ping')
+        client.admin.command("ping")
         db = client.get_database()
-        print(f"  ✓ Connected to MongoDB: {db.name}")
+        print(f"  OK Connected to MongoDB: {db.name}")
         return db
     except Exception as e:
-        print(f"  ✗ MongoDB connection failed: {e}")
+        print(f"  x MongoDB connection failed: {e}")
         return None
 
 
@@ -56,32 +60,157 @@ def load_json(filepath: str) -> list:
     if not os.path.exists(filepath):
         return []
     try:
-        with open(filepath, 'r', encoding='utf-8') as f:
+        with open(filepath, "r", encoding="utf-8") as f:
             return json.load(f)
     except Exception as e:
-        print(f"  ✗ Failed to load {filepath}: {e}")
+        print(f"  x Failed to load {filepath}: {e}")
         return []
 
 
+def _normalize_domain(url: str) -> str:
+    """Normalize domain for dedupe: strip scheme/www/port and keep first path."""
+    if not url:
+        return ""
+    raw = str(url).strip()
+    if not raw:
+        return ""
+    if not re.match(r"^https?://", raw, re.IGNORECASE) and "." in raw:
+        raw = f"https://{raw}"
+    try:
+        parsed = urlparse(raw)
+        domain = (parsed.netloc or "").lower()
+        domain = re.sub(r"^www\.", "", domain)
+        domain = domain.split(":")[0]
+        if not domain:
+            return ""
+        path = (parsed.path or "").strip("/")
+        if path:
+            first = path.split("/")[0]
+            if len(first) > 1:
+                return f"{domain}/{first}"
+        return domain
+    except Exception:
+        return raw.lower()
+
+
+def build_sync_key(item: Dict[str, Any]) -> str:
+    """Create stable key matching backend key strategy."""
+    website = item.get("website") or ""
+    key = _normalize_domain(website)
+    if key:
+        return key
+    name = (item.get("name") or "").lower().strip()
+    return "".join(c for c in name if c.isalnum())
+
+
 def normalize_key(item: dict) -> str:
-    """Create a unique key for deduplication."""
-    # Prefer website, fallback to normalized name
-    website = (item.get('website') or '').lower().strip()
-    if website:
-        return website
-    name = (item.get('name') or '').lower().strip()
-    return ''.join(c for c in name if c.isalnum())
+    """Backward-compatible alias."""
+    return build_sync_key(item)
+
+
+def _normalize_curated_product(product: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    """Map curated dark-horse fields into standard product fields."""
+    if not isinstance(product, dict):
+        return None
+    normalized = product.copy()
+    if not normalized.get("logo_url"):
+        normalized["logo_url"] = normalized.get("logo") or normalized.get("logoUrl") or ""
+    if not normalized.get("categories"):
+        category = normalized.get("category")
+        if category:
+            normalized["categories"] = [category]
+    if not normalized.get("source"):
+        normalized["source"] = "curated"
+    if "is_hardware" not in normalized:
+        normalized["is_hardware"] = False
+    return normalized
+
+
+def _merge_fields(target: Dict[str, Any], source: Dict[str, Any]) -> None:
+    """Merge fields with simple quality heuristics."""
+    numeric_max_fields = {"dark_horse_index", "final_score", "hot_score", "trending_score", "rating"}
+    text_fields = {"description", "why_matters", "latest_news"}
+    for field, value in source.items():
+        if value in (None, "", [], {}):
+            continue
+        if field in numeric_max_fields:
+            try:
+                current = target.get(field) or 0
+                target[field] = max(float(current), float(value))
+            except Exception:
+                if not target.get(field):
+                    target[field] = value
+            continue
+        if field in text_fields:
+            current = str(target.get(field) or "")
+            candidate = str(value)
+            if len(candidate) > len(current):
+                target[field] = value
+            continue
+        if not target.get(field):
+            target[field] = value
+
+
+def load_dark_horses() -> List[Dict[str, Any]]:
+    """Load curated dark-horse products from dark_horses/*.json."""
+    if not os.path.isdir(DARK_HORSES_DIR):
+        return []
+    curated: List[Dict[str, Any]] = []
+    for filename in sorted(os.listdir(DARK_HORSES_DIR)):
+        if not filename.endswith(".json"):
+            continue
+        if filename == "template.json":
+            continue
+        path = os.path.join(DARK_HORSES_DIR, filename)
+        try:
+            data = load_json(path)
+            if isinstance(data, dict):
+                data = [data]
+            if isinstance(data, list):
+                curated.extend(item for item in data if isinstance(item, dict))
+        except Exception:
+            continue
+    return curated
+
+
+def merge_products(featured: List[Dict[str, Any]], curated: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Merge featured products and curated dark-horse products by normalized key."""
+    by_key: Dict[str, Dict[str, Any]] = {}
+    ordered: List[Dict[str, Any]] = []
+
+    for item in featured:
+        if not isinstance(item, dict):
+            continue
+        key = build_sync_key(item)
+        if not key:
+            continue
+        if key in by_key:
+            _merge_fields(by_key[key], item)
+        else:
+            by_key[key] = item
+            ordered.append(item)
+
+    for item in curated:
+        normalized = _normalize_curated_product(item)
+        if not normalized:
+            continue
+        key = build_sync_key(normalized)
+        if not key:
+            continue
+        if key in by_key:
+            _merge_fields(by_key[key], normalized)
+        else:
+            by_key[key] = normalized
+            ordered.append(normalized)
+
+    return ordered
 
 
 def clear_non_curated(db, collection_name: str, dry_run: bool = False) -> int:
     """Remove items that are not from curated sources."""
     collection = db[collection_name]
-
-    # Curated sources to keep
-    curated_sources = {'curated', 'candidate_approved', 'manual'}
-
-    # Find non-curated items
-    query = {'source': {'$nin': list(curated_sources)}}
+    curated_sources = {"curated", "candidate_approved", "manual"}
+    query = {"source": {"$nin": list(curated_sources)}}
     count = collection.count_documents(query)
 
     if dry_run:
@@ -90,172 +219,181 @@ def clear_non_curated(db, collection_name: str, dry_run: bool = False) -> int:
 
     if count > 0:
         result = collection.delete_many(query)
-        print(f"  ✓ Deleted {result.deleted_count} non-curated items from {collection_name}")
+        print(f"  OK Deleted {result.deleted_count} non-curated items from {collection_name}")
         return result.deleted_count
-
     return 0
 
 
 def sync_products(db, products: list, dry_run: bool = False) -> dict:
     """Sync products to MongoDB."""
-    collection = db['products']
-    stats = {'inserted': 0, 'updated': 0, 'skipped': 0}
-
-    now_iso = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace('+00:00', 'Z')
+    collection = db["products"]
+    stats = {"inserted": 0, "updated": 0, "skipped": 0}
+    now_iso = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
     for product in products:
-        key = normalize_key(product)
+        key = build_sync_key(product)
         if not key:
-            stats['skipped'] += 1
+            stats["skipped"] += 1
             continue
 
-        # Prepare document
         doc = product.copy()
-        doc['_sync_key'] = key
-        doc['synced_at'] = now_iso
-        doc.setdefault('source', 'curated')
-        doc.setdefault('content_type', 'product')
-
-        # Remove internal fields
-        doc.pop('_id', None)
-        doc.pop('_candidate_reason', None)
+        doc["_sync_key"] = key
+        doc["synced_at"] = now_iso
+        doc.setdefault("source", "curated")
+        doc.setdefault("content_type", "product")
+        doc.pop("_id", None)
+        doc.pop("_candidate_reason", None)
 
         if dry_run:
-            stats['updated'] += 1
+            stats["updated"] += 1
             continue
 
-        # Upsert by sync key
-        result = collection.update_one(
-            {'_sync_key': key},
-            {'$set': doc},
-            upsert=True
-        )
-
+        result = collection.update_one({"_sync_key": key}, {"$set": doc}, upsert=True)
         if result.upserted_id:
-            stats['inserted'] += 1
+            stats["inserted"] += 1
         elif result.modified_count > 0:
-            stats['updated'] += 1
+            stats["updated"] += 1
         else:
-            stats['skipped'] += 1
+            stats["skipped"] += 1
 
     return stats
 
 
 def sync_blogs(db, blogs: list, dry_run: bool = False) -> dict:
     """Sync blogs/news to MongoDB."""
-    collection = db['blogs']
-    stats = {'inserted': 0, 'updated': 0, 'skipped': 0}
-
-    now_iso = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace('+00:00', 'Z')
+    collection = db["blogs"]
+    stats = {"inserted": 0, "updated": 0, "skipped": 0}
+    now_iso = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
     for blog in blogs:
-        # Use URL or title as key
-        url = (blog.get('url') or blog.get('website') or '').strip()
-        title = (blog.get('title') or blog.get('name') or '').strip()
-        key = url or ''.join(c.lower() for c in title if c.isalnum())
-
+        url = (blog.get("url") or blog.get("website") or "").strip()
+        title = (blog.get("title") or blog.get("name") or "").strip()
+        key = url or "".join(c.lower() for c in title if c.isalnum())
         if not key:
-            stats['skipped'] += 1
+            stats["skipped"] += 1
             continue
 
-        # Prepare document
         doc = blog.copy()
-        doc['_sync_key'] = key
-        doc['synced_at'] = now_iso
-        doc.setdefault('content_type', 'blog')
-
-        # Remove internal fields
-        doc.pop('_id', None)
+        doc["_sync_key"] = key
+        doc["synced_at"] = now_iso
+        doc.setdefault("content_type", "blog")
+        doc.pop("_id", None)
 
         if dry_run:
-            stats['updated'] += 1
+            stats["updated"] += 1
             continue
 
-        # Upsert by sync key
-        result = collection.update_one(
-            {'_sync_key': key},
-            {'$set': doc},
-            upsert=True
-        )
-
+        result = collection.update_one({"_sync_key": key}, {"$set": doc}, upsert=True)
         if result.upserted_id:
-            stats['inserted'] += 1
+            stats["inserted"] += 1
         elif result.modified_count > 0:
-            stats['updated'] += 1
+            stats["updated"] += 1
         else:
-            stats['skipped'] += 1
-
+            stats["skipped"] += 1
     return stats
 
 
 def sync_candidates(db, candidates: list, dry_run: bool = False) -> dict:
     """Sync candidates to MongoDB (separate collection for review)."""
-    collection = db['candidates']
-    stats = {'inserted': 0, 'updated': 0, 'skipped': 0}
-
-    now_iso = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace('+00:00', 'Z')
+    collection = db["candidates"]
+    stats = {"inserted": 0, "updated": 0, "skipped": 0}
+    now_iso = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
     for candidate in candidates:
-        key = normalize_key(candidate)
+        key = build_sync_key(candidate)
         if not key:
-            stats['skipped'] += 1
+            stats["skipped"] += 1
             continue
 
-        # Prepare document
         doc = candidate.copy()
-        doc['_sync_key'] = key
-        doc['synced_at'] = now_iso
-        doc.setdefault('status', 'pending')
-
-        # Remove internal fields but keep candidate reason
-        doc.pop('_id', None)
+        doc["_sync_key"] = key
+        doc["synced_at"] = now_iso
+        doc.setdefault("status", "pending")
+        doc.pop("_id", None)
 
         if dry_run:
-            stats['updated'] += 1
+            stats["updated"] += 1
             continue
 
-        # Upsert by sync key
-        result = collection.update_one(
-            {'_sync_key': key},
-            {'$set': doc},
-            upsert=True
-        )
-
+        result = collection.update_one({"_sync_key": key}, {"$set": doc}, upsert=True)
         if result.upserted_id:
-            stats['inserted'] += 1
+            stats["inserted"] += 1
         elif result.modified_count > 0:
-            stats['updated'] += 1
+            stats["updated"] += 1
         else:
-            stats['skipped'] += 1
-
+            stats["skipped"] += 1
     return stats
+
+
+def ensure_indexes(db, dry_run: bool = False) -> None:
+    """Create recommended indexes for products/blogs collections."""
+    products = db["products"]
+    blogs = db["blogs"]
+    product_indexes = [
+        ("_sync_key_unique", [("_sync_key", ASCENDING)], {"unique": True}),
+        ("website_1", [("website", ASCENDING)], {}),
+        ("dark_horse_index_desc", [("dark_horse_index", DESCENDING)], {}),
+        ("final_score_desc", [("final_score", DESCENDING)], {}),
+        ("discovered_at_desc", [("discovered_at", DESCENDING)], {}),
+        ("categories_1", [("categories", ASCENDING)], {}),
+    ]
+    blog_indexes = [
+        ("_sync_key_unique", [("_sync_key", ASCENDING)], {"unique": True}),
+        ("published_at_desc", [("published_at", DESCENDING)], {}),
+        ("created_at_desc", [("created_at", DESCENDING)], {}),
+    ]
+
+    print("\n  Ensuring indexes...")
+    for name, keys, opts in product_indexes:
+        if dry_run:
+            print(f"  [DRY RUN] products.{name}")
+        else:
+            products.create_index(keys, name=name, **opts)
+            print(f"  OK products.{name}")
+
+    if dry_run:
+        print("  [DRY RUN] products.text_search")
+    else:
+        products.create_index(
+            [("name", TEXT), ("description", TEXT), ("why_matters", TEXT)],
+            name="text_search",
+        )
+        print("  OK products.text_search")
+
+    for name, keys, opts in blog_indexes:
+        if dry_run:
+            print(f"  [DRY RUN] blogs.{name}")
+        else:
+            blogs.create_index(keys, name=name, **opts)
+            print(f"  OK blogs.{name}")
 
 
 def print_stats(name: str, stats: dict, dry_run: bool = False):
     """Print sync statistics."""
     prefix = "[DRY RUN] " if dry_run else ""
-    print(f"  {prefix}{name}: {stats['inserted']} inserted, {stats['updated']} updated, {stats['skipped']} skipped")
+    print(
+        f"  {prefix}{name}: {stats['inserted']} inserted, {stats['updated']} updated, {stats['skipped']} skipped"
+    )
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Sync curated JSON data to MongoDB',
+        description="Sync curated JSON data to MongoDB",
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog='''
+        epilog="""
 Examples:
   python tools/sync_to_mongodb.py                  # Sync products only
   python tools/sync_to_mongodb.py --all            # Sync everything
   python tools/sync_to_mongodb.py --clear-old      # Clear non-curated first
   python tools/sync_to_mongodb.py --dry-run        # Preview changes
-'''
+""",
     )
-    parser.add_argument('--blogs', action='store_true', help='Also sync blogs_news.json')
-    parser.add_argument('--candidates', action='store_true', help='Also sync candidates')
-    parser.add_argument('--all', '-a', action='store_true', help='Sync everything')
-    parser.add_argument('--clear-old', action='store_true',
-                        help='Clear non-curated items before sync')
-    parser.add_argument('--dry-run', action='store_true', help='Show what would be done')
-
+    parser.add_argument("--blogs", action="store_true", help="Also sync blogs_news.json")
+    parser.add_argument("--candidates", action="store_true", help="Also sync candidates")
+    parser.add_argument("--all", "-a", action="store_true", help="Sync everything")
+    parser.add_argument("--clear-old", action="store_true", help="Clear non-curated items before sync")
+    parser.add_argument("--dry-run", action="store_true", help="Show what would be done")
+    parser.add_argument("--ensure-indexes", action="store_true", help="Only ensure indexes")
     args = parser.parse_args()
 
     if args.all:
@@ -264,29 +402,34 @@ Examples:
 
     print("\n  MongoDB Sync Tool")
     print("  " + "=" * 40)
-
-    # Connect to MongoDB
     db = get_mongo_db()
     if db is None:
         sys.exit(1)
 
-    # Clear old non-curated items if requested
+    if args.ensure_indexes:
+        ensure_indexes(db, args.dry_run)
+        print()
+        return
+
     if args.clear_old:
         print("\n  Clearing non-curated items...")
-        clear_non_curated(db, 'products', args.dry_run)
+        clear_non_curated(db, "products", args.dry_run)
         if args.blogs:
-            clear_non_curated(db, 'blogs', args.dry_run)
+            clear_non_curated(db, "blogs", args.dry_run)
 
-    # Sync products
     print("\n  Syncing products...")
-    products = load_json(PRODUCTS_FILE)
-    if products:
-        stats = sync_products(db, products, args.dry_run)
+    featured = load_json(PRODUCTS_FILE)
+    curated = load_dark_horses()
+    merged = merge_products(featured, curated)
+    print(f"  Loaded featured: {len(featured)}")
+    print(f"  Loaded dark_horses: {len(curated)}")
+    print(f"  Merged+deduped: {len(merged)}")
+    if merged:
+        stats = sync_products(db, merged, args.dry_run)
         print_stats("Products", stats, args.dry_run)
     else:
-        print("  ⚠ No products to sync")
+        print("  x No products to sync")
 
-    # Sync blogs
     if args.blogs:
         print("\n  Syncing blogs...")
         blogs = load_json(BLOGS_FILE)
@@ -294,9 +437,8 @@ Examples:
             stats = sync_blogs(db, blogs, args.dry_run)
             print_stats("Blogs", stats, args.dry_run)
         else:
-            print("  ⚠ No blogs to sync")
+            print("  x No blogs to sync")
 
-    # Sync candidates
     if args.candidates:
         print("\n  Syncing candidates...")
         candidates = load_json(CANDIDATES_FILE)
@@ -304,25 +446,23 @@ Examples:
             stats = sync_candidates(db, candidates, args.dry_run)
             print_stats("Candidates", stats, args.dry_run)
         else:
-            print("  ⚠ No candidates to sync")
+            print("  x No candidates to sync")
 
-    # Summary
+    ensure_indexes(db, args.dry_run)
+
     print("\n  " + "-" * 40)
     if args.dry_run:
         print("  [DRY RUN] No changes made")
     else:
-        print("  ✓ Sync complete!")
-
-        # Show collection counts
-        print(f"\n  Collection counts:")
+        print("  OK Sync complete!")
+        print("\n  Collection counts:")
         print(f"    products:   {db['products'].count_documents({})}")
         if args.blogs:
             print(f"    blogs:      {db['blogs'].count_documents({})}")
         if args.candidates:
             print(f"    candidates: {db['candidates'].count_documents({})}")
-
     print()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

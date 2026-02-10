@@ -288,7 +288,15 @@ class PerplexityClient:
             self._rate_limit()
     
     def _extract_json(self, text: str) -> Union[dict, list, str]:
-        """从文本中提取 JSON"""
+        """从文本中提取 JSON.
+
+        Returns parsed JSON (list or dict) on success.
+        Returns [] on parse failure so callers never receive raw text
+        that masquerades as valid data.
+        """
+        if not text:
+            return []
+
         # 尝试 ```json ... ``` 块
         json_match = re.search(r'```json\s*([\s\S]*?)\s*```', text)
         if json_match:
@@ -296,13 +304,13 @@ class PerplexityClient:
                 return json.loads(json_match.group(1))
             except json.JSONDecodeError:
                 pass
-        
+
         # 尝试直接解析
         try:
             return json.loads(text)
         except json.JSONDecodeError:
             pass
-        
+
         # 尝试找到 JSON 数组
         array_match = re.search(r'\[\s*\{[\s\S]*\}\s*\]', text)
         if array_match:
@@ -310,8 +318,11 @@ class PerplexityClient:
                 return json.loads(array_match.group())
             except json.JSONDecodeError:
                 pass
-        
-        return text
+
+        # All parsing attempts failed — log and return empty list
+        snippet = text[:200].replace('\n', ' ')
+        print(f"  ⚠ _extract_json: could not parse response (first 200 chars): {snippet}")
+        return []
     
     # ════════════════════════════════════════════════════════════════════════════
     # 组合方法：搜索 + 分析

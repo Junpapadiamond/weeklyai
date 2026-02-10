@@ -4,9 +4,11 @@
 """
 
 import os
+import re
 import json
 from datetime import datetime
 from typing import List, Dict, Any, Optional
+from urllib.parse import urlparse
 
 try:
     from pymongo import MongoClient
@@ -93,53 +95,89 @@ class DatabaseHandler:
         self.mysql_conn.commit()
         cursor.close()
     
+    @staticmethod
+    def _build_sync_key(product: Dict[str, Any]) -> str:
+        """Build a stable sync key matching the sync tool / backend strategy.
+
+        Uses normalized domain (strip scheme/www/port, keep first path segment).
+        Falls back to alphanumeric-only lowercase name.
+        """
+        website = (product.get('website') or '').strip()
+        if website:
+            raw = website
+            if not re.match(r'^https?://', raw, re.IGNORECASE) and '.' in raw:
+                raw = f'https://{raw}'
+            try:
+                parsed = urlparse(raw)
+                domain = (parsed.netloc or '').lower()
+                domain = re.sub(r'^www\.', '', domain)
+                domain = domain.split(':')[0]
+                if domain:
+                    path = (parsed.path or '').strip('/')
+                    if path:
+                        first = path.split('/')[0]
+                        if len(first) > 1:
+                            return f'{domain}/{first}'
+                    return domain
+            except Exception:
+                pass
+        name = (product.get('name') or '').strip().lower()
+        return ''.join(c for c in name if c.isalnum())
+
     def save_products(self, products: List[Dict[str, Any]]) -> int:
         """
         保存产品到 MongoDB
-        使用 upsert 避免重复
+        使用 _sync_key upsert 避免重复（与 sync_to_mongodb.py 保持一致）
         """
         if self.mongo_db is None or not products:
             return 0
-        
+
         collection = self.mongo_db.products
         saved_count = 0
-        
+
         for product in products:
             try:
                 # 复制并清理数据
                 doc = {k: v for k, v in product.items() if v is not None}
-                
+
                 # 添加时间戳
                 doc['updated_at'] = datetime.utcnow()
-                
+
                 # 处理 extra 字段（展开或序列化）
                 if 'extra' in doc and isinstance(doc['extra'], dict):
                     doc['extra'] = json.dumps(doc['extra'], ensure_ascii=False)
-                
-                # 使用 name + source 作为唯一标识
+
+                # Build stable sync key (aligned with sync_to_mongodb.py)
+                sync_key = self._build_sync_key(doc)
+                if not sync_key:
+                    print(f"    跳过 (no sync key): {doc.get('name', 'unknown')}")
+                    continue
+                doc['_sync_key'] = sync_key
+
+                # Remove MongoDB ObjectId if present
+                doc.pop('_id', None)
+
+                # Upsert by _sync_key (consistent with sync tool)
                 result = collection.update_one(
-                    {
-                        'name': doc['name'],
-                        'source': doc.get('source', 'unknown')
-                    },
+                    {'_sync_key': sync_key},
                     {
                         '$set': doc,
                         '$setOnInsert': {'created_at': datetime.utcnow()}
                     },
                     upsert=True
                 )
-                
+
                 if result.upserted_id or result.modified_count:
                     saved_count += 1
-                    
+
             except Exception as e:
                 print(f"    保存失败 {product.get('name', 'unknown')}: {e}")
                 continue
-        
+
         # 记录采集日志
         source = products[0].get('source', 'mixed') if products else 'unknown'
         self._log_crawl(source, saved_count, 'success')
-        
+
         return saved_count
     
     def get_trending_products(self, limit: int = 5) -> List[Dict]:

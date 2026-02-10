@@ -36,15 +36,22 @@ _mongo_client = None
 _mongo_db = None
 
 
+def _mongo_uri_configured() -> bool:
+    """Whether MONGO_URI is explicitly configured."""
+    return bool(os.getenv('MONGO_URI'))
+
+
 def get_mongo_db():
-    """Get MongoDB connection (lazy initialization)"""
+    """Get MongoDB connection (lazy initialization)."""
     global _mongo_client, _mongo_db
     if not HAS_MONGO:
+        return None
+    if not _mongo_uri_configured():
         return None
     if _mongo_db is not None:
         return _mongo_db
     try:
-        mongo_uri = os.getenv('MONGO_URI', 'mongodb://localhost:27017/weeklyai')
+        mongo_uri = os.environ['MONGO_URI']
         _mongo_client = MongoClient(mongo_uri, serverSelectionTimeoutMS=3000)
         _mongo_client.admin.command('ping')
         _mongo_db = _mongo_client.get_database()
@@ -300,13 +307,11 @@ class ProductRepository:
 
     @classmethod
     def load_products(cls, filters_module=None) -> List[Dict]:
-        """加载产品数据（带缓存）- 只从 products_featured.json 加载策展产品
+        """加载产品数据（带缓存）。
 
-        重要: 产品数据只来自手动策展的 JSON 文件，不从 MongoDB 或爬虫输出加载。
-        这确保了产品列表的高质量和人工审核。
-
-        参数:
-        - filters_module: 可选的过滤模块，用于规范化和过滤产品
+        优先级:
+        1) 若设置了 MONGO_URI，优先读取 MongoDB（适配 Vercel）。
+        2) 若 MongoDB 不可用或为空，则回退到本地 JSON 逻辑。
         """
         now = datetime.now()
 
@@ -316,16 +321,19 @@ class ProductRepository:
             if age < cls._cache_duration:
                 return cls._cached_products
 
-        # 1. 只从 products_featured.json 加载（策展产品）
-        products = cls._load_from_crawler_file()
+        products: List[Dict] = []
 
-        # 2. 如果没有策展文件，使用示例数据
+        # 1) MongoDB path when configured
+        if _mongo_uri_configured():
+            products = cls.load_from_mongodb()
+
+        # 2) JSON fallback path
         if not products:
-            products = SAMPLE_PRODUCTS.copy()
-
-        # 3. 合并手动策展黑马产品 (dark_horses/ 目录)
-        curated = cls._load_curated_dark_horses()
-        products = cls._merge_curated_products(products, curated, filters_module)
+            products = cls._load_from_crawler_file()
+            if not products:
+                products = SAMPLE_PRODUCTS.copy()
+            curated = cls._load_curated_dark_horses()
+            products = cls._merge_curated_products(products, curated, filters_module)
 
         # 4. 统一字段 & 过滤
         if filters_module:
@@ -672,7 +680,12 @@ class ProductRepository:
 
     @classmethod
     def load_blogs(cls) -> List[Dict]:
-        """加载博客/新闻/讨论数据"""
+        """加载博客/新闻/讨论数据（优先 MongoDB，回退 JSON）。"""
+        if _mongo_uri_configured():
+            blogs = cls.load_blogs_from_mongodb()
+            if blogs:
+                return blogs
+
         if not os.path.exists(BLOGS_NEWS_FILE):
             return []
 
@@ -688,6 +701,27 @@ class ProductRepository:
             return blogs
         except Exception as e:
             print(f"加载博客数据失败: {e}")
+            return []
+
+    @classmethod
+    def load_blogs_from_mongodb(cls) -> List[Dict]:
+        """从 MongoDB 加载博客数据。"""
+        db = get_mongo_db()
+        if db is None:
+            return []
+
+        try:
+            collection = db.blogs
+            blogs = list(collection.find({}, {'_id': 0}).sort('published_at', -1))
+            if not blogs:
+                blogs = list(collection.find({}, {'_id': 0}).sort('created_at', -1))
+
+            for i, b in enumerate(blogs):
+                if '_id' not in b:
+                    b['_id'] = f"blog_{i + 1}"
+            return blogs
+        except Exception as e:
+            print(f"  ⚠ MongoDB blog load failed: {e}")
             return []
 
     @staticmethod

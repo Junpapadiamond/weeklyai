@@ -91,5 +91,17 @@ else
     echo "[$(date +%H:%M:%S)] rss_to_products.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
 fi
 
+# 4. Sync to MongoDB (when MONGO_URI is configured)
+if [ -n "$MONGO_URI" ]; then
+    echo "[$(date +%H:%M:%S)] Running sync_to_mongodb.py --all..." >> "$LOG_DIR/daily_update.log"
+    if $PYTHON_BIN crawler/tools/sync_to_mongodb.py --all >> "$LOG_DIR/daily_update.log" 2>&1; then
+        echo "[$(date +%H:%M:%S)] sync_to_mongodb.py completed successfully" >> "$LOG_DIR/daily_update.log"
+    else
+        echo "[$(date +%H:%M:%S)] sync_to_mongodb.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
+    fi
+else
+    echo "[$(date +%H:%M:%S)] MONGO_URI not set, skipping MongoDB sync" >> "$LOG_DIR/daily_update.log"
+fi
+
 echo "=== WeeklyAI Daily Update Completed at $(date +"%Y-%m-%d %H:%M:%S") ===" >> "$LOG_DIR/daily_update.log"
 echo "" >> "$LOG_DIR/daily_update.log"

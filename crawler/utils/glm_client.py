@@ -417,9 +417,14 @@ class GLMClient:
         return {}
 
     def _extract_json(self, text: str) -> Union[dict, list, str]:
-        """从文本中提取 JSON"""
+        """从文本中提取 JSON.
+
+        Returns parsed JSON (list or dict) on success.
+        Returns [] on parse failure so callers never receive raw text
+        that masquerades as valid data.
+        """
         if not text:
-            return text
+            return []
 
         # 尝试 ```json ... ``` 块
         json_match = re.search(r'```json\s*([\s\S]*?)\s*```', text)
@@ -451,7 +456,10 @@ class GLMClient:
             except json.JSONDecodeError:
                 pass
 
-        return text
+        # All parsing attempts failed — log and return empty list
+        snippet = text[:200].replace('\n', ' ')
+        print(f"  ⚠ _extract_json: could not parse response (first 200 chars): {snippet}")
+        return []
 
     # ════════════════════════════════════════════════════════════════════════════
     # 组合方法：搜索 + 分析

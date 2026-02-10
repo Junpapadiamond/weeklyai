@@ -8,6 +8,23 @@
 version: '3.8'
 
 services:
+  # MongoDB (local dev, mirrors prod runtime store)
+  mongo:
+    image: mongo:7
+    container_name: weeklyai-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - weeklyai-mongo:/data/db
+    networks:
+      - weeklyai-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
   # 前端服务 (Express + EJS)
   frontend:
     build:
@@ -43,8 +60,12 @@ services:
     environment:
       - FLASK_ENV=production
       - DATA_PATH=/data
+      - MONGO_URI=mongodb://mongo:27017/weeklyai
     volumes:
       - weeklyai-data:/data
+    depends_on:
+      mongo:
+        condition: service_healthy
     networks:
       - weeklyai-network
     healthcheck:
@@ -63,16 +84,22 @@ services:
     environment:
       - PERPLEXITY_API_KEY=${PERPLEXITY_API_KEY}
       - DATA_PATH=/data
+      - MONGO_URI=mongodb://mongo:27017/weeklyai
       - TZ=Asia/Shanghai
     volumes:
       - weeklyai-data:/data
       - ./crawler/logs:/app/logs
+    depends_on:
+      mongo:
+        condition: service_healthy
     networks:
       - weeklyai-network
 
 # 共享数据卷
 volumes:
   weeklyai-data:
+    driver: local
+  weeklyai-mongo:
     driver: local
 
 # 网络

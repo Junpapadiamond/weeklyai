@@ -941,10 +941,12 @@ def validate_product(product: dict) -> tuple[bool, str]:
         return False, f"description too short ({len(description)} chars)"
 
     # 4. 检查 why_matters 是否太泛化
+    #    Fix: use OR — reject if contains generic phrase OR is too short.
+    #    Previous AND logic allowed very short generic texts through.
     why_lower = why_matters.lower()
     for generic in GENERIC_WHY_MATTERS:
-        if generic in why_lower and len(why_matters) < 50:
-            return False, f"generic why_matters: contains '{generic}'"
+        if generic in why_lower or len(why_matters) < 30:
+            return False, f"generic why_matters: contains '{generic}' or too short ({len(why_matters)} chars)"
 
     # 5. 检查 why_matters 是否包含具体数字（融资/ARR/用户数）
     has_number = bool(re.search(r'[\$¥€]\d+|ARR|\d+[MBK万亿]|\d+%', why_matters))
@@ -991,6 +993,16 @@ def validate_product(product: dict) -> tuple[bool, str]:
     confidence = product.get("confidence", 1.0)
     if confidence < 0.6:
         return False, f"low confidence ({confidence:.2f})"
+
+    # 10. Default missing categories to ["other"]
+    cats = product.get("categories")
+    if not cats or not isinstance(cats, list) or len(cats) == 0:
+        product["categories"] = ["other"]
+
+    # 11. Default missing/null region
+    region = product.get("region")
+    if not region or not isinstance(region, str) or not region.strip():
+        product["region"] = "\U0001f30d"  # 🌍
 
     return True, "passed"
 

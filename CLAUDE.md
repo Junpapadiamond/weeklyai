@@ -671,4 +671,126 @@ Base URL: `http://localhost:5000/api/v1`
 
 ---
 
-*更新: 2026-01-20 (硬件评判体系+CES硬件产品+去重优化)*
+## MongoDB Migration (JSON → Mongo)
+
+### Architecture
+
+```
+JSON files (source of truth)
+    ↓  sync_to_mongodb.py --all
+MongoDB (runtime store for Vercel)
+    ↓  MONGO_URI env var
+Backend (prefers MongoDB, falls back to JSON)
+```
+
+### How It Works
+
+- **Sync tool** (`crawler/tools/sync_to_mongodb.py`):
+  - Loads `products_featured.json` + all `dark_horses/*.json` (skips `template.json`)
+  - Merges and deduplicates by normalized domain key (same logic as backend)
+  - Upserts into MongoDB `products` collection via `_sync_key`
+  - Also syncs `blogs`, `candidates` with `--blogs`, `--candidates`, or `--all`
+  - Creates indexes with `--ensure-indexes` (also runs automatically after sync)
+
+- **Backend** (`product_repository.py`):
+  - `_mongo_uri_configured()`: returns True only when `MONGO_URI` env var is set and non-empty
+  - `load_products()`: tries MongoDB first when configured, falls back to JSON file loading
+  - `load_blogs()`: same pattern — MongoDB first, JSON fallback
+  - MongoClient is cached at module scope for serverless connection reuse
+
+- **Docker Compose**: includes `mongo:7` service; backend and crawler get `MONGO_URI` automatically
+
+### Environment Variables
+
+| Variable | Where | Example |
+|---|---|---|
+| `MONGO_URI` | Vercel backend | `mongodb+srv://user:pass@cluster/weeklyai?retryWrites=true&w=majority` |
+| `MONGO_URI` | Local dev | `mongodb://localhost:27017/weeklyai` (set by docker-compose) |
+
+When `MONGO_URI` is **not set**, the backend uses JSON files only (zero MongoDB dependency).
+
+### One-Time Migration Runbook
+
+```bash
+# 1. Set MONGO_URI to your target MongoDB
+export MONGO_URI="mongodb+srv://..."
+
+# 2. Dry run to verify
+cd crawler
+python tools/sync_to_mongodb.py --all --dry-run
+
+# 3. Real sync (clears non-curated items first)
+python tools/sync_to_mongodb.py --all --clear-old
+
+# 4. Verify counts
+python -c "
+from pymongo import MongoClient
+import os
+db = MongoClient(os.environ['MONGO_URI']).get_database()
+print(f'products: {db.products.count_documents({})}')
+print(f'blogs: {db.blogs.count_documents({})}')
+"
+```
+
+### Ongoing Sync
+
+After daily crawler runs, sync to MongoDB:
+
+```bash
+python tools/sync_to_mongodb.py --all
+```
+
+### Collections & Indexes
+
+**products**: `_sync_key` (unique), `website`, `dark_horse_index` desc, `final_score` desc, `discovered_at` desc, `categories`, text index on `name`/`description`/`why_matters`
+
+**blogs**: `_sync_key` (unique), `published_at` desc, `created_at` desc
+
+### Tests
+
+```bash
+PYTHONPATH=backend:crawler backend/.venv/bin/python -m pytest tests/test_mongo_migration.py -v
+```
+
+30 tests covering: sync key generation, merge/dedupe, curated product normalization, dark-horse loading, MongoDB vs JSON fallback logic.
+
+---
+
+## Pipeline Data Quality Fixes
+
+### What Was Fixed
+
+| Issue | File | Fix |
+|---|---|---|
+| `_extract_json()` returns raw text on parse failure | `crawler/utils/perplexity_client.py`, `crawler/utils/glm_client.py` | Returns `[]` + logs warning on all parse failures |
+| `why_matters` validation AND→OR bug | `crawler/tools/auto_discover.py` | Reject if contains generic phrase **OR** length < 30 chars |
+| Missing categories on products | `crawler/tools/auto_discover.py` | Default to `["other"]` in `validate_product()` |
+| Bad/null region field | `crawler/tools/auto_discover.py` | Default to globe emoji in `validate_product()` |
+| Conflicting upsert keys (`name+source` vs `_sync_key`) | `crawler/database/db_handler.py` | Aligned to `_sync_key` (normalized domain) everywhere |
+| No MongoDB sync in daily pipeline | `ops/scheduling/daily_update.sh` | Added `sync_to_mongodb.py --all` as final step (when `MONGO_URI` set) |
+
+### Data Repair Script
+
+One-time repair for existing `products_featured.json`:
+
+```bash
+# Preview
+python crawler/tools/repair_data.py --dry-run
+
+# Apply (creates .bak backup automatically)
+python crawler/tools/repair_data.py
+```
+
+Fixes: empty `criteria_met` (backfilled from funding/team/growth signals), missing categories, bad regions, well-known product removal, funding normalization (`funding_total_usd` field added).
+
+### Recommended Migration Order
+
+1. Run `repair_data.py` to clean source data
+2. Run `sync_to_mongodb.py --all --dry-run` to verify counts
+3. Run `sync_to_mongodb.py --all --clear-old` to populate MongoDB
+4. Set `MONGO_URI` in Vercel production
+5. Monitor for 1 week; JSON fallback is automatic if MongoDB fails
+
+---
+
+*更新: 2026-02-10 (MongoDB migration + pipeline data quality fixes)*
