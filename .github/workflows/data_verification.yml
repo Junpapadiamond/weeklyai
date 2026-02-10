@@ -1,0 +1,60 @@
+name: Data Verification
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install crawler deps
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r crawler/requirements.txt
+
+      - name: Run verifier (heuristic)
+        run: |
+          set -euo pipefail
+          python crawler/tools/verify_data_sources.py \
+            --mode heuristic \
+            --check-network none \
+            --report-json /tmp/data_report.json \
+            --report-md /tmp/data_report.md
+
+      - name: Unit tests (verifier)
+        run: |
+          set -euo pipefail
+          python -m unittest tests/test_data_verifier.py
+
+      - name: Publish summary
+        if: always()
+        run: |
+          if [ -f /tmp/data_report.md ]; then
+            cat /tmp/data_report.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No report markdown found." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: weeklyai-data-report
+          path: |
+            /tmp/data_report.json
+            /tmp/data_report.md
+

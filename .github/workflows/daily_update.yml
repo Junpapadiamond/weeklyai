@@ -61,6 +61,41 @@ jobs:
           python main.py --news-only || true
           python tools/rss_to_products.py --input data/blogs_news.json --sources youtube,x,xhs,wechat --enrich-featured || true
 
+      - name: Verify JSON data sources (LLM-assisted)
+        env:
+          PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
+          PERPLEXITY_MODEL: ${{ secrets.PERPLEXITY_MODEL || 'sonar' }}
+          ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
+          GLM_MODEL: ${{ secrets.GLM_MODEL || 'glm-4.7' }}
+          GLM_SEARCH_ENGINE: ${{ secrets.GLM_SEARCH_ENGINE || 'search_pro' }}
+          USE_GLM_FOR_CN: ${{ secrets.ZHIPU_API_KEY && 'true' || 'false' }}
+        run: |
+          set -euo pipefail
+          python crawler/tools/verify_data_sources.py \
+            --mode llm \
+            --check-network logos \
+            --skip-backend-snapshot-check \
+            --report-json /tmp/data_report.json \
+            --report-md /tmp/data_report.md
+
+      - name: Publish verification summary
+        if: always()
+        run: |
+          if [ -f /tmp/data_report.md ]; then
+            cat /tmp/data_report.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No verification report markdown found." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload verification report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: weeklyai-data-report-${{ github.run_number }}
+          path: |
+            /tmp/data_report.json
+            /tmp/data_report.md
+
       - name: Sync snapshot for backend deployment
         run: |
           set -euo pipefail
