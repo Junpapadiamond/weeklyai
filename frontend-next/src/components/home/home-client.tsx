@@ -22,6 +22,7 @@ const DiscoveryDeck = dynamic(() => import("@/components/home/discovery-deck"), 
 
 const FAVORITES_KEY = "weeklyai_favorites_v2";
 const PRODUCTS_PER_PAGE = 12;
+const FAVORITES_EVENT = "weeklyai:favorites";
 
 type HomeClientProps = {
   darkHorses: Product[];
@@ -29,13 +30,16 @@ type HomeClientProps = {
   freshnessLabel: string;
 };
 
-function loadInitialFavorites() {
-  if (typeof window === "undefined") return [] as string[];
+function readFavoritesFromStorage(): string[] {
+  if (typeof window === "undefined") return [];
   try {
-    const stored = window.localStorage.getItem(FAVORITES_KEY);
-    if (!stored) return [];
-    const parsed = JSON.parse(stored) as string[];
-    return Array.isArray(parsed) ? parsed : [];
+    const raw = window.localStorage.getItem(FAVORITES_KEY) ?? "";
+    if (!raw) {
+      return [];
+    }
+
+    const parsed = JSON.parse(raw) as unknown;
+    return Array.isArray(parsed) ? (parsed as string[]) : [];
   } catch {
     return [];
   }
@@ -47,7 +51,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
   const [typeFilter, setTypeFilter] = useState<"all" | "software" | "hardware">("all");
   const [sortBy, setSortBy] = useState<"score" | "date" | "funding">("score");
   const [currentPage, setCurrentPage] = useState(1);
-  const [favorites, setFavorites] = useState<string[]>(loadInitialFavorites);
+  const [favoritesCount, setFavoritesCount] = useState(0);
 
   const [shouldLoadFullProducts, setShouldLoadFullProducts] = useState(false);
 
@@ -81,16 +85,32 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const syncCount = () => setFavoritesCount(readFavoritesFromStorage().length);
+    syncCount();
+
+    const handler = () => syncCount();
+    window.addEventListener("storage", handler);
+    window.addEventListener(FAVORITES_EVENT, handler);
+    return () => {
+      window.removeEventListener("storage", handler);
+      window.removeEventListener(FAVORITES_EVENT, handler);
+    };
+  }, []);
+
   function addFavorite(product: Product) {
     const key = product._id || product.name;
     if (!key) return;
+    if (typeof window === "undefined") return;
 
-    setFavorites((previous) => {
-      if (previous.includes(key)) return previous;
-      const next = [...previous, key];
-      window.localStorage.setItem(FAVORITES_KEY, JSON.stringify(next));
-      return next;
-    });
+    const current = readFavoritesFromStorage();
+    if (current.includes(key)) return;
+    const next = [...current, key];
+    window.localStorage.setItem(FAVORITES_KEY, JSON.stringify(next));
+    setFavoritesCount(next.length);
+    window.dispatchEvent(new Event(FAVORITES_EVENT));
   }
 
   const productPool = useMemo(() => {
@@ -210,7 +230,9 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
 
         <div className="products-grid">
           {filteredDarkHorses.length ? (
-            filteredDarkHorses.map((product) => <ProductCard key={product._id || product.name} product={product} />)
+            filteredDarkHorses.map((product) => (
+              <ProductCard key={product._id || product.name} product={product} compact />
+            ))
           ) : (
             <div className="empty-state">
               <p className="empty-state-text">该筛选下暂无黑马产品。</p>
@@ -308,7 +330,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
               </select>
             </label>
             <button className="favorites-toggle" type="button" aria-label="收藏数量">
-              ❤️ {favorites.length}
+              ❤️ {favoritesCount}
             </button>
           </div>
         </div>

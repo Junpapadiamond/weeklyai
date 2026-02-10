@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans, JetBrains_Mono, Noto_Sans_SC, Space_Grotesk } from "next/font/google";
+import { JetBrains_Mono, Noto_Sans_SC, Plus_Jakarta_Sans } from "next/font/google";
 import { PageShell } from "@/components/layout/page-shell";
 import "./globals.css";
 import "../styles/tokens.css";
 import "../styles/base.css";
 import "../styles/home.css";
 
-const displayFont = Space_Grotesk({
+const displayFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-display",
   weight: ["400", "500", "600", "700"],
@@ -18,7 +18,7 @@ const bodyFont = Noto_Sans_SC({
   weight: ["400", "500", "600", "700"],
 });
 
-const bodyLatinFont = IBM_Plex_Sans({
+const bodyLatinFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-body",
   weight: ["400", "500", "600", "700"],

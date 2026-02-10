@@ -3,40 +3,30 @@
 }
 
 .hero {
-  margin-top: 5.3rem;
+  margin-top: 1.25rem;
   margin-bottom: 1.6rem;
   min-height: 330px;
-  border: 1px solid color-mix(in oklab, var(--primary) 24%, var(--border));
+  border: 1px solid var(--border);
   border-radius: var(--radius-xl);
   overflow: hidden;
   position: relative;
-  box-shadow: var(--shadow-md);
-  background:
-    linear-gradient(126deg, color-mix(in oklab, var(--surface) 92%, var(--primary) 8%) 0%, transparent 58%),
-    linear-gradient(196deg, color-mix(in oklab, var(--surface) 92%, var(--accent) 8%) 0%, transparent 64%),
-    var(--surface);
+  box-shadow: var(--shadow-sm);
+  background: var(--surface);
 }
 
 .hero::after {
-  content: "";
-  position: absolute;
-  inset: auto -12% -42% auto;
-  width: 420px;
-  height: 220px;
-  transform: rotate(-8deg);
-  background: linear-gradient(
-    180deg,
-    color-mix(in oklab, var(--punch) 26%, transparent),
-    transparent
-  );
-  pointer-events: none;
+  content: none;
 }
 
 .hero-art {
   position: absolute;
   inset: 0;
-  opacity: 0.9;
+  opacity: 0.28;
   z-index: 1;
+}
+
+[data-theme="dark"] .hero-art {
+  opacity: 0.18;
 }
 
 .hero-layout {
@@ -57,9 +47,9 @@
   font-size: 0.76rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: color-mix(in oklab, var(--primary) 82%, var(--text));
-  border: 1px solid color-mix(in oklab, var(--primary) 32%, transparent);
-  background: color-mix(in oklab, var(--primary) 10%, transparent);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
   border-radius: var(--radius-pill);
   padding: 0.26rem 0.62rem;
   margin-bottom: 0.86rem;
@@ -105,9 +95,9 @@
 }
 
 .hero-stat {
-  border: 1px solid color-mix(in oklab, var(--primary) 28%, var(--border));
+  border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  background: color-mix(in oklab, var(--surface-strong) 88%, transparent);
+  background: var(--bg-elevated);
   padding: 0.45rem 0.56rem;
   display: grid;
   gap: 0.1rem;
@@ -132,7 +122,7 @@
 }
 
 .hero-signal span {
-  color: color-mix(in oklab, var(--primary) 72%, var(--text));
+  color: var(--primary);
 }
 
 .hero-canvas,
@@ -143,9 +133,39 @@
 }
 
 .hero-canvas--loading {
-  background:
-    linear-gradient(172deg, color-mix(in oklab, var(--primary) 16%, transparent), transparent 65%),
-    linear-gradient(32deg, color-mix(in oklab, var(--accent) 16%, transparent), transparent 62%);
+  background: var(--bg-elevated);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-kicker {
+    animation: waFadeUp 560ms var(--motion-normal) both;
+    animation-delay: 20ms;
+  }
+
+  .hero-title {
+    animation: waFadeUp 560ms var(--motion-normal) both;
+    animation-delay: 70ms;
+  }
+
+  .hero-subtitle {
+    animation: waFadeUp 560ms var(--motion-normal) both;
+    animation-delay: 120ms;
+  }
+
+  .data-freshness {
+    animation: waFadeUp 560ms var(--motion-normal) both;
+    animation-delay: 170ms;
+  }
+
+  .hero-stats {
+    animation: waFadeUp 560ms var(--motion-normal) both;
+    animation-delay: 220ms;
+  }
+
+  .hero-signal {
+    animation: waFadeUp 560ms var(--motion-normal) both;
+    animation-delay: 260ms;
+  }
 }
 
 .title-icon {
