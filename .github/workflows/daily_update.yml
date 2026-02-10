@@ -43,22 +43,23 @@ jobs:
           GLM_MODEL: ${{ secrets.GLM_MODEL || 'glm-4.7' }}
           GLM_SEARCH_ENGINE: ${{ secrets.GLM_SEARCH_ENGINE || 'search_pro' }}
           USE_GLM_FOR_CN: ${{ secrets.ZHIPU_API_KEY && 'true' || 'false' }}
+        working-directory: crawler
         run: |
           set -euo pipefail
           export CONTENT_YEAR="$(date -u +%Y)"
 
-          python crawler/tools/auto_discover.py --region all || true
-          python crawler/tools/auto_publish.py || true
+          python tools/auto_discover.py --region all || true
+          python tools/auto_publish.py || true
 
           # Quality / enrichment pipeline (best-effort, don't fail the whole run)
-          python crawler/tools/backfill_source_urls.py || true
-          python crawler/tools/resolve_websites.py --input crawler/data/products_featured.json --aggressive || true
-          python crawler/tools/validate_websites.py || true
-          python crawler/tools/cleanup_unknowns_and_duplicates.py || true
-          python crawler/tools/fix_logos.py --input crawler/data/products_featured.json || true
+          python tools/backfill_source_urls.py || true
+          python tools/resolve_websites.py --input data/products_featured.json --aggressive || true
+          python tools/validate_websites.py || true
+          python tools/cleanup_unknowns_and_duplicates.py || true
+          python tools/fix_logos.py --input data/products_featured.json || true
 
-          python crawler/main.py --news-only || true
-          python crawler/tools/rss_to_products.py --input crawler/data/blogs_news.json --sources youtube,x,xhs,wechat --enrich-featured || true
+          python main.py --news-only || true
+          python tools/rss_to_products.py --input data/blogs_news.json --sources youtube,x,xhs,wechat --enrich-featured || true
 
       - name: Sync snapshot for backend deployment
         run: |
