@@ -1,6 +1,6 @@
 "use client";
 
-import { PointerEvent, useEffect, useRef, useState } from "react";
+import { PointerEvent, TouchEvent, useEffect, useRef, useState } from "react";
 import type { Product } from "@/types/api";
 import {
   cleanDescription,
@@ -18,6 +18,10 @@ const SWIPE_OUT_OFFSET_BASE = 620;
 const SWIPE_EXIT_MS = 280;
 const SWIPE_RETURN_MS = 220;
 const SWIPE_FEEDBACK_MIN = 24;
+const SWIPE_FLICK_MIN_DISTANCE_TOUCH = 34;
+const SWIPE_FLICK_MIN_DISTANCE_POINTER = 46;
+const SWIPE_FLICK_VELOCITY_TOUCH = 0.48;
+const SWIPE_FLICK_VELOCITY_POINTER = 0.58;
 
 type DiscoveryDeckProps = {
   products: Product[];
@@ -99,6 +103,12 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
   const dragStartX = useRef<number | null>(null);
   const dragStartY = useRef<number | null>(null);
   const dragPointerId = useRef<number | null>(null);
+  const dragTouchId = useRef<number | null>(null);
+  const lastClientX = useRef<number | null>(null);
+  const lastClientY = useRef<number | null>(null);
+  const lastMoveTs = useRef<number | null>(null);
+  const velocityX = useRef(0);
+  const activeGestureInput = useRef<"pointer" | "touch" | null>(null);
   const isSwipeOutRef = useRef(false);
   const swipeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const swipeEchoTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -154,6 +164,12 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
     dragStartX.current = null;
     dragStartY.current = null;
     dragPointerId.current = null;
+    dragTouchId.current = null;
+    lastClientX.current = null;
+    lastClientY.current = null;
+    lastMoveTs.current = null;
+    velocityX.current = 0;
+    activeGestureInput.current = null;
     setIsDragging(false);
     if (!isSwipeOutRef.current) {
       setDragX(0);
@@ -202,19 +218,81 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
       dragStartX.current = null;
       dragStartY.current = null;
       dragPointerId.current = null;
+      dragTouchId.current = null;
+      lastClientX.current = null;
+      lastClientY.current = null;
+      lastMoveTs.current = null;
+      velocityX.current = 0;
+      activeGestureInput.current = null;
       swipeTimerRef.current = null;
     }, SWIPE_EXIT_MS);
+  }
+
+  function beginDrag(clientX: number, clientY: number) {
+    dragStartX.current = clientX;
+    dragStartY.current = clientY;
+    lastClientX.current = clientX;
+    lastClientY.current = clientY;
+    lastMoveTs.current = Date.now();
+    velocityX.current = 0;
+    setIsDragging(true);
+    setDragX(0);
+    setDragY(0);
+  }
+
+  function updateDrag(clientX: number, clientY: number) {
+    if (!isDragging || dragStartX.current === null || dragStartY.current === null) return;
+
+    const now = Date.now();
+    if (lastClientX.current !== null && lastMoveTs.current !== null) {
+      const dt = now - lastMoveTs.current;
+      if (dt > 0) {
+        const vx = (clientX - lastClientX.current) / dt;
+        // Smooth velocity to avoid noisy spikes while keeping flick detection responsive.
+        velocityX.current = velocityX.current * 0.56 + vx * 0.44;
+      }
+    }
+    lastClientX.current = clientX;
+    lastClientY.current = clientY;
+    lastMoveTs.current = now;
+
+    const delta = clientX - dragStartX.current;
+    const deltaY = clientY - dragStartY.current;
+    setDragX(delta);
+    setDragY(deltaY);
+  }
+
+  function maybeSwipeByGesture(clientX: number, pointerType: "touch" | "mouse" | "pen") {
+    if (!isDragging || dragStartX.current === null) {
+      resetDrag();
+      return;
+    }
+
+    const delta = clientX - dragStartX.current;
+    const isTouch = pointerType === "touch";
+    const threshold = isTouch ? SWIPE_THRESHOLD_TOUCH : SWIPE_THRESHOLD_POINTER;
+    const flickMinDistance = isTouch ? SWIPE_FLICK_MIN_DISTANCE_TOUCH : SWIPE_FLICK_MIN_DISTANCE_POINTER;
+    const flickVelocity = isTouch ? SWIPE_FLICK_VELOCITY_TOUCH : SWIPE_FLICK_VELOCITY_POINTER;
+    const absDelta = Math.abs(delta);
+    const absVelocity = Math.abs(velocityX.current);
+    const shouldSwipe = absDelta >= threshold || (absDelta >= flickMinDistance && absVelocity >= flickVelocity);
+
+    if (shouldSwipe) {
+      setIsDragging(false);
+      animateSwipe(delta > 0 ? "right" : "left");
+      return;
+    }
+
+    resetDrag();
   }
 
   function handlePointerDown(event: PointerEvent<HTMLElement>) {
     if (isSwipeOutRef.current || swipeOutDirection) return;
     if (event.pointerType === "mouse" && event.button !== 0) return;
-    dragStartX.current = event.clientX;
-    dragStartY.current = event.clientY;
+    if (activeGestureInput.current === "touch") return;
+    activeGestureInput.current = "pointer";
     dragPointerId.current = event.pointerId;
-    setIsDragging(true);
-    setDragX(0);
-    setDragY(0);
+    beginDrag(event.clientX, event.clientY);
     try {
       event.currentTarget.setPointerCapture(event.pointerId);
     } catch {
@@ -225,11 +303,8 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
   function handlePointerMove(event: PointerEvent<HTMLElement>) {
     if (isSwipeOutRef.current || swipeOutDirection) return;
     if (dragPointerId.current !== event.pointerId) return;
-    if (!isDragging || dragStartX.current === null || dragStartY.current === null) return;
-    const delta = event.clientX - dragStartX.current;
-    const deltaY = event.clientY - dragStartY.current;
-    setDragX(delta);
-    setDragY(deltaY);
+    if (activeGestureInput.current !== "pointer") return;
+    updateDrag(event.clientX, event.clientY);
   }
 
   function handlePointerUp(event: PointerEvent<HTMLElement>) {
@@ -237,31 +312,67 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
       resetDrag();
       return;
     }
-    if (!isDragging || dragStartX.current === null || dragStartY.current === null) {
-      resetDrag();
-      return;
-    }
-
-    const delta = event.clientX - dragStartX.current;
-    const threshold = event.pointerType === "touch" ? SWIPE_THRESHOLD_TOUCH : SWIPE_THRESHOLD_POINTER;
-    if (Math.abs(delta) >= threshold) {
-      dragStartX.current = null;
-      dragPointerId.current = null;
-      setIsDragging(false);
-      try {
-        event.currentTarget.releasePointerCapture(event.pointerId);
-      } catch {
-        // no-op
-      }
-      animateSwipe(delta > 0 ? "right" : "left");
-      return;
-    }
+    dragPointerId.current = null;
     try {
       event.currentTarget.releasePointerCapture(event.pointerId);
     } catch {
       // no-op
     }
-    resetDrag();
+    maybeSwipeByGesture(event.clientX, event.pointerType as "touch" | "mouse" | "pen");
+  }
+
+  function handleLostPointerCapture(event: PointerEvent<HTMLElement>) {
+    if (activeGestureInput.current !== "pointer") return;
+    if (dragPointerId.current === null) return;
+    if (event.pointerId !== dragPointerId.current) return;
+
+    dragPointerId.current = null;
+    const clientX = lastClientX.current ?? dragStartX.current ?? event.clientX;
+    maybeSwipeByGesture(clientX, event.pointerType as "touch" | "mouse" | "pen");
+  }
+
+  function findTouchById(event: TouchEvent<HTMLElement>, touchId: number) {
+    for (const touch of Array.from(event.changedTouches)) {
+      if (touch.identifier === touchId) return touch;
+    }
+    for (const touch of Array.from(event.touches)) {
+      if (touch.identifier === touchId) return touch;
+    }
+    return null;
+  }
+
+  function handleTouchStart(event: TouchEvent<HTMLElement>) {
+    if (isSwipeOutRef.current || swipeOutDirection) return;
+    if (activeGestureInput.current === "pointer") return;
+    const firstTouch = event.changedTouches[0];
+    if (!firstTouch) return;
+    activeGestureInput.current = "touch";
+    dragTouchId.current = firstTouch.identifier;
+    beginDrag(firstTouch.clientX, firstTouch.clientY);
+  }
+
+  function handleTouchMove(event: TouchEvent<HTMLElement>) {
+    if (isSwipeOutRef.current || swipeOutDirection) return;
+    if (activeGestureInput.current !== "touch") return;
+    if (dragTouchId.current === null) return;
+    const touch = findTouchById(event, dragTouchId.current);
+    if (!touch) return;
+    updateDrag(touch.clientX, touch.clientY);
+  }
+
+  function handleTouchEnd(event: TouchEvent<HTMLElement>) {
+    if (activeGestureInput.current !== "touch") {
+      resetDrag();
+      return;
+    }
+    if (dragTouchId.current === null) {
+      resetDrag();
+      return;
+    }
+    const touch = findTouchById(event, dragTouchId.current);
+    const clientX = touch?.clientX ?? (lastClientX.current ?? dragStartX.current ?? 0);
+    dragTouchId.current = null;
+    maybeSwipeByGesture(clientX, "touch");
   }
 
   if (!stack.length) {
@@ -348,7 +459,11 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
           onPointerCancel={resetDrag}
-          onLostPointerCapture={resetDrag}
+          onLostPointerCapture={handleLostPointerCapture}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onTouchCancel={resetDrag}
         >
           <div className={`swipe-card__fade ${feedbackDirection ? `is-${feedbackDirection}` : ""}`} style={{ opacity: fadeOverlayOpacity }} aria-hidden="true" />
 
