@@ -20,6 +20,7 @@ let hasDarkhorseData = true;
 // Sort and filter state
 let currentSort = 'score';
 let currentTypeFilter = 'all';
+let currentDirectionFilter = 'all';
 
 // Favorites stored in localStorage
 const FAVORITES_KEY = 'weeklyai_favorites';
@@ -65,6 +66,45 @@ const LEADERS_CATEGORY_ORDER = [
 let leadersCategoriesData = null;
 let leadersActiveFilter = 'all';
 
+const CATEGORY_ALIASES = {
+    'ai coding': 'coding',
+    'ai 基础设施': 'other',
+    'ai 硬件': 'hardware',
+    'ai 客服': 'agent',
+    'enterprise': 'other',
+    'world model': 'vision'
+};
+
+const DIRECTION_META = {
+    voice: { label: '🎤 语音', tag: '语音' },
+    vision: { label: '👁️ 视觉', tag: '视觉' },
+    driving: { label: '🚗 驾驶', tag: '驾驶' },
+    robotics: { label: '🤖 机器人', tag: '机器人' },
+    chip: { label: '🧠 芯片/算力', tag: '芯片/算力' },
+    agent: { label: '🧩 Agent', tag: 'Agent' },
+    coding: { label: '💻 编程开发', tag: '编程' },
+    writing: { label: '✍️ 写作内容', tag: '写作' },
+    finance: { label: '💰 金融科技', tag: '金融' },
+    healthcare: { label: '🏥 医疗健康', tag: '医疗' },
+    education: { label: '📚 教育学习', tag: '教育' }
+};
+
+const DIRECTION_ORDER = [
+    'voice',
+    'vision',
+    'driving',
+    'robotics',
+    'chip',
+    'agent',
+    'coding',
+    'writing',
+    'finance',
+    'healthcare',
+    'education'
+];
+
+const DIRECTION_CORE_KEYS = ['voice', 'vision', 'driving'];
+
 function normalizeWebsite(url) {
     if (!url) return '';
     const trimmed = String(url).trim();
@@ -89,6 +129,201 @@ function isPlaceholderValue(value) {
     const normalized = String(value).trim().toLowerCase();
     if (!normalized) return true;
     return PLACEHOLDER_VALUES.has(normalized);
+}
+
+function normalizeCategoryId(value) {
+    if (!value) return '';
+    const normalized = String(value).trim().toLowerCase();
+    if (!normalized) return '';
+    return CATEGORY_ALIASES[normalized] || normalized;
+}
+
+function getNormalizedProductCategories(product) {
+    const rawCategories = Array.isArray(product.categories) ? product.categories : [];
+    const categorySet = new Set();
+
+    rawCategories.forEach((cat) => {
+        const normalized = normalizeCategoryId(cat);
+        if (normalized) categorySet.add(normalized);
+    });
+
+    const primary = normalizeCategoryId(product.category);
+    if (primary) categorySet.add(primary);
+
+    return categorySet;
+}
+
+function getProductCorpusText(product) {
+    const rawCategories = Array.isArray(product.categories) ? product.categories : [];
+    return [
+        product.name,
+        product.description,
+        product.why_matters,
+        product.latest_news,
+        product.search_keyword,
+        product.hardware_category,
+        product.use_case,
+        product.form_factor,
+        ...rawCategories,
+        product.category
+    ]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase();
+}
+
+function isHardwareProduct(product) {
+    if (!product) return false;
+
+    const categories = getNormalizedProductCategories(product);
+    if (product.is_hardware || categories.has('hardware')) return true;
+
+    if (product.hardware_category) return true;
+
+    const text = getProductCorpusText(product);
+    return /(chip|semiconductor|robot|robotics|humanoid|drone|wearable|hardware|硬件|芯片|机器人|眼镜|吊坠|ring|glasses)/i.test(text);
+}
+
+function inferProductDirections(product) {
+    const categories = getNormalizedProductCategories(product);
+    const text = getProductCorpusText(product);
+    const hardwareCategory = String(product.hardware_category || '').toLowerCase();
+    const useCase = String(product.use_case || '').toLowerCase();
+    const directions = [];
+
+    if (
+        categories.has('voice') ||
+        /voice|audio|speech|asr|tts|podcast|call|phone|语音|音频|语音识别|语音合成/.test(text)
+    ) {
+        directions.push('voice');
+    }
+
+    if (
+        categories.has('image') ||
+        categories.has('video') ||
+        categories.has('vision') ||
+        /\bvision\b|\bvisual\b|\bimage\b|\bvideo\b|\bcamera\b|\bocr\b|\bmultimodal\b|\bar\b|\bvr\b|\bglasses\b|图像|视觉|视频|相机|识别|多模态|眼镜/.test(text)
+    ) {
+        directions.push('vision');
+    }
+
+    if (
+        /\bdrive\b|\bdriving\b|autonomous|self-driving|adas|vehicle|车载|自动驾驶|无人驾驶|智驾/.test(text)
+    ) {
+        directions.push('driving');
+    }
+
+    if (
+        hardwareCategory === 'robotics' ||
+        /robot|robotics|humanoid|embodied|具身|机器人/.test(text)
+    ) {
+        directions.push('robotics');
+    }
+
+    if (
+        hardwareCategory === 'ai_chip' ||
+        hardwareCategory === 'edge_ai' ||
+        /chip|semiconductor|gpu|npu|edge ai|芯片|半导体|算力/.test(text)
+    ) {
+        directions.push('chip');
+    }
+
+    if (
+        categories.has('agent') ||
+        /agent|workflow|automation|assistant|copilot|智能体|自动化|代理/.test(text)
+    ) {
+        directions.push('agent');
+    }
+
+    if (
+        categories.has('coding') ||
+        /\bcode\b|\bcoding\b|\bdeveloper\b|devtool|\bide\b|programming|编程|开发|代码|开发者/.test(text)
+    ) {
+        directions.push('coding');
+    }
+
+    if (
+        categories.has('writing') ||
+        /writing|copywriting|content|blog|文案|写作|内容创作/.test(text)
+    ) {
+        directions.push('writing');
+    }
+
+    if (
+        categories.has('finance') ||
+        /finance|fintech|trading|bank|payment|金融|理财|投顾/.test(text)
+    ) {
+        directions.push('finance');
+    }
+
+    if (
+        categories.has('healthcare') ||
+        useCase === 'health_monitoring' ||
+        /health|medical|clinic|hospital|医疗|健康|诊疗/.test(text)
+    ) {
+        directions.push('healthcare');
+    }
+
+    if (
+        categories.has('education') ||
+        /education|learning|tutor|classroom|课程|教育|学习|教学/.test(text)
+    ) {
+        directions.push('education');
+    }
+
+    return Array.from(new Set(directions));
+}
+
+function getDirectionLabel(directionKey) {
+    return DIRECTION_META[directionKey]?.label || directionKey;
+}
+
+function getDirectionTagName(directionKey) {
+    return DIRECTION_META[directionKey]?.tag || directionKey;
+}
+
+function syncDirectionFilterOptions(products) {
+    if (!elements.directionFilter) return;
+
+    const directionCounts = {};
+    products.forEach((product) => {
+        inferProductDirections(product).forEach((direction) => {
+            directionCounts[direction] = (directionCounts[direction] || 0) + 1;
+        });
+    });
+
+    const availableDirections = DIRECTION_ORDER.filter((direction) => {
+        return DIRECTION_CORE_KEYS.includes(direction) || (directionCounts[direction] || 0) > 0;
+    });
+
+    const optionsHtml = [
+        '<option value="all">全部方向</option>',
+        ...availableDirections.map((direction) => {
+            const count = directionCounts[direction] || 0;
+            const suffix = count > 0 ? ` (${count})` : '';
+            return `<option value="${direction}">${getDirectionLabel(direction)}${suffix}</option>`;
+        })
+    ].join('');
+
+    elements.directionFilter.innerHTML = optionsHtml;
+
+    if (currentDirectionFilter !== 'all' && !availableDirections.includes(currentDirectionFilter)) {
+        currentDirectionFilter = 'all';
+    }
+    elements.directionFilter.value = currentDirectionFilter;
+}
+
+function applyTierFilter(products) {
+    if (currentTier === 'darkhorse') {
+        return products.filter((p) => (p.dark_horse_index || 0) >= 4);
+    }
+    if (currentTier === 'rising') {
+        return products.filter((p) => {
+            const score = p.dark_horse_index || 0;
+            return score >= 2 && score <= 3;
+        });
+    }
+    return products;
 }
 
 // ========== DOM 元素 ==========
@@ -121,6 +356,7 @@ const elements = {
     // Sort/Filter controls
     sortBy: document.getElementById('sortBy'),
     typeFilter: document.getElementById('typeFilter'),
+    directionFilter: document.getElementById('directionFilter'),
     showFavoritesBtn: document.getElementById('showFavoritesBtn'),
     favoritesCount: document.getElementById('favoritesCount'),
     // Modal
@@ -935,11 +1171,7 @@ async function loadDarkHorseProducts() {
 function filterDarkHorseByType(products, type) {
     if (type === 'all') return products;
     return products.filter(p => {
-        const categories = p.categories || [];
-        const isHardware = categories.includes('hardware') ||
-            p.category === 'hardware' ||
-            (p.description && p.description.toLowerCase().includes('chip')) ||
-            (p.description && p.description.toLowerCase().includes('robot'));
+        const isHardware = isHardwareProduct(p);
         return type === 'hardware' ? isHardware : !isHardware;
     });
 }
@@ -1014,25 +1246,20 @@ function initLoadMore() {
 }
 
 function applyFiltersAndRender(append = false) {
-    let products = [...allProductsCache];
+    let products = applyTierFilter([...allProductsCache]);
 
-    // 按 tier 筛选
-    if (currentTier === 'darkhorse') {
-        products = products.filter(p => (p.dark_horse_index || 0) >= 4);
-    } else if (currentTier === 'rising') {
-        products = products.filter(p => {
-            const score = p.dark_horse_index || 0;
-            return score >= 2 && score <= 3;
+    // 一级分类筛选（软件/硬件）
+    if (currentTypeFilter !== 'all') {
+        products = products.filter((p) => {
+            const isHardware = isHardwareProduct(p);
+            return currentTypeFilter === 'hardware' ? isHardware : !isHardware;
         });
     }
 
-    // 按类型筛选
-    if (currentTypeFilter !== 'all') {
-        products = products.filter(p => {
-            const categories = p.categories || [];
-            const isHardware = categories.includes('hardware') || p.category === 'hardware';
-            return currentTypeFilter === 'hardware' ? isHardware : !isHardware;
-        });
+    // 二级方向筛选（语音/视觉/驾驶等）
+    syncDirectionFilterOptions(products);
+    if (currentDirectionFilter !== 'all') {
+        products = products.filter((p) => inferProductDirections(p).includes(currentDirectionFilter));
     }
 
     // 排序
@@ -1144,10 +1371,7 @@ function createDarkHorseCard(product) {
     const region = product.region || '';
 
     // 判断是否为硬件产品
-    const isHardware = categories.includes('hardware') ||
-        product.category === 'hardware' ||
-        (description && description.toLowerCase().includes('chip')) ||
-        (description && description.toLowerCase().includes('robot'));
+    const isHardware = isHardwareProduct(product);
 
     const categoryTags = categories.slice(0, 2).map(cat =>
         `<span class="darkhorse-tag">${getCategoryName(cat)}</span>`
@@ -1655,8 +1879,11 @@ function createProductListItem(product, rank) {
 
 // ========== 辅助函数 ==========
 function getCategoryName(categoryId) {
+    const normalized = normalizeCategoryId(categoryId);
     const categoryNames = {
+        'software': '软件应用',
         'coding': '编程开发',
+        'agent': '智能体',
         'voice': '语音识别',
         'finance': '金融科技',
         'image': '图像处理',
@@ -1665,9 +1892,11 @@ function getCategoryName(categoryId) {
         'healthcare': '医疗健康',
         'education': '教育学习',
         'hardware': '硬件设备',
+        'enterprise': '企业服务',
+        'vision': '视觉理解',
         'other': '其他'
     };
-    return categoryNames[categoryId] || categoryId;
+    return categoryNames[normalized] || categoryId;
 }
 
 function formatNumber(num) {
@@ -1871,6 +2100,15 @@ function initSortFilter() {
     if (elements.typeFilter) {
         elements.typeFilter.addEventListener('change', (e) => {
             currentTypeFilter = e.target.value;
+            currentDirectionFilter = 'all';
+            currentPage = 1;
+            applyFiltersAndRender();
+        });
+    }
+
+    if (elements.directionFilter) {
+        elements.directionFilter.addEventListener('change', (e) => {
+            currentDirectionFilter = e.target.value;
             currentPage = 1;
             applyFiltersAndRender();
         });
@@ -2207,6 +2445,9 @@ function createProductCardWithFavorite(product, showBadge = false) {
     const categoryTags = categories.slice(0, 2).map(cat =>
         `<span class="product-tag">${getCategoryName(cat)}</span>`
     ).join('');
+    const directionTags = inferProductDirections(product).slice(0, 2).map(direction =>
+        `<span class="product-tag product-tag--direction">${getDirectionTagName(direction)}</span>`
+    ).join('');
 
     const name = product.name || '未命名';
     const fundingTotal = product.funding_total || '';
@@ -2233,10 +2474,7 @@ function createProductCardWithFavorite(product, showBadge = false) {
     }
 
     // Category pill for hardware/software
-    const isHardware = categories.includes('hardware') ||
-        product.category === 'hardware' ||
-        (product.description && product.description.toLowerCase().includes('chip')) ||
-        (product.description && product.description.toLowerCase().includes('robot'));
+    const isHardware = isHardwareProduct(product);
     const categoryPill = isHardware
         ? '<span class="category-pill category-pill--hardware"><i data-lucide="cpu" style="width:12px;height:12px;"></i> 硬件</span>'
         : '<span class="category-pill category-pill--software"><i data-lucide="code" style="width:12px;height:12px;"></i> 软件</span>';
@@ -2269,6 +2507,7 @@ function createProductCardWithFavorite(product, showBadge = false) {
                 </div>
                 <div class="product-tags">
                     ${categoryTags}
+                    ${directionTags}
                 </div>
             </div>
         </div>

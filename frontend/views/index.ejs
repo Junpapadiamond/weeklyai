@@ -164,16 +164,25 @@
                         <label for="sortBy">排序:</label>
                         <select id="sortBy" class="sort-select">
                             <option value="score">🔥 热度</option>
-                            <option value="date">🕐 最新</option>
+                            <option value="date">🕐 时间线</option>
                             <option value="funding">💰 融资</option>
                         </select>
                     </div>
                     <div class="filter-control">
-                        <label for="typeFilter">类型:</label>
+                        <label for="typeFilter">一级:</label>
                         <select id="typeFilter" class="filter-select">
                             <option value="all">全部</option>
                             <option value="software">💻 软件</option>
                             <option value="hardware">🔧 硬件</option>
+                        </select>
+                    </div>
+                    <div class="filter-control">
+                        <label for="directionFilter">方向:</label>
+                        <select id="directionFilter" class="filter-select filter-select--wide">
+                            <option value="all">全部方向</option>
+                            <option value="voice">🎤 语音</option>
+                            <option value="vision">👁️ 视觉</option>
+                            <option value="driving">🚗 驾驶</option>
                         </select>
                     </div>
                     <button class="favorites-toggle" id="showFavoritesBtn" title="显示收藏">

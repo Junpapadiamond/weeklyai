@@ -1194,6 +1194,12 @@ body::after {
     border: 1px solid rgba(29, 78, 216, 0.16);
 }
 
+.product-tag--direction {
+    background: rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.28);
+    color: #047857;
+}
+
 .product-tag--pending {
     background: rgba(234, 179, 8, 0.14);
     border-color: rgba(234, 179, 8, 0.28);
@@ -2278,6 +2284,8 @@ body::after {
     display: flex;
     align-items: center;
     gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 }
 
 /* ========== Load More ========== */
@@ -2367,6 +2375,10 @@ body::after {
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235b6f8b' stroke-width='2'><polyline points='6 9 12 15 18 9'/></svg>");
     background-repeat: no-repeat;
     background-position: right 0.6rem center;
+}
+
+.filter-select--wide {
+    min-width: 170px;
 }
 
 .sort-select:hover,
@@ -2905,6 +2917,10 @@ body::after {
     .sort-select,
     .filter-select {
         flex: 1;
+    }
+
+    .filter-select--wide {
+        min-width: 0;
     }
 
     .favorites-toggle {
@@ -3623,6 +3639,12 @@ body::after {
     background: rgba(16, 185, 129, 0.15);
     border-left-color: rgba(16, 185, 129, 0.5);
     color: #34d399;
+}
+
+[data-theme="dark"] .product-tag--direction {
+    background: rgba(16, 185, 129, 0.16);
+    border-color: rgba(16, 185, 129, 0.38);
+    color: #6ee7b7;
 }
 
 /* Dark mode for swipe card hover */
