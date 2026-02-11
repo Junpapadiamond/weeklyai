@@ -4,6 +4,7 @@ import useSWR from "swr";
 import { useMemo, useState } from "react";
 import { getBlogsClient } from "@/lib/api-client";
 import { SmartLogo } from "@/components/common/smart-logo";
+import { FavoriteButton } from "@/components/favorites/favorite-button";
 import {
   cleanDescription,
   getFreshnessLabel,
@@ -100,6 +101,7 @@ function BlogCard({ item }: { item: BlogPost }) {
         <p className="product-card__desc">{cleanDescription(item.description)}</p>
 
         <div className="product-card__actions blog-card__actions">
+          <FavoriteButton blog={item} />
           {hasWebsite ? (
             <a className="link-btn link-btn--card" href={website} target="_blank" rel="noopener noreferrer">
               原文

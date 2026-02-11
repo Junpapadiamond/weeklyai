@@ -3,7 +3,9 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
-import { Flame, Newspaper, Search, Sparkles } from "lucide-react";
+import { Heart, Flame, Newspaper, Search, Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
+import { countFavorites, openFavoritesPanel, subscribeFavorites } from "@/lib/favorites";
 
 const ThemeToggle = dynamic(() => import("@/components/layout/theme-toggle").then((mod) => mod.ThemeToggle), {
   ssr: false,
@@ -17,6 +19,13 @@ const navItems = [
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const [favoritesCount, setFavoritesCount] = useState(0);
+
+  useEffect(() => {
+    const sync = () => setFavoritesCount(countFavorites());
+    sync();
+    return subscribeFavorites(sync);
+  }, []);
 
   return (
     <header className="navbar">
@@ -43,7 +52,13 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <ThemeToggle />
+        <div className="nav-actions">
+          <button className="nav-favorites" type="button" onClick={() => openFavoritesPanel("product")} aria-label="打开收藏夹">
+            <Heart size={16} />
+            <span>收藏 {favoritesCount}</span>
+          </button>
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );

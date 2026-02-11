@@ -1,12 +1,15 @@
 import { describe, expect, it } from "vitest";
 import {
   filterProducts,
+  getDirectionLabel,
   getFreshnessLabel,
   getLogoCandidates,
   getLogoFallbacks,
+  getProductDirections,
   getMonogram,
   getTierTone,
   isValidLogoSource,
+  normalizeDirectionToken,
   normalizeLogoSource,
   normalizeWebsite,
   shouldRenderLogoImage,
@@ -109,6 +112,27 @@ describe("product-utils", () => {
 
     const sorted = sortProducts(products, "funding");
     expect(sorted[0]?.name).toBe("B");
+  });
+
+  it("normalizes product directions for second-level filtering", () => {
+    expect(normalizeDirectionToken("AI voice assistant")).toBe("voice");
+    expect(normalizeDirectionToken("智能驾驶")).toBe("driving");
+    expect(getDirectionLabel("ai_chip")).toBe("AI芯片");
+
+    const directions = getProductDirections({
+      name: "Test",
+      description: "x",
+      category: "agent",
+      categories: ["voice", "hardware"],
+      hardware_category: "robotics",
+      use_case: "智能驾驶",
+    });
+
+    expect(directions).toContain("agent");
+    expect(directions).toContain("voice");
+    expect(directions).toContain("robotics");
+    expect(directions).toContain("driving");
+    expect(directions).not.toContain("hardware");
   });
 
   it("generates freshness labels from available dates", () => {

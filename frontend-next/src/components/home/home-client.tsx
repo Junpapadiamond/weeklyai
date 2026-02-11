@@ -8,7 +8,8 @@ import useSWR from "swr";
 import type { Product } from "@/types/api";
 import { ProductCard } from "@/components/product/product-card";
 import { getWeeklyTopClient } from "@/lib/client-home-api";
-import { filterProducts, isHardware, sortProducts } from "@/lib/product-utils";
+import { addProductFavorite, countFavorites, openFavoritesPanel, subscribeFavorites } from "@/lib/favorites";
+import { filterProducts, getDirectionLabel, getProductDirections, isHardware, sortProducts } from "@/lib/product-utils";
 
 const HeroCanvas = dynamic(() => import("@/components/home/hero-canvas"), {
   ssr: false,
@@ -20,9 +21,7 @@ const DiscoveryDeck = dynamic(() => import("@/components/home/discovery-deck"), 
   loading: () => <div className="swipe-card is-active">加载探索卡片中...</div>,
 });
 
-const FAVORITES_KEY = "weeklyai_favorites_v2";
 const PRODUCTS_PER_PAGE = 12;
-const FAVORITES_EVENT = "weeklyai:favorites";
 
 type HomeClientProps = {
   darkHorses: Product[];
@@ -30,25 +29,11 @@ type HomeClientProps = {
   freshnessLabel: string;
 };
 
-function readFavoritesFromStorage(): string[] {
-  if (typeof window === "undefined") return [];
-  try {
-    const raw = window.localStorage.getItem(FAVORITES_KEY) ?? "";
-    if (!raw) {
-      return [];
-    }
-
-    const parsed = JSON.parse(raw) as unknown;
-    return Array.isArray(parsed) ? (parsed as string[]) : [];
-  } catch {
-    return [];
-  }
-}
-
 export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClientProps) {
   const [darkFilter, setDarkFilter] = useState<"all" | "hardware" | "software">("all");
   const [tierFilter, setTierFilter] = useState<"all" | "darkhorse" | "rising">("all");
   const [typeFilter, setTypeFilter] = useState<"all" | "software" | "hardware">("all");
+  const [directionFilter, setDirectionFilter] = useState("all");
   const [sortBy, setSortBy] = useState<"score" | "date" | "funding">("score");
   const [currentPage, setCurrentPage] = useState(1);
   const [favoritesCount, setFavoritesCount] = useState(0);
@@ -86,31 +71,15 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
   }, []);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const syncCount = () => setFavoritesCount(readFavoritesFromStorage().length);
+    const syncCount = () => setFavoritesCount(countFavorites());
     syncCount();
-
-    const handler = () => syncCount();
-    window.addEventListener("storage", handler);
-    window.addEventListener(FAVORITES_EVENT, handler);
-    return () => {
-      window.removeEventListener("storage", handler);
-      window.removeEventListener(FAVORITES_EVENT, handler);
-    };
+    return subscribeFavorites(syncCount);
   }, []);
 
   function addFavorite(product: Product) {
-    const key = product._id || product.name;
-    if (!key) return;
-    if (typeof window === "undefined") return;
-
-    const current = readFavoritesFromStorage();
-    if (current.includes(key)) return;
-    const next = [...current, key];
-    window.localStorage.setItem(FAVORITES_KEY, JSON.stringify(next));
-    setFavoritesCount(next.length);
-    window.dispatchEvent(new Event(FAVORITES_EVENT));
+    if (addProductFavorite(product)) {
+      setFavoritesCount(countFavorites());
+    }
   }
 
   const productPool = useMemo(() => {
@@ -130,13 +99,44 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
     });
   }, [darkFilter, darkHorses]);
 
+  const directionOptions = useMemo(() => {
+    const filtered = filterProducts(productPool, {
+      tier: tierFilter,
+      type: typeFilter,
+    });
+    const counts = new Map<string, number>();
+
+    for (const product of filtered) {
+      for (const direction of getProductDirections(product)) {
+        counts.set(direction, (counts.get(direction) || 0) + 1);
+      }
+    }
+
+    return [...counts.entries()]
+      .map(([value, count]) => ({
+        value,
+        count,
+        label: getDirectionLabel(value) || value,
+      }))
+      .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label, "zh-CN"));
+  }, [productPool, tierFilter, typeFilter]);
+
+  const activeDirectionFilter =
+    directionFilter === "all" || directionOptions.some((option) => option.value === directionFilter)
+      ? directionFilter
+      : "all";
+
   const trendingFiltered = useMemo(() => {
     const filtered = filterProducts(productPool, {
       tier: tierFilter,
       type: typeFilter,
     });
-    return sortProducts(filtered, sortBy);
-  }, [productPool, sortBy, tierFilter, typeFilter]);
+    const directionalFiltered =
+      activeDirectionFilter === "all"
+        ? filtered
+        : filtered.filter((product) => getProductDirections(product).includes(activeDirectionFilter));
+    return sortProducts(directionalFiltered, sortBy);
+  }, [activeDirectionFilter, productPool, sortBy, tierFilter, typeFilter]);
 
   const visibleProducts = useMemo(() => {
     return trendingFiltered.slice(0, currentPage * PRODUCTS_PER_PAGE);
@@ -316,11 +316,12 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
               </select>
             </label>
             <label>
-              类型
+              一级分类
               <select
                 value={typeFilter}
                 onChange={(event) => {
                   setTypeFilter(event.target.value as typeof typeFilter);
+                  setDirectionFilter("all");
                   setCurrentPage(1);
                 }}
               >
@@ -329,7 +330,29 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
                 <option value="hardware">硬件</option>
               </select>
             </label>
-            <button className="favorites-toggle" type="button" aria-label="收藏数量">
+            <label>
+              二级方向
+              <select
+                value={activeDirectionFilter}
+                onChange={(event) => {
+                  setDirectionFilter(event.target.value);
+                  setCurrentPage(1);
+                }}
+              >
+                <option value="all">全部方向</option>
+                {directionOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label} ({option.count})
+                  </option>
+                ))}
+              </select>
+            </label>
+            <button
+              className="favorites-toggle"
+              type="button"
+              aria-label="打开收藏夹"
+              onClick={() => openFavoritesPanel("product")}
+            >
               ❤️ {favoritesCount}
             </button>
           </div>

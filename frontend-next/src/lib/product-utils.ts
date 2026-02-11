@@ -2,6 +2,53 @@ import type { Product } from "@/types/api";
 
 const INVALID_WEBSITE_VALUES = new Set(["unknown", "n/a", "na", "none", "null", "undefined", ""]);
 const PLACEHOLDER_VALUES = new Set(["unknown", "n/a", "na", "none", "tbd", "暂无", "未公开", "待定", "unknown.", "n/a."]);
+const DIRECTION_IGNORED = new Set([
+  "hardware",
+  "software",
+  "other",
+  "tool",
+  "tools",
+  "ai",
+  "ai tool",
+  "ai_tool",
+  "ai tools",
+  "ai_tools",
+  "ai hardware",
+  "ai_hardware",
+  "ai 工具",
+  "ai_工具",
+  "ai 硬件",
+  "ai_硬件",
+]);
+
+const DIRECTION_LABELS: Record<string, string> = {
+  agent: "Agent",
+  coding: "编程开发",
+  image: "图像",
+  video: "视频",
+  vision: "视觉",
+  voice: "语音",
+  writing: "写作",
+  finance: "金融",
+  education: "教育",
+  healthcare: "医疗健康",
+  enterprise: "企业服务",
+  productivity: "效率",
+  ai_chip: "AI芯片",
+  robotics: "机器人",
+  driving: "自动驾驶",
+  wearables: "可穿戴",
+  smart_glasses: "智能眼镜",
+  smart_home: "智能家居",
+  edge_ai: "边缘AI",
+  drone: "无人机",
+  simulation: "仿真",
+  security: "AI安全",
+  infrastructure: "基础设施",
+  legal: "法律",
+  brain_computer_interface: "脑机接口",
+  world_model: "世界模型",
+};
 
 export function normalizeWebsite(url: string | undefined | null): string {
   if (!url) return "";
@@ -163,6 +210,79 @@ export function formatCategories(product: Product) {
   if (product.categories?.length) return product.categories.join(" · ");
   if (product.category) return product.category;
   return "精选 AI 工具";
+}
+
+export function normalizeDirectionToken(value: string | undefined | null): string {
+  const normalized = String(value || "")
+    .trim()
+    .toLowerCase();
+  if (!normalized) return "";
+
+  if (normalized.includes("voice") || normalized.includes("语音")) return "voice";
+  if (normalized.includes("image")) return "image";
+  if (normalized.includes("video")) return "video";
+  if (normalized.includes("vision") || normalized.includes("视觉")) return "vision";
+  if (normalized.includes("coding") || normalized.includes("开发") || normalized.includes("编程")) return "coding";
+  if (normalized.includes("agent")) return "agent";
+  if (normalized.includes("finance") || normalized.includes("金融")) return "finance";
+  if (normalized.includes("health") || normalized.includes("医疗") || normalized.includes("健康")) return "healthcare";
+  if (normalized.includes("education") || normalized.includes("教育")) return "education";
+  if (normalized.includes("enterprise") || normalized.includes("企业")) return "enterprise";
+  if (normalized.includes("productivity") || normalized.includes("效率") || normalized.includes("办公")) return "productivity";
+  if (normalized.includes("chip") || normalized.includes("semiconductor") || normalized.includes("芯片")) return "ai_chip";
+  if (normalized.includes("robot")) return "robotics";
+  if (normalized.includes("driving") || normalized.includes("autonomous") || normalized.includes("驾驶")) return "driving";
+  if (normalized.includes("wearable") || normalized.includes("可穿戴")) return "wearables";
+  if (normalized.includes("smart_glasses") || normalized.includes("智能眼镜") || normalized.includes("glasses")) return "smart_glasses";
+  if (normalized.includes("smart_home") || normalized.includes("智能家居")) return "smart_home";
+  if (normalized.includes("edge") || normalized.includes("边缘")) return "edge_ai";
+  if (normalized.includes("drone") || normalized.includes("无人机")) return "drone";
+  if (normalized.includes("simulation") || normalized.includes("仿真")) return "simulation";
+  if (normalized.includes("security") || normalized.includes("安全")) return "security";
+  if (normalized.includes("infrastructure") || normalized.includes("基础设施")) return "infrastructure";
+  if (normalized.includes("legal") || normalized.includes("法律")) return "legal";
+  if (normalized.includes("脑机")) return "brain_computer_interface";
+  if (normalized.includes("world model") || normalized.includes("world_model") || normalized.includes("世界模型")) return "world_model";
+
+  const compacted = normalized.replace(/[_\s/-]+/g, "_");
+  return DIRECTION_IGNORED.has(compacted) ? "" : compacted;
+}
+
+export function getDirectionLabel(direction: string): string {
+  const normalized = normalizeDirectionToken(direction);
+  if (!normalized) return "";
+  return DIRECTION_LABELS[normalized] || normalized.replace(/_/g, " ");
+}
+
+export function getProductDirections(product: Product): string[] {
+  const extra = (product.extra ?? {}) as Record<string, unknown>;
+  const candidates = [
+    product.category,
+    ...(product.categories || []),
+    product.hardware_category,
+    product.hardware_type,
+    product.use_case,
+    product.form_factor,
+    ...(product.innovation_traits || []),
+    String(extra.hardware_category || ""),
+    String(extra.use_case || ""),
+    String(extra.form_factor || ""),
+  ];
+
+  if (Array.isArray(extra.innovation_traits)) {
+    for (const trait of extra.innovation_traits) {
+      candidates.push(String(trait || ""));
+    }
+  }
+
+  const deduped = new Set<string>();
+  for (const candidate of candidates) {
+    const direction = normalizeDirectionToken(candidate);
+    if (!direction || DIRECTION_IGNORED.has(direction)) continue;
+    deduped.add(direction);
+  }
+
+  return [...deduped];
 }
 
 export function cleanDescription(desc: string | undefined) {

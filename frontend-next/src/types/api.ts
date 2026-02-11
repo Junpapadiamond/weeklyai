@@ -15,6 +15,12 @@ export type Product = {
   dark_horse_index?: number;
   category?: string;
   categories?: string[];
+  hardware_category?: string;
+  hardware_type?: string;
+  form_factor?: string;
+  use_case?: string;
+  innovation_traits?: string[];
+  price?: string;
   funding_total?: string;
   latest_news?: string;
   source?: string;

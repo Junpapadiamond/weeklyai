@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Product } from "@/types/api";
 import { SmartLogo } from "@/components/common/smart-logo";
+import { FavoriteButton } from "@/components/favorites/favorite-button";
 import {
   cleanDescription,
   formatCategories,
@@ -84,6 +85,7 @@ export function ProductCard({ product, compact = false }: ProductCardProps) {
         </div>
 
         <footer className="product-card__footer">
+          <FavoriteButton product={product} />
           <Link href={`/product/${detailId}`} className="link-btn link-btn--card link-btn--card-primary">
             详情
           </Link>

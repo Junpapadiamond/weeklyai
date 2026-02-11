@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { FavoritesPanel } from "@/components/favorites/favorites-panel";
 import { SiteHeader } from "@/components/layout/site-header";
 
 type PageShellProps = {
@@ -14,6 +15,7 @@ export function PageShell({ children }: PageShellProps) {
         <div className="bg-grid" />
       </div>
       <SiteHeader />
+      <FavoritesPanel />
       <main className="main-content">{children}</main>
     </>
   );

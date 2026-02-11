@@ -260,6 +260,36 @@ a:focus-visible {
   border-color: color-mix(in oklab, var(--primary) 62%, transparent);
 }
 
+.nav-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-favorites {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  height: 2.2rem;
+  padding: 0 0.68rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: transform var(--motion-fast), border-color var(--motion-fast), color var(--motion-fast);
+}
+
+.nav-favorites:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklab, var(--line) 34%, transparent);
+}
+
+.nav-favorites span {
+  font-size: 0.82rem;
+  font-family: var(--font-mono);
+}
+
 button,
 select,
 input {
@@ -270,6 +300,8 @@ input {
 .tier-tab,
 .tag-btn,
 .favorites-toggle,
+.favorite-btn,
+.nav-favorites,
 .load-more-btn,
 .swipe-btn,
 .link-btn,
@@ -295,6 +327,8 @@ input {
 .load-more-btn,
 .link-btn,
 .favorites-toggle,
+.favorite-btn,
+.nav-favorites,
 .search-panel button,
 .pagination button {
   cursor: pointer;
@@ -341,6 +375,8 @@ input {
 .load-more-btn:hover,
 .link-btn:hover,
 .favorites-toggle:hover,
+.favorite-btn:hover,
+.nav-favorites:hover,
 .search-panel button:hover,
 .pagination button:hover {
   transform: translateY(-2px);
@@ -819,6 +855,49 @@ input {
   border-top: 1px solid color-mix(in oklab, var(--line) 14%, transparent);
 }
 
+.favorite-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  color: var(--text-muted);
+  border-color: color-mix(in oklab, var(--line) 22%, transparent);
+  background: color-mix(in oklab, var(--surface) 90%, transparent);
+}
+
+.favorite-btn svg {
+  transition: transform var(--motion-fast), fill var(--motion-fast), color var(--motion-fast);
+}
+
+.favorite-btn--sm {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+}
+
+.favorite-btn--md {
+  min-height: 2rem;
+  padding: 0.3rem 0.58rem;
+}
+
+.favorite-btn.is-active {
+  color: color-mix(in oklab, var(--punch) 84%, var(--text));
+  border-color: color-mix(in oklab, var(--punch) 34%, transparent);
+  background: color-mix(in oklab, var(--punch) 14%, transparent);
+}
+
+.favorite-btn.is-active svg {
+  fill: currentColor;
+}
+
+.product-card__footer .favorite-btn {
+  margin-right: auto;
+}
+
+.blog-card__actions .favorite-btn {
+  margin-right: auto;
+}
+
 .blog-card__content .product-card__desc {
   -webkit-line-clamp: 1;
 }
@@ -1104,6 +1183,160 @@ input {
   align-items: center;
 }
 
+.favorites-panel__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 74;
+  opacity: 0;
+  pointer-events: none;
+  background: color-mix(in oklab, var(--bg) 42%, rgba(0, 0, 0, 0.72));
+  transition: opacity var(--motion-normal);
+}
+
+.favorites-panel__backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.favorites-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(560px, 100vw);
+  height: 100vh;
+  z-index: 80;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr auto;
+  gap: 0.82rem;
+  padding: 1rem;
+  background: color-mix(in oklab, var(--surface) 96%, transparent);
+  border-left: 1px solid var(--border);
+  box-shadow: -24px 0 48px color-mix(in oklab, var(--line) 22%, transparent);
+  transform: translateX(104%);
+  transition: transform var(--motion-normal);
+}
+
+.favorites-panel.is-open {
+  transform: translateX(0);
+}
+
+.favorites-panel__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.favorites-panel__header h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.18rem;
+}
+
+.favorites-panel__header p {
+  margin: 0.25rem 0 0;
+  color: var(--text-soft);
+  font-size: 0.82rem;
+}
+
+.favorites-panel__close {
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text-soft);
+  cursor: pointer;
+}
+
+.favorites-panel__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.favorites-panel__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  max-height: 110px;
+  overflow: auto;
+  padding-bottom: 0.08rem;
+}
+
+.favorites-panel__filters .tag-btn {
+  padding: 0.4rem 0.66rem;
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+}
+
+.favorites-panel__list {
+  display: grid;
+  gap: 0.66rem;
+  align-content: start;
+  overflow: auto;
+  padding-right: 0.18rem;
+}
+
+.favorites-panel__item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: color-mix(in oklab, var(--surface) 94%, transparent);
+  padding: 0.74rem 0.78rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.favorites-panel__item-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.56rem;
+}
+
+.favorites-panel__item-head h3 {
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.25;
+  font-family: var(--font-display);
+}
+
+.favorites-panel__item-meta,
+.favorites-panel__item-tags {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 0.74rem;
+  font-family: var(--font-mono);
+}
+
+.favorites-panel__item-desc {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 0.84rem;
+  line-height: 1.48;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.favorites-panel__item-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.favorites-panel__legacy-note {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-family: var(--font-mono);
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .home-root .section-header,
   .home-root .products-grid .product-card,
@@ -1153,7 +1386,7 @@ input {
 
   .nav-links {
     overflow-x: auto;
-    max-width: calc(100vw - 150px);
+    max-width: calc(100vw - 248px);
   }
 
   .nav-link {
@@ -1187,7 +1420,15 @@ input {
   }
 
   .nav-links {
-    max-width: calc(100vw - 132px);
+    max-width: calc(100vw - 216px);
+  }
+
+  .nav-favorites {
+    padding: 0 0.54rem;
+  }
+
+  .nav-favorites span {
+    font-size: 0.74rem;
   }
 }
 
