@@ -16,12 +16,21 @@ const SWIPE_THRESHOLD_TOUCH = 70;
 const SWIPE_THRESHOLD_POINTER = 92;
 const SWIPE_OUT_OFFSET_BASE = 620;
 const SWIPE_EXIT_MS = 280;
+const SWIPE_EXIT_MS_MIN = 190;
 const SWIPE_RETURN_MS = 220;
 const SWIPE_FEEDBACK_MIN = 24;
+const SWIPE_TAP_THRESHOLD = 10;
 const SWIPE_FLICK_MIN_DISTANCE_TOUCH = 34;
 const SWIPE_FLICK_MIN_DISTANCE_POINTER = 46;
 const SWIPE_FLICK_VELOCITY_TOUCH = 0.48;
 const SWIPE_FLICK_VELOCITY_POINTER = 0.58;
+const SWIPE_INERTIA_MIN_VELOCITY_TOUCH = 0.7;
+const SWIPE_INERTIA_MIN_VELOCITY_POINTER = 0.82;
+const SWIPE_INERTIA_VELOCITY_CAP_TOUCH = 1.9;
+const SWIPE_INERTIA_VELOCITY_CAP_POINTER = 2.15;
+const SWIPE_INERTIA_EXTRA_OFFSET_MAX = 360;
+const SWIPE_INERTIA_DURATION_REDUCTION_MAX = 96;
+const SWIPE_INERTIA_STRONG_THRESHOLD = 0.28;
 
 type DiscoveryDeckProps = {
   products: Product[];
@@ -31,6 +40,13 @@ type DiscoveryDeckProps = {
 type SwipedState = {
   keys: string[];
   timestamp: number;
+};
+
+type SwipeInput = {
+  pointerType?: "touch" | "mouse" | "pen";
+  velocityX?: number;
+  deltaX?: number;
+  deltaY?: number;
 };
 
 function clamp(value: number, min: number, max: number) {
@@ -94,12 +110,18 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
   const [deck, setDeck] = useState(() => createDeck(products));
   const [liked, setLiked] = useState(0);
   const [skipped, setSkipped] = useState(0);
+  const [likeStreak, setLikeStreak] = useState(0);
   const [dragX, setDragX] = useState(0);
   const [dragY, setDragY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [gestureInputType, setGestureInputType] = useState<"pointer" | "touch" | null>(null);
+  const [swipeExitMs, setSwipeExitMs] = useState(SWIPE_EXIT_MS);
   const [swipeOutDirection, setSwipeOutDirection] = useState<"left" | "right" | null>(null);
   const [lastSwipeAction, setLastSwipeAction] = useState<"left" | "right" | null>(null);
+  const [lastSwipeHadInertia, setLastSwipeHadInertia] = useState(false);
   const [showSwipeEcho, setShowSwipeEcho] = useState(false);
+  const [showStreakBurst, setShowStreakBurst] = useState(false);
+  const likeStreakRef = useRef(0);
   const dragStartX = useRef<number | null>(null);
   const dragStartY = useRef<number | null>(null);
   const dragPointerId = useRef<number | null>(null);
@@ -112,6 +134,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
   const isSwipeOutRef = useRef(false);
   const swipeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const swipeEchoTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const streakBurstTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const stack = deck.stack;
   const pool = deck.pool;
 
@@ -122,6 +145,9 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
       }
       if (swipeEchoTimerRef.current) {
         clearTimeout(swipeEchoTimerRef.current);
+      }
+      if (streakBurstTimerRef.current) {
+        clearTimeout(streakBurstTimerRef.current);
       }
       isSwipeOutRef.current = false;
     };
@@ -170,6 +196,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
     lastMoveTs.current = null;
     velocityX.current = 0;
     activeGestureInput.current = null;
+    setGestureInputType(null);
     setIsDragging(false);
     if (!isSwipeOutRef.current) {
       setDragX(0);
@@ -177,26 +204,91 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
     }
   }
 
-  function animateSwipe(direction: "left" | "right") {
+  function tryOpenCurrentWebsite() {
+    if (typeof window === "undefined") return;
+    const current = stack[0];
+    if (!current) return;
+    const website = normalizeWebsite(current.website);
+    if (!isValidWebsite(website)) return;
+    window.open(website, "_blank", "noopener,noreferrer");
+  }
+
+  function shouldIgnoreGestureStart(target: EventTarget | null) {
+    return target instanceof Element && !!target.closest("a, button");
+  }
+
+  function resolveSwipePhysics(input?: SwipeInput) {
+    const pointerType = input?.pointerType || "mouse";
+    const isTouch = pointerType === "touch";
+    const minVelocity = isTouch ? SWIPE_INERTIA_MIN_VELOCITY_TOUCH : SWIPE_INERTIA_MIN_VELOCITY_POINTER;
+    const velocityCap = isTouch ? SWIPE_INERTIA_VELOCITY_CAP_TOUCH : SWIPE_INERTIA_VELOCITY_CAP_POINTER;
+    const threshold = isTouch ? SWIPE_THRESHOLD_TOUCH : SWIPE_THRESHOLD_POINTER;
+    const absVelocity = Math.abs(input?.velocityX || 0);
+    const absDelta = Math.abs(input?.deltaX || dragX);
+    const velocityRatio = clamp((absVelocity - minVelocity) / (velocityCap - minVelocity), 0, 1);
+    const distanceRatio = clamp(absDelta / threshold, 0, 1.2);
+    const inertiaStrength = clamp(velocityRatio * 0.8 + distanceRatio * 0.2, 0, 1);
+    const extraOffset = Math.round(inertiaStrength * SWIPE_INERTIA_EXTRA_OFFSET_MAX);
+    const exitMs = Math.round(
+      clamp(
+        SWIPE_EXIT_MS - inertiaStrength * SWIPE_INERTIA_DURATION_REDUCTION_MAX,
+        SWIPE_EXIT_MS_MIN,
+        SWIPE_EXIT_MS
+      )
+    );
+
+    return {
+      extraOffset,
+      exitMs,
+      inertiaStrength,
+    };
+  }
+
+  function animateSwipe(direction: "left" | "right", input?: SwipeInput) {
     if (!stack.length || swipeOutDirection) return;
     const current = stack[0];
+    const physics = resolveSwipePhysics(input);
     const exitOffset =
       typeof window === "undefined"
         ? SWIPE_OUT_OFFSET_BASE
-        : Math.max(SWIPE_OUT_OFFSET_BASE, Math.round(window.innerWidth * 0.92));
+        : Math.max(SWIPE_OUT_OFFSET_BASE, Math.round(window.innerWidth * 0.92)) + physics.extraOffset;
+    const releaseDeltaY = input?.deltaY ?? dragY;
+    const hadInertia = physics.inertiaStrength >= SWIPE_INERTIA_STRONG_THRESHOLD;
     isSwipeOutRef.current = true;
+    setSwipeExitMs(physics.exitMs);
     setSwipeOutDirection(direction);
+    setLastSwipeHadInertia(hadInertia);
     setLastSwipeAction(direction);
     setShowSwipeEcho(true);
     if (direction === "right") {
       setLiked((value) => value + 1);
+      const nextStreak = likeStreakRef.current + 1;
+      likeStreakRef.current = nextStreak;
+      setLikeStreak(nextStreak);
+      if (nextStreak >= 2) {
+        if (streakBurstTimerRef.current) {
+          clearTimeout(streakBurstTimerRef.current);
+        }
+        setShowStreakBurst(true);
+        streakBurstTimerRef.current = setTimeout(() => {
+          setShowStreakBurst(false);
+          streakBurstTimerRef.current = null;
+        }, 980);
+      }
       onLike(current);
     } else {
       setSkipped((value) => value + 1);
+      likeStreakRef.current = 0;
+      setLikeStreak(0);
+      setShowStreakBurst(false);
+      if (streakBurstTimerRef.current) {
+        clearTimeout(streakBurstTimerRef.current);
+        streakBurstTimerRef.current = null;
+      }
     }
     setIsDragging(false);
     setDragX(direction === "right" ? exitOffset : -exitOffset);
-    setDragY(dragY * 0.32);
+    setDragY(releaseDeltaY * (0.32 + physics.inertiaStrength * 0.08));
 
     if (swipeEchoTimerRef.current) {
       clearTimeout(swipeEchoTimerRef.current);
@@ -213,6 +305,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
       swipe();
       setDragX(0);
       setDragY(0);
+      setSwipeExitMs(SWIPE_EXIT_MS);
       setSwipeOutDirection(null);
       isSwipeOutRef.current = false;
       dragStartX.current = null;
@@ -224,11 +317,14 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
       lastMoveTs.current = null;
       velocityX.current = 0;
       activeGestureInput.current = null;
+      setGestureInputType(null);
       swipeTimerRef.current = null;
-    }, SWIPE_EXIT_MS);
+    }, physics.exitMs);
   }
 
-  function beginDrag(clientX: number, clientY: number) {
+  function beginDrag(clientX: number, clientY: number, inputType: "pointer" | "touch") {
+    activeGestureInput.current = inputType;
+    setGestureInputType(inputType);
     dragStartX.current = clientX;
     dragStartY.current = clientY;
     lastClientX.current = clientX;
@@ -262,13 +358,14 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
     setDragY(deltaY);
   }
 
-  function maybeSwipeByGesture(clientX: number, pointerType: "touch" | "mouse" | "pen") {
-    if (!isDragging || dragStartX.current === null) {
+  function maybeSwipeByGesture(clientX: number, clientY: number, pointerType: "touch" | "mouse" | "pen") {
+    if (!isDragging || dragStartX.current === null || dragStartY.current === null) {
       resetDrag();
       return;
     }
 
     const delta = clientX - dragStartX.current;
+    const deltaY = clientY - dragStartY.current;
     const isTouch = pointerType === "touch";
     const threshold = isTouch ? SWIPE_THRESHOLD_TOUCH : SWIPE_THRESHOLD_POINTER;
     const flickMinDistance = isTouch ? SWIPE_FLICK_MIN_DISTANCE_TOUCH : SWIPE_FLICK_MIN_DISTANCE_POINTER;
@@ -279,8 +376,17 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
 
     if (shouldSwipe) {
       setIsDragging(false);
-      animateSwipe(delta > 0 ? "right" : "left");
+      animateSwipe(delta > 0 ? "right" : "left", {
+        pointerType,
+        velocityX: velocityX.current,
+        deltaX: delta,
+        deltaY,
+      });
       return;
+    }
+
+    if (Math.abs(delta) < SWIPE_TAP_THRESHOLD && Math.abs(deltaY) < SWIPE_TAP_THRESHOLD) {
+      tryOpenCurrentWebsite();
     }
 
     resetDrag();
@@ -289,10 +395,10 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
   function handlePointerDown(event: PointerEvent<HTMLElement>) {
     if (isSwipeOutRef.current || swipeOutDirection) return;
     if (event.pointerType === "mouse" && event.button !== 0) return;
+    if (shouldIgnoreGestureStart(event.target)) return;
     if (activeGestureInput.current === "touch") return;
-    activeGestureInput.current = "pointer";
     dragPointerId.current = event.pointerId;
-    beginDrag(event.clientX, event.clientY);
+    beginDrag(event.clientX, event.clientY, "pointer");
     try {
       event.currentTarget.setPointerCapture(event.pointerId);
     } catch {
@@ -318,7 +424,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
     } catch {
       // no-op
     }
-    maybeSwipeByGesture(event.clientX, event.pointerType as "touch" | "mouse" | "pen");
+    maybeSwipeByGesture(event.clientX, event.clientY, event.pointerType as "touch" | "mouse" | "pen");
   }
 
   function handleLostPointerCapture(event: PointerEvent<HTMLElement>) {
@@ -328,7 +434,8 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
 
     dragPointerId.current = null;
     const clientX = lastClientX.current ?? dragStartX.current ?? event.clientX;
-    maybeSwipeByGesture(clientX, event.pointerType as "touch" | "mouse" | "pen");
+    const clientY = lastClientY.current ?? dragStartY.current ?? event.clientY;
+    maybeSwipeByGesture(clientX, clientY, event.pointerType as "touch" | "mouse" | "pen");
   }
 
   function findTouchById(event: TouchEvent<HTMLElement>, touchId: number) {
@@ -344,11 +451,11 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
   function handleTouchStart(event: TouchEvent<HTMLElement>) {
     if (isSwipeOutRef.current || swipeOutDirection) return;
     if (activeGestureInput.current === "pointer") return;
+    if (shouldIgnoreGestureStart(event.target)) return;
     const firstTouch = event.changedTouches[0];
     if (!firstTouch) return;
-    activeGestureInput.current = "touch";
     dragTouchId.current = firstTouch.identifier;
-    beginDrag(firstTouch.clientX, firstTouch.clientY);
+    beginDrag(firstTouch.clientX, firstTouch.clientY, "touch");
   }
 
   function handleTouchMove(event: TouchEvent<HTMLElement>) {
@@ -371,8 +478,9 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
     }
     const touch = findTouchById(event, dragTouchId.current);
     const clientX = touch?.clientX ?? (lastClientX.current ?? dragStartX.current ?? 0);
+    const clientY = touch?.clientY ?? (lastClientY.current ?? dragStartY.current ?? 0);
     dragTouchId.current = null;
-    maybeSwipeByGesture(clientX, "touch");
+    maybeSwipeByGesture(clientX, clientY, "touch");
   }
 
   if (!stack.length) {
@@ -389,9 +497,11 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
   const backCard = stack[2] ?? null;
   const website = normalizeWebsite(current.website);
   const feedbackDirection = swipeOutDirection || (dragX > SWIPE_FEEDBACK_MIN ? "right" : dragX < -SWIPE_FEEDBACK_MIN ? "left" : null);
-  const dragProgress = clamp(Math.abs(dragX) / (SWIPE_THRESHOLD_POINTER * 1.45), 0, 1);
+  const dragThreshold = gestureInputType === "touch" ? SWIPE_THRESHOLD_TOUCH : SWIPE_THRESHOLD_POINTER;
+  const dragProgress = clamp(Math.abs(dragX) / (dragThreshold * 1.45), 0, 1);
   const stackProgress = swipeOutDirection ? 1 : clamp(Math.abs(dragX) / (SWIPE_THRESHOLD_POINTER * 1.04), 0, 1);
   const feedbackOpacity = feedbackDirection ? (swipeOutDirection ? 1 : clamp(Math.abs(dragX) / SWIPE_THRESHOLD_POINTER, 0, 1)) : 0;
+  const swipePower = clamp(Math.abs(dragX) / (dragThreshold * 1.08), 0, 1);
   const visualX = dragX;
   const visualY = dragY * 0.08;
   const visualRotate = visualX * 0.047 + dragY * 0.011;
@@ -403,7 +513,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
     transition: isDragging
       ? "none"
       : swipeOutDirection
-        ? `transform ${SWIPE_EXIT_MS}ms cubic-bezier(0.2, 0.92, 0.26, 1), opacity ${SWIPE_EXIT_MS}ms ease-out`
+        ? `transform ${swipeExitMs}ms cubic-bezier(0.2, 0.92, 0.26, 1), opacity ${swipeExitMs}ms ease-out`
         : `transform ${SWIPE_RETURN_MS}ms cubic-bezier(0.2, 0.8, 0.25, 1), opacity ${SWIPE_RETURN_MS}ms ease-out`,
   } as const;
 
@@ -416,6 +526,22 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
     transform: `translate3d(0, ${30 - stackProgress * 15}px, 0) scale(${0.938 + stackProgress * 0.052})`,
     opacity: 0.42 + stackProgress * 0.26,
   } as const;
+  const hintText =
+    feedbackDirection === "right"
+      ? "继续右滑，松手即可收藏"
+      : feedbackDirection === "left"
+        ? "继续左滑，松手跳过"
+        : likeStreak >= 2
+          ? `连击 x${likeStreak}，继续右滑挖黑马`
+          : "左右拖动卡片即可滑动，右滑收藏，左滑跳过";
+  const swipeEchoText =
+    lastSwipeAction === "right"
+      ? lastSwipeHadInertia
+        ? "惯性右甩已收藏，继续滑更快"
+        : "已收藏，继续右滑快速筛选"
+      : lastSwipeHadInertia
+        ? "惯性左甩已跳过，继续左滑看下一个"
+        : "已跳过，继续左滑看下一个";
 
   return (
     <div className="discover-shell">
@@ -505,10 +631,17 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
         </button>
       </div>
       <div className={`swipe-echo ${showSwipeEcho ? "is-visible" : ""} ${lastSwipeAction ? `is-${lastSwipeAction}` : ""}`}>
-        {lastSwipeAction === "right" ? "已收藏，继续右滑快速筛选" : "已跳过，继续左滑看下一个"}
+        {swipeEchoText}
       </div>
 
-      <div className="swipe-gesture-hint">左右拖动卡片即可滑动，右滑收藏，左滑跳过</div>
+      <div className="swipe-power" aria-hidden="true">
+        <span
+          className={`swipe-power__fill ${feedbackDirection ? `is-${feedbackDirection}` : ""}`}
+          style={{ transform: `scaleX(${Math.max(0.08, swipePower)})` }}
+        />
+      </div>
+      {likeStreak >= 2 ? <div className={`swipe-streak ${showStreakBurst ? "is-visible" : ""}`}>🔥 黑马连击 x{likeStreak}</div> : null}
+      <div className={`swipe-gesture-hint ${feedbackDirection ? `is-${feedbackDirection}` : ""}`}>{hintText}</div>
       <div className="swipe-status">已收藏 {liked} · 已跳过 {skipped}</div>
     </div>
   );
