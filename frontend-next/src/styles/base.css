@@ -430,23 +430,25 @@ input {
 }
 
 .darkhorse-section .products-grid {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(304px, 1fr));
   gap: 1rem;
-  padding-bottom: 0.75rem;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-
-.darkhorse-section .products-grid::-webkit-scrollbar {
-  display: none;
+  align-items: start;
 }
 
 .darkhorse-section .product-card {
-  flex: 0 0 clamp(280px, 78vw, 340px);
-  scroll-snap-align: start;
+  min-width: 0;
+}
+
+@media (min-width: 921px) {
+  /* Slight stagger so the list scans as a cascade, not a rigid wall. */
+  .darkhorse-section .product-card:nth-child(3n + 2) {
+    margin-top: 0.35rem;
+  }
+
+  .darkhorse-section .product-card:nth-child(3n + 3) {
+    margin-top: 0.7rem;
+  }
 }
 
 .product-card,
@@ -1128,6 +1130,27 @@ input {
 }
 
 @media (max-width: 920px) {
+  .darkhorse-section .products-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 1rem;
+    padding-bottom: 0.75rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .darkhorse-section .products-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .darkhorse-section .product-card {
+    margin-top: 0;
+    flex: 0 0 clamp(280px, 78vw, 340px);
+    scroll-snap-align: start;
+  }
+
   .nav-links {
     overflow-x: auto;
     max-width: calc(100vw - 150px);
