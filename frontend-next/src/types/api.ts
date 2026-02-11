@@ -12,6 +12,7 @@ export type Product = {
   description: string;
   why_matters?: string;
   logo_url?: string;
+  logo?: string;
   dark_horse_index?: number;
   category?: string;
   categories?: string[];
@@ -43,6 +44,7 @@ export type BlogPost = {
   description: string;
   website?: string;
   logo_url?: string;
+  logo?: string;
   source?: string;
   published_at?: string;
   categories?: string[];

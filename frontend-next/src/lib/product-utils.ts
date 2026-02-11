@@ -100,29 +100,127 @@ export function shouldRenderLogoImage(url: string | undefined | null): boolean {
   return normalized.startsWith("/");
 }
 
-export function getLogoFallbacks(website: string | undefined | null, sourceUrl?: string | undefined | null): string[] {
-  const primary = normalizeWebsite(website);
-  const fallbackSource = normalizeWebsite(sourceUrl);
-  const candidate = isValidWebsite(primary) ? primary : isValidWebsite(fallbackSource) ? fallbackSource : "";
-  if (!candidate) return [];
+function normalizeHost(value: string | undefined | null): string {
+  const raw = String(value || "")
+    .trim()
+    .toLowerCase();
+  if (!raw) return "";
+
+  const withoutProtocol = raw.replace(/^https?:\/\//, "");
+  const withoutPath = withoutProtocol.replace(/\/.*$/, "");
+  const withoutPort = withoutPath.replace(/:\d+$/, "");
+  const withoutWww = withoutPort.replace(/^www\./, "");
+  if (!/^[a-z0-9.-]+\.[a-z]{2,}$/i.test(withoutWww)) return "";
+
+  return withoutWww;
+}
+
+function extractHostFromProviderLogo(logoSource: string | undefined | null): string {
+  const normalized = normalizeLogoSource(logoSource);
+  if (!normalized || normalized.startsWith("/")) return "";
 
   try {
-    const host = new URL(candidate).hostname.replace(/^www\./, "");
-    if (!host) return [];
-    return [
-      `https://logo.clearbit.com/${host}`,
-      `https://www.google.com/s2/favicons?domain=${host}&sz=128`,
-      `https://favicon.bing.com/favicon.ico?url=${host}&size=128`,
-      `https://icons.duckduckgo.com/ip3/${host}.ico`,
-      `https://icon.horse/icon/${host}`,
-    ];
+    const parsed = new URL(normalized);
+    const host = parsed.hostname.toLowerCase();
+
+    if (host.includes("logo.clearbit.com")) {
+      return normalizeHost(decodeURIComponent(parsed.pathname).replace(/^\/+/, ""));
+    }
+
+    if (host.includes("google.com") && parsed.pathname.includes("/s2/favicons")) {
+      const domain = parsed.searchParams.get("domain");
+      if (domain) return normalizeHost(domain);
+      const domainUrl = parsed.searchParams.get("domain_url");
+      if (!domainUrl) return "";
+      try {
+        return normalizeHost(new URL(domainUrl).hostname);
+      } catch {
+        return normalizeHost(domainUrl);
+      }
+    }
+
+    if (host.includes("favicon.bing.com")) {
+      return normalizeHost(parsed.searchParams.get("url"));
+    }
+
+    if (host.includes("icons.duckduckgo.com")) {
+      return normalizeHost(parsed.pathname.replace(/^\/ip3\//, "").replace(/\.ico$/i, ""));
+    }
+
+    if (host.includes("icon.horse")) {
+      return normalizeHost(parsed.pathname.replace(/^\/icon\//, ""));
+    }
+
+    return "";
   } catch {
-    return [];
+    return "";
   }
+}
+
+function resolveLogoHost(
+  website: string | undefined | null,
+  sourceUrl?: string | undefined | null,
+  logoUrl?: string | undefined | null,
+  secondaryLogoUrl?: string | undefined | null
+): string {
+  const primary = normalizeWebsite(website);
+  if (isValidWebsite(primary)) {
+    try {
+      return normalizeHost(new URL(primary).hostname);
+    } catch {
+      // ignore invalid website parsing and continue fallback chain
+    }
+  }
+
+  const fallbackSource = normalizeWebsite(sourceUrl);
+  if (isValidWebsite(fallbackSource)) {
+    try {
+      return normalizeHost(new URL(fallbackSource).hostname);
+    } catch {
+      // ignore invalid source parsing and continue fallback chain
+    }
+  }
+
+  return extractHostFromProviderLogo(logoUrl) || extractHostFromProviderLogo(secondaryLogoUrl);
+}
+
+function isLowPriorityProviderLogo(url: string | undefined | null): boolean {
+  const normalized = normalizeLogoSource(url);
+  if (!normalized || normalized.startsWith("/")) return false;
+  try {
+    const host = new URL(normalized).hostname.toLowerCase();
+    return host.includes("logo.clearbit.com") || host.includes("favicon.bing.com");
+  } catch {
+    return false;
+  }
+}
+
+export function getLogoFallbacks(
+  website: string | undefined | null,
+  sourceUrl?: string | undefined | null,
+  logoUrl?: string | undefined | null,
+  secondaryLogoUrl?: string | undefined | null
+): string[] {
+  const host = resolveLogoHost(website, sourceUrl, logoUrl, secondaryLogoUrl);
+  if (!host) return [];
+
+  const directFavicons = [`https://${host}/favicon.ico`];
+  if (!host.startsWith("www.")) {
+    directFavicons.push(`https://www.${host}/favicon.ico`);
+  }
+
+  return [
+    `https://www.google.com/s2/favicons?domain=${host}&sz=128`,
+    `https://icons.duckduckgo.com/ip3/${host}.ico`,
+    `https://icon.horse/icon/${host}`,
+    ...directFavicons,
+    `https://logo.clearbit.com/${host}`,
+  ];
 }
 
 type LogoCandidatesInput = {
   logoUrl?: string | null;
+  secondaryLogoUrl?: string | null;
   website?: string | null;
   sourceUrl?: string | null;
 };
@@ -130,19 +228,28 @@ type LogoCandidatesInput = {
 export function getLogoCandidates(input: LogoCandidatesInput): string[] {
   const result: string[] = [];
   const seen = new Set<string>();
+  const deferredClearbit: string[] = [];
 
-  const pushIfValid = (value: string | undefined | null) => {
+  const pushIfValid = (value: string | undefined | null, opts?: { deferLowPriority?: boolean }) => {
     const normalized = normalizeLogoSource(value);
     if (!isValidLogoSource(normalized)) return;
     if (seen.has(normalized)) return;
+    if (opts?.deferLowPriority && isLowPriorityProviderLogo(normalized)) {
+      deferredClearbit.push(normalized);
+      return;
+    }
     seen.add(normalized);
     result.push(normalized);
   };
 
-  pushIfValid(input.logoUrl);
-  const fallbacks = getLogoFallbacks(input.website, input.sourceUrl);
+  pushIfValid(input.logoUrl, { deferLowPriority: true });
+  pushIfValid(input.secondaryLogoUrl, { deferLowPriority: true });
+  const fallbacks = getLogoFallbacks(input.website, input.sourceUrl, input.logoUrl, input.secondaryLogoUrl);
   for (const fallback of fallbacks) {
     pushIfValid(fallback);
+  }
+  for (const candidate of deferredClearbit) {
+    pushIfValid(candidate);
   }
 
   return result;

@@ -84,10 +84,11 @@ function BlogCard({ item }: { item: BlogPost }) {
         <header className="product-card__headline blog-card__headline">
           <div className="product-card__identity">
             <SmartLogo
-              key={`${item.name}-${item.logo_url || ""}-${item.website || ""}`}
+              key={`${item.name}-${item.logo_url || ""}-${item.logo || ""}-${item.website || ""}`}
               className="product-card__logo"
               name={item.name}
               logoUrl={item.logo_url}
+              secondaryLogoUrl={item.logo}
               website={item.website}
               size={44}
             />

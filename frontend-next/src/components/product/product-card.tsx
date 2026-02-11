@@ -58,10 +58,11 @@ export function ProductCard({ product, compact = false }: ProductCardProps) {
         <header className="product-card__header">
           <div className="product-card__identity">
             <SmartLogo
-              key={`${product._id || product.name}-${product.logo_url || ""}-${product.website || ""}`}
+              key={`${product._id || product.name}-${product.logo_url || ""}-${product.logo || ""}-${product.website || ""}-${product.source_url || ""}`}
               className="product-card__logo"
               name={product.name}
               logoUrl={product.logo_url}
+              secondaryLogoUrl={product.logo}
               website={product.website}
               sourceUrl={product.source_url}
               size={compact ? 44 : 48}
