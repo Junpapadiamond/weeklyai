@@ -180,6 +180,17 @@
   position: relative;
 }
 
+.swipe-stack {
+  position: relative;
+  display: grid;
+  min-height: 352px;
+  perspective: 920px;
+}
+
+.swipe-stack .swipe-card {
+  grid-area: 1 / 1;
+}
+
 .swipe-card {
   padding: 1rem;
   border-color: color-mix(in oklab, var(--accent) 34%, var(--border));
@@ -188,14 +199,72 @@
   position: relative;
   overflow: hidden;
   will-change: transform, opacity;
+  transform-origin: 50% 86%;
+  backface-visibility: hidden;
 }
 
 .swipe-card.is-active {
+  z-index: 3;
   box-shadow: var(--shadow-md);
+  cursor: grab;
 }
 
 .swipe-card.is-dragging {
   cursor: grabbing;
+}
+
+.swipe-card--ghost {
+  pointer-events: none;
+  z-index: 1;
+  border-color: color-mix(in oklab, var(--line) 18%, var(--border));
+  background: color-mix(in oklab, var(--surface) 95%, transparent);
+  box-shadow: var(--shadow-sm);
+}
+
+.swipe-card--ghost-mid {
+  z-index: 2;
+}
+
+.swipe-card--ghost-back {
+  z-index: 1;
+}
+
+.swipe-card--ghost .swipe-card-highlight {
+  display: none;
+}
+
+.swipe-card-header--ghost {
+  opacity: 0.88;
+}
+
+.swipe-card-desc--ghost {
+  opacity: 0.74;
+  -webkit-line-clamp: 2;
+}
+
+.swipe-card-meta--ghost {
+  opacity: 0.72;
+}
+
+.swipe-card__fade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 140ms ease-out;
+}
+
+.swipe-card__fade.is-right {
+  background:
+    linear-gradient(104deg, transparent 34%, color-mix(in oklab, var(--primary) 70%, transparent) 100%),
+    linear-gradient(180deg, transparent 48%, color-mix(in oklab, var(--primary) 16%, transparent) 100%);
+}
+
+.swipe-card__fade.is-left {
+  background:
+    linear-gradient(76deg, color-mix(in oklab, var(--punch) 68%, transparent) 0%, transparent 66%),
+    linear-gradient(180deg, transparent 48%, color-mix(in oklab, var(--punch) 14%, transparent) 100%);
 }
 
 .swipe-card--feedback-right {
@@ -355,5 +424,9 @@
 
   .hero-stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .swipe-stack {
+    min-height: 332px;
   }
 }
