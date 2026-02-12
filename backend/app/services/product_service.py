@@ -322,8 +322,8 @@ class ProductService:
         if top_product_eligible and top_product not in fresh_candidates:
             fresh_candidates.append(top_product)
 
-        # 如果新鲜产品不足, 回退到按评分排序的 top 产品
-        if len(fresh_candidates) < limit:
+        # 仅在“完全空状态”时回退到历史候选，避免把过期产品补回本周黑马
+        if not fresh_candidates:
             # 按评分+融资排序所有候选
             all_candidates_sorted = sorted(
                 all_candidates,
