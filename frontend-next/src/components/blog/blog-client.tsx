@@ -13,9 +13,10 @@ import {
 } from "@/lib/product-utils";
 import type { BlogPost } from "@/types/api";
 
-const SOURCE_OPTIONS = ["", "hackernews", "producthunt", "youtube", "x", "reddit", "tech_news"];
+const SOURCE_OPTIONS = ["", "cn_news", "hackernews", "producthunt", "youtube", "x", "reddit", "tech_news"];
 const SOURCE_LABELS: Record<string, string> = {
   "": "全部",
+  cn_news: "中国本土源",
   hackernews: "Hacker News",
   producthunt: "Product Hunt",
   youtube: "YouTube",
@@ -23,6 +24,35 @@ const SOURCE_LABELS: Record<string, string> = {
   reddit: "Reddit",
   tech_news: "Tech News",
 };
+
+const MARKET_OPTIONS = [
+  { value: "hybrid", label: "全球 Hybrid" },
+  { value: "cn", label: "中国" },
+  { value: "us", label: "美国" },
+] as const;
+
+const MARKET_LABELS: Record<string, string> = {
+  hybrid: "全球 Hybrid",
+  cn: "中国",
+  us: "美国",
+  global: "全球",
+};
+
+const US_SOURCES = new Set(["hackernews", "producthunt", "youtube", "x", "reddit", "tech_news"]);
+
+function inferMarket(item: BlogPost): "cn" | "us" | "global" {
+  const explicit = String(item.market || "").trim().toLowerCase();
+  if (explicit === "cn" || explicit === "us" || explicit === "global" || explicit === "hybrid") {
+    return explicit === "hybrid" ? "global" : (explicit as "cn" | "us" | "global");
+  }
+  const source = String(item.source || "").trim().toLowerCase();
+  if (source === "cn_news") return "cn";
+  if (US_SOURCES.has(source)) return "us";
+  const extra = item.extra && typeof item.extra === "object" ? (item.extra as Record<string, unknown>) : {};
+  const fromExtra = String(extra.news_market || "").trim().toLowerCase();
+  if (fromExtra === "cn" || fromExtra === "us" || fromExtra === "global") return fromExtra as "cn" | "us" | "global";
+  return "global";
+}
 
 const BIG_COMPANY_FILTERS = [
   { id: "all", label: "全部公司" },
@@ -62,6 +92,7 @@ function BlogCard({ item }: { item: BlogPost }) {
   const website = normalizeWebsite(item.website);
   const hasWebsite = isValidWebsite(website);
   const sourceLabel = SOURCE_LABELS[item.source || ""] || item.source || "Blog";
+  const marketLabel = MARKET_LABELS[inferMarket(item)] || "全球";
   const freshness = getFreshnessLabel({
     name: item.name,
     description: item.description,
@@ -79,7 +110,7 @@ function BlogCard({ item }: { item: BlogPost }) {
   return (
     <article className="product-card product-card--signal product-card--watch product-card--compact">
       <div className="product-card__content blog-card__content">
-        <p className="product-card__microline">{`${sourceLabel} · ${freshness}`}</p>
+        <p className="product-card__microline">{`${marketLabel} · ${sourceLabel} · ${freshness}`}</p>
 
         <header className="product-card__headline blog-card__headline">
           <div className="product-card__identity">
@@ -118,12 +149,17 @@ function BlogCard({ item }: { item: BlogPost }) {
 
 export function BlogClient() {
   const [source, setSource] = useState("");
+  const [market, setMarket] = useState<(typeof MARKET_OPTIONS)[number]["value"]>("hybrid");
   const [companyFilter, setCompanyFilter] = useState<(typeof BIG_COMPANY_FILTERS)[number]["id"]>("all");
 
-  const { data, isLoading, error } = useSWR(["blogs", source], ([, selectedSource]) => getBlogsClient(selectedSource, 40), {
-    dedupingInterval: 30_000,
-    revalidateOnFocus: false,
-  });
+  const { data, isLoading, error } = useSWR(
+    ["blogs", source, market],
+    ([, selectedSource, selectedMarket]) => getBlogsClient(selectedSource, 80, selectedMarket),
+    {
+      dedupingInterval: 30_000,
+      revalidateOnFocus: false,
+    }
+  );
 
   const posts = useMemo(() => {
     const all = data || [];
@@ -135,14 +171,28 @@ export function BlogClient() {
       return matches.includes(companyFilter);
     });
   }, [companyFilter, data]);
-  const sourceSummary = source ? `当前：${SOURCE_LABELS[source] || source}` : "当前：全部来源";
+  const sourceSummary = source ? `来源：${SOURCE_LABELS[source] || source}` : "来源：全部";
+  const marketSummary = `区域：${MARKET_LABELS[market] || market}`;
 
   return (
     <section className="section">
       <div className="section-header">
         <h1 className="section-title">博客 & 动态</h1>
-        <p className="section-desc">来自 YouTube / X / Reddit / HN / Product Hunt 的一手信号</p>
-        <p className="section-micro-note">{sourceSummary} · 共 {posts.length} 条</p>
+        <p className="section-desc">中国本土源与海外动态共存，可按区域快速切换</p>
+        <p className="section-micro-note">{marketSummary} · {sourceSummary} · 共 {posts.length} 条</p>
+      </div>
+
+      <div className="blog-toolbar">
+        <label>
+          区域
+          <select value={market} onChange={(event) => setMarket(event.target.value as (typeof MARKET_OPTIONS)[number]["value"])}>
+            {MARKET_OPTIONS.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
 
       <div className="source-pills" role="tablist" aria-label="博客来源筛选">

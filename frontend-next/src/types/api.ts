@@ -47,6 +47,8 @@ export type BlogPost = {
   logo_url?: string;
   logo?: string;
   source?: string;
+  region?: string;
+  market?: string;
   published_at?: string;
   categories?: string[];
   content_type?: string;

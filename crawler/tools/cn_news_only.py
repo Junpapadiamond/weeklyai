@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Run China-native news collection only.
+Run China-native news collection and merge into blogs_news.json.
 
 Output:
 - crawler/data/blogs_news.json
@@ -14,7 +14,7 @@ import json
 import os
 import sys
 from datetime import datetime, timezone
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
 
 
 TOOLS_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -22,6 +22,17 @@ CRAWLER_DIR = os.path.dirname(TOOLS_DIR)
 sys.path.insert(0, CRAWLER_DIR)
 
 from spiders.cn_news_spider import CNNewsSpider  # noqa: E402
+
+
+CN_SOURCE = "cn_news"
+US_LIKE_SOURCES = {
+    "hackernews",
+    "reddit",
+    "tech_news",
+    "youtube",
+    "x",
+    "producthunt",
+}
 
 
 def _to_serializable(item: Dict[str, Any]) -> Dict[str, Any]:
@@ -61,6 +72,106 @@ def _item_year_ok(item: Dict[str, Any], allowed_year: int) -> bool:
     return _parse_year(str(published)) == allowed_year
 
 
+def _parse_dt(value: str) -> datetime:
+    cleaned = (value or "").strip()
+    if not cleaned:
+        return datetime(1970, 1, 1, tzinfo=timezone.utc)
+    if cleaned.endswith("Z"):
+        cleaned = cleaned[:-1] + "+00:00"
+    try:
+        dt = datetime.fromisoformat(cleaned)
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        else:
+            dt = dt.astimezone(timezone.utc)
+        return dt
+    except Exception:
+        return datetime(1970, 1, 1, tzinfo=timezone.utc)
+
+
+def _infer_market(item: Dict[str, Any]) -> str:
+    extra = item.get("extra") if isinstance(item.get("extra"), dict) else {}
+    explicit = str(item.get("market") or extra.get("news_market") or "").strip().lower()
+    if explicit in {"cn", "us", "global", "hybrid"}:
+        return "global" if explicit == "hybrid" else explicit
+
+    source = str(item.get("source") or "").strip().lower()
+    if source == CN_SOURCE:
+        return "cn"
+    if source in US_LIKE_SOURCES:
+        return "us"
+
+    region = str(item.get("region") or "").strip().lower()
+    if "cn" in region or "中国" in region or "🇨🇳" in region:
+        return "cn"
+    if "us" in region or "美国" in region or "🇺🇸" in region:
+        return "us"
+    return "global"
+
+
+def _with_market_meta(item: Dict[str, Any]) -> Dict[str, Any]:
+    out = dict(item)
+    extra = out.get("extra") if isinstance(out.get("extra"), dict) else {}
+    market = _infer_market(out)
+    out["market"] = market
+    if market == "cn":
+        out["region"] = "🇨🇳"
+    elif market == "us" and not out.get("region"):
+        out["region"] = "🇺🇸"
+    elif market == "global" and not out.get("region"):
+        out["region"] = "🌍"
+    extra["news_market"] = market
+    out["extra"] = extra
+    out["content_type"] = "blog"
+    return out
+
+
+def _blog_key(item: Dict[str, Any]) -> str:
+    source = str(item.get("source") or "unknown").strip().lower()
+    website = str(item.get("website") or "").strip().lower()
+    name = str(item.get("name") or "").strip().lower()
+    if website and website not in {"unknown", "n/a", "na", "none", "null"}:
+        return f"{source}|w:{website}"
+    return f"{source}|n:{name}"
+
+
+def _load_existing_blogs(blogs_file: str) -> List[Dict[str, Any]]:
+    if not os.path.exists(blogs_file):
+        return []
+    try:
+        with open(blogs_file, "r", encoding="utf-8") as fh:
+            data = json.load(fh)
+        if isinstance(data, list):
+            return [item for item in data if isinstance(item, dict)]
+    except Exception:
+        return []
+    return []
+
+
+def _split_by_market(items: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+    cn: List[Dict[str, Any]] = []
+    non_cn: List[Dict[str, Any]] = []
+    for item in items:
+        normalized = _with_market_meta(item)
+        if normalized.get("market") == "cn":
+            cn.append(normalized)
+        else:
+            non_cn.append(normalized)
+    return cn, non_cn
+
+
+def _dedupe(items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    deduped: List[Dict[str, Any]] = []
+    seen = set()
+    for item in items:
+        key = _blog_key(item)
+        if key in seen:
+            continue
+        seen.add(key)
+        deduped.append(item)
+    return deduped
+
+
 def _save_last_updated(output_dir: str) -> str:
     last_updated_file = os.path.join(output_dir, "last_updated.json")
     payload = {
@@ -72,7 +183,7 @@ def _save_last_updated(output_dir: str) -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Collect CN-native RSS news into blogs_news.json")
+    parser = argparse.ArgumentParser(description="Collect CN-native RSS news and merge into blogs_news.json")
     parser.add_argument("--dry-run", action="store_true", help="Print summary only; do not write files")
     args = parser.parse_args()
 
@@ -83,21 +194,36 @@ def main() -> int:
 
     spider = CNNewsSpider()
     items = spider.crawl()
-    blogs: List[Dict[str, Any]] = []
+    cn_blogs: List[Dict[str, Any]] = []
 
     for raw in items:
-        item = _to_serializable(raw)
-        item["content_type"] = "blog"
+        item = _with_market_meta(_to_serializable(raw))
         if _item_year_ok(item, allowed_year):
-            blogs.append(item)
+            cn_blogs.append(item)
 
-    blogs.sort(key=lambda x: x.get("published_at", ""), reverse=True)
     output_dir = os.path.join(CRAWLER_DIR, "data")
     blogs_file = os.path.join(output_dir, "blogs_news.json")
+    existing = _load_existing_blogs(blogs_file)
+    existing_cn, existing_non_cn = _split_by_market(existing)
 
-    print("\n📦 CN news-only result")
+    if cn_blogs:
+        merged = existing_non_cn + cn_blogs
+    else:
+        # Keep old CN slice if this run failed to collect new CN sources.
+        merged = existing_non_cn + existing_cn
+
+    merged = [_with_market_meta(item) for item in merged if _item_year_ok(item, allowed_year)]
+    merged = _dedupe(merged)
+    merged.sort(key=lambda x: _parse_dt(str(x.get("published_at") or "")).timestamp(), reverse=True)
+
+    def _count_market(arr: List[Dict[str, Any]], market: str) -> int:
+        return sum(1 for item in arr if _infer_market(item) == market)
+
+    print("\n📦 CN news merge result")
     print(f"  • total collected: {len(items)}")
-    print(f"  • kept ({allowed_year}): {len(blogs)}")
+    print(f"  • cn kept ({allowed_year}): {len(cn_blogs)}")
+    print(f"  • existing total: {len(existing)} (cn={_count_market(existing, 'cn')}, us={_count_market(existing, 'us')}, global={_count_market(existing, 'global')})")
+    print(f"  • merged total: {len(merged)} (cn={_count_market(merged, 'cn')}, us={_count_market(merged, 'us')}, global={_count_market(merged, 'global')})")
     print(f"  • output file: {blogs_file}")
 
     if args.dry_run:
@@ -106,10 +232,10 @@ def main() -> int:
 
     os.makedirs(output_dir, exist_ok=True)
     with open(blogs_file, "w", encoding="utf-8") as fh:
-        json.dump(blogs, fh, ensure_ascii=False, indent=2)
+        json.dump(merged, fh, ensure_ascii=False, indent=2)
     last_updated_file = _save_last_updated(output_dir)
 
-    print(f"✓ 新闻/讨论: {len(blogs)} 条 → blogs_news.json")
+    print(f"✓ 新闻/讨论: {len(merged)} 条 → blogs_news.json")
     print(f"✓ 已更新 {last_updated_file}")
     return 0
 

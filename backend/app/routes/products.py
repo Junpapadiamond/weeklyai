@@ -89,11 +89,12 @@ def get_blogs_news():
     try:
         limit = request.args.get('limit', 20, type=int)
         source = request.args.get('source', '')
+        market = request.args.get('market', '')
 
         if source:
-            blogs = ProductService.get_blogs_by_source(source, limit=limit)
+            blogs = ProductService.get_blogs_by_source(source, limit=limit, market=market)
         else:
-            blogs = ProductService.get_blogs_news(limit=limit)
+            blogs = ProductService.get_blogs_news(limit=limit, market=market)
 
         return jsonify({
             'success': True,
@@ -267,5 +268,4 @@ def get_industry_leaders():
             'data': None,
             'message': str(e)
         }), 500
-
 

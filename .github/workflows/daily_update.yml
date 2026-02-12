@@ -59,6 +59,8 @@ jobs:
           python tools/fix_logos.py --input data/products_featured.json || true
 
           python main.py --news-only || true
+          # Merge China-native RSS news into blogs_news.json so CN + US/global coexist.
+          python tools/cn_news_only.py || true
           python tools/rss_to_products.py --input data/blogs_news.json --sources youtube,x,xhs,wechat --enrich-featured || true
 
       - name: Verify JSON data sources (LLM-assisted)

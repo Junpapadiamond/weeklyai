@@ -120,10 +120,11 @@ export const getLastUpdated = cache(async (): Promise<LastUpdatedPayload> => {
   };
 });
 
-export async function getBlogs(source = "", limit = 30): Promise<BlogPost[]> {
+export async function getBlogs(source = "", limit = 30, market = "hybrid"): Promise<BlogPost[]> {
   const params = new URLSearchParams();
   params.set("limit", String(limit));
   if (source) params.set("source", source);
+  if (market) params.set("market", market);
 
   const json = await fetchJson(`/products/blogs?${params.toString()}`, {
     next: { revalidate: 120, tags: ["blogs"] },
@@ -183,8 +184,8 @@ export function parseLastUpdatedLabel(hoursAgo: number | null | undefined) {
 }
 
 // Client-side helpers (SWR)
-export async function getBlogsClient(source = "", limit = 30): Promise<BlogPost[]> {
-  return getBlogs(source, limit);
+export async function getBlogsClient(source = "", limit = 30, market = "hybrid"): Promise<BlogPost[]> {
+  return getBlogs(source, limit, market);
 }
 
 export async function searchProductsClient(params: SearchParams) {

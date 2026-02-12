@@ -55,6 +55,8 @@ export const BlogSchema = z.object({
   logo_url: z.string().optional(),
   logo: z.string().optional(),
   source: z.string().optional(),
+  region: z.string().optional(),
+  market: z.string().optional(),
   published_at: z.string().optional(),
   categories: z.array(z.string()).optional(),
   content_type: z.string().optional(),

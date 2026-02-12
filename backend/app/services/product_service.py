@@ -244,18 +244,20 @@ class ProductService:
         return filtered[:limit]
 
     @staticmethod
-    def get_blogs_news(limit: int = 20) -> List[Dict]:
+    def get_blogs_news(limit: int = 20, market: str = '') -> List[Dict]:
         """获取博客/新闻/讨论内容"""
         blogs = ProductService._load_blogs()
+        blogs = filters.filter_blogs_by_market(blogs, market)
 
         # 按分数排序
         blogs = sorting.sort_by_trending(blogs)
         return blogs[:limit]
 
     @staticmethod
-    def get_blogs_by_source(source: str, limit: int = 20) -> List[Dict]:
+    def get_blogs_by_source(source: str, limit: int = 20, market: str = '') -> List[Dict]:
         """按来源获取博客内容"""
         blogs = ProductService._load_blogs()
+        blogs = filters.filter_blogs_by_market(blogs, market)
         filtered = filters.filter_by_source(blogs, source)
         return filtered[:limit]
 

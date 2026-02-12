@@ -25,6 +25,9 @@ NEW_FEATURE_KEYWORDS = {
     'v2', 'v3', 'v4', 'announces', '宣布'
 }
 
+BLOG_CN_SOURCES = {'cn_news'}
+BLOG_US_SOURCES = {'hackernews', 'reddit', 'tech_news', 'youtube', 'x', 'producthunt'}
+
 
 def _normalize_domain(url: str, include_path: bool = False) -> str:
     """Normalize domain for dedupe (strip scheme/www/port, optionally keep first path)."""
@@ -223,6 +226,42 @@ def filter_by_source(products: List[Dict], source: str) -> List[Dict]:
             filtered.append(product)
 
     return filtered
+
+
+def infer_blog_market(blog: Dict[str, Any]) -> str:
+    """Infer blog market label: cn/us/global."""
+    source = str(blog.get('source') or '').strip().lower()
+    if source in BLOG_CN_SOURCES:
+        return 'cn'
+    if source in BLOG_US_SOURCES:
+        return 'us'
+
+    extra = blog.get('extra')
+    if isinstance(extra, dict):
+        explicit = str(extra.get('news_market') or '').strip().lower()
+        if explicit in {'cn', 'us', 'global', 'hybrid'}:
+            return 'global' if explicit == 'hybrid' else explicit
+
+    explicit_market = str(blog.get('market') or '').strip().lower()
+    if explicit_market in {'cn', 'us', 'global', 'hybrid'}:
+        return 'global' if explicit_market == 'hybrid' else explicit_market
+
+    region = str(blog.get('region') or '').strip().lower()
+    if '🇨🇳' in region or '中国' in region or 'cn' in region:
+        return 'cn'
+    if '🇺🇸' in region or '美国' in region or 'us' in region:
+        return 'us'
+    return 'global'
+
+
+def filter_blogs_by_market(blogs: List[Dict], market: str) -> List[Dict]:
+    """Filter blog/news by market selector: cn/us/hybrid."""
+    target = (market or '').strip().lower()
+    if target in {'', 'all', 'hybrid', 'global'}:
+        return blogs
+    if target not in {'cn', 'us'}:
+        return blogs
+    return [b for b in blogs if infer_blog_market(b) == target]
 
 
 def filter_by_category(products: List[Dict], category: str) -> List[Dict]:
