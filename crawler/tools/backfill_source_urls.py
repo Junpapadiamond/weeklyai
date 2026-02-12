@@ -25,7 +25,8 @@ FEATURED_FILE = os.path.join(DATA_DIR, "products_featured.json")
 def _normalize_name(name: str) -> str:
     if not name:
         return ""
-    return re.sub(r"[^a-z0-9]", "", name.lower())
+    # Keep ASCII alphanumerics and CJK ideographs so CN products can be matched too.
+    return re.sub(r"[^a-z0-9\u4e00-\u9fff]", "", name.lower())
 
 
 def _is_unknown(value: str) -> bool:

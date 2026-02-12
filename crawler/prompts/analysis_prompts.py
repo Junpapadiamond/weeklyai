@@ -645,6 +645,7 @@ HARDWARE_ANALYSIS_PROMPT = """你是 WeeklyAI 的 AI 创新硬件分析师。
     "why_matters": "AI 伴侣吊坠，Claude 驱动，$99 无订阅，Twitter 现象级爆火",
     "latest_news": "2026-01: 出货量达 10 万台",
     "source": "Wired",
+    "source_url": "https://wired.com/article-url",
     "confidence": 0.85
   }}
 ]
@@ -661,6 +662,11 @@ HARDWARE_ANALYSIS_PROMPT = """你是 WeeklyAI 的 AI 创新硬件分析师。
    "website": "unknown", "needs_verification": true
 
 ⚠️ 禁止使用占位域名（example.com / test.com / placeholder），这些会被判为无效。
+
+## 关键：source_url 必须可追溯
+
+- `source_url` 字段**必须**精确复制自上方搜索结果中的 URL（新闻/帖子/众筹链接）。
+- 不允许编造 `source_url`；如果找不到可对应的 URL，就不要输出该产品。
 
 ### 字段说明
 
@@ -810,6 +816,9 @@ def validate_hardware_product(product: dict) -> tuple[bool, str]:
 
     if website.lower() == "unknown":
         product["needs_verification"] = True
+        # unknown website without a traceable source is not actionable (can't resolve later).
+        if not product.get("source_url"):
+            return False, "missing source_url for unknown website"
     elif not website.startswith(("http://", "https://")):
         return False, "invalid website URL"
     else:

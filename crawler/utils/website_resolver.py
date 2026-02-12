@@ -22,6 +22,13 @@ SOCIAL_DOMAINS = {
     "instagram.com",
     "youtube.com",
     "tiktok.com",
+    # China-native social/content platforms (not official product websites)
+    "mp.weixin.qq.com",
+    "weixin.qq.com",
+    "wechat.com",
+    "zhihu.com",
+    "xiaohongshu.com",
+    "xhslink.com",
     "weibo.com",
     "reddit.com",
     "threads.net",
@@ -92,7 +99,9 @@ class _LinkExtractor(HTMLParser):
 
 
 def _normalize_name(value: str) -> str:
-    return re.sub(r"[^a-z0-9]", "", (value or "").lower())
+    # Keep ASCII alphanumerics and CJK ideographs; drop punctuation/whitespace.
+    # This helps resolve Chinese product pages where the anchor text contains the product name.
+    return re.sub(r"[^a-z0-9\u4e00-\u9fff]", "", (value or "").lower())
 
 
 def _domain_from_url(url: str) -> str:
@@ -164,10 +173,19 @@ def _score_link(url: str, text: str, name_norm: str, source_domain: str) -> int:
                 score += 5
                 break
 
-    if not name_hit:
-        return -100
+    official_hint = bool(re.search(r"(official|website|homepage|官网|官方网站|主页|官网链接|访问官网|进入官网|产品官网|公司官网)", text, re.IGNORECASE))
 
-    if re.search(r"(official|website|homepage|官网|官方网站|主页)", text, re.IGNORECASE):
+    # Chinese sources often link as "官网" without repeating the company name in the anchor text.
+    # If the product name is CJK-only, allow a strong "official" hint to qualify the link.
+    has_cjk_name = bool(re.search(r"[\u4e00-\u9fff]", name_norm))
+    if not name_hit:
+        if official_hint and (not name_norm or has_cjk_name):
+            score += 18  # baseline so it can pass the threshold with other signals
+            name_hit = True
+        else:
+            return -100
+
+    if official_hint:
         score += 12
 
     tld = f".{domain.split('.')[-1]}"

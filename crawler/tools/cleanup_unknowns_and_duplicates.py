@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Cleanup products_featured.json
-1) Remove products with unknown/empty website
+1) Remove products with empty website (keep "unknown" to allow manual verification)
 2) Deduplicate by website domain
 3) Deduplicate by normalized name
 """
@@ -20,7 +20,8 @@ UNKNOWN_VALUES = {"unknown", "n/a", "na", "none", ""}
 
 
 def normalize_name(name: str) -> str:
-    return re.sub(r"[^a-z0-9]", "", (name or "").lower())
+    # Keep ASCII alphanumerics and CJK ideographs so CN products can dedupe by name too.
+    return re.sub(r"[^a-z0-9\u4e00-\u9fff]", "", (name or "").lower())
 
 
 def normalize_domain(url: str) -> str:
@@ -74,20 +75,28 @@ def main() -> int:
     with open(FEATURED_FILE, "r", encoding="utf-8") as f:
         items = json.load(f)
 
-    removed_unknown = []
+    removed_empty = []
     filtered = []
     for p in items:
-        if is_unknown_website(p.get("website")):
-            removed_unknown.append(p)
-        else:
-            filtered.append(p)
+        website_raw = str(p.get("website") or "").strip()
+        if not website_raw:
+            removed_empty.append(p)
+            continue
+        # Keep "unknown" websites; they are allowed but should not participate in domain de-dupe.
+        filtered.append(p)
 
     by_domain = {}
+    unknown_websites = []
     removed_domain_dupes = []
     for p in filtered:
+        if is_unknown_website(p.get("website")):
+            unknown_websites.append(p)
+            continue
+
         domain = normalize_domain(p.get("website", ""))
-        if not domain:
-            removed_domain_dupes.append(p)
+        # If we can't extract a meaningful domain, keep the item but skip domain-based de-dupe.
+        if not domain or domain in UNKNOWN_VALUES:
+            unknown_websites.append(p)
             continue
         if domain not in by_domain:
             by_domain[domain] = p
@@ -100,7 +109,7 @@ def main() -> int:
 
     by_name = {}
     removed_name_dupes = []
-    for p in by_domain.values():
+    for p in list(by_domain.values()) + unknown_websites:
         name_key = normalize_name(p.get("name", ""))
         if not name_key:
             by_name[id(p)] = p
@@ -117,7 +126,7 @@ def main() -> int:
     final = list(by_name.values())
 
     print(f"original {len(items)}")
-    print(f"removed_unknown {len(removed_unknown)}")
+    print(f"removed_empty_website {len(removed_empty)}")
     print(f"removed_duplicate_by_domain {len(removed_domain_dupes)}")
     print(f"removed_duplicate_by_name {len(removed_name_dupes)}")
     print(f"final {len(final)}")

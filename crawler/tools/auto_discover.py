@@ -957,6 +957,9 @@ def validate_product(product: dict) -> tuple[bool, str]:
     if website.lower() == "unknown":
         # 允许 unknown，但后续需要人工验证
         product["needs_verification"] = True
+        # unknown website without a traceable source is not actionable (can't resolve later).
+        if not product.get("source_url"):
+            return False, "missing source_url for unknown website"
     elif not website.startswith(("http://", "https://")):
         return False, "invalid website URL"
 
@@ -981,9 +984,13 @@ def validate_product(product: dict) -> tuple[bool, str]:
     if not has_number and not has_specific:
         return False, "why_matters lacks specific details"
 
-    # 6. 检查 name 是否像新闻标题
-    news_patterns = ['融资', '宣布', '发布', '获得', '完成', '推出', '上线']
-    if any(p in name for p in news_patterns) and len(name) > 15:
+    # 6. 检查 name 是否像新闻标题（中文区更容易把标题当产品名）
+    news_patterns = [
+        '融资', '宣布', '发布', '获得', '完成', '推出', '上线',
+        '投资', '领投', '参投', '被投', '收购', '估值',
+        '独家', '爆料', '报道', '曝光', '传出', '消息', '传闻',
+    ]
+    if any(p in name for p in news_patterns) and len(name) >= 8:
         return False, "name looks like news headline"
 
     # 7. 检查是否是知名产品
@@ -1313,6 +1320,21 @@ def analyze_with_glm(content: str, task: str = "extract", region: str = "🇨�
                 quota_dark_horses=quota_remaining.get("dark_horses", 5),
                 quota_rising_stars=quota_remaining.get("rising_stars", 10)
             )
+
+        # GLM is more likely to hallucinate websites / output headline-like names.
+        # Add strict guardrails to keep results traceable and reduce junk entries.
+        prompt += """
+
+## GLM 额外要求（必须遵守）
+
+1. `name` 必须是一个明确的「产品/公司名」，不能是新闻标题或描述句。
+   - 禁止包含：投资/领投/参投/融资/独家/爆料/报道/曝光/消息/传闻 等标题词（出现即不输出该条）。
+2. `source_url` 必须精确复制自上方搜索结果中的 `URL:` 行，不允许编造，也不允许留空。
+   - 找不到可对应的 URL，就不要输出该产品。
+3. `website` 只有在搜索结果文本里「明确出现官网域名」时才填写；否则必须设置：
+   - `"website": "unknown", "needs_verification": true`
+   - 不要凭感觉猜测官网。
+"""
     elif task == "score":
         prompt = SCORING_PROMPT.format(
             product=json.dumps(content, ensure_ascii=False, indent=2)
