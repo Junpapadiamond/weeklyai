@@ -13,7 +13,6 @@ import {
 } from "@/lib/product-utils";
 import type { BlogPost } from "@/types/api";
 
-const SOURCE_OPTIONS = ["", "cn_news", "hackernews", "producthunt", "youtube", "x", "reddit", "tech_news"];
 const SOURCE_LABELS: Record<string, string> = {
   "": "全部",
   cn_news: "中国本土源",
@@ -24,6 +23,8 @@ const SOURCE_LABELS: Record<string, string> = {
   reddit: "Reddit",
   tech_news: "Tech News",
 };
+
+const SOURCE_ORDER = ["cn_news", "hackernews", "reddit", "tech_news", "producthunt", "youtube", "x"] as const;
 
 const MARKET_OPTIONS = [
   { value: "hybrid", label: "全球 Hybrid" },
@@ -54,38 +55,23 @@ function inferMarket(item: BlogPost): "cn" | "us" | "global" {
   return "global";
 }
 
-const BIG_COMPANY_FILTERS = [
-  { id: "all", label: "全部公司" },
-  { id: "big", label: "大公司" },
-  { id: "openai", label: "OpenAI" },
-  { id: "google", label: "Google" },
-  { id: "microsoft", label: "Microsoft" },
-  { id: "meta", label: "Meta" },
-  { id: "amazon", label: "Amazon" },
-  { id: "apple", label: "Apple" },
-  { id: "nvidia", label: "NVIDIA" },
-  { id: "anthropic", label: "Anthropic" },
-] as const;
-
-const BIG_COMPANY_PATTERNS: Record<string, RegExp> = {
-  openai: /(openai|chatgpt|sora)\b/i,
-  google: /\b(google|gemini|deepmind|android xr)\b/i,
-  microsoft: /\b(microsoft|copilot|azure)\b/i,
-  meta: /\b(meta|llama|instagram|whatsapp)\b/i,
-  amazon: /\b(amazon|aws|bedrock|alexa)\b/i,
-  apple: /\b(apple|vision pro|siri)\b/i,
-  nvidia: /\b(nvidia|geforce|cuda)\b/i,
-  anthropic: /\b(anthropic|claude)\b/i,
-};
-
-function detectBigCompany(item: BlogPost): string[] {
-  const website = normalizeWebsite(item.website);
-  const haystack = [item.name, item.description, item.source, website].filter(Boolean).join(" ").toLowerCase();
-  const matches: string[] = [];
-  for (const [key, pattern] of Object.entries(BIG_COMPANY_PATTERNS)) {
-    if (pattern.test(haystack)) matches.push(key);
+function buildSourceOptions(data: BlogPost[] | undefined) {
+  const seen = new Set<string>();
+  for (const item of data || []) {
+    const source = String(item.source || "").trim();
+    if (source) seen.add(source);
   }
-  return matches;
+
+  const ordered: string[] = [];
+  for (const source of SOURCE_ORDER) {
+    if (seen.has(source)) ordered.push(source);
+  }
+
+  const rest = [...seen]
+    .filter((source) => !(SOURCE_ORDER as readonly string[]).includes(source))
+    .sort((a, b) => a.localeCompare(b, "en"));
+
+  return ["", ...ordered, ...rest];
 }
 
 function BlogCard({ item }: { item: BlogPost }) {
@@ -150,7 +136,6 @@ function BlogCard({ item }: { item: BlogPost }) {
 export function BlogClient() {
   const [source, setSource] = useState("");
   const [market, setMarket] = useState<(typeof MARKET_OPTIONS)[number]["value"]>("hybrid");
-  const [companyFilter, setCompanyFilter] = useState<(typeof BIG_COMPANY_FILTERS)[number]["id"]>("all");
 
   const { data, isLoading, error } = useSWR(
     ["blogs", source, market],
@@ -161,16 +146,9 @@ export function BlogClient() {
     }
   );
 
-  const posts = useMemo(() => {
-    const all = data || [];
-    if (companyFilter === "all") return all;
+  const posts = data || [];
+  const sourceOptions = useMemo(() => buildSourceOptions(data), [data]);
 
-    return all.filter((item) => {
-      const matches = detectBigCompany(item);
-      if (companyFilter === "big") return matches.length > 0;
-      return matches.includes(companyFilter);
-    });
-  }, [companyFilter, data]);
   const sourceSummary = source ? `来源：${SOURCE_LABELS[source] || source}` : "来源：全部";
   const marketSummary = `区域：${MARKET_LABELS[market] || market}`;
 
@@ -185,7 +163,13 @@ export function BlogClient() {
       <div className="blog-toolbar">
         <label>
           区域
-          <select value={market} onChange={(event) => setMarket(event.target.value as (typeof MARKET_OPTIONS)[number]["value"])}>
+          <select
+            value={market}
+            onChange={(event) => {
+              setMarket(event.target.value as (typeof MARKET_OPTIONS)[number]["value"]);
+              setSource("");
+            }}
+          >
             {MARKET_OPTIONS.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
@@ -196,7 +180,7 @@ export function BlogClient() {
       </div>
 
       <div className="source-pills" role="tablist" aria-label="博客来源筛选">
-        {SOURCE_OPTIONS.map((option) => {
+        {sourceOptions.map((option) => {
           const isActive = option === source;
           return (
             <button
@@ -206,22 +190,6 @@ export function BlogClient() {
               onClick={() => setSource(option)}
             >
               {SOURCE_LABELS[option] || option}
-            </button>
-          );
-        })}
-      </div>
-
-      <div className="source-pills" role="tablist" aria-label="大公司筛选">
-        {BIG_COMPANY_FILTERS.map((item) => {
-          const isActive = item.id === companyFilter;
-          return (
-            <button
-              key={item.id}
-              type="button"
-              className={`source-pill ${isActive ? "active" : ""}`}
-              onClick={() => setCompanyFilter(item.id)}
-            >
-              {item.label}
             </button>
           );
         })}

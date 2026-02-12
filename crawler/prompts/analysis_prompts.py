@@ -794,6 +794,15 @@ def validate_hardware_product(product: dict) -> tuple[bool, str]:
     if not website:
         return False, "missing website"
 
+    # 过滤「新闻标题式」name（GLM 更容易把文章标题当成产品名）
+    headline_patterns = [
+        "融资", "宣布", "发布", "获得", "完成", "推出", "上线",
+        "投资", "领投", "参投", "被投", "收购", "估值",
+        "独家", "爆料", "报道", "曝光", "传出", "消息", "传闻",
+    ]
+    if any(p in name_raw for p in headline_patterns) and len(name_raw) >= 8:
+        return False, "name looks like news headline"
+
     # 修复缺少协议的 URL
     if not website.startswith(("http://", "https://")) and "." in website:
         website = f"https://{website}"
@@ -826,6 +835,18 @@ def validate_hardware_product(product: dict) -> tuple[bool, str]:
     # 宽松版：硬件产品只需要满足基本要求即可
     # 不再强制要求 criteria 数量
     score = product.get("dark_horse_index", 0)
+    try:
+        score = int(float(score))
+    except Exception:
+        score = 0
+
+    # 高分硬件若官网未知，容易是「新闻标题/概念」被误提取；降级为潜力观察，避免上首页黑马区。
+    if website.lower() == "unknown" and score >= 4:
+        product["dark_horse_index"] = 3
+        extra = product.get("extra") if isinstance(product.get("extra"), dict) else {}
+        extra["downgrade_reason"] = "missing_official_website"
+        product["extra"] = extra
+        score = 3
     
     # 只有 5 分产品需要至少 1 条标准
     criteria = product.get("criteria_met", [])

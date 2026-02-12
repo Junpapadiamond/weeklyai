@@ -31,7 +31,7 @@ import os
 import json
 import time
 import re
-from typing import Optional, Union
+from typing import Optional, Union, Any
 from dataclasses import dataclass, field
 
 # ════════════════════════════════════════════════════════════════════════════════
@@ -175,6 +175,115 @@ class GLMClient:
         msg = str(error)
         return ("Error code: 429" in msg) or ("1302" in msg) or ("并发数过高" in msg)
 
+    def _as_plain_obj(self, value: Any) -> Any:
+        """Best-effort convert SDK response objects to plain dict/list for robust parsing."""
+        if value is None:
+            return None
+        if isinstance(value, (str, int, float, bool, dict, list)):
+            return value
+
+        model_dump = getattr(value, "model_dump", None)
+        if callable(model_dump):
+            try:
+                return model_dump()
+            except Exception:
+                pass
+
+        as_dict = getattr(value, "dict", None)
+        if callable(as_dict):
+            try:
+                return as_dict()
+            except Exception:
+                pass
+
+        raw = getattr(value, "__dict__", None)
+        if isinstance(raw, dict) and raw:
+            return {k: self._as_plain_obj(v) for k, v in raw.items()}
+
+        return value
+
+    def _find_search_result_items(self, obj: Any) -> list[dict]:
+        """Find a list of result dicts in an arbitrarily-shaped tool payload."""
+        plain = self._as_plain_obj(obj)
+
+        def looks_like_item(value: Any) -> bool:
+            if not isinstance(value, dict):
+                return False
+            if not value.get("title"):
+                return False
+            return bool(value.get("link") or value.get("url") or value.get("href"))
+
+        if isinstance(plain, list):
+            if any(looks_like_item(item) for item in plain):
+                return [item for item in plain if isinstance(item, dict)]
+            for item in plain:
+                found = self._find_search_result_items(item)
+                if found:
+                    return found
+            return []
+
+        if isinstance(plain, dict):
+            for key in ("search_result", "results", "data", "items"):
+                if key in plain:
+                    found = self._find_search_result_items(plain.get(key))
+                    if found:
+                        return found
+            for value in plain.values():
+                found = self._find_search_result_items(value)
+                if found:
+                    return found
+            return []
+
+        return []
+
+    def _extract_tool_search_items(self, message: Any) -> list[dict]:
+        """Extract web_search tool results from a zhipuai message object."""
+        msg = self._as_plain_obj(message)
+        tool_calls = None
+
+        if isinstance(msg, dict):
+            tool_calls = msg.get("tool_calls")
+        else:
+            tool_calls = getattr(message, "tool_calls", None)
+
+        if not tool_calls:
+            return []
+
+        items: list[dict] = []
+        for tool_call in tool_calls:
+            plain = self._as_plain_obj(tool_call)
+            found = self._find_search_result_items(plain)
+            if found:
+                items.extend(found)
+                continue
+
+            # OpenAI-style function tool call compatibility: function.arguments is a JSON string.
+            if isinstance(plain, dict):
+                func = plain.get("function") or {}
+                args = func.get("arguments")
+                if isinstance(args, str) and args.strip():
+                    try:
+                        parsed = json.loads(args)
+                    except Exception:
+                        parsed = None
+                    found = self._find_search_result_items(parsed)
+                    if found:
+                        items.extend(found)
+
+        # Deduplicate by url/link to avoid repeats across tool calls.
+        deduped: list[dict] = []
+        seen = set()
+        for item in items:
+            if not isinstance(item, dict):
+                continue
+            url = (item.get("link") or item.get("url") or item.get("href") or "").strip()
+            if not url or url in seen:
+                continue
+            seen.add(url)
+            deduped.append(item)
+
+        return deduped
+
     # ════════════════════════════════════════════════════════════════════════════
     # Web Search (使用 GLM 的联网搜索工具)
     # ════════════════════════════════════════════════════════════════════════════
@@ -244,21 +353,23 @@ class GLMClient:
                 results = []
                 content = response.choices[0].message.content or ""
 
-                # 尝试从 web_search 结果中提取
-                if hasattr(response.choices[0].message, 'tool_calls'):
-                    tool_calls = response.choices[0].message.tool_calls
-                    if tool_calls:
-                        for tool_call in tool_calls:
-                            if hasattr(tool_call, 'search_result'):
-                                # 解析搜索结果
-                                for item in tool_call.search_result or []:
-                                    results.append(SearchResult(
-                                        title=item.get('title', ''),
-                                        url=item.get('link', item.get('url', '')),
-                                        snippet=item.get('content', item.get('snippet', '')),
-                                        date=item.get('publish_date', item.get('date')),
-                                        source=item.get('media', item.get('source'))
-                                    ))
+                # Prefer parsing structured web_search tool payloads (more reliable than model-written JSON).
+                tool_items = self._extract_tool_search_items(response.choices[0].message)
+                for item in tool_items:
+                    if not isinstance(item, dict):
+                        continue
+                    url = (item.get("link") or item.get("url") or item.get("href") or "").strip()
+                    title = (item.get("title") or "").strip()
+                    snippet = (item.get("content") or item.get("snippet") or item.get("summary") or "").strip()
+                    if not url or not title:
+                        continue
+                    results.append(SearchResult(
+                        title=title,
+                        url=url,
+                        snippet=snippet,
+                        date=item.get('publish_date', item.get('date')),
+                        source=item.get('media', item.get('source'))
+                    ))
 
                 # 如果没有从 tool_calls 获取到结果，尝试从内容中解析
                 if not results and content:
