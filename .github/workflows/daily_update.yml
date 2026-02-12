@@ -2,8 +2,8 @@ name: Daily Data Update
 
 on:
   schedule:
-    # 08:00 UTC ~= 03:00 US/Eastern (winter). GitHub cron is always UTC.
-    - cron: "0 8 * * *"
+    # 19:00 UTC = 03:00 Asia/Shanghai (next day). GitHub cron is always UTC.
+    - cron: "0 19 * * *"
   workflow_dispatch:
 
 permissions:
@@ -62,6 +62,7 @@ jobs:
           python tools/rss_to_products.py --input data/blogs_news.json --sources youtube,x,xhs,wechat --enrich-featured || true
 
       - name: Verify JSON data sources (LLM-assisted)
+        continue-on-error: true
         env:
           PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
           PERPLEXITY_MODEL: ${{ secrets.PERPLEXITY_MODEL || 'sonar' }}

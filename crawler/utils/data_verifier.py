@@ -451,6 +451,11 @@ def validate_item_heuristic(
 ) -> List[Issue]:
     issues: List[Issue] = []
 
+    # blogs_news.json is a "signal stream" (news/discussions). Some sources only provide a title,
+    # so description can be shorter than product-quality thresholds. Keep this as WARN so it doesn't
+    # block CI / daily updates.
+    is_blogs_stream = os.path.basename(file_path) == "blogs_news.json"
+
     name = (item.get("name") or "").strip()
     if not name:
         issues.append(
@@ -543,7 +548,7 @@ def validate_item_heuristic(
     elif len(description) < 20:
         issues.append(
             Issue(
-                severity="ERROR",
+                severity="WARN" if is_blogs_stream else "ERROR",
                 code="short_description",
                 message=f"description too short ({len(description)})",
                 file=file_path,

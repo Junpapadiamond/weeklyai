@@ -15,12 +15,18 @@ def setup_screenshot_dir():
     os.makedirs(SCREENSHOT_DIR, exist_ok=True)
 
 
+def open_homepage(page):
+    """Open homepage with stable readiness checks (avoid flaky networkidle waits)."""
+    page.goto(BASE_URL, wait_until="domcontentloaded")
+    page.wait_for_selector(".hero", timeout=15000)
+    page.wait_for_timeout(400)
+
+
 def test_homepage_loads(page):
     """Test that homepage loads correctly with all sections"""
     print("\n[TEST] Homepage Load")
 
-    page.goto(BASE_URL)
-    page.wait_for_load_state('networkidle')
+    open_homepage(page)
 
     # Check title
     title = page.title()
@@ -63,8 +69,7 @@ def test_navigation(page):
     """Test navigation between sections"""
     print("\n[TEST] Navigation")
 
-    page.goto(BASE_URL)
-    page.wait_for_load_state('networkidle')
+    open_homepage(page)
 
     # Test "本周榜单" navigation
     weekly_link = page.locator('.nav-link[data-section="weekly"]')
@@ -104,8 +109,7 @@ def test_tinder_cards(page):
     """Test tinder swipe card functionality"""
     print("\n[TEST] Tinder Swipe Cards")
 
-    page.goto(BASE_URL)
-    page.wait_for_load_state('networkidle')
+    open_homepage(page)
     page.wait_for_timeout(1000)  # Wait for cards to load
 
     # Check if cards are loaded
@@ -155,8 +159,7 @@ def test_search_functionality(page):
     """Test search functionality"""
     print("\n[TEST] Search Functionality")
 
-    page.goto(BASE_URL)
-    page.wait_for_load_state('networkidle')
+    open_homepage(page)
 
     # Enter search query
     search_input = page.locator('#searchInput')
@@ -178,11 +181,13 @@ def test_search_functionality(page):
     page.screenshot(path=f"{SCREENSHOT_DIR}/07_search_results.png", full_page=True)
 
     # Test category filter
-    page.goto(BASE_URL)
-    page.wait_for_load_state('networkidle')
+    open_homepage(page)
 
-    coding_tag = page.locator('.tag-btn[data-category="coding"]')
-    coding_tag.click()
+    coding_tag = page.locator(
+        '.discover-filter-btn[data-category="coding"], .tag-btn[data-category="coding"]'
+    )
+    assert coding_tag.count() > 0, "Coding category filter not found"
+    coding_tag.first.click()
     page.wait_for_timeout(1000)
 
     print("  ✓ Category filter clicked")
@@ -203,8 +208,7 @@ def test_responsive_design(page):
 
     for vp in viewports:
         page.set_viewport_size({"width": vp["width"], "height": vp["height"]})
-        page.goto(BASE_URL)
-        page.wait_for_load_state('networkidle')
+        open_homepage(page)
         page.wait_for_timeout(500)
 
         # Check key elements are visible
@@ -226,8 +230,7 @@ def test_product_cards_display(page):
     print("\n[TEST] Product Cards Display")
 
     page.set_viewport_size({"width": 1440, "height": 900})
-    page.goto(BASE_URL)
-    page.wait_for_load_state('networkidle')
+    open_homepage(page)
     page.wait_for_timeout(1500)  # Wait for products to load
 
     # Check trending products
