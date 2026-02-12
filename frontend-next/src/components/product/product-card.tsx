@@ -22,6 +22,14 @@ function formatScore(score: number): string {
   return Number.isInteger(score) ? `${score}分` : `${score.toFixed(1)}分`;
 }
 
+function scoreBadgeTone(score: number): string {
+  if (score >= 5) return "product-badge--score-5";
+  if (score >= 4) return "product-badge--score-4";
+  if (score >= 3) return "product-badge--score-3";
+  if (score >= 2) return "product-badge--rising";
+  return "";
+}
+
 export function ProductCard({ product, compact = false }: ProductCardProps) {
   const website = normalizeWebsite(product.website);
   const hasWebsite = isValidWebsite(website);
@@ -34,11 +42,7 @@ export function ProductCard({ product, compact = false }: ProductCardProps) {
   const hasRegionText = /[A-Za-z\u4e00-\u9fff]/.test(regionLabel);
   const microlineParts = [freshness, product.source || "来源待补充"];
   const description = cleanDescription(product.description);
-  const summaryParts = [description];
-  if (product.why_matters) {
-    summaryParts.push(`为何重要：${product.why_matters}`);
-  }
-  const summaryText = summaryParts.join(" ");
+  const whyMatters = product.why_matters?.trim();
   const tierClass = score >= 4 ? "product-card--darkhorse" : score >= 2 ? "product-card--rising" : "product-card--watch";
   const secondaryBadge = product.funding_total || (isHardware(product) ? "硬件" : "软件");
 
@@ -74,7 +78,7 @@ export function ProductCard({ product, compact = false }: ProductCardProps) {
           </div>
 
           <div className="product-card__badges">
-            <span className={`product-badge ${score >= 4 ? "product-badge--darkhorse" : score >= 2 ? "product-badge--rising" : ""}`}>
+            <span className={`product-badge ${scoreBadgeTone(score)}`}>
               {score >= 4 ? `黑马 ${scoreLabel}` : score >= 2 ? `潜力 ${scoreLabel}` : scoreLabel}
             </span>
             <span className="product-badge">{secondaryBadge}</span>
@@ -82,7 +86,13 @@ export function ProductCard({ product, compact = false }: ProductCardProps) {
         </header>
 
         <div className="product-card__summary">
-          <p className="product-card__summary-text">{summaryText}</p>
+          <p className="product-card__summary-text">{description}</p>
+          {!compact && whyMatters ? (
+            <p className="product-card__summary-why">
+              <span className="product-card__summary-why-label">WHY</span>
+              {whyMatters}
+            </p>
+          ) : null}
         </div>
 
         <footer className="product-card__footer">

@@ -178,6 +178,8 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
+  align-items: stretch;
+  grid-auto-rows: 1fr;
 }
 
 .darkhorse-spotlight-card {
@@ -187,7 +189,8 @@
   background: var(--surface);
   box-shadow: var(--shadow-sm);
   padding: 1rem;
-  height: 320px;
+  min-height: 332px;
+  height: 100%;
   transition: border-color var(--motion-fast), box-shadow var(--motion-fast), transform var(--motion-fast);
 }
 
@@ -326,6 +329,7 @@
   color: var(--text-soft);
   font-size: 0.84rem;
   line-height: 1.44;
+  min-height: calc(1.44em * 3);
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
@@ -377,9 +381,21 @@
   justify-content: center;
 }
 
+.discover-page {
+  display: grid;
+  gap: 0.92rem;
+}
+
+.discover-page .section-header,
+.discover-page .discover-page__controls,
+.discover-page .discover-shell {
+  width: min(72vw, 940px);
+  margin-inline: auto;
+}
+
 .discover-shell {
   display: grid;
-  gap: 0.84rem;
+  gap: 1rem;
   position: relative;
 }
 
@@ -480,7 +496,7 @@
 .swipe-stack {
   position: relative;
   display: grid;
-  min-height: 352px;
+  min-height: clamp(420px, 58vh, 620px);
   perspective: 920px;
 }
 
@@ -489,7 +505,7 @@
 }
 
 .swipe-card {
-  padding: 1rem;
+  padding: clamp(1.06rem, 1rem + 0.6vw, 1.34rem);
   border-color: color-mix(in oklab, var(--accent) 34%, var(--border));
   touch-action: none;
   user-select: none;
@@ -769,6 +785,14 @@
   gap: 0.72rem;
 }
 
+@media (max-width: 1120px) {
+  .discover-page .section-header,
+  .discover-page .discover-page__controls,
+  .discover-page .discover-shell {
+    width: min(100%, 860px);
+  }
+}
+
 @media (max-width: 920px) {
   .darkhorse-spotlight-grid {
     grid-template-columns: 1fr;
@@ -789,7 +813,13 @@
   }
 
   .darkhorse-spotlight-card {
-    height: 308px;
+    min-height: 308px;
+  }
+
+  .discover-page .section-header,
+  .discover-page .discover-page__controls,
+  .discover-page .discover-shell {
+    width: 100%;
   }
 
   .darkhorse-spotlight__body {
@@ -813,6 +843,6 @@
   }
 
   .swipe-stack {
-    min-height: 332px;
+    min-height: 388px;
   }
 }

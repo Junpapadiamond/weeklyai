@@ -44,6 +44,12 @@ function formatScore(score: number): string {
   return Number.isInteger(score) ? `${score}分` : `${score.toFixed(1)}分`;
 }
 
+function getScoreBadgeClass(score: number): string {
+  if (score >= 5) return "score-badge--5";
+  if (score >= 4) return "score-badge--4";
+  return "score-badge--3";
+}
+
 function getRegionFlag(region?: string): string {
   if (!region) return "🌍";
   const match = region.match(REGION_FLAG_RE);
@@ -141,7 +147,7 @@ function DarkHorseSpotlightCard({ product }: DarkHorseSpotlightCardProps) {
             <span className={`darkhorse-spotlight__badge darkhorse-spotlight__badge--funding ${fundingLabel ? "" : "is-muted"}`}>
               {fundingLabel || "融资待补充"}
             </span>
-            <span className="score-badge score-badge--5 darkhorse-spotlight__badge darkhorse-spotlight__badge--score">
+            <span className={`score-badge ${getScoreBadgeClass(score)} darkhorse-spotlight__badge darkhorse-spotlight__badge--score`}>
               {scoreLabel}
             </span>
           </div>
@@ -368,7 +374,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
             <span className="title-icon">
               <Flame size={18} />
             </span>
-            本周黑马 <span className="score-badge score-badge--5">4-5分</span>
+            本周黑马 <span className="score-badge score-badge--4">4-5分</span>
           </h2>
           <p className="section-desc">不是最吵的项目，而是最可能突然起飞的项目。</p>
           <p className="section-micro-note">优先看 4-5 分，按硬件/软件切流减少信息噪声。</p>

@@ -23,6 +23,12 @@ function formatScore(score: number): string {
   return Number.isInteger(score) ? `${score}分` : `${score.toFixed(1)}分`;
 }
 
+function scoreBadgeClass(score: number): string {
+  if (score >= 5) return "score-badge--5";
+  if (score >= 4) return "score-badge--4";
+  return "score-badge--3";
+}
+
 function formatDate(value?: string): string {
   if (!value) return "-";
   const date = new Date(value);
@@ -73,8 +79,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <div className="detail-hero__content">
             <div className="detail-hero__head">
               <h1 className="detail-hero__title">{product.name}</h1>
-              {score >= 4 ? (
-                <span className="score-badge score-badge--5">{scoreLabel}</span>
+              {score >= 3 ? (
+                <span className={`score-badge ${scoreBadgeClass(score)}`}>{scoreLabel}</span>
               ) : (
                 <span className="product-badge">{scoreLabel}</span>
               )}
@@ -124,6 +130,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
             logoUrl={product.logo_url}
             secondaryLogoUrl={product.logo}
             sourceUrl={product.source_url}
+            category={product.category}
+            categories={product.categories}
+            isHardware={product.is_hardware}
             alt={`${product.name} 官网截图`}
             logoSize={84}
           />
