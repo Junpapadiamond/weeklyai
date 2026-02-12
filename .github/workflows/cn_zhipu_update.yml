@@ -118,6 +118,9 @@ jobs:
           eval "${CMD}"
 
           if [ "${WF_DRY_RUN}" != "true" ]; then
+            # Sanity prune weekly dark horses (avoid headline-like items).
+            python tools/prune_dark_horses.py || true
+
             # Best-effort quality/enrichment chain (do not fail whole workflow)
             python tools/auto_publish.py || true
             python tools/backfill_source_urls.py || true

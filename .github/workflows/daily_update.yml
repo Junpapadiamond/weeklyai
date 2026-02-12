@@ -49,6 +49,8 @@ jobs:
           export CONTENT_YEAR="$(date -u +%Y)"
 
           python tools/auto_discover.py --region all || true
+          # Sanity prune weekly dark horses (avoid headline-like items).
+          python tools/prune_dark_horses.py || true
           python tools/auto_publish.py || true
 
           # Quality / enrichment pipeline (best-effort, don't fail the whole run)

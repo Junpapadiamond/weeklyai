@@ -839,14 +839,6 @@ def validate_hardware_product(product: dict) -> tuple[bool, str]:
         score = int(float(score))
     except Exception:
         score = 0
-
-    # 高分硬件若官网未知，容易是「新闻标题/概念」被误提取；降级为潜力观察，避免上首页黑马区。
-    if website.lower() == "unknown" and score >= 4:
-        product["dark_horse_index"] = 3
-        extra = product.get("extra") if isinstance(product.get("extra"), dict) else {}
-        extra["downgrade_reason"] = "missing_official_website"
-        product["extra"] = extra
-        score = 3
     
     # 只有 5 分产品需要至少 1 条标准
     criteria = product.get("criteria_met", [])

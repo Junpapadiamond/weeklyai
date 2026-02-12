@@ -131,10 +131,10 @@ class TestHardwareValidation(unittest.TestCase):
         ok, reason = validate_hardware_product(product)
         self.assertTrue(ok)
         self.assertEqual(reason, "passed")
-        self.assertEqual(product.get("dark_horse_index"), 3)
-        self.assertEqual((product.get("extra") or {}).get("downgrade_reason"), "missing_official_website")
+        # Unknown website should be allowed (with manual verification), without mutating score.
+        self.assertEqual(product.get("dark_horse_index"), 4)
+        self.assertTrue(product.get("needs_verification"))
 
 
 if __name__ == "__main__":
     unittest.main()
-
