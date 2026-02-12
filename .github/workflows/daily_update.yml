@@ -137,6 +137,13 @@ jobs:
 
           git commit -m "chore(data): daily update"
 
+          # Some best-effort steps may touch additional tracked files (e.g. candidates cache).
+          # Keep the working tree clean so `git pull --rebase` won't fail.
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "Working tree dirty after commit; stashing leftovers before rebase/push."
+            git stash push -u -m "ci-autostash-before-push" || true
+          fi
+
           pushed="false"
           for attempt in 1 2 3; do
             echo "Push attempt ${attempt}/3"
