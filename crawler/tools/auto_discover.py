@@ -63,6 +63,8 @@ ENABLE_DEMAND_SIGNALS = os.environ.get('ENABLE_DEMAND_SIGNALS', 'true').lower() 
 DEMAND_WINDOW_DAYS = int(os.environ.get('DEMAND_WINDOW_DAYS', '7'))
 DEMAND_MAX_PRODUCTS_PER_RUN = int(os.environ.get('DEMAND_MAX_PRODUCTS_PER_RUN', '25'))
 DEMAND_OVERRIDE_MODE = os.environ.get('DEMAND_OVERRIDE_MODE', 'medium').strip().lower()
+DEMAND_GITHUB_MAX_STAR_PAGES = int(os.environ.get('DEMAND_GITHUB_MAX_STAR_PAGES', '6'))
+GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN', '')
 DEFAULT_OFFICIAL_HANDLES_FILE = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
     'data',
@@ -1912,6 +1914,8 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
             strict_x_official=True,
             official_handles_path=PRODUCT_OFFICIAL_HANDLES_FILE,
             perplexity_api_key=PERPLEXITY_API_KEY,
+            github_token=GITHUB_TOKEN,
+            github_max_star_pages=DEMAND_GITHUB_MAX_STAR_PAGES,
         )
 
     stats = {
@@ -2170,6 +2174,8 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
             strict_x_official=True,
             official_handles_path=PRODUCT_OFFICIAL_HANDLES_FILE,
             perplexity_api_key=PERPLEXITY_API_KEY,
+            github_token=GITHUB_TOKEN,
+            github_max_star_pages=DEMAND_GITHUB_MAX_STAR_PAGES,
         )
 
     def quotas_met():

@@ -121,6 +121,34 @@ class TestXSignals(unittest.TestCase):
         self.assertEqual(signal.get("skipped_reason"), "official_handle_missing")
 
 
+class TestGitHubSignals(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        _ensure_import_paths()
+
+    def test_resolve_github_repo_from_fields(self) -> None:
+        from utils.demand_signals import resolve_github_repo
+
+        product = {
+            "name": "OpenHands",
+            "website": "https://all-hands.dev",
+            "github_url": "https://github.com/All-Hands-AI/OpenHands",
+        }
+        repo = resolve_github_repo(product)
+        self.assertEqual(repo, "All-Hands-AI/OpenHands")
+
+    def test_demand_score_includes_github_acceleration(self) -> None:
+        from utils.demand_signals import calculate_demand_score
+
+        score, tier = calculate_demand_score(
+            {"status": "skipped", "engagement_depth_ratio": 0, "comments": 0},
+            {"status": "skipped", "non_official_mentions_7d": 0, "unique_authors_7d": 0},
+            {"status": "ok", "stars_7d_delta": 180, "stars_velocity_per_day": 25.7},
+        )
+        self.assertGreater(score, 0.45)
+        self.assertIn(tier, {"medium", "high"})
+
+
 class TestGuardrail(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -207,10 +235,20 @@ class TestDemandSchema(unittest.TestCase):
             "status": "ok",
             "window_days": 7,
         }
+        fake_github = {
+            "repo": "example/example",
+            "stars_total": 2800,
+            "stars_7d_delta": 160,
+            "stars_velocity_per_day": 22.8,
+            "is_open_source": True,
+            "status": "ok",
+            "window_days": 7,
+        }
 
         with (
             patch("utils.demand_signals.collect_hn_signal", return_value=(fake_hn, fake_verdict)),
             patch("utils.demand_signals.collect_x_non_official_signal", return_value=fake_x),
+            patch("utils.demand_signals.collect_github_signal", return_value=fake_github),
         ):
             engine = DemandSignalEngine(
                 window_days=7,
@@ -231,6 +269,7 @@ class TestDemandSchema(unittest.TestCase):
         self.assertEqual(demand.get("window_days"), 7)
         self.assertIn("hn", demand)
         self.assertIn("x", demand)
+        self.assertIn("github", demand)
         self.assertIn("demand_score_raw", demand)
         self.assertIn("demand_tier", demand)
         self.assertIn("guardrail_applied", demand)

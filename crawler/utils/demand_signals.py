@@ -5,6 +5,7 @@ Demand signal utilities (V1)
 Signals:
 - Hacker News comment depth and community verdict
 - X non-official mention volume (strict official-handle mapping)
+- GitHub stars acceleration (7d stars delta)
 """
 
 from __future__ import annotations
@@ -28,9 +29,15 @@ except Exception:  # pragma: no cover - runtime fallback
 
 HN_SEARCH_URL = "https://hn.algolia.com/api/v1/search_by_date"
 HN_ITEM_URL = "https://hn.algolia.com/api/v1/items/{item_id}"
+GITHUB_REPO_URL = "https://api.github.com/repos/{repo}"
+GITHUB_STARGAZERS_URL = "https://api.github.com/repos/{repo}/stargazers"
 
 STATUS_URL_PATTERN = re.compile(
     r"https://(?:x|twitter|mobile\.twitter)\.com/(?:[A-Za-z0-9_]+/status/\d+|i/(?:web/)?status/\d+)",
+    re.IGNORECASE,
+)
+GITHUB_REPO_PATTERN = re.compile(
+    r"(?:https?://)?(?:www\.)?github\.com/([A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+)",
     re.IGNORECASE,
 )
 
@@ -95,6 +102,76 @@ def _safe_float(value: Any, default: float = 0.0) -> float:
         return float(str(value))
     except Exception:
         return default
+
+
+def _parse_iso_datetime(value: Any) -> Optional[datetime]:
+    text = str(value or "").strip()
+    if not text:
+        return None
+    try:
+        return datetime.fromisoformat(text.replace("Z", "+00:00")).astimezone(timezone.utc)
+    except Exception:
+        return None
+
+
+def _normalize_repo_slug(raw: str) -> str:
+    text = str(raw or "").strip().strip("/")
+    if not text:
+        return ""
+    if text.endswith(".git"):
+        text = text[:-4]
+    parts = [p for p in text.split("/") if p]
+    if len(parts) < 2:
+        return ""
+    owner = parts[0].strip()
+    repo = parts[1].strip()
+    if not owner or not repo:
+        return ""
+    return f"{owner}/{repo}"
+
+
+def _extract_github_repo(value: Any) -> str:
+    text = str(value or "").strip()
+    if not text:
+        return ""
+    match = GITHUB_REPO_PATTERN.search(text)
+    if match:
+        owner = match.group(1).strip()
+        repo = match.group(2).strip()
+        return _normalize_repo_slug(f"{owner}/{repo}")
+    if "/" in text and " " not in text and "." not in text:
+        return _normalize_repo_slug(text)
+    return ""
+
+
+def resolve_github_repo(product: Dict[str, Any]) -> str:
+    candidates: List[Any] = [
+        product.get("github_url"),
+        product.get("github"),
+        product.get("repo"),
+        product.get("repository"),
+        product.get("source_repo"),
+        product.get("source_url"),
+        product.get("website"),
+    ]
+
+    extra = product.get("extra")
+    if isinstance(extra, dict):
+        candidates.extend(
+            [
+                extra.get("github_url"),
+                extra.get("github"),
+                extra.get("repo"),
+                extra.get("repository"),
+                extra.get("github_repo"),
+            ]
+        )
+
+    for value in candidates:
+        repo = _extract_github_repo(value)
+        if repo:
+            return repo
+    return ""
 
 
 def _extract_handle_and_id(url: str) -> Tuple[str, str]:
@@ -286,6 +363,18 @@ def _empty_x(window_days: int) -> Dict[str, Any]:
         "unique_authors_7d": 0,
         "status_urls_sample": [],
         "query": "",
+        "status": "ok",
+        "window_days": window_days,
+    }
+
+
+def _empty_github(window_days: int) -> Dict[str, Any]:
+    return {
+        "repo": "",
+        "stars_total": 0,
+        "stars_7d_delta": 0,
+        "stars_velocity_per_day": 0.0,
+        "is_open_source": False,
         "status": "ok",
         "window_days": window_days,
     }
@@ -559,18 +648,150 @@ def collect_x_non_official_signal(
     return signal
 
 
-def calculate_demand_score(hn_signal: Dict[str, Any], x_signal: Dict[str, Any]) -> Tuple[float, str]:
+def _github_headers(github_token: str, *, stargazer: bool = False) -> Dict[str, str]:
+    headers = {
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+    }
+    if stargazer:
+        headers["Accept"] = "application/vnd.github.star+json"
+    token = str(github_token or "").strip()
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    return headers
+
+
+def collect_github_signal(
+    *,
+    product: Dict[str, Any],
+    window_days: int,
+    session: Optional[requests.Session] = None,
+    github_token: str = "",
+    max_star_pages: int = 6,
+) -> Dict[str, Any]:
+    signal = _empty_github(window_days=window_days)
+    repo = resolve_github_repo(product)
+    if not repo:
+        signal["status"] = "skipped"
+        signal["skipped_reason"] = "repo_not_found"
+        return signal
+
+    signal["repo"] = repo
+    sess = session or requests.Session()
+
+    try:
+        repo_resp = sess.get(
+            GITHUB_REPO_URL.format(repo=repo),
+            headers=_github_headers(github_token, stargazer=False),
+            timeout=12,
+        )
+        if repo_resp.status_code == 404:
+            signal["status"] = "skipped"
+            signal["skipped_reason"] = "repo_not_found"
+            return signal
+        if repo_resp.status_code == 403:
+            signal["status"] = "skipped"
+            signal["skipped_reason"] = "github_rate_limited"
+            return signal
+        repo_resp.raise_for_status()
+        repo_data = repo_resp.json() if repo_resp.content else {}
+    except Exception as exc:
+        signal["status"] = "error"
+        signal["error"] = f"github_repo_failed:{exc}"
+        return signal
+
+    signal["stars_total"] = _safe_int(repo_data.get("stargazers_count"), 0)
+    signal["is_open_source"] = not bool(repo_data.get("private", False))
+
+    cutoff = _now_utc() - timedelta(days=max(window_days, 1))
+    stars_recent = 0
+    stars_with_timestamps = 0
+
+    max_star_pages = max(1, int(max_star_pages or 6))
+    for page in range(1, max_star_pages + 1):
+        try:
+            star_resp = sess.get(
+                GITHUB_STARGAZERS_URL.format(repo=repo),
+                params={"per_page": 100, "page": page},
+                headers=_github_headers(github_token, stargazer=True),
+                timeout=12,
+            )
+            if star_resp.status_code == 403:
+                signal["status"] = "skipped"
+                signal["skipped_reason"] = "github_rate_limited"
+                break
+            star_resp.raise_for_status()
+            items = star_resp.json() if star_resp.content else []
+        except Exception as exc:
+            signal["status"] = "error"
+            signal["error"] = f"github_stargazers_failed:{exc}"
+            break
+
+        if not isinstance(items, list) or not items:
+            break
+
+        oldest_dt: Optional[datetime] = None
+        for item in items:
+            if not isinstance(item, dict):
+                continue
+            starred_at = _parse_iso_datetime(item.get("starred_at"))
+            if not starred_at:
+                continue
+            stars_with_timestamps += 1
+            if oldest_dt is None or starred_at < oldest_dt:
+                oldest_dt = starred_at
+            if starred_at >= cutoff:
+                stars_recent += 1
+
+        if len(items) < 100:
+            break
+        if oldest_dt and oldest_dt < cutoff:
+            break
+
+    if signal.get("status") == "ok" and stars_with_timestamps == 0:
+        signal["status"] = "skipped"
+        signal["skipped_reason"] = "stargazer_timestamp_unavailable"
+
+    signal["stars_7d_delta"] = stars_recent
+    signal["stars_velocity_per_day"] = round(stars_recent / max(window_days, 1), 4)
+    return signal
+
+
+def calculate_demand_score(
+    hn_signal: Dict[str, Any],
+    x_signal: Dict[str, Any],
+    github_signal: Optional[Dict[str, Any]] = None,
+) -> Tuple[float, str]:
+    github_signal = github_signal or {}
+
     hn_ratio_score = min(_safe_float(hn_signal.get("engagement_depth_ratio"), 0.0) / 1.5, 1.0)
     hn_comment_score = min(_safe_float(hn_signal.get("comments"), 0.0) / 200.0, 1.0)
     x_mention_score = min(_safe_float(x_signal.get("non_official_mentions_7d"), 0.0) / 50.0, 1.0)
     x_author_score = min(_safe_float(x_signal.get("unique_authors_7d"), 0.0) / 30.0, 1.0)
+    gh_delta_score = min(_safe_float(github_signal.get("stars_7d_delta"), 0.0) / 300.0, 1.0)
+    gh_velocity_score = min(_safe_float(github_signal.get("stars_velocity_per_day"), 0.0) / 50.0, 1.0)
 
-    score = (
-        0.35 * hn_ratio_score
-        + 0.25 * hn_comment_score
-        + 0.25 * x_mention_score
-        + 0.15 * x_author_score
-    )
+    components: List[Tuple[float, float]] = []
+
+    hn_status = str(hn_signal.get("status") or "")
+    if hn_status == "ok":
+        components.extend([(0.25, hn_ratio_score), (0.20, hn_comment_score)])
+
+    x_status = str(x_signal.get("status") or "")
+    if x_status == "ok":
+        components.extend([(0.20, x_mention_score), (0.10, x_author_score)])
+
+    gh_status = str(github_signal.get("status") or "")
+    if gh_status == "ok":
+        components.extend([(0.20, gh_delta_score), (0.05, gh_velocity_score)])
+
+    if not components:
+        score = 0.0
+    else:
+        total_weight = sum(w for w, _ in components)
+        weighted = sum(w * v for w, v in components)
+        score = weighted / max(total_weight, 1e-9)
+
     score = round(_clamp01(score), 4)
 
     if score >= 0.7:
@@ -604,13 +825,17 @@ def apply_demand_guardrail(
 
     hn_status = str((demand_payload.get("hn") or {}).get("status") or "")
     x_status = str((demand_payload.get("x") or {}).get("status") or "")
+    gh_status = str((demand_payload.get("github") or {}).get("status") or "")
 
     # 升分允许在部分信号场景发生；降分仅在双信号可用时触发，避免数据缺失导致误伤。
     can_upgrade = (
         (_safe_int((demand_payload.get("hn") or {}).get("story_count"), 0) > 0)
         or (_safe_int((demand_payload.get("x") or {}).get("non_official_mentions_7d"), 0) > 0)
+        or (_safe_int((demand_payload.get("github") or {}).get("stars_7d_delta"), 0) > 0)
     )
-    can_downgrade = hn_status == "ok" and x_status == "ok"
+    # Downgrade requires at least two independent signals to be available to reduce false negatives.
+    ok_count = sum(1 for s in [hn_status, x_status, gh_status] if s == "ok")
+    can_downgrade = ok_count >= 2
 
     if llm_score <= 3 and can_upgrade and score >= cfg["upgrade"]:
         return min(5, llm_score + 1), "upgraded", f"demand_score_raw={score:.2f} >= {cfg['upgrade']:.2f}"
@@ -632,6 +857,8 @@ class DemandSignalEngine:
     strict_x_official: bool = True
     official_handles_path: str = ""
     perplexity_api_key: str = ""
+    github_token: str = ""
+    github_max_star_pages: int = 6
 
     def __post_init__(self) -> None:
         self.window_days = max(1, int(self.window_days or 7))
@@ -649,6 +876,7 @@ class DemandSignalEngine:
 
         self._hn_cache: Dict[str, Tuple[Dict[str, Any], Optional[Dict[str, Any]]]] = {}
         self._x_cache: Dict[str, Dict[str, Any]] = {}
+        self._github_cache: Dict[str, Dict[str, Any]] = {}
 
     def _cache_key(self, product_name: str, website: str) -> str:
         return f"{_normalize_name_key(product_name)}::{_normalize_domain(website)}"
@@ -663,6 +891,7 @@ class DemandSignalEngine:
             "window_days": self.window_days,
             "hn": _empty_hn(self.window_days),
             "x": _empty_x(self.window_days),
+            "github": _empty_github(self.window_days),
             "demand_score_raw": 0.0,
             "demand_tier": "low",
             "guardrail_applied": "none",
@@ -674,6 +903,8 @@ class DemandSignalEngine:
             demand_payload["hn"]["skipped_reason"] = "missing_product_name"
             demand_payload["x"]["status"] = "skipped"
             demand_payload["x"]["skipped_reason"] = "missing_product_name"
+            demand_payload["github"]["status"] = "skipped"
+            demand_payload["github"]["skipped_reason"] = "missing_product_name"
             demand_payload["guardrail_reason"] = "missing_product_name"
             return {
                 "demand": demand_payload,
@@ -711,10 +942,23 @@ class DemandSignalEngine:
             )
             self._x_cache[x_cache_key] = x_signal
 
-        score, tier = calculate_demand_score(hn_signal, x_signal)
+        if cache_key in self._github_cache:
+            github_signal = self._github_cache[cache_key]
+        else:
+            github_signal = collect_github_signal(
+                product=product,
+                window_days=self.window_days,
+                session=self.session,
+                github_token=self.github_token,
+                max_star_pages=self.github_max_star_pages,
+            )
+            self._github_cache[cache_key] = github_signal
+
+        score, tier = calculate_demand_score(hn_signal, x_signal, github_signal)
 
         demand_payload["hn"] = hn_signal
         demand_payload["x"] = x_signal
+        demand_payload["github"] = github_signal
         demand_payload["demand_score_raw"] = score
         demand_payload["demand_tier"] = tier
 
@@ -724,6 +968,8 @@ class DemandSignalEngine:
                 tags.append("demand_signal_hn")
         if _safe_int(x_signal.get("non_official_mentions_7d"), 0) >= 10 or _safe_int(x_signal.get("unique_authors_7d"), 0) >= 6:
             tags.append("demand_signal_x_non_official")
+        if _safe_int(github_signal.get("stars_7d_delta"), 0) >= 100:
+            tags.append("demand_signal_github_acceleration")
 
         return {
             "demand": demand_payload,

@@ -290,12 +290,16 @@ def main() -> None:
     override_mode = os.getenv("DEMAND_OVERRIDE_MODE", "medium").strip().lower()
     window_days = int(os.getenv("DEMAND_WINDOW_DAYS", "7"))
     pplx_key = os.getenv("PERPLEXITY_API_KEY", "")
+    github_token = os.getenv("GITHUB_TOKEN", "")
+    github_max_star_pages = int(os.getenv("DEMAND_GITHUB_MAX_STAR_PAGES", "6"))
 
     engine = DemandSignalEngine(
         window_days=window_days,
         strict_x_official=True,
         official_handles_path=official_handles_file,
         perplexity_api_key=pplx_key,
+        github_token=github_token,
+        github_max_star_pages=github_max_star_pages,
     )
 
     dark_files, dark_total = _latest_week_files(DARK_HORSES_DIR, weeks)
