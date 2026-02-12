@@ -48,8 +48,6 @@ jobs:
       GLM_SEARCH_ENGINE: ${{ secrets.GLM_SEARCH_ENGINE || 'search_pro' }}
       USE_GLM_FOR_CN: "true"
       PERPLEXITY_API_KEY: ""
-      CN_X_ACCOUNTS: ${{ vars.CN_X_ACCOUNTS }}
-      CN_YOUTUBE_CHANNEL_IDS: ${{ vars.CN_YOUTUBE_CHANNEL_IDS }}
 
     steps:
       - name: Checkout
@@ -131,26 +129,18 @@ jobs:
             echo "ℹ️ dry_run=true, skipped post-processing pipeline." >> "$GITHUB_STEP_SUMMARY"
           fi
 
-      - name: Run CN news-only signals (strict CN sources)
+      - name: Run CN news-only signals (China-native RSS)
         if: ${{ env.WF_DRY_RUN != 'true' && env.WF_RUN_NEWS == 'true' }}
         working-directory: crawler
+        env:
+          CN_NEWS_HOURS: "96"
         run: |
           set -euo pipefail
 
-          if [ -z "${CN_X_ACCOUNTS:-}" ] || [ -z "${CN_YOUTUBE_CHANNEL_IDS:-}" ]; then
-            echo "⚠️ 严格中国源未满足：缺少 vars.CN_X_ACCOUNTS 或 vars.CN_YOUTUBE_CHANNEL_IDS，已跳过 news 步骤。" >> "$GITHUB_STEP_SUMMARY"
-            exit 0
-          fi
-
           export CONTENT_YEAR="$(date -u +%Y)"
-          export X_SOURCE_MODE="fallback_only"
-          export SOCIAL_X_LANGUAGES="zh"
-          export X_ACCOUNTS="${CN_X_ACCOUNTS}"
-          export YOUTUBE_CHANNEL_IDS="${CN_YOUTUBE_CHANNEL_IDS}"
+          python tools/cn_news_only.py || true
 
-          python main.py --news-only || true
-
-          echo "✅ 已执行 news-only（严格中国源，未运行 rss_to_products enrich）。" >> "$GITHUB_STEP_SUMMARY"
+          echo "✅ 已执行 cn_news_only（中国本土 RSS 源，未运行 YouTube/X 与 rss_to_products enrich）。" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Skip CN news-only signals
         if: ${{ env.WF_DRY_RUN == 'true' || env.WF_RUN_NEWS != 'true' }}
@@ -208,7 +198,22 @@ jobs:
           fi
 
           git commit -m "chore(data): cn zhipu update"
-          git push
+
+          pushed="false"
+          for attempt in 1 2 3; do
+            echo "Push attempt ${attempt}/3"
+            if git pull --rebase origin main && git push; then
+              pushed="true"
+              break
+            fi
+            git rebase --abort || true
+            sleep $((attempt * 5))
+          done
+
+          if [ "$pushed" != "true" ]; then
+            echo "❌ Push failed after retries (non-fast-forward or rebase conflict)." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
 
       - name: Skip commit
         if: ${{ env.WF_DRY_RUN != 'true' && env.WF_COMMIT_CHANGES != 'true' }}

@@ -8,6 +8,7 @@ from .hardware_spider import AIHardwareSpider
 from .exhibition_spider import ExhibitionSpider
 from .company_spider import CompanySpider
 from .tech_news_spider import TechNewsSpider
+from .cn_news_spider import CNNewsSpider
 
 __all__ = [
     'BaseSpider',
@@ -18,4 +19,5 @@ __all__ = [
     'ExhibitionSpider',
     'CompanySpider',
     'TechNewsSpider',
+    'CNNewsSpider',
 ]

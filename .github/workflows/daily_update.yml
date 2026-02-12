@@ -134,4 +134,19 @@ jobs:
           fi
 
           git commit -m "chore(data): daily update"
-          git push
+
+          pushed="false"
+          for attempt in 1 2 3; do
+            echo "Push attempt ${attempt}/3"
+            if git pull --rebase origin main && git push; then
+              pushed="true"
+              break
+            fi
+            git rebase --abort || true
+            sleep $((attempt * 5))
+          done
+
+          if [ "$pushed" != "true" ]; then
+            echo "❌ Push failed after retries (non-fast-forward or rebase conflict)." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
