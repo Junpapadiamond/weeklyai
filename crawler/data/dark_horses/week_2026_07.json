@@ -1331,5 +1331,147 @@
         "guardrail_reason": "insufficient_demand_data"
       }
     }
+  },
+  {
+    "name": "AutoWork",
+    "website": "unknown",
+    "needs_verification": true,
+    "description": "致力于开发能够处理复杂办公任务的 AI Agent，旨在通过自动化技术大幅提升企业白领的工作效率。",
+    "category": "agent",
+    "region": "🇨🇳",
+    "funding_total": "$50M A轮",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "完成 5000 万美元 A 轮融资，专注于处理复杂办公任务的垂直场景落地。",
+    "latest_news": "2024年: 宣布完成 5000 万美元 A 轮融资",
+    "source": "PEdaily",
+    "source_url": "https://www.pedaily.cn/news/1123456.html",
+    "confidence": 0.8,
+    "categories": [
+      "other"
+    ],
+    "discovered_at": "2026-02-12",
+    "discovery_method": "glm_search",
+    "search_keyword": "AI Agent 创业公司",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-12T19:42:15.905543Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
+  },
+  {
+    "name": "Gyges Labs AI Glasses",
+    "website": "unknown",
+    "needs_verification": true,
+    "description": "CES2025惊艳亮相并创下近400万美金众筹记录的AI眼镜。",
+    "category": "hardware",
+    "hardware_type": "innovative",
+    "form_factor": "glasses",
+    "use_case": "multimodal_interaction",
+    "innovation_traits": [
+      "wearable",
+      "new_form_factor",
+      "crowdfunding",
+      "media_coverage"
+    ],
+    "region": "🇨🇳",
+    "funding_total": "$4M",
+    "price": "unknown",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "form_innovation",
+      "social_buzz",
+      "funding_success"
+    ],
+    "why_matters": "AI眼镜新形态，众筹近400万美金，获朱啸虎及资本青睐。",
+    "latest_news": "2025年10月完成Pre A轮融资。",
+    "source": "36Kr",
+    "source_url": "https://36kr.com/p/2983456789",
+    "confidence": 0.9,
+    "is_hardware": true,
+    "discovered_at": "2026-02-12",
+    "discovery_method": "glm_search",
+    "search_keyword": "AI硬件 众筹 创新",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-12T19:43:09.884671Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
   }
 ]

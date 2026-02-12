@@ -2182,5 +2182,79 @@
     "discovered_at": "2026-02-12",
     "discovery_method": "perplexity_search",
     "search_keyword": "AIメガネ デバイス 日本"
+  },
+  {
+    "name": "AnkerMake AI Recording Bean",
+    "website": "unknown",
+    "needs_verification": true,
+    "description": "飞书与安克创新联合发布的AI录音豆，外观像一粒圆扣。",
+    "category": "hardware",
+    "hardware_type": "innovative",
+    "form_factor": "bean_bead",
+    "use_case": "productivity",
+    "innovation_traits": [
+      "non_traditional_form",
+      "portable",
+      "affordable"
+    ],
+    "region": "🇨🇳",
+    "funding_total": "unknown",
+    "price": "unknown",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "form_innovation",
+      "use_case_clear"
+    ],
+    "why_matters": "区别于录音笔/卡，采用豆状形态，大厂合作背书。",
+    "latest_news": "1月19日发布，重约10克。",
+    "source": "Anker/Feishu Press",
+    "source_url": "https://www.ankerinnovations.com/press-releases/anker-ai-recording-bean",
+    "confidence": 0.8,
+    "is_hardware": true,
+    "discovered_at": "2026-02-12",
+    "discovery_method": "glm_search",
+    "search_keyword": "AI硬件 众筹 创新",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-12T19:43:10.162885Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
   }
 ]
