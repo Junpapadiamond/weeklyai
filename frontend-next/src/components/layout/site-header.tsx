@@ -3,7 +3,7 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
-import { Heart, Flame, Newspaper, Search, Sparkles } from "lucide-react";
+import { Dice5, Heart, Flame, Newspaper, Search, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 import { countFavorites, openFavoritesPanel, subscribeFavorites } from "@/lib/favorites";
 
@@ -13,6 +13,7 @@ const ThemeToggle = dynamic(() => import("@/components/layout/theme-toggle").the
 
 const navItems = [
   { href: "/", label: "黑马推荐", icon: Flame },
+  { href: "/discover", label: "随机发现", icon: Dice5 },
   { href: "/blog", label: "博客动态", icon: Newspaper },
   { href: "/search", label: "搜索", icon: Search },
 ];

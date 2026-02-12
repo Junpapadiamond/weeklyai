@@ -11,6 +11,7 @@ import {
 } from "@/lib/product-utils";
 
 const SWIPED_KEY = "weeklyai_swiped";
+const SWIPE_GUIDE_SEEN_KEY = "weeklyai_swipe_guide_seen";
 const SWIPED_EXPIRY_DAYS = 7;
 const SWIPE_THRESHOLD_TOUCH = 70;
 const SWIPE_THRESHOLD_POINTER = 92;
@@ -111,6 +112,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
   const [liked, setLiked] = useState(0);
   const [skipped, setSkipped] = useState(0);
   const [likeStreak, setLikeStreak] = useState(0);
+  const [showSwipeGuide, setShowSwipeGuide] = useState(false);
   const [dragX, setDragX] = useState(0);
   const [dragY, setDragY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -138,6 +140,12 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
   const stack = deck.stack;
   const pool = deck.pool;
 
+  function dismissSwipeGuide() {
+    setShowSwipeGuide(false);
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem(SWIPE_GUIDE_SEEN_KEY, "1");
+  }
+
   useEffect(() => {
     return () => {
       if (swipeTimerRef.current) {
@@ -151,6 +159,13 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
       }
       isSwipeOutRef.current = false;
     };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.localStorage.getItem(SWIPE_GUIDE_SEEN_KEY) === "1") return;
+    const rafId = window.requestAnimationFrame(() => setShowSwipeGuide(true));
+    return () => window.cancelAnimationFrame(rafId);
   }, []);
 
   function refill(nextStack: Product[], nextPool: Product[]) {
@@ -246,6 +261,9 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
 
   function animateSwipe(direction: "left" | "right", input?: SwipeInput) {
     if (!stack.length || swipeOutDirection) return;
+    if (showSwipeGuide) {
+      dismissSwipeGuide();
+    }
     const current = stack[0];
     const physics = resolveSwipePhysics(input);
     const exitOffset =
@@ -545,6 +563,18 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
 
   return (
     <div className="discover-shell">
+      {showSwipeGuide ? (
+        <div className="swipe-onboarding" role="dialog" aria-label="快速发现手势引导">
+          <p className="swipe-onboarding__title">左右滑动，30 秒筛出黑马</p>
+          <div className="swipe-onboarding__gestures" aria-hidden="true">
+            <span className="swipe-onboarding__gesture swipe-onboarding__gesture--left">← 左滑跳过</span>
+            <span className="swipe-onboarding__gesture swipe-onboarding__gesture--right">右滑收藏 →</span>
+          </div>
+          <button className="swipe-onboarding__start" type="button" onClick={dismissSwipeGuide}>
+            开始发现
+          </button>
+        </div>
+      ) : null}
       <div className={`swipe-stack ${feedbackDirection ? `is-${feedbackDirection}` : ""}`}>
         {backCard ? (
           <article className="swipe-card swipe-card--ghost swipe-card--ghost-back" style={backCardStyle} aria-hidden="true">

@@ -320,12 +320,22 @@
             <h3>❤️ 我的收藏</h3>
             <button class="favorites-close" id="favoritesClose">×</button>
         </div>
+        <div class="favorites-controls" id="favoritesControls">
+            <div class="favorites-type-tabs" id="favoritesTypeTabs">
+                <button class="favorites-type-tab active" data-type="all">全部</button>
+                <button class="favorites-type-tab" data-type="product">产品</button>
+                <button class="favorites-type-tab" data-type="blog">博客动态</button>
+            </div>
+            <div class="favorites-subfilters" id="favoritesSubfilters">
+                <!-- 二级筛选由 JS 动态渲染 -->
+            </div>
+        </div>
         <div class="favorites-list" id="favoritesList">
             <!-- Favorites loaded dynamically -->
         </div>
         <div class="favorites-empty" id="favoritesEmpty">
-            <p>还没有收藏任何产品</p>
-            <p class="favorites-hint">点击产品卡片上的 ❤️ 按钮添加收藏</p>
+            <p>还没有收藏任何内容</p>
+            <p class="favorites-hint">点击产品卡片、快速发现或博客动态上的 ❤️ 按钮添加收藏</p>
         </div>
     </div>
 

@@ -1077,105 +1077,31 @@
     "search_keyword": "AI スタートアップ 資金調達 2026"
   },
   {
-    "name": "Lumus Geometric Waveguides Glasses",
+    "name": "燈",
     "website": "unknown",
-    "description": "AR smart glasses optics with 70° field of view, highly efficient waveguides eliminating eye glow for immersive experiences.",
+    "description": "东京大学发AI初创公司，专注建设制造行业AI驱动DX，强调Embodied AI和机器人实机验证。",
     "category": "hardware",
-    "hardware_type": "innovative",
-    "form_factor": "glasses",
-    "use_case": "immersive_ar",
-    "innovation_traits": [
-      "wearable",
-      "new_form_factor",
-      "media_coverage"
-    ],
-    "region": "🇺🇸",
-    "funding_total": "unknown",
-    "price": "unknown",
+    "region": "🇯🇵🇰🇷",
+    "funding_total": "50億円",
     "dark_horse_index": 3,
     "criteria_met": [
-      "form_innovation",
-      "demo_prototype",
-      "tech_breakthrough"
+      "funding_signal"
     ],
-    "why_matters": "CES 2026最佳demo，70°视场轻量化波导，2年内进消费产品重塑AR沉浸感",
-    "latest_news": "CES 2026: Introduced 70° FOV geometric waveguides",
-    "source": "[3]",
+    "why_matters": "2026年1月国内融资排行榜冠军，50亿日元专注重工业DX，已实现盈利，瞄准无人化工厂和全球扩张。",
+    "latest_news": "2026-01: 完成50亿日元融资，登記簿確認。",
+    "source": "Startup DB",
+    "source_url": "https://lp.startup-db.com/media/articles/funding-ranking-202601",
     "confidence": 0.8,
-    "is_hardware": true,
     "needs_verification": true,
-    "discovered_at": "2026-02-12",
+    "is_hardware": true,
+    "discovered_at": "2026-02-11",
     "discovery_method": "perplexity_search",
-    "search_keyword": "AI glasses startup 2026"
+    "search_keyword": "Japan AI startup funding"
   },
   {
-    "name": "Rokid Payment Smart Glasses",
-    "website": "unknown",
-    "description": "Smart glasses enabling mobile payments on the go, hinting at wallet-less future.",
-    "category": "hardware",
-    "hardware_type": "innovative",
-    "form_factor": "glasses",
-    "use_case": "payments",
-    "innovation_traits": [
-      "wearable",
-      "single_use_case",
-      "media_coverage"
-    ],
-    "region": "🇺🇸",
-    "funding_total": "unknown",
-    "price": "unknown",
-    "dark_horse_index": 3,
-    "criteria_met": [
-      "form_innovation",
-      "use_case_clear",
-      "demo_prototype"
-    ],
-    "why_matters": "CES 2026展示移动支付功能，开启无钱包时代新场景",
-    "latest_news": "CES 2026: Demonstrated mobile payments capability",
-    "source": "[3]",
-    "confidence": 0.75,
-    "is_hardware": true,
-    "needs_verification": true,
-    "discovered_at": "2026-02-12",
-    "discovery_method": "perplexity_search",
-    "search_keyword": "AI glasses startup 2026"
-  },
-  {
-    "name": "AIKONIC AI Hardware",
-    "website": "unknown",
-    "description": "全球首款结合智能硬件与主动式AI的产品，超越记录功能，赋能专业人士高效工作。",
-    "category": "hardware",
-    "hardware_type": "innovative",
-    "form_factor": "wearable_device",
-    "use_case": "productivity",
-    "innovation_traits": [
-      "non_traditional_form",
-      "proactive_ai",
-      "always_on"
-    ],
-    "region": "🇸🇬",
-    "funding_total": "unknown",
-    "price": "unknown",
-    "dark_horse_index": 3,
-    "criteria_met": [
-      "form_innovation",
-      "use_case_clear"
-    ],
-    "why_matters": "新加坡创新公司推出的下一代AI硬件生态，强调主动AI与硬件融合，新形态载体。",
-    "latest_news": "2026: 发布全球首款主动式AI硬件产品。",
-    "source": "[7]",
-    "confidence": 0.75,
-    "is_hardware": true,
-    "needs_verification": true,
-    "discovered_at": "2026-02-12",
-    "discovery_method": "perplexity_search",
-    "search_keyword": "AI hardware startup Singapore"
-  },
-  {
-    "name": "AI Smart Ring",
-    "website": "unknown",
-    "needs_verification": true,
-    "description": "集成了人工智能算法的智能戒指，用于健康监测与生活辅助。",
+    "name": "Oura Ring 3",
+    "website": "https://ouraring.com",
+    "description": "市面功能最强大的 AI 智能戒指之一，专注于睡眠追踪和健康监测。",
     "category": "hardware",
     "hardware_type": "innovative",
     "form_factor": "ring",
@@ -1183,8 +1109,39 @@
     "innovation_traits": [
       "non_traditional_form",
       "wearable",
-      "health",
-      "ambient"
+      "screenless",
+      "lifestyle"
+    ],
+    "region": "🇨🇳",
+    "funding_total": "unknown",
+    "price": "$299+",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "form_innovation",
+      "use_case_clear"
+    ],
+    "why_matters": "智能戒指领域的标杆产品，推动了戒指作为可穿戴健康设备的主流认知。",
+    "latest_news": "2024: 入选年度最值得关注的五大 AI 戒指。",
+    "source": "Wearable Daily",
+    "confidence": 0.9,
+    "is_hardware": true,
+    "discovered_at": "2026-02-11",
+    "discovery_method": "glm_search",
+    "search_keyword": "AI戒指 智能穿戴"
+  },
+  {
+    "name": "Circular Ring",
+    "website": "https://circular.xyz",
+    "description": "设计时尚的 AI 智能戒指，提供健康监测与运动数据分析。",
+    "category": "hardware",
+    "hardware_type": "innovative",
+    "form_factor": "ring",
+    "use_case": "health_monitoring",
+    "innovation_traits": [
+      "non_traditional_form",
+      "wearable",
+      "screenless",
+      "lifestyle"
     ],
     "region": "🇨🇳",
     "funding_total": "unknown",
@@ -1194,27 +1151,27 @@
       "form_innovation",
       "use_case_clear"
     ],
-    "why_matters": "AI戒指作为新兴的可穿戴形态，相比手环更轻便，专注健康监测场景，市场报告显示其为新增长点。",
-    "latest_news": "2024年最值得关注的AI智能戒指推荐，市场增长迅速。",
-    "source": "Market Report / Reviews",
-    "confidence": 0.7,
+    "why_matters": "以时尚设计切入市场，展示了 AI 硬件在个性化外观上的潜力。",
+    "latest_news": "2024: 被列为年度五大 AI 戒指推荐之一。",
+    "source": "Wearable Daily",
+    "confidence": 0.85,
     "is_hardware": true,
-    "discovered_at": "2026-02-12",
+    "discovered_at": "2026-02-11",
     "discovery_method": "glm_search",
     "search_keyword": "AI戒指 智能穿戴"
   },
   {
-    "name": "XbotGo Falcon AI",
+    "name": "XbotGo Falcon",
     "website": "unknown",
-    "description": "搭载6 TOPS算力AI芯片的智能摄像机，支持智能运动识别与自动拍摄。",
+    "description": "搭载AI芯片的智能摄像机，支持20多种运动项目的智能跟踪。",
     "category": "hardware",
     "hardware_type": "innovative",
-    "form_factor": "smart_camera",
-    "use_case": "sports_filming",
+    "form_factor": "camera",
+    "use_case": "sports_recording",
     "innovation_traits": [
       "single_use_case",
-      "ai_chip",
-      "crowdfunding"
+      "crowdfunding",
+      "affordable"
     ],
     "region": "🇨🇳",
     "funding_total": "$1.42M",
@@ -1224,94 +1181,155 @@
       "use_case_clear",
       "crowdfunding_success"
     ],
-    "why_matters": "专注于运动拍摄场景，利用AI解决自动跟拍痛点，众筹超预期28384%。",
-    "latest_news": "Kickstarter众筹金额达1,419,209美元。",
+    "why_matters": "专注于运动场景的AI摄像机，众筹超预期28384%，显示出垂直场景AI硬件的爆发力。",
+    "latest_news": "众筹已筹1,419,209美元，超预期28384%。",
     "source": "Kickstarter",
-    "confidence": 0.75,
+    "confidence": 0.8,
     "is_hardware": true,
     "needs_verification": true,
-    "discovered_at": "2026-02-12",
+    "discovered_at": "2026-02-11",
     "discovery_method": "glm_search",
     "search_keyword": "AI硬件 众筹 创新"
   },
   {
-    "name": "SOXAI RING 2",
-    "website": "unknown",
-    "description": "世界最細クラスの国産スマートリングで、健康管理と活動追跡を実現。",
-    "category": "hardware",
-    "hardware_type": "innovative",
-    "form_factor": "ring",
-    "use_case": "health_monitoring",
-    "innovation_traits": [
-      "non_traditional_form",
-      "wearable",
-      "single_use_case"
-    ],
-    "region": "🇯🇵🇰🇷",
-    "funding_total": "unknown",
-    "price": "unknown",
+    "name": "Winn.ai",
+    "website": "https://winn.ai",
+    "description": "AI驱动的销售助手，为销售代表提供实时通话指导和CRM集成，自动化销售前后的行政任务",
+    "category": "agent",
+    "region": "🇺🇸",
+    "funding_total": "$18M Series A",
     "dark_horse_index": 3,
     "criteria_met": [
-      "form_innovation",
-      "use_case_clear"
+      "funding_signal"
     ],
-    "why_matters": "世界最細スマートリングとして形態の極薄化を実現し、日常装着性を高めたAI健康追跡デバイス。",
-    "latest_news": "約1カ月使用で日常変化を実感、世界最細クラス。",
-    "source": "xdoge.jp",
-    "confidence": 0.8,
-    "is_hardware": true,
-    "needs_verification": true,
-    "discovered_at": "2026-02-12",
+    "why_matters": "Insight Partners、S Capital、Mangusta Capital联合领投$18M Series A，总融资$35M，专注销售流程自动化，企业应用场景明确",
+    "latest_news": "2026-02: 完成$18M Series A融资",
+    "source": "Crunchbase News",
+    "source_url": "https://news.crunchbase.com/venture/startup-winn-ai-seriesa-real-time-assistant/",
+    "confidence": 0.85,
+    "categories": [
+      "other"
+    ],
+    "discovered_at": "2026-02-11",
     "discovery_method": "perplexity_search",
-    "search_keyword": "AIウェアラブル スタートアップ 日本"
+    "search_keyword": "AI Series A 2026"
   },
   {
-    "name": "New AIスマートレンズ",
-    "website": "https://item.rakuten.co.jp/selfshop/hcy-/",
-    "description": "38g超軽量スマートグラスで、800万画素カメラ、22言語リアルタイム翻訳、AI音声アシスタントを搭載したサングラス型オーディオデバイス。",
+    "name": "Glīd",
+    "website": "https://glidtech.us",
+    "description": "2025 Startup Battlefield冠军，AI相关早期创业公司。",
+    "category": "other",
+    "region": "🇺🇸",
+    "funding_total": "$5.1M",
+    "dark_horse_index": 2,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "获TechCrunch Startup Battlefield 2025冠军，融资510万美元，脱颖而出获评委青睐。",
+    "latest_news": "2025: Startup Battlefield Winner",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/startup-battlefield/",
+    "confidence": 0.85,
+    "categories": [
+      "other"
+    ],
+    "discovered_at": "2026-02-11",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:techcrunch.com AI startup funding"
+  },
+  {
+    "name": "SenseTime SenseNova-MARS",
+    "website": "https://www.sensetime.com",
+    "description": "开源AI模型结合图像文本搜索与智能推理能力，可解决复杂视觉谜题",
+    "category": "image",
+    "region": "🇸🇬",
+    "funding_total": "unknown",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "category_innovation"
+    ],
+    "why_matters": "首个开源多模态推理模型，整合图像文本搜索与视觉推理，突破传统计算机视觉局限",
+    "latest_news": "2026-02: 开源SenseNova-MARS AI模型，支持图像文本搜索与智能推理",
+    "source": "Entelechy Asia",
+    "source_url": "https://entelechyasia.com/category/artificial-intelligence/",
+    "confidence": 0.75,
+    "needs_verification": true,
+    "categories": [
+      "other"
+    ],
+    "discovered_at": "2026-02-11",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "Tech in Asia artificial intelligence"
+  },
+  {
+    "name": "Sirbai Autonomous Drone Swarm",
+    "website": "https://sirbai.com",
+    "description": "中东首个AI驱动自主无人机群技术，专注防御应用领域",
+    "category": "hardware",
+    "region": "🇸🇬",
+    "funding_total": "unknown",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "category_innovation"
+    ],
+    "why_matters": "由40+AI、自主系统和机器人工程师开发，在UMEX 2026首次展示中东首创自主无人机群技术，针对防御应用",
+    "latest_news": "2026-02: 在阿布扎比UMEX 2026展示中东首个AI驱动自主无人机群技术",
+    "source": "Entelechy Asia",
+    "source_url": "https://entelechyasia.com/category/artificial-intelligence/",
+    "confidence": 0.72,
+    "needs_verification": true,
+    "is_hardware": true,
+    "discovered_at": "2026-02-11",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "Tech in Asia artificial intelligence"
+  },
+  {
+    "name": "Google AI Smart Glasses",
+    "website": "unknown",
+    "needs_verification": true,
+    "description": "AI-powered smart glasses launching in 2026, partnering with Warby Parker for stylish, seamless everyday wear.",
     "category": "hardware",
     "hardware_type": "innovative",
     "form_factor": "glasses",
-    "use_case": "translation_productivity",
+    "use_case": "productivity",
     "innovation_traits": [
       "non_traditional_form",
       "wearable",
-      "voice_first",
-      "screenless",
-      "affordable"
+      "media_coverage"
     ],
-    "region": "🇯🇵🇰🇷",
-    "funding_total": "unknown",
+    "region": "🇺🇸",
+    "funding_total": "$75M+ partnership",
     "price": "unknown",
     "dark_horse_index": 3,
     "criteria_met": [
       "form_innovation",
       "use_case_clear"
     ],
-    "why_matters": "サングラス型でカメラ・翻訳・AIを統合し、日常ビジネス・アウトドアに特化した軽量ウェアラブル。",
-    "latest_news": "2026新登場、楽天市場で販売中",
-    "source": "楽天市場",
+    "why_matters": "Google正式进军AI眼镜，2026年发布，与Warby Parker合作强调风格与沉浸平衡，挑战Meta主导市场。",
+    "latest_news": "2026: 确认2026年推出，投资Warby Parker最高$150M。",
+    "source": "TechBuzz",
     "confidence": 0.9,
     "is_hardware": true,
-    "discovered_at": "2026-02-12",
+    "discovered_at": "2026-02-11",
     "discovery_method": "perplexity_search",
-    "search_keyword": "AIメガネ デバイス 日本"
+    "search_keyword": "AI glasses startup 2026"
   },
   {
-    "name": "Rokid Style",
+    "name": "VITURE Luma Ultra",
     "website": "unknown",
-    "description": "超轻无屏AI眼镜，仅38.59克，专注日常佩戴舒适性",
+    "needs_verification": true,
+    "description": "XR smart glasses with 152in virtual display, triple camera 6DoF tracking, hand gestures, and real-time 2D to 3D conversion.",
     "category": "hardware",
     "hardware_type": "innovative",
     "form_factor": "glasses",
-    "use_case": "daily_wear_ai_assistant",
+    "use_case": "productivity",
     "innovation_traits": [
       "non_traditional_form",
-      "screenless",
-      "lightweight",
-      "always_on"
+      "wearable",
+      "gesture",
+      "media_coverage"
     ],
-    "region": "🇪🇺",
+    "region": "🇺🇸",
     "funding_total": "unknown",
     "price": "unknown",
     "dark_horse_index": 3,
@@ -1319,76 +1337,13 @@
       "form_innovation",
       "use_case_clear"
     ],
-    "why_matters": "灵伴科技在CES 2026展示的无屏AI眼镜，极致轻量化设计打破传统眼镜认知，专注解决日常佩戴舒适性问题",
-    "latest_news": "2026-01: CES 2026首次亮相展示",
-    "source": "澎湃新闻",
-    "confidence": 0.75,
-    "is_hardware": true,
-    "needs_verification": true,
-    "discovered_at": "2026-02-12",
-    "discovery_method": "perplexity_search",
-    "search_keyword": "AI glasses pendant Europe startup"
-  },
-  {
-    "name": "OpenAI Gumdrop",
-    "website": "unknown",
-    "description": "内部代号Gumdrop的智能笔或可穿戴式音频设备，由富士康代工",
-    "category": "hardware",
-    "hardware_type": "innovative",
-    "form_factor": "pen_or_wearable_audio",
-    "use_case": "productivity_assistant",
-    "innovation_traits": [
-      "non_traditional_form",
-      "portable",
-      "voice_first"
-    ],
-    "region": "🇪🇺",
-    "funding_total": "$66.5B",
-    "price": "unknown",
-    "dark_horse_index": 3,
-    "criteria_met": [
-      "form_innovation",
-      "media_coverage"
-    ],
-    "why_matters": "OpenAI第二款硬件产品，形态创新（智能笔或可穿戴音频），由富士康代工，预计2026年下半年发布，代表AI硬件多形态探索方向",
-    "latest_news": "2026-02: 富士康代工确认，预计下半年发布",
-    "source": "投中网、CBNData",
-    "confidence": 0.7,
-    "is_hardware": true,
-    "needs_verification": true,
-    "discovered_at": "2026-02-12",
-    "discovery_method": "perplexity_search",
-    "search_keyword": "AI glasses pendant Europe startup"
-  },
-  {
-    "name": "Google AI Glasses",
-    "website": "unknown",
-    "description": "谷歌新立项AI眼镜项目，由富士康代工、三星提供参考设计、高通提供芯片",
-    "category": "hardware",
-    "hardware_type": "innovative",
-    "form_factor": "glasses",
-    "use_case": "ai_assistant",
-    "innovation_traits": [
-      "non_traditional_form",
-      "screenless",
-      "always_on"
-    ],
-    "region": "🇪🇺",
-    "funding_total": "unknown",
-    "price": "unknown",
-    "dark_horse_index": 3,
-    "criteria_met": [
-      "form_innovation",
-      "media_coverage"
-    ],
-    "why_matters": "谷歌2025年底立项两个新AI眼镜项目，由全球顶级供应链支持（富士康、三星、高通），预计2026年Q4发布，代表科技巨头AI眼镜竞赛升温",
-    "latest_news": "2026-01: 立项确认，预计Q4发布",
-    "source": "36氪",
+    "why_matters": "2026顶级AI眼镜之一，152英寸虚拟屏+手势控制+电致变色镜片，Sony micro-OLED提升沉浸体验。",
+    "latest_news": "2026: 预计主导市场，1,500尼特亮度降低35%功耗。",
+    "source": "Tech Centeral YouTube",
     "confidence": 0.8,
     "is_hardware": true,
-    "needs_verification": true,
-    "discovered_at": "2026-02-12",
+    "discovered_at": "2026-02-11",
     "discovery_method": "perplexity_search",
-    "search_keyword": "AI glasses pendant Europe startup"
+    "search_keyword": "AI glasses startup 2026"
   }
 ]

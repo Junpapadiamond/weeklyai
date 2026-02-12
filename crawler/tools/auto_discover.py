@@ -58,6 +58,21 @@ GLM_MODEL = os.environ.get('GLM_MODEL', 'glm-4.7')  # 最新: glm-4.7 (200K cont
 GLM_SEARCH_ENGINE = os.environ.get('GLM_SEARCH_ENGINE', 'search_pro')
 USE_GLM_FOR_CN = os.environ.get('USE_GLM_FOR_CN', 'true').lower() == 'true'
 
+# Demand signals (HN + X)
+ENABLE_DEMAND_SIGNALS = os.environ.get('ENABLE_DEMAND_SIGNALS', 'true').lower() == 'true'
+DEMAND_WINDOW_DAYS = int(os.environ.get('DEMAND_WINDOW_DAYS', '7'))
+DEMAND_MAX_PRODUCTS_PER_RUN = int(os.environ.get('DEMAND_MAX_PRODUCTS_PER_RUN', '25'))
+DEMAND_OVERRIDE_MODE = os.environ.get('DEMAND_OVERRIDE_MODE', 'medium').strip().lower()
+DEFAULT_OFFICIAL_HANDLES_FILE = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    'data',
+    'product_official_handles.json'
+)
+PRODUCT_OFFICIAL_HANDLES_FILE = os.environ.get(
+    'PRODUCT_OFFICIAL_HANDLES_FILE',
+    DEFAULT_OFFICIAL_HANDLES_FILE
+)
+
 # Provider routing (动态选择)
 PROVIDER_NAME = "perplexity"  # 默认 provider，实际按区域动态选择
 
@@ -397,6 +412,13 @@ AUTO_DISCOVER_LOCK_FILE = os.environ.get(
     'AUTO_DISCOVER_LOCK_FILE',
     os.path.join(PROJECT_ROOT, 'logs', 'auto_discover.lock')
 )
+
+try:
+    from utils.demand_signals import DemandSignalEngine, apply_demand_guardrail
+    HAS_DEMAND_SIGNALS = True
+except Exception as e:
+    HAS_DEMAND_SIGNALS = False
+    print(f"⚠️ demand_signals module not available: {e}")
 
 # ============================================
 # Prompt 模块 (独立优化的搜索和分析 Prompt)
@@ -1557,6 +1579,123 @@ def analyze_and_score(product: dict) -> dict:
     return product
 
 
+def _coerce_score(value, default: int = 2) -> int:
+    try:
+        score = int(float(str(value)))
+    except Exception:
+        score = default
+    return max(1, min(5, score))
+
+
+def _ensure_criteria_list(product: dict) -> list:
+    criteria = product.get('criteria_met', [])
+    if isinstance(criteria, list):
+        out = [str(c).strip() for c in criteria if str(c).strip()]
+    elif criteria:
+        out = [str(criteria).strip()]
+    else:
+        out = []
+    product['criteria_met'] = out
+    return out
+
+
+def _add_criteria(product: dict, tag: str) -> None:
+    tag = str(tag or '').strip()
+    if not tag:
+        return
+    criteria = _ensure_criteria_list(product)
+    if tag not in criteria:
+        criteria.append(tag)
+        product['criteria_met'] = criteria
+
+
+def _parse_funding_amount_musd(funding_text: str) -> float:
+    text = str(funding_text or '').strip()
+    if not text:
+        return 0.0
+    match = re.search(r'\$?\s*([\d,.]+)\s*([BMK]?)', text, re.IGNORECASE)
+    if not match:
+        return 0.0
+    try:
+        amount = float(match.group(1).replace(',', ''))
+    except Exception:
+        return 0.0
+    unit = (match.group(2) or '').upper()
+    if unit == 'B':
+        amount *= 1000.0
+    elif unit == 'K':
+        amount /= 1000.0
+    return amount
+
+
+def _has_strong_supply_signal(product: dict) -> bool:
+    funding = _parse_funding_amount_musd(product.get('funding_total', ''))
+    if funding >= 30.0:
+        return True
+
+    criteria = [str(c).lower() for c in _ensure_criteria_list(product)]
+    if any(k in criteria for k in ['funding_signal', 'top_vc_backing', 'founder_background', 'category_creator']):
+        return True
+
+    why_matters = str(product.get('why_matters', '')).lower()
+    strong_markers = ['sequoia', 'a16z', 'benchmark', 'accel', 'greylock', 'yc', 'y combinator', 'top-tier']
+    return any(m in why_matters for m in strong_markers)
+
+
+def _apply_demand_signals_and_guardrail(
+    product: dict,
+    *,
+    demand_engine,
+    llm_score: int,
+    override_mode: str,
+) -> tuple[int, str]:
+    """
+    Enrich product with demand signals and apply scoring guardrail.
+
+    Returns:
+        (new_score, guardrail_applied)
+    """
+    if not demand_engine:
+        return llm_score, "none"
+
+    result = demand_engine.collect_for_product(product)
+    demand_payload = result.get('demand') or {}
+    community_verdict = result.get('community_verdict')
+    criteria_tags = result.get('criteria_tags') or []
+
+    extra = product.get('extra')
+    if not isinstance(extra, dict):
+        extra = {}
+    extra['demand'] = demand_payload
+    product['extra'] = extra
+
+    if isinstance(community_verdict, dict):
+        product['community_verdict'] = community_verdict
+
+    for tag in criteria_tags:
+        _add_criteria(product, tag)
+
+    has_supply = _has_strong_supply_signal(product)
+    new_score, applied, reason = apply_demand_guardrail(
+        llm_score=llm_score,
+        demand_payload=demand_payload,
+        has_strong_supply_signal=has_supply,
+        mode=override_mode,
+    )
+
+    demand_payload['guardrail_applied'] = applied
+    demand_payload['guardrail_reason'] = reason
+    extra['demand'] = demand_payload
+    product['extra'] = extra
+
+    if applied == 'upgraded':
+        _add_criteria(product, 'demand_guardrail_upgraded')
+    elif applied == 'downgraded':
+        _add_criteria(product, 'demand_guardrail_downgraded')
+
+    return new_score, applied
+
+
 def save_product(product: dict, dry_run: bool = False):
     """保存产品到相应目录"""
     score = product.get('dark_horse_index', 2)
@@ -1641,6 +1780,8 @@ def sync_to_featured(product: dict):
             'source_url': product.get('source_url', ''),
             'source_title': product.get('source_title', ''),
             'website_source': product.get('website_source', ''),
+            'community_verdict': product.get('community_verdict'),
+            'extra': product.get('extra', {}) if isinstance(product.get('extra'), dict) else {},
             'discovered_at': product.get('discovered_at', datetime.utcnow().strftime('%Y-%m-%d')),
             'first_seen': datetime.utcnow().isoformat() + 'Z',
             # 计算分数（用于排序）
@@ -1760,6 +1901,18 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
     dedup_checker = EnhancedDuplicateChecker(existing_products)
     all_products = []
     quality_rejections = []
+    demand_engine = None
+    demand_processed = 0
+    demand_upgraded = 0
+    demand_downgraded = 0
+
+    if ENABLE_DEMAND_SIGNALS and HAS_DEMAND_SIGNALS:
+        demand_engine = DemandSignalEngine(
+            window_days=DEMAND_WINDOW_DAYS,
+            strict_x_official=True,
+            official_handles_path=PRODUCT_OFFICIAL_HANDLES_FILE,
+            perplexity_api_key=PERPLEXITY_API_KEY,
+        )
 
     stats = {
         "region": region_key,
@@ -1771,6 +1924,9 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
         "rising_stars": 0,
         "duplicates_skipped": 0,
         "quality_rejections": 0,
+        "demand_processed": 0,
+        "demand_upgraded": 0,
+        "demand_downgraded": 0,
     }
 
     # 对每个关键词进行搜索
@@ -1869,6 +2025,30 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
                 print(f"    🎯 Fallback scoring: {product.get('name')}...")
                 product = analyze_and_score(product)
                 score = product.get('dark_horse_index', 2)
+            score = _coerce_score(score, default=2)
+            product['dark_horse_index'] = score
+
+            # Demand signals + guardrail（仅对通过质量校验的候选）
+            guardrail_applied = "none"
+            if demand_engine and demand_processed < max(DEMAND_MAX_PRODUCTS_PER_RUN, 0):
+                try:
+                    score, guardrail_applied = _apply_demand_signals_and_guardrail(
+                        product,
+                        demand_engine=demand_engine,
+                        llm_score=score,
+                        override_mode=DEMAND_OVERRIDE_MODE,
+                    )
+                    demand_processed += 1
+                    if guardrail_applied == 'upgraded':
+                        demand_upgraded += 1
+                    elif guardrail_applied == 'downgraded':
+                        demand_downgraded += 1
+                    product['dark_horse_index'] = score
+                    print(f"    🧭 Demand guardrail: {guardrail_applied} (score={score})")
+                except Exception as e:
+                    print(f"    ⚠️ Demand signal failed: {e}")
+            elif demand_engine and DEMAND_MAX_PRODUCTS_PER_RUN >= 0 and demand_processed >= DEMAND_MAX_PRODUCTS_PER_RUN:
+                print("    ⏭️ Demand skipped: per-run limit reached")
 
             criteria = product.get('criteria_met', [])
             print(f"    📈 Score: {score}/5 | Criteria: {criteria}")
@@ -1910,6 +2090,14 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
     print(f"  ⭐ Rising Stars (2-3): {stats['rising_stars']}")
     print(f"  Duplicates Skipped: {stats['duplicates_skipped']}")
     print(f"  Quality Rejections: {stats['quality_rejections']}")
+    if demand_engine:
+        stats["demand_processed"] = demand_processed
+        stats["demand_upgraded"] = demand_upgraded
+        stats["demand_downgraded"] = demand_downgraded
+        print(
+            "  Demand Signals: "
+            f"processed={demand_processed}, upgraded={demand_upgraded}, downgraded={demand_downgraded}"
+        )
 
     if quality_rejections:
         print(f"\n  Top rejection reasons:")
@@ -1963,6 +2151,10 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
     quality_rejections = []
     attempts = 0
     unique_domains = set()  # 跟踪唯一域名
+    demand_processed = 0
+    demand_upgraded = 0
+    demand_downgraded = 0
+    demand_engine = None
 
     # 使用增强去重检查器
     featured_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "products_featured.json")
@@ -1972,6 +2164,13 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
             existing_products = json.load(f)
     
     dedup_checker = EnhancedDuplicateChecker(existing_products)
+    if ENABLE_DEMAND_SIGNALS and HAS_DEMAND_SIGNALS:
+        demand_engine = DemandSignalEngine(
+            window_days=DEMAND_WINDOW_DAYS,
+            strict_x_official=True,
+            official_handles_path=PRODUCT_OFFICIAL_HANDLES_FILE,
+            perplexity_api_key=PERPLEXITY_API_KEY,
+        )
 
     def quotas_met():
         return (found["dark_horses"] >= DAILY_QUOTA["dark_horses"] and
@@ -2111,6 +2310,30 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
                     if score is None:
                         product = analyze_and_score(product)
                         score = product.get('dark_horse_index', 2)
+                    score = _coerce_score(score, default=2)
+                    product['dark_horse_index'] = score
+
+                    # Demand signals + guardrail（仅对通过质量校验候选）
+                    guardrail_applied = "none"
+                    if demand_engine and demand_processed < max(DEMAND_MAX_PRODUCTS_PER_RUN, 0):
+                        try:
+                            score, guardrail_applied = _apply_demand_signals_and_guardrail(
+                                product,
+                                demand_engine=demand_engine,
+                                llm_score=score,
+                                override_mode=DEMAND_OVERRIDE_MODE,
+                            )
+                            demand_processed += 1
+                            if guardrail_applied == 'upgraded':
+                                demand_upgraded += 1
+                            elif guardrail_applied == 'downgraded':
+                                demand_downgraded += 1
+                            product['dark_horse_index'] = score
+                            print(f"    🧭 Demand guardrail: {guardrail_applied} (score={score})")
+                        except Exception as e:
+                            print(f"    ⚠️ Demand signal failed: {e}")
+                    elif demand_engine and DEMAND_MAX_PRODUCTS_PER_RUN >= 0 and demand_processed >= DEMAND_MAX_PRODUCTS_PER_RUN:
+                        print("    ⏭️ Demand skipped: per-run limit reached")
 
                     category = get_category(score)
 
@@ -2162,6 +2385,11 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
     print(f"  Total saved: {found['dark_horses'] + found['rising_stars']}")
     print(f"  Duplicates skipped: {duplicates_skipped}")
     print(f"  Quality rejections: {len(quality_rejections)}")
+    if demand_engine:
+        print(
+            "  Demand signals: "
+            f"processed={demand_processed}, upgraded={demand_upgraded}, downgraded={demand_downgraded}"
+        )
 
     if quality_rejections:
         print("\n  Quality rejection reasons:")
@@ -2185,6 +2413,9 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
         "unique_domains": len(unique_domains),
         "duplicates_skipped": duplicates_skipped,
         "quality_rejections": len(quality_rejections),
+        "demand_processed": demand_processed,
+        "demand_upgraded": demand_upgraded,
+        "demand_downgraded": demand_downgraded,
         "duration_seconds": duration,
         "quotas_met": quotas_met(),
     }

@@ -26,6 +26,7 @@ export const ProductSchema = z
     innovation_traits: z.array(z.string()).optional(),
     price: z.string().optional(),
     funding_total: z.string().optional(),
+    valuation: z.string().optional(),
     latest_news: z.string().optional(),
     source: z.string().optional(),
     source_url: z.string().optional(),

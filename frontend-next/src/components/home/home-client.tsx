@@ -2,32 +2,191 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { Cpu, Flame, Newspaper, Sparkles, Star } from "lucide-react";
+import { ChevronDown, ChevronUp, Cpu, Flame, Newspaper, Sparkles } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import useSWR from "swr";
 import type { Product } from "@/types/api";
+import { SmartLogo } from "@/components/common/smart-logo";
 import { ProductCard } from "@/components/product/product-card";
 import { getWeeklyTopClient } from "@/lib/client-home-api";
-import { addProductFavorite, countFavorites, openFavoritesPanel, subscribeFavorites } from "@/lib/favorites";
-import { filterProducts, getDirectionLabel, getProductDirections, isHardware, sortProducts } from "@/lib/product-utils";
+import { countFavorites, openFavoritesPanel, subscribeFavorites } from "@/lib/favorites";
+import {
+  cleanDescription,
+  filterProducts,
+  formatCategories,
+  getDirectionLabel,
+  getProductDirections,
+  getProductScore,
+  isHardware,
+  isPlaceholderValue,
+  isValidWebsite,
+  normalizeWebsite,
+  sortProducts,
+} from "@/lib/product-utils";
 
 const HeroCanvas = dynamic(() => import("@/components/home/hero-canvas"), {
   ssr: false,
   loading: () => <div className="hero-canvas hero-canvas--loading" aria-hidden="true" />,
 });
 
-const DiscoveryDeck = dynamic(() => import("@/components/home/discovery-deck"), {
-  ssr: false,
-  loading: () => <div className="swipe-card is-active">加载探索卡片中...</div>,
-});
-
 const PRODUCTS_PER_PAGE = 12;
+const DARK_HORSE_COLLAPSE_LIMIT = 10;
+const REGION_FLAG_RE = /[\u{1F1E6}-\u{1F1FF}]{2}/u;
 
 type HomeClientProps = {
   darkHorses: Product[];
   allProducts: Product[];
   freshnessLabel: string;
 };
+
+function formatScore(score: number): string {
+  if (score <= 0) return "待评";
+  return Number.isInteger(score) ? `${score}分` : `${score.toFixed(1)}分`;
+}
+
+function getRegionFlag(region?: string): string {
+  if (!region) return "🌍";
+  const match = region.match(REGION_FLAG_RE);
+  return match?.[0] || "🌍";
+}
+
+function getRegionLabel(region?: string): string {
+  if (!region) return "全球";
+  const normalized = region.replace(REGION_FLAG_RE, "").trim();
+  return normalized || "全球";
+}
+
+function parseDateValue(value?: string): Date | null {
+  if (!value) return null;
+  const timestamp = new Date(value).getTime();
+  if (!Number.isFinite(timestamp)) return null;
+  return new Date(timestamp);
+}
+
+function getCurrentWeekStart(now: Date): Date {
+  const weekStart = new Date(now);
+  const day = weekStart.getDay();
+  const offset = day === 0 ? -6 : 1 - day;
+  weekStart.setDate(weekStart.getDate() + offset);
+  weekStart.setHours(0, 0, 0, 0);
+  return weekStart;
+}
+
+type DarkHorseSpotlightCardProps = {
+  product: Product;
+};
+
+function DarkHorseSpotlightCard({ product }: DarkHorseSpotlightCardProps) {
+  const [expanded, setExpanded] = useState(false);
+  const [canExpand, setCanExpand] = useState(false);
+  const whyMattersRef = useRef<HTMLParagraphElement | null>(null);
+  const detailId = encodeURIComponent(product._id || product.name);
+  const score = getProductScore(product);
+  const scoreLabel = formatScore(score);
+  const description = cleanDescription(product.description);
+  const website = normalizeWebsite(product.website);
+  const hasWebsite = isValidWebsite(website);
+  const regionFlag = getRegionFlag(product.region);
+  const regionLabel = getRegionLabel(product.region);
+  const fundingLabel = !isPlaceholderValue(product.funding_total) ? product.funding_total?.trim() : "";
+
+  useEffect(() => {
+    const node = whyMattersRef.current;
+    if (!node || !product.why_matters) return;
+
+    const checkOverflow = () => {
+      setCanExpand(node.scrollHeight - node.clientHeight > 2);
+    };
+
+    const rafId = window.requestAnimationFrame(checkOverflow);
+    if (typeof ResizeObserver === "undefined") {
+      return () => window.cancelAnimationFrame(rafId);
+    }
+
+    const observer = new ResizeObserver(checkOverflow);
+    observer.observe(node);
+    return () => {
+      window.cancelAnimationFrame(rafId);
+      observer.disconnect();
+    };
+  }, [product.why_matters, expanded]);
+
+  return (
+    <article className="darkhorse-spotlight-card">
+      <span className="darkhorse-spotlight__region-flag-corner" aria-hidden="true" title={regionLabel}>
+        {regionFlag}
+      </span>
+      <div className="darkhorse-spotlight__body">
+        <SmartLogo
+          key={`${product._id || product.name}-${product.logo_url || ""}-${product.logo || ""}-${product.website || ""}-${product.source_url || ""}`}
+          className="darkhorse-spotlight__logo"
+          name={product.name}
+          logoUrl={product.logo_url}
+          secondaryLogoUrl={product.logo}
+          website={product.website}
+          sourceUrl={product.source_url}
+          size={64}
+        />
+
+        <div className="darkhorse-spotlight__content">
+          <header className="darkhorse-spotlight__header">
+            <h3 className="darkhorse-spotlight__title">{product.name}</h3>
+            <p className="darkhorse-spotlight__categories">{formatCategories(product)}</p>
+          </header>
+
+          <p className="darkhorse-spotlight__description">{description}</p>
+
+          <div className="darkhorse-spotlight__badges">
+            <span className="darkhorse-spotlight__region-tag">{regionLabel}</span>
+            <span className={`darkhorse-spotlight__badge darkhorse-spotlight__badge--funding ${fundingLabel ? "" : "is-muted"}`}>
+              {fundingLabel || "融资待补充"}
+            </span>
+            <span className="score-badge score-badge--5 darkhorse-spotlight__badge darkhorse-spotlight__badge--score">
+              {scoreLabel}
+            </span>
+          </div>
+
+          <div className="darkhorse-spotlight__why-wrap">
+            <p ref={whyMattersRef} className={`darkhorse-spotlight__why ${expanded ? "is-expanded" : ""}`}>
+              {product.why_matters || "why_matters 待补充"}
+            </p>
+            {canExpand ? (
+              <button
+                className="darkhorse-spotlight__expand-btn"
+                type="button"
+                onClick={() => setExpanded((value) => !value)}
+                aria-expanded={expanded}
+              >
+                {expanded ? (
+                  <>
+                    <ChevronUp size={14} /> 收起
+                  </>
+                ) : (
+                  <>
+                    <ChevronDown size={14} /> 展开
+                  </>
+                )}
+              </button>
+            ) : null}
+          </div>
+
+          <footer className="darkhorse-spotlight__footer">
+            <Link href={`/product/${detailId}`} className="link-btn link-btn--card link-btn--card-primary">
+              详情
+            </Link>
+            {hasWebsite ? (
+              <a className="link-btn link-btn--card" href={website} target="_blank" rel="noopener noreferrer">
+                官网
+              </a>
+            ) : (
+              <span className="pending-tag">官网待验证</span>
+            )}
+          </footer>
+        </div>
+      </div>
+    </article>
+  );
+}
 
 export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClientProps) {
   const [darkFilter, setDarkFilter] = useState<"all" | "hardware" | "software">("all");
@@ -37,10 +196,10 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
   const [sortBy, setSortBy] = useState<"score" | "date" | "funding">("score");
   const [currentPage, setCurrentPage] = useState(1);
   const [favoritesCount, setFavoritesCount] = useState(0);
+  const [showAllDarkHorses, setShowAllDarkHorses] = useState(false);
 
   const [shouldLoadFullProducts, setShouldLoadFullProducts] = useState(false);
 
-  const discoverSectionRef = useRef<HTMLElement | null>(null);
   const trendingSectionRef = useRef<HTMLElement | null>(null);
 
   const { data: fullProducts, isLoading: isHydratingAllProducts } = useSWR(
@@ -53,7 +212,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
   );
 
   useEffect(() => {
-    const targets = [discoverSectionRef.current, trendingSectionRef.current].filter(Boolean);
+    const targets = [trendingSectionRef.current].filter(Boolean);
     if (!targets.length) return;
 
     const observer = new IntersectionObserver(
@@ -76,12 +235,6 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
     return subscribeFavorites(syncCount);
   }, []);
 
-  function addFavorite(product: Product) {
-    if (addProductFavorite(product)) {
-      setFavoritesCount(countFavorites());
-    }
-  }
-
   const productPool = useMemo(() => {
     if (fullProducts && fullProducts.length > allProducts.length) {
       return fullProducts;
@@ -98,6 +251,11 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
       return !isHardware(product);
     });
   }, [darkFilter, darkHorses]);
+
+  const visibleDarkHorses = useMemo(() => {
+    if (showAllDarkHorses) return filteredDarkHorses;
+    return filteredDarkHorses.slice(0, DARK_HORSE_COLLAPSE_LIMIT);
+  }, [filteredDarkHorses, showAllDarkHorses]);
 
   const directionOptions = useMemo(() => {
     const filtered = filterProducts(productPool, {
@@ -145,14 +303,22 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
   const hasMore = visibleProducts.length < trendingFiltered.length;
 
   const signalStats = useMemo(() => {
-    const darkhorseCount = productPool.filter((product) => (product.dark_horse_index ?? 0) >= 4).length;
-    const hardwareCount = productPool.filter((product) => isHardware(product)).length;
+    const now = new Date();
+    const weekStart = getCurrentWeekStart(now).getTime();
+    const nowTs = now.getTime();
+    const weekNewCount = productPool.filter((product) => {
+      const discovered = parseDateValue(product.discovered_at);
+      if (!discovered) return false;
+      const ts = discovered.getTime();
+      return ts >= weekStart && ts <= nowTs;
+    }).length;
+    const fundedCount = productPool.filter((product) => !isPlaceholderValue(product.funding_total)).length;
     const regionCount = new Set(productPool.map((product) => product.region).filter(Boolean)).size;
 
     return {
       total: productPool.length,
-      darkhorseCount,
-      hardwareCount,
+      weekNewCount,
+      fundedCount,
       regionCount,
     };
   }, [productPool]);
@@ -167,26 +333,26 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
           <div className="hero-content">
             <div className="hero-kicker">global signal board · weeklyai</div>
             <h1 className="hero-title">发现全球最新AI产品</h1>
-            <p className="hero-subtitle">黑马与潜力股，每周更新。</p>
+            <p className="hero-subtitle">每周 5 分钟，看完全球 AI 领域最值得关注的新产品</p>
             <div className="data-freshness" aria-live="polite">
               {freshnessLabel}
             </div>
             <div className="hero-stats" role="list" aria-label="本期信号概览">
               <div className="hero-stat" role="listitem">
-                <span className="hero-stat__label">样本池</span>
-                <strong className="hero-stat__value">{signalStats.total}</strong>
+                <span className="hero-stat__label">本周新增</span>
+                <strong className="hero-stat__value">{signalStats.weekNewCount} 款</strong>
               </div>
               <div className="hero-stat" role="listitem">
-                <span className="hero-stat__label">黑马候选</span>
-                <strong className="hero-stat__value">{signalStats.darkhorseCount}</strong>
-              </div>
-              <div className="hero-stat" role="listitem">
-                <span className="hero-stat__label">硬件占比</span>
-                <strong className="hero-stat__value">{signalStats.hardwareCount}</strong>
+                <span className="hero-stat__label">获得融资</span>
+                <strong className="hero-stat__value">{signalStats.fundedCount} 款</strong>
               </div>
               <div className="hero-stat" role="listitem">
                 <span className="hero-stat__label">覆盖地区</span>
-                <strong className="hero-stat__value">{signalStats.regionCount}</strong>
+                <strong className="hero-stat__value">{signalStats.regionCount} 个</strong>
+              </div>
+              <div className="hero-stat" role="listitem">
+                <span className="hero-stat__label">累计收录</span>
+                <strong className="hero-stat__value">{signalStats.total} 款</strong>
               </div>
             </div>
             <p className="hero-signal">
@@ -209,29 +375,42 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
         </div>
 
         <div className="darkhorse-filters">
-          <button className={`filter-btn ${darkFilter === "all" ? "active" : ""}`} type="button" onClick={() => setDarkFilter("all")}>
+          <button
+            className={`filter-btn ${darkFilter === "all" ? "active" : ""}`}
+            type="button"
+            onClick={() => {
+              setDarkFilter("all");
+              setShowAllDarkHorses(false);
+            }}
+          >
             全部
           </button>
           <button
             className={`filter-btn ${darkFilter === "hardware" ? "active" : ""}`}
             type="button"
-            onClick={() => setDarkFilter("hardware")}
+            onClick={() => {
+              setDarkFilter("hardware");
+              setShowAllDarkHorses(false);
+            }}
           >
             <Cpu size={14} /> 硬件
           </button>
           <button
             className={`filter-btn ${darkFilter === "software" ? "active" : ""}`}
             type="button"
-            onClick={() => setDarkFilter("software")}
+            onClick={() => {
+              setDarkFilter("software");
+              setShowAllDarkHorses(false);
+            }}
           >
             <Sparkles size={14} /> 软件
           </button>
         </div>
 
-        <div className="products-grid">
-          {filteredDarkHorses.length ? (
-            filteredDarkHorses.map((product) => (
-              <ProductCard key={product._id || product.name} product={product} compact />
+        <div className="darkhorse-spotlight-grid">
+          {visibleDarkHorses.length ? (
+            visibleDarkHorses.map((product) => (
+              <DarkHorseSpotlightCard key={product._id || product.name} product={product} />
             ))
           ) : (
             <div className="empty-state">
@@ -239,21 +418,14 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
             </div>
           )}
         </div>
-      </section>
 
-      <section className="section discovery-section" id="discoverSection" ref={discoverSectionRef}>
-        <div className="section-header">
-          <h2 className="section-title">
-            <span className="title-icon">
-              <Star size={18} />
-            </span>
-            快速发现
-          </h2>
-          <p className="section-desc">向右收藏，向左跳过，候选会越来越准。</p>
-          <p className="section-micro-note">收藏行为会直接影响下一轮候选排序。</p>
-        </div>
-
-        <DiscoveryDeck key={`deck-${productPool.length}`} products={productPool} onLike={addFavorite} />
+        {filteredDarkHorses.length > DARK_HORSE_COLLAPSE_LIMIT ? (
+          <div className="darkhorse-expand-row">
+            <button className="load-more-btn" type="button" onClick={() => setShowAllDarkHorses((value) => !value)}>
+              {showAllDarkHorses ? "收起" : `展开更多 (${filteredDarkHorses.length - DARK_HORSE_COLLAPSE_LIMIT} 款)`}
+            </button>
+          </div>
+        ) : null}
       </section>
 
       <section className="section trending-section" id="trendingSection" ref={trendingSectionRef}>
@@ -374,6 +546,9 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
       </section>
 
       <section className="section section--linkout">
+        <Link className="link-banner" href="/discover">
+          🎲 随机发现产品 →
+        </Link>
         <Link className="link-banner" href="/blog">
           <Newspaper size={18} /> 查看博客和动态信号
         </Link>

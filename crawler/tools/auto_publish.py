@@ -100,6 +100,7 @@ def build_featured_product(raw: dict) -> dict:
 
     copy_optional_fields(raw, product, [
         'latest_news',
+        'news_updated_at',
         'criteria_met',
         'hardware_category',
         'is_hardware',
@@ -107,6 +108,8 @@ def build_featured_product(raw: dict) -> dict:
         'confidence',
         'discovery_method',
         'search_keyword',
+        'community_verdict',
+        'extra',
     ])
 
     return product

@@ -50,6 +50,10 @@ let currentTier = 'all'; // all, darkhorse, rising
 let currentPage = 1;
 const PRODUCTS_PER_PAGE = 12;
 
+// Favorites panel filters
+let favoritesTypeFilter = 'all'; // all / product / blog
+let favoritesSubFilter = 'all';
+
 // Industry leaders
 const LEADERS_CATEGORY_ORDER = [
     '通用大模型',
@@ -366,6 +370,9 @@ const elements = {
     // Favorites panel
     favoritesPanel: document.getElementById('favoritesPanel'),
     favoritesClose: document.getElementById('favoritesClose'),
+    favoritesControls: document.getElementById('favoritesControls'),
+    favoritesTypeTabs: document.getElementById('favoritesTypeTabs'),
+    favoritesSubfilters: document.getElementById('favoritesSubfilters'),
     favoritesList: document.getElementById('favoritesList'),
     // Industry leaders
     leadersSection: document.getElementById('leadersSection'),
@@ -785,6 +792,7 @@ function renderDiscoveryStack() {
         const pos = discoveryState.stack.length - 1 - index;
         return createSwipeCard(product, pos);
     }).join('');
+    refreshIcons();
 
     const activeCard = elements.swipeStack.querySelector('.swipe-card.is-active');
     if (activeCard) {
@@ -797,6 +805,9 @@ function createSwipeCard(product, position) {
     const categories = (product.categories || []).slice(0, 2).map(getCategoryName).join(' · ');
     const website = normalizeWebsite(product.website || '');
     const hasWebsite = isValidWebsite(website);
+    const productKey = getProductKey(product);
+    const isFav = isFavorited(productKey);
+    const encodedProduct = encodeURIComponent(JSON.stringify(product).replace(/'/g, "\\'"));
 
     // Clean and truncate description - remove technical noise
     let description = product.description || '暂无描述';
@@ -808,6 +819,7 @@ function createSwipeCard(product, position) {
     const sourceBadge = getSourceBadge(source, isNew);
 
     const logoMarkup = buildLogoMarkup(product);
+    const screenshotMarkup = buildWebsiteScreenshotMarkup(product, { className: 'swipe-media', width: 920 });
 
     const videoPreview = getVideoPreview(product);
 
@@ -836,7 +848,14 @@ function createSwipeCard(product, position) {
                     <p>${categories || '精选 AI 工具'}</p>
                 </div>
                 ${sourceBadge}
+                <button class="card-favorite-btn swipe-favorite-btn ${isFav ? 'is-favorited' : ''}"
+                        data-product-key="${productKey}"
+                        onclick="handleSwipeFavoriteClick(event, '${encodedProduct}')"
+                        title="收藏">
+                    ${isFav ? '❤️' : '🤍'}
+                </button>
             </div>
+            ${screenshotMarkup}
             <p class="swipe-card-desc">${description}</p>
             ${highlightsMarkup}
             ${videoPreview}
@@ -905,7 +924,7 @@ function attachSwipeHandlers(card) {
     let isDragging = false;
 
     const openWebsite = (event) => {
-        if (event?.target?.closest && event.target.closest('a')) return;
+        if (event?.target?.closest && event.target.closest('a, button')) return;
         const website = card.dataset.website || '';
         if (isValidWebsite(website)) {
             window.open(website, '_blank', 'noopener,noreferrer');
@@ -942,6 +961,7 @@ function attachSwipeHandlers(card) {
 
     card.addEventListener('pointerdown', (event) => {
         if (event.button !== 0) return;
+        if (event.target?.closest && event.target.closest('a, button')) return;
         isDragging = true;
         startX = event.clientX;
         startY = event.clientY;
@@ -986,22 +1006,8 @@ function updateDiscoveryPreferences(product, direction) {
 
     if (direction === 'right') {
         discoveryState.liked += 1;
-        // Add to favorites (avoid duplicates)
-        if (productKey && !isFavorited(productKey)) {
-            const favorites = getFavorites();
-            favorites.push({
-                key: productKey,
-                name: product.name,
-                logo_url: product.logo_url,
-                website: normalizeWebsite(product.website || ''),
-                categories: product.categories,
-                addedAt: new Date().toISOString()
-            });
-            saveFavorites(favorites);
-            updateFavoritesCount();
-            updateFavoriteButtons(productKey);
-            renderFavoritesList();
-        }
+        // 右滑即收藏，立即写入避免用户切页时丢失
+        addFavoriteEntry(createProductFavoriteEntry(product), { immediate: true });
     } else {
         discoveryState.skipped += 1;
     }
@@ -1369,6 +1375,8 @@ function createDarkHorseCard(product) {
     const funding = product.funding_total || '';
     const latestNews = product.latest_news || '';
     const region = product.region || '';
+    const ratingLabel = darkHorseIndex > 0 ? `${darkHorseIndex} 分黑马` : '黑马推荐';
+    const cardTierClass = darkHorseIndex >= 5 ? 'darkhorse-card--elite' : 'darkhorse-card--strong';
 
     // 判断是否为硬件产品
     const isHardware = isHardwareProduct(product);
@@ -1378,6 +1386,7 @@ function createDarkHorseCard(product) {
     ).join('');
 
     const logoMarkup = buildLogoMarkup(product);
+    const screenshotMarkup = buildWebsiteScreenshotMarkup(product, { className: 'darkhorse-media', width: 1100 });
 
     // 构建 meta 标签
     let metaTags = '';
@@ -1405,17 +1414,20 @@ function createDarkHorseCard(product) {
     const clickAttr = hasWebsite ? `onclick="openProduct('${website}')"` : '';
 
     return `
-        <div class="darkhorse-card ${hasWebsite ? '' : 'darkhorse-card--no-link'}" ${clickAttr}>
+        <div class="darkhorse-card ${cardTierClass} ${hasWebsite ? '' : 'darkhorse-card--no-link'}" ${clickAttr}>
+            ${screenshotMarkup}
             <div class="darkhorse-card-header">
                 <div class="darkhorse-logo">${logoMarkup}</div>
                 <div class="darkhorse-title-block">
                     <h3 class="darkhorse-name">${name}</h3>
                     <div class="darkhorse-rating" title="黑马指数 ${darkHorseIndex}/5">
+                        <span class="darkhorse-score">${ratingLabel}</span>
                         <span class="darkhorse-stars">${stars}</span>
                     </div>
                 </div>
             </div>
             <p class="darkhorse-description">${description}</p>
+            ${categoryTags ? `<div class="darkhorse-tags">${categoryTags}</div>` : ''}
             ${whyMatters ? `<div class="darkhorse-why">${whyMatters}</div>` : ''}
             <div class="darkhorse-meta">
                 ${metaTags}
@@ -1668,17 +1680,27 @@ function createBlogItem(blog) {
     const source = blog.source || 'unknown';
     const sourceLabel = getSourceLabel(source);
     const description = cleanDescription(blog.description || '');
-    const website = blog.website || '';
+    const website = normalizeWebsite(blog.website || '');
+    const hasWebsite = isValidWebsite(website);
     const extra = blog.extra || {};
     const points = extra.points || extra.votes || 0;
     const comments = extra.comments || 0;
+    const blogKey = getBlogFavoriteKey(blog);
+    const isFav = isFavorited(blogKey);
+    const encodedBlog = encodeURIComponent(JSON.stringify(blog).replace(/'/g, "\\'"));
 
     // Format date
     const dateStr = blog.published_at || blog.first_seen || '';
     const dateLabel = dateStr ? formatDate(dateStr) : '';
 
     return `
-        <div class="blog-item" onclick="openProduct('${website}')">
+        <div class="blog-item ${hasWebsite ? '' : 'blog-item--no-link'}" ${hasWebsite ? `onclick="openProduct('${website}')"` : ''}>
+            <button class="card-favorite-btn blog-favorite-btn ${isFav ? 'is-favorited' : ''}"
+                    data-product-key="${blogKey}"
+                    onclick="toggleBlogFavorite(event, '${encodedBlog}')"
+                    title="收藏">
+                ${isFav ? '❤️' : '🤍'}
+            </button>
             <div class="blog-source ${source}">${sourceLabel}</div>
             <div class="blog-content">
                 <h3 class="blog-title">${blog.name}</h3>
@@ -1687,6 +1709,7 @@ function createBlogItem(blog) {
                     ${points ? `<span class="blog-stat">👍 ${points}</span>` : ''}
                     ${comments ? `<span class="blog-stat">💬 ${comments}</span>` : ''}
                     ${dateLabel ? `<span class="blog-date">${dateLabel}</span>` : ''}
+                    ${!hasWebsite ? '<span class="blog-date">官网待验证</span>' : ''}
                 </div>
             </div>
         </div>
@@ -1785,7 +1808,50 @@ function buildLogoMarkup(product, options = {}) {
     return `<div class="product-logo-placeholder">${initial}</div>`;
 }
 
-/* exported handleLogoError, openProduct */
+function getProductVisualMeta(product) {
+    const isHardware = isHardwareProduct(product);
+    if (isHardware) {
+        return { icon: 'cpu', label: '硬件产品', tone: 'card-shot--hardware' };
+    }
+
+    const primaryCategory = normalizeCategoryId((product.categories && product.categories[0]) || product.category || 'other');
+    const visualMap = {
+        coding: { icon: 'code', label: '编程工具', tone: 'card-shot--coding' },
+        agent: { icon: 'bot', label: '智能体', tone: 'card-shot--agent' },
+        image: { icon: 'image', label: '图像产品', tone: 'card-shot--image' },
+        video: { icon: 'film', label: '视频产品', tone: 'card-shot--video' },
+        voice: { icon: 'mic', label: '语音产品', tone: 'card-shot--voice' },
+        writing: { icon: 'pen-tool', label: '写作产品', tone: 'card-shot--writing' },
+        finance: { icon: 'bar-chart-3', label: '金融产品', tone: 'card-shot--finance' },
+        education: { icon: 'graduation-cap', label: '教育产品', tone: 'card-shot--education' },
+        healthcare: { icon: 'heart', label: '医疗产品', tone: 'card-shot--healthcare' }
+    };
+
+    return visualMap[primaryCategory] || { icon: 'sparkles', label: 'AI 产品', tone: 'card-shot--default' };
+}
+
+function buildWebsiteScreenshotMarkup(product, options = {}) {
+    const website = normalizeWebsite(product.website || '');
+    const hasWebsite = isValidWebsite(website);
+    const className = options.className || 'card-media-shot';
+    const width = Number(options.width) || 960;
+    const visualMeta = getProductVisualMeta(product);
+    const screenshotUrl = hasWebsite
+        ? `https://image.thum.io/get/width/${width}/crop/960/noanimate/${encodeURI(website)}`
+        : '';
+
+    return `
+        <div class="${className} card-shot ${visualMeta.tone}${hasWebsite ? '' : ' is-fallback'}">
+            ${hasWebsite ? `<img src="${screenshotUrl}" alt="${product.name || 'AI 产品'} 截图" loading="lazy" referrerpolicy="no-referrer" onerror="handleScreenshotError(this)">` : ''}
+            <div class="card-shot-fallback">
+                <span class="card-shot-fallback-icon"><i data-lucide="${visualMeta.icon}"></i></span>
+                <span class="card-shot-fallback-label">${visualMeta.label}</span>
+            </div>
+        </div>
+    `;
+}
+
+/* exported handleLogoError, handleScreenshotError, openProduct */
 function handleLogoError(img) {
     if (!img) return;
     const fallbackAttr = img.dataset.fallbacks || '';
@@ -1805,6 +1871,15 @@ function handleLogoError(img) {
     img.replaceWith(placeholder);
 }
 
+function handleScreenshotError(img) {
+    if (!img) return;
+    const wrapper = img.closest('.card-shot');
+    if (wrapper) {
+        wrapper.classList.add('is-fallback');
+    }
+    img.remove();
+}
+
 // ========== 创建产品卡片 ==========
 function createProductCard(product, showBadge = false) {
     const categories = product.categories || [];
@@ -1818,13 +1893,17 @@ function createProductCard(product, showBadge = false) {
     const hasWebsite = isValidWebsite(website);
     const cardClass = `${showBadge ? 'product-card product-card--hot' : 'product-card'}${hasWebsite ? '' : ' product-card--no-link'}`;
     const logoMarkup = buildLogoMarkup(product);
+    const screenshotMarkup = buildWebsiteScreenshotMarkup(product, { className: 'product-media-shot', width: 880 });
     const pendingTag = hasWebsite ? '' : '<span class="product-tag product-tag--pending">待验证</span>';
     const clickAttr = hasWebsite ? `onclick="openProduct('${website}')"` : '';
 
     return `
         <div class="${cardClass}" ${clickAttr}>
-            <div class="product-logo">
-                ${logoMarkup}
+            <div class="product-card-media">
+                ${screenshotMarkup}
+                <div class="product-logo">
+                    ${logoMarkup}
+                </div>
             </div>
             <div class="product-info">
                 <div class="product-header">
@@ -2130,6 +2209,25 @@ function initFavorites() {
         elements.favoritesClose.addEventListener('click', closeFavoritesPanel);
     }
 
+    if (elements.favoritesTypeTabs) {
+        elements.favoritesTypeTabs.addEventListener('click', (e) => {
+            const btn = e.target.closest('.favorites-type-tab');
+            if (!btn) return;
+            favoritesTypeFilter = btn.dataset.type || 'all';
+            favoritesSubFilter = 'all';
+            renderFavoritesList();
+        });
+    }
+
+    if (elements.favoritesSubfilters) {
+        elements.favoritesSubfilters.addEventListener('click', (e) => {
+            const btn = e.target.closest('.favorites-subfilter-btn');
+            if (!btn) return;
+            favoritesSubFilter = btn.dataset.value || 'all';
+            renderFavoritesList();
+        });
+    }
+
     // Close panel when clicking outside
     document.addEventListener('click', (e) => {
         if (elements.favoritesPanel?.classList.contains('is-open')) {
@@ -2143,6 +2241,7 @@ function initFavorites() {
 
 function getFavorites() {
     try {
+        if (pendingFavoritesData) return pendingFavoritesData;
         const stored = localStorage.getItem(FAVORITES_KEY);
         return stored ? JSON.parse(stored) : [];
     } catch {
@@ -2154,11 +2253,23 @@ function getFavorites() {
 let favoritesSaveTimer = null;
 let pendingFavoritesData = null;
 
-function saveFavorites(favorites) {
+function saveFavorites(favorites, options = {}) {
+    const { immediate = false } = options;
     pendingFavoritesData = favorites;
 
     if (favoritesSaveTimer) {
         clearTimeout(favoritesSaveTimer);
+    }
+
+    if (immediate) {
+        try {
+            localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+            pendingFavoritesData = null;
+        } catch (e) {
+            console.error('Failed to save favorites:', e);
+        }
+        favoritesSaveTimer = null;
+        return;
     }
 
     favoritesSaveTimer = setTimeout(() => {
@@ -2174,9 +2285,205 @@ function saveFavorites(favorites) {
     }, 500);
 }
 
+function flushPendingFavorites() {
+    if (!pendingFavoritesData) return;
+    try {
+        localStorage.setItem(FAVORITES_KEY, JSON.stringify(pendingFavoritesData));
+        pendingFavoritesData = null;
+    } catch (e) {
+        console.error('Failed to flush favorites:', e);
+    } finally {
+        if (favoritesSaveTimer) {
+            clearTimeout(favoritesSaveTimer);
+            favoritesSaveTimer = null;
+        }
+    }
+}
+
+window.addEventListener('pagehide', flushPendingFavorites);
+window.addEventListener('beforeunload', flushPendingFavorites);
+
 function isFavorited(productKey) {
+    if (!productKey) return false;
     const favorites = getFavorites();
     return favorites.some(f => f.key === productKey);
+}
+
+function getProductKey(product) {
+    const website = normalizeWebsite(product.website || '');
+    return website || product.name || '';
+}
+
+function getBlogFavoriteKey(blog) {
+    const website = normalizeWebsite(blog.website || '');
+    const source = blog.source || 'blog';
+    const title = blog.name || '';
+    return `blog:${source}:${website || title}`;
+}
+
+function createProductFavoriteEntry(product) {
+    return {
+        key: getProductKey(product),
+        favorite_type: 'product',
+        name: product.name,
+        logo_url: product.logo_url,
+        website: normalizeWebsite(product.website || ''),
+        categories: product.categories,
+        source: product.source || '',
+        addedAt: new Date().toISOString()
+    };
+}
+
+function createBlogFavoriteEntry(blog) {
+    return {
+        key: getBlogFavoriteKey(blog),
+        favorite_type: 'blog',
+        name: blog.name,
+        logo_url: blog.logo_url || '',
+        website: normalizeWebsite(blog.website || ''),
+        categories: ['blog'],
+        source: blog.source || 'unknown',
+        addedAt: new Date().toISOString()
+    };
+}
+
+function getFavoriteType(favorite) {
+    if (!favorite) return 'product';
+    if (favorite.favorite_type === 'blog') return 'blog';
+    if (favorite.favorite_type === 'product') return 'product';
+    return String(favorite.key || '').startsWith('blog:') ? 'blog' : 'product';
+}
+
+function getProductFavoriteSubfilters(favorites) {
+    const counts = {};
+
+    favorites
+        .filter((fav) => getFavoriteType(fav) === 'product')
+        .forEach((fav) => {
+            const categories = Array.isArray(fav.categories) ? fav.categories : [];
+            const normalized = categories.map(normalizeCategoryId).filter(Boolean);
+            const keys = normalized.length > 0 ? normalized : ['other'];
+
+            keys.forEach((key) => {
+                counts[key] = (counts[key] || 0) + 1;
+            });
+        });
+
+    return Object.entries(counts)
+        .sort((a, b) => b[1] - a[1])
+        .map(([value, count]) => ({ value, count, label: getCategoryName(value) }));
+}
+
+function getBlogFavoriteSubfilters(favorites) {
+    const counts = {};
+
+    favorites
+        .filter((fav) => getFavoriteType(fav) === 'blog')
+        .forEach((fav) => {
+            const source = String(fav.source || 'unknown').toLowerCase();
+            counts[source] = (counts[source] || 0) + 1;
+        });
+
+    return Object.entries(counts)
+        .sort((a, b) => b[1] - a[1])
+        .map(([value, count]) => ({ value, count, label: getSourceLabel(value) }));
+}
+
+function renderFavoritesControls(favorites) {
+    if (!elements.favoritesTypeTabs || !elements.favoritesSubfilters || !elements.favoritesControls) return;
+
+    const typeCounts = { product: 0, blog: 0 };
+    favorites.forEach((fav) => {
+        const type = getFavoriteType(fav);
+        if (typeCounts[type] !== undefined) typeCounts[type] += 1;
+    });
+
+    elements.favoritesControls.style.display = favorites.length > 0 ? 'grid' : 'none';
+
+    elements.favoritesTypeTabs.querySelectorAll('.favorites-type-tab').forEach((btn) => {
+        const type = btn.dataset.type || 'all';
+        const baseLabel = type === 'all'
+            ? '全部'
+            : (type === 'product' ? '产品' : '博客动态');
+        const count = type === 'all' ? favorites.length : (typeCounts[type] || 0);
+        btn.textContent = `${baseLabel} (${count})`;
+        btn.classList.toggle('active', favoritesTypeFilter === type);
+    });
+
+    let subfilters = [];
+    if (favoritesTypeFilter === 'product') {
+        subfilters = getProductFavoriteSubfilters(favorites);
+    } else if (favoritesTypeFilter === 'blog') {
+        subfilters = getBlogFavoriteSubfilters(favorites);
+    }
+
+    const availableValues = subfilters.map((s) => s.value);
+    if (favoritesSubFilter !== 'all' && !availableValues.includes(favoritesSubFilter)) {
+        favoritesSubFilter = 'all';
+    }
+
+    if (subfilters.length === 0) {
+        elements.favoritesSubfilters.innerHTML = '';
+        return;
+    }
+
+    const chips = [
+        `<button class="favorites-subfilter-btn ${favoritesSubFilter === 'all' ? 'active' : ''}" data-value="all">全部</button>`,
+        ...subfilters.map((item) => {
+            const activeClass = favoritesSubFilter === item.value ? 'active' : '';
+            return `<button class="favorites-subfilter-btn ${activeClass}" data-value="${item.value}">${item.label} (${item.count})</button>`;
+        })
+    ];
+    elements.favoritesSubfilters.innerHTML = chips.join('');
+}
+
+function filterFavoritesByPanelSelection(favorites) {
+    let filtered = [...favorites];
+
+    if (favoritesTypeFilter !== 'all') {
+        filtered = filtered.filter((fav) => getFavoriteType(fav) === favoritesTypeFilter);
+    }
+
+    if (favoritesSubFilter !== 'all') {
+        if (favoritesTypeFilter === 'product') {
+            filtered = filtered.filter((fav) => {
+                const categories = Array.isArray(fav.categories) ? fav.categories : [];
+                const normalized = categories.map(normalizeCategoryId).filter(Boolean);
+                const keys = normalized.length > 0 ? normalized : ['other'];
+                return keys.includes(favoritesSubFilter);
+            });
+        } else if (favoritesTypeFilter === 'blog') {
+            filtered = filtered.filter((fav) => {
+                return String(fav.source || 'unknown').toLowerCase() === favoritesSubFilter;
+            });
+        }
+    }
+
+    return filtered;
+}
+
+function removeFavoriteByKey(productKey) {
+    let favorites = getFavorites();
+    const next = favorites.filter(f => f.key !== productKey);
+    if (next.length === favorites.length) return false;
+
+    saveFavorites(next);
+    updateFavoritesCount();
+    updateFavoriteButtons(productKey);
+    renderFavoritesList();
+    return true;
+}
+
+function addFavoriteEntry(entry, options = {}) {
+    if (!entry?.key || isFavorited(entry.key)) return false;
+
+    const favorites = getFavorites();
+    favorites.push(entry);
+    saveFavorites(favorites, options);
+    updateFavoritesCount();
+    updateFavoriteButtons(entry.key);
+    renderFavoritesList();
+    return true;
 }
 
 function toggleFavorite(product, event) {
@@ -2185,30 +2492,50 @@ function toggleFavorite(product, event) {
     }
 
     const productKey = getProductKey(product);
-    let favorites = getFavorites();
+    if (!productKey) return;
 
     if (isFavorited(productKey)) {
-        favorites = favorites.filter(f => f.key !== productKey);
-    } else {
-        favorites.push({
-            key: productKey,
-            name: product.name,
-            logo_url: product.logo_url,
-            website: normalizeWebsite(product.website || ''),
-            categories: product.categories,
-            addedAt: new Date().toISOString()
-        });
+        removeFavoriteByKey(productKey);
+        return;
     }
 
-    saveFavorites(favorites);
-    updateFavoritesCount();
-    updateFavoriteButtons(productKey);
-    renderFavoritesList();
+    addFavoriteEntry(createProductFavoriteEntry(product));
 }
 
-function getProductKey(product) {
-    const website = normalizeWebsite(product.website || '');
-    return website || product.name || '';
+/* exported toggleBlogFavorite, handleSwipeFavoriteClick */
+function toggleBlogFavorite(event, encodedBlog) {
+    if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+
+    try {
+        const blog = JSON.parse(decodeURIComponent(encodedBlog));
+        const key = getBlogFavoriteKey(blog);
+
+        if (isFavorited(key)) {
+            removeFavoriteByKey(key);
+            return;
+        }
+
+        addFavoriteEntry(createBlogFavoriteEntry(blog));
+    } catch (e) {
+        console.error('Failed to toggle blog favorite:', e);
+    }
+}
+
+function handleSwipeFavoriteClick(event, encodedProduct) {
+    if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+
+    try {
+        const product = JSON.parse(decodeURIComponent(encodedProduct));
+        toggleFavorite(product, event);
+    } catch (e) {
+        console.error('Failed to toggle swipe favorite:', e);
+    }
 }
 
 function updateFavoritesCount() {
@@ -2219,10 +2546,19 @@ function updateFavoritesCount() {
 }
 
 function updateFavoriteButtons(productKey) {
+    if (!productKey) return;
     const isFav = isFavorited(productKey);
-    document.querySelectorAll(`[data-product-key="${productKey}"]`).forEach(btn => {
+    const escapedKey = (window.CSS && typeof window.CSS.escape === 'function')
+        ? window.CSS.escape(productKey)
+        : String(productKey).replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+
+    document.querySelectorAll(`[data-product-key="${escapedKey}"]`).forEach(btn => {
         btn.classList.toggle('is-favorited', isFav);
-        btn.innerHTML = isFav ? '❤️' : '🤍';
+        if (btn.classList.contains('modal-favorite-btn')) {
+            btn.innerHTML = isFav ? '❤️ 已收藏' : '🤍 收藏';
+        } else {
+            btn.innerHTML = isFav ? '❤️' : '🤍';
+        }
     });
 }
 
@@ -2254,6 +2590,7 @@ function renderFavoritesList() {
 
     const favorites = getFavorites();
     const panel = elements.favoritesPanel;
+    renderFavoritesControls(favorites);
 
     if (favorites.length === 0) {
         panel?.classList.add('is-empty');
@@ -2262,9 +2599,22 @@ function renderFavoritesList() {
     }
 
     panel?.classList.remove('is-empty');
+    const filteredFavorites = filterFavoritesByPanelSelection(favorites);
 
-    elements.favoritesList.innerHTML = favorites.map(fav => {
+    if (filteredFavorites.length === 0) {
+        elements.favoritesList.innerHTML = `
+            <div class="favorites-filter-empty">
+                当前筛选下暂无收藏，试试切换上方分类
+            </div>
+        `;
+        return;
+    }
+
+    elements.favoritesList.innerHTML = filteredFavorites.map(fav => {
         const categories = (fav.categories || []).slice(0, 2).map(getCategoryName).join(' · ');
+        const categoryText = getFavoriteType(fav) === 'blog'
+            ? `博客动态 · ${getSourceLabel(fav.source || 'unknown')}`
+            : (categories || '精选 AI 工具');
         const logoMarkup = fav.logo_url
             ? `<img src="${fav.logo_url}" alt="${fav.name}" width="40" height="40" loading="lazy" onerror="this.style.display='none'">`
             : `<div class="product-logo-placeholder">${getInitial(fav.name)}</div>`;
@@ -2278,7 +2628,7 @@ function renderFavoritesList() {
                 <div class="favorite-item-logo">${logoMarkup}</div>
                 <div class="favorite-item-info">
                     <div class="favorite-item-name">${fav.name}</div>
-                    <div class="favorite-item-category">${categories || '精选 AI 工具'}</div>
+                    <div class="favorite-item-category">${categoryText}</div>
                     ${pendingNote}
                 </div>
                 <button class="favorite-item-remove" onclick="removeFavoriteFromPanel('${fav.key}', event)" title="移除收藏">×</button>
@@ -2292,13 +2642,7 @@ function removeFavoriteFromPanel(productKey, event) {
     if (event) {
         event.stopPropagation();
     }
-
-    let favorites = getFavorites();
-    favorites = favorites.filter(f => f.key !== productKey);
-    saveFavorites(favorites);
-    updateFavoritesCount();
-    updateFavoriteButtons(productKey);
-    renderFavoritesList();
+    removeFavoriteByKey(productKey);
 }
 
 // ========== Product Modal ==========
@@ -2455,13 +2799,19 @@ function createProductCardWithFavorite(product, showBadge = false) {
     const description = product.description || '暂无描述';
     const rating = product.rating ? product.rating.toFixed(1) : 'N/A';
     const users = formatNumber(product.weekly_users);
-    const cardClass = showBadge ? 'product-card product-card--hot' : 'product-card';
+    const score = product.dark_horse_index || 0;
+    const isFeatured = score >= 5;
+    const isCompact = score >= 2 && score <= 3;
+    const cardTierClass = isFeatured
+        ? 'product-card--featured'
+        : (isCompact ? 'product-card--compact' : 'product-card--standard');
+    const cardClass = `${showBadge ? 'product-card product-card--hot' : 'product-card'} ${cardTierClass}`;
     const logoMarkup = buildLogoMarkup(product);
+    const screenshotMarkup = buildWebsiteScreenshotMarkup(product, { className: 'product-media-shot', width: 960 });
     const productKey = getProductKey(product);
     const isFav = isFavorited(productKey);
 
     // Score badge based on dark_horse_index
-    const score = product.dark_horse_index || 0;
     let scoreBadge = '';
     if (score >= 5) {
         scoreBadge = '<span class="score-badge score-badge--5">5分</span>';
@@ -2478,6 +2828,13 @@ function createProductCardWithFavorite(product, showBadge = false) {
     const categoryPill = isHardware
         ? '<span class="category-pill category-pill--hardware"><i data-lucide="cpu" style="width:12px;height:12px;"></i> 硬件</span>'
         : '<span class="category-pill category-pill--software"><i data-lucide="code" style="width:12px;height:12px;"></i> 软件</span>';
+    const compactLine = `
+        <div class="product-compact-line">
+            ${categoryPill}
+            ${fundingTotal ? `<span class="product-meta-item">💰 ${fundingTotal}</span>` : ''}
+            <span class="product-meta-item">⭐ ${rating}</span>
+        </div>
+    `;
 
     return `
         <div class="${cardClass}" onclick="handleProductClick(event, '${encodeURIComponent(JSON.stringify(product).replace(/'/g, "\\'"))}')">
@@ -2486,29 +2843,34 @@ function createProductCardWithFavorite(product, showBadge = false) {
                     onclick="handleFavoriteClick(event, '${encodeURIComponent(JSON.stringify(product).replace(/'/g, "\\'"))}')">
                 ${isFav ? '❤️' : '🤍'}
             </button>
-            <div class="product-logo">
-                ${logoMarkup}
+            <div class="product-card-media">
+                ${screenshotMarkup}
+                <div class="product-logo">
+                    ${logoMarkup}
+                </div>
             </div>
             <div class="product-info">
                 <div class="product-header">
                     <h3 class="product-name">${name}</h3>
                     ${scoreBadge}
                 </div>
-                <p class="product-description">${description}</p>
-                ${(whyMatters || fundingTotal) ? `
-                <div class="product-insights">
-                    ${whyMatters ? `<div class="product-insight">💡 ${whyMatters}</div>` : ''}
-                    ${fundingTotal ? `<div class="product-insight product-insight--funding">💰 ${fundingTotal}</div>` : ''}
-                </div>` : ''}
-                <div class="product-meta">
-                    ${categoryPill}
-                    <span class="product-meta-item">⭐ ${rating}</span>
-                    <span class="product-meta-item">👥 ${users}</span>
-                </div>
-                <div class="product-tags">
-                    ${categoryTags}
-                    ${directionTags}
-                </div>
+                ${isCompact ? compactLine : `<p class="product-description">${description}</p>`}
+                ${!isCompact && (whyMatters || fundingTotal) ? `
+                    <div class="product-insights">
+                        ${whyMatters ? `<div class="product-insight">💡 ${whyMatters}</div>` : ''}
+                        ${fundingTotal ? `<div class="product-insight product-insight--funding">💰 ${fundingTotal}</div>` : ''}
+                    </div>` : ''}
+                ${!isCompact ? `
+                    <div class="product-meta">
+                        ${categoryPill}
+                        <span class="product-meta-item">⭐ ${rating}</span>
+                        <span class="product-meta-item">👥 ${users}</span>
+                    </div>
+                    <div class="product-tags">
+                        ${categoryTags}
+                        ${directionTags}
+                    </div>
+                ` : ''}
             </div>
         </div>
     `;

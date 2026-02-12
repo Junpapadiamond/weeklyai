@@ -23,6 +23,7 @@ export type Product = {
   innovation_traits?: string[];
   price?: string;
   funding_total?: string;
+  valuation?: string;
   latest_news?: string;
   source?: string;
   source_url?: string;

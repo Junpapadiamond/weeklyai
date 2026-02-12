@@ -368,6 +368,16 @@ class ProductRepository:
             for i, p in enumerate(products):
                 if '_id' not in p:
                     p['_id'] = str(i + 1)
+                if 'extra' in p and isinstance(p['extra'], str):
+                    try:
+                        p['extra'] = json.loads(p['extra'])
+                    except Exception:
+                        pass
+                if 'community_verdict' in p and isinstance(p['community_verdict'], str):
+                    try:
+                        p['community_verdict'] = json.loads(p['community_verdict'])
+                    except Exception:
+                        pass
 
             print(f"  ✓ 加载 {len(products)} 个策展产品")
             return products
@@ -671,6 +681,11 @@ class ProductRepository:
                     try:
                         p['extra'] = json.loads(p['extra'])
                     except:
+                        pass
+                if 'community_verdict' in p and isinstance(p['community_verdict'], str):
+                    try:
+                        p['community_verdict'] = json.loads(p['community_verdict'])
+                    except Exception:
                         pass
 
             return products
