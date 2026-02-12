@@ -1,0 +1,216 @@
+name: CN Zhipu Data Update
+
+on:
+  schedule:
+    # 19:00 UTC = 03:00 Asia/Shanghai (next day). GitHub cron is always UTC.
+    - cron: "0 19 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Run discovery in dry-run mode (no file writes/commits)"
+        required: false
+        type: boolean
+        default: false
+      product_type:
+        description: "Product type for CN discovery"
+        required: false
+        type: choice
+        default: mixed
+        options:
+          - mixed
+          - software
+          - hardware
+      run_news:
+        description: "Run CN news-only pipeline (strict CN sources required)"
+        required: false
+        type: boolean
+        default: true
+      commit_changes:
+        description: "Commit and push data changes"
+        required: false
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-data-update
+  cancel-in-progress: false
+
+jobs:
+  update-cn:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
+      GLM_MODEL: ${{ secrets.GLM_MODEL || 'glm-4.7' }}
+      GLM_SEARCH_ENGINE: ${{ secrets.GLM_SEARCH_ENGINE || 'search_pro' }}
+      USE_GLM_FOR_CN: "true"
+      PERPLEXITY_API_KEY: ""
+      CN_X_ACCOUNTS: ${{ vars.CN_X_ACCOUNTS }}
+      CN_YOUTUBE_CHANNEL_IDS: ${{ vars.CN_YOUTUBE_CHANNEL_IDS }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: crawler/requirements.txt
+
+      - name: Install crawler deps
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r crawler/requirements.txt
+
+      - name: Preflight checks and resolve runtime config
+        run: |
+          set -euo pipefail
+
+          if [ -z "${ZHIPU_API_KEY:-}" ]; then
+            echo "❌ Missing required secret: ZHIPU_API_KEY" | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+
+          DRY_RUN="${{ inputs.dry_run }}"
+          PRODUCT_TYPE="${{ inputs.product_type }}"
+          RUN_NEWS="${{ inputs.run_news }}"
+          COMMIT_CHANGES="${{ inputs.commit_changes }}"
+
+          # Scheduled runs don't provide workflow_dispatch inputs.
+          DRY_RUN="${DRY_RUN:-false}"
+          PRODUCT_TYPE="${PRODUCT_TYPE:-mixed}"
+          RUN_NEWS="${RUN_NEWS:-true}"
+          COMMIT_CHANGES="${COMMIT_CHANGES:-true}"
+
+          echo "WF_DRY_RUN=${DRY_RUN}" >> "$GITHUB_ENV"
+          echo "WF_PRODUCT_TYPE=${PRODUCT_TYPE}" >> "$GITHUB_ENV"
+          echo "WF_RUN_NEWS=${RUN_NEWS}" >> "$GITHUB_ENV"
+          echo "WF_COMMIT_CHANGES=${COMMIT_CHANGES}" >> "$GITHUB_ENV"
+
+          {
+            echo "## CN Zhipu Update Run Config"
+            echo "- region: \`cn\`"
+            echo "- product_type: \`${PRODUCT_TYPE}\`"
+            echo "- dry_run: \`${DRY_RUN}\`"
+            echo "- run_news: \`${RUN_NEWS}\`"
+            echo "- commit_changes: \`${COMMIT_CHANGES}\`"
+            echo "- provider route: \`GLM only for CN\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Run CN discovery and cleanup pipeline
+        working-directory: crawler
+        run: |
+          set -euo pipefail
+
+          export CONTENT_YEAR="$(date -u +%Y)"
+
+          CMD="python tools/auto_discover.py --region cn --type ${WF_PRODUCT_TYPE}"
+          if [ "${WF_DRY_RUN}" = "true" ]; then
+            CMD="${CMD} --dry-run"
+          fi
+
+          echo "▶ ${CMD}"
+          eval "${CMD}"
+
+          if [ "${WF_DRY_RUN}" != "true" ]; then
+            # Best-effort quality/enrichment chain (do not fail whole workflow)
+            python tools/auto_publish.py || true
+            python tools/backfill_source_urls.py || true
+            python tools/resolve_websites.py --input data/products_featured.json --aggressive || true
+            python tools/validate_websites.py || true
+            python tools/cleanup_unknowns_and_duplicates.py || true
+            python tools/fix_logos.py --input data/products_featured.json || true
+          else
+            echo "ℹ️ dry_run=true, skipped post-processing pipeline." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Run CN news-only signals (strict CN sources)
+        if: ${{ env.WF_DRY_RUN != 'true' && env.WF_RUN_NEWS == 'true' }}
+        working-directory: crawler
+        run: |
+          set -euo pipefail
+
+          if [ -z "${CN_X_ACCOUNTS:-}" ] || [ -z "${CN_YOUTUBE_CHANNEL_IDS:-}" ]; then
+            echo "⚠️ 严格中国源未满足：缺少 vars.CN_X_ACCOUNTS 或 vars.CN_YOUTUBE_CHANNEL_IDS，已跳过 news 步骤。" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          export CONTENT_YEAR="$(date -u +%Y)"
+          export X_SOURCE_MODE="fallback_only"
+          export SOCIAL_X_LANGUAGES="zh"
+          export X_ACCOUNTS="${CN_X_ACCOUNTS}"
+          export YOUTUBE_CHANNEL_IDS="${CN_YOUTUBE_CHANNEL_IDS}"
+
+          python main.py --news-only || true
+
+          echo "✅ 已执行 news-only（严格中国源，未运行 rss_to_products enrich）。" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Skip CN news-only signals
+        if: ${{ env.WF_DRY_RUN == 'true' || env.WF_RUN_NEWS != 'true' }}
+        run: |
+          echo "ℹ️ News step skipped (dry_run=${WF_DRY_RUN}, run_news=${WF_RUN_NEWS})." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Sync snapshot for backend deployment
+        if: ${{ env.WF_DRY_RUN != 'true' }}
+        run: |
+          set -euo pipefail
+
+          mkdir -p crawler/data/dark_horses crawler/data/rising_stars
+          mkdir -p backend/data/dark_horses backend/data/rising_stars
+
+          cp -f crawler/data/products_featured.json backend/data/products_featured.json
+          cp -f crawler/data/industry_leaders.json backend/data/industry_leaders.json
+          cp -f crawler/data/last_updated.json backend/data/last_updated.json
+          if [ -f crawler/data/blogs_news.json ]; then
+            cp -f crawler/data/blogs_news.json backend/data/blogs_news.json
+          fi
+
+          rsync -a crawler/data/dark_horses/ backend/data/dark_horses/
+          rsync -a crawler/data/rising_stars/ backend/data/rising_stars/
+
+      - name: Commit and push (if changed)
+        if: ${{ env.WF_DRY_RUN != 'true' && env.WF_COMMIT_CHANGES == 'true' }}
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          add_path() {
+            local p="$1"
+            if [ -e "$p" ] || git ls-files --error-unmatch "$p" >/dev/null 2>&1; then
+              git add "$p"
+            fi
+          }
+
+          add_path "crawler/data/products_featured.json"
+          add_path "crawler/data/blogs_news.json"
+          add_path "crawler/data/last_updated.json"
+          add_path "crawler/data/dark_horses"
+          add_path "crawler/data/rising_stars"
+          add_path "backend/data/products_featured.json"
+          add_path "backend/data/blogs_news.json"
+          add_path "backend/data/industry_leaders.json"
+          add_path "backend/data/last_updated.json"
+          add_path "backend/data/dark_horses"
+          add_path "backend/data/rising_stars"
+
+          if git diff --cached --quiet; then
+            echo "No data changes to commit." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          git commit -m "chore(data): cn zhipu update"
+          git push
+
+      - name: Skip commit
+        if: ${{ env.WF_DRY_RUN != 'true' && env.WF_COMMIT_CHANGES != 'true' }}
+        run: |
+          echo "ℹ️ commit_changes=false, skipped commit/push." >> "$GITHUB_STEP_SUMMARY"
