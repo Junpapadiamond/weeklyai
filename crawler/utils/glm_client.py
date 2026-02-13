@@ -31,7 +31,8 @@ import os
 import json
 import time
 import re
-from typing import Optional, Union, Any
+import requests
+from typing import Optional, Union
 from dataclasses import dataclass, field
 
 # ════════════════════════════════════════════════════════════════════════════════
@@ -47,6 +48,9 @@ API_RETRY_BACKOFF = float(os.environ.get('API_RETRY_BACKOFF', '2'))
 GLM_THINKING_TYPE = os.environ.get('GLM_THINKING_TYPE', 'disabled')  # enabled/disabled
 GLM_CLEAR_THINKING = os.environ.get('GLM_CLEAR_THINKING', 'true').lower() == 'true'
 USE_GLM_FOR_CN = os.environ.get('USE_GLM_FOR_CN', 'true').lower() == 'true'
+
+# 独立 Web Search API 端点
+GLM_WEB_SEARCH_URL = "https://open.bigmodel.cn/api/paas/v4/web_search"
 
 # GLM-4.7 默认采样参数
 GLM_DEFAULT_TEMPERATURE = 1.0  # GLM-4.7 默认值
@@ -157,8 +161,16 @@ class GLMClient:
         self.model = GLM_MODEL
         self.search_engine = GLM_SEARCH_ENGINE
         self._client = None
+        self._search_session = None
 
         if self.api_key:
+            # Setup requests.Session for direct Web Search API
+            self._search_session = requests.Session()
+            self._search_session.headers.update({
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json",
+            })
+            # Setup ZhipuAI SDK for analyze() (chat completions)
             try:
                 from zhipuai import ZhipuAI
                 self._client = ZhipuAI(api_key=self.api_key)
@@ -169,7 +181,7 @@ class GLMClient:
 
     def is_available(self) -> bool:
         """检查客户端是否可用"""
-        return self._client is not None
+        return self._search_session is not None or self._client is not None
 
     def _rate_limit(self):
         """API 限流"""
@@ -180,117 +192,8 @@ class GLMClient:
         msg = str(error)
         return ("Error code: 429" in msg) or ("1302" in msg) or ("并发数过高" in msg)
 
-    def _as_plain_obj(self, value: Any) -> Any:
-        """Best-effort convert SDK response objects to plain dict/list for robust parsing."""
-        if value is None:
-            return None
-        if isinstance(value, (str, int, float, bool, dict, list)):
-            return value
-
-        model_dump = getattr(value, "model_dump", None)
-        if callable(model_dump):
-            try:
-                return model_dump()
-            except Exception:
-                pass
-
-        as_dict = getattr(value, "dict", None)
-        if callable(as_dict):
-            try:
-                return as_dict()
-            except Exception:
-                pass
-
-        raw = getattr(value, "__dict__", None)
-        if isinstance(raw, dict) and raw:
-            return {k: self._as_plain_obj(v) for k, v in raw.items()}
-
-        return value
-
-    def _find_search_result_items(self, obj: Any) -> list[dict]:
-        """Find a list of result dicts in an arbitrarily-shaped tool payload."""
-        plain = self._as_plain_obj(obj)
-
-        def looks_like_item(value: Any) -> bool:
-            if not isinstance(value, dict):
-                return False
-            if not value.get("title"):
-                return False
-            return bool(value.get("link") or value.get("url") or value.get("href"))
-
-        if isinstance(plain, list):
-            if any(looks_like_item(item) for item in plain):
-                return [item for item in plain if isinstance(item, dict)]
-            for item in plain:
-                found = self._find_search_result_items(item)
-                if found:
-                    return found
-            return []
-
-        if isinstance(plain, dict):
-            for key in ("search_result", "results", "data", "items"):
-                if key in plain:
-                    found = self._find_search_result_items(plain.get(key))
-                    if found:
-                        return found
-            for value in plain.values():
-                found = self._find_search_result_items(value)
-                if found:
-                    return found
-            return []
-
-        return []
-
-    def _extract_tool_search_items(self, message: Any) -> list[dict]:
-        """Extract web_search tool results from a zhipuai message object."""
-        msg = self._as_plain_obj(message)
-        tool_calls = None
-
-        if isinstance(msg, dict):
-            tool_calls = msg.get("tool_calls")
-        else:
-            tool_calls = getattr(message, "tool_calls", None)
-
-        if not tool_calls:
-            return []
-
-        items: list[dict] = []
-        for tool_call in tool_calls:
-            plain = self._as_plain_obj(tool_call)
-            found = self._find_search_result_items(plain)
-            if found:
-                items.extend(found)
-                continue
-
-            # OpenAI-style function tool call compatibility: function.arguments is a JSON string.
-            if isinstance(plain, dict):
-                func = plain.get("function") or {}
-                args = func.get("arguments")
-                if isinstance(args, str) and args.strip():
-                    try:
-                        parsed = json.loads(args)
-                    except Exception:
-                        parsed = None
-                    found = self._find_search_result_items(parsed)
-                    if found:
-                        items.extend(found)
-
-        # Deduplicate by url/link to avoid repeats across tool calls.
-        deduped: list[dict] = []
-        seen = set()
-        for item in items:
-            if not isinstance(item, dict):
-                continue
-            url = (item.get("link") or item.get("url") or item.get("href") or "").strip()
-            if not url or url in seen:
-                continue
-            seen.add(url)
-            deduped.append(item)
-
-        return deduped
-
     # ════════════════════════════════════════════════════════════════════════════
-    # Web Search (使用 GLM 的联网搜索工具)
+    # Web Search (独立 Web Search API)
     # ════════════════════════════════════════════════════════════════════════════
 
     def search(
@@ -300,89 +203,71 @@ class GLMClient:
         search_engine: Optional[str] = None,
     ) -> list[SearchResult]:
         """
-        使用 GLM 联网搜索
+        使用智谱独立 Web Search API 搜索
 
-        通过 GLM 的 web_search tool 进行搜索，模型会自动调用搜索并返回结果。
+        直接调用 POST /paas/v4/web_search，返回结构化搜索结果（真实 URL）。
+        不经过 GLM 模型，避免幻觉 URL。
 
         Args:
             query: 搜索查询
-            max_results: 期望结果数量（实际数量取决于搜索结果）
-            search_engine: 搜索引擎 (search_pro/search_pro_sogou/search_std)
+            max_results: 期望结果数量 (最大 50)
+            search_engine: 搜索引擎 (search_pro/search_pro_sogou/search_pro_quark/search_std)
 
         Returns:
             SearchResult 列表
         """
-        if not self._client:
+        if not self._search_session:
             return []
 
         engine = search_engine or self.search_engine
-        print(f"  🔍 GLM Search ({engine}): {query[:50]}...")
+        print(f"  🔍 GLM Web Search API ({engine}): {query[:50]}...")
 
-        # 构建搜索请求，使用 web_search tool
-        tools = [{
-            "type": "web_search",
-            "web_search": {
-                "enable": True,
-                "search_engine": engine
-            }
-        }]
-
-        # 使用 GLM 模型进行搜索
-        messages = [{
-            "role": "user",
-            "content": f"""请搜索以下内容并返回搜索结果：
-
-{query}
-
-请返回搜索到的每个结果的标题、URL、摘要和日期（如果有）。
-格式要求：对每个结果用 JSON 格式返回，包含 title, url, snippet, date 字段。
-将所有结果放在一个 JSON 数组中返回。"""
-        }]
+        payload = {
+            "search_query": query,
+            "search_engine": engine,
+            "search_intent": False,
+            "count": min(max_results, 50),
+            "content_size": "medium",
+            "search_recency_filter": "oneWeek",
+        }
 
         last_error: Optional[Exception] = None
         for attempt in range(1, API_MAX_RETRIES + 1):
             try:
-                response = self._client.chat.completions.create(
-                    model=self.model,
-                    messages=messages,
-                    tools=tools,
-                    tool_choice="auto",
-                    max_tokens=4096,
-                    thinking={
-                        "type": GLM_THINKING_TYPE,
-                        "clear_thinking": GLM_CLEAR_THINKING
-                    }
+                resp = self._search_session.post(
+                    GLM_WEB_SEARCH_URL, json=payload, timeout=30
                 )
+                resp.raise_for_status()
+                data = resp.json()
 
-                # 解析搜索结果
                 results = []
-                content = response.choices[0].message.content or ""
-
-                # Prefer parsing structured web_search tool payloads (more reliable than model-written JSON).
-                tool_items = self._extract_tool_search_items(response.choices[0].message)
-                for item in tool_items:
-                    if not isinstance(item, dict):
-                        continue
-                    url = (item.get("link") or item.get("url") or item.get("href") or "").strip()
+                for item in data.get("search_result", []):
+                    url = (item.get("link") or "").strip()
                     title = (item.get("title") or "").strip()
-                    snippet = (item.get("content") or item.get("snippet") or item.get("summary") or "").strip()
                     if not url or not title:
                         continue
                     results.append(SearchResult(
                         title=title,
                         url=url,
-                        snippet=snippet,
-                        date=item.get('publish_date', item.get('date')),
-                        source=item.get('media', item.get('source'))
+                        snippet=(item.get("content") or "").strip(),
+                        date=item.get("publish_date"),
+                        source=item.get("media"),
                     ))
-
-                # 如果没有从 tool_calls 获取到结果，尝试从内容中解析
-                if not results and content:
-                    results = self._parse_search_results(content)
 
                 print(f"  ✅ Found {len(results)} results")
                 return results[:max_results]
 
+            except requests.exceptions.HTTPError as e:
+                last_error = e
+                status = e.response.status_code if e.response is not None else 0
+                if status == 429 and attempt < API_MAX_RETRIES:
+                    wait = API_RATE_LIMIT_DELAY * (API_RETRY_BACKOFF ** (attempt - 1))
+                    print(f"  ⏳ GLM rate limited, retrying in {wait:.1f}s "
+                          f"(attempt {attempt}/{API_MAX_RETRIES})")
+                    time.sleep(wait)
+                    continue
+                print(f"  ❌ GLM Web Search HTTP Error ({status}): {e}")
+                break
             except Exception as e:
                 last_error = e
                 if self._is_rate_limited(e) and attempt < API_MAX_RETRIES:
@@ -391,47 +276,20 @@ class GLMClient:
                           f"(attempt {attempt}/{API_MAX_RETRIES})")
                     time.sleep(wait)
                     continue
-                print(f"  ❌ GLM Search Error: {e}")
+                print(f"  ❌ GLM Web Search Error: {e}")
                 break
             finally:
                 self._rate_limit()
 
-        if last_error and self._is_rate_limited(last_error):
+        if last_error and (
+            self._is_rate_limited(last_error)
+            or (isinstance(last_error, requests.exceptions.HTTPError)
+                and last_error.response is not None
+                and last_error.response.status_code == 429)
+        ):
             print("  ⚠️ GLM search failed due to rate limit; consider reducing traffic or "
                   "raising API concurrency limits.")
         return []
-
-    def _parse_search_results(self, content: str) -> list[SearchResult]:
-        """从 GLM 响应内容中解析搜索结果"""
-        results = []
-
-        # 尝试解析 JSON
-        json_data = self._extract_json(content)
-
-        if isinstance(json_data, list):
-            for item in json_data:
-                if isinstance(item, dict):
-                    results.append(SearchResult(
-                        title=item.get('title', ''),
-                        url=item.get('url', item.get('link', '')),
-                        snippet=item.get('snippet', item.get('content', '')),
-                        date=item.get('date', item.get('publish_date')),
-                        source=item.get('source', item.get('media'))
-                    ))
-        elif isinstance(json_data, dict):
-            # 可能是包装在外层对象中
-            items = json_data.get('results', json_data.get('data', []))
-            if isinstance(items, list):
-                for item in items:
-                    results.append(SearchResult(
-                        title=item.get('title', ''),
-                        url=item.get('url', item.get('link', '')),
-                        snippet=item.get('snippet', item.get('content', '')),
-                        date=item.get('date', item.get('publish_date')),
-                        source=item.get('source', item.get('media'))
-                    ))
-
-        return results
 
     def search_by_region(
         self,
@@ -652,6 +510,7 @@ class GLMClient:
             "api_key_set": bool(self.api_key),
             "model": self.model,
             "search_engine": self.search_engine,
+            "search_mode": "direct_api",
             "search_engine_info": SEARCH_ENGINES.get(self.search_engine, {}),
             "thinking": {
                 "type": GLM_THINKING_TYPE,
