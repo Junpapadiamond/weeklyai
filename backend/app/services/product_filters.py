@@ -9,6 +9,7 @@ from urllib.parse import urlparse
 # 被屏蔽的来源和域名
 BLOCKED_SOURCES = {'github', 'huggingface', 'huggingface_spaces'}
 BLOCKED_DOMAINS = ('github.com', 'huggingface.co')
+UNKNOWN_WEBSITE_VALUES = {'', 'unknown', 'n/a', 'na', 'none', 'null', 'undefined', 'tbd'}
 
 # 著名产品黑名单 - 除非有新功能否则不显示
 WELL_KNOWN_PRODUCTS = {
@@ -54,6 +55,91 @@ def _normalize_domain(url: str, include_path: bool = False) -> str:
         return domain
     except Exception:
         return raw.lower()
+
+
+def _normalize_website(value: Any) -> str:
+    """Normalize website into absolute HTTP(S) URL, or empty string if unusable."""
+    raw = str(value or '').strip()
+    if not raw:
+        return ''
+
+    lowered = raw.lower()
+    if lowered in UNKNOWN_WEBSITE_VALUES:
+        return ''
+
+    if not re.match(r'^https?://', raw, re.IGNORECASE):
+        if '.' not in raw:
+            return ''
+        raw = f"https://{raw}"
+
+    return raw
+
+
+def _has_usable_website(product: Dict[str, Any]) -> bool:
+    """Require a valid official website for all product records."""
+    normalized = _normalize_website(product.get('website'))
+    if not normalized:
+        return False
+
+    try:
+        parsed = urlparse(normalized)
+        host = (parsed.netloc or '').strip().lower()
+        host = re.sub(r'^www\.', '', host).split(':')[0]
+        if not host or '.' not in host:
+            return False
+    except Exception:
+        return False
+
+    # Keep normalized value to avoid downstream "unknown"/bare-domain regressions.
+    product['website'] = normalized
+    return True
+
+
+def _same_or_subdomain(host: str, root: str) -> bool:
+    host = (host or '').lower()
+    root = (root or '').lower()
+    return bool(host and root and (host == root or host.endswith(f".{root}")))
+
+
+def _sanitize_logo_url(product: Dict[str, Any]) -> None:
+    """Drop remote logos that do not belong to the product's official website domain."""
+    candidate = (
+        product.get('logo_url')
+        or product.get('logo')
+        or product.get('logoUrl')
+        or ''
+    )
+    logo = str(candidate or '').strip()
+    if not logo:
+        return
+
+    if logo.startswith('/'):
+        product['logo_url'] = logo
+        return
+
+    if not re.match(r'^https?://', logo, re.IGNORECASE):
+        product['logo_url'] = ''
+        return
+
+    website_domain = _normalize_domain(str(product.get('website') or ''), include_path=False)
+    if not website_domain:
+        product['logo_url'] = ''
+        return
+
+    try:
+        parsed = urlparse(logo)
+        logo_host = (parsed.netloc or '').lower()
+        logo_host = re.sub(r'^www\.', '', logo_host).split(':')[0]
+    except Exception:
+        product['logo_url'] = ''
+        return
+
+    if _same_or_subdomain(logo_host, website_domain):
+        product['logo_url'] = logo
+        return
+
+    # Reject social/media/provider logos as primary logo source.
+    product['logo_url'] = ''
 
 
 def _get_domain_key(url: str) -> str:
@@ -122,12 +208,13 @@ def normalize_products(products: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     """Normalize products and drop blocked sources/domains + well-known products."""
     normalized = []
     for idx, product in enumerate(products):
-        if not product or is_blocked(product) or is_well_known(product):
+        if not product:
             continue
-        if not product.get('logo_url'):
-            logo = product.get('logo') or product.get('logoUrl')
-            if logo:
-                product['logo_url'] = logo
+        if not _has_usable_website(product):
+            continue
+        if is_blocked(product) or is_well_known(product):
+            continue
+        _sanitize_logo_url(product)
         if '_id' not in product:
             product['_id'] = str(idx + 1)
         normalized.append(product)

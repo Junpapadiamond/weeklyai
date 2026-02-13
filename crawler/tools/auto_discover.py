@@ -1494,8 +1494,8 @@ def analyze_with_glm(content: str, task: str = "extract", region: str = "🇨�
    - 找不到可对应的 URL，就不要输出该产品。
    - 不允许编造 source_url，也不允许留空。
 
-3. `website` 只有在搜索结果文本里「明确出现官网域名」时才填写；否则必须设置：
-   - `"website": "unknown", "needs_verification": true`
+3. `website` 只有在搜索结果文本里「明确出现官网域名」时才填写。
+   - 无法确认真实官网时：**不要输出该产品**（不要写 unknown）。
    - 不要凭感觉猜测官网（如把公司名拼成 .com/.ai）。
 
 ### 产品名称规则

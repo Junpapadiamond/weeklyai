@@ -84,13 +84,21 @@ const lastUpdatedEnvelopeSchema = z.object({
   hours_ago: z.number().nullable().optional(),
   message: z.string().optional(),
 });
+const INVALID_WEBSITE_VALUES = new Set(["unknown", "n/a", "na", "none", "null", "undefined", ""]);
+
+function hasUsableWebsite(product: Product): boolean {
+  const website = String(product.website || "")
+    .trim()
+    .toLowerCase();
+  return Boolean(website) && !INVALID_WEBSITE_VALUES.has(website);
+}
 
 export const getDarkHorses = cache(async (limit = 10, minIndex = 4): Promise<Product[]> => {
   const json = await fetchJson(`/products/dark-horses?limit=${limit}&min_index=${minIndex}`, {
     next: { revalidate: 120, tags: ["products", "dark-horses"] },
   });
   const parsed = safeParse(productListSchema, json, { data: [] });
-  return parsed.data;
+  return parsed.data.filter(hasUsableWebsite);
 });
 
 export const getWeeklyTop = cache(async (limit = 0): Promise<Product[]> => {
@@ -98,7 +106,7 @@ export const getWeeklyTop = cache(async (limit = 0): Promise<Product[]> => {
     next: { revalidate: 120, tags: ["products", "weekly-top"] },
   });
   const parsed = safeParse(productListSchema, json, { data: [] });
-  return parsed.data;
+  return parsed.data.filter(hasUsableWebsite);
 });
 
 export const getIndustryLeaders = cache(async (): Promise<IndustryLeadersPayload> => {
@@ -162,7 +170,8 @@ export const getProductById = cache(async (id: string): Promise<Product | null> 
     next: { revalidate: 120, tags: ["products", `product-${id}`] },
   });
   const parsed = safeParse(productItemSchema, json, { data: null });
-  return parsed.data ?? null;
+  if (!parsed.data) return null;
+  return hasUsableWebsite(parsed.data) ? parsed.data : null;
 });
 
 export const getRelatedProducts = cache(async (id: string, limit = 6): Promise<Product[]> => {
@@ -170,7 +179,7 @@ export const getRelatedProducts = cache(async (id: string, limit = 6): Promise<P
     next: { revalidate: 120, tags: ["products", `product-${id}`, "related"] },
   });
   const parsed = safeParse(relatedProductsSchema, json, { data: [] });
-  return parsed.data;
+  return parsed.data.filter(hasUsableWebsite);
 });
 
 export function parseLastUpdatedLabel(hoursAgo: number | null | undefined) {

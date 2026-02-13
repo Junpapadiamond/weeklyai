@@ -1,6 +1,7 @@
 import type { Product } from "@/types/api";
 
 const DEFAULT_SERVER_BASE = "http://localhost:5000/api/v1";
+const INVALID_WEBSITES = new Set(["unknown", "n/a", "na", "none", "null", "undefined", ""]);
 
 function resolveClientApiBase() {
   const envBase = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -28,5 +29,10 @@ export async function getWeeklyTopClient(limit = 0): Promise<Product[]> {
     return [];
   }
 
-  return json.data as Product[];
+  return (json.data as Product[]).filter((product) => {
+    const website = String(product.website || "")
+      .trim()
+      .toLowerCase();
+    return !INVALID_WEBSITES.has(website);
+  });
 }
