@@ -2022,5 +2022,70 @@
         "guardrail_reason": "insufficient_demand_data"
       }
     }
+  },
+  {
+    "name": "PallasAI",
+    "website": "https://www.pallasai.net",
+    "description": "行业首款提供标准化服务的GEO AI Agent平台，专注答案引擎优化（AEO）",
+    "category": "agent",
+    "region": "🇨🇳",
+    "funding_total": "数千万人民币",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "category_innovation"
+    ],
+    "why_matters": "前蚂蚁大模型首席架构师创立，三个月内完成两轮融资，发布行业首款GEO产品化AI Agent，帮助头部企业品牌可见性平均提升50%以上",
+    "latest_news": "2026.02: 完成数千万元融资，由有赞独家投资",
+    "source": "搜狐",
+    "source_url": "https://www.sohu.com/a/984371120_122074763",
+    "confidence": 0.9,
+    "categories": [
+      "other"
+    ],
+    "discovered_at": "2026-02-13",
+    "discovery_method": "glm_search",
+    "search_keyword": "大模型创业",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-13T10:05:27.762924Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
   }
 ]
