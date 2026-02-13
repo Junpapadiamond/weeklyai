@@ -930,6 +930,21 @@ UNTRUSTED_SOURCES = {
     "reddit", "facebook", "instagram",
 }
 
+# source_url 域名黑名单（防 source 字段被模型伪造）
+UNTRUSTED_SOURCE_DOMAINS = {
+    # 零售/电商
+    "rakuten.co.jp", "item.rakuten.co.jp", "amazon.com", "amazon.co.jp",
+    "taobao.com", "tmall.com", "jd.com", "aliexpress.com", "ebay.com",
+    # 视频/短视频
+    "youtube.com", "youtu.be", "bilibili.com", "tiktok.com", "douyin.com", "kuaishou.com",
+    # 社交/社区
+    "x.com", "twitter.com", "weibo.com", "zhihu.com", "reddit.com", "facebook.com", "instagram.com",
+}
+
+PLACEHOLDER_SOURCE_DOMAINS = {
+    "example.com", "example.org", "example.net", "localhost", "127.0.0.1",
+}
+
 # ── 博客标题特征词 ────────────────────────────────────────────────────
 BLOG_TITLE_MARKERS = [
     "：", "？", "！", "如何", "什么是", "为什么", "的下一个",
@@ -947,12 +962,22 @@ GENERIC_CONCEPT_NAMES = [
 def validate_source(product: dict) -> tuple[bool, str]:
     """验证产品来源是否可信"""
     source = product.get("source", "").strip().lower()
+    source_url = product.get("source_url", "").strip().lower()
+
     if not source:
-        return True, "no source"  # 没有 source 不拒绝，后续验证会处理
+        source = ""
 
     for untrusted in UNTRUSTED_SOURCES:
-        if untrusted.lower() in source:
+        if source and untrusted.lower() in source:
             return False, f"untrusted source: {source}"
+
+    if source_url:
+        domain = normalize_url(source_url)
+        if domain in PLACEHOLDER_SOURCE_DOMAINS:
+            return False, f"placeholder source_url domain: {domain}"
+        for blocked in UNTRUSTED_SOURCE_DOMAINS:
+            if blocked in domain:
+                return False, f"untrusted source_url domain: {domain}"
 
     return True, "source ok"
 
