@@ -538,10 +538,8 @@ def validate_product(
     if not website and llm_client:
         website = search_website(name, product.get('category', ''), llm_client)
 
-    needs_verification = False
-    if not website:
-        website = "unknown"
-        needs_verification = True
+    if not website or website.lower() == "unknown":
+        return None
 
     # Industry leaders should not enter candidates, but can still be enriched if they already exist in featured.
     domain_key = normalize_domain(website) if website and website.lower() != "unknown" else ""
@@ -624,9 +622,6 @@ def validate_product(
     if product.get('website_source'):
         standardized['website_source'] = product['website_source']
 
-    if needs_verification:
-        standardized['needs_verification'] = True
-    
     return standardized
 
 

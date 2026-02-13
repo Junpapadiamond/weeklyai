@@ -468,7 +468,7 @@ python3 tools/auto_discover.py --region us --dry-run
 |----------|------|--------|
 | `ZHIPU_API_KEY` | 智谱 API Key | (required for cn) |
 | `GLM_MODEL` | GLM 模型 | `glm-4.7` |
-| `GLM_SEARCH_ENGINE` | 搜索引擎 | `search_pro` |
+| `GLM_SEARCH_ENGINE` | 搜索引擎 | `search_pro` (可选: `search_pro_sogou`, `search_pro_quark`, `search_std`) |
 | `USE_GLM_FOR_CN` | 中国区启用 GLM | `true` |
 
 **搜索引擎选项:**
@@ -477,6 +477,7 @@ python3 tools/auto_discover.py --region us --dry-run
 |------|------|------|
 | `search_pro` | ¥0.03/次 | 智谱自研高阶版 (推荐) |
 | `search_pro_sogou` | ¥0.05/次 | 腾讯生态+知乎 |
+| `search_pro_quark` | ¥0.05/次 | 夸克搜索增强，中文召回更强 |
 | `search_std` | ¥0.01/次 | 基础搜索 |
 
 **启用 GLM (中国区):**

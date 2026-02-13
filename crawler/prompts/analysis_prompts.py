@@ -800,6 +800,25 @@ def validate_hardware_product(product: dict) -> tuple[bool, str]:
     if not website:
         return False, "missing website"
 
+    # ── 博客标题/通用概念名检查 ──
+    blog_markers = ["：", "？", "！", "如何", "什么是", "为什么", "风口", "趋势"]
+    if len(name_raw) > 10 and any(m in name_raw for m in blog_markers):
+        return False, f"name looks like blog title: {name_raw}"
+
+    generic_concepts = [
+        "ai随身设备", "ai智能助手", "智能穿戴设备", "ai硬件",
+        "ai眼镜", "ai助手", "智能硬件", "ai可穿戴",
+    ]
+    if name in generic_concepts or any(name.startswith(gc) for gc in generic_concepts):
+        return False, f"name is generic concept: {name_raw}"
+
+    # ── 不可信 source 检查 ──
+    source_lower = product.get("source", "").strip().lower()
+    untrusted = ["楽天市場", "rakuten", "眼鏡市場", "amazon", "youtube",
+                 "bilibili", "tiktok", "淘宝", "京东", "twitter"]
+    if any(u.lower() in source_lower for u in untrusted):
+        return False, f"untrusted source: {source_lower}"
+
     # 过滤「新闻标题式」name（GLM 更容易把文章标题当成产品名）
     headline_patterns = [
         "融资", "宣布", "发布", "获得", "完成", "推出", "上线",
@@ -815,10 +834,7 @@ def validate_hardware_product(product: dict) -> tuple[bool, str]:
         product["website"] = website
 
     if website.lower() == "unknown":
-        product["needs_verification"] = True
-        # unknown website without a traceable source is not actionable (can't resolve later).
-        if not product.get("source_url"):
-            return False, "missing source_url for unknown website"
+        return False, "unknown website not allowed"
     elif not website.startswith(("http://", "https://")):
         return False, "invalid website URL"
     else:

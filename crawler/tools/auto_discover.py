@@ -918,6 +918,129 @@ WELL_KNOWN_PRODUCTS = {
     "microsoft copilot", "bing chat", "amazon q", "aws bedrock",
 }
 
+# ── 不可信 source 黑名单 ─────────────────────────────────────────────
+UNTRUSTED_SOURCES = {
+    # 零售平台
+    "楽天市場", "rakuten", "眼鏡市場", "amazon", "taobao", "淘宝",
+    "京东", "jd.com", "天猫", "aliexpress", "ebay",
+    # 视频平台
+    "youtube", "bilibili", "tiktok", "抖音", "快手",
+    # 社交媒体
+    "twitter", "x.com", "微博", "weibo", "知乎", "zhihu",
+    "reddit", "facebook", "instagram",
+}
+
+# ── 博客标题特征词 ────────────────────────────────────────────────────
+BLOG_TITLE_MARKERS = [
+    "：", "？", "！", "如何", "什么是", "为什么", "的下一个",
+    "风口", "趋势", "未来", "盘点", "合集", "Top",
+]
+
+# ── 通用概念名（不是产品名）────────────────────────────────────────────
+GENERIC_CONCEPT_NAMES = [
+    "AI随身设备", "AI智能助手", "智能穿戴设备", "AI硬件",
+    "AI眼镜", "AI助手", "智能硬件", "AI可穿戴",
+    "AI wearable", "AI device", "AI hardware", "smart glasses",
+]
+
+
+def validate_source(product: dict) -> tuple[bool, str]:
+    """验证产品来源是否可信"""
+    source = product.get("source", "").strip().lower()
+    if not source:
+        return True, "no source"  # 没有 source 不拒绝，后续验证会处理
+
+    for untrusted in UNTRUSTED_SOURCES:
+        if untrusted.lower() in source:
+            return False, f"untrusted source: {source}"
+
+    return True, "source ok"
+
+
+def validate_product_name(name: str) -> tuple[bool, str]:
+    """验证产品名是否像真正的产品名（不是博客标题或通用概念）"""
+    if not name:
+        return False, "empty name"
+
+    # 检查博客标题特征
+    if len(name) > 10:
+        matching_markers = [m for m in BLOG_TITLE_MARKERS if m in name]
+        if len(matching_markers) >= 1:
+            return False, f"name looks like blog title (markers: {matching_markers})"
+
+    # 检查通用概念名
+    name_lower = name.lower().strip()
+    for concept in GENERIC_CONCEPT_NAMES:
+        if name_lower == concept.lower() or name_lower.startswith(concept.lower()):
+            return False, f"name is generic concept: {concept}"
+
+    return True, "name ok"
+
+
+def validate_against_search_results(
+    product: dict, search_results: list
+) -> tuple[bool, str]:
+    """
+    交叉验证：产品名是否在搜索结果中出现过。
+    这是防止 LLM 幻觉的最重要检查。
+
+    Args:
+        product: 提取的产品
+        search_results: 原始搜索结果列表 (SearchResult 对象或字典)
+
+    Returns:
+        (是否通过, 原因)
+    """
+    if not search_results:
+        return True, "no search results to cross-check"
+
+    name = product.get("name", "").strip()
+    if not name:
+        return False, "no name"
+
+    # 将所有搜索结果的文本合并
+    search_text_combined = ""
+    for r in search_results:
+        if isinstance(r, dict):
+            search_text_combined += " " + (r.get("title", "") + " " +
+                                           r.get("content", "") + " " +
+                                           r.get("snippet", "") + " " +
+                                           r.get("url", ""))
+        elif hasattr(r, 'title'):
+            search_text_combined += " " + (r.title + " " + r.snippet + " " + r.url)
+
+    search_text_lower = search_text_combined.lower()
+
+    # 检查产品名（或其主要部分）是否在搜索结果中出现
+    name_lower = name.lower()
+
+    # 精确匹配
+    if name_lower in search_text_lower:
+        return True, "exact match in search results"
+
+    # 部分匹配（对于中文名可能需要）: 至少 3 个字符的子串
+    name_parts = name.split()
+    for part in name_parts:
+        if len(part) >= 3 and part.lower() in search_text_lower:
+            return True, f"partial match: {part}"
+
+    # 对于中文名，检查连续 3+ 字符
+    if any('\u4e00' <= c <= '\u9fff' for c in name):
+        for i in range(len(name) - 2):
+            chunk = name[i:i+3]
+            if chunk.lower() in search_text_lower:
+                return True, f"chinese partial match: {chunk}"
+
+    # source_url 检查：如果产品的 source_url 在搜索结果中
+    source_url = product.get("source_url", "")
+    if source_url:
+        for r in search_results:
+            r_url = r.get("url", "") if isinstance(r, dict) else getattr(r, 'url', '')
+            if source_url == r_url:
+                return True, "source_url matches search result"
+
+    return False, f"product '{name}' not found in search results (possible hallucination)"
+
 
 def validate_product(product: dict) -> tuple[bool, str]:
     """
@@ -937,6 +1060,16 @@ def validate_product(product: dict) -> tuple[bool, str]:
     description = product.get("description", "").strip()
     why_matters = product.get("why_matters", "").strip()
 
+    # 0a. 检查产品名是否合法（防博客标题/通用概念）
+    name_valid, name_reason = validate_product_name(name)
+    if not name_valid:
+        return False, name_reason
+
+    # 0b. 检查来源是否可信（防零售/视频/社交平台）
+    source_valid, source_reason = validate_source(product)
+    if not source_valid:
+        return False, source_reason
+
     # 1. 检查必填字段
     if not name:
         return False, "missing name"
@@ -948,6 +1081,8 @@ def validate_product(product: dict) -> tuple[bool, str]:
     # 2. 检查 website
     if not website:
         return False, "missing website"
+    if website.lower() == "unknown":
+        return False, "unknown website not allowed"
     
     # 修复缺少协议的 URL
     if not website.startswith(("http://", "https://")) and "." in website:
@@ -955,11 +1090,7 @@ def validate_product(product: dict) -> tuple[bool, str]:
         product["website"] = website
     
     if website.lower() == "unknown":
-        # 允许 unknown，但后续需要人工验证
-        product["needs_verification"] = True
-        # unknown website without a traceable source is not actionable (can't resolve later).
-        if not product.get("source_url"):
-            return False, "missing source_url for unknown website"
+        return False, "unknown website not allowed"
     elif not website.startswith(("http://", "https://")):
         return False, "invalid website URL"
 
@@ -1325,15 +1456,37 @@ def analyze_with_glm(content: str, task: str = "extract", region: str = "🇨�
         # Add strict guardrails to keep results traceable and reduce junk entries.
         prompt += """
 
-## GLM 额外要求（必须遵守）
+## GLM 额外要求（必须遵守，违反任何一条则不输出该产品）
 
-1. `name` 必须是一个明确的「产品/公司名」，不能是新闻标题或描述句。
-   - 禁止包含：投资/领投/参投/融资/独家/爆料/报道/曝光/消息/传闻 等标题词（出现即不输出该条）。
-2. `source_url` 必须精确复制自上方搜索结果中的 `URL:` 行，不允许编造，也不允许留空。
+### 反幻觉规则（最重要！）
+
+1. **只提取搜索结果中明确提到的产品**。
+   - 如果搜索结果中没有提到某个产品的名字，绝对不要输出它。
+   - 不要从你的训练知识中"补充"产品。搜索结果里没有的 = 不存在。
+   - 输出产品数量不能超过搜索结果中实际提到的不同产品数量。
+
+2. `source_url` 必须精确复制自上方搜索结果中的 `Source URL:` 行。
    - 找不到可对应的 URL，就不要输出该产品。
+   - 不允许编造 source_url，也不允许留空。
+
 3. `website` 只有在搜索结果文本里「明确出现官网域名」时才填写；否则必须设置：
    - `"website": "unknown", "needs_verification": true`
-   - 不要凭感觉猜测官网。
+   - 不要凭感觉猜测官网（如把公司名拼成 .com/.ai）。
+
+### 产品名称规则
+
+4. `name` 必须是一个明确的「产品/公司名」，不能是：
+   - 新闻标题或描述句（禁止包含：投资/领投/融资/独家/爆料/报道/曝光/消息/传闻/如何/什么是/风口/趋势）
+   - 通用概念（如"AI随身设备"、"AI智能助手"、"智能穿戴设备"）
+   - 博客文章标题（含"：""？""！"等标点的长句）
+
+### 来源可信度规则
+
+5. `source` 必须是权威媒体或产品平台，以下来源不可信，不要使用：
+   - 零售平台：楽天市場、眼鏡市場、Amazon、淘宝、京东
+   - 视频平台：YouTube、Bilibili、TikTok
+   - 社交媒体：Twitter/X、微博、知乎
+   - 如果搜索结果全部来自以上不可信来源，返回空数组 `[]`
 """
     elif task == "score":
         prompt = SCORING_PROMPT.format(
@@ -1781,12 +1934,27 @@ def sync_to_featured(product: dict):
         else:
             featured = []
         
-        # 检查是否已存在（按 website 去重）
+        # 检查是否已存在（website 优先，其次 name）
         existing_websites = {normalize_url(p.get('website', '')) for p in featured}
+        def _safe_name_key(value: str) -> str:
+            if not value:
+                return ""
+            try:
+                return normalize_name(value) if callable(globals().get("normalize_name")) else "".join(
+                    ch for ch in value.lower() if ch.isalnum()
+                )
+            except Exception:
+                return "".join(ch for ch in value.lower() if ch.isalnum())
+
+        existing_names = {_safe_name_key(p.get('name', '')) for p in featured}
         product_domain = normalize_url(product.get('website', ''))
-        
+        product_name_key = _safe_name_key(product.get('name', ''))
+
         if product_domain and product_domain in existing_websites:
-            print(f"  📋 Already in featured: {product.get('name')}")
+            print(f"  📋 Already in featured (domain): {product.get('name')}")
+            return
+        if (not product_domain) and product_name_key and product_name_key in existing_names:
+            print(f"  📋 Already in featured (name): {product.get('name')}")
             return
         
         # 转换字段格式（适配前端）
@@ -2017,6 +2185,18 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
 
             # 绑定 source_url（用于后续解析官网）
             attach_source_url(product, search_results)
+
+            # ── 反幻觉：交叉验证产品是否在搜索结果中 ──
+            # 仅对 GLM provider 启用（Perplexity 自带搜索引用，幻觉少）
+            if current_provider == "glm":
+                xref_valid, xref_reason = validate_against_search_results(
+                    product, search_results
+                )
+                if not xref_valid:
+                    stats["quality_rejections"] += 1
+                    quality_rejections.append({"name": name, "reason": xref_reason})
+                    print(f"    🚫 Hallucination filter: {name} ({xref_reason})")
+                    continue
 
             # 质量验证
             is_hardware = (

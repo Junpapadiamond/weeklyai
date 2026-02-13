@@ -40,7 +40,7 @@ from dataclasses import dataclass, field
 
 ZHIPU_API_KEY = os.environ.get('ZHIPU_API_KEY', '')
 GLM_MODEL = os.environ.get('GLM_MODEL', 'glm-4.7')  # 最新: glm-4.7 (200K context, 128K output)
-GLM_SEARCH_ENGINE = os.environ.get('GLM_SEARCH_ENGINE', 'search_pro')  # search_pro / search_pro_sogou
+GLM_SEARCH_ENGINE = os.environ.get('GLM_SEARCH_ENGINE', 'search_pro')  # search_pro / search_pro_sogou / search_pro_quark
 API_RATE_LIMIT_DELAY = float(os.environ.get('API_RATE_LIMIT_DELAY', '2'))
 API_MAX_RETRIES = int(os.environ.get('API_MAX_RETRIES', '3'))
 API_RETRY_BACKOFF = float(os.environ.get('API_RETRY_BACKOFF', '2'))
@@ -63,6 +63,11 @@ SEARCH_ENGINES = {
         "name": "搜狗高阶搜索",
         "price": "¥0.05/次",
         "description": "腾讯生态+知乎，适合中文内容深度搜索"
+    },
+    "search_pro_quark": {
+        "name": "夸克高阶搜索",
+        "price": "¥0.05/次",
+        "description": "夸克搜索增强，适合中文站点召回"
     },
     "search_std": {
         "name": "标准搜索",

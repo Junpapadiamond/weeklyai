@@ -11,7 +11,7 @@ const Cards = {
         const name = Utils.escapeHtml(product.name || 'Product');
         const logoUrl = Utils.getLogoSource(product);
         const initial = name.charAt(0).toUpperCase();
-        const fallbacks = Utils.getLogoFallbacks(product.website || '', product.source_url || '');
+        const fallbacks = Utils.getLogoFallbacks(product.website || '');
         const filtered = fallbacks.filter(url => url && url !== logoUrl);
         const fallbackAttr = filtered.join('|');
 

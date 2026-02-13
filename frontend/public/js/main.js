@@ -1766,12 +1766,9 @@ function getFaviconUrl(website) {
     }
 }
 
-function getLogoFallbacks(website, sourceUrl = '') {
+function getLogoFallbacks(website) {
     const primary = normalizeWebsite(website);
-    const fallbackSource = normalizeWebsite(sourceUrl);
-    const candidate = isValidWebsite(primary)
-        ? primary
-        : (isValidWebsite(fallbackSource) ? fallbackSource : '');
+    const candidate = isValidWebsite(primary) ? primary : '';
     if (!candidate) return [];
     try {
         const host = new URL(candidate).hostname;
@@ -1793,7 +1790,7 @@ function buildLogoMarkup(product, options = {}) {
     const initial = getInitial(name);
     const logoSrc = getLogoSource(product);
     const { width = 48, height = 48 } = options;
-    const fallbacks = getLogoFallbacks(product.website || '', product.source_url || '');
+    const fallbacks = getLogoFallbacks(product.website || '');
     const filtered = fallbacks.filter(url => url && url !== logoSrc);
     const fallbackAttr = filtered.join('|');
 

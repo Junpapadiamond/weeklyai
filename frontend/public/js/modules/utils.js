@@ -163,12 +163,9 @@ const Utils = {
     /**
      * Get logo fallbacks (Clearbit -> Google -> Bing -> DuckDuckGo -> IconHorse)
      */
-    getLogoFallbacks(website, sourceUrl = '') {
+    getLogoFallbacks(website) {
         const primary = this.normalizeWebsite(website);
-        const fallbackSource = this.normalizeWebsite(sourceUrl);
-        const candidate = this.isValidWebsite(primary)
-            ? primary
-            : (this.isValidWebsite(fallbackSource) ? fallbackSource : '');
+        const candidate = this.isValidWebsite(primary) ? primary : '';
         if (!candidate) return [];
         try {
             const domain = new URL(candidate).hostname;
