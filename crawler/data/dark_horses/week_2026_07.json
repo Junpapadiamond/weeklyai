@@ -1835,5 +1835,355 @@
         "guardrail_reason": "insufficient_demand_data"
       }
     }
+  },
+  {
+    "name": "Stark",
+    "website": "https://stark.ai",
+    "description": "德国武装无人机初创公司，开发自主导航的垂直起降(VTOL)自杀式无人机Virtus，集成AI制导系统，可执行100公里范围内的精准打击任务",
+    "category": "hardware",
+    "region": "🇪🇺",
+    "funding_total": "$1.2B+ valuation (Founders Fund + European investors)",
+    "dark_horse_index": 5,
+    "criteria_met": [
+      "funding_signal",
+      "category_innovation"
+    ],
+    "why_matters": "刚达到独角兽估值($1.2B+)，获得德国政府€2.86B潜在合同订单(初期€269M)，员工数计划从450人翻倍至2026年底，已进入英国和瑞典市场。Virtus无人机具备AI引导、5kg有效载荷、250km/h最高速度和返航能力等创新特性，代表欧洲防御技术自主化的战略转向",
+    "latest_news": "2026-02: 融资轮后估值突破€10亿，德国政府批准€4.3B防御采购合同(与Helsing联合)",
+    "source": "Sifted, Jerusalem Post, TechFundingNews",
+    "source_url": "https://www.startupresearcher.com/news/germany-s-stark-surpasses-usd1-2-billion-valuation-in-funding-round",
+    "confidence": 0.92,
+    "is_hardware": true,
+    "discovered_at": "2026-02-14",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "UK France Germany AI startup",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-14T19:27:49.061091Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
+  },
+  {
+    "name": "Deep Intelligent Pharma",
+    "website": "https://www.deepintelligentpharma.com",
+    "description": "AI药物发现平台，提供从早期研究到临床试验全流程的自主智能解决方案，已实现零修订临床试验协议通过",
+    "category": "healthcare",
+    "region": "🇺🇸",
+    "funding_total": "$60M latest round + $50M Series D (2个月内融资$110M+)",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "category_innovation"
+    ],
+    "why_matters": "2个月内融资超$110M，显示投资者对AI药物开发的强劲信心；独创全栈AI系统涵盖临床试验全周期，医学术语准确率99%+，安全性达99.9%工业级；已产生通过监管审查零修订的临床试验协议（业界罕见）；Protocol Rehearsal虚拟试验功能可预测患者入组速度、脱落率和运营挑战",
+    "latest_news": "2026-02: 融资$60M，吸引Trustbridge Capital等首次投资者，2个月内融资总额超$110M",
+    "source": "Pharma Business Outlook",
+    "source_url": "https://pharmabusinessoutlook.com/deep-intelligent-pharma-raises-fresh-60-million-to-take-ai-into-clinical-trials/",
+    "confidence": 0.88,
+    "categories": [
+      "other"
+    ],
+    "discovered_at": "2026-02-14",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "artificial intelligence company raised funding",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-14T19:29:00.788059Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
+  },
+  {
+    "name": "Operand",
+    "website": "https://operand.ai",
+    "description": "YC 2025毕业的AI平台，自动化传统商业咨询职能，专注电商定价与促销策略优化。",
+    "category": "agent",
+    "region": "🇺🇸",
+    "funding_total": "unknown",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "growth_anomaly",
+      "demand_signal_hn"
+    ],
+    "why_matters": "YC S25毕业，专注电商领域通过分析内部数据执行最优定价策略，已展现直接财务影响吸引早期关注。",
+    "latest_news": "2026-02: YC毕业生，电商AI咨询平台快速获关注",
+    "source": "Atlantic.Net",
+    "source_url": "https://www.atlantic.net/gpu-server-hosting/fastest-growing-ai-startups-2026/",
+    "confidence": 0.85,
+    "categories": [
+      "other"
+    ],
+    "discovered_at": "2026-02-14",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "generative AI startup Series A",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-14T19:29:09.009242Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 1,
+          "top_story_id": "46964297",
+          "points": 1,
+          "comments": 5,
+          "engagement_depth_ratio": 5.0,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "This will essentially always be more expensive than generating code a compiler can use, because the compiler and intermediate representation rule out, ex ante, a vast logical space of binaries that will crash.",
+            "I don't see why it's not possible. In your example scenario, it sounds like Bob is vibe-coding a project in assembly language, and then using an existing assembler to create the final binary? I have not tried it, but I would imagine that current LLMs are relatively weak on generating assembly language, just due to less thorough training compared to higher-level languages, but even if so, that's surmountable. As for, what I think you are suggesting, having the LLM also do the assembly step? Again, in theory, sure, but I would think just using the existing known-good assembler would be preferable to training an LLM to convert assembly language to binary. I'm not sure what you would gain in ter",
+            "The basis of this idea is grounded on fantasy. You understand that one wrong byte means that the program crashes? Why use a tool that is totally probabilistic to generate assembly directly which must be correct? Why?",
+            "I didn't think there would be a gain of speed or productivity, but just a (possibly ominous) idea of 'cutting out the middleman'. Granted, that middleman is very important. Natural language is not the best language for formal descriptions of projects, but it is the one that humans use most day to day. Perhaps a chain like this would be the start of on demand programs.",
+            "You are right that this is an error prone process, but as these tools are used now, are much like how compilers were used in the past. It is, after all, another layer of abstraction. Is it foolproof? No. I do think the idea had some merit, though."
+          ],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.5667,
+        "demand_tier": "medium",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "评论者认为用LLM直接生成汇编代码风险高，因为一个字节错误就会导致程序崩溃，且LLM的概率性输出不适合这种精确需求。一些人承认过程易出错但视其为抽象层，有一定潜力，并建议结合现有汇编器使用。整体讨论认可想法的理论可能性，但强调当前工具的局限性和可靠性问题。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.85
+    }
+  },
+  {
+    "name": "7AI",
+    "website": "https://7ai.com",
+    "description": "波士顿初创公司，构建网络安全AI代理系统。",
+    "category": "agent",
+    "region": "🇺🇸",
+    "funding_total": "$100M+",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "2025年9月30日完成超1亿美元融资，由Fidelity和Atreides Management联合领投，专注企业级安全AI代理。",
+    "latest_news": "2025-09-30: 宣布超1亿美元融资轮次",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/01/19/here-are-the-49-us-ai-startups-that-have-raised-100m-or-more-in-2025/",
+    "confidence": 0.85,
+    "categories": [
+      "other"
+    ],
+    "discovered_at": "2026-02-14",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI agent startup funding",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-14T19:29:52.438967Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
+  },
+  {
+    "name": "Ray-Ban Meta",
+    "website": "https://www.meta.com",
+    "description": "Meta 与雷朋合作的 AI 智能眼镜，支持语音交互、拍照及多模态 AI 功能。",
+    "category": "hardware",
+    "hardware_type": "innovative",
+    "form_factor": "glasses",
+    "use_case": "lifestyle",
+    "innovation_traits": [
+      "non_traditional_form",
+      "wearable",
+      "voice_first",
+      "media_coverage"
+    ],
+    "region": "🇨🇳",
+    "funding_total": "unknown",
+    "price": "$299",
+    "dark_horse_index": 5,
+    "criteria_met": [
+      "form_innovation",
+      "use_case_clear",
+      "media_coverage"
+    ],
+    "why_matters": "年销量突破 700 万副，同比增长 250%，成为 AI 眼镜领域的标杆产品，验证了智能眼镜作为 AI 载体的商业可行性。",
+    "latest_news": "2025年销量超700万副，双方计划将年产能提高至2000万台或更多。",
+    "source": "VR陀螺",
+    "source_url": "https://www.sohu.com/a/986743072_549351",
+    "confidence": 0.95,
+    "is_hardware": true,
+    "discovered_at": "2026-02-14",
+    "discovery_method": "glm_search",
+    "search_keyword": "AI智能眼镜 创业公司",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-14T19:31:32.215056Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
   }
 ]
