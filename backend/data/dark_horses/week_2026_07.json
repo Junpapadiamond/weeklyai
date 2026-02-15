@@ -2185,5 +2185,276 @@
         "guardrail_reason": "insufficient_demand_data"
       }
     }
+  },
+  {
+    "name": "Bretton AI",
+    "website": "https://bretton.ai",
+    "description": "AI代理平台，自动化金融犯罪合规工作流，包括KYC/KYB审查、AML和制裁调查",
+    "category": "finance",
+    "region": "🇺🇸",
+    "funding_total": "$75M Series B",
+    "dark_horse_index": 5,
+    "criteria_met": [
+      "funding_signal",
+      "category_innovation",
+      "growth_anomaly"
+    ],
+    "why_matters": "Series B融资7500万美元，由Sapphire Ventures领投；完成120万+金融犯罪调查，为客户节省1000万+美元合规成本；平均合同价值从2023年的2.5万美元增长到2026年的20.1万美元，增长8倍；客户总市值从1500亿美元增至1万亿美元；首次在全球最受监管的金融机构中大规模部署生产级AI代理，定义了受信任AI在金融系统中的行业标准",
+    "latest_news": "2026-02: 完成$75M Series B融资，从Greenlite AI更名为Bretton AI，宣布扩展至更多金融犯罪领域",
+    "source": "RegTech Analyst, BusinessWire, Sapphire Ventures",
+    "source_url": "https://regtechanalyst.com/financial-crime-platform-bretton-ai-secures-75m/",
+    "confidence": 0.95,
+    "categories": [
+      "other"
+    ],
+    "discovered_at": "2026-02-15",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI agent startup funding",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-15T19:28:16.515370Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
+  },
+  {
+    "name": "Simile",
+    "website": "https://simile.ai",
+    "description": "利用AI创建模拟环境和AI代理的仿真工具初创公司。",
+    "category": "agent",
+    "region": "🇺🇸",
+    "funding_total": "$100M Series A",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "2026年初A轮融资1亿美元，由Index Ventures领投，专注AI模拟环境创建，是早期巨额融资AI初创公司。",
+    "latest_news": "2026-02: $100M Series A by Index Ventures",
+    "source": "Crunchbase",
+    "source_url": "https://news.crunchbase.com/venture/biggest-funding-rounds-anthropic-leads-ai-robotics/",
+    "confidence": 0.9,
+    "categories": [
+      "other"
+    ],
+    "discovered_at": "2026-02-15",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI startup funding 2026",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-15T19:29:45.263591Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
+  },
+  {
+    "name": "Trener Robotics",
+    "website": "https://trenerrobotics.com",
+    "description": "Trener Robotics开发Acteris平台，让工业机器人通过对话学习任务，无需复杂编程。",
+    "category": "hardware",
+    "region": "🇪🇺",
+    "funding_total": "€26M Series A",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "€26M Series A融资打造工业自动化'物理AI'层，通过对话训练机器人，革新传统编程模式。",
+    "latest_news": "2026-01: 完成€26M Series A融资",
+    "source": "EU Tech Future",
+    "source_url": "https://eutechfuture.com",
+    "confidence": 0.9,
+    "is_hardware": true,
+    "discovered_at": "2026-02-15",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI Series A Europe",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-15T19:32:36.183088Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
+  },
+  {
+    "name": "Databricks",
+    "website": "https://databricks.com",
+    "description": "数据湖仓架构提出者，提供从数据集成到AI模型训练部署的一体化平台。",
+    "category": "other",
+    "region": "🇨🇳",
+    "funding_total": "$5B J轮",
+    "dark_horse_index": 5,
+    "criteria_met": [
+      "growth_anomaly",
+      "funding_signal",
+      "demand_signal_hn"
+    ],
+    "why_matters": "完成50亿美元股权融资，估值达1340亿美元；年化营收54亿美元，同比增长65%，其中AI产品年化营收14亿美元。",
+    "latest_news": "2026-02-09: 完成50亿美元融资，估值1340亿美元，年化营收54亿美元。",
+    "source": "163.com",
+    "source_url": "https://www.163.com/dy/article/KLEG4DFN053469RG.html",
+    "confidence": 0.95,
+    "categories": [
+      "other"
+    ],
+    "discovered_at": "2026-02-15",
+    "discovery_method": "glm_search",
+    "search_keyword": "人工智能 独角兽 估值",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-15T19:33:57.781975Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 2,
+          "top_story_id": "46975075",
+          "points": 1,
+          "comments": 1,
+          "engagement_depth_ratio": 1.0,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "Is this a service, a github repo, something else? did you forget to include a link? have you considered a service that does the opposite?"
+          ],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.3726,
+        "demand_tier": "medium",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "评论者质疑这是服务、GitHub仓库还是其他，并指出缺少链接。评论建议考虑提供相反功能的现有服务。整体语气显示困惑和批评，没有正面反馈。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "negative",
+      "confidence": 0.9
+    }
   }
 ]
