@@ -19,6 +19,7 @@ import {
 } from "@/lib/schemas";
 
 const DEFAULT_SERVER_BASE = "http://localhost:5000/api/v1";
+const LOCAL_FALLBACK_SERVER_BASE = "http://localhost:5001/api/v1";
 export type WeeklyTopSort = "composite" | "trending" | "recency" | "funding";
 
 function resolveApiBaseUrl() {
@@ -35,19 +36,41 @@ type FetchConfig = RequestInit & {
   };
 };
 
+function canUseLocalPortFallback(baseUrl: string) {
+  if (process.env.NEXT_PUBLIC_API_BASE_URL) return false;
+  return baseUrl === DEFAULT_SERVER_BASE;
+}
+
+async function requestJson(baseUrl: string, path: string, config?: FetchConfig): Promise<Response> {
+  const url = `${baseUrl}${path}`;
+  return fetch(url, {
+    ...config,
+    headers: {
+      Accept: "application/json",
+      ...(config?.headers || {}),
+    },
+  });
+}
+
 async function fetchJson(path: string, config?: FetchConfig): Promise<unknown> {
   const baseUrl = resolveApiBaseUrl().replace(/\/$/, "");
   const url = `${baseUrl}${path}`;
+
   try {
-    const response = await fetch(url, {
-      ...config,
-      headers: {
-        Accept: "application/json",
-        ...(config?.headers || {}),
-      },
-    });
+    const response = await requestJson(baseUrl, path, config);
 
     if (!response.ok) {
+      if (canUseLocalPortFallback(baseUrl) && [426, 502, 503, 504].includes(response.status)) {
+        try {
+          const fallbackResponse = await requestJson(LOCAL_FALLBACK_SERVER_BASE, path, config);
+          if (fallbackResponse.ok) {
+            return fallbackResponse.json();
+          }
+        } catch {
+          // ignore fallback error and keep original error handling
+        }
+      }
+
       if (typeof window !== "undefined") {
         throw new Error(`API request failed: ${response.status} ${response.statusText} (${url})`);
       }
@@ -57,6 +80,17 @@ async function fetchJson(path: string, config?: FetchConfig): Promise<unknown> {
 
     return response.json();
   } catch (error) {
+    if (canUseLocalPortFallback(baseUrl)) {
+      try {
+        const fallbackResponse = await requestJson(LOCAL_FALLBACK_SERVER_BASE, path, config);
+        if (fallbackResponse.ok) {
+          return fallbackResponse.json();
+        }
+      } catch {
+        // ignore fallback error and continue to original error handling
+      }
+    }
+
     if (typeof window !== "undefined") {
       throw error;
     }
