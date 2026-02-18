@@ -28,6 +28,12 @@ export type Product = {
   source?: string;
   source_url?: string;
   region?: string;
+  source_region?: string;
+  country_code?: string;
+  country_name?: string;
+  country_flag?: string;
+  country_display?: string;
+  country_source?: string;
   final_score?: number;
   trending_score?: number;
   hot_score?: number;

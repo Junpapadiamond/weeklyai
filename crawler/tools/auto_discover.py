@@ -24,7 +24,7 @@ import requests
 import time
 from datetime import datetime
 from urllib.parse import urlparse
-from typing import Optional
+from typing import Any, Dict, Optional, Tuple
 
 # 添加父目录到路径（用于导入 utils）
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -77,6 +77,292 @@ PRODUCT_OFFICIAL_HANDLES_FILE = os.environ.get(
 
 # Provider routing (动态选择)
 PROVIDER_NAME = "perplexity"  # 默认 provider，实际按区域动态选择
+
+# ============================================
+# 国家归属解析（公司归属优先）
+# ============================================
+UNKNOWN_COUNTRY_CODE = "UNKNOWN"
+UNKNOWN_COUNTRY_NAME = "Unknown"
+UNKNOWN_COUNTRY_DISPLAY = "Unknown"
+
+COUNTRY_CODE_TO_NAME = {
+    "US": "United States",
+    "CN": "China",
+    "SG": "Singapore",
+    "JP": "Japan",
+    "KR": "South Korea",
+    "GB": "United Kingdom",
+    "DE": "Germany",
+    "FR": "France",
+    "SE": "Sweden",
+    "CA": "Canada",
+    "IL": "Israel",
+    "BE": "Belgium",
+    "AE": "United Arab Emirates",
+    "NL": "Netherlands",
+    "CH": "Switzerland",
+    "IN": "India",
+}
+
+COUNTRY_CODE_TO_FLAG = {
+    "US": "🇺🇸",
+    "CN": "🇨🇳",
+    "SG": "🇸🇬",
+    "JP": "🇯🇵",
+    "KR": "🇰🇷",
+    "GB": "🇬🇧",
+    "DE": "🇩🇪",
+    "FR": "🇫🇷",
+    "SE": "🇸🇪",
+    "CA": "🇨🇦",
+    "IL": "🇮🇱",
+    "BE": "🇧🇪",
+    "AE": "🇦🇪",
+    "NL": "🇳🇱",
+    "CH": "🇨🇭",
+    "IN": "🇮🇳",
+}
+
+COUNTRY_NAME_ALIASES = {
+    "us": "US",
+    "usa": "US",
+    "united states": "US",
+    "u.s.": "US",
+    "america": "US",
+    "美国": "US",
+    "cn": "CN",
+    "china": "CN",
+    "prc": "CN",
+    "中国": "CN",
+    "sg": "SG",
+    "singapore": "SG",
+    "新加坡": "SG",
+    "jp": "JP",
+    "japan": "JP",
+    "日本": "JP",
+    "kr": "KR",
+    "korea": "KR",
+    "south korea": "KR",
+    "韩国": "KR",
+    "gb": "GB",
+    "uk": "GB",
+    "united kingdom": "GB",
+    "britain": "GB",
+    "england": "GB",
+    "英国": "GB",
+    "de": "DE",
+    "germany": "DE",
+    "德国": "DE",
+    "fr": "FR",
+    "france": "FR",
+    "法国": "FR",
+    "se": "SE",
+    "sweden": "SE",
+    "瑞典": "SE",
+    "ca": "CA",
+    "canada": "CA",
+    "加拿大": "CA",
+    "il": "IL",
+    "israel": "IL",
+    "以色列": "IL",
+    "be": "BE",
+    "belgium": "BE",
+    "比利时": "BE",
+    "ae": "AE",
+    "uae": "AE",
+    "united arab emirates": "AE",
+    "阿联酋": "AE",
+    "nl": "NL",
+    "netherlands": "NL",
+    "荷兰": "NL",
+    "ch": "CH",
+    "switzerland": "CH",
+    "瑞士": "CH",
+    "in": "IN",
+    "india": "IN",
+    "印度": "IN",
+}
+
+FLAG_TO_COUNTRY_CODE = {flag: code for code, flag in COUNTRY_CODE_TO_FLAG.items()}
+
+# 这组 flag 在发现阶段通常代表“搜索市场”，不是公司归属国
+DISCOVERY_REGION_FLAGS = {"🇺🇸", "🇨🇳", "🇪🇺", "🇯🇵🇰🇷", "🇸🇬", "🌍"}
+SEARCH_REGION_SAFE_FLAGS = {"🇺🇸", "🇨🇳"}
+
+COUNTRY_BY_CC_TLD = {
+    "cn": "CN",
+    "jp": "JP",
+    "kr": "KR",
+    "de": "DE",
+    "fr": "FR",
+    "se": "SE",
+    "ca": "CA",
+    "uk": "GB",
+    "sg": "SG",
+    "il": "IL",
+    "be": "BE",
+    "ae": "AE",
+    "nl": "NL",
+    "ch": "CH",
+    "in": "IN",
+}
+
+
+def _extract_region_flag(value: Any) -> str:
+    text = str(value or "").strip()
+    if not text:
+        return ""
+    match = re.search(r"[\U0001F1E6-\U0001F1FF]{2}", text)
+    return match.group(0) if match else ""
+
+
+def _normalize_country_code(value: Any) -> str:
+    text = str(value or "").strip()
+    if not text:
+        return ""
+
+    upper = text.upper()
+    if upper in COUNTRY_CODE_TO_NAME:
+        return upper
+
+    flag = _extract_region_flag(text)
+    if flag and flag in FLAG_TO_COUNTRY_CODE:
+        return FLAG_TO_COUNTRY_CODE[flag]
+
+    normalized = re.sub(r"[_\-.]+", " ", text.lower()).strip()
+    normalized = re.sub(r"\s+", " ", normalized)
+    return COUNTRY_NAME_ALIASES.get(normalized, "")
+
+
+def _country_code_from_website_tld(website: Any) -> str:
+    raw = str(website or "").strip()
+    if not raw:
+        return ""
+    if not raw.startswith(("http://", "https://")):
+        raw = f"https://{raw}"
+
+    try:
+        host = (urlparse(raw).netloc or "").lower()
+        host = host.split(":")[0]
+        if host.startswith("www."):
+            host = host[4:]
+        if not host or "." not in host:
+            return ""
+        suffix = host.rsplit(".", 1)[-1]
+        return COUNTRY_BY_CC_TLD.get(suffix, "")
+    except Exception:
+        return ""
+
+
+def resolve_company_country(
+    product: Dict[str, Any],
+    fallback_region_flag: str = "",
+) -> Tuple[str, str]:
+    """
+    解析产品公司归属国。
+
+    优先级：
+    1) 公司/创始相关显式字段
+    2) 策展数据的 region（仅 curated，视为人工确认）
+    3) 官网 ccTLD（仅强指向国家）
+    4) Unknown
+    """
+    explicit_fields = [
+        "company_country_code",
+        "company_country",
+        "hq_country_code",
+        "hq_country",
+        "headquarters_country",
+        "origin_country",
+        "founder_country",
+        "country_code",
+        "country_name",
+        "country",
+        "nationality",
+    ]
+
+    for field in explicit_fields:
+        code = _normalize_country_code(product.get(field))
+        if code:
+            return code, f"explicit:{field}"
+
+    extra = product.get("extra")
+    if isinstance(extra, dict):
+        for field in explicit_fields:
+            code = _normalize_country_code(extra.get(field))
+            if code:
+                return code, f"extra:{field}"
+
+    for field in ("country_flag", "company_country_flag", "hq_country_flag"):
+        code = _normalize_country_code(product.get(field))
+        if code:
+            return code, f"explicit:{field}"
+
+    source = str(product.get("source") or "").strip().lower()
+    region_flag = _extract_region_flag(product.get("region"))
+    if source == "curated" and region_flag:
+        code = FLAG_TO_COUNTRY_CODE.get(region_flag, "")
+        if code:
+            return code, "curated:region"
+
+    # 发现阶段的 region 属于“检索市场”信号，默认不直接当公司国家
+    if region_flag and region_flag not in DISCOVERY_REGION_FLAGS:
+        code = FLAG_TO_COUNTRY_CODE.get(region_flag, "")
+        if code:
+            return code, "region:legacy"
+
+    if region_flag and region_flag in SEARCH_REGION_SAFE_FLAGS:
+        code = FLAG_TO_COUNTRY_CODE.get(region_flag, "")
+        if code:
+            return code, "region:search_fallback"
+
+    if fallback_region_flag and fallback_region_flag not in DISCOVERY_REGION_FLAGS:
+        code = FLAG_TO_COUNTRY_CODE.get(fallback_region_flag, "")
+        if code:
+            return code, "region:fallback"
+    if fallback_region_flag and fallback_region_flag in SEARCH_REGION_SAFE_FLAGS:
+        code = FLAG_TO_COUNTRY_CODE.get(fallback_region_flag, "")
+        if code:
+            return code, "region:search_fallback"
+
+    cc_tld_code = _country_code_from_website_tld(product.get("website"))
+    if cc_tld_code:
+        return cc_tld_code, "website:cc_tld"
+
+    return "", "unknown"
+
+
+def apply_country_fields(product: Dict[str, Any], fallback_region_flag: str = "") -> None:
+    """
+    为产品写入统一国家字段，并保证未知时不输出错误国旗。
+    """
+    if fallback_region_flag:
+        product["source_region"] = fallback_region_flag
+    elif not product.get("source_region"):
+        existing_region = str(product.get("region") or "").strip()
+        if existing_region:
+            product["source_region"] = existing_region
+
+    code, country_source = resolve_company_country(product, fallback_region_flag=fallback_region_flag)
+    if code:
+        country_name = COUNTRY_CODE_TO_NAME.get(code, code)
+        country_flag = COUNTRY_CODE_TO_FLAG.get(code, "")
+        country_display = f"{country_flag} {country_name}".strip()
+        product["country_code"] = code
+        product["country_name"] = country_name
+        product["country_flag"] = country_flag
+        product["country_display"] = country_display
+        product["country_source"] = country_source
+        product["region"] = country_flag or country_name
+        return
+
+    product["country_code"] = UNKNOWN_COUNTRY_CODE
+    product["country_name"] = UNKNOWN_COUNTRY_NAME
+    product["country_flag"] = ""
+    product["country_display"] = UNKNOWN_COUNTRY_DISPLAY
+    product["country_source"] = "unknown"
+    product["region"] = UNKNOWN_COUNTRY_DISPLAY
+
 
 # ============================================
 # 每日配额系统
@@ -1189,7 +1475,7 @@ def validate_product(product: dict) -> tuple[bool, str]:
     # 11. Default missing/null region
     region = product.get("region")
     if not region or not isinstance(region, str) or not region.strip():
-        product["region"] = "\U0001f30d"  # 🌍
+        product["region"] = UNKNOWN_COUNTRY_DISPLAY
 
     return True, "passed"
 
@@ -1711,10 +1997,11 @@ def fetch_with_provider(source_config: dict, limit: int = 10) -> list:
     for p in products[:limit]:
         # 添加来源信息
         p['source'] = source_name
-        p['region'] = region_flag
+        p['source_region'] = region_flag
         p['discovered_at'] = datetime.utcnow().strftime('%Y-%m-%d')
         if url and not p.get('source_url'):
             p['source_url'] = url
+        apply_country_fields(p, fallback_region_flag=region_flag)
 
         score_result = analyze_with_provider(p, task="score", region_key=region_key, region_flag=region_flag)
         if isinstance(score_result, dict) and score_result:
@@ -1983,16 +2270,23 @@ def sync_to_featured(product: dict):
             return
         
         # 转换字段格式（适配前端）
+        apply_country_fields(product, fallback_region_flag=str(product.get('source_region') or product.get('region') or '').strip())
         featured_product = {
             'name': product.get('name'),
             'description': product.get('description'),
             'website': product.get('website'),
-            'logo_url': product.get('logo', ''),
+            'logo_url': product.get('logo_url') or product.get('logo', ''),
             'categories': [product.get('category', 'other')],
             'dark_horse_index': product.get('dark_horse_index', 2),
             'why_matters': product.get('why_matters', ''),
             'funding_total': product.get('funding_total', ''),
-            'region': product.get('region', '🌍'),
+            'region': product.get('region', UNKNOWN_COUNTRY_DISPLAY),
+            'country_code': product.get('country_code', UNKNOWN_COUNTRY_CODE),
+            'country_name': product.get('country_name', UNKNOWN_COUNTRY_NAME),
+            'country_flag': product.get('country_flag', ''),
+            'country_display': product.get('country_display', UNKNOWN_COUNTRY_DISPLAY),
+            'country_source': product.get('country_source', 'unknown'),
+            'source_region': product.get('source_region', ''),
             'source': product.get('source', 'auto_discover'),
             'source_url': product.get('source_url', ''),
             'source_title': product.get('source_title', ''),
@@ -2243,10 +2537,11 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
                 continue
 
             # 补充信息
-            product['region'] = region_flag
+            product['source_region'] = region_flag
             product['discovered_at'] = datetime.utcnow().strftime('%Y-%m-%d')
             product['discovery_method'] = f'{current_provider}_search'
             product['search_keyword'] = keyword
+            apply_country_fields(product, fallback_region_flag=region_flag)
 
             # 4. 使用合并 prompt 的评分（无需额外 API 调用）
             # 如果提取结果已包含 dark_horse_index，直接使用
@@ -2531,10 +2826,11 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
                         continue
 
                     # 补充元信息
-                    product['region'] = region_flag
+                    product['source_region'] = region_flag
                     product['discovered_at'] = datetime.utcnow().strftime('%Y-%m-%d')
                     product['discovery_method'] = f'{current_provider}_search'
                     product['search_keyword'] = keyword
+                    apply_country_fields(product, fallback_region_flag=region_flag)
 
                     # 使用合并 prompt 的评分（无需额外 API 调用）
                     # 如果提取结果已包含 dark_horse_index，直接使用

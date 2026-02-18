@@ -1,4 +1,5 @@
 import type { Product } from "@/types/api";
+import type { WeeklyTopSort } from "@/lib/api-client";
 
 const DEFAULT_SERVER_BASE = "http://localhost:5000/api/v1";
 const INVALID_WEBSITES = new Set(["unknown", "n/a", "na", "none", "null", "undefined", ""]);
@@ -14,9 +15,13 @@ function resolveClientApiBase() {
   return "/api/v1";
 }
 
-export async function getWeeklyTopClient(limit = 0): Promise<Product[]> {
+export async function getWeeklyTopClient(limit = 0, sortBy: WeeklyTopSort = "composite"): Promise<Product[]> {
   const base = resolveClientApiBase();
-  const response = await fetch(`${base}/products/weekly-top?limit=${limit}`, {
+  const params = new URLSearchParams();
+  params.set("limit", String(limit));
+  params.set("sort_by", sortBy);
+
+  const response = await fetch(`${base}/products/weekly-top?${params.toString()}`, {
     headers: { Accept: "application/json" },
   });
 

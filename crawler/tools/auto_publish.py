@@ -13,6 +13,10 @@ import os
 from datetime import datetime
 from urllib.parse import urlparse
 
+UNKNOWN_COUNTRY_CODE = "UNKNOWN"
+UNKNOWN_COUNTRY_NAME = "Unknown"
+UNKNOWN_COUNTRY_DISPLAY = "Unknown"
+
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(PROJECT_ROOT, 'data')
 DARK_HORSES_DIR = os.path.join(DATA_DIR, 'dark_horses')
@@ -76,6 +80,16 @@ def copy_optional_fields(source: dict, target: dict, fields: list) -> None:
             target[field] = value
 
 
+def resolve_region(raw: dict) -> str:
+    region = str(raw.get('region') or '').strip()
+    if region:
+        return region
+    flag = str(raw.get('country_flag') or '').strip()
+    if flag:
+        return flag
+    return UNKNOWN_COUNTRY_DISPLAY
+
+
 def build_featured_product(raw: dict) -> dict:
     dark_index = raw.get('dark_horse_index', 2)
     discovered_at = raw.get('discovered_at') or datetime.utcnow().strftime('%Y-%m-%d')
@@ -90,7 +104,13 @@ def build_featured_product(raw: dict) -> dict:
         'dark_horse_index': dark_index,
         'why_matters': raw.get('why_matters') or '',
         'funding_total': raw.get('funding_total') or '',
-        'region': raw.get('region') or '',
+        'region': resolve_region(raw),
+        'country_code': raw.get('country_code') or UNKNOWN_COUNTRY_CODE,
+        'country_name': raw.get('country_name') or UNKNOWN_COUNTRY_NAME,
+        'country_flag': raw.get('country_flag') or '',
+        'country_display': raw.get('country_display') or UNKNOWN_COUNTRY_DISPLAY,
+        'country_source': raw.get('country_source') or 'unknown',
+        'source_region': raw.get('source_region') or '',
         'source': raw.get('source') or 'auto_publish',
         'discovered_at': discovered_at,
         'first_seen': first_seen,
@@ -108,6 +128,10 @@ def build_featured_product(raw: dict) -> dict:
         'confidence',
         'discovery_method',
         'search_keyword',
+        'company_country',
+        'company_country_code',
+        'hq_country',
+        'headquarters_country',
         'community_verdict',
         'extra',
     ])

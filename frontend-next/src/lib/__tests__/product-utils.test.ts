@@ -113,30 +113,56 @@ describe("product-utils", () => {
   });
 
   it("filters and sorts products", () => {
+    const now = Date.now();
     const products: Product[] = [
       {
-        name: "A",
+        name: "HotOld",
         description: "a",
-        dark_horse_index: 4,
+        dark_horse_index: 5,
+        hot_score: 98,
+        final_score: 95,
         category: "coding",
         funding_total: "$1M",
+        discovered_at: new Date(now - 120 * 24 * 60 * 60 * 1000).toISOString(),
       },
       {
-        name: "B",
+        name: "FreshBalanced",
         description: "b",
         dark_horse_index: 3,
+        hot_score: 72,
         category: "hardware",
         is_hardware: true,
-        funding_total: "$10M",
+        funding_total: "$20M",
+        discovered_at: new Date(now - 2 * 24 * 60 * 60 * 1000).toISOString(),
+      },
+      {
+        name: "FreshLowHeatRich",
+        description: "c",
+        dark_horse_index: 2,
+        hot_score: 40,
+        category: "agent",
+        funding_total: "$1.2B",
+        discovered_at: new Date(now - 2 * 60 * 60 * 1000).toISOString(),
       },
     ];
 
     const filtered = filterProducts(products, { tier: "rising", type: "hardware" });
     expect(filtered).toHaveLength(1);
-    expect(filtered[0]?.name).toBe("B");
+    expect(filtered[0]?.name).toBe("FreshBalanced");
 
-    const sorted = sortProducts(products, "funding");
-    expect(sorted[0]?.name).toBe("B");
+    const trendingSorted = sortProducts(products, "trending");
+    const recencySorted = sortProducts(products, "recency");
+    const compositeSorted = sortProducts(products, "composite");
+    const fundingSorted = sortProducts(products, "funding");
+    const legacyScoreSorted = sortProducts(products, "score");
+    const legacyDateSorted = sortProducts(products, "date");
+
+    expect(trendingSorted[0]?.name).toBe("HotOld");
+    expect(recencySorted[0]?.name).toBe("FreshLowHeatRich");
+    expect(compositeSorted[0]?.name).toBe("FreshBalanced");
+    expect(fundingSorted[0]?.name).toBe("FreshLowHeatRich");
+    expect(legacyScoreSorted[0]?.name).toBe("HotOld");
+    expect(legacyDateSorted[0]?.name).toBe("FreshLowHeatRich");
   });
 
   it("normalizes product directions for second-level filtering", () => {

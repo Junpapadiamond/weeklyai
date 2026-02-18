@@ -550,6 +550,16 @@
   opacity: 0.88;
 }
 
+.swipe-card-header--ghost .swipe-card-header__identity {
+  grid-template-columns: 42px minmax(0, 1fr);
+}
+
+.swipe-card-header--ghost .swipe-card-logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+}
+
 .swipe-card-desc--ghost {
   opacity: 0.74;
   -webkit-line-clamp: 2;
@@ -636,10 +646,94 @@
 .swipe-card-header {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 0.6rem;
   margin-bottom: 0.75rem;
   position: relative;
   z-index: 2;
+}
+
+.swipe-card-header__identity {
+  min-width: 0;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 0.64rem;
+  align-items: center;
+}
+
+.swipe-card-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in oklab, var(--line) 24%, transparent);
+  background: color-mix(in oklab, var(--surface-strong) 90%, transparent);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: color-mix(in oklab, var(--primary) 74%, var(--text));
+}
+
+.swipe-card-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 5px;
+}
+
+.swipe-card-header__copy {
+  min-width: 0;
+  display: grid;
+  gap: 0.22rem;
+}
+
+.swipe-card-header__name-row {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.42rem;
+  flex-wrap: wrap;
+}
+
+.swipe-card-header__name-row h3 {
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.swipe-card-country {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid color-mix(in oklab, var(--line) 24%, transparent);
+  background: color-mix(in oklab, var(--surface-strong) 92%, transparent);
+  padding: 0.12rem 0.4rem;
+  max-width: 100%;
+}
+
+.swipe-card-country__flag {
+  line-height: 1;
+}
+
+.swipe-card-country__text {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.swipe-card-country.is-unknown {
+  border-color: color-mix(in oklab, var(--line) 40%, transparent);
+  background: color-mix(in oklab, var(--surface) 96%, transparent);
 }
 
 .swipe-badge {
@@ -840,6 +934,20 @@
 
   .swipe-onboarding__gesture {
     justify-content: center;
+  }
+
+  .swipe-card-header__identity {
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 0.56rem;
+  }
+
+  .swipe-card-logo {
+    width: 44px;
+    height: 44px;
+  }
+
+  .swipe-card-country__text {
+    font-size: 0.64rem;
   }
 
   .swipe-stack {

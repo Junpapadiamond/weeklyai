@@ -6,6 +6,7 @@ import { ChevronDown, ChevronUp, Cpu, Flame, Newspaper, Sparkles } from "lucide-
 import { useEffect, useMemo, useRef, useState } from "react";
 import useSWR from "swr";
 import type { Product } from "@/types/api";
+import type { WeeklyTopSort } from "@/lib/api-client";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { ProductCard } from "@/components/product/product-card";
 import { getWeeklyTopClient } from "@/lib/client-home-api";
@@ -21,7 +22,7 @@ import {
   isPlaceholderValue,
   isValidWebsite,
   normalizeWebsite,
-  sortProducts,
+  resolveProductCountry,
 } from "@/lib/product-utils";
 
 const HeroCanvas = dynamic(() => import("@/components/home/hero-canvas"), {
@@ -31,7 +32,7 @@ const HeroCanvas = dynamic(() => import("@/components/home/hero-canvas"), {
 
 const PRODUCTS_PER_PAGE = 12;
 const DARK_HORSE_COLLAPSE_LIMIT = 10;
-const REGION_FLAG_RE = /[\u{1F1E6}-\u{1F1FF}]{2}/u;
+const DEFAULT_WEEKLY_TOP_SORT: WeeklyTopSort = "composite";
 
 type HomeClientProps = {
   darkHorses: Product[];
@@ -48,18 +49,6 @@ function getScoreBadgeClass(score: number): string {
   if (score >= 5) return "score-badge--5";
   if (score >= 4) return "score-badge--4";
   return "score-badge--3";
-}
-
-function getRegionFlag(region?: string): string {
-  if (!region) return "🌍";
-  const match = region.match(REGION_FLAG_RE);
-  return match?.[0] || "🌍";
-}
-
-function getRegionLabel(region?: string): string {
-  if (!region) return "全球";
-  const normalized = region.replace(REGION_FLAG_RE, "").trim();
-  return normalized || "全球";
 }
 
 function parseDateValue(value?: string): Date | null {
@@ -92,8 +81,9 @@ function DarkHorseSpotlightCard({ product }: DarkHorseSpotlightCardProps) {
   const description = cleanDescription(product.description);
   const website = normalizeWebsite(product.website);
   const hasWebsite = isValidWebsite(website);
-  const regionFlag = getRegionFlag(product.region);
-  const regionLabel = getRegionLabel(product.region);
+  const country = resolveProductCountry(product);
+  const regionFlag = country.flag || "?";
+  const regionLabel = country.unknown ? "Unknown" : country.name;
   const fundingLabel = !isPlaceholderValue(product.funding_total) ? product.funding_total?.trim() : "";
 
   useEffect(() => {
@@ -199,7 +189,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
   const [tierFilter, setTierFilter] = useState<"all" | "darkhorse" | "rising">("all");
   const [typeFilter, setTypeFilter] = useState<"all" | "software" | "hardware">("all");
   const [directionFilter, setDirectionFilter] = useState("all");
-  const [sortBy, setSortBy] = useState<"score" | "date" | "funding">("score");
+  const [sortBy, setSortBy] = useState<WeeklyTopSort>(DEFAULT_WEEKLY_TOP_SORT);
   const [currentPage, setCurrentPage] = useState(1);
   const [favoritesCount, setFavoritesCount] = useState(0);
   const [showAllDarkHorses, setShowAllDarkHorses] = useState(false);
@@ -207,10 +197,11 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
   const [shouldLoadFullProducts, setShouldLoadFullProducts] = useState(false);
 
   const trendingSectionRef = useRef<HTMLElement | null>(null);
+  const shouldFetchSortedProducts = shouldLoadFullProducts || sortBy !== DEFAULT_WEEKLY_TOP_SORT;
 
   const { data: fullProducts, isLoading: isHydratingAllProducts } = useSWR(
-    shouldLoadFullProducts ? "home-full-products" : null,
-    () => getWeeklyTopClient(0),
+    shouldFetchSortedProducts ? `home-full-products-${sortBy}` : null,
+    () => getWeeklyTopClient(0, sortBy),
     {
       revalidateOnFocus: false,
       dedupingInterval: 60_000,
@@ -242,13 +233,17 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
   }, []);
 
   const productPool = useMemo(() => {
-    if (fullProducts && fullProducts.length > allProducts.length) {
+    if (fullProducts) {
       return fullProducts;
     }
-    return allProducts;
-  }, [allProducts, fullProducts]);
+    if (sortBy === DEFAULT_WEEKLY_TOP_SORT) {
+      return allProducts;
+    }
+    return [];
+  }, [allProducts, fullProducts, sortBy]);
 
-  const hasLoadedAllProducts = !!fullProducts && fullProducts.length > allProducts.length;
+  const hasLoadedAllProducts = !!fullProducts;
+  const isSwitchingSort = sortBy !== DEFAULT_WEEKLY_TOP_SORT && isHydratingAllProducts && !fullProducts;
 
   const filteredDarkHorses = useMemo(() => {
     return darkHorses.filter((product) => {
@@ -295,12 +290,10 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
       tier: tierFilter,
       type: typeFilter,
     });
-    const directionalFiltered =
-      activeDirectionFilter === "all"
-        ? filtered
-        : filtered.filter((product) => getProductDirections(product).includes(activeDirectionFilter));
-    return sortProducts(directionalFiltered, sortBy);
-  }, [activeDirectionFilter, productPool, sortBy, tierFilter, typeFilter]);
+    return activeDirectionFilter === "all"
+      ? filtered
+      : filtered.filter((product) => getProductDirections(product).includes(activeDirectionFilter));
+  }, [activeDirectionFilter, productPool, tierFilter, typeFilter]);
 
   const visibleProducts = useMemo(() => {
     return trendingFiltered.slice(0, currentPage * PRODUCTS_PER_PAGE);
@@ -438,7 +431,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
         <div className="section-header">
           <h2 className="section-title">更多推荐</h2>
           <p className="section-desc">黑马 (4-5分) + 潜力股 (2-3分)</p>
-          <p className="section-micro-note">默认按热度排序，你可以切换到融资或时间线。</p>
+          <p className="section-micro-note">默认按综合排序（热度 + 新鲜度），可切换热度或时间。</p>
           {shouldLoadFullProducts && isHydratingAllProducts && !hasLoadedAllProducts ? (
             <p className="section-desc">正在补全完整产品池...</p>
           ) : null}
@@ -488,9 +481,9 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
                   setCurrentPage(1);
                 }}
               >
-                <option value="score">🔥 热度</option>
-                <option value="date">🕐 最新</option>
-                <option value="funding">💰 融资</option>
+                <option value="composite">🧠 综合</option>
+                <option value="trending">🔥 热度</option>
+                <option value="recency">🕐 时间</option>
               </select>
             </label>
             <label>
@@ -537,9 +530,13 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
         </div>
 
         <div className="products-grid">
-          {visibleProducts.map((product) => (
-            <ProductCard key={product._id || product.name} product={product} />
-          ))}
+          {isSwitchingSort ? (
+            <div className="empty-state">
+              <p className="empty-state-text">正在按当前排序拉取推荐...</p>
+            </div>
+          ) : (
+            visibleProducts.map((product) => <ProductCard key={product._id || product.name} product={product} />)
+          )}
         </div>
 
         {hasMore ? (

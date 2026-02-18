@@ -2,10 +2,33 @@
 产品排序工具 - 负责所有排序和多样化选择逻辑
 """
 
+import math
 import re
 from collections import defaultdict
 from datetime import datetime
 from typing import List, Dict, Any, Optional
+
+WEEKLY_TOP_SORT_ALIASES = {
+    'composite': 'composite',
+    'overall': 'composite',
+    'blended': 'composite',
+    'mix': 'composite',
+    'trending': 'trending',
+    'hot': 'trending',
+    'score': 'trending',
+    'recency': 'recency',
+    'date': 'recency',
+    'time': 'recency',
+    'latest': 'recency',
+    'newest': 'recency',
+    'funding': 'funding',
+}
+
+# 综合分: 0.65*热度 + 0.30*新鲜度 + 0.05*融资加分
+COMPOSITE_HEAT_WEIGHT = 0.65
+COMPOSITE_FRESHNESS_WEIGHT = 0.30
+COMPOSITE_FUNDING_WEIGHT = 0.05
+FRESHNESS_HALF_LIFE_DAYS = 21.0
 
 
 def parse_funding(funding: str) -> float:
@@ -64,10 +87,67 @@ def parse_date(value: Any) -> Optional[datetime]:
         return None
 
 
+def _to_float(value: Any) -> float:
+    """Safely coerce numeric-like values."""
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return 0.0
+
+
+def resolve_weekly_top_sort(sort_by: Optional[str]) -> str:
+    """Resolve weekly-top sort mode with backward compatible aliases."""
+    normalized = (sort_by or 'composite').strip().lower()
+    return WEEKLY_TOP_SORT_ALIASES.get(normalized, 'composite')
+
+
 def get_product_date(product: Dict[str, Any]) -> Optional[datetime]:
     """Pick a comparable date field for freshness checks."""
     return parse_date(
         product.get('discovered_at') or product.get('first_seen') or product.get('published_at')
+    )
+
+
+def get_heat_score(product: Dict[str, Any]) -> float:
+    """标准化热度信号到 0-100."""
+    primary_signal = max(
+        _to_float(product.get('hot_score')),
+        _to_float(product.get('final_score')),
+        _to_float(product.get('trending_score'))
+    )
+    tier_signal = max(0.0, _to_float(product.get('dark_horse_index'))) * 20.0
+    return min(100.0, max(primary_signal, tier_signal))
+
+
+def get_freshness_score(product: Dict[str, Any], now: Optional[datetime] = None) -> float:
+    """将产品新鲜度转换为 0-100 分，越新越高."""
+    product_date = get_product_date(product)
+    if not product_date:
+        return 0.0
+
+    current = now or datetime.now()
+    age_days = max(0.0, (current - product_date).total_seconds() / 86400.0)
+    decay_lambda = math.log(2) / FRESHNESS_HALF_LIFE_DAYS
+    freshness = 100.0 * math.exp(-decay_lambda * age_days)
+    return min(100.0, max(0.0, freshness))
+
+
+def get_funding_bonus_score(product: Dict[str, Any]) -> float:
+    """融资加分（低权重），压缩到 0-100."""
+    funding_million = max(0.0, parse_funding(product.get('funding_total', '')))
+    # log10 压缩，避免融资规模主导整体排序
+    return min(100.0, math.log10(1.0 + funding_million) * 35.0)
+
+
+def get_composite_score(product: Dict[str, Any], now: Optional[datetime] = None) -> float:
+    """计算综合分: 热度主导 + 新鲜度辅助 + 融资微弱加分."""
+    heat = get_heat_score(product)
+    freshness = get_freshness_score(product, now=now)
+    funding_bonus = get_funding_bonus_score(product)
+    return (
+        COMPOSITE_HEAT_WEIGHT * heat
+        + COMPOSITE_FRESHNESS_WEIGHT * freshness
+        + COMPOSITE_FUNDING_WEIGHT * funding_bonus
     )
 
 
@@ -85,10 +165,14 @@ def sort_by_score_funding_valuation(products: List[Dict]) -> List[Dict]:
 
 
 def sort_by_trending(products: List[Dict]) -> List[Dict]:
-    """按热度排序 (hot_score > final_score > trending_score)"""
+    """按热度排序."""
     return sorted(
         products,
-        key=lambda x: x.get('hot_score', x.get('final_score', x.get('trending_score', 0))),
+        key=lambda x: (
+            get_heat_score(x),
+            get_product_date(x) or datetime(1970, 1, 1),
+            parse_funding(x.get('funding_total', ''))
+        ),
         reverse=True
     )
 
@@ -105,11 +189,44 @@ def sort_by_users(products: List[Dict]) -> List[Dict]:
 
 def sort_by_recency(products: List[Dict]) -> List[Dict]:
     """按时间新鲜度排序"""
+    epoch = datetime(1970, 1, 1)
     return sorted(
         products,
-        key=lambda x: x.get('first_seen', x.get('published_at', '')),
+        key=lambda x: (
+            get_product_date(x) or epoch,
+            get_heat_score(x),
+            parse_funding(x.get('funding_total', ''))
+        ),
         reverse=True
     )
+
+
+def sort_by_composite(products: List[Dict], now: Optional[datetime] = None) -> List[Dict]:
+    """按综合分排序（热度 + 新鲜度 + 融资加分）"""
+    current = now or datetime.now()
+    epoch = datetime(1970, 1, 1)
+    return sorted(
+        products,
+        key=lambda x: (
+            get_composite_score(x, now=current),
+            get_heat_score(x),
+            get_product_date(x) or epoch
+        ),
+        reverse=True
+    )
+
+
+def sort_weekly_top(products: List[Dict], sort_by: str = 'composite') -> List[Dict]:
+    """Weekly Top 统一排序入口."""
+    mode = resolve_weekly_top_sort(sort_by)
+    if mode == 'trending':
+        return sort_by_trending(products)
+    if mode == 'recency':
+        return sort_by_recency(products)
+    if mode == 'funding':
+        # 兼容旧参数（前端已下线该选项）
+        return sort_by_score_funding_valuation(products)
+    return sort_by_composite(products)
 
 
 def diversify_products(

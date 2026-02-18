@@ -476,9 +476,42 @@ class ProductRepository:
 
         numeric_max_fields = {'dark_horse_index', 'final_score', 'hot_score', 'trending_score', 'rating'}
         date_fields = {'discovered_at', 'first_seen', 'published_at', 'news_updated_at'}
+        country_fields = {'region', 'country_code', 'country_name', 'country_flag', 'country_display', 'country_source'}
+        country_source_priority = {
+            'unknown': 0,
+            'website:cc_tld': 1,
+            'region:search_fallback': 1,
+            'region:legacy': 2,
+            'curated:region': 3,
+        }
+
+        def _is_unknown_country(field: str, value: Any) -> bool:
+            text = str(value or '').strip().lower()
+            if field == 'country_code':
+                return text in {'', 'unknown'}
+            if field == 'country_flag':
+                return text in {'', '🌍'}
+            if field == 'region':
+                return text in {'', 'unknown', '🌍'}
+            return text in {'', 'unknown', 'n/a', 'na', 'none', 'null'}
 
         for field, value in source.items():
             if value in (None, '', [], {}):
+                continue
+
+            if field in country_fields:
+                current = target.get(field)
+                if field == 'country_source':
+                    current_rank = country_source_priority.get(str(current or '').strip().lower(), 4)
+                    value_rank = country_source_priority.get(str(value or '').strip().lower(), 4)
+                    if value_rank >= current_rank:
+                        target[field] = value
+                    continue
+                if _is_unknown_country(field, current) and not _is_unknown_country(field, value):
+                    target[field] = value
+                    continue
+                if not current:
+                    target[field] = value
                 continue
 
             if field in numeric_max_fields:

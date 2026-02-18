@@ -1190,10 +1190,22 @@ input {
   grid-template-columns: 1fr auto;
   gap: 0.65rem;
   margin-bottom: 1rem;
+  align-items: stretch;
 }
 
 .search-panel input {
   width: 100%;
+}
+
+.search-panel__actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, auto));
+  gap: 0.56rem;
+}
+
+.search-panel__actions button {
+  min-width: 4.2rem;
+  white-space: nowrap;
 }
 
 .search-result-meta {
@@ -1207,8 +1219,56 @@ input {
 }
 
 .error-block {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.66rem;
   border-color: color-mix(in oklab, var(--punch) 56%, transparent);
   color: color-mix(in oklab, var(--punch) 82%, var(--text));
+}
+
+.search-page .search-toolbar {
+  align-items: stretch;
+}
+
+.search-page .search-toolbar--minimal {
+  align-items: flex-end;
+}
+
+.search-page .search-toolbar__item {
+  min-width: 0;
+  justify-content: space-between;
+}
+
+.search-page .search-toolbar--minimal .search-toolbar__item {
+  flex: 0 1 220px;
+}
+
+.search-page .search-toolbar__item select {
+  min-width: 9.5rem;
+}
+
+.search-page .search-toolbar__reset {
+  align-self: stretch;
+}
+
+.search-page .search-results-grid {
+  align-items: stretch;
+}
+
+.search-page .search-results-grid .product-card {
+  min-width: 0;
+}
+
+.search-page .search-results-grid .product-card__footer {
+  gap: 0.44rem;
+}
+
+.search-page .search-results-grid .pending-tag {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .leaders-grid {
@@ -1691,9 +1751,23 @@ input {
     grid-template-columns: 1fr;
   }
 
+  .search-panel__actions {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .active-filter-strip .link-btn {
     width: 100%;
     justify-content: center;
+  }
+
+  .search-page .search-toolbar__item select {
+    min-width: 0;
+    width: 56%;
+  }
+
+  .search-page .search-toolbar__reset {
+    width: 100%;
   }
 }
 
@@ -1742,6 +1816,10 @@ input {
 }
 
 @media (max-width: 420px) {
+  .search-panel__actions {
+    grid-template-columns: 1fr;
+  }
+
   .product-card__topline {
     flex-direction: column;
     align-items: flex-start;

@@ -2,6 +2,10 @@ import type { Product } from "@/types/api";
 
 const INVALID_WEBSITE_VALUES = new Set(["unknown", "n/a", "na", "none", "null", "undefined", ""]);
 const PLACEHOLDER_VALUES = new Set(["unknown", "n/a", "na", "none", "tbd", "暂无", "未公开", "待定", "unknown.", "n/a."]);
+const COMPOSITE_HEAT_WEIGHT = 0.65;
+const COMPOSITE_FRESHNESS_WEIGHT = 0.3;
+const COMPOSITE_FUNDING_WEIGHT = 0.05;
+const FRESHNESS_HALF_LIFE_DAYS = 21;
 const DIRECTION_IGNORED = new Set([
   "hardware",
   "software",
@@ -48,6 +52,133 @@ const DIRECTION_LABELS: Record<string, string> = {
   legal: "法律",
   brain_computer_interface: "脑机接口",
   world_model: "世界模型",
+};
+
+const UNKNOWN_COUNTRY_CODE = "UNKNOWN";
+const UNKNOWN_COUNTRY_NAME = "Unknown";
+const REGION_FLAG_RE = /[\u{1F1E6}-\u{1F1FF}]{2}/u;
+
+const COUNTRY_CODE_TO_NAME: Record<string, string> = {
+  US: "United States",
+  CN: "China",
+  SG: "Singapore",
+  JP: "Japan",
+  KR: "South Korea",
+  GB: "United Kingdom",
+  DE: "Germany",
+  FR: "France",
+  SE: "Sweden",
+  CA: "Canada",
+  IL: "Israel",
+  BE: "Belgium",
+  AE: "United Arab Emirates",
+  NL: "Netherlands",
+  CH: "Switzerland",
+  IN: "India",
+};
+
+const COUNTRY_CODE_TO_FLAG: Record<string, string> = {
+  US: "🇺🇸",
+  CN: "🇨🇳",
+  SG: "🇸🇬",
+  JP: "🇯🇵",
+  KR: "🇰🇷",
+  GB: "🇬🇧",
+  DE: "🇩🇪",
+  FR: "🇫🇷",
+  SE: "🇸🇪",
+  CA: "🇨🇦",
+  IL: "🇮🇱",
+  BE: "🇧🇪",
+  AE: "🇦🇪",
+  NL: "🇳🇱",
+  CH: "🇨🇭",
+  IN: "🇮🇳",
+};
+
+const COUNTRY_NAME_ALIASES: Record<string, string> = {
+  us: "US",
+  usa: "US",
+  "united states": "US",
+  "u.s.": "US",
+  america: "US",
+  美国: "US",
+  cn: "CN",
+  china: "CN",
+  prc: "CN",
+  中国: "CN",
+  sg: "SG",
+  singapore: "SG",
+  新加坡: "SG",
+  jp: "JP",
+  japan: "JP",
+  日本: "JP",
+  kr: "KR",
+  korea: "KR",
+  "south korea": "KR",
+  韩国: "KR",
+  gb: "GB",
+  uk: "GB",
+  "united kingdom": "GB",
+  britain: "GB",
+  england: "GB",
+  英国: "GB",
+  de: "DE",
+  germany: "DE",
+  德国: "DE",
+  fr: "FR",
+  france: "FR",
+  法国: "FR",
+  se: "SE",
+  sweden: "SE",
+  瑞典: "SE",
+  ca: "CA",
+  canada: "CA",
+  加拿大: "CA",
+  il: "IL",
+  israel: "IL",
+  以色列: "IL",
+  be: "BE",
+  belgium: "BE",
+  比利时: "BE",
+  ae: "AE",
+  uae: "AE",
+  "united arab emirates": "AE",
+  阿联酋: "AE",
+  nl: "NL",
+  netherlands: "NL",
+  荷兰: "NL",
+  ch: "CH",
+  switzerland: "CH",
+  瑞士: "CH",
+  in: "IN",
+  india: "IN",
+  印度: "IN",
+};
+
+const FLAG_TO_COUNTRY_CODE: Record<string, string> = Object.entries(COUNTRY_CODE_TO_FLAG).reduce((acc, [code, flag]) => {
+  acc[flag] = code;
+  return acc;
+}, {} as Record<string, string>);
+
+const DISCOVERY_REGION_FLAGS = new Set(["🇺🇸", "🇨🇳", "🇪🇺", "🇯🇵🇰🇷", "🇸🇬", "🌍"]);
+const SEARCH_REGION_SAFE_FLAGS = new Set(["🇺🇸", "🇨🇳"]);
+const COUNTRY_BY_CC_TLD: Record<string, string> = {
+  cn: "CN",
+  jp: "JP",
+  kr: "KR",
+  de: "DE",
+  fr: "FR",
+  se: "SE",
+  ca: "CA",
+  uk: "GB",
+  sg: "SG",
+  il: "IL",
+  be: "BE",
+  ae: "AE",
+  nl: "NL",
+  ch: "CH",
+  in: "IN",
 };
 
 export function normalizeWebsite(url: string | undefined | null): string {
@@ -300,6 +431,33 @@ export function productDate(product: Product): number {
   return Number.isFinite(ts) ? ts : 0;
 }
 
+function getHeatScore(product: Product): number {
+  const primary = Math.max(product.hot_score || 0, product.final_score || 0, product.trending_score || 0);
+  const tierSignal = Math.max(0, product.dark_horse_index || 0) * 20;
+  return Math.min(100, Math.max(primary, tierSignal));
+}
+
+function getFreshnessScore(product: Product, nowTs: number): number {
+  const ts = productDate(product);
+  if (!ts) return 0;
+  const ageDays = Math.max(0, (nowTs - ts) / (1000 * 60 * 60 * 24));
+  const decayLambda = Math.log(2) / FRESHNESS_HALF_LIFE_DAYS;
+  return Math.min(100, Math.max(0, 100 * Math.exp(-decayLambda * ageDays)));
+}
+
+function getFundingBonusScore(product: Product): number {
+  const funding = Math.max(0, parseFundingAmount(product.funding_total));
+  return Math.min(100, Math.log10(1 + funding) * 35);
+}
+
+function getCompositeScore(product: Product, nowTs: number): number {
+  return (
+    COMPOSITE_HEAT_WEIGHT * getHeatScore(product)
+    + COMPOSITE_FRESHNESS_WEIGHT * getFreshnessScore(product, nowTs)
+    + COMPOSITE_FUNDING_WEIGHT * getFundingBonusScore(product)
+  );
+}
+
 export function formatCategories(product: Product) {
   if (product.categories?.length) return product.categories.join(" · ");
   if (product.category) return product.category;
@@ -405,6 +563,175 @@ export function getMonogram(name: string | undefined): string {
   return chars[0]?.toUpperCase() || "AI";
 }
 
+export type ProductCountryInfo = {
+  code: string;
+  name: string;
+  flag: string;
+  display: string;
+  source: string;
+  unknown: boolean;
+};
+
+function normalizeCountryCode(value: unknown): string {
+  const text = String(value || "").trim();
+  if (!text) return "";
+
+  const upper = text.toUpperCase();
+  if (COUNTRY_CODE_TO_NAME[upper]) return upper;
+
+  const flag = extractRegionFlag(text);
+  if (flag && FLAG_TO_COUNTRY_CODE[flag]) return FLAG_TO_COUNTRY_CODE[flag];
+
+  const normalized = text
+    .toLowerCase()
+    .replace(/[_\-.]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  return COUNTRY_NAME_ALIASES[normalized] || "";
+}
+
+function extractRegionFlag(value: unknown): string {
+  const text = String(value || "").trim();
+  if (!text) return "";
+  const match = text.match(REGION_FLAG_RE);
+  return match?.[0] || "";
+}
+
+function countryCodeFromWebsiteTld(website: string | undefined | null): string {
+  const normalized = normalizeWebsite(website);
+  if (!normalized) return "";
+  try {
+    const host = new URL(normalized).hostname.toLowerCase().replace(/^www\./, "");
+    if (!host.includes(".")) return "";
+    const parts = host.split(".");
+    const suffix = parts[parts.length - 1] || "";
+    return COUNTRY_BY_CC_TLD[suffix] || "";
+  } catch {
+    return "";
+  }
+}
+
+export function resolveProductCountry(product: Product): ProductCountryInfo {
+  const raw = product as Product & Record<string, unknown>;
+  const extra = (product.extra ?? {}) as Record<string, unknown>;
+  const explicitFields = [
+    raw.country_code,
+    raw.company_country_code,
+    raw.hq_country_code,
+    raw.country_name,
+    raw.country,
+    raw.company_country,
+    raw.hq_country,
+    raw.headquarters_country,
+    raw.origin_country,
+    raw.founder_country,
+    extra.country_code,
+    extra.company_country_code,
+    extra.country_name,
+    extra.country,
+    extra.company_country,
+    extra.hq_country,
+    extra.headquarters_country,
+    extra.origin_country,
+    extra.founder_country,
+  ];
+
+  for (const candidate of explicitFields) {
+    const code = normalizeCountryCode(candidate);
+    if (code) {
+      const name = COUNTRY_CODE_TO_NAME[code] || code;
+      const flag = COUNTRY_CODE_TO_FLAG[code] || "";
+      return {
+        code,
+        name,
+        flag,
+        display: flag ? `${flag} ${name}` : name,
+        source: String(raw.country_source || "explicit"),
+        unknown: false,
+      };
+    }
+  }
+
+  for (const candidate of [raw.country_flag, raw.company_country_flag, raw.hq_country_flag]) {
+    const code = normalizeCountryCode(candidate);
+    if (code) {
+      const name = COUNTRY_CODE_TO_NAME[code] || code;
+      const flag = COUNTRY_CODE_TO_FLAG[code] || "";
+      return {
+        code,
+        name,
+        flag,
+        display: flag ? `${flag} ${name}` : name,
+        source: String(raw.country_source || "explicit:flag"),
+        unknown: false,
+      };
+    }
+  }
+
+  const source = String(raw.source || "").trim().toLowerCase();
+  const regionFlag = extractRegionFlag(product.region);
+  if (source === "curated" && regionFlag && FLAG_TO_COUNTRY_CODE[regionFlag]) {
+    const code = FLAG_TO_COUNTRY_CODE[regionFlag];
+    const name = COUNTRY_CODE_TO_NAME[code] || code;
+    return {
+      code,
+      name,
+      flag: COUNTRY_CODE_TO_FLAG[code] || "",
+      display: `${COUNTRY_CODE_TO_FLAG[code] || ""} ${name}`.trim(),
+      source: "curated:region",
+      unknown: false,
+    };
+  }
+
+  if (regionFlag && !DISCOVERY_REGION_FLAGS.has(regionFlag) && FLAG_TO_COUNTRY_CODE[regionFlag]) {
+    const code = FLAG_TO_COUNTRY_CODE[regionFlag];
+    const name = COUNTRY_CODE_TO_NAME[code] || code;
+    return {
+      code,
+      name,
+      flag: COUNTRY_CODE_TO_FLAG[code] || "",
+      display: `${COUNTRY_CODE_TO_FLAG[code] || ""} ${name}`.trim(),
+      source: "region:legacy",
+      unknown: false,
+    };
+  }
+
+  if (regionFlag && SEARCH_REGION_SAFE_FLAGS.has(regionFlag) && FLAG_TO_COUNTRY_CODE[regionFlag]) {
+    const code = FLAG_TO_COUNTRY_CODE[regionFlag];
+    const name = COUNTRY_CODE_TO_NAME[code] || code;
+    return {
+      code,
+      name,
+      flag: COUNTRY_CODE_TO_FLAG[code] || "",
+      display: `${COUNTRY_CODE_TO_FLAG[code] || ""} ${name}`.trim(),
+      source: "region:search_fallback",
+      unknown: false,
+    };
+  }
+
+  const tldCode = countryCodeFromWebsiteTld(product.website);
+  if (tldCode) {
+    const name = COUNTRY_CODE_TO_NAME[tldCode] || tldCode;
+    return {
+      code: tldCode,
+      name,
+      flag: COUNTRY_CODE_TO_FLAG[tldCode] || "",
+      display: `${COUNTRY_CODE_TO_FLAG[tldCode] || ""} ${name}`.trim(),
+      source: "website:cc_tld",
+      unknown: false,
+    };
+  }
+
+  return {
+    code: UNKNOWN_COUNTRY_CODE,
+    name: UNKNOWN_COUNTRY_NAME,
+    flag: "",
+    display: UNKNOWN_COUNTRY_NAME,
+    source: "unknown",
+    unknown: true,
+  };
+}
+
 export function getFreshnessLabel(product: Product, now: Date = new Date()): string {
   const raw = product.discovered_at || product.first_seen || product.published_at;
   if (!raw) return "时间待补充";
@@ -436,18 +763,32 @@ export function productKey(product: Product): string {
   return `${website}::${(product.name || "").toLowerCase()}`;
 }
 
-export function sortProducts(
-  products: Product[],
-  sortBy: "score" | "date" | "funding"
-): Product[] {
+export type ProductSortMode = "composite" | "trending" | "recency" | "funding" | "score" | "date";
+
+function resolveSortMode(sortBy: ProductSortMode): "composite" | "trending" | "recency" | "funding" {
+  if (sortBy === "score") return "trending";
+  if (sortBy === "date") return "recency";
+  return sortBy;
+}
+
+export function sortProducts(products: Product[], sortBy: ProductSortMode): Product[] {
   const copied = [...products];
-  if (sortBy === "date") {
-    return copied.sort((a, b) => productDate(b) - productDate(a));
+  const mode = resolveSortMode(sortBy);
+  const nowTs = Date.now();
+
+  if (mode === "recency") {
+    return copied.sort((a, b) => productDate(b) - productDate(a) || getHeatScore(b) - getHeatScore(a));
   }
-  if (sortBy === "funding") {
+
+  if (mode === "funding") {
     return copied.sort((a, b) => parseFundingAmount(b.funding_total) - parseFundingAmount(a.funding_total));
   }
-  return copied.sort((a, b) => getProductScore(b) - getProductScore(a));
+
+  if (mode === "trending") {
+    return copied.sort((a, b) => getHeatScore(b) - getHeatScore(a) || productDate(b) - productDate(a));
+  }
+
+  return copied.sort((a, b) => getCompositeScore(b, nowTs) - getCompositeScore(a, nowTs));
 }
 
 export function filterProducts(

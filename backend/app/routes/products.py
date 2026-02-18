@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from app.services.product_service import ProductService
+from app.services import product_sorting as sorting
 
 products_bp = Blueprint('products', __name__)
 
@@ -25,10 +26,13 @@ def get_weekly_top_products():
     """获取本周Top 15产品"""
     try:
         limit = request.args.get('limit', 15, type=int)
-        products = ProductService.get_weekly_top_products(limit=limit)
+        sort_by = request.args.get('sort_by') or request.args.get('sort') or 'composite'
+        resolved_sort = sorting.resolve_weekly_top_sort(sort_by)
+        products = ProductService.get_weekly_top_products(limit=limit, sort_by=resolved_sort)
         return jsonify({
             'success': True,
             'data': products,
+            'sort_by': resolved_sort,
             'message': '获取本周Top产品成功'
         })
     except Exception as e:
@@ -268,4 +272,3 @@ def get_industry_leaders():
             'data': None,
             'message': str(e)
         }), 500
-

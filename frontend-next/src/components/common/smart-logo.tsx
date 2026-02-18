@@ -11,9 +11,19 @@ type SmartLogoProps = {
   website?: string;
   sourceUrl?: string;
   size?: number;
+  loading?: "lazy" | "eager";
 };
 
-export function SmartLogo({ className, name, logoUrl, secondaryLogoUrl, website, sourceUrl, size = 48 }: SmartLogoProps) {
+export function SmartLogo({
+  className,
+  name,
+  logoUrl,
+  secondaryLogoUrl,
+  website,
+  sourceUrl,
+  size = 48,
+  loading = "lazy",
+}: SmartLogoProps) {
   const monogram = getMonogram(name);
   const candidates = useMemo(
     () =>
@@ -28,6 +38,7 @@ export function SmartLogo({ className, name, logoUrl, secondaryLogoUrl, website,
   const [index, setIndex] = useState(0);
   const [isExhausted, setIsExhausted] = useState(false);
   const current = !isExhausted ? candidates[index] : undefined;
+
   const moveToNextCandidate = () => {
     if (index + 1 < candidates.length) {
       setIndex((prev) => prev + 1);
@@ -45,7 +56,7 @@ export function SmartLogo({ className, name, logoUrl, secondaryLogoUrl, website,
           alt=""
           width={size}
           height={size}
-          loading="lazy"
+          loading={loading}
           decoding="async"
           onLoad={(event) => {
             if (event.currentTarget.naturalWidth > 0 && event.currentTarget.naturalHeight > 0) return;
@@ -54,7 +65,7 @@ export function SmartLogo({ className, name, logoUrl, secondaryLogoUrl, website,
           onError={moveToNextCandidate}
         />
       ) : (
-        <span>{monogram}</span>
+        <span className="smart-logo__fallback">{monogram}</span>
       )}
     </span>
   );

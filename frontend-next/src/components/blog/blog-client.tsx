@@ -40,6 +40,28 @@ const MARKET_LABELS: Record<string, string> = {
 };
 
 const US_SOURCES = new Set(["hackernews", "producthunt", "youtube", "x", "reddit", "tech_news"]);
+const SOURCE_ALIASES: Record<string, string[]> = {
+  youtube: ["youtube", "youtube_rss", "yt"],
+  x: ["x", "twitter"],
+  reddit: ["reddit"],
+};
+
+function normalizeSource(value: string | undefined): string {
+  return String(value || "").trim().toLowerCase();
+}
+
+function matchesSource(item: BlogPost, selectedSource: string): boolean {
+  const target = normalizeSource(selectedSource);
+  if (!target) return true;
+
+  const source = normalizeSource(item.source);
+  if (source === target) return true;
+
+  const aliases = SOURCE_ALIASES[target];
+  if (aliases && aliases.includes(source)) return true;
+
+  return false;
+}
 
 function inferMarket(item: BlogPost): "cn" | "us" | "global" {
   const explicit = String(item.market || "").trim().toLowerCase();
@@ -139,7 +161,18 @@ export function BlogClient() {
 
   const { data, isLoading, error } = useSWR(
     ["blogs", source, market],
-    ([, selectedSource, selectedMarket]) => getBlogsClient(selectedSource, 80, selectedMarket),
+    async ([, selectedSource, selectedMarket]) => {
+      try {
+        return await getBlogsClient(selectedSource, 80, selectedMarket);
+      } catch (err) {
+        // 部分环境下 market=cn 可能触发网关/代理失败，这里回退为 hybrid + 客户端过滤。
+        if (selectedMarket !== "cn") {
+          throw err;
+        }
+        const fallback = await getBlogsClient("", 120, "hybrid");
+        return fallback.filter((item) => inferMarket(item) === "cn" && matchesSource(item, selectedSource));
+      }
+    },
     {
       dedupingInterval: 30_000,
       revalidateOnFocus: false,

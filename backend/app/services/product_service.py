@@ -136,17 +136,22 @@ class ProductService:
         )
 
     @staticmethod
-    def get_weekly_top_products(limit: int = 15) -> List[Dict]:
+    def get_weekly_top_products(limit: int = 15, sort_by: str = 'composite') -> List[Dict]:
         """获取本周Top产品
 
-        排序规则: 评分 > 融资金额 > 用户数/估值
+        排序规则:
+        - composite: 综合分（热度 + 新鲜度 + 低权重融资）
+        - trending: 热度
+        - recency: 时间
+        - funding: 兼容旧参数（内部保留）
+
         多样化规则: 硬件 ≤40%, 每个硬件子类别 ≤3, 每个软件类别 ≤4
         """
         products = ProductService._load_products()
         products = filters.filter_by_dark_horse_index(products, min_index=2)
 
-        # 排序: 评分 > 融资 > 估值/用户数
-        sorted_products = sorting.sort_by_score_funding_valuation(products)
+        # 统一排序入口（含历史参数兼容）
+        sorted_products = sorting.sort_weekly_top(products, sort_by=sort_by)
 
         if limit <= 0:
             return sorted_products
@@ -190,11 +195,39 @@ class ProductService:
         - page: 页码
         - limit: 每页数量
         """
+        keyword = (keyword or '').strip()
+        categories = categories or []
+        product_type = (product_type or 'all').strip().lower()
+        sort_by = (sort_by or 'trending').strip().lower()
+
+        if product_type not in {'all', 'software', 'hardware'}:
+            product_type = 'all'
+        if sort_by not in {'trending', 'rating', 'users'}:
+            sort_by = 'trending'
+
+        try:
+            page = max(1, int(page))
+        except (TypeError, ValueError):
+            page = 1
+        try:
+            limit = max(1, min(50, int(limit)))
+        except (TypeError, ValueError):
+            limit = 15
+
         products = ProductService._load_products()
         results = products.copy()
+        keyword_scores: Dict[int, float] = {}
 
         # 关键词筛选
-        results = filters.filter_by_keyword(results, keyword)
+        if keyword:
+            filtered_by_keyword = []
+            for product in results:
+                relevance = filters.compute_keyword_score(product, keyword)
+                if relevance <= 0:
+                    continue
+                keyword_scores[id(product)] = relevance
+                filtered_by_keyword.append(product)
+            results = filtered_by_keyword
 
         # 分类筛选（支持多选，OR逻辑）
         results = filters.filter_by_categories(results, categories)
@@ -202,18 +235,33 @@ class ProductService:
         # 类型筛选
         results = filters.filter_by_type(results, product_type)
 
-        # 排序
+        # 基础排序
         if sort_by == 'trending':
-            results = sorting.sort_by_trending(results)
+            sorted_results = sorting.sort_by_trending(results)
         elif sort_by == 'rating':
-            results = sorting.sort_by_rating(results)
+            sorted_results = sorting.sort_by_rating(results)
         elif sort_by == 'users':
-            results = sorting.sort_by_users(results)
+            sorted_results = sorting.sort_by_users(results)
+        else:
+            sorted_results = sorting.sort_by_trending(results)
+
+        # 带关键词时优先相关性，再用所选排序作为次序。
+        if keyword:
+            sort_rank = {id(product): idx for idx, product in enumerate(sorted_results)}
+            results = sorted(
+                sorted_results,
+                key=lambda product: (
+                    -keyword_scores.get(id(product), 0.0),
+                    sort_rank.get(id(product), len(sorted_results))
+                )
+            )
+        else:
+            results = sorted_results
 
         # 分页
         total = len(results)
-        start = (page - 1) * limit
-        end = start + limit
+        start = min(max((page - 1) * limit, 0), total)
+        end = min(start + limit, total)
         paginated_results = results[start:end]
 
         return {

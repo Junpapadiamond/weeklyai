@@ -19,6 +19,7 @@ import {
 } from "@/lib/schemas";
 
 const DEFAULT_SERVER_BASE = "http://localhost:5000/api/v1";
+export type WeeklyTopSort = "composite" | "trending" | "recency" | "funding";
 
 function resolveApiBaseUrl() {
   if (typeof window !== "undefined") {
@@ -101,8 +102,12 @@ export const getDarkHorses = cache(async (limit = 10, minIndex = 4): Promise<Pro
   return parsed.data.filter(hasUsableWebsite);
 });
 
-export const getWeeklyTop = cache(async (limit = 0): Promise<Product[]> => {
-  const json = await fetchJson(`/products/weekly-top?limit=${limit}`, {
+export const getWeeklyTop = cache(async (limit = 0, sortBy: WeeklyTopSort = "composite"): Promise<Product[]> => {
+  const params = new URLSearchParams();
+  params.set("limit", String(limit));
+  params.set("sort_by", sortBy);
+
+  const json = await fetchJson(`/products/weekly-top?${params.toString()}`, {
     next: { revalidate: 120, tags: ["products", "weekly-top"] },
   });
   const parsed = safeParse(productListSchema, json, { data: [] });

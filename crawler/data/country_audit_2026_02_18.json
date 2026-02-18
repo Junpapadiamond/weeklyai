@@ -1,0 +1,412 @@
+{
+  "generated_at": "2026-02-18T08:56:38.462572Z",
+  "source_file": "/Users/jun/Desktop/Projects/WeeklyAI/crawler/data/products_featured.json",
+  "summary": {
+    "total_products": 424,
+    "high_confidence_conflicts": 3,
+    "needs_manual_review": 155
+  },
+  "high_confidence_conflicts": [
+    {
+      "name": "Entire",
+      "website": "https://entire.io",
+      "source": "网易",
+      "source_region": "🇨🇳",
+      "region": "🇺🇸",
+      "country_code": "US",
+      "country_flag": "🇺🇸",
+      "country_source": "manual:audit_2026_02_18",
+      "reasons": [
+        "source_region(🇨🇳) conflicts with country_flag(🇺🇸)"
+      ]
+    },
+    {
+      "name": "Plaud Note Pro",
+      "website": "https://www.plaud.ai",
+      "source": "PRNewswire",
+      "source_region": "🇸🇬",
+      "region": "🇺🇸",
+      "country_code": "US",
+      "country_flag": "🇺🇸",
+      "country_source": "manual:audit_2026_02_18",
+      "reasons": [
+        "source_region(🇸🇬) conflicts with country_flag(🇺🇸)"
+      ]
+    },
+    {
+      "name": "Plaud NotePin",
+      "website": "https://www.plaud.ai",
+      "source": "Kickstarter",
+      "source_region": "🇨🇳",
+      "region": "🇺🇸",
+      "country_code": "US",
+      "country_flag": "🇺🇸",
+      "country_source": "manual:audit_2026_02_18",
+      "reasons": [
+        "source_region(🇨🇳) conflicts with country_flag(🇺🇸)"
+      ]
+    }
+  ],
+  "needs_manual_review_sample": [
+    {
+      "name": "Stark Defence",
+      "website": "https://stark.ai",
+      "source": "Manager Magazin / Reuters",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Modveon",
+      "website": "https://modveon.com",
+      "source": "note.com/startup_now0708",
+      "region": "🇯🇵🇰🇷",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "LayerX",
+      "website": "https://layerx.ai",
+      "source": "TechBuzz",
+      "region": "🇯🇵🇰🇷",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "etalytics",
+      "website": "https://etalytics.com",
+      "source": "StartHub Hessen",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Seamflow",
+      "website": "https://seamflow.com",
+      "source": "Tech.eu",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Blockbrain",
+      "website": "https://blockbrain.ai",
+      "source": "Bebeez",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "HP EliteBoard G1a Next Gen AI PC",
+      "website": "https://www.hp.com",
+      "source": "Windows Blog",
+      "region": "🇯🇵🇰🇷",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "genas.ai",
+      "website": "https://genas.ai",
+      "source": "株式会社ニュウジア",
+      "region": "🇯🇵🇰🇷",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "ニュウジア",
+      "website": "https://www.niusia.co.jp",
+      "source": "ニュウジア公式",
+      "region": "🇯🇵🇰🇷",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Shizuku AI",
+      "website": "https://shizuku.ai",
+      "source": "ITmedia NEWS",
+      "region": "🇯🇵🇰🇷",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Overmind",
+      "website": "https://overmind.ai",
+      "source": "Tech.eu",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Reflow",
+      "website": "https://reflow.ai",
+      "source": "Tech.eu",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Electric Twin",
+      "website": "https://electrictwin.ai",
+      "source": "Tech.eu",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Linse Lite",
+      "website": "https://www.meganeichiba.jp/lp/linse/",
+      "source": "眼鏡市場",
+      "region": "🇯🇵🇰🇷",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "New AIスマートレンズ",
+      "website": "https://item.rakuten.co.jp/selfshop/hcy-/",
+      "source": "楽天市場",
+      "region": "🇯🇵🇰🇷",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Alibaba Quark AI Glasses S1",
+      "website": "https://www.quark.alibaba.com",
+      "source": "[3]",
+      "region": "🇸🇬",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Tandem Health",
+      "website": "https://tandemhealth.ai",
+      "source": "Sifted",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "CoMind",
+      "website": "https://comind.io",
+      "source": "Sifted",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Berget AI",
+      "website": "https://berget.ai",
+      "source": "The AI Insider",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Mozart AI",
+      "website": "https://mozartai.com",
+      "source": "Tech.eu",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Markup AI",
+      "website": "https://markup.ai",
+      "source": "Vestbee",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Emdoor XR AI Glasses",
+      "website": "https://vr.emdoor.com",
+      "source": "Emdoor XR site",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "讯飞 AI 会议耳机 Pro3",
+      "website": "https://viaim.com",
+      "source": "[3]",
+      "region": "🇸🇬",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Sirbai Autonomous Drone Swarm",
+      "website": "https://sirbai.com",
+      "source": "Entelechy Asia",
+      "region": "🇸🇬",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "SenseTime SenseNova-MARS",
+      "website": "https://www.sensetime.com",
+      "source": "Entelechy Asia",
+      "region": "🇸🇬",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Cast AI",
+      "website": "https://cast.ai",
+      "source": "TechCrunch",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Harmattan AI",
+      "website": "https://harmattan.ai",
+      "source": "TechCrunch",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Andercore",
+      "website": "https://andercore.com",
+      "source": "Sifted",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Ranketta",
+      "website": "https://ranketta.ai",
+      "source": "EU-Startups",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Polaron",
+      "website": "https://polaron.ai",
+      "source": "EU-Startups",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "scavenger.ai",
+      "website": "https://scavenger.ai",
+      "source": "StartHub Hessen",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Snap Spectacles",
+      "website": "https://spectacles.snapchat.com",
+      "source": "[1]",
+      "region": "🇸🇬",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Fractile",
+      "website": "https://fractile.ai",
+      "source": "Sifted",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "J-STYLE Smart Rings",
+      "website": "https://www.jointcorp.com",
+      "source": "J-STYLE WHX DUBAI announcement[2]",
+      "region": "🇸🇬",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "PleaseFix AI",
+      "website": "https://pleasefix.ai",
+      "source": "EU Tech Future",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Duna",
+      "website": "https://duna.com",
+      "source": "EU Tech Future",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Capalo AI",
+      "website": "https://capalo.ai",
+      "source": "EU Tech Future",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Dash0",
+      "website": "https://dash0.com",
+      "source": "Sifted",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "vitrealab Quantum Light Chips",
+      "website": "https://vitrealab.com",
+      "source": "Vestbee",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    },
+    {
+      "name": "Fini AI",
+      "website": "https://fini.ai",
+      "source": "Vestbee",
+      "region": "🇪🇺",
+      "country_code": "UNKNOWN",
+      "country_source": "unknown",
+      "reason": "country unresolved under ambiguous/market region flag"
+    }
+  ]
+}

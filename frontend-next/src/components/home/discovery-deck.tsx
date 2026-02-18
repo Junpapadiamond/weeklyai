@@ -2,12 +2,14 @@
 
 import { PointerEvent, TouchEvent, useEffect, useRef, useState } from "react";
 import type { Product } from "@/types/api";
+import { SmartLogo } from "@/components/common/smart-logo";
 import {
   cleanDescription,
   formatCategories,
   isValidWebsite,
   normalizeWebsite,
   productKey,
+  resolveProductCountry,
 } from "@/lib/product-utils";
 
 const SWIPED_KEY = "weeklyai_swiped";
@@ -105,6 +107,38 @@ function createDeck(products: Product[]) {
     stack: shuffled.slice(0, 3),
     pool: shuffled.slice(3),
   };
+}
+
+function SwipeCardIdentity({ product, compact = false }: { product: Product; compact?: boolean }) {
+  const country = resolveProductCountry(product);
+  const countryText = country.unknown ? "Unknown" : country.name;
+  const logoSize = compact ? 42 : 48;
+
+  return (
+    <div className="swipe-card-header__identity">
+      <SmartLogo
+        key={`${product._id || product.name}-${product.logo_url || ""}-${product.logo || ""}-${product.website || ""}-${product.source_url || ""}`}
+        className="swipe-card-logo"
+        name={product.name}
+        logoUrl={product.logo_url}
+        secondaryLogoUrl={product.logo}
+        website={product.website}
+        sourceUrl={product.source_url}
+        size={logoSize}
+        loading="eager"
+      />
+      <div className="swipe-card-header__copy">
+        <div className="swipe-card-header__name-row">
+          <h3>{product.name}</h3>
+          <span className={`swipe-card-country ${country.unknown ? "is-unknown" : ""}`} aria-label={`国家：${countryText}`} title={`国家：${countryText}`}>
+            {country.flag ? <span className="swipe-card-country__flag">{country.flag}</span> : null}
+            <span className="swipe-card-country__text">{countryText}</span>
+          </span>
+        </div>
+        <p>{formatCategories(product)}</p>
+      </div>
+    </div>
+  );
 }
 
 export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) {
@@ -579,10 +613,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
         {backCard ? (
           <article className="swipe-card swipe-card--ghost swipe-card--ghost-back" style={backCardStyle} aria-hidden="true">
             <header className="swipe-card-header swipe-card-header--ghost">
-              <div>
-                <h3>{backCard.name}</h3>
-                <p>{formatCategories(backCard)}</p>
-              </div>
+              <SwipeCardIdentity product={backCard} compact />
               <span className="swipe-badge">{backCard.dark_horse_index ? `${backCard.dark_horse_index}分` : "精选"}</span>
             </header>
             <p className="swipe-card-desc swipe-card-desc--ghost">{cleanDescription(backCard.description)}</p>
@@ -595,10 +626,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
         {nextCard ? (
           <article className="swipe-card swipe-card--ghost swipe-card--ghost-mid" style={nextCardStyle} aria-hidden="true">
             <header className="swipe-card-header swipe-card-header--ghost">
-              <div>
-                <h3>{nextCard.name}</h3>
-                <p>{formatCategories(nextCard)}</p>
-              </div>
+              <SwipeCardIdentity product={nextCard} compact />
               <span className="swipe-badge">{nextCard.dark_horse_index ? `${nextCard.dark_horse_index}分` : "精选"}</span>
             </header>
             <p className="swipe-card-desc swipe-card-desc--ghost">{cleanDescription(nextCard.description)}</p>
@@ -628,10 +656,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
           </div>
 
           <header className="swipe-card-header">
-            <div>
-              <h3>{current.name}</h3>
-              <p>{formatCategories(current)}</p>
-            </div>
+            <SwipeCardIdentity product={current} />
             <span className="swipe-badge">{current.dark_horse_index ? `${current.dark_horse_index}分` : "精选"}</span>
           </header>
 

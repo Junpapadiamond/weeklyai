@@ -10,6 +10,7 @@ import {
   isHardware,
   isValidWebsite,
   normalizeWebsite,
+  resolveProductCountry,
 } from "@/lib/product-utils";
 
 type ProductCardProps = {
@@ -37,9 +38,10 @@ export function ProductCard({ product, compact = false }: ProductCardProps) {
   const score = getProductScore(product);
   const scoreLabel = formatScore(score);
   const freshness = getFreshnessLabel(product);
-  const regionLabel = product.region?.trim() || "全球";
-  const regionMark = product.region?.trim() || "🌍";
-  const hasRegionText = /[A-Za-z\u4e00-\u9fff]/.test(regionLabel);
+  const country = resolveProductCountry(product);
+  const regionLabel = country.unknown ? "Unknown" : country.name;
+  const regionMark = country.flag;
+  const hasRegionText = true;
   const microlineParts = [freshness, product.source || "来源待补充"];
   const description = cleanDescription(product.description);
   const whyMatters = product.why_matters?.trim();
@@ -51,9 +53,11 @@ export function ProductCard({ product, compact = false }: ProductCardProps) {
       <div className="product-card__content">
         <div className="product-card__topline">
           <span className="product-card__region-pill" aria-label={`地区：${regionLabel}`} title={`地区：${regionLabel}`}>
-            <span className="product-card__region-flag" aria-hidden="true">
-              {regionMark}
-            </span>
+            {regionMark ? (
+              <span className="product-card__region-flag" aria-hidden="true">
+                {regionMark}
+              </span>
+            ) : null}
             {hasRegionText ? <span className="product-card__region-text">{regionLabel}</span> : null}
           </span>
           <p className="product-card__microline">{microlineParts.join(" · ")}</p>

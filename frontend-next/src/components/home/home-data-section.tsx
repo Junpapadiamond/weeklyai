@@ -3,11 +3,12 @@ import { getDarkHorses, getLastUpdated, getWeeklyTop, parseLastUpdatedLabel } fr
 
 const HOME_INITIAL_PRODUCTS_LIMIT = 0;
 const DARK_HORSE_FETCH_LIMIT = 30;
+const HOME_DEFAULT_SORT = "composite";
 
 export async function HomeDataSection() {
   const [darkHorses, allProducts, lastUpdated] = await Promise.all([
     getDarkHorses(DARK_HORSE_FETCH_LIMIT, 4),
-    getWeeklyTop(HOME_INITIAL_PRODUCTS_LIMIT),
+    getWeeklyTop(HOME_INITIAL_PRODUCTS_LIMIT, HOME_DEFAULT_SORT),
     getLastUpdated(),
   ]);
 

@@ -15,18 +15,79 @@
 
 ---
 
+## 技术栈
+
+| 层 | 技术 |
+|------|------|
+| **前端 (主力)** | Next.js 16, React 19, TypeScript, Tailwind CSS, SWR, Zod |
+| **前端 (遗留)** | Express.js + EJS (frontend/) |
+| **后端** | Flask 3.0, PyMongo 4.6, MongoDB 7, Gunicorn |
+| **爬虫** | Python 3.9+, Scrapy, BeautifulSoup4, Perplexity API, Zhipu GLM |
+| **AI 模型** | Perplexity Sonar (全球), Zhipu GLM-4.7 (中国), Claude (分析) |
+| **存储** | MongoDB (主要), JSON 文件 (回退) |
+| **部署** | Docker Compose (本地), Vercel (前端+后端) |
+| **定时调度** | macOS launchd (本地), cron (服务器) |
+| **测试** | Pytest, Playwright, Vitest |
+
+---
+
+## 项目结构
+
+```
+WeeklyAI/
+├── .env / .env.example          # 环境变量
+├── .mcp.json                    # Claude MCP 配置 (智谱 web search)
+├── docker-compose.yml           # 全栈: mongo + frontend + backend + crawler
+├── CLAUDE.md                    # 项目文档 (source of truth)
+├── AGENTS.md                    # Agent 专用精简文档
+│
+├── frontend-next/               # 🟢 主力前端 (Next.js 16 + React 19)
+│   ├── src/app/                 # 页面 (home, product, blog, discover, search)
+│   ├── src/components/          # 组件 (home, product, discover, common, layout)
+│   ├── src/lib/                 # 工具库 (api-client, product-utils, schemas)
+│   └── src/types/               # TypeScript 类型定义
+│
+├── frontend/                    # ⚪ 遗留前端 (Express + EJS)
+│
+├── backend/                     # Flask API
+│   ├── app/routes/              # products.py, search.py
+│   ├── app/services/            # product_repository, product_service, filters, sorting
+│   └── vercel.json              # Vercel Serverless 部署
+│
+├── crawler/                     # AI 发现引擎
+│   ├── main.py                  # 主协调器 (新闻聚合)
+│   ├── tools/                   # 32 个 Python 工具脚本
+│   ├── utils/                   # 12 个工具模块
+│   ├── prompts/                 # 搜索 + 分析 Prompt
+│   ├── spiders/                 # 17 个爬虫 (含 YouTube/X)
+│   ├── database/                # MongoDB/JSON 抽象层
+│   └── data/                    # 数据文件
+│
+├── ops/scheduling/              # 定时任务 (daily_update.sh, launchd)
+├── tests/                       # 测试套件 (7 个测试文件)
+└── history/                     # 历史版本
+```
+
+---
+
 ## 数据结构
 
 ```
 crawler/data/
-├── dark_horses/          # 黑马产品 (4-5分)
-│   └── week_2026_04.json
-├── rising_stars/         # 潜力股 (2-3分)
-│   └── global_2026_04.json
-├── candidates/           # 待审核
-├── products_featured.json # 精选产品 (前端数据源)
-├── products_history.json  # 历史数据
-└── industry_leaders.json  # 🏆 行业领军（已知名产品参考）
+├── dark_horses/                 # 黑马产品 (4-5分)
+│   └── week_2026_07.json
+├── rising_stars/                # 潜力股 (2-3分)
+│   └── global_2026_07.json
+├── candidates/                  # 待审核
+│   └── rss_to_products_cache.json
+├── products_featured.json       # 精选产品 (前端数据源, 2-5分全量)
+├── products_history.json        # 历史数据
+├── industry_leaders.json        # 🏆 行业领军（排除名单）
+├── blogs_news.json              # 新闻/博客 (YouTube/X/RSS)
+├── logo_cache.json              # Logo URL 缓存
+├── source_watchlists.json       # 社交账号监控列表 (YouTube/X)
+├── product_official_handles.json # 产品社交媒体账号
+└── last_updated.json            # 更新时间戳
 ```
 
 ---
@@ -36,14 +97,31 @@ crawler/data/
 | 文件 | 职责 |
 |------|------|
 | `crawler/tools/auto_discover.py` | 自动发现 (Provider 路由: cn→GLM, 其他→Perplexity) |
-| `crawler/tools/add_product.py` | 手动添加产品 |
+| `crawler/tools/auto_publish.py` | 自动发布候选 → featured |
+| `crawler/tools/rss_to_products.py` | 社交信号→产品 + enrich featured |
+| `crawler/tools/sync_to_mongodb.py` | JSON → MongoDB 同步 |
 | `crawler/tools/dark_horse_detector.py` | 黑马评分计算 |
+| `crawler/tools/fix_logos.py` | Logo 自动修复 (favicon/HTML icon 解析) |
+| `crawler/tools/resolve_websites.py` | 自动解析缺失官网 URL |
+| `crawler/tools/validate_websites.py` | 验证自动解析的域名 |
+| `crawler/tools/cleanup_unknowns_and_duplicates.py` | 去重 + 清理未知域名 |
+| `crawler/tools/backfill_source_urls.py` | 回填 source_url |
+| `crawler/tools/add_product.py` | 手动添加产品 |
+| `crawler/tools/data_classifier.py` | 自动分类 (YouTube/X → blog) |
 | `crawler/prompts/search_prompts.py` | 🔍 搜索 Prompt 模块 |
 | `crawler/prompts/analysis_prompts.py` | 📊 分析 Prompt 模块 (含硬件评判体系) |
 | `crawler/utils/perplexity_client.py` | Perplexity SDK 封装 (美国/欧洲/日韩) |
 | `crawler/utils/glm_client.py` | 智谱 GLM SDK 封装 (中国区) |
+| `crawler/utils/social_sources.py` | 社交来源配置 (YouTube/X 账号列表) |
+| `crawler/utils/dedup.py` | 去重 (按 normalized domain) |
+| `crawler/spiders/youtube_spider.py` | YouTube RSS 信号爬虫 |
+| `crawler/spiders/x_spider.py` | X/Twitter 信号爬虫 (Perplexity + fallback) |
 | `backend/app/routes/products.py` | 产品 API |
-| `frontend/views/index.ejs` | 首页模板 |
+| `backend/app/services/product_repository.py` | 数据层 (MongoDB 优先, JSON 回退) |
+| `backend/app/services/product_service.py` | 业务逻辑 (排序/过滤/enrichment) |
+| `frontend-next/src/app/page.tsx` | 首页 (Next.js) |
+| `frontend-next/src/components/home/home-client.tsx` | 首页客户端组件 |
+| `frontend-next/src/components/home/discovery-deck.tsx` | Swipe Card 组件 |
 
 ---
 
@@ -71,7 +149,7 @@ python3 tools/auto_discover.py --region us     # 美国
 python3 tools/auto_discover.py --region cn     # 中国
 python3 tools/auto_discover.py --region all    # 全球
 
-# 硬件/软件分离搜索 (新增)
+# 硬件/软件分离搜索
 python3 tools/auto_discover.py --region all --type hardware  # 只搜硬件
 python3 tools/auto_discover.py --region all --type software  # 只搜软件
 python3 tools/auto_discover.py --region all --type mixed     # 混合 (40%硬件+60%软件)
@@ -81,25 +159,50 @@ python3 tools/auto_discover.py --list-keywords --region us   # 查看关键词
 python3 tools/add_product.py --quick "Name" "URL" "Desc"
 
 # 启动服务
-cd frontend && npm start      # localhost:3000
-cd backend && python run.py   # localhost:5000
+cd frontend-next && npm run dev   # localhost:3001 (主力前端)
+cd frontend && npm start          # localhost:3000 (遗留前端)
+cd backend && python run.py       # localhost:5000
+
+# 社交信号
+python3 tools/rss_to_products.py --sources youtube,x --enrich-featured --dry-run
+
+# MongoDB 同步
+python3 tools/sync_to_mongodb.py --all --dry-run
 
 # 定时任务管理
 launchctl list | grep weeklyai              # 查看任务状态
 ./ops/scheduling/daily_update.sh            # 手动运行
 tail -f crawler/logs/daily_update.log       # 查看日志
+
+# 测试
+cd frontend-next && npm test                # Vitest 前端测试
+PYTHONPATH=backend:crawler python -m pytest tests/ -v   # Python 测试
 ```
 
 ### 定时任务 (launchd)
 
 | 文件 | 说明 |
 |------|------|
-| `ops/scheduling/daily_update.sh` | 每日更新脚本 |
+| `ops/scheduling/daily_update.sh` | 每日更新脚本 (10 步流水线) |
 | `ops/scheduling/com.weeklyai.crawler.plist` | launchd 配置 |
+| `ops/scheduling/com.weeklyai.news.plist` | 新闻更新任务 |
 
 **运行时间**: 每天凌晨 3:00
-**执行内容**: `auto_discover.py --region all` → `main.py --news-only`
 **日志位置**: `crawler/logs/daily_update.log`
+
+**每日流水线 (10 步)**:
+```
+1. auto_discover.py --region all        → 全球 AI 产品发现
+2. auto_publish.py                      → 候选产品发布到 featured
+3. backfill_source_urls.py              → 回填 source_url
+4. resolve_websites.py --aggressive     → 自动解析缺失官网
+5. validate_websites.py                 → 验证自动解析的域名
+6. cleanup_unknowns_and_duplicates.py   → 去重 + 清理未知域名
+7. fix_logos.py                         → Logo 自动修复
+8. main.py --news-only                  → 新闻/博客更新
+9. rss_to_products.py --enrich-featured → 社交信号 enrich
+10. sync_to_mongodb.py --all            → 同步到 MongoDB (如有配置)
+```
 
 安装命令:
 ```bash
@@ -126,7 +229,7 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 ### 自动入库
 
 - auto_discover 产出 **2-5 分** 产品，完成评判体系评分 + 去重（按 website）后，全部写入后端数据源（当前为 `products_featured.json`）。
-- **2-5 分全量库**即前端“更多推荐”的完整数据源。
+- **2-5 分全量库**即前端"更多推荐"的完整数据源。
 
 ### 首页三段展示
 
@@ -361,7 +464,7 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 | 地区 | 权重 | 搜索引擎 |
 |------|------|----------|
 | 🇺🇸 美国 | 40% | Bing |
-| 🇨🇳 中国 | 25% | Sogou |
+| 🇨🇳 中国 | 25% | Sogou/Quark |
 | 🇪🇺 欧洲 | 15% | Bing |
 | 🇯🇵🇰🇷 日韩 | 10% | Bing |
 | 🇸🇬 东南亚 | 10% | Bing |
@@ -468,8 +571,10 @@ python3 tools/auto_discover.py --region us --dry-run
 |----------|------|--------|
 | `ZHIPU_API_KEY` | 智谱 API Key | (required for cn) |
 | `GLM_MODEL` | GLM 模型 | `glm-4.7` |
-| `GLM_SEARCH_ENGINE` | 搜索引擎 | `search_pro` |
+| `GLM_SEARCH_ENGINE` | 搜索引擎 | `search_pro` (可选: `search_pro_sogou`, `search_pro_quark`, `search_std`) |
 | `USE_GLM_FOR_CN` | 中国区启用 GLM | `true` |
+| `GLM_THINKING_TYPE` | 深度思考模式 | `disabled` |
+| `GLM_CLEAR_THINKING` | 清除思考内容 | `true` |
 
 **搜索引擎选项:**
 
@@ -477,6 +582,7 @@ python3 tools/auto_discover.py --region us --dry-run
 |------|------|------|
 | `search_pro` | ¥0.03/次 | 智谱自研高阶版 (推荐) |
 | `search_pro_sogou` | ¥0.05/次 | 腾讯生态+知乎 |
+| `search_pro_quark` | ¥0.05/次 | 夸克搜索增强，中文召回更强 |
 | `search_std` | ¥0.01/次 | 基础搜索 |
 
 **启用 GLM (中国区):**
@@ -511,7 +617,8 @@ python3 tools/auto_discover.py --region cn --dry-run
 
 **⚠️ 限流处理:**
 - GLM API 有并发限制，429 错误表示 "并发数过高"
-- 自动重试机制：遇到 429 会等待后重试
+- 自动重试机制：遇到 429 会等待后重试（退避策略）
+- 单实例锁 + 关键词数限制 + cooldown 节流
 - 如果频繁限流，可联系智谱客服增加限额
 - 或者设置 `USE_GLM_FOR_CN=false` 临时回退到 Perplexity
 
@@ -543,12 +650,15 @@ python3 tools/auto_discover.py --region cn --dry-run
 产品必须通过以下验证才会被保存：
 
 1. **必填字段**：`name`, `website`, `description`, `why_matters`
-2. **URL 验证**：必须是有效的 `http://` 或 `https://` URL
+2. **URL 验证**：必须是有效的 `http://` 或 `https://` URL，禁止 placeholder 域名
 3. **描述长度**：`description` 必须 >20 字符
 4. **why_matters 质量**：
    - ✅ 必须包含具体数字（融资金额/ARR/用户数）
    - ✅ 必须包含具体差异化（首创/背景/技术）
    - ❌ 禁止泛化描述："很有潜力"、"值得关注"、"融资情况良好"
+   - ❌ 长度 < 30 字符则拒绝
+5. **域名过滤**：unknown 域名不阻止入库但标记 `needs_verification: true`
+6. **行业领军排除**：`industry_leaders.json` 中的产品不收录
 
 ### why_matters 示例
 
@@ -586,6 +696,98 @@ Quality rejection reasons:
 
 ---
 
+## 社交信号引擎 (YouTube + X)
+
+### 架构
+
+```
+YouTube RSS / X (Perplexity Search)
+       │
+       ▼
+ youtube_spider.py / x_spider.py
+       │
+       ▼
+ blogs_news.json (source: youtube/x)
+       │
+       ▼
+ rss_to_products.py --enrich-featured
+       │
+  ┌────┴────┐
+  ▼         ▼
+新产品 →    已存在产品 →
+candidates  刷新 latest_news / news_updated_at
+```
+
+### 关键特性
+
+- **来源配置优先级**：`env > crawler/data/source_watchlists.json > 内置默认`（由 `social_sources.py` 读取）
+- **X 回退链路**：Perplexity 产出为 0 时启用 account fallback（`r.jina.ai` timeline + `cdn.syndication.twimg.com`）
+- **enrich 逻辑**：先 enrich 已存在产品，再判重；确保已有产品也能刷新 `latest_news` / `news_updated_at` 并写入 `extra.signals`
+- **年份硬闸门**：`CONTENT_YEAR` (默认当前年) 统一过滤非指定年份内容
+- **YouTube 精度**：信号词需命中标题/描述前窗口；`github.com` 仅在有 "open source/开源" 文案时才算信号
+- **X URL 支持**：多种形态 (`/status/`, `/i/web/status/`, `mobile.twitter.com`)
+- **分类规则**：`data_classifier.py` 对 `youtube/x` 来源强制归类为 `blog`
+
+### 环境变量
+
+| 变量 | 说明 | 默认值 |
+|------|------|--------|
+| `CONTENT_YEAR` | 仅保留该年份内容 | `2026` |
+| `SOCIAL_HOURS` | 信号回溯窗口 (小时) | `96` |
+| `YOUTUBE_CHANNEL_IDS` | 监控的 YouTube 频道 | (env 或 watchlists) |
+| `X_ACCOUNTS` | 监控的 X 账号 | (env 或 watchlists) |
+| `X_SOURCE_MODE` | X 来源模式 | `hybrid` |
+| `SOCIAL_X_MAX_RESULTS` | X 搜索最大结果数 | `20` |
+
+### 验证
+
+```bash
+# 验证社交信号质量 (不写入 repo)
+python3 crawler/tools/verify_social_signals.py --hours 96 --limit 30
+
+# Dry-run enrich
+python3 crawler/tools/rss_to_products.py --sources youtube,x --enrich-featured --dry-run
+```
+
+---
+
+## 前端 (frontend-next)
+
+### 技术栈
+Next.js 16 + React 19 + TypeScript + Tailwind CSS + SWR + Zod
+
+### 页面
+
+| 路径 | 文件 | 说明 |
+|------|------|------|
+| `/` | `src/app/page.tsx` | 首页 (黑马 + Swipe Card + 更多推荐) |
+| `/product/[id]` | `src/app/product/[id]/page.tsx` | 产品详情 |
+| `/discover` | `src/app/discover/page.tsx` | Swipe 发现模式 |
+| `/blog` | `src/app/blog/page.tsx` | 新闻/博客 |
+| `/search` | `src/app/search/page.tsx` | 搜索结果 |
+
+### 核心组件
+
+| 组件 | 文件 | 说明 |
+|------|------|------|
+| HomeClient | `components/home/home-client.tsx` | 首页客户端编排 |
+| DiscoveryDeck | `components/home/discovery-deck.tsx` | Swipe Card 交互 |
+| HeroCanvas | `components/home/hero-canvas.tsx` | Hero 背景动画 (p5.js) |
+| ProductCard | `components/product/product-card.tsx` | 产品卡片 |
+| SmartLogo | `components/common/smart-logo.tsx` | 智能 Logo 加载 (CDN + fallback) |
+| FavoriteButton | `components/favorites/favorite-button.tsx` | 收藏按钮 |
+| ThemeToggle | `components/layout/theme-toggle.tsx` | 深色/浅色切换 |
+
+### 启动
+
+```bash
+cd frontend-next
+npm install
+npm run dev    # localhost:3001
+```
+
+---
+
 ## API 端点
 
 Base URL: `http://localhost:5000/api/v1`
@@ -600,6 +802,7 @@ Base URL: `http://localhost:5000/api/v1`
 | `/products/<id>` | GET | 产品详情 |
 | `/products/categories` | GET | 分类列表 |
 | `/products/blogs` | GET | 博客/新闻 (`limit`, `source`) |
+| `/products/<id>/favorite` | POST | 收藏产品 |
 | `/search?q=xxx` | GET | 搜索 (`categories`, `type`, `sort`, `page`) |
 
 ### 排序规则
@@ -734,7 +937,7 @@ print(f'blogs: {db.blogs.count_documents({})}')
 
 ### Ongoing Sync
 
-After daily crawler runs, sync to MongoDB:
+After daily crawler runs, sync to MongoDB (step 10 in daily pipeline):
 
 ```bash
 python tools/sync_to_mongodb.py --all
@@ -746,51 +949,81 @@ python tools/sync_to_mongodb.py --all
 
 **blogs**: `_sync_key` (unique), `published_at` desc, `created_at` desc
 
-### Tests
-
-```bash
-PYTHONPATH=backend:crawler backend/.venv/bin/python -m pytest tests/test_mongo_migration.py -v
-```
-
-30 tests covering: sync key generation, merge/dedupe, curated product normalization, dark-horse loading, MongoDB vs JSON fallback logic.
-
 ---
 
-## Pipeline Data Quality Fixes
+## 数据质量保障
 
-### What Was Fixed
+### 流水线质量修复
 
-| Issue | File | Fix |
+| 问题 | 文件 | 修复 |
 |---|---|---|
-| `_extract_json()` returns raw text on parse failure | `crawler/utils/perplexity_client.py`, `crawler/utils/glm_client.py` | Returns `[]` + logs warning on all parse failures |
-| `why_matters` validation AND→OR bug | `crawler/tools/auto_discover.py` | Reject if contains generic phrase **OR** length < 30 chars |
-| Missing categories on products | `crawler/tools/auto_discover.py` | Default to `["other"]` in `validate_product()` |
-| Bad/null region field | `crawler/tools/auto_discover.py` | Default to globe emoji in `validate_product()` |
-| Conflicting upsert keys (`name+source` vs `_sync_key`) | `crawler/database/db_handler.py` | Aligned to `_sync_key` (normalized domain) everywhere |
-| No MongoDB sync in daily pipeline | `ops/scheduling/daily_update.sh` | Added `sync_to_mongodb.py --all` as final step (when `MONGO_URI` set) |
+| JSON 解析失败返回原始文本 | `perplexity_client.py`, `glm_client.py` | 返回 `[]` + 日志警告 |
+| `why_matters` 验证 AND→OR bug | `auto_discover.py` | 含泛化短语 **或** 长度 < 30 则拒绝 |
+| 缺失 categories | `auto_discover.py` | `validate_product()` 默认 `["other"]` |
+| 无效 region | `auto_discover.py` | `validate_product()` 默认 🌐 |
+| upsert key 冲突 | `db_handler.py` | 统一为 `_sync_key` (normalized domain) |
+| Unknown 域名处理 | `cleanup_unknowns_and_duplicates.py` | 硬过滤未知域名 + 不可信平台 |
+| source_url 域名校验 | `auto_discover.py` (cn) | 校验 source_url 不含不可信平台域名 |
+| Logo 域名锁定 | `fix_logos.py` | Logo 仅从产品官方域名获取 |
 
-### Data Repair Script
-
-One-time repair for existing `products_featured.json`:
+### 修复工具
 
 ```bash
-# Preview
-python crawler/tools/repair_data.py --dry-run
-
-# Apply (creates .bak backup automatically)
-python crawler/tools/repair_data.py
+# 一次性数据修复
+python crawler/tools/repair_data.py --dry-run   # 预览
+python crawler/tools/repair_data.py              # 执行 (自动创建 .bak 备份)
 ```
 
-Fixes: empty `criteria_met` (backfilled from funding/team/growth signals), missing categories, bad regions, well-known product removal, funding normalization (`funding_total_usd` field added).
-
-### Recommended Migration Order
-
-1. Run `repair_data.py` to clean source data
-2. Run `sync_to_mongodb.py --all --dry-run` to verify counts
-3. Run `sync_to_mongodb.py --all --clear-old` to populate MongoDB
-4. Set `MONGO_URI` in Vercel production
-5. Monitor for 1 week; JSON fallback is automatic if MongoDB fails
+修复内容：空 `criteria_met` 回填、缺失 categories、无效 region、知名产品清除、融资金额标准化 (`funding_total_usd`)。
 
 ---
 
-*更新: 2026-02-10 (MongoDB migration + pipeline data quality fixes)*
+## 测试
+
+| 测试文件 | 覆盖范围 |
+|----------|----------|
+| `tests/test_darkhorse_freshness.py` | 黑马新鲜度/轮换逻辑 |
+| `tests/test_data_verifier.py` | 产品 schema 验证 |
+| `tests/test_demand_signals.py` | 需求信号检测 (融资/增长/热度) |
+| `tests/test_frontend.py` | E2E 前端测试 (Playwright) |
+| `tests/test_glm_tool_parsing.py` | GLM JSON 解析鲁棒性 |
+| `tests/test_mongo_migration.py` | MongoDB 同步/去重/回退 (30 tests) |
+| `tests/test_social_signals.py` | X/YouTube URL 解析 + enrich 逻辑 |
+| `frontend-next/src/lib/__tests__/` | 前端工具函数 + schema 验证 (Vitest) |
+
+```bash
+# Python 测试
+PYTHONPATH=backend:crawler python -m pytest tests/ -v
+
+# 前端测试
+cd frontend-next && npm test
+```
+
+---
+
+## 全部环境变量
+
+| 变量 | 说明 | 默认值 |
+|------|------|--------|
+| `MONGO_URI` | MongoDB 连接 URI | (未设置则用 JSON) |
+| `PERPLEXITY_API_KEY` | Perplexity API Key | (required) |
+| `PERPLEXITY_MODEL` | Perplexity 模型 | `sonar` |
+| `ZHIPU_API_KEY` | 智谱 API Key | (required for cn) |
+| `GLM_MODEL` | GLM 模型 | `glm-4.7` |
+| `GLM_SEARCH_ENGINE` | GLM 搜索引擎 | `search_pro` |
+| `USE_GLM_FOR_CN` | 中国区启用 GLM | `true` |
+| `GLM_THINKING_TYPE` | GLM 深度思考 | `disabled` |
+| `CONTENT_YEAR` | 内容年份过滤 | `2026` |
+| `SOCIAL_HOURS` | 社交信号回溯窗口 | `96` |
+| `YOUTUBE_CHANNEL_IDS` | YouTube 频道列表 | (watchlists) |
+| `X_ACCOUNTS` | X 账号列表 | (watchlists) |
+| `X_SOURCE_MODE` | X 来源模式 | `hybrid` |
+| `SOCIAL_X_MAX_RESULTS` | X 最大结果数 | `20` |
+| `FLASK_ENV` | Flask 环境 | `production` |
+| `NODE_ENV` | Node 环境 | `production` |
+| `DARK_HORSE_FRESH_DAYS` | 黑马新鲜期 (天) | `5` |
+| `DARK_HORSE_STICKY_DAYS` | TOP1 保留期 (天) | `10` |
+
+---
+
+*更新: 2026-02-13*
