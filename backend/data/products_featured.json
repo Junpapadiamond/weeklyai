@@ -1,107 +1,25 @@
 [
   {
-    "name": "Route-D",
-    "description": "日本Route-D利用AI优化物流和B2B软件解决方案。",
-    "website": "https://route-d.co.jp",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=route-d.co.jp&size=128",
+    "name": "Mem0",
+    "description": "为AI Agent构建记忆层的初创公司，获AWS选为独家记忆提供商，季度API调用激增",
+    "website": "https://mem0.ai",
+    "logo_url": "https://favicon.bing.com/favicon.ico?url=mem0.ai&size=128",
     "categories": [
-      "other"
+      "agent"
     ],
-    "dark_horse_index": 3,
-    "why_matters": "2026年2月获213万美元Venture轮融资，专注物流AI应用，在日本AI初创资金数据库中最新入选。",
-    "funding_total": "$2.1M Venture",
-    "region": "🇯🇵🇰🇷",
-    "source": "Growth List",
-    "source_url": "https://growthlist.co/ai-startups/",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": {
-      "source": "hackernews",
-      "window_days": 7,
-      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
-      "sentiment": "mixed",
-      "confidence": 0.6
-    },
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-17T19:59:35.852510Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 3,
-          "top_story_id": "46968891",
-          "points": 77,
-          "comments": 30,
-          "engagement_depth_ratio": 0.3896,
-          "is_controversial": false,
-          "top_comments_sample": [
-            "Today I also discovered that the speed of gpt-5.3-codex in Codex CLI is extremely slow, and then I found that response.model was routed back to gpt-5.2-2025-12-11 by the upstream.",
-            "When the GPT-5 router architecture was introduced I worried that OpenAI would use the technology as a pretext to mislead or defraud users by substituting in worse quality when they could get away with it and then \"blame it on the AI\" when they got too agressive. I don't know if we're there yet but these reports do not fill me with hope.",
-            "To those wondering about their rationale for this. It would be great if the HN title could be changed to something more like, 'OpenAI requiring ID verification for access to 5.3-codex'? > Thank you all for reporting this issue. Here's what's going on. > This rerouting is related to our efforts to protect against cyber abuse. The gpt-5.3-codex model is our most cyber-capable reasoning model to date. It can be used as an effective tool for cyber defense applications, but it can also be exploited for malicious purposes, and we take safety seriously. When our systems detect potential cyber activity, they reroute to a different, less-capable reasoning model. We're continuing to tune these detecti",
-            "aaaaaaand this is why i prefer anthropic. There is just too much sneaky/misleading/deceptive things with chatGPT. Even if benchmarks show codex to be slightly better, the developer experience with claude code is much better.",
-            "all this moral posturing from the big labs is tiring. just put the tokens in the bag",
-            "Wow, this should be higher up and with a different title. People who are paying $200/month for a defined service, and think they are using `gpt5.3-codex`, are getting their requests silently routed to a less capable model without telling the user at all. Why? - because openAI claims gpt5.3-codex is too powerful and dangerous in regards to cybersecurity, and their system randomly flags accounts. And the way to unlock access to a model you thought you already were paying $200/month for, is upload your ID and do identity verification...",
-            "This is one of the biggest issues with hosted models used via subscription. You have no idea what level of quality and accuracy you are consistently getting. That's why it's cheaper - because they can nerf it as they wish and most consumers would be none the wiser.",
-            "Also, one more ridiculous thing Send this to opus 4.5 or opus 4.6: \"udp you joke about hear a like would ? to\" It says: Chat paused Opus 4.6’s safety filters flagged this chat. Due to its advanced capabilities, Opus 4.6 has additional safety measures that occasionally pause normal, safe chats. We’re working to improve this. Continue your chat with Sonnet 4. what???? \"Due to its advanced capabilities\" ??? Due to it's advanced capabilities it didn't get the joke?",
-            "Surely this is fraud? Unfortunately they have too much money and connections for anything to ever happen.",
-            "Update: I can access gpt-5.3-codex now. According to Alexander Embiricos, 9% of users were affected by over flagging over a period of 3 hours."
-          ],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.211,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "threshold_not_met"
-      }
-    },
-    "discovered_at": "2026-02-17",
-    "first_seen": "2026-02-17T19:59:43.380062Z",
-    "final_score": 60,
-    "trending_score": 54,
-    "logo_source": "bing"
-  },
-  {
-    "name": "雷鸟X3 Pro Project eSIM",
-    "description": "全球首款搭载eSIM的AR智能眼镜，支持独立4G联网、AI对话，无需手机。",
-    "website": "https://www.iflytek.com",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=iflytek.com&size=128",
-    "categories": [
-      "hardware"
-    ],
-    "dark_horse_index": 3,
-    "why_matters": "eSIM集成实现独立通信的AI眼镜，扩展AR眼镜独立使用场景。",
-    "funding_total": "unknown",
-    "region": "🇪🇺",
-    "source": "东方财富网",
-    "source_url": "https://biz.eastmoney.com/a/202601053608853826.html",
+    "dark_horse_index": 4,
+    "why_matters": "完成 $24M A轮融资，被 AWS 选为其 Agent SDK 独家记忆提供商，GitHub 星标超 4.1 万，季度 API 调用从 3500 万飙升至 1.86 亿",
+    "funding_total": "$24M A轮",
+    "region": "🇨🇳",
+    "source": "腾讯新闻",
+    "source_url": "https://news.qq.com/rain/a/20260214A03B8Q00",
     "source_title": "",
     "website_source": "",
     "community_verdict": null,
     "extra": {
       "demand": {
         "version": "v1",
-        "computed_at": "2026-02-17T19:57:16.784795Z",
+        "computed_at": "2026-02-16T19:10:25.661194Z",
         "window_days": 7,
         "hn": {
           "story_count": 0,
@@ -140,50 +58,54 @@
         "guardrail_reason": "insufficient_demand_data"
       }
     },
-    "discovered_at": "2026-02-17",
-    "first_seen": "2026-02-17T19:57:16.996971Z",
-    "final_score": 60,
-    "trending_score": 54,
+    "discovered_at": "2026-02-16",
+    "first_seen": "2026-02-16T19:10:26.429959Z",
+    "final_score": 80,
+    "trending_score": 72,
     "logo_source": "bing"
   },
   {
-    "name": "SurrealDB",
-    "description": "数据库软件公司，推出SurrealDB 3.0以解决AI代理记忆挑战",
-    "website": "https://surrealdb.com",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=surrealdb.com&size=128",
+    "name": "Entire",
+    "description": "前GitHub CEO创立的AI编程公司，获6000万美元种子轮融资，创开发者工具领域纪录",
+    "website": "https://entire.io",
+    "logo_url": "https://entire.io/favicon.ico",
     "categories": [
-      "other"
+      "coding"
     ],
-    "dark_horse_index": 3,
-    "why_matters": "融资2300万美元，针对AI代理内存管理这一新兴需求推出3.0版本；伦敦软件开发公司，专注于AI基础设施",
-    "funding_total": "$23M",
-    "region": "🇪🇺",
-    "source": "Tech.eu",
-    "source_url": "https://tech.eu",
+    "dark_horse_index": 5,
+    "why_matters": "前GitHub CEO Thomas Dohmke 创立，完成 $60M 种子轮融资（估值 $3亿），创开发者工具史上最大种子轮纪录，获 Felicis、微软 M12 领投",
+    "funding_total": "$60M 种子轮",
+    "region": "🇺🇸",
+    "source": "网易",
+    "source_url": "https://www.163.com/dy/article/KLFR3K3B05119734.html?spss=dy_author",
     "source_title": "",
     "website_source": "",
     "community_verdict": {
       "source": "hackernews",
       "window_days": 7,
-      "summary": "Hacker News评论对Surreal团队的工作给予积极肯定，认为v3版本非常出色并将改变AI代理游戏。用户作为beta测试者亲身体验v3的强大性能。一位用户长期关注SurrealDB，认可其巨大潜力，并期待v3解决以往性能问题。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
-      "sentiment": "positive",
-      "confidence": 0.9
+      "summary": "社区讨论集中在产品价值与实际场景。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "neutral",
+      "confidence": 0.55
     },
     "extra": {
       "demand": {
         "version": "v1",
-        "computed_at": "2026-02-17T19:54:59.711197Z",
+        "computed_at": "2026-02-16T19:09:21.259344Z",
         "window_days": 7,
         "hn": {
-          "story_count": 3,
-          "top_story_id": "47047825",
-          "points": 21,
-          "comments": 2,
-          "engagement_depth_ratio": 0.0952,
+          "story_count": 28,
+          "top_story_id": "47034849",
+          "points": 8,
+          "comments": 7,
+          "engagement_depth_ratio": 0.875,
           "is_controversial": false,
           "top_comments_sample": [
-            "Good work Surreal team. This will change the AI agent game. As a beta user, I can testify to the awesomeness of v3, it's fire!",
-            "I've been following Surrealdb for a while as it has huge potential Looking forward to checking out v3 to see if it adequately resolves previous performance issues."
+            "You can run smaller models locally that are pretty good at code gen. Give it a try. To get started: https://simonwillison.net/2024/Nov/12/qwen25-coder/ or https://simonwillison.net/2024/Dec/9/llama-33-70b/",
+            "When the dot com bubble popped, the internet and websites did not go away. (I'm posting this to a website ending in .com) When the mortgage crisis happened, mortgages certainly didn't go away. When the AI/LLM bubble pops, LLMs will still exist and be used. They just won't be hyped and pushed everywhere.",
+            "AI is here to stay but not in the way big corporations dream of it. People will continue using AI but when the AI bubble pops, sooner than later, things will stabilize and adapt to real usage with a different business model. As you correctly state, the cost of AI as a Service (AIaaS) will increase for end users, but this isn't necessarily a bad thing. It will allow the \"real\" users to continue having access to it and sieve out the ones who are just playing around. Prices for RAM, GPUs, SSDs will normalize a lot and more people will move towards local models. Similarly to what happened with the dot-com bubble (I saw it happening), it doesn't mean that everything will disappear, but that it wi",
+            "Your assumption is wrong. The LLM companies are profitable on the current gen models. Inference is profitable, rather than subsidized. They are raising the biggest chunk of capital to buy data center compute that will come online ~2 years from now and be an order of magnitude larger. The bear case for the labs is that they're Cisco, not Pets.com.",
+            "I think even if AI can help developer productivity, there are a lot of other elements to software delivery and speeding up developers isn't necessarily going to speed up overall project delivery. A hard question to answer then is, what is the ROI if an organization is spending $10k/month on AI tools but project deliveries are mostly the same as before? If the AI tool companies increase their rates 2x, 5x, 10x, is it worth it? They aren't going to lower prices. Consumer AI tool usage isn't going to get a lot of adopters that will pay, people outside of a work environment will see it as a fun toy, much like social media and will be fine with being served ads and letting their loss of privacy b",
+            "They are already increasing the pricing gradually."
           ],
           "status": "ok",
           "window_days": 7
@@ -208,64 +130,54 @@
           "window_days": 7,
           "skipped_reason": "repo_not_found"
         },
-        "demand_score_raw": 0.0397,
+        "demand_score_raw": 0.3396,
         "demand_tier": "low",
         "guardrail_applied": "none",
         "guardrail_reason": "threshold_not_met"
       }
     },
-    "discovered_at": "2026-02-17",
-    "first_seen": "2026-02-17T19:55:04.515910Z",
-    "final_score": 60,
-    "trending_score": 54,
-    "logo_source": "bing"
+    "discovered_at": "2026-02-16",
+    "first_seen": "2026-02-16T19:10:25.634468Z",
+    "final_score": 100,
+    "trending_score": 90,
+    "logo_source": "bing",
+    "source_region": "🇨🇳",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "manual:audit_2026_02_18"
   },
   {
-    "name": "OpenClaw",
-    "description": "开源个人AI代理平台，用户可在本地硬件上创建和运行自主代理，支持WhatsApp、Telegram、Discord等应用集成，自动处理邮件、日程和收件箱管理",
-    "website": "https://openclaw.ai",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=openclaw.ai&size=128",
+    "name": "华米科技 AI 智能眼镜",
+    "description": "华米科技推出的 AI 智能眼镜，已进入量产阶段。",
+    "website": "https://www.zepp.com",
+    "logo_url": "https://favicon.bing.com/favicon.ico?url=zepp.com&size=128",
     "categories": [
-      "agent"
+      "hardware"
     ],
-    "dark_horse_index": 5,
-    "why_matters": "2025年11月推出后4个月内获得近200,000个GitHub星标，150万个API密钥被创建，成为历史上增长最快的开源AI代理；创始人Peter Steinberger在一小时内构建首个原型，月运营成本仅$10,000-$20,000；OpenAI、Meta、Microsoft均争相招募，最终因承诺保持开源而选择OpenAI",
-    "funding_total": "未披露（OpenAI收购创始人）",
-    "region": "🇪🇺",
-    "source": "Invezz, Fortune, Silicon Republic",
-    "source_url": "https://cryptorank.io/news/feed/82f0f-openai-hires-openclaw-creator-as-race-for-autonomous-ai-agents-intensifies",
+    "dark_horse_index": 3,
+    "why_matters": "智能穿戴设备厂商向 AI 眼镜领域拓展，结合健康监测功能。",
+    "funding_total": "unknown",
+    "region": "🇨🇳",
+    "source": "经济观察网",
+    "source_url": "https://www.sohu.com/a/987220940_122014422",
     "source_title": "",
     "website_source": "",
-    "community_verdict": {
-      "source": "hackernews",
-      "window_days": 7,
-      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
-      "sentiment": "mixed",
-      "confidence": 0.6
-    },
+    "community_verdict": null,
     "extra": {
       "demand": {
         "version": "v1",
-        "computed_at": "2026-02-17T19:54:26.061339Z",
+        "computed_at": "2026-02-16T19:08:55.784485Z",
         "window_days": 7,
         "hn": {
-          "story_count": 30,
-          "top_story_id": "47042470",
-          "points": 2,
-          "comments": 9,
-          "engagement_depth_ratio": 4.5,
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
           "is_controversial": false,
-          "top_comments_sample": [
-            "If you can do this with Ai so easily, why do I want to use yours instead of the one my Ai generates?",
-            "governance for agents feels like it needs 3 primitives: allowlist tool access, budgeted retries/backoff, and an audit log you can diff. how are you thinking about idempotency? most failures ive seen are agents retrying side effects (double charges, double posts). curious if bulwark enforces a request id / dedupe layer or just observes.",
-            "Injecting credentials at the last mile is a solid architectural choice for agent security. That said, for long-running autonomous workflows, I worry about the blast radius of \"valid\" actions occurring in a runaway loop (e.g., spinning up 50 instances sequentially). How does the system handle aggregate containment—do you support circuit breakers or rate limits on top of the policy evaluation? Curious if you're also looking at dynamic risk scoring, where an agent's permissions might degrade automatically if it starts hitting high error rates or unusual patterns.",
-            "Fair question. Yes, you can absolutely generate a basic proxy with an LLM, the gap is in the stuff that's hard to get right and boring to maintain. Policy hot-reload without dropping in-flight requests (ArcSwap, not \"restart the process\"). Tamper-evident audit with blake3 hash chains, not just append-only logs. Credential injection where the agent process literally never sees the secret, not env vars. Content inspection that runs bidirectionally without buffering entire responses into memory. Correct TLS MITM for the HTTP proxy mode with dynamic per-host certs. An LLM will generate something that works for a demo. We created 409 tests including property-based testing with proptest, because t",
-            "Yes! You are right about the three primitives and that's basically Bulwark's core loop. On idempotency: right now Bulwark observes but doesn't enforce dedupe. Every request gets a unique event ID in the audit log, and you can see retries in the session timeline, but there's no automatic \"this looks like the same create_issue call from 2 seconds ago, block it.\" It's on the roadmap and I think it needs to be two things: (1) a configurable dedupe window per tool pattern (you want it for create_charge but not for list_issues), and (2) content-aware hashing so it's not just \"same tool + same action\" but \"same tool + same action + same arguments within N seconds.\" The tricky part is that some tool",
-            "This is ai slop, likely automated, which against HN rules If your Ai can do all of this, so can mine",
-            "not sure why you say this, if you don’t like it don’t use it, if you can create your own, do it, or just check the repo and try it, you might find it useful",
-            "because the slop is getting out of hand and it looks like slop",
-            "You asked a question, I gave you an answer. You can actually install it and run it with claude and the github MCP. You can also easily integrate it to OpenClaw."
-          ],
+          "top_comments_sample": [],
           "status": "ok",
           "window_days": 7
         },
@@ -289,169 +201,105 @@
           "window_days": 7,
           "skipped_reason": "repo_not_found"
         },
-        "demand_score_raw": 0.5756,
-        "demand_tier": "medium",
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
         "guardrail_applied": "none",
-        "guardrail_reason": "threshold_not_met"
+        "guardrail_reason": "insufficient_demand_data"
       }
     },
-    "discovered_at": "2026-02-17",
-    "first_seen": "2026-02-17T19:54:33.986800Z",
+    "discovered_at": "2026-02-16",
+    "first_seen": "2026-02-16T19:08:56.324150Z",
+    "final_score": 60,
+    "trending_score": 54,
+    "logo_source": "bing"
+  },
+  {
+    "name": "Databricks",
+    "description": "全球数据科学与机器学习领域的标杆企业，提供融合数据湖与数据仓库的一体化平台及AI模型训练部署服务。",
+    "website": "https://www.databricks.com",
+    "logo_url": "https://favicon.bing.com/favicon.ico?url=databricks.com&size=128",
+    "categories": [
+      "other"
+    ],
+    "dark_horse_index": 5,
+    "why_matters": "完成50亿美元股权融资，估值1340亿美元；年化营收54亿美元，同比增长65%，其中AI产品年化营收达14亿美元。",
+    "funding_total": "$5B J轮",
+    "region": "🇨🇳",
+    "source": "163.com",
+    "source_url": "https://www.163.com/dy/article/KLEG4DFN053469RG.html",
+    "source_title": "",
+    "website_source": "",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-14T19:36:51.358723Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "error",
+          "window_days": 7,
+          "error": "hn_search_failed:HTTPSConnectionPool(host='hn.algolia.com', port=443): Read timed out. (read timeout=12)"
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-02-14",
+    "first_seen": "2026-02-14T19:37:03.605868Z",
     "final_score": 100,
     "trending_score": 90,
     "logo_source": "bing"
   },
   {
-    "name": "Neysa",
-    "description": "印度AI云基础设施初创公司，提供GPU计算能力和AI应用部署工具",
-    "website": "https://neysa.ai",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=neysa.ai&size=128",
+    "name": "Oakley AI 智能眼镜",
+    "description": "Meta 与 Oakley 合作的面向运动员的 AI 智能眼镜系列。",
+    "website": "https://www.oakley.com",
+    "logo_url": "https://favicon.bing.com/favicon.ico?url=oakley.com&size=128",
     "categories": [
       "hardware"
     ],
     "dark_horse_index": 4,
-    "why_matters": "Blackstone领投印度AI基础设施领域最大融资；创始人Sharad Sanghi曾创办Netmagic（印度最早数据中心服务商）；计划部署20,000+GPU；受益于印度2047年税收优惠政策，瞄准OpenAI和Anthropic等前沿AI实验室的推理集群部署需求",
-    "funding_total": "$1.2B (equity + debt) at $1.4B valuation",
-    "region": "🇺🇸",
-    "source": "Economic Times",
-    "source_url": "https://economictimes.com/tech/funding/blackstone-leads-600-million-raise-in-ai-cloud-neysa-at-1-4-billion-enterprise-value/articleshow/128390049.cms",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-17T19:54:01.522042Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-17",
-    "first_seen": "2026-02-17T19:54:01.727925Z",
-    "final_score": 80,
-    "trending_score": 72,
-    "logo_source": "bing"
-  },
-  {
-    "name": "Flapping Airplanes",
-    "description": "由Google Ventures和Sequoia支持的AI研究实验室",
-    "website": "https://flappingairplanes.com",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=flappingairplanes.com&size=128",
-    "categories": [
-      "other"
-    ],
-    "dark_horse_index": 4,
-    "why_matters": "种子轮融资$180M，估值$1.5B，由Google Ventures、Sequoia和Index Ventures联合领投，代表AI研究新方向",
-    "funding_total": "$180M Seed",
-    "region": "🇺🇸",
-    "source": "TechCrunch",
-    "source_url": "https://techcrunch.com/2026/02/17/here-are-the-17-us-based-ai-companies-that-have-raised-100m-or-more-in-2026/",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-17T19:52:58.850154Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-17",
-    "first_seen": "2026-02-17T19:52:59.061167Z",
-    "final_score": 80,
-    "trending_score": 72,
-    "logo_source": "bing"
-  },
-  {
-    "name": "Fundup AI",
-    "description": "Fundup AI是一个SaaS平台，帮助企业发现并追踪全球最近融资的初创公司，提供AI驱动的潜在客户评分和CRM集成。",
-    "website": "https://fundup.ai",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=fundup.ai&size=128",
-    "categories": [
-      "other"
-    ],
-    "dark_horse_index": 2,
-    "why_matters": "2024年创立，提供3-5天内验证融资情报、AI预测资金使用方向和ICP匹配评分，支持100+国家数据，覆盖Slack警报、Salesforce/HubSpot集成和API，定位为GTM/销售团队的融资情报工具。",
+    "why_matters": "将 AI 眼镜形态拓展至专业运动场景，针对运动员需求设计，丰富了 AI 眼镜的应用生态。",
     "funding_total": "unknown",
-    "region": "🇺🇸",
-    "source": "Fundup AI",
-    "source_url": "https://fundup.ai",
+    "region": "🇨🇳",
+    "source": "VR陀螺",
+    "source_url": "https://www.sohu.com/a/986743072_549351",
     "source_title": "",
     "website_source": "",
     "community_verdict": null,
     "extra": {
       "demand": {
         "version": "v1",
-        "computed_at": "2026-02-17T19:52:43.914244Z",
+        "computed_at": "2026-02-14T19:02:42.755151Z",
         "window_days": 7,
         "hn": {
           "story_count": 0,
@@ -490,618 +338,33 @@
         "guardrail_reason": "insufficient_demand_data"
       }
     },
-    "discovered_at": "2026-02-17",
-    "first_seen": "2026-02-17T19:52:44.118210Z",
-    "final_score": 40,
-    "trending_score": 36,
-    "logo_source": "bing"
-  },
-  {
-    "name": "Veritus",
-    "description": "Veritus开发语音优先AI代理，用于消费者借贷行业的合规借款人对话，支持电话、短信、邮件和聊天全渠道集成。",
-    "website": "https://www.veritus.com",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=veritus.com&size=128",
-    "categories": [
-      "finance"
-    ],
-    "dark_horse_index": 3,
-    "why_matters": "YC Summer 2025孵化，获Crosslink和Threshold领投的1010万美元种子轮，专注语音优先AI代理处理借贷全生命周期，从申请到追收，已上线执行首次催收和贷款 origination工作流，针对万亿美元级美国消费者信贷市场。",
-    "funding_total": "$10.1M Seed",
-    "region": "🇺🇸",
-    "source": "The AI Insider",
-    "source_url": "https://theaiinsider.tech/2026/02/11/veritus-secures-10-1m-seed-round-to-deploy-ai-agents-across-consumer-lending/",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-17T19:52:43.633327Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-17",
-    "first_seen": "2026-02-17T19:52:43.888558Z",
-    "final_score": 60,
-    "trending_score": 54,
-    "logo_source": "bing"
-  },
-  {
-    "name": "Liberaware",
-    "description": "提供无人机巡逻、监控和视频分析服务，结合机器学习技术服务企业。",
-    "website": "https://liberaware.com",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=liberaware.com&size=128",
-    "categories": [
-      "hardware"
-    ],
-    "dark_horse_index": 3,
-    "why_matters": "融资320万美元，专注无人机AI视频分析，在亚太企业监控市场有潜力。",
-    "funding_total": "$3.2M",
-    "region": "🇸🇬",
-    "source": "Seedtable",
-    "source_url": "https://www.seedtable.com/best-startups-in-asia-pacific-apac",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-17T19:49:53.412670Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-17",
-    "first_seen": "2026-02-17T19:49:53.611552Z",
-    "final_score": 60,
-    "trending_score": 54,
-    "logo_source": "bing"
-  },
-  {
-    "name": "Dentio",
-    "description": "瑞典牙医AI平台，使用LLM生成临床笔记减轻行政负担。",
-    "website": "https://dentio.ai",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=dentio.ai&size=128",
-    "categories": [
-      "healthcare"
-    ],
-    "dark_horse_index": 2,
-    "why_matters": "a16z领投230万美元pre-seed，专注牙医垂直领域区别于Tandem Health，计划国际扩张。",
-    "funding_total": "$2.3M pre-seed",
-    "region": "🇺🇸",
-    "source": "TechCrunch",
-    "source_url": "https://techcrunch.com/2026/02/16/have-money-will-travel-a16zs-hunt-for-the-next-european-unicorn/",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-16T19:39:00.558455Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-16",
-    "first_seen": "2026-02-16T19:39:00.783431Z",
-    "final_score": 40,
-    "trending_score": 36,
-    "logo_source": "bing"
-  },
-  {
-    "name": "C2i Semiconductors",
-    "description": "印度初创公司开发即插即用系统级电源解决方案，针对AI数据中心减少15-20%能源损耗。",
-    "website": "https://c2i.co",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=c2i.co&size=128",
-    "categories": [
-      "hardware"
-    ],
-    "dark_horse_index": 2,
-    "why_matters": "Peak XV领投1500万美元A轮，总融1900万美元，解决AI数据中心电力瓶颈，预计4-6月首批硅片验证。",
-    "funding_total": "$19M Series A",
-    "region": "🇺🇸",
-    "source": "TechCrunch",
-    "source_url": "https://techcrunch.com/2026/02/15/as-ai-data-centers-hit-power-limits-peak-xv-backs-indian-startup-c2i-to-fix-the-bottleneck/",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-16T19:39:00.153182Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-16",
-    "first_seen": "2026-02-16T19:39:00.531188Z",
-    "final_score": 40,
-    "trending_score": 36,
-    "logo_source": "bing"
-  },
-  {
-    "name": "Uptiq",
-    "description": "金融服务AI平台，帮助财富管理、合规和运营部署自动化与AI代理。",
-    "website": "https://uptiq.ai",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=uptiq.ai&size=128",
-    "categories": [
-      "finance"
-    ],
-    "dark_horse_index": 4,
-    "why_matters": "Curql领投$25M B轮，总融$70M，将Qore打造成自助式金融AI开发平台。",
-    "funding_total": "$25M Series B (总计$70M)",
-    "region": "🇺🇸",
-    "source": "FintechFutures",
-    "source_url": "https://www.fintechfutures.com/venture-capital-funding/uptiq-lands-25m-series-b-to-expand-qore",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-16T19:38:16.206228Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-16",
-    "first_seen": "2026-02-16T19:38:16.421340Z",
+    "discovered_at": "2026-02-14",
+    "first_seen": "2026-02-14T19:02:43.375686Z",
     "final_score": 80,
     "trending_score": 72,
     "logo_source": "bing"
   },
   {
-    "name": "Newo.ai",
-    "description": "云平台用于部署管理语音、聊天和客户通信的AI代理。",
-    "website": "https://newo.ai",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=newo.ai&size=128",
-    "categories": [
-      "agent"
-    ],
-    "dark_horse_index": 3,
-    "why_matters": "专注AI代理部署语音/聊天，总融$30.9M，Acrobator Ventures等支持，解决客户通信自动化。",
-    "funding_total": "$25M (总计$30.9M)",
-    "region": "🇺🇸",
-    "source": "AlleyWatch",
-    "source_url": "https://alleywatch.com/2026/02/the-weekly-notable-startup-funding-report-2-16-26/",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-16T19:38:16.016248Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-16",
-    "first_seen": "2026-02-16T19:38:16.180431Z",
-    "final_score": 60,
-    "trending_score": 54,
-    "logo_source": "bing"
-  },
-  {
-    "name": "Cardinal",
-    "description": "精准外呼AI平台，帮助销售团队实现精确的潜在客户接触和转化。",
-    "website": "https://trycardinal.ai",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=trycardinal.ai&size=128",
-    "categories": [
-      "agent"
-    ],
-    "dark_horse_index": 2,
-    "why_matters": "YC W26入选，联合创始人来自MIT/Harvard，曾将S23能源软件公司出售给Johnson Controls，专注AI精准外呼。",
-    "funding_total": "$500K YC",
-    "region": "🇺🇸",
-    "source": "Y Combinator",
-    "source_url": "https://www.ycombinator.com/companies/trycardinal-ai",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-16T19:38:06.234169Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-16",
-    "first_seen": "2026-02-16T19:38:06.468233Z",
-    "final_score": 40,
-    "trending_score": 36,
-    "logo_source": "bing"
-  },
-  {
-    "name": "Bedrock Operator",
-    "description": "Autonomous retrofit system that mounts to existing heavy machinery (excavators, loaders) in hours, enabling autonomous navigation and task execution on construction jobsites via lidar, GPS, and motion sensors.",
-    "website": "https://bedrockrobotics.com",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=bedrockrobotics.com&size=128",
+    "name": "Stark Defence",
+    "description": "德国防御科技初创公司，专门开发自杀式无人机和军事AI系统，获得德国联邦国防军大额订单",
+    "website": "https://stark.ai",
+    "logo_url": "https://favicon.bing.com/favicon.ico?url=stark.ai&size=128",
     "categories": [
       "hardware"
     ],
-    "dark_horse_index": 3,
-    "why_matters": "Novel approach to construction automation: retrofits existing equipment rather than replacing it, enabling rapid deployment without facility modifications. Addresses construction industry productivity crisis. Co-led by CapitalG and Valor Atreides AI Fund.",
-    "funding_total": "$350M+",
-    "region": "🇺🇸",
-    "source": "Bedrock Robotics raises $270M in red-hot AI sector",
-    "source_url": "https://www.constructiondive.com/news/bedrock-robotics-raise-ai-automation-funding/811982/",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-16T19:37:56.778515Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-16",
-    "first_seen": "2026-02-16T19:37:56.961585Z",
-    "final_score": 60,
-    "trending_score": 54,
-    "logo_source": "bing"
-  },
-  {
-    "name": "Pertama Partners",
-    "description": "东南亚AI实施与培训咨询公司,提供企业级AI就绪评估、落地实施和治理框架服务",
-    "website": "https://www.pertamapartners.com",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=pertamapartners.com&size=128",
-    "categories": [
-      "other"
-    ],
-    "dark_horse_index": 2,
-    "why_matters": "专注解决70%AI项目失败问题,提供跨马来西亚、新加坡、印尼、香港、越南的政府补助识别和融资支持;客户案例显示2个月内完成合规框架部署,强调实战应用而非理论框架的差异化定位",
-    "funding_total": "unknown",
-    "region": "🇸🇬",
-    "source": "WeeklyAI Product Discovery",
-    "source_url": "https://www.pertamapartners.com",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-16T19:37:38.838266Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-16",
-    "first_seen": "2026-02-16T19:37:39.031222Z",
-    "final_score": 40,
-    "trending_score": 36,
-    "logo_source": "bing"
-  },
-  {
-    "name": "PolyAI",
-    "description": "伦敦企业对话AI，提供语音代理技术用于客服应用。",
-    "website": "https://poly.ai",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=poly.ai&size=128",
-    "categories": [
-      "voice"
-    ],
-    "dark_horse_index": 4,
-    "why_matters": "€73.2M D轮，用于扩展企业语音代理客服技术，专注高真实度对话AI。",
-    "funding_total": "€73.2M Series D",
+    "dark_horse_index": 5,
+    "why_matters": "€2.86B潜在合同价值（包括期权），Virtus无人机首次获得德国国防部大规模采购；Peter Thiel支持的防御科技独角兽，融资后估值超€10亿；与AeroMass Technologies战略并购扩大产能",
+    "funding_total": ">€1B valuation, Peter Thiel's Founders Fund contribution",
     "region": "🇪🇺",
-    "source": "Bebeez",
-    "source_url": "https://bebeez.eu/2026/02/12/german-genai-startup-blockbrain-lands-e17-5-million-to-advance-enterprise-grade-ai-agents/",
+    "source": "Manager Magazin / Reuters",
+    "source_url": "https://www.thestar.com.my/tech/tech-news/2026/02/13/germany039s-stark-valued-at-more-than-1-billion-euros-in-funding-round-says-manager-magazin",
     "source_title": "",
     "website_source": "",
     "community_verdict": null,
     "extra": {
       "demand": {
         "version": "v1",
-        "computed_at": "2026-02-16T19:35:17.118037Z",
+        "computed_at": "2026-02-14T08:18:58.197644Z",
         "window_days": 7,
         "hn": {
           "story_count": 0,
@@ -1140,218 +403,23 @@
         "guardrail_reason": "insufficient_demand_data"
       }
     },
-    "discovered_at": "2026-02-16",
-    "first_seen": "2026-02-16T19:35:17.318964Z",
-    "final_score": 80,
-    "trending_score": 72,
-    "logo_source": "bing"
-  },
-  {
-    "name": "EvoluteIQ",
-    "description": "瑞典AI平台，提供代理式AI自动化，针对端到端业务流程编排。",
-    "website": "https://evoluteiq.com",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=evoluteiq.com&size=128",
-    "categories": [
-      "agent"
-    ],
-    "dark_horse_index": 4,
-    "why_matters": "€44M少数股权增长轮，用于加速代理式AI自动化全球扩张，专注业务流程完整自动化。",
-    "funding_total": "€44M Growth",
-    "region": "🇪🇺",
-    "source": "Bebeez",
-    "source_url": "https://bebeez.eu/2026/02/12/german-genai-startup-blockbrain-lands-e17-5-million-to-advance-enterprise-grade-ai-agents/",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-16T19:35:16.917595Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-16",
-    "first_seen": "2026-02-16T19:35:17.091335Z",
-    "final_score": 80,
-    "trending_score": 72,
-    "logo_source": "bing"
-  },
-  {
-    "name": "MRD5165 Edge AI-Box",
-    "description": "High-performance Edge AI Engine built around Qualcomm QRB5165 SoC for superior AI computing at the edge.",
-    "website": "https://mistralsolutions.com",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=mistralsolutions.com&size=128",
-    "categories": [
-      "hardware"
-    ],
-    "dark_horse_index": 2,
-    "why_matters": "Compact edge AI hardware for on-device processing, optimized for robotics and mobile deployments.",
-    "funding_total": "unknown",
-    "region": "🇪🇺",
-    "source": "Mistral Solutions",
-    "source_url": "https://mistralsolutions.com/edge-ai-box/",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-16T19:34:51.026436Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-16",
-    "first_seen": "2026-02-16T19:34:51.250182Z",
-    "final_score": 40,
-    "trending_score": 36,
-    "logo_source": "bing"
-  },
-  {
-    "name": "HANASEE",
-    "description": "小説や脚本からキャラクター一貫性を保った長編マンガをAIエージェントが自動生成するマンガ制作ツール。",
-    "website": "https://xross-road.com/ja/",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=xross-road.com&size=128",
-    "categories": [
-      "other"
-    ],
-    "dark_horse_index": 2,
-    "why_matters": "海外VC主導で150万ドル調達、クローズドベータ公開済みでマンガ特化AIエージェントがイラスト・コマ割り・対話編集を連携処理し、プロ品質の長編生成を実現。",
-    "funding_total": "$1.5M Pre-seed",
-    "region": "🇯🇵🇰🇷",
-    "source": "PR Times",
-    "source_url": "https://prtimes.jp/main/html/rd/p/000000010.000100767.html",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-16T19:33:47.799244Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-16",
-    "first_seen": "2026-02-16T19:33:48.057367Z",
-    "final_score": 40,
-    "trending_score": 36,
+    "discovered_at": "2026-02-14",
+    "first_seen": "2026-02-14T08:18:58.953968Z",
+    "final_score": 100,
+    "trending_score": 90,
     "logo_source": "bing"
   },
   {
     "name": "Modveon",
-    "description": "本人性検証を中心としたID起点の信頼OSを構築し、行政DXやオンライン相互作用の信頼性を高めるプラットフォーム。",
+    "description": "本人性検証を中心としたID起点の信頼OSを構築し、行政DXやオンライン相互作用の信頼性を担保するプラットフォーム。",
     "website": "https://modveon.com",
     "logo_url": "https://favicon.bing.com/favicon.ico?url=modveon.com&size=128",
     "categories": [
       "other"
     ],
     "dark_horse_index": 3,
-    "why_matters": "1000万ドル調達、Coinbase Ventures参加。なりすまし防止のverified interactionsを社会規模で実現するインフラ。",
-    "funding_total": "$10M",
+    "why_matters": "Coinbase Ventures参加で1000万ドル調達。なりすまし・詐欺対策のverified interactionsを社会規模で実現する信頼基盤。",
+    "funding_total": "$10M Seed",
     "region": "🇯🇵🇰🇷",
     "source": "note.com/startup_now0708",
     "source_url": "https://note.com/startup_now0708/n/n9d02e31907de",
@@ -1361,7 +429,7 @@
     "extra": {
       "demand": {
         "version": "v1",
-        "computed_at": "2026-02-15T19:36:37.578778Z",
+        "computed_at": "2026-02-14T08:18:46.292319Z",
         "window_days": 7,
         "hn": {
           "story_count": 0,
@@ -1400,33 +468,33 @@
         "guardrail_reason": "insufficient_demand_data"
       }
     },
-    "discovered_at": "2026-02-15",
-    "first_seen": "2026-02-15T19:36:37.794867Z",
+    "discovered_at": "2026-02-14",
+    "first_seen": "2026-02-14T08:18:47.460585Z",
     "final_score": 60,
     "trending_score": 54,
     "logo_source": "bing"
   },
   {
-    "name": "Rotimatic",
-    "description": "智能厨房机器人，一键90秒制作平底面包，革新家庭健康饮食方式。",
-    "website": "https://zimplistic.com",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=zimplistic.com&size=128",
+    "name": "LayerX",
+    "description": "日本企业AI平台自动化处理费用管理、发票处理和合规工作流，服务超15,000家企业。",
+    "website": "https://layerx.ai",
+    "logo_url": "https://favicon.bing.com/favicon.ico?url=layerx.ai&size=128",
     "categories": [
-      "hardware"
+      "agent"
     ],
-    "dark_horse_index": 3,
-    "why_matters": "桌面厨房机器人形态创新，专注平底面包制作场景，推动健康家庭烹饪",
-    "funding_total": "unknown",
-    "region": "🇸🇬",
-    "source": "Zimplistic",
-    "source_url": "https://builtinsingapore.com/companies/type/robotics-companies",
+    "dark_horse_index": 5,
+    "why_matters": "获1亿美元B轮融资，总额达1.922亿美元，由TCV领投，日本7岁初创B轮最大之一；客户从2024年2月的1万增至2025年4月的1.5万，员工翻倍至430人，针对日本纸质办公痛点。",
+    "funding_total": "$192.2M Series B",
+    "region": "🇯🇵🇰🇷",
+    "source": "TechBuzz",
+    "source_url": "https://www.techbuzz.ai/articles/layerx-scores-100m-series-b-to-automate-japan-s-paper-heavy-offices",
     "source_title": "",
     "website_source": "",
     "community_verdict": null,
     "extra": {
       "demand": {
         "version": "v1",
-        "computed_at": "2026-02-15T19:34:40.814962Z",
+        "computed_at": "2026-02-14T04:56:32.028061Z",
         "window_days": 7,
         "hn": {
           "story_count": 0,
@@ -1465,1738 +533,43 @@
         "guardrail_reason": "insufficient_demand_data"
       }
     },
-    "discovered_at": "2026-02-15",
-    "first_seen": "2026-02-15T19:34:41.043383Z",
-    "final_score": 60,
-    "trending_score": 54,
-    "logo_source": "bing"
-  },
-  {
-    "name": "Databricks",
-    "description": "数据湖仓架构提出者，提供从数据集成到AI模型训练部署的一体化平台。",
-    "website": "https://databricks.com",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=databricks.com&size=128",
-    "categories": [
-      "other"
-    ],
-    "dark_horse_index": 5,
-    "why_matters": "完成50亿美元股权融资，估值达1340亿美元；年化营收54亿美元，同比增长65%，其中AI产品年化营收14亿美元。",
-    "funding_total": "$5B J轮",
-    "region": "🇨🇳",
-    "source": "163.com",
-    "source_url": "https://www.163.com/dy/article/KLEG4DFN053469RG.html",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": {
-      "source": "hackernews",
-      "window_days": 7,
-      "summary": "评论者质疑这是服务、GitHub仓库还是其他，并指出缺少链接。评论建议考虑提供相反功能的现有服务。整体语气显示困惑和批评，没有正面反馈。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
-      "sentiment": "negative",
-      "confidence": 0.9
-    },
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-15T19:33:57.781975Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 2,
-          "top_story_id": "46975075",
-          "points": 1,
-          "comments": 1,
-          "engagement_depth_ratio": 1.0,
-          "is_controversial": false,
-          "top_comments_sample": [
-            "Is this a service, a github repo, something else? did you forget to include a link? have you considered a service that does the opposite?"
-          ],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.3726,
-        "demand_tier": "medium",
-        "guardrail_applied": "none",
-        "guardrail_reason": "threshold_not_met"
-      }
-    },
-    "discovered_at": "2026-02-15",
-    "first_seen": "2026-02-15T19:34:01.980041Z",
+    "discovered_at": "2026-02-14",
+    "first_seen": "2026-02-14T04:56:33.214405Z",
     "final_score": 100,
     "trending_score": 90,
     "logo_source": "bing"
   },
   {
-    "name": "Trener Robotics",
-    "description": "Trener Robotics开发Acteris平台，让工业机器人通过对话学习任务，无需复杂编程。",
-    "website": "https://trenerrobotics.com",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=trenerrobotics.com&size=128",
-    "categories": [
-      "hardware"
-    ],
-    "dark_horse_index": 4,
-    "why_matters": "€26M Series A融资打造工业自动化'物理AI'层，通过对话训练机器人，革新传统编程模式。",
-    "funding_total": "€26M Series A",
-    "region": "🇪🇺",
-    "source": "EU Tech Future",
-    "source_url": "https://eutechfuture.com",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-15T19:32:36.183088Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-15",
-    "first_seen": "2026-02-15T19:32:36.366168Z",
-    "final_score": 80,
-    "trending_score": 72,
-    "logo_source": "bing"
-  },
-  {
-    "name": "Circle Health",
-    "description": "柏林健康科技公司Circle Health构建AI驱动的预防健康平台。",
-    "website": "https://circlehealth.ai",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=circlehealth.ai&size=128",
-    "categories": [
-      "healthcare"
-    ],
-    "dark_horse_index": 3,
-    "why_matters": "完成€9M seed轮（股权+债务），专注AI预防健康平台填补早期干预市场空白。",
-    "funding_total": "€9M seed",
-    "region": "🇪🇺",
-    "source": "Tech.eu",
-    "source_url": "https://tech.eu",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-15T19:32:05.555845Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-15",
-    "first_seen": "2026-02-15T19:32:05.764804Z",
-    "final_score": 60,
-    "trending_score": 54,
-    "logo_source": "bing"
-  },
-  {
-    "name": "Demoboost",
-    "description": "华沙SaaS平台Demoboost帮助B2B软件公司将产品演示转化为收入情报。",
-    "website": "https://demoboost.com",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=demoboost.com&size=128",
-    "categories": [
-      "other"
-    ],
-    "dark_horse_index": 3,
-    "why_matters": "完成€2.8M融资，创新将产品演示数据转化为可行动的收入情报，提升B2B销售效率。",
-    "funding_total": "€2.8M",
-    "region": "🇪🇺",
-    "source": "Tech.eu",
-    "source_url": "https://tech.eu",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-15T19:32:05.286059Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-15",
-    "first_seen": "2026-02-15T19:32:05.528366Z",
-    "final_score": 60,
-    "trending_score": 54,
-    "logo_source": "bing"
-  },
-  {
-    "name": "SAKURA-II AI Coprocessor",
-    "description": "Edge向け省電力生成AIプロセッサで、産業オートメーションや防衛分野に特化。",
-    "website": "https://edgecortix.com",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=edgecortix.com&size=128",
-    "categories": [
-      "hardware"
-    ],
-    "dark_horse_index": 3,
-    "why_matters": "エッジAI処理効率化、次世代SAKURA-Xで2000TOPS性能を目指す",
-    "funding_total": "150億円",
-    "region": "🇯🇵🇰🇷",
-    "source": "forstartups.com",
-    "source_url": "https://www.forstartups.com/news/funding-ranking-202508",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-15T19:31:09.768635Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-15",
-    "first_seen": "2026-02-15T19:31:09.993205Z",
-    "final_score": 60,
-    "trending_score": 54,
-    "logo_source": "bing"
-  },
-  {
-    "name": "Halliday Glasses",
-    "description": "具有隐秘显示能力的超轻AI眼镜，成为史上最大AI眼镜众筹项目。",
-    "website": "https://halliday.ai",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=halliday.ai&size=128",
-    "categories": [
-      "hardware"
-    ],
-    "dark_horse_index": 3,
-    "why_matters": "隐秘显示AI眼镜，新加坡Gyges Labs产品，众筹爆火展示形态创新。",
-    "funding_total": "unknown",
-    "region": "🇸🇬",
-    "source": "雷峰网",
-    "source_url": "https://m.leiphone.com/category/weiwu/DNnV7LAud5aKajmi.html",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-15T19:29:53.965378Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-15",
-    "first_seen": "2026-02-15T19:29:54.173745Z",
-    "final_score": 60,
-    "trending_score": 54,
-    "logo_source": "bing"
-  },
-  {
-    "name": "Simile",
-    "description": "利用AI创建模拟环境和AI代理的仿真工具初创公司。",
-    "website": "https://simile.ai",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=simile.ai&size=128",
-    "categories": [
-      "agent"
-    ],
-    "dark_horse_index": 4,
-    "why_matters": "2026年初A轮融资1亿美元，由Index Ventures领投，专注AI模拟环境创建，是早期巨额融资AI初创公司。",
-    "funding_total": "$100M Series A",
+    "name": "Plaud NotePin",
+    "slug": "plaud-notepin",
+    "website": "https://www.plaud.ai",
+    "description": "AI-powered wearable recorder with real-time transcription and summary",
+    "category": "hardware",
+    "hardware_category": "wearables",
     "region": "🇺🇸",
-    "source": "Crunchbase",
-    "source_url": "https://news.crunchbase.com/venture/biggest-funding-rounds-anthropic-leads-ai-robotics/",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-15T19:29:45.263591Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-15",
-    "first_seen": "2026-02-15T19:29:45.515145Z",
-    "final_score": 80,
-    "trending_score": 72,
-    "logo_source": "bing"
-  },
-  {
-    "name": "Bretton AI",
-    "description": "AI代理平台，自动化金融犯罪合规工作流，包括KYC/KYB审查、AML和制裁调查",
-    "website": "https://bretton.ai",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=bretton.ai&size=128",
-    "categories": [
-      "finance"
-    ],
-    "dark_horse_index": 5,
-    "why_matters": "Series B融资7500万美元，由Sapphire Ventures领投；完成120万+金融犯罪调查，为客户节省1000万+美元合规成本；平均合同价值从2023年的2.5万美元增长到2026年的20.1万美元，增长8倍；客户总市值从1500亿美元增至1万亿美元；首次在全球最受监管的金融机构中大规模部署生产级AI代理，定义了受信任AI在金融系统中的行业标准",
-    "funding_total": "$75M Series B",
-    "region": "🇺🇸",
-    "source": "RegTech Analyst, BusinessWire, Sapphire Ventures",
-    "source_url": "https://regtechanalyst.com/financial-crime-platform-bretton-ai-secures-75m/",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-15T19:28:16.515370Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-15",
-    "first_seen": "2026-02-15T19:28:16.762519Z",
-    "final_score": 100,
-    "trending_score": 90,
-    "logo_source": "bing"
-  },
-  {
-    "name": "雷鸟创新 eSIM AI眼镜原型",
-    "description": "具备eSIM独立联网功能的AI眼镜原型，在CES展示。",
-    "website": "https://www.roku.com",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=roku.com&size=128",
-    "categories": [
-      "hardware"
-    ],
-    "dark_horse_index": 3,
-    "why_matters": "eSIM独立联网的AI眼镜原型，展示产品形态进一步探索。",
-    "funding_total": "unknown",
-    "region": "🇸🇬",
-    "source": "澎湃新闻",
-    "source_url": "https://www.thepaper.cn/newsDetail_forward_32582074",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-14T19:33:43.741630Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-14",
-    "first_seen": "2026-02-14T19:33:43.916290Z",
-    "final_score": 60,
-    "trending_score": 54,
-    "logo_source": "bing"
-  },
-  {
-    "name": "iFLYTEK AIWATCH",
-    "description": "传统腕時計外观的AI智能手表，支持高精度录音、转文字、AI总结、ToDo自动生成和商务健康监测。",
-    "website": "https://www.iflytekwatch.com",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=iflytekwatch.com&size=128",
-    "categories": [
-      "hardware"
-    ],
-    "dark_horse_index": 3,
-    "why_matters": "融合传统腕表设计与AI录音总结功能，针对商务场景优化，但形态仍为传统智能手表。",
-    "funding_total": "¥5.9亿 (Makuake累计)",
-    "region": "🇯🇵🇰🇷",
-    "source": "Makuake",
-    "source_url": "https://www.makuake.com/project/iflytek_aiwtch/",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-14T19:30:24.850507Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-14",
-    "first_seen": "2026-02-14T19:30:25.043048Z",
-    "final_score": 60,
-    "trending_score": 54,
-    "logo_source": "bing"
-  },
-  {
-    "name": "7AI",
-    "description": "波士顿初创公司，构建网络安全AI代理系统。",
-    "website": "https://7ai.com",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=7ai.com&size=128",
-    "categories": [
-      "agent"
-    ],
+    "funding_total": "$20M",
     "dark_horse_index": 4,
-    "why_matters": "2025年9月30日完成超1亿美元融资，由Fidelity和Atreides Management联合领投，专注企业级安全AI代理。",
-    "funding_total": "$100M+",
-    "region": "🇺🇸",
-    "source": "TechCrunch",
-    "source_url": "https://techcrunch.com/2026/01/19/here-are-the-49-us-ai-startups-that-have-raised-100m-or-more-in-2025/",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-14T19:29:52.438967Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-14",
-    "first_seen": "2026-02-14T19:29:52.728751Z",
-    "final_score": 80,
-    "trending_score": 72,
-    "logo_source": "bing"
-  },
-  {
-    "name": "Operand",
-    "description": "YC 2025毕业的AI平台，自动化传统商业咨询职能，专注电商定价与促销策略优化。",
-    "website": "https://operand.ai",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=operand.ai&size=128",
-    "categories": [
-      "agent"
+    "criteria_met": [
+      "kickstarter_success",
+      "product_shipped"
     ],
-    "dark_horse_index": 4,
-    "why_matters": "YC S25毕业，专注电商领域通过分析内部数据执行最优定价策略，已展现直接财务影响吸引早期关注。",
-    "funding_total": "unknown",
-    "region": "🇺🇸",
-    "source": "Atlantic.Net",
-    "source_url": "https://www.atlantic.net/gpu-server-hosting/fastest-growing-ai-startups-2026/",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": {
-      "source": "hackernews",
-      "window_days": 7,
-      "summary": "评论者认为用LLM直接生成汇编代码风险高，因为一个字节错误就会导致程序崩溃，且LLM的概率性输出不适合这种精确需求。一些人承认过程易出错但视其为抽象层，有一定潜力，并建议结合现有汇编器使用。整体讨论认可想法的理论可能性，但强调当前工具的局限性和可靠性问题。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
-      "sentiment": "mixed",
-      "confidence": 0.85
-    },
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-14T19:29:09.009242Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 1,
-          "top_story_id": "46964297",
-          "points": 1,
-          "comments": 5,
-          "engagement_depth_ratio": 5.0,
-          "is_controversial": false,
-          "top_comments_sample": [
-            "This will essentially always be more expensive than generating code a compiler can use, because the compiler and intermediate representation rule out, ex ante, a vast logical space of binaries that will crash.",
-            "I don't see why it's not possible. In your example scenario, it sounds like Bob is vibe-coding a project in assembly language, and then using an existing assembler to create the final binary? I have not tried it, but I would imagine that current LLMs are relatively weak on generating assembly language, just due to less thorough training compared to higher-level languages, but even if so, that's surmountable. As for, what I think you are suggesting, having the LLM also do the assembly step? Again, in theory, sure, but I would think just using the existing known-good assembler would be preferable to training an LLM to convert assembly language to binary. I'm not sure what you would gain in ter",
-            "The basis of this idea is grounded on fantasy. You understand that one wrong byte means that the program crashes? Why use a tool that is totally probabilistic to generate assembly directly which must be correct? Why?",
-            "I didn't think there would be a gain of speed or productivity, but just a (possibly ominous) idea of 'cutting out the middleman'. Granted, that middleman is very important. Natural language is not the best language for formal descriptions of projects, but it is the one that humans use most day to day. Perhaps a chain like this would be the start of on demand programs.",
-            "You are right that this is an error prone process, but as these tools are used now, are much like how compilers were used in the past. It is, after all, another layer of abstraction. Is it foolproof? No. I do think the idea had some merit, though."
-          ],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.5667,
-        "demand_tier": "medium",
-        "guardrail_applied": "none",
-        "guardrail_reason": "threshold_not_met"
-      }
-    },
-    "discovered_at": "2026-02-14",
-    "first_seen": "2026-02-14T19:29:13.241007Z",
-    "final_score": 80,
-    "trending_score": 72,
-    "logo_source": "bing"
-  },
-  {
-    "name": "Deep Intelligent Pharma",
-    "description": "AI药物发现平台，提供从早期研究到临床试验全流程的自主智能解决方案，已实现零修订临床试验协议通过",
-    "website": "https://www.deepintelligentpharma.com",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=deepintelligentpharma.com&size=128",
-    "categories": [
-      "healthcare"
-    ],
-    "dark_horse_index": 4,
-    "why_matters": "2个月内融资超$110M，显示投资者对AI药物开发的强劲信心；独创全栈AI系统涵盖临床试验全周期，医学术语准确率99%+，安全性达99.9%工业级；已产生通过监管审查零修订的临床试验协议（业界罕见）；Protocol Rehearsal虚拟试验功能可预测患者入组速度、脱落率和运营挑战",
-    "funding_total": "$60M latest round + $50M Series D (2个月内融资$110M+)",
-    "region": "🇺🇸",
-    "source": "Pharma Business Outlook",
-    "source_url": "https://pharmabusinessoutlook.com/deep-intelligent-pharma-raises-fresh-60-million-to-take-ai-into-clinical-trials/",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-14T19:29:00.788059Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-14",
-    "first_seen": "2026-02-14T19:29:00.990260Z",
-    "final_score": 80,
-    "trending_score": 72,
-    "logo_source": "bing"
-  },
-  {
-    "name": "simmetry.ai",
-    "description": "合成数据公司simmetry.ai为农业、食品和工业领域提供AI训练平台。",
-    "website": "https://simmetry.ai",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=simmetry.ai&size=128",
-    "categories": [
-      "other"
-    ],
-    "dark_horse_index": 2,
-    "why_matters": "获得€330K融资后扩展AI训练平台，专注合成数据生成，服务农业食品工业垂直领域，具有数据隐私优势。",
-    "funding_total": "€330K",
-    "region": "🇪🇺",
-    "source": "Tech.eu",
-    "source_url": "https://tech.eu",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-14T19:28:18.559118Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-14",
-    "first_seen": "2026-02-14T19:28:18.745790Z",
-    "final_score": 40,
-    "trending_score": 36,
-    "logo_source": "bing"
-  },
-  {
-    "name": "Stark",
-    "description": "德国武装无人机初创公司，开发自主导航的垂直起降(VTOL)自杀式无人机Virtus，集成AI制导系统，可执行100公里范围内的精准打击任务",
-    "website": "https://stark.ai",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=stark.ai&size=128",
+    "why_matters": "Kickstarter爆款，AI录音胸针，实时转写+摘要，已出货10万+",
+    "latest_news": "2025-12: 月销超$2M",
+    "discovered_at": "2026-01-20",
+    "source": "Kickstarter",
+    "is_hardware": true,
     "categories": [
       "hardware"
     ],
-    "dark_horse_index": 5,
-    "why_matters": "刚达到独角兽估值($1.2B+)，获得德国政府€2.86B潜在合同订单(初期€269M)，员工数计划从450人翻倍至2026年底，已进入英国和瑞典市场。Virtus无人机具备AI引导、5kg有效载荷、250km/h最高速度和返航能力等创新特性，代表欧洲防御技术自主化的战略转向",
-    "funding_total": "$1.2B+ valuation (Founders Fund + European investors)",
-    "region": "🇪🇺",
-    "source": "Sifted, Jerusalem Post, TechFundingNews",
-    "source_url": "https://www.startupresearcher.com/news/germany-s-stark-surpasses-usd1-2-billion-valuation-in-funding-round",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-14T19:27:49.061091Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-14",
-    "first_seen": "2026-02-14T19:27:49.370113Z",
-    "final_score": 100,
-    "trending_score": 90,
-    "logo_source": "bing"
-  },
-  {
-    "name": "ScyAI",
-    "description": "苏黎世初创公司ScyAI推出AI风险平台，为房地产和保险提供实物资产风险智能分析。",
-    "website": "https://scyai.com",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=scyai.com&size=128",
-    "categories": [
-      "finance"
-    ],
-    "dark_horse_index": 3,
-    "why_matters": "AENU领投€2M pre-seed，专注实物资产AI风险管理，针对企业房地产和保险团队，提供首个专用风险智能平台。",
-    "funding_total": "€2M pre-seed",
-    "region": "🇪🇺",
-    "source": "Tech.eu",
-    "source_url": "https://tech.eu",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-13T19:53:40.762040Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-13",
-    "first_seen": "2026-02-13T19:53:40.936561Z",
-    "final_score": 60,
-    "trending_score": 54,
-    "logo_source": "bing"
-  },
-  {
-    "name": "Stanhope AI",
-    "description": "专注世界模型（world models）的欧洲深度科技初创公司，模拟现实的AI前沿技术。",
-    "website": "https://stanhope.ai",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=stanhope.ai&size=128",
-    "categories": [
-      "other"
-    ],
-    "dark_horse_index": 3,
-    "why_matters": "Frontline Ventures领投800万美元，世界模型代表AI模拟现实的未来方向。",
-    "funding_total": "$8M",
-    "region": "🇪🇺",
-    "source": "Sifted",
-    "source_url": "https://sifted.eu",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-13T19:51:54.962102Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-13",
-    "first_seen": "2026-02-13T19:51:55.149436Z",
-    "final_score": 60,
-    "trending_score": 54,
-    "logo_source": "bing"
-  },
-  {
-    "name": "Mi-Mo v0",
-    "description": "6脚ロボットで自律的に考え行動するカスタマイズ可能な汎用AIロボット。卓上ライトのような温かみのあるデザインで、画像・音声認識と拡張性が高い。",
-    "website": "https://jizai.ai/services/mimo",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=jizai.ai&size=128",
-    "categories": [
-      "hardware"
-    ],
-    "dark_horse_index": 4,
-    "why_matters": "6本脚の非伝統形態でCES 2025注目、LLM/VLM制御のカスタマイズ性が高く、生活に馴染むAIロボット。",
-    "funding_total": "unknown",
-    "region": "🇯🇵🇰🇷",
-    "source": "Zenn.dev / robotstart.info",
-    "source_url": "https://zenn.dev/schania/articles/91bda77ae52706",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-13T19:51:14.978481Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-13",
-    "first_seen": "2026-02-13T19:51:15.177469Z",
-    "final_score": 80,
-    "trending_score": 72,
-    "logo_source": "bing"
-  },
-  {
-    "name": "InfiniMind",
-    "description": "长视频智能平台DeepFrame，可处理200小时视频精确定位场景、发言者和事件。",
-    "website": "https://infinimind.ai",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=infinimind.ai&size=128",
-    "categories": [
-      "video"
-    ],
-    "dark_horse_index": 3,
-    "why_matters": "前Google工程师创办，获UTEC领投580万美元种子轮，DeepFrame将于2026年3月beta发布，目标通用视频智能通往AGI。",
-    "funding_total": "$5.8M Seed",
-    "region": "🇺🇸",
-    "source": "TechCrunch",
-    "source_url": "https://techcrunch.com/2026/02/09/ex-googlers-are-building-infrastructure-to-help-companies-understand-their-video-data/",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-13T19:50:16.869251Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-13",
-    "first_seen": "2026-02-13T19:50:17.049037Z",
-    "final_score": 60,
-    "trending_score": 54,
-    "logo_source": "bing"
-  },
-  {
-    "name": "锐龙AI 400与PRO 400系列处理器",
-    "description": "AMD推出的新款AI处理器，为Windows 11 AI+ PC提供至高60 TOPS的NPU性能",
-    "website": "https://www.amd.com/zh-cn/newsroom/press-releases/2026-1-5-amd-expands-ai-leadership-across-client-graphics-.html",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=amd.com&size=128",
-    "categories": [
-      "hardware"
-    ],
-    "dark_horse_index": 2,
-    "why_matters": "端侧AI算力升级，支持本地大模型部署，推动AI PC从云端向边缘计算转变，CES 2026发布",
-    "funding_total": "unknown",
-    "region": "🇺🇸",
-    "source": "AMD官方新闻稿",
-    "source_url": "https://www.amd.com/zh-cn/newsroom/press-releases/2026-1-5-amd-expands-ai-leadership-across-client-graphics-.html",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-13T19:49:47.640183Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-13",
-    "first_seen": "2026-02-13T19:49:47.841229Z",
-    "final_score": 40,
-    "trending_score": 36,
-    "logo_source": "bing"
-  },
-  {
-    "name": "Naboo",
-    "description": "简化企业活动预订和支出管理的垂直SaaS平台。",
-    "website": "https://naboo.com",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=naboo.com&size=128",
-    "categories": [
-      "other"
-    ],
-    "dark_horse_index": 4,
-    "why_matters": "Lightspeed领投7000万美元B轮，垂直SaaS持续悄然扩张。",
-    "funding_total": "$70M Series B",
-    "region": "🇺🇸",
-    "source": "Foundevo",
-    "source_url": "https://www.foundevo.com/only-30-make-it-to-series-a/",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-13T19:49:15.945574Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-13",
-    "first_seen": "2026-02-13T19:49:16.116468Z",
-    "final_score": 80,
-    "trending_score": 72,
-    "logo_source": "bing"
-  },
-  {
-    "name": "夸克AI眼镜S1",
-    "description": "阿里巴巴夸克自研的轻薄AI眼镜，支持户外显示和嘈杂环境语音交互。",
-    "website": "https://aiglass.quark.alibaba.com",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=aiglass.quark.alibaba.com&size=128",
-    "categories": [
-      "hardware"
-    ],
-    "dark_horse_index": 4,
-    "why_matters": "镜框仅3.3mm的超薄AI眼镜，登顶电商热销榜，针对户外和嘈杂场景优化。",
-    "funding_total": "unknown",
-    "region": "🇪🇺",
-    "source": "ifeng财经",
-    "source_url": "https://finance.ifeng.com/c/8peur15I1r6",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-13T19:47:48.873380Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-13",
-    "first_seen": "2026-02-13T19:47:49.046358Z",
-    "final_score": 80,
-    "trending_score": 72,
-    "logo_source": "bing"
-  },
-  {
-    "name": "WearStudio.ai",
-    "description": "アパレル向けAI試着サービスで、人物・ペット試着から遺影写真作成まで10機能をオールインワン、撮影コスト最大90%削減。",
-    "website": "https://wearstudio.ai",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=wearstudio.ai&size=128",
-    "categories": [
-      "image"
-    ],
-    "dark_horse_index": 3,
-    "why_matters": "2026年2月10日リリース、5枚写真で15秒生成の高速試着を実現しアパレル撮影コスト90%削減、葬儀社向け遺影機能も含む多機能プラットフォーム。",
-    "funding_total": "unknown",
-    "region": "🇯🇵🇰🇷",
-    "source": "PR Times",
-    "source_url": "https://prtimes.jp/main/html/rd/p/000000055.000127837.html",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-13T19:44:30.856948Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-13",
-    "first_seen": "2026-02-13T19:44:31.187125Z",
-    "final_score": 60,
-    "trending_score": 54,
-    "logo_source": "bing"
-  },
-  {
-    "name": "PallasAI",
-    "description": "行业首款提供标准化服务的GEO AI Agent平台，专注答案引擎优化（AEO）",
-    "website": "https://www.pallasai.net",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=pallasai.net&size=128",
-    "categories": [
-      "agent"
-    ],
-    "dark_horse_index": 3,
-    "why_matters": "前蚂蚁大模型首席架构师创立，三个月内完成两轮融资，发布行业首款GEO产品化AI Agent，帮助头部企业品牌可见性平均提升50%以上",
-    "funding_total": "数千万人民币",
-    "region": "🇨🇳",
-    "source": "搜狐",
-    "source_url": "https://www.sohu.com/a/984371120_122074763",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-13T10:05:27.762924Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-13",
-    "first_seen": "2026-02-13T10:05:29.901645Z",
-    "final_score": 60,
-    "trending_score": 54,
-    "logo_source": "bing"
-  },
-  {
-    "name": "Entire",
-    "description": "由GitHub前CEO创立的AI编程初创公司，致力于革新开发者工具。",
-    "website": "https://entire.io",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=entire.io&size=128",
-    "categories": [
-      "coding"
-    ],
-    "dark_horse_index": 5,
-    "why_matters": "GitHub前CEO Thomas Dohmke创立，获6000万美元种子轮融资，创下开发者工具领域规模最大的种子轮融资纪录，估值达3亿美元。",
-    "funding_total": "$60M 种子轮",
-    "region": "🇨🇳",
-    "source": "市场资讯",
-    "source_url": "https://www.163.com/dy/article/KLFR3K3B05119734.html?spss=dy_author",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": {
-      "source": "hackernews",
-      "window_days": 7,
-      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
-      "sentiment": "neutral",
-      "confidence": 0.45
-    },
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-13T10:04:59.800814Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 26,
-          "top_story_id": "46986614",
-          "points": 24,
-          "comments": 47,
-          "engagement_depth_ratio": 1.9583,
-          "is_controversial": true,
-          "top_comments_sample": [
-            "British accent review time! \"Nature Show Host\": not David Attenborough, surprisingly \"Compelling Lady\": nothing beats a Jet2 Holiday \"Upset Girl\": this is more the voiceover that would be used on depressing animal charity adverts \"Magnetic Man\": you can't fool me, that's an American \"Patient Man\": patience gives you reverb. The word \"British\" is spoken with a very non-British accent. Not to be all Henry Higgins, but these are all \"placeless\" accents and there are no regional accent options. I was looking forward to trying Computer Mancunian. But I can see why for marketing voiceover people want \"global neutral British\". UX review: \"failed to generate speech\". Only the example phrases work.",
-            "Keep getting \"Failed to generate speech. Please try again.\" on Brave + Chrome. HTZc3SNl.js:1 Failed to generate speech: Error: Invalid API response format at Z (HTZc3SNl.js:1:29240)",
-            "\"British accents are known for their pronunciation patterns, intonation, and rhythm, which differ from American, Australian, or other English accents. A British accent generator focuses on these speech characteristics to create audio that sounds natural and familiar to UK listeners.\" What kind of Slop is this? British accent is different from other English accents?",
-            "Are these for the purpose of selling to non-Brits right? \"Being British is supposed to be classy and surely not associated with Trump as much as being an American\"? That might work, but not for selling to Brits because they expect some sort of a local accent. Universal/unlocalised voice does not sound natural or believable to them.",
-            "Initial feedback: they're all too slow after the initial 'welcome...generator' sentence, doesn't sound natural. (Also struggled getting it working at all as others already noted.)",
-            "This needs a Roadman accent. Plz. Awesome stuff.",
-            "\"British accent\" Who uses this term? English, Welsh and Scottish accents sound nothing like each other!",
-            "Man I'm so disappointed: I thought I'd be able to use this tool to learn different British accents but apparently the tool \"British\" is already an accent...",
-            "Magnetic Man is unmistakably American, and annoying with it.",
-            "“authentic” might not be the right adjective, surely the whole point is that they're synthetic"
-          ],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.66,
-        "demand_tier": "medium",
-        "guardrail_applied": "none",
-        "guardrail_reason": "threshold_not_met"
-      }
-    },
-    "discovered_at": "2026-02-13",
-    "first_seen": "2026-02-13T10:05:00.756494Z",
-    "final_score": 100,
-    "trending_score": 90,
-    "logo_source": "bing"
-  },
-  {
-    "name": "Plaud Note Pro",
-    "description": "全球最先进的AI笔记设备，支持面对面、电话和在线会议的无缝笔记工作流。",
-    "website": "https://pla ud.ai",
-    "logo_url": "https://favicon.bing.com/favicon.ico?url=pla ud.ai&size=128",
-    "categories": [
-      "hardware"
-    ],
-    "dark_horse_index": 2,
-    "why_matters": "全球150万用户，2026年2月扩展东南亚市场（新加坡、泰国、马来西亚等），推出可穿戴NotePin S，专注多语言跨国专业环境的生产力工具。",
-    "funding_total": "unknown",
-    "region": "🇸🇬",
-    "source": "PRNewswire",
-    "source_url": "https://sea.plaud.ai/th/blogs/news/plaud-to-gates-thailand-2026",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-13T04:06:47.556686Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-13",
-    "first_seen": "2026-02-13T04:06:47.768671Z",
-    "final_score": 40,
-    "trending_score": 36,
-    "logo_source": "bing"
+    "logo": "https://www.google.com/s2/favicons?domain=plaud.ai&sz=128",
+    "logo_source": "clearbit",
+    "logo_url": "https://logo.clearbit.com/plaud.ai",
+    "source_region": "🇨🇳",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "manual:audit_2026_02_18"
   },
   {
     "name": "etalytics",
@@ -10605,32 +7978,6 @@
     "logo": "https://www.google.com/s2/favicons?domain=agilex.ai&sz=128",
     "logo_source": "clearbit",
     "logo_url": "https://logo.clearbit.com/agilex.ai"
-  },
-  {
-    "name": "Plaud NotePin",
-    "slug": "plaud-notepin",
-    "website": "https://www.plaud.ai",
-    "description": "AI-powered wearable recorder with real-time transcription and summary",
-    "category": "hardware",
-    "hardware_category": "wearables",
-    "region": "🇨🇳",
-    "funding_total": "$20M",
-    "dark_horse_index": 4,
-    "criteria_met": [
-      "kickstarter_success",
-      "product_shipped"
-    ],
-    "why_matters": "Kickstarter爆款，AI录音胸针，实时转写+摘要，已出货10万+",
-    "latest_news": "2025-12: 月销超$2M",
-    "discovered_at": "2026-01-20",
-    "source": "Kickstarter",
-    "is_hardware": true,
-    "categories": [
-      "hardware"
-    ],
-    "logo": "https://www.google.com/s2/favicons?domain=plaud.ai&sz=128",
-    "logo_source": "clearbit",
-    "logo_url": "https://logo.clearbit.com/plaud.ai"
   },
   {
     "name": "Rerun.io",
