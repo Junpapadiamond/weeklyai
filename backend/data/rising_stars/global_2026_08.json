@@ -281,5 +281,478 @@
         "guardrail_reason": "insufficient_demand_data"
       }
     }
+  },
+  {
+    "name": "TIER IV",
+    "website": "https://tier4.jp",
+    "description": "世界初のオープンソース自動運転OS「Autoware」を開発し、レベル4自動運転社会実装をリードする企業。",
+    "category": "hardware",
+    "region": "🇯🇵",
+    "funding_total": "unknown",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "category_innovation"
+    ],
+    "why_matters": "Autoware Foundationを通じたグローバル協調で商用車両/MaaS向け自動運転を推進、オープンソースアプローチが差別化。",
+    "latest_news": "2026-02: 自動運転テック企業として注目",
+    "source": "movin.co.jp",
+    "source_url": "https://www.movin.co.jp/it/ai/firmlist.html",
+    "confidence": 0.85,
+    "is_hardware": true,
+    "source_region": "🇯🇵🇰🇷",
+    "discovered_at": "2026-02-19",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "人工知能 スタートアップ",
+    "country_code": "JP",
+    "country_name": "Japan",
+    "country_flag": "🇯🇵",
+    "country_display": "🇯🇵 Japan",
+    "country_source": "region:legacy",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-19T19:44:24.875958Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
+  },
+  {
+    "name": "Route-D",
+    "website": "https://route-d.co.jp",
+    "description": "日本AI物流初创Route-D，提供B2B物流软件解决方案。",
+    "category": "other",
+    "region": "🇯🇵",
+    "funding_total": "$2.1M Series Unknown",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "2026年2月获213万美元融资，专注物流AI与B2B软件。",
+    "latest_news": "2026-02: 获213万美元融资",
+    "source": "Growth List",
+    "source_url": "https://growthlist.co/ai-startups/",
+    "confidence": 0.8,
+    "categories": [
+      "other"
+    ],
+    "source_region": "🇯🇵🇰🇷",
+    "discovered_at": "2026-02-19",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "Japan AI startup funding",
+    "country_code": "JP",
+    "country_name": "Japan",
+    "country_flag": "🇯🇵",
+    "country_display": "🇯🇵 Japan",
+    "country_source": "region:legacy",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-19T19:44:38.272787Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 5,
+          "top_story_id": "46994955",
+          "points": 5,
+          "comments": 3,
+          "engagement_depth_ratio": 0.6,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "No need to submit it multiple times within a few minutes. https://news.ycombinator.com/item?id=46994910",
+            "It might be down to this: https://x.com/embirico/status/2021376881942200801",
+            "it's back today, even I'm verified on https://chatgpt.com/cyber , fortunately I can notice pretty quickly when it happens now - difference is apparent"
+          ],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.2289,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "用户建议不必在短时间内多次提交。有人分享了一个可能解释问题的X帖子链接。另一用户表示ChatGPT cyber功能今天恢复了，并能快速注意到差异。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.9
+    }
+  },
+  {
+    "name": "Tingit",
+    "website": "https://tingit.com",
+    "description": "利用AI驱动的平台帮助用户修复时尚和电子产品，推动可持续消费。",
+    "category": "other",
+    "region": "Unknown",
+    "funding_total": "€1.5M",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "融资€1.5M用于扩展AI维修平台至全欧洲，针对时尚和电子修复市场，提供可持续解决方案以减少浪费。",
+    "latest_news": "2026-02: 完成€1.5M融资扩展欧洲市场",
+    "source": "Tech.eu",
+    "source_url": "https://tech.eu",
+    "confidence": 0.9,
+    "categories": [
+      "other"
+    ],
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-02-19",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "European AI startup funding 2026",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-19T19:46:41.053782Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
+  },
+  {
+    "name": "Plato",
+    "website": "https://platohq.com",
+    "description": "为批发分销商提供AI操作系统，优化运营效率。",
+    "category": "agent",
+    "region": "Unknown",
+    "funding_total": "$14.5M",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "完成$14.5M融资，用于扩展AI工具服务批发分销商，针对B2B运营痛点提供智能化解决方案。",
+    "latest_news": "2026-02: 关闭$14.5M融资轮",
+    "source": "Tech.eu",
+    "source_url": "https://tech.eu",
+    "confidence": 0.9,
+    "categories": [
+      "other"
+    ],
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-02-19",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "European AI startup funding 2026",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-19T19:46:41.265417Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
+  },
+  {
+    "name": "Flinn",
+    "website": "https://flinn.ai",
+    "description": "维也纳AI初创公司，提供医疗科技和制药的产品生命周期管理工具。",
+    "category": "healthcare",
+    "region": "Unknown",
+    "funding_total": "$20M",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "维也纳基地，获$20M融资开发AI工具，专注医械制药全生命周期管理，提升行业效率。",
+    "latest_news": "2026-02: 获$20M用于产品生命周期AI工具开发",
+    "source": "Tech.eu",
+    "source_url": "https://tech.eu",
+    "confidence": 0.85,
+    "categories": [
+      "other"
+    ],
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-02-19",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "European AI startup funding 2026",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-19T19:46:41.562280Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
+  },
+  {
+    "name": "Ballie",
+    "website": "https://www.samsung.com",
+    "description": "球形移动AI家庭伴侣机器人，支持投影、AI交互和智能家居控制。",
+    "category": "hardware",
+    "hardware_type": "innovative",
+    "form_factor": "rolling_ball",
+    "use_case": "home_assistant",
+    "innovation_traits": [
+      "non_traditional_form",
+      "ambient",
+      "proactive_ai"
+    ],
+    "region": "🇰🇷",
+    "funding_total": "unknown",
+    "price": "unknown",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "form_innovation",
+      "use_case_clear"
+    ],
+    "why_matters": "三星球形机器人，新颖滚动形态结合投影和Gemini模型。",
+    "latest_news": "CES 2026三星球形AI家庭助理。",
+    "source": "ednchina.com",
+    "source_url": "https://www.ednchina.com/technews/38304.html",
+    "confidence": 0.85,
+    "is_hardware": true,
+    "source_region": "🇸🇬",
+    "discovered_at": "2026-02-19",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI hardware startup Singapore",
+    "country_code": "KR",
+    "country_name": "South Korea",
+    "country_flag": "🇰🇷",
+    "country_display": "🇰🇷 South Korea",
+    "country_source": "region:legacy",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-19T19:48:21.633862Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
+  },
+  {
+    "name": "Moltbook",
+    "website": "https://www.moltbook.com",
+    "description": "专为AI代理设计的社交网络，模仿Reddit格式，仅允许验证AI代理发帖互动，人类仅能观察。",
+    "category": "other",
+    "region": "🇺🇸",
+    "funding_total": "unknown",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "🆕 category_innovation",
+      "🔥 community_buzz"
+    ],
+    "why_matters": "2026年1月推出后用户从15.7万激增至160万活跃AI代理，伴随MOLT代币24小时暴涨1800%，Marc Andreessen关注放大热度，首创AI专属社交平台。",
+    "latest_news": "2026-02: 用户达160万，引发病毒式传播和哲学讨论热潮",
+    "source": "Wikipedia",
+    "source_url": "https://en.wikipedia.org/wiki/Moltbook",
+    "confidence": 0.95,
+    "categories": [
+      "other"
+    ],
+    "source_region": "🇸🇬",
+    "discovered_at": "2026-02-19",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "Tech in Asia artificial intelligence",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "region:search_fallback"
   }
 ]
