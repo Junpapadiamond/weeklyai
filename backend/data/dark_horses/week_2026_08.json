@@ -984,5 +984,389 @@
         "guardrail_reason": "insufficient_demand_data"
       }
     }
+  },
+  {
+    "name": "Temporal",
+    "website": "https://temporal.io",
+    "description": "提供云平台提升AI代理可靠性，解决代理执行中的错误和状态管理问题。",
+    "category": "agent",
+    "region": "🇺🇸",
+    "funding_total": "$300M Series D",
+    "dark_horse_index": 5,
+    "criteria_met": [
+      "funding_signal",
+      "growth_anomaly"
+    ],
+    "why_matters": "a16z领投3亿美元D轮，专注AI代理可靠性平台，解决多步骤代理执行中的状态持久化和错误恢复痛点，已获Lightspeed等多方跟投。",
+    "latest_news": "2026-02-17: a16z领投3亿美元D轮融资",
+    "source": "SiliconANGLE",
+    "source_url": "https://siliconangle.com/2026/02/17/ai-agent-reliability-startup-temporal-raises-300m-funding/",
+    "confidence": 0.95,
+    "categories": [
+      "other"
+    ],
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-02-20",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "artificial intelligence company raised funding",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "region:search_fallback",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-20T19:38:35.315906Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 12,
+          "top_story_id": "47087544",
+          "points": 3,
+          "comments": 1,
+          "engagement_depth_ratio": 0.3333,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "Everyone and their Uncle Bob have been scrambling to leverage LLM Agents for Process/Task/Message Scheduling and Orchestration with Durable Execution. They have been worshiping Peter Steinberger as their champion and the God of LLM Agents. While Temporal.IO has quietly partnered with Apple to Schedule and Orchestrate all of their services with Durable Execution. It's funny how everyone assumes that using Inference for Deterministic Tasks like Mathematics and Compiler Optimization is a good idea. Reality doesn't agree. Wasting Electricity and Precious Minerals for Inference Compute is Reality. Compilers and Schedulers are deterministic, your LLM is not. You cannot infer Mathematics and assume"
+          ],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.1257,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "评论指出许多人热衷于利用LLM Agents进行任务调度和编排，并将Peter Steinberger奉为神明，而Temporal.IO已悄然与Apple合作实现服务的耐久执行。评论嘲讽大家盲目追捧Temporal，并批评将LLM用于确定性任务如数学和编译优化是浪费电力和资源的错误想法。现实并不支持这种LLM推理方式。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.95
+    }
+  },
+  {
+    "name": "Code Metal",
+    "website": "https://codemetal.ai",
+    "description": "提供可验证代码翻译工具，支持多语言代码互转和安全部署。",
+    "category": "coding",
+    "region": "🇺🇸",
+    "funding_total": "$125M Series B",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "Salesforce Ventures领投1.25亿美元B轮，仅3个月后A轮，专注AI代码翻译验证，解决企业迁移痛点。",
+    "latest_news": "2026: 1.25亿美元B轮融资",
+    "source": "Crunchbase News",
+    "source_url": "https://news.crunchbase.com/venture/biggest-funding-rounds-cloud-energy-ai-world-labs/",
+    "confidence": 0.9,
+    "categories": [
+      "other"
+    ],
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-02-20",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "artificial intelligence company raised funding",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "region:search_fallback",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-20T19:38:39.973938Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
+  },
+  {
+    "name": "Sarvam Kaze",
+    "website": "https://sarvam.ai",
+    "description": "印度本土设计的AI智能眼镜，能听懂、响应并捕捉佩戴者视野，支持印度语言的本地AI处理。",
+    "category": "hardware",
+    "hardware_type": "innovative",
+    "form_factor": "glasses",
+    "use_case": "life_logging",
+    "innovation_traits": [
+      "wearable",
+      "voice_first",
+      "screenless",
+      "proactive_ai",
+      "always_on",
+      "social_buzz",
+      "media_coverage"
+    ],
+    "region": "🇮🇳",
+    "funding_total": "unknown",
+    "price": "unknown",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "form_innovation",
+      "use_case_clear",
+      "social_buzz"
+    ],
+    "why_matters": "印度首款本土AI眼镜，PM Modi亲自试戴，采用自研Edge AI模型，支持离线处理和开发者平台定制，挑战Meta Ray-Ban在印市场",
+    "latest_news": "2026-02-17: India AI Impact Summit发布，计划5月上市",
+    "source": "Indian Startup News",
+    "source_url": "https://indianstartupnews.com/news/sarvam-ai-launches-its-first-ai-powered-smart-glasses-kaze-pm-modi-is-the-first-person-to-try-them-11122107",
+    "confidence": 0.95,
+    "is_hardware": true,
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-02-20",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI glasses startup 2026",
+    "country_code": "IN",
+    "country_name": "India",
+    "country_flag": "🇮🇳",
+    "country_display": "🇮🇳 India",
+    "country_source": "region:legacy",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-20T19:38:59.139322Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
+  },
+  {
+    "name": "Neysa AI",
+    "website": "https://neysa.ai",
+    "description": "印度孟买初创公司，提供主权AI云基础设施，支持企业级GPU集群和安全数据处理。",
+    "category": "hardware",
+    "region": "🇮🇳",
+    "funding_total": "$1.2B (含$600M股权+$600M债务)",
+    "dark_horse_index": 5,
+    "criteria_met": [
+      "funding_signal",
+      "growth_anomaly"
+    ],
+    "why_matters": "2026年2月16日获12亿美元融资，估值达14亿美元（11倍增长），Blackstone领投，将部署超2万GPU占印度商用GPU池1/3，支持IndiaAI Mission主权计算。",
+    "latest_news": "2026-02-16: 达成独角兽地位，获12亿美元巨额融资",
+    "source": "Lapaas Voice",
+    "source_url": "https://voice.lapaas.com/neysa-turns-2nd-unicorn-of-india-in-2026/",
+    "confidence": 0.95,
+    "is_hardware": true,
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-02-20",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI unicorn startup valuation 2026",
+    "country_code": "IN",
+    "country_name": "India",
+    "country_flag": "🇮🇳",
+    "country_display": "🇮🇳 India",
+    "country_source": "region:legacy",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-20T19:39:34.279732Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
+  },
+  {
+    "name": "Braintrust",
+    "website": "https://braintrustdata.com",
+    "description": "旧金山初创公司，为开发团队提供AI可观测性软件。",
+    "category": "other",
+    "region": "🇺🇸",
+    "funding_total": "$80M Series B",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "Iconiq Capital领投8000万美元B轮，针对AI开发团队的可观测性需求，提供监控和调试工具。",
+    "latest_news": "2026-02: 获8000万美元B轮融资",
+    "source": "Crunchbase News",
+    "source_url": "https://news.crunchbase.com/venture/biggest-funding-rounds-cloud-energy-ai-world-labs/",
+    "confidence": 0.85,
+    "categories": [
+      "other"
+    ],
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-02-20",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI unicorn startup valuation 2026",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "region:search_fallback",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-20T19:39:34.491864Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 2,
+          "top_story_id": "47091182",
+          "points": 3,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "HN 暂无足够评论样本用于形成社区结论。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "neutral",
+      "confidence": 0.3
+    }
   }
 ]
