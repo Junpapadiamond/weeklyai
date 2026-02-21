@@ -1368,5 +1368,384 @@
       "sentiment": "neutral",
       "confidence": 0.3
     }
+  },
+  {
+    "name": "Galaxea",
+    "website": "https://galaxea.ai",
+    "description": "开发机器人及具身AI全栈平台，包括基础模型、数据基础设施和人形及双臂移动硬件系统。",
+    "category": "hardware",
+    "region": "🇨🇳",
+    "funding_total": "1亿人民币B轮",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "完成1亿人民币B轮融资，由Jinding Capital、BAIC Industrial Investment等领投，计划全球多行业试点并投资算法、硬件和数据生态，构建具身智能开发者平台。",
+    "latest_news": "2026-02: 完成1亿人民币B轮融资",
+    "source": "Hyphen Partners",
+    "source_url": "https://hyphenpartners.substack.com/p/ep-172-southeast-asias-ai-dream-is",
+    "confidence": 0.9,
+    "is_hardware": true,
+    "source_region": "🇸🇬",
+    "discovered_at": "2026-02-21",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI startup Indonesia Vietnam",
+    "country_code": "CN",
+    "country_name": "China",
+    "country_flag": "🇨🇳",
+    "country_display": "🇨🇳 China",
+    "country_source": "region:search_fallback",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-21T19:27:05.373427Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
+  },
+  {
+    "name": "Arena",
+    "website": "https://arena.ai",
+    "description": "大型语言模型评估平台，一岁公司快速崛起。",
+    "category": "other",
+    "region": "🇺🇸",
+    "funding_total": "$150M Series A",
+    "dark_horse_index": 5,
+    "criteria_met": [
+      "funding_signal",
+      "growth_anomaly"
+    ],
+    "why_matters": "Felicis和UC Investments联合领投1.5亿美元A轮，1月6日公布，一年内估值17亿美元。",
+    "latest_news": "2026-01-06: $150M Series A at $1.7B valuation",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/02/17/here-are-the-17-us-based-ai-companies-that-have-raised-100m-or-more-in-2026/",
+    "confidence": 0.95,
+    "categories": [
+      "other"
+    ],
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-02-21",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:techcrunch.com AI startup funding",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "region:search_fallback",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-21T19:28:08.254146Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 3,
+          "top_story_id": "47070129",
+          "points": 2,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "HN 暂无足够评论样本用于形成社区结论。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "neutral",
+      "confidence": 0.3
+    }
+  },
+  {
+    "name": "Efficient Computer Electron E1",
+    "website": "https://efficientcomputer.com",
+    "description": "基于空间数据流架构的新型处理器，旨在最小化能耗，支持AI设备长时间运行数月。",
+    "category": "hardware",
+    "hardware_type": "innovative",
+    "form_factor": "chip_for_devices",
+    "use_case": "low_power_ai",
+    "innovation_traits": [
+      "new_form_factor",
+      "single_use_case",
+      "always_on"
+    ],
+    "region": "🇺🇸",
+    "funding_total": "$76M",
+    "price": "unknown",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "form_innovation",
+      "use_case_clear",
+      "media_coverage"
+    ],
+    "why_matters": "全新空间数据流架构芯片，支持AI设备月级续航，解决边缘AI能耗瓶颈，获$60M融资。",
+    "latest_news": "2026-02-18: 完成$60M Series A融资。",
+    "source": "SiliconANGLE",
+    "source_url": "https://siliconangle.com/2026/02/18/efficient-computer-raises-60m-keep-ai-devices-running-months-end/",
+    "confidence": 0.95,
+    "is_hardware": true,
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-02-21",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI chip startup funding 2026",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "region:search_fallback",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-21T19:28:25.601466Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
+  },
+  {
+    "name": "Nothing AI-native Devices",
+    "website": "https://nothing.tech",
+    "description": "Nothing's upcoming AI-native devices running a new AI OS, designed for hyper-personalized experiences across novel form factors.",
+    "category": "hardware",
+    "hardware_type": "innovative",
+    "form_factor": "unknown_new_class",
+    "use_case": "hyper_personalized_ai",
+    "innovation_traits": [
+      "non_traditional_form",
+      "proactive_ai",
+      "new_form_factor",
+      "media_coverage"
+    ],
+    "region": "🇬🇧",
+    "funding_total": "$200M",
+    "price": "unknown",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "form_innovation",
+      "use_case_clear",
+      "media_coverage",
+      "funding"
+    ],
+    "why_matters": "First-mover in AI-native hardware beyond traditional phones, with $200M funding and plans for smart glasses, robots; aggressive 2026 launch.",
+    "latest_news": "2025: Raised $200M Series C at $1.3B valuation for 2026 AI-native devices.",
+    "source": "TechBuzz",
+    "source_url": "https://www.techbuzz.ai/articles/nothing-raises-200m-to-launch-ai-native-devices-in-2026",
+    "confidence": 0.85,
+    "is_hardware": true,
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-02-21",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI hardware kickstarter indiegogo 2026",
+    "country_code": "GB",
+    "country_name": "United Kingdom",
+    "country_flag": "🇬🇧",
+    "country_display": "🇬🇧 United Kingdom",
+    "country_source": "region:legacy",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-21T19:29:04.278535Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
+  },
+  {
+    "name": "EdgeCortix",
+    "website": "https://edgecortix.com",
+    "description": "开发用于工厂、商店等边缘环境AI处理的片上系统半导体。",
+    "category": "hardware",
+    "region": "🇯🇵",
+    "funding_total": "$110M",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "总融资金额1.1亿美元，包括TDK Ventures领投的B轮，是日本深科技全球领导者潜力股。",
+    "latest_news": "2025: Series B by TDK Ventures",
+    "source": "Global Venturing",
+    "source_url": "https://globalventuring.com/corporate/asia/japan-global-startups/",
+    "confidence": 0.9,
+    "is_hardware": true,
+    "source_region": "🇯🇵🇰🇷",
+    "discovered_at": "2026-02-21",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "Japan AI startup funding",
+    "country_code": "JP",
+    "country_name": "Japan",
+    "country_flag": "🇯🇵",
+    "country_display": "🇯🇵 Japan",
+    "country_source": "region:legacy",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-21T19:32:23.617597Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
   }
 ]
