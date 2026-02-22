@@ -1747,5 +1747,78 @@
         "guardrail_reason": "insufficient_demand_data"
       }
     }
+  },
+  {
+    "name": "Adept AI Labs",
+    "website": "https://adept.ai",
+    "description": "致力于为企业打造人工智能工具的初创公司，专注AI代理技术",
+    "category": "agent",
+    "region": "🇺🇸",
+    "funding_total": "$350M",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "founder_background"
+    ],
+    "why_matters": "前OpenAI工程副总裁David Luan创立，2023年完成3.5亿美元融资估值超10亿美元，核心团队已被亚马逊AGI实验室收购",
+    "latest_news": "2024年底：创始人David Luan离职加入亚马逊负责AI代理实验室",
+    "source": "搜狐",
+    "source_url": "https://www.sohu.com/a/988724199_115060",
+    "confidence": 0.9,
+    "categories": [
+      "other"
+    ],
+    "source_region": "🇨🇳",
+    "discovered_at": "2026-02-22",
+    "discovery_method": "glm_search",
+    "search_keyword": "人工智能创业公司",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "region:search_fallback",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-22T19:16:05.470390Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "needs_verification": true
   }
 ]
