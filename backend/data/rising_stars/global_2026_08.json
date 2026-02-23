@@ -1270,5 +1270,462 @@
         "guardrail_reason": "insufficient_demand_data"
       }
     }
+  },
+  {
+    "name": "OpenAI Smart Speaker",
+    "website": "https://openai.com",
+    "description": "OpenAI正在研发的智能音箱，售价预计200-300美元，配备摄像头以获取用户及环境信息，最早2027年上市。",
+    "category": "hardware",
+    "hardware_type": "traditional",
+    "form_factor": "speaker",
+    "use_case": "productivity",
+    "innovation_traits": [
+      "voice_first",
+      "proactive_ai"
+    ],
+    "region": "🇺🇸",
+    "funding_total": "unknown",
+    "price": "$200-$300",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "use_case_clear",
+      "media_coverage"
+    ],
+    "why_matters": "OpenAI进军硬件领域的首款产品，结合摄像头与AI模型，旨在重塑家庭智能中心体验。",
+    "latest_news": "2026-02: 研发中，预计2027年2月上市。",
+    "source": "163.com",
+    "source_url": "https://www.163.com/dy/article/KM8GQEBV05568W0A.html?spss=dy_author",
+    "confidence": 0.85,
+    "is_hardware": true,
+    "source_region": "🇨🇳",
+    "discovered_at": "2026-02-22",
+    "discovery_method": "glm_search",
+    "search_keyword": "AI智能眼镜 创业公司",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "region:search_fallback",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-22T19:29:35.322459Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "OpenAI",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "(\"OpenAI Smart Speaker\" OR \"openai.com\") (site:x.com OR site:twitter.com) -from:OpenAI",
+          "status": "ok",
+          "window_days": 7
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    }
+  },
+  {
+    "name": "Helix Mesh Rider Radio",
+    "website": "https://doodlelabs.com",
+    "description": "工业级无线Mesh网络解决方案，为UAVs、UGVs、AMRs等机器人提供高吞吐长距离数据链路。",
+    "category": "hardware",
+    "hardware_type": "innovative",
+    "form_factor": "wireless_module",
+    "use_case": "robotic_networking",
+    "innovation_traits": [
+      "new_form_factor",
+      "portable",
+      "single_use_case"
+    ],
+    "region": "Unknown",
+    "funding_total": "unknown",
+    "price": "unknown",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "form_innovation",
+      "use_case_clear"
+    ],
+    "why_matters": "专为机器人系统设计的Mesh Rider无线模块，入选Blue UAS程序，支持DIU赞助开发，形态为紧凑无线硬件。",
+    "latest_news": "被评为Fast公司之一。",
+    "source": "BuiltInSingapore",
+    "source_url": "https://builtinsingapore.com/companies/type/robotics-companies",
+    "confidence": 0.8,
+    "is_hardware": true,
+    "source_region": "🇸🇬",
+    "discovered_at": "2026-02-22",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI hardware startup Singapore",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-22T19:32:01.264113Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
+  },
+  {
+    "name": "Flyability Confined Space Inspection Drone",
+    "website": "https://www.flyability.com",
+    "description": "开创性密闭空间检查无人机，允许远程数据收集而无需人员进入危险区域。",
+    "category": "hardware",
+    "hardware_type": "innovative",
+    "form_factor": "collision_tolerant_drone",
+    "use_case": "industrial_inspection",
+    "innovation_traits": [
+      "non_traditional_form",
+      "single_use_case",
+      "media_coverage"
+    ],
+    "region": "Unknown",
+    "funding_total": "unknown",
+    "price": "unknown",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "form_innovation",
+      "use_case_clear"
+    ],
+    "why_matters": "碰撞耐受无人机专为危险密闭空间设计，自2014年起成为内部检查解决方案领导者，提高安全性和减少停机时间。",
+    "latest_news": "自推出以来已成为受信任提供商。",
+    "source": "BuiltInSingapore",
+    "source_url": "https://builtinsingapore.com/companies/type/robotics-companies",
+    "confidence": 0.85,
+    "is_hardware": true,
+    "source_region": "🇸🇬",
+    "discovered_at": "2026-02-22",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI hardware startup Singapore",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-22T19:32:01.507405Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
+  },
+  {
+    "name": "Apptronik Apollo",
+    "website": "https://apptronik.com/apollo",
+    "description": "Humanoid robot designed for industrial tasks like material handling in warehouses, emphasizing human-safe collaboration and mass manufacturability.",
+    "category": "hardware",
+    "hardware_type": "traditional",
+    "form_factor": "humanoid_robot",
+    "use_case": "logistics_warehousing",
+    "innovation_traits": [
+      "single_use_case",
+      "media_coverage"
+    ],
+    "region": "🇺🇸",
+    "funding_total": "$520M",
+    "price": "unknown",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "use_case_clear",
+      "has_demo",
+      "funding"
+    ],
+    "why_matters": "人形机器人，融资5.2亿美元，用于物流和工厂重复性任务，支持人类协作，强调安全和可扩展制造",
+    "latest_news": "2026-02: 融资5.2亿美元，用于Apollo大规模生产",
+    "source": "MachineLearn.com",
+    "source_url": "http://www.machinelearn.com/2026/02/machinelearncom-apptronik-raises-520m.html",
+    "confidence": 0.95,
+    "is_hardware": true,
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-02-22",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "humanoid robot company funding",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "region:search_fallback",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-22T19:33:38.831714Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
+  },
+  {
+    "name": "Forum",
+    "website": "https://forum.exchange",
+    "description": "将用户注意力转化为可交易资产，建立受监管的注意力交易所，创造新型金融原语。",
+    "category": "finance",
+    "region": "🇺🇸",
+    "funding_total": "YC W26",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "founder_background",
+      "category_innovation"
+    ],
+    "why_matters": "创始人来自全球顶级对冲基金Balyasny和NASA工程师，获YC核心合伙人Jared Friedman指派；对齐YC Spring 2026 RFS'新金融原语'方向，首次将注意力直接定价交易化。",
+    "latest_news": "2026-02: YC Winter 2026批次，注意力资产交易所",
+    "source": "RootData",
+    "source_url": "https://www.rootdata.com/news/552095",
+    "confidence": 0.85,
+    "categories": [
+      "other"
+    ],
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-02-22",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "YC AI companies winter 2026",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "region:search_fallback",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-22T19:34:30.107010Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
+  },
+  {
+    "name": "Beacon Health",
+    "website": "https://beaconhealth.ai",
+    "description": "为初级保健提供AI代理服务，提升医疗诊断和患者管理效率。",
+    "category": "healthcare",
+    "region": "🇺🇸",
+    "funding_total": "YC W26",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "YC Winter 2026批次注目AI医疗公司，专注初级保健代理填补垂直医疗AI空白。",
+    "latest_news": "2026-01: YC W26批次发布，AI初级保健代理",
+    "source": "TLDL",
+    "source_url": "https://www.tldl.io/blog/yc-ai-startups-2026",
+    "confidence": 0.8,
+    "categories": [
+      "other"
+    ],
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-02-22",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "YC AI companies winter 2026",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "region:search_fallback",
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-22T19:34:30.383483Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    }
   }
 ]
