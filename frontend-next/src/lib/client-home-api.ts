@@ -16,9 +16,18 @@ function resolveClientApiBase() {
   return "/api/v1";
 }
 
-function canUseLocalPortFallback(base: string) {
-  if (process.env.NEXT_PUBLIC_API_BASE_URL) return false;
-  return base === DEFAULT_SERVER_BASE;
+function resolveLocalFallbackBase(base: string): string | null {
+  try {
+    const parsed = new URL(base);
+    const host = parsed.hostname.toLowerCase();
+    const isLocalHost = host === "localhost" || host === "127.0.0.1" || host === "::1";
+    const normalizedPort = parsed.port || (parsed.protocol === "https:" ? "443" : "80");
+    if (!isLocalHost || normalizedPort !== "5000") return null;
+    parsed.port = "5001";
+    return parsed.toString().replace(/\/$/, "");
+  } catch {
+    return base === DEFAULT_SERVER_BASE ? LOCAL_FALLBACK_SERVER_BASE : null;
+  }
 }
 
 async function requestWeeklyTop(base: string, query: string): Promise<Response> {
@@ -29,6 +38,7 @@ async function requestWeeklyTop(base: string, query: string): Promise<Response> 
 
 export async function getWeeklyTopClient(limit = 0, sortBy: WeeklyTopSort = "composite"): Promise<Product[]> {
   const base = resolveClientApiBase();
+  const fallbackBase = resolveLocalFallbackBase(base);
   const params = new URLSearchParams();
   params.set("limit", String(limit));
   params.set("sort_by", sortBy);
@@ -38,15 +48,15 @@ export async function getWeeklyTopClient(limit = 0, sortBy: WeeklyTopSort = "com
   try {
     response = await requestWeeklyTop(base, query);
   } catch (error) {
-    if (canUseLocalPortFallback(base)) {
-      response = await requestWeeklyTop(LOCAL_FALLBACK_SERVER_BASE, query);
+    if (fallbackBase) {
+      response = await requestWeeklyTop(fallbackBase, query);
     } else {
       throw error;
     }
   }
 
-  if (!response.ok && canUseLocalPortFallback(base) && [426, 502, 503, 504].includes(response.status)) {
-    response = await requestWeeklyTop(LOCAL_FALLBACK_SERVER_BASE, query);
+  if (!response.ok && fallbackBase && [426, 502, 503, 504].includes(response.status)) {
+    response = await requestWeeklyTop(fallbackBase, query);
   }
 
   if (!response.ok) {

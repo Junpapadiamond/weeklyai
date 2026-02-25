@@ -287,7 +287,9 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
         <div className="hero-layout">
           <div className="hero-content">
             <div className="hero-kicker">global signal board · weeklyai</div>
-            <h1 className="hero-title">发现全球最新AI产品</h1>
+            <h1 className="hero-title">
+              发现全球最新<span className="gradient-text">AI产品</span>
+            </h1>
             <p className="hero-subtitle">每周 5 分钟，看完全球 AI 领域最值得关注的新产品</p>
             <div className="data-freshness" aria-live="polite">
               {freshnessLabel}

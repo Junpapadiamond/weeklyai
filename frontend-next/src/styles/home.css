@@ -11,7 +11,10 @@
   overflow: hidden;
   position: relative;
   box-shadow: var(--shadow-sm);
-  background: var(--surface);
+  background:
+    radial-gradient(ellipse at 15% 65%, color-mix(in oklab, var(--primary) 8%, transparent) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 15%, color-mix(in oklab, var(--punch) 6%, transparent) 0%, transparent 50%),
+    var(--surface);
 }
 
 .hero::after {
@@ -21,12 +24,12 @@
 .hero-art {
   position: absolute;
   inset: 0;
-  opacity: 0.28;
+  opacity: 0.42;
   z-index: 1;
 }
 
 [data-theme="dark"] .hero-art {
-  opacity: 0.18;
+  opacity: 0.32;
 }
 
 .hero-layout {
@@ -198,6 +201,16 @@
   transform: translateY(-1px);
   border-color: color-mix(in oklab, var(--primary) 34%, var(--border));
   box-shadow: var(--shadow-md);
+}
+
+[data-theme="dark"] .darkhorse-spotlight-card:hover {
+  border-color: color-mix(in oklab, #6366f1 55%, var(--border));
+  box-shadow: 0 0 0 1px color-mix(in oklab, #6366f1 25%, transparent), var(--shadow-md);
+}
+
+[data-theme="dark"] .product-card:hover {
+  border-color: color-mix(in oklab, #6366f1 45%, var(--border));
+  box-shadow: 0 0 0 1px color-mix(in oklab, #6366f1 20%, transparent), var(--shadow-md);
 }
 
 .darkhorse-spotlight__region-flag-corner {

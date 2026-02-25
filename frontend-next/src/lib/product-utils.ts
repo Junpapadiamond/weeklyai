@@ -162,7 +162,7 @@ const FLAG_TO_COUNTRY_CODE: Record<string, string> = Object.entries(COUNTRY_CODE
 }, {} as Record<string, string>);
 
 const DISCOVERY_REGION_FLAGS = new Set(["🇺🇸", "🇨🇳", "🇪🇺", "🇯🇵🇰🇷", "🇸🇬", "🌍"]);
-const SEARCH_REGION_SAFE_FLAGS = new Set(["🇺🇸", "🇨🇳"]);
+const REGION_DERIVED_COUNTRY_SOURCES = new Set(["region:search_fallback", "region:fallback"]);
 const COUNTRY_BY_CC_TLD: Record<string, string> = {
   cn: "CN",
   jp: "JP",
@@ -614,26 +614,24 @@ function countryCodeFromWebsiteTld(website: string | undefined | null): string {
 export function resolveProductCountry(product: Product): ProductCountryInfo {
   const raw = product as Product & Record<string, unknown>;
   const extra = (product.extra ?? {}) as Record<string, unknown>;
+  const countrySourceHint = String(raw.country_source || "").trim().toLowerCase();
+  const skipRegionDerivedCountryFields = REGION_DERIVED_COUNTRY_SOURCES.has(countrySourceHint);
   const explicitFields = [
-    raw.country_code,
     raw.company_country_code,
     raw.hq_country_code,
-    raw.country_name,
-    raw.country,
     raw.company_country,
     raw.hq_country,
     raw.headquarters_country,
     raw.origin_country,
     raw.founder_country,
-    extra.country_code,
+    ...(skipRegionDerivedCountryFields ? [] : [raw.country_code, raw.country_name, raw.country]),
     extra.company_country_code,
-    extra.country_name,
-    extra.country,
     extra.company_country,
     extra.hq_country,
     extra.headquarters_country,
     extra.origin_country,
     extra.founder_country,
+    ...(skipRegionDerivedCountryFields ? [] : [extra.country_code, extra.country_name, extra.country]),
   ];
 
   for (const candidate of explicitFields) {
@@ -652,7 +650,10 @@ export function resolveProductCountry(product: Product): ProductCountryInfo {
     }
   }
 
-  for (const candidate of [raw.country_flag, raw.company_country_flag, raw.hq_country_flag]) {
+  const explicitFlagFields = skipRegionDerivedCountryFields
+    ? [raw.company_country_flag, raw.hq_country_flag]
+    : [raw.country_flag, raw.company_country_flag, raw.hq_country_flag];
+  for (const candidate of explicitFlagFields) {
     const code = normalizeCountryCode(candidate);
     if (code) {
       const name = COUNTRY_CODE_TO_NAME[code] || code;
@@ -692,19 +693,6 @@ export function resolveProductCountry(product: Product): ProductCountryInfo {
       flag: COUNTRY_CODE_TO_FLAG[code] || "",
       display: `${COUNTRY_CODE_TO_FLAG[code] || ""} ${name}`.trim(),
       source: "region:legacy",
-      unknown: false,
-    };
-  }
-
-  if (regionFlag && SEARCH_REGION_SAFE_FLAGS.has(regionFlag) && FLAG_TO_COUNTRY_CODE[regionFlag]) {
-    const code = FLAG_TO_COUNTRY_CODE[regionFlag];
-    const name = COUNTRY_CODE_TO_NAME[code] || code;
-    return {
-      code,
-      name,
-      flag: COUNTRY_CODE_TO_FLAG[code] || "",
-      display: `${COUNTRY_CODE_TO_FLAG[code] || ""} ${name}`.trim(),
-      source: "region:search_fallback",
       unknown: false,
     };
   }

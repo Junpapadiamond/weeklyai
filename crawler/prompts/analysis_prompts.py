@@ -106,6 +106,13 @@ Examples:
 
 The source_url field should contain the NEWS ARTICLE URL from search results.
 
+## CRITICAL: Company Country Verification
+
+- `region` is the search market flag injected by system, **not** the company nationality.
+- Infer company headquarters/origin country from evidence in search results.
+- Fill `company_country` with ISO code or country name (e.g. `US`, `United States`, `中国`).
+- If evidence is insufficient, set `company_country` to `"unknown"` and confidence ≤ 0.5.
+
 ## Output Format (JSON ONLY)
 
 Return a JSON array. If no qualifying products found, return `[]`.
@@ -125,6 +132,8 @@ Return a JSON array. If no qualifying products found, return `[]`.
     "latest_news": "2026-01: Event description",
     "source": "TechCrunch",
     "source_url": "https://techcrunch.com/article-url",  // Article URL from search results
+    "company_country": "US",
+    "company_country_confidence": 0.9,
     "confidence": 0.85
   }}
 ]
@@ -226,6 +235,13 @@ LangChain, PyTorch, TensorFlow, HuggingFace 模型, 只有 GitHub 没有产品,
 
 source_url 字段应填入搜索结果中的新闻文章 URL。
 
+## 关键：公司国籍校验
+
+- `region` 是系统注入的“搜索市场”标识，**不是**公司国籍。
+- 需要根据搜索结果证据判断公司总部/注册地国家，写入 `company_country`。
+- `company_country` 支持 ISO 国家码或国家名称（如 `US` / `United States` / `中国`）。
+- 若证据不足，必须填 `"company_country": "unknown"`，并将置信度设为 ≤ 0.5。
+
 ## 输出格式（仅返回 JSON）
 
 返回 JSON 数组。如果没有符合条件的产品，返回 `[]`。
@@ -245,6 +261,8 @@ source_url 字段应填入搜索结果中的新闻文章 URL。
     "latest_news": "2026-01: 事件描述",
     "source": "36氪",
     "source_url": "https://36kr.com/文章链接",  // 文章 URL
+    "company_country": "CN",
+    "company_country_confidence": 0.9,
     "confidence": 0.85
   }}
 ]
@@ -646,10 +664,18 @@ HARDWARE_ANALYSIS_PROMPT = """你是 WeeklyAI 的 AI 创新硬件分析师。
     "latest_news": "2026-01: 出货量达 10 万台",
     "source": "Wired",
     "source_url": "https://wired.com/article-url",
+    "company_country": "US",
+    "company_country_confidence": 0.9,
     "confidence": 0.85
   }}
 ]
 ```
+
+## 关键：公司国籍校验
+
+- `region` 是搜索市场标识，不是公司国籍。
+- 需要根据搜索结果中的证据填 `company_country`（ISO 码或国家名）。
+- 证据不足时，填 `"company_country": "unknown"` 且置信度 ≤ 0.5。
 
 ## 关键：公司官网 URL 提取！
 

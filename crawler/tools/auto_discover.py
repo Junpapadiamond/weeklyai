@@ -187,7 +187,7 @@ FLAG_TO_COUNTRY_CODE = {flag: code for code, flag in COUNTRY_CODE_TO_FLAG.items(
 
 # 这组 flag 在发现阶段通常代表“搜索市场”，不是公司归属国
 DISCOVERY_REGION_FLAGS = {"🇺🇸", "🇨🇳", "🇪🇺", "🇯🇵🇰🇷", "🇸🇬", "🌍"}
-SEARCH_REGION_SAFE_FLAGS = {"🇺🇸", "🇨🇳"}
+REGION_DERIVED_COUNTRY_SOURCES = {"region:search_fallback", "region:fallback"}
 
 COUNTRY_BY_CC_TLD = {
     "cn": "CN",
@@ -264,9 +264,13 @@ def resolve_company_country(
     优先级：
     1) 公司/创始相关显式字段
     2) 策展数据的 region（仅 curated，视为人工确认）
-    3) 官网 ccTLD（仅强指向国家）
-    4) Unknown
+    3) 非发现阶段的 legacy region（如 🇩🇪 / 🇫🇷 这类单国旗）
+    4) 官网 ccTLD（仅强指向国家）
+    5) Unknown
     """
+    country_source_hint = str(product.get("country_source") or "").strip().lower()
+    skip_region_derived_country_fields = country_source_hint in REGION_DERIVED_COUNTRY_SOURCES
+
     explicit_fields = [
         "company_country_code",
         "company_country",
@@ -282,6 +286,9 @@ def resolve_company_country(
     ]
 
     for field in explicit_fields:
+        if skip_region_derived_country_fields and field in {"country_code", "country_name", "country"}:
+            # 兼容历史数据：这些字段可能由旧版 "region:search_fallback" 误推断而来
+            continue
         code = _normalize_country_code(product.get(field))
         if code:
             return code, f"explicit:{field}"
@@ -289,11 +296,15 @@ def resolve_company_country(
     extra = product.get("extra")
     if isinstance(extra, dict):
         for field in explicit_fields:
+            if skip_region_derived_country_fields and field in {"country_code", "country_name", "country"}:
+                continue
             code = _normalize_country_code(extra.get(field))
             if code:
                 return code, f"extra:{field}"
 
     for field in ("country_flag", "company_country_flag", "hq_country_flag"):
+        if skip_region_derived_country_fields and field == "country_flag":
+            continue
         code = _normalize_country_code(product.get(field))
         if code:
             return code, f"explicit:{field}"
@@ -311,19 +322,10 @@ def resolve_company_country(
         if code:
             return code, "region:legacy"
 
-    if region_flag and region_flag in SEARCH_REGION_SAFE_FLAGS:
-        code = FLAG_TO_COUNTRY_CODE.get(region_flag, "")
-        if code:
-            return code, "region:search_fallback"
-
     if fallback_region_flag and fallback_region_flag not in DISCOVERY_REGION_FLAGS:
         code = FLAG_TO_COUNTRY_CODE.get(fallback_region_flag, "")
         if code:
             return code, "region:fallback"
-    if fallback_region_flag and fallback_region_flag in SEARCH_REGION_SAFE_FLAGS:
-        code = FLAG_TO_COUNTRY_CODE.get(fallback_region_flag, "")
-        if code:
-            return code, "region:search_fallback"
 
     cc_tld_code = _country_code_from_website_tld(product.get("website"))
     if cc_tld_code:
@@ -764,9 +766,14 @@ if not USE_MODULAR_PROMPTS:
 ✅ GOOD: "Sequoia领投$50M，8个月ARR从0到$10M"
 ❌ BAD: "This is a promising AI product"
 
+## CRITICAL: Company Country Verification
+- `region` is search market only, not company nationality.
+- Fill `company_country` using evidence from search results.
+- If uncertain, set `company_country` to "unknown" and lower confidence.
+
 ## Output (JSON only)
 ```json
-[{{"name": "...", "website": "https://...", "description": "中文描述(>20字)", "category": "coding|image|video|...", "region": "{region}", "funding_total": "$50M", "dark_horse_index": 4, "criteria_met": ["funding_signal"], "why_matters": "具体数字+差异化", "source": "...", "confidence": 0.85}}]
+[{{"name": "...", "website": "https://...", "description": "中文描述(>20字)", "category": "coding|image|video|...", "region": "{region}", "company_country": "US|CN|unknown", "company_country_confidence": 0.8, "funding_total": "$50M", "dark_horse_index": 4, "criteria_met": ["funding_signal"], "why_matters": "具体数字+差异化", "source": "...", "confidence": 0.85}}]
 ```
 
 Quota: Dark Horses: {quota_dark_horses} | Rising Stars: {quota_rising_stars}
@@ -797,9 +804,14 @@ Return [] if nothing qualifies."""
 ✅ GOOD: "Sequoia领投$50M，8个月ARR从0到$10M"
 ❌ BAD: "这是一个很有潜力的AI产品"
 
+## 关键：公司国籍校验
+- `region` 只是搜索市场，不是公司国籍。
+- 根据搜索结果证据填写 `company_country`。
+- 不确定时必须填 `"company_country": "unknown"` 并降低置信度。
+
 ## 输出 (仅JSON)
 ```json
-[{{"name": "产品名", "website": "https://...", "description": "中文描述(>20字)", "category": "coding|image|video|...", "region": "{region}", "funding_total": "$50M", "dark_horse_index": 4, "criteria_met": ["funding_signal"], "why_matters": "具体数字+差异化", "source": "...", "confidence": 0.85}}]
+[{{"name": "产品名", "website": "https://...", "description": "中文描述(>20字)", "category": "coding|image|video|...", "region": "{region}", "company_country": "US|CN|unknown", "company_country_confidence": 0.8, "funding_total": "$50M", "dark_horse_index": 4, "criteria_met": ["funding_signal"], "why_matters": "具体数字+差异化", "source": "...", "confidence": 0.85}}]
 ```
 
 配额: 黑马: {quota_dark_horses} | 潜力股: {quota_rising_stars}

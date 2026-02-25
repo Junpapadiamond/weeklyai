@@ -51,12 +51,12 @@ WeeklyAI/
 │
 ├── backend/                     # Flask API
 │   ├── app/routes/              # products.py, search.py
-│   ├── app/services/            # product_repository, product_service, filters, sorting
+│   ├── app/services/            # product_repository, product_service, product_filters, product_sorting
 │   └── vercel.json              # Vercel Serverless 部署
 │
 ├── crawler/                     # AI 发现引擎
 │   ├── main.py                  # 主协调器 (新闻聚合)
-│   ├── tools/                   # 32 个 Python 工具脚本
+│   ├── tools/                   # 33 个 Python 工具脚本
 │   ├── utils/                   # 12 个工具模块
 │   ├── prompts/                 # 搜索 + 分析 Prompt
 │   ├── spiders/                 # 17 个爬虫 (含 YouTube/X)
@@ -64,7 +64,7 @@ WeeklyAI/
 │   └── data/                    # 数据文件
 │
 ├── ops/scheduling/              # 定时任务 (daily_update.sh, launchd)
-├── tests/                       # 测试套件 (7 个测试文件)
+├── tests/                       # 测试套件 (12 个 Python 测试文件)
 └── history/                     # 历史版本
 ```
 
@@ -75,12 +75,13 @@ WeeklyAI/
 ```
 crawler/data/
 ├── dark_horses/                 # 黑马产品 (4-5分)
-│   └── week_2026_07.json
+│   └── week_2026_09.json
 ├── rising_stars/                # 潜力股 (2-3分)
-│   └── global_2026_07.json
+│   └── global_2026_09.json
 ├── candidates/                  # 待审核
 │   └── rss_to_products_cache.json
 ├── products_featured.json       # 精选产品 (前端数据源, 2-5分全量)
+├── products_hot_search.json     # 热搜词数据源
 ├── products_history.json        # 历史数据
 ├── industry_leaders.json        # 🏆 行业领军（排除名单）
 ├── blogs_news.json              # 新闻/博客 (YouTube/X/RSS)
@@ -795,15 +796,19 @@ Base URL: `http://localhost:5000/api/v1`
 | 端点 | 方法 | 说明 |
 |------|------|------|
 | `/products/trending` | GET | 热门 Top 5 |
-| `/products/weekly-top` | GET | 本周 Top 15 |
-| `/products/dark-horses` | GET | 黑马产品 (`limit`, `min_index`, `max_index`) |
+| `/products/weekly-top` | GET | 本周 Top 15 (`limit`, `sort_by`) |
+| `/products/dark-horses` | GET | 黑马产品 (`limit`, `min_index`) |
 | `/products/rising-stars` | GET | **潜力股产品 (2-3分)** (`limit`) |
 | `/products/today` | GET | 今日精选 (`limit`, `hours`) |
 | `/products/<id>` | GET | 产品详情 |
+| `/products/<id>/related` | GET | 相关产品推荐 (`limit`) |
 | `/products/categories` | GET | 分类列表 |
-| `/products/blogs` | GET | 博客/新闻 (`limit`, `source`) |
-| `/products/<id>/favorite` | POST | 收藏产品 |
-| `/search?q=xxx` | GET | 搜索 (`categories`, `type`, `sort`, `page`) |
+| `/products/blogs` | GET | 博客/新闻 (`limit`, `source`, `market`) |
+| `/products/last-updated` | GET | 最近更新时间 |
+| `/products/analytics/summary` | GET | 数据分析摘要 |
+| `/products/feed/rss` | GET | RSS 订阅源 |
+| `/products/industry-leaders` | GET | 行业领军参考列表 |
+| `/search?q=xxx` | GET | 搜索 (`categories`, `type`, `sort`, `page`, `limit`) |
 
 ### 排序规则
 
@@ -982,14 +987,20 @@ python crawler/tools/repair_data.py              # 执行 (自动创建 .bak 备
 
 | 测试文件 | 覆盖范围 |
 |----------|----------|
+| `tests/test_blog_market_distribution.py` | 博客市场分布与聚合逻辑 |
+| `tests/test_blog_market_filters.py` | 博客市场过滤参数 |
+| `tests/test_cn_news_only_merge.py` | 中国区新闻合并去重 |
 | `tests/test_darkhorse_freshness.py` | 黑马新鲜度/轮换逻辑 |
 | `tests/test_data_verifier.py` | 产品 schema 验证 |
 | `tests/test_demand_signals.py` | 需求信号检测 (融资/增长/热度) |
 | `tests/test_frontend.py` | E2E 前端测试 (Playwright) |
 | `tests/test_glm_tool_parsing.py` | GLM JSON 解析鲁棒性 |
 | `tests/test_mongo_migration.py` | MongoDB 同步/去重/回退 (30 tests) |
+| `tests/test_search_accuracy.py` | 搜索相关性与排序准确性 |
 | `tests/test_social_signals.py` | X/YouTube URL 解析 + enrich 逻辑 |
-| `frontend-next/src/lib/__tests__/` | 前端工具函数 + schema 验证 (Vitest) |
+| `tests/test_weekly_top_sorting.py` | Weekly Top 排序策略 |
+| `frontend-next/src/lib/__tests__/schemas.test.ts` | 前端 schema 验证 |
+| `frontend-next/src/lib/__tests__/product-utils.test.ts` | 前端工具函数测试 |
 
 ```bash
 # Python 测试
@@ -1006,6 +1017,8 @@ cd frontend-next && npm test
 | 变量 | 说明 | 默认值 |
 |------|------|--------|
 | `MONGO_URI` | MongoDB 连接 URI | (未设置则用 JSON) |
+| `API_BASE_URL_SERVER` | Next.js 服务端 API 基地址 | `http://localhost:5000/api/v1` |
+| `NEXT_PUBLIC_API_BASE_URL` | 前端浏览器侧 API 基地址 | `http://localhost:5000/api/v1` |
 | `PERPLEXITY_API_KEY` | Perplexity API Key | (required) |
 | `PERPLEXITY_MODEL` | Perplexity 模型 | `sonar` |
 | `ZHIPU_API_KEY` | 智谱 API Key | (required for cn) |
@@ -1019,11 +1032,14 @@ cd frontend-next && npm test
 | `X_ACCOUNTS` | X 账号列表 | (watchlists) |
 | `X_SOURCE_MODE` | X 来源模式 | `hybrid` |
 | `SOCIAL_X_MAX_RESULTS` | X 最大结果数 | `20` |
-| `FLASK_ENV` | Flask 环境 | `production` |
+| `FLASK_ENV` | Flask 环境 | `development` |
+| `CORS_ALLOWED_ORIGINS` | 后端 CORS 白名单 (逗号分隔) | 空 |
+| `PORT` | 后端端口 | `5000` |
+| `PORT_FALLBACK` | 备用后端端口 | `5001` |
 | `NODE_ENV` | Node 环境 | `production` |
 | `DARK_HORSE_FRESH_DAYS` | 黑马新鲜期 (天) | `5` |
 | `DARK_HORSE_STICKY_DAYS` | TOP1 保留期 (天) | `10` |
 
 ---
 
-*更新: 2026-02-13*
+*更新: 2026-02-25*

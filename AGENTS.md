@@ -36,15 +36,15 @@ WeeklyAI/
 │   └── src/types/               # TypeScript 类型
 ├── backend/                     # Flask API
 │   ├── app/routes/              # products.py, search.py
-│   └── app/services/            # product_repository, product_service, filters, sorting
+│   └── app/services/            # product_repository, product_service, product_filters, product_sorting
 ├── crawler/                     # AI 发现引擎
-│   ├── tools/                   # 32 工具脚本 (auto_discover, rss_to_products, sync_to_mongodb...)
+│   ├── tools/                   # 33 工具脚本 (auto_discover, rss_to_products, sync_to_mongodb...)
 │   ├── utils/                   # perplexity_client, glm_client, dedup, social_sources...
 │   ├── prompts/                 # search_prompts, analysis_prompts
 │   ├── spiders/                 # 17 爬虫 (含 youtube_spider, x_spider)
 │   └── data/                    # products_featured.json, blogs_news.json, dark_horses/...
 ├── ops/scheduling/              # daily_update.sh (10步流水线), launchd
-└── tests/                       # 7 测试文件
+└── tests/                       # 12 个 Python 测试文件 (+ frontend-next Vitest)
 ```
 
 ---
@@ -69,6 +69,8 @@ WeeklyAI/
 |------|------|
 | `backend/app/services/product_repository.py` | 数据层 (MongoDB→JSON 回退) |
 | `backend/app/services/product_service.py` | 业务逻辑 |
+| `backend/app/services/product_filters.py` | 过滤/搜索匹配/数据清洗 |
+| `backend/app/services/product_sorting.py` | 排序/多样化策略 |
 | `backend/app/routes/products.py` | API 端点 |
 
 ### 前端核心
@@ -89,6 +91,7 @@ WeeklyAI/
 | `crawler/data/dark_horses/week_*.json` | 每周黑马 (4-5分) |
 | `crawler/data/rising_stars/global_*.json` | 每周潜力股 (2-3分) |
 | `crawler/data/blogs_news.json` | 新闻/博客 (YouTube/X/RSS) |
+| `crawler/data/products_hot_search.json` | 热搜词数据源 |
 | `crawler/data/industry_leaders.json` | 排除名单 |
 | `crawler/data/source_watchlists.json` | 社交监控账号 |
 | `crawler/data/logo_cache.json` | Logo URL 缓存 |
@@ -152,9 +155,13 @@ Base: `http://localhost:5000/api/v1`
 | `GET /products/trending` | 热门 Top 5 |
 | `GET /products/today` | 今日精选 |
 | `GET /products/<id>` | 产品详情 |
+| `GET /products/<id>/related` | 相关产品推荐 |
 | `GET /products/blogs` | 新闻/博客 |
 | `GET /products/categories` | 分类列表 |
-| `POST /products/<id>/favorite` | 收藏 |
+| `GET /products/last-updated` | 数据更新时间 |
+| `GET /products/analytics/summary` | 分析摘要 |
+| `GET /products/feed/rss` | RSS 订阅源 |
+| `GET /products/industry-leaders` | 行业领军参考列表 |
 | `GET /search?q=xxx` | 搜索 |
 
 ---
@@ -163,7 +170,7 @@ Base: `http://localhost:5000/api/v1`
 
 ```
 cn → GLM (glm-4.7, search_pro/search_pro_quark/search_std)
-us/eu/jp/sg → Perplexity (sonar)
+us/eu/jp(含日韩)/sea → Perplexity (sonar)
 ```
 
 回退: `USE_GLM_FOR_CN=false` → 中国区回退到 Perplexity
@@ -187,12 +194,16 @@ us/eu/jp/sg → Perplexity (sonar)
 |------|------|
 | `MONGO_URI` | MongoDB (未设置=JSON 回退) |
 | `PERPLEXITY_API_KEY` | Perplexity API |
+| `PERPLEXITY_MODEL` | Perplexity 模型 (默认 `sonar`) |
 | `ZHIPU_API_KEY` | 智谱 GLM API |
+| `GLM_MODEL` | GLM 模型 (默认 `glm-4.7`) |
 | `GLM_SEARCH_ENGINE` | `search_pro` / `search_pro_quark` / `search_std` |
 | `USE_GLM_FOR_CN` | 中国区 GLM 开关 |
 | `CONTENT_YEAR` | 年份过滤 (默认 2026) |
 | `SOCIAL_HOURS` | 社交信号回溯 (默认 96h) |
+| `DARK_HORSE_FRESH_DAYS` | 黑马新鲜期 (默认 5) |
+| `DARK_HORSE_STICKY_DAYS` | TOP1 保留期 (默认 10) |
 
 ---
 
-*更新: 2026-02-13 | 完整文档: CLAUDE.md*
+*更新: 2026-02-25 | 完整文档: CLAUDE.md*

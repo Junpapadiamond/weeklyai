@@ -36,9 +36,18 @@ type FetchConfig = RequestInit & {
   };
 };
 
-function canUseLocalPortFallback(baseUrl: string) {
-  if (process.env.NEXT_PUBLIC_API_BASE_URL) return false;
-  return baseUrl === DEFAULT_SERVER_BASE;
+function resolveLocalFallbackBase(baseUrl: string): string | null {
+  try {
+    const parsed = new URL(baseUrl);
+    const host = parsed.hostname.toLowerCase();
+    const isLocalHost = host === "localhost" || host === "127.0.0.1" || host === "::1";
+    const normalizedPort = parsed.port || (parsed.protocol === "https:" ? "443" : "80");
+    if (!isLocalHost || normalizedPort !== "5000") return null;
+    parsed.port = "5001";
+    return parsed.toString().replace(/\/$/, "");
+  } catch {
+    return baseUrl === DEFAULT_SERVER_BASE ? LOCAL_FALLBACK_SERVER_BASE : null;
+  }
 }
 
 async function requestJson(baseUrl: string, path: string, config?: FetchConfig): Promise<Response> {
@@ -54,15 +63,16 @@ async function requestJson(baseUrl: string, path: string, config?: FetchConfig):
 
 async function fetchJson(path: string, config?: FetchConfig): Promise<unknown> {
   const baseUrl = resolveApiBaseUrl().replace(/\/$/, "");
+  const fallbackBaseUrl = resolveLocalFallbackBase(baseUrl);
   const url = `${baseUrl}${path}`;
 
   try {
     const response = await requestJson(baseUrl, path, config);
 
     if (!response.ok) {
-      if (canUseLocalPortFallback(baseUrl) && [426, 502, 503, 504].includes(response.status)) {
+      if (fallbackBaseUrl && [426, 502, 503, 504].includes(response.status)) {
         try {
-          const fallbackResponse = await requestJson(LOCAL_FALLBACK_SERVER_BASE, path, config);
+          const fallbackResponse = await requestJson(fallbackBaseUrl, path, config);
           if (fallbackResponse.ok) {
             return fallbackResponse.json();
           }
@@ -80,9 +90,9 @@ async function fetchJson(path: string, config?: FetchConfig): Promise<unknown> {
 
     return response.json();
   } catch (error) {
-    if (canUseLocalPortFallback(baseUrl)) {
+    if (fallbackBaseUrl) {
       try {
-        const fallbackResponse = await requestJson(LOCAL_FALLBACK_SERVER_BASE, path, config);
+        const fallbackResponse = await requestJson(fallbackBaseUrl, path, config);
         if (fallbackResponse.ok) {
           return fallbackResponse.json();
         }

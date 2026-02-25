@@ -26,7 +26,7 @@ NEW_FEATURE_KEYWORDS = {
     'v2', 'v3', 'v4', 'announces', '宣布'
 }
 
-BLOG_CN_SOURCES = {'cn_news'}
+BLOG_CN_SOURCES = {'cn_news', 'cn_news_glm'}
 BLOG_US_SOURCES = {'hackernews', 'reddit', 'tech_news', 'youtube', 'x', 'producthunt'}
 
 SEARCH_TEXT_FIELDS = (
@@ -160,7 +160,7 @@ COUNTRY_NAME_ALIASES = {
 
 FLAG_TO_COUNTRY_CODE = {flag: code for code, flag in COUNTRY_CODE_TO_FLAG.items()}
 DISCOVERY_REGION_FLAGS = {'🇺🇸', '🇨🇳', '🇪🇺', '🇯🇵🇰🇷', '🇸🇬', '🌍'}
-SEARCH_REGION_SAFE_FLAGS = {'🇺🇸', '🇨🇳'}
+REGION_DERIVED_COUNTRY_SOURCES = {'region:search_fallback', 'region:fallback'}
 
 COUNTRY_BY_CC_TLD = {
     'cn': 'CN',
@@ -338,6 +338,9 @@ def _country_code_from_website_tld(website: Any) -> str:
 
 
 def _resolve_company_country(product: Dict[str, Any]) -> tuple[str, str]:
+    country_source_hint = str(product.get('country_source') or '').strip().lower()
+    skip_region_derived_country_fields = country_source_hint in REGION_DERIVED_COUNTRY_SOURCES
+
     explicit_fields = [
         'company_country_code',
         'company_country',
@@ -353,6 +356,9 @@ def _resolve_company_country(product: Dict[str, Any]) -> tuple[str, str]:
     ]
 
     for field in explicit_fields:
+        if skip_region_derived_country_fields and field in {'country_code', 'country_name', 'country'}:
+            # Backward compatibility: old country fields may have been inferred from search region.
+            continue
         code = _normalize_country_code(product.get(field))
         if code:
             return code, f'explicit:{field}'
@@ -360,11 +366,15 @@ def _resolve_company_country(product: Dict[str, Any]) -> tuple[str, str]:
     extra = product.get('extra')
     if isinstance(extra, dict):
         for field in explicit_fields:
+            if skip_region_derived_country_fields and field in {'country_code', 'country_name', 'country'}:
+                continue
             code = _normalize_country_code(extra.get(field))
             if code:
                 return code, f'extra:{field}'
 
     for field in ('country_flag', 'company_country_flag', 'hq_country_flag'):
+        if skip_region_derived_country_fields and field == 'country_flag':
+            continue
         code = _normalize_country_code(product.get(field))
         if code:
             return code, f'explicit:{field}'
@@ -380,11 +390,6 @@ def _resolve_company_country(product: Dict[str, Any]) -> tuple[str, str]:
         code = FLAG_TO_COUNTRY_CODE.get(region_flag, '')
         if code:
             return code, 'region:legacy'
-
-    if region_flag and region_flag in SEARCH_REGION_SAFE_FLAGS:
-        code = FLAG_TO_COUNTRY_CODE.get(region_flag, '')
-        if code:
-            return code, 'region:search_fallback'
 
     cc_tld = _country_code_from_website_tld(product.get('website'))
     if cc_tld:
