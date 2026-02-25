@@ -42,6 +42,8 @@ GITHUB_REPO_PATTERN = re.compile(
 )
 
 _SENTIMENT_OPTIONS = {"positive", "mixed", "negative", "neutral"}
+DEMAND_HN_LLM_MIN_COMMENTS = max(0, int(os.getenv("DEMAND_HN_LLM_MIN_COMMENTS", "30")))
+DEMAND_HN_LLM_MIN_SAMPLES = max(1, int(os.getenv("DEMAND_HN_LLM_MIN_SAMPLES", "5")))
 
 
 def _now_utc() -> datetime:
@@ -351,6 +353,8 @@ def _empty_hn(window_days: int) -> Dict[str, Any]:
         "engagement_depth_ratio": 0.0,
         "is_controversial": False,
         "top_comments_sample": [],
+        "llm_summary_used": False,
+        "llm_summary_skipped_reason": "",
         "status": "ok",
         "window_days": window_days,
     }
@@ -494,8 +498,22 @@ def collect_hn_signal(
             signal["comment_fetch_error"] = str(exc)
 
     signal["top_comments_sample"] = comment_samples
+    can_use_llm_summary = bool(
+        llm_client
+        and comments >= DEMAND_HN_LLM_MIN_COMMENTS
+        and len(comment_samples) >= DEMAND_HN_LLM_MIN_SAMPLES
+    )
+    signal["llm_summary_used"] = can_use_llm_summary
+    if llm_client and not can_use_llm_summary:
+        if comments < DEMAND_HN_LLM_MIN_COMMENTS:
+            signal["llm_summary_skipped_reason"] = "comments_below_threshold"
+        elif len(comment_samples) < DEMAND_HN_LLM_MIN_SAMPLES:
+            signal["llm_summary_skipped_reason"] = "samples_below_threshold"
 
-    verdict_payload = summarize_hn_comments(comment_samples, llm_client=llm_client)
+    verdict_payload = summarize_hn_comments(
+        comment_samples,
+        llm_client=llm_client if can_use_llm_summary else None,
+    )
     community_verdict = {
         "source": "hackernews",
         "window_days": window_days,

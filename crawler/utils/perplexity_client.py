@@ -34,6 +34,11 @@ import re
 from typing import Optional, Union
 from dataclasses import dataclass, field
 import requests
+try:
+    from utils.api_usage_metrics import record_api_usage
+except Exception:
+    def record_api_usage(**kwargs):
+        return None
 
 # ════════════════════════════════════════════════════════════════════════════════
 # 全局配置
@@ -134,6 +139,30 @@ class PerplexityClient:
     def _rate_limit(self):
         """API 限流"""
         time.sleep(API_RATE_LIMIT_DELAY)
+
+    @staticmethod
+    def _extract_usage_tokens(payload: dict) -> tuple[int, int]:
+        usage = payload.get("usage") if isinstance(payload, dict) else None
+        if not isinstance(usage, dict):
+            return 0, 0
+
+        input_tokens = 0
+        output_tokens = 0
+        for key in ("prompt_tokens", "input_tokens", "total_input_tokens"):
+            if key in usage:
+                try:
+                    input_tokens = int(usage.get(key) or 0)
+                    break
+                except Exception:
+                    pass
+        for key in ("completion_tokens", "output_tokens", "total_output_tokens"):
+            if key in usage:
+                try:
+                    output_tokens = int(usage.get(key) or 0)
+                    break
+                except Exception:
+                    pass
+        return max(0, input_tokens), max(0, output_tokens)
     
     # ════════════════════════════════════════════════════════════════════════════
     # Search API (第一步：获取搜索结果)
@@ -191,6 +220,13 @@ class PerplexityClient:
             response = self._session.post(SEARCH_API_URL, json=payload, timeout=30)
             response.raise_for_status()
             data = response.json()
+            input_tokens, output_tokens = self._extract_usage_tokens(data)
+            record_api_usage(
+                provider="perplexity",
+                search_requests=1,
+                input_tokens=input_tokens,
+                output_tokens=output_tokens,
+            )
             
             results = []
             for item in data.get("results", []):
@@ -277,6 +313,13 @@ class PerplexityClient:
             response = self._session.post(CHAT_API_URL, json=payload, timeout=60)
             response.raise_for_status()
             data = response.json()
+            input_tokens, output_tokens = self._extract_usage_tokens(data)
+            record_api_usage(
+                provider="perplexity",
+                chat_requests=1,
+                input_tokens=input_tokens,
+                output_tokens=output_tokens,
+            )
             
             result_text = data['choices'][0]['message']['content']
             return self._extract_json(result_text)

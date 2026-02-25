@@ -36,6 +36,32 @@ class _FakePerplexityClient:
         return [_FakeSearchResult(url=u) for u in self.urls]
 
 
+class _FakeResponse:
+    def __init__(self, payload, status_code: int = 200):
+        self._payload = payload
+        self.status_code = status_code
+
+    def raise_for_status(self):
+        if self.status_code >= 400:
+            raise RuntimeError(f"HTTP {self.status_code}")
+
+    def json(self):
+        return self._payload
+
+
+class _FakeSession:
+    def __init__(self, *, hits, item_payload):
+        self._hits = hits
+        self._item_payload = item_payload
+
+    def get(self, url, params=None, timeout=None):
+        if "search_by_date" in url:
+            return _FakeResponse({"hits": self._hits})
+        if "/items/" in url:
+            return _FakeResponse(self._item_payload)
+        return _FakeResponse({}, status_code=404)
+
+
 class TestHNSignals(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -70,6 +96,135 @@ class TestHNSignals(unittest.TestCase):
         self.assertGreaterEqual(sentence_markers, 3)
 
         self.assertIn(verdict.get("sentiment"), {"positive", "mixed", "negative", "neutral"})
+
+    def test_hn_llm_summary_gate_enables_when_thresholds_met(self) -> None:
+        import utils.demand_signals as ds
+
+        llm_client = object()
+        hits = [
+            {
+                "title": "Example AI raised Series A",
+                "story_text": "Example AI raised funding and launched product.",
+                "url": "https://example.com/blog",
+                "num_comments": ds.DEMAND_HN_LLM_MIN_COMMENTS,
+                "points": 20,
+                "created_at_i": 1730000000,
+                "objectID": "123",
+            }
+        ]
+        item_payload = {
+            "children": [
+                {"text": "comment 1"},
+                {"text": "comment 2"},
+                {"text": "comment 3"},
+                {"text": "comment 4"},
+                {"text": "comment 5"},
+            ]
+        }
+        session = _FakeSession(hits=hits, item_payload=item_payload)
+
+        with patch(
+            "utils.demand_signals.summarize_hn_comments",
+            return_value={"summary": "一句。 二句。 三句。", "sentiment": "mixed", "confidence": 0.7},
+        ) as mocked_summary:
+            signal, verdict = ds.collect_hn_signal(
+                "Example AI",
+                "https://example.com",
+                window_days=7,
+                session=session,
+                llm_client=llm_client,
+            )
+
+        self.assertTrue(signal.get("llm_summary_used"))
+        self.assertEqual(signal.get("llm_summary_skipped_reason"), "")
+        self.assertIsNotNone(verdict)
+        self.assertIs(mocked_summary.call_args.kwargs.get("llm_client"), llm_client)
+
+    def test_hn_llm_summary_gate_skips_when_samples_too_low(self) -> None:
+        import utils.demand_signals as ds
+
+        llm_client = object()
+        hits = [
+            {
+                "title": "Example AI raised Series A",
+                "story_text": "Example AI raised funding and launched product.",
+                "url": "https://example.com/blog",
+                "num_comments": ds.DEMAND_HN_LLM_MIN_COMMENTS + 5,
+                "points": 30,
+                "created_at_i": 1730000000,
+                "objectID": "456",
+            }
+        ]
+        item_payload = {
+            "children": [
+                {"text": "comment 1"},
+                {"text": "comment 2"},
+                {"text": "comment 3"},
+                {"text": "comment 4"},
+            ]
+        }
+        session = _FakeSession(hits=hits, item_payload=item_payload)
+
+        with patch(
+            "utils.demand_signals.summarize_hn_comments",
+            return_value={"summary": "一句。 二句。 三句。", "sentiment": "mixed", "confidence": 0.7},
+        ) as mocked_summary:
+            signal, verdict = ds.collect_hn_signal(
+                "Example AI",
+                "https://example.com",
+                window_days=7,
+                session=session,
+                llm_client=llm_client,
+            )
+
+        self.assertFalse(signal.get("llm_summary_used"))
+        self.assertEqual(signal.get("llm_summary_skipped_reason"), "samples_below_threshold")
+        self.assertIsNotNone(verdict)
+        self.assertIsNone(mocked_summary.call_args.kwargs.get("llm_client"))
+
+    def test_hn_llm_summary_gate_skips_when_comments_too_low(self) -> None:
+        import utils.demand_signals as ds
+
+        llm_client = object()
+        hits = [
+            {
+                "title": "Example AI raised Series A",
+                "story_text": "Example AI raised funding and launched product.",
+                "url": "https://example.com/blog",
+                "num_comments": max(0, ds.DEMAND_HN_LLM_MIN_COMMENTS - 1),
+                "points": 30,
+                "created_at_i": 1730000000,
+                "objectID": "789",
+            }
+        ]
+        item_payload = {
+            "children": [
+                {"text": "comment 1"},
+                {"text": "comment 2"},
+                {"text": "comment 3"},
+                {"text": "comment 4"},
+                {"text": "comment 5"},
+                {"text": "comment 6"},
+            ]
+        }
+        session = _FakeSession(hits=hits, item_payload=item_payload)
+
+        with patch(
+            "utils.demand_signals.summarize_hn_comments",
+            return_value={"summary": "一句。 二句。 三句。", "sentiment": "mixed", "confidence": 0.7},
+        ) as mocked_summary:
+            signal, verdict = ds.collect_hn_signal(
+                "Example AI",
+                "https://example.com",
+                window_days=7,
+                session=session,
+                llm_client=llm_client,
+            )
+
+        self.assertFalse(signal.get("llm_summary_used"))
+        self.assertEqual(signal.get("llm_summary_skipped_reason"), "comments_below_threshold")
+        self.assertIsNotNone(verdict)
+        self.assertIsNone(mocked_summary.call_args.kwargs.get("llm_client"))
 
 
 class TestXSignals(unittest.TestCase):

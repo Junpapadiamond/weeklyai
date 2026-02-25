@@ -34,6 +34,11 @@ import re
 import requests
 from typing import Optional, Union
 from dataclasses import dataclass, field
+try:
+    from utils.api_usage_metrics import record_api_usage
+except Exception:
+    def record_api_usage(**kwargs):
+        return None
 
 # ════════════════════════════════════════════════════════════════════════════════
 # 全局配置
@@ -192,6 +197,40 @@ class GLMClient:
         msg = str(error)
         return ("Error code: 429" in msg) or ("1302" in msg) or ("并发数过高" in msg)
 
+    @staticmethod
+    def _extract_usage_tokens(payload: object) -> tuple[int, int]:
+        usage = None
+        if isinstance(payload, dict):
+            usage = payload.get("usage")
+        else:
+            usage = getattr(payload, "usage", None)
+
+        if usage is None:
+            return 0, 0
+
+        if not isinstance(usage, dict):
+            usage = usage.__dict__ if hasattr(usage, "__dict__") else {}
+        if not isinstance(usage, dict):
+            return 0, 0
+
+        input_tokens = 0
+        output_tokens = 0
+        for key in ("prompt_tokens", "input_tokens", "total_input_tokens"):
+            if key in usage:
+                try:
+                    input_tokens = int(usage.get(key) or 0)
+                    break
+                except Exception:
+                    pass
+        for key in ("completion_tokens", "output_tokens", "total_output_tokens"):
+            if key in usage:
+                try:
+                    output_tokens = int(usage.get(key) or 0)
+                    break
+                except Exception:
+                    pass
+        return max(0, input_tokens), max(0, output_tokens)
+
     # ════════════════════════════════════════════════════════════════════════════
     # Web Search (独立 Web Search API)
     # ════════════════════════════════════════════════════════════════════════════
@@ -239,6 +278,13 @@ class GLMClient:
                 )
                 resp.raise_for_status()
                 data = resp.json()
+                input_tokens, output_tokens = self._extract_usage_tokens(data)
+                record_api_usage(
+                    provider="glm",
+                    search_requests=1,
+                    input_tokens=input_tokens,
+                    output_tokens=output_tokens,
+                )
 
                 results = []
                 for item in data.get("search_result", []):
@@ -368,6 +414,13 @@ class GLMClient:
         for attempt in range(1, API_MAX_RETRIES + 1):
             try:
                 response = self._client.chat.completions.create(**request_params)
+                input_tokens, output_tokens = self._extract_usage_tokens(response)
+                record_api_usage(
+                    provider="glm",
+                    chat_requests=1,
+                    input_tokens=input_tokens,
+                    output_tokens=output_tokens,
+                )
 
                 result_text = response.choices[0].message.content or ""
                 return self._extract_json(result_text)

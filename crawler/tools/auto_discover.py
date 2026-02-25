@@ -24,7 +24,7 @@ import requests
 import time
 from datetime import datetime
 from urllib.parse import urlparse
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple, List
 
 # 添加父目录到路径（用于导入 utils）
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -388,6 +388,17 @@ GLM_KEYWORD_DELAY = float(os.environ.get('GLM_KEYWORD_DELAY', '3'))  # 每个关
 MAX_KEYWORDS_CN = int(os.environ.get('AUTO_DISCOVER_MAX_KEYWORDS_CN', '4'))  # 0=不限制
 MAX_KEYWORDS_DEFAULT = int(os.environ.get('AUTO_DISCOVER_MAX_KEYWORDS', '0'))  # 0=不限制
 
+# 成本优化配置
+AUTO_DISCOVER_BUDGET_MODE = os.environ.get('AUTO_DISCOVER_BUDGET_MODE', 'adaptive').strip().lower()
+if AUTO_DISCOVER_BUDGET_MODE not in {'adaptive', 'legacy'}:
+    AUTO_DISCOVER_BUDGET_MODE = 'adaptive'
+AUTO_DISCOVER_ROUND1_KEYWORDS = max(1, int(os.environ.get('AUTO_DISCOVER_ROUND1_KEYWORDS', '2')))
+AUTO_DISCOVER_ROUND_EXPAND_STEP = max(1, int(os.environ.get('AUTO_DISCOVER_ROUND_EXPAND_STEP', '2')))
+AUTO_DISCOVER_ENABLE_ANALYZE_GATE = os.environ.get('AUTO_DISCOVER_ENABLE_ANALYZE_GATE', 'true').lower() == 'true'
+AUTO_DISCOVER_QUALITY_FALLBACK = os.environ.get('AUTO_DISCOVER_QUALITY_FALLBACK', 'true').lower() == 'true'
+AUTO_DISCOVER_PROMPT_MAX_CHARS = max(1200, int(os.environ.get('AUTO_DISCOVER_PROMPT_MAX_CHARS', '6000')))
+AUTO_DISCOVER_RESULT_SNIPPET_MAX_CHARS = max(120, int(os.environ.get('AUTO_DISCOVER_RESULT_SNIPPET_MAX_CHARS', '320')))
+
 # ============================================
 # 多语言关键词库（原生语言搜索效果更好）
 # ============================================
@@ -702,6 +713,7 @@ AUTO_DISCOVER_LOCK_FILE = os.environ.get(
     'AUTO_DISCOVER_LOCK_FILE',
     os.path.join(PROJECT_ROOT, 'logs', 'auto_discover.lock')
 )
+KEYWORD_YIELD_STATS_FILE = os.path.join(PROJECT_ROOT, 'data', 'metrics', 'keyword_yield_stats.json')
 
 try:
     from utils.demand_signals import DemandSignalEngine, apply_demand_guardrail
@@ -709,6 +721,172 @@ try:
 except Exception as e:
     HAS_DEMAND_SIGNALS = False
     print(f"⚠️ demand_signals module not available: {e}")
+
+
+def apply_keyword_limit(region_key: str, keywords: List[str]) -> List[str]:
+    keyword_limit = 0
+    if region_key == "cn" and MAX_KEYWORDS_CN > 0:
+        keyword_limit = MAX_KEYWORDS_CN
+    elif MAX_KEYWORDS_DEFAULT > 0:
+        keyword_limit = MAX_KEYWORDS_DEFAULT
+    if keyword_limit and len(keywords) > keyword_limit:
+        return keywords[:keyword_limit]
+    return keywords
+
+
+def build_search_text(search_results: List[dict], snippet_limit: int = AUTO_DISCOVER_RESULT_SNIPPET_MAX_CHARS) -> str:
+    blocks = []
+    for r in search_results:
+        title = str(r.get('title', 'No Title') or 'No Title').strip()
+        url = str(r.get('url', 'N/A') or 'N/A').strip()
+        date_text = str(r.get('date', '') or '').strip()
+        raw_snippet = str(r.get('content', r.get('snippet', '')) or '').strip()
+        snippet = raw_snippet[:snippet_limit]
+        lines = [f"### {title}", f"URL: {url}"]
+        if date_text:
+            lines.append(f"Date: {date_text}")
+        lines.append(snippet)
+        blocks.append("\n".join(lines))
+    return "\n\n".join(blocks)
+
+
+def _extract_domain_from_result(result: dict) -> str:
+    raw_url = str(result.get("url", "") or "").strip()
+    if not raw_url:
+        return ""
+    try:
+        parsed = urlparse(raw_url)
+        host = (parsed.netloc or "").lower()
+        if host.startswith("www."):
+            host = host[4:]
+        return host
+    except Exception:
+        return ""
+
+
+def should_analyze_search_results(search_results: List[dict], query: str) -> Tuple[bool, str]:
+    query_text = str(query or "").lower()
+    if "site:" in query_text:
+        return True, "site_query_bypass"
+    if len(search_results) < 3:
+        return False, "too_few_results"
+
+    domains = {_extract_domain_from_result(r) for r in search_results if _extract_domain_from_result(r)}
+    if len(domains) < 2:
+        return False, "too_few_domains"
+
+    signal_terms = [
+        "raise", "raised", "raises", "funding", "series a", "series b", "series c",
+        "launch", "launched", "release", "released", "preview", "beta", "introduc", "unveil",
+        "融资", "获投", "a轮", "b轮", "发布", "推出", "上线", "众筹",
+    ]
+    signal_blob = " ".join(
+        f"{(r.get('title') or '').lower()} {(r.get('content', r.get('snippet', '')) or '').lower()}"
+        for r in search_results
+    )
+    if not any(term in signal_blob for term in signal_terms):
+        return False, "missing_signal_terms"
+    return True, "signal_ok"
+
+
+def _safe_load_json_dict(path: str) -> Dict[str, Any]:
+    if not path or not os.path.exists(path):
+        return {}
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        if isinstance(data, dict):
+            return data
+    except Exception:
+        pass
+    return {}
+
+
+def _safe_save_json_dict(path: str, payload: Dict[str, Any]) -> None:
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+
+
+def load_keyword_yield_stats() -> Dict[str, Any]:
+    data = _safe_load_json_dict(KEYWORD_YIELD_STATS_FILE)
+    if not data:
+        return {
+            "meta": {"updated_at": "", "version": "v1"},
+            "keywords": {},
+        }
+    if not isinstance(data.get("keywords"), dict):
+        data["keywords"] = {}
+    if not isinstance(data.get("meta"), dict):
+        data["meta"] = {"updated_at": "", "version": "v1"}
+    return data
+
+
+def rank_keywords_by_yield(region_key: str, keywords: List[str], stats: Dict[str, Any]) -> List[str]:
+    if not keywords:
+        return []
+    region_stats = (stats.get("keywords") or {}).get(region_key, {})
+    if not isinstance(region_stats, dict):
+        return list(keywords)
+
+    scored = []
+    for idx, keyword in enumerate(keywords):
+        row = region_stats.get(keyword) if isinstance(region_stats, dict) else None
+        if not isinstance(row, dict):
+            scored.append((0.0, 0, idx, keyword))
+            continue
+        saved = int(row.get("saved", 0) or 0)
+        dark = int(row.get("dark_horses", 0) or 0)
+        searches = int(row.get("searches", 0) or 0)
+        precision = (saved / searches) if searches > 0 else 0.0
+        dh_boost = (dark / max(saved, 1))
+        score = precision * 0.7 + dh_boost * 0.3
+        scored.append((score, saved, idx, keyword))
+
+    scored.sort(key=lambda x: (x[0], x[1], -x[2]), reverse=True)
+    return [row[3] for row in scored]
+
+
+def update_keyword_yield_stats(
+    stats: Dict[str, Any],
+    *,
+    region_key: str,
+    keyword: str,
+    searches: int = 0,
+    extracted: int = 0,
+    saved: int = 0,
+    dark_horses: int = 0,
+) -> None:
+    if not keyword:
+        return
+    keywords_bucket = stats.setdefault("keywords", {})
+    if not isinstance(keywords_bucket, dict):
+        keywords_bucket = {}
+        stats["keywords"] = keywords_bucket
+    region_bucket = keywords_bucket.setdefault(region_key, {})
+    if not isinstance(region_bucket, dict):
+        region_bucket = {}
+        keywords_bucket[region_key] = region_bucket
+    row = region_bucket.setdefault(keyword, {})
+    if not isinstance(row, dict):
+        row = {}
+        region_bucket[keyword] = row
+
+    row["searches"] = int(row.get("searches", 0) or 0) + int(max(searches, 0))
+    row["extracted"] = int(row.get("extracted", 0) or 0) + int(max(extracted, 0))
+    row["saved"] = int(row.get("saved", 0) or 0) + int(max(saved, 0))
+    row["dark_horses"] = int(row.get("dark_horses", 0) or 0) + int(max(dark_horses, 0))
+    row["last_seen"] = datetime.utcnow().strftime("%Y-%m-%d")
+
+
+def flush_keyword_yield_stats(stats: Dict[str, Any]) -> None:
+    meta = stats.get("meta")
+    if not isinstance(meta, dict):
+        meta = {}
+        stats["meta"] = meta
+    meta["updated_at"] = datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
+    meta["version"] = "v1"
+    _safe_save_json_dict(KEYWORD_YIELD_STATS_FILE, stats)
 
 # ============================================
 # Prompt 模块 (独立优化的搜索和分析 Prompt)
@@ -1647,7 +1825,7 @@ def analyze_with_perplexity(content: str, task: str = "extract", region: str = "
     if task == "extract":
         if USE_MODULAR_PROMPTS and product_type == "hardware":
             prompt = get_hardware_analysis_prompt(
-                search_results=content[:10000],
+                search_results=content[:AUTO_DISCOVER_PROMPT_MAX_CHARS],
                 region=region,
                 quota_dark_horses=quota_remaining.get("dark_horses", 5),
                 quota_rising_stars=quota_remaining.get("rising_stars", 10)
@@ -1655,7 +1833,7 @@ def analyze_with_perplexity(content: str, task: str = "extract", region: str = "
         elif USE_MODULAR_PROMPTS:
             prompt = get_analysis_prompt(
                 region_key=region_key,
-                search_results=content[:10000],
+                search_results=content[:AUTO_DISCOVER_PROMPT_MAX_CHARS],
                 quota_dark_horses=quota_remaining.get("dark_horses", 5),
                 quota_rising_stars=quota_remaining.get("rising_stars", 10),
                 region_flag=region
@@ -1663,7 +1841,7 @@ def analyze_with_perplexity(content: str, task: str = "extract", region: str = "
         else:
             prompt_template = get_extraction_prompt(region_key)
             prompt = prompt_template.format(
-                search_results=content[:10000],
+                search_results=content[:AUTO_DISCOVER_PROMPT_MAX_CHARS],
                 region=region,
                 quota_dark_horses=quota_remaining.get("dark_horses", 5),
                 quota_rising_stars=quota_remaining.get("rising_stars", 10)
@@ -1753,7 +1931,7 @@ def analyze_with_glm(content: str, task: str = "extract", region: str = "🇨�
     if task == "extract":
         if USE_MODULAR_PROMPTS and product_type == "hardware":
             prompt = get_hardware_analysis_prompt(
-                search_results=content[:10000],
+                search_results=content[:AUTO_DISCOVER_PROMPT_MAX_CHARS],
                 region=region,
                 quota_dark_horses=quota_remaining.get("dark_horses", 5),
                 quota_rising_stars=quota_remaining.get("rising_stars", 10)
@@ -1761,7 +1939,7 @@ def analyze_with_glm(content: str, task: str = "extract", region: str = "🇨�
         elif USE_MODULAR_PROMPTS:
             prompt = get_analysis_prompt(
                 region_key=region_key,
-                search_results=content[:10000],
+                search_results=content[:AUTO_DISCOVER_PROMPT_MAX_CHARS],
                 quota_dark_horses=quota_remaining.get("dark_horses", 5),
                 quota_rising_stars=quota_remaining.get("rising_stars", 10),
                 region_flag=region
@@ -1769,7 +1947,7 @@ def analyze_with_glm(content: str, task: str = "extract", region: str = "🇨�
         else:
             prompt_template = get_extraction_prompt("cn")
             prompt = prompt_template.format(
-                search_results=content[:10000],
+                search_results=content[:AUTO_DISCOVER_PROMPT_MAX_CHARS],
                 region=region,
                 quota_dark_horses=quota_remaining.get("dark_horses", 5),
                 quota_rising_stars=quota_remaining.get("rising_stars", 10)
@@ -2393,14 +2571,17 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
     current_provider = get_provider_for_region(region_key)
 
     # 使用关键词轮换（支持产品类型）
+    keyword_stats = load_keyword_yield_stats()
     keywords = get_keywords_for_today(region_key, product_type)
+    keywords = apply_keyword_limit(region_key, keywords)
+    if AUTO_DISCOVER_BUDGET_MODE == "adaptive":
+        keywords = rank_keywords_by_yield(region_key, keywords, keyword_stats)
+
     keyword_limit = 0
     if region_key == "cn" and MAX_KEYWORDS_CN > 0:
         keyword_limit = MAX_KEYWORDS_CN
     elif MAX_KEYWORDS_DEFAULT > 0:
         keyword_limit = MAX_KEYWORDS_DEFAULT
-    if keyword_limit and len(keywords) > keyword_limit:
-        keywords = keywords[:keyword_limit]
 
     type_label = {"software": "💻 软件", "hardware": "🔧 硬件", "mixed": "📊 混合(40%硬件+60%软件)"}.get(product_type, "混合")
 
@@ -2409,6 +2590,8 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
     print(f"  📡 Search Engine: {search_engine}")
     print(f"  🤖 Provider: {current_provider}")
     print(f"  📦 Product Type: {type_label}")
+    print(f"  💸 Budget Mode: {AUTO_DISCOVER_BUDGET_MODE}")
+    print(f"  🧪 Analyze Gate: {'on' if AUTO_DISCOVER_ENABLE_ANALYZE_GATE else 'off'}")
     print(f"  🔑 Keywords: {len(keywords)} queries (day {datetime.now().weekday()})")
     if keyword_limit:
         print(f"  🧯 Keyword limit: {keyword_limit}")
@@ -2454,39 +2637,37 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
         "demand_downgraded": 0,
     }
 
-    # 对每个关键词进行搜索
-    for i, keyword in enumerate(keywords, 1):
-        print(f"\n  [{i}/{len(keywords)}] Searching: {keyword[:50]}...")
-        keyword_type = resolve_keyword_type(keyword, region_key, product_type)
+    deferred_keywords: List[Tuple[str, str, List[dict], str]] = []
+    region_flag_map = {
+        'us': '🇺🇸', 'cn': '🇨🇳', 'eu': '🇪🇺',
+        'jp': '🇯🇵🇰🇷', 'kr': '🇰🇷', 'sea': '🇸🇬'
+    }
+    region_flag = region_flag_map.get(region_key, '🌍')
 
-        # 1. Search using provider routing
-        search_results = search_with_provider(keyword, region_key, search_engine)
-        stats["search_results"] += len(search_results)
-
-        if not search_results:
-            continue
-
-        # 将搜索结果格式化为文本
-        search_text = "\n\n".join([
-            f"### {r.get('title', 'No Title')}\n"
-            f"URL: {r.get('url', 'N/A')}\n"
-            f"{r.get('content', r.get('snippet', ''))}"
-            for r in search_results
-        ])
-
-        if not search_text.strip():
-            continue
-
-        # 2. Extract products using provider routing
+    def _run_extract_for_keyword(
+        keyword: str,
+        keyword_type: str,
+        search_results: List[dict],
+        *,
+        bypass_gate: bool = False,
+    ) -> Tuple[int, int, int]:
+        nonlocal demand_processed, demand_upgraded, demand_downgraded
+        keyword_saved = 0
+        keyword_dark_horses = 0
         current_provider = get_provider_for_region(region_key)
+
+        if AUTO_DISCOVER_ENABLE_ANALYZE_GATE and not bypass_gate:
+            analyze_ok, analyze_reason = should_analyze_search_results(search_results, keyword)
+            if not analyze_ok:
+                deferred_keywords.append((keyword, keyword_type, search_results, analyze_reason))
+                print(f"    ⏭️ Analyze gate skipped: {analyze_reason}")
+                return 0, 0, 0
+
+        search_text = build_search_text(search_results)
+        if not search_text.strip():
+            return 0, 0, 0
+
         print(f"    📊 Extracting products with {current_provider}...")
-
-        region_flag_map = {
-            'us': '🇺🇸', 'cn': '🇨🇳', 'eu': '🇪🇺',
-            'jp': '🇯🇵🇰🇷', 'kr': '🇰🇷', 'sea': '🇸🇬'
-        }
-        region_flag = region_flag_map.get(region_key, '🌍')
-
         products = analyze_with_provider(
             search_text,
             "extract",
@@ -2494,31 +2675,25 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
             region_flag,
             product_type=keyword_type
         )
-
         if not isinstance(products, list):
             products = []
 
         print(f"    ✅ Extracted {len(products)} products")
         stats["products_found"] += len(products)
 
-        # 3. 对每个产品评分
         for product in products:
             name = product.get('name', '')
             if not name:
                 continue
 
-            # 使用增强去重检查器
             is_dup, dup_reason = dedup_checker.is_duplicate(product)
             if is_dup:
                 stats["duplicates_skipped"] += 1
                 print(f"    ⏭️ Skip duplicate: {dup_reason}")
                 continue
 
-            # 绑定 source_url（用于后续解析官网）
             attach_source_url(product, search_results)
 
-            # ── 反幻觉：交叉验证产品是否在搜索结果中 ──
-            # 仅对 GLM provider 启用（Perplexity 自带搜索引用，幻觉少）
             if current_provider == "glm":
                 xref_valid, xref_reason = validate_against_search_results(
                     product, search_results
@@ -2529,7 +2704,6 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
                     print(f"    🚫 Hallucination filter: {name} ({xref_reason})")
                     continue
 
-            # 质量验证
             is_hardware = (
                 keyword_type == "hardware" or
                 product.get("category") == "hardware" or
@@ -2548,16 +2722,12 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
                 print(f"    ❌ Quality fail: {name} ({reason})")
                 continue
 
-            # 补充信息
             product['source_region'] = region_flag
             product['discovered_at'] = datetime.utcnow().strftime('%Y-%m-%d')
             product['discovery_method'] = f'{current_provider}_search'
             product['search_keyword'] = keyword
             apply_country_fields(product, fallback_region_flag=region_flag)
 
-            # 4. 使用合并 prompt 的评分（无需额外 API 调用）
-            # 如果提取结果已包含 dark_horse_index，直接使用
-            # 否则使用规则评分作为 fallback
             score = product.get('dark_horse_index')
             if score is None:
                 print(f"    🎯 Fallback scoring: {product.get('name')}...")
@@ -2566,7 +2736,6 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
             score = _coerce_score(score, default=2)
             product['dark_horse_index'] = score
 
-            # Demand signals + guardrail（仅对通过质量校验的候选）
             guardrail_applied = "none"
             if demand_engine and demand_processed < max(DEMAND_MAX_PRODUCTS_PER_RUN, 0):
                 try:
@@ -2591,31 +2760,87 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
             criteria = product.get('criteria_met', [])
             print(f"    📈 Score: {score}/5 | Criteria: {criteria}")
 
-            # 5. URL 验证（可选，跳过 dry_run 模式）
             website = product.get('website', '')
             if not dry_run and website and website.lower() != 'unknown':
                 if not verify_url_exists(website, timeout=5):
                     print(f"    ⚠️ URL not accessible: {website}")
                     product['needs_verification'] = True
-                    # 不拒绝，但标记需要人工验证
 
-            # 6. 保存产品
             save_product(product, dry_run)
             stats["products_saved"] += 1
+            keyword_saved += 1
 
             if score >= 4:
                 stats["dark_horses"] += 1
+                keyword_dark_horses += 1
             else:
                 stats["rising_stars"] += 1
 
-            # 更新去重索引
             dedup_checker.add_product(product)
             all_products.append(product)
 
-        # GLM 额外节流，避免并发/频率过高
+        return keyword_saved, keyword_dark_horses, len(products)
+
+    # 对每个关键词进行搜索
+    for i, keyword in enumerate(keywords, 1):
+        print(f"\n  [{i}/{len(keywords)}] Searching: {keyword[:50]}...")
+        keyword_type = resolve_keyword_type(keyword, region_key, product_type)
+
+        search_results = search_with_provider(keyword, region_key, search_engine)
+        stats["search_results"] += len(search_results)
+        if not search_results:
+            update_keyword_yield_stats(
+                keyword_stats,
+                region_key=region_key,
+                keyword=keyword,
+                searches=1,
+            )
+            continue
+
+        saved_count, dark_count, extracted_count = _run_extract_for_keyword(
+            keyword,
+            keyword_type,
+            search_results,
+            bypass_gate=False,
+        )
+        update_keyword_yield_stats(
+            keyword_stats,
+            region_key=region_key,
+            keyword=keyword,
+            searches=1,
+            extracted=extracted_count,
+            saved=saved_count,
+            dark_horses=dark_count,
+        )
+
+        current_provider = get_provider_for_region(region_key)
         if current_provider == "glm" and GLM_KEYWORD_DELAY > 0 and i < len(keywords):
             print(f"  ⏳ GLM cooldown: sleeping {GLM_KEYWORD_DELAY:.1f}s")
             time.sleep(GLM_KEYWORD_DELAY)
+
+    # Analyze gate 保底回放：当本轮产出偏低时，回放被 gate 拦截的关键词
+    min_expected_saves = max(1, len(keywords) // 4)
+    if AUTO_DISCOVER_ENABLE_ANALYZE_GATE and deferred_keywords and stats["products_saved"] < min_expected_saves:
+        print(f"\n  ♻️ Replaying deferred keywords due to low yield ({stats['products_saved']} < {min_expected_saves})")
+        for keyword, keyword_type, search_results, reason in deferred_keywords:
+            print(f"  ↩ Replaying: {keyword[:50]}... (gate reason: {reason})")
+            saved_count, dark_count, extracted_count = _run_extract_for_keyword(
+                keyword,
+                keyword_type,
+                search_results,
+                bypass_gate=True,
+            )
+            update_keyword_yield_stats(
+                keyword_stats,
+                region_key=region_key,
+                keyword=keyword,
+                searches=0,
+                extracted=extracted_count,
+                saved=saved_count,
+                dark_horses=dark_count,
+            )
+
+    flush_keyword_yield_stats(keyword_stats)
 
     # 打印统计
     print(f"\n{'='*60}")
@@ -2675,6 +2900,9 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
     print(f"  📊 Quota: {DAILY_QUOTA['dark_horses']} Dark Horses + {DAILY_QUOTA['rising_stars']} Rising Stars")
     print(f"  📦 Product Type: {type_label}")
     print(f"  🔄 Max Attempts: {MAX_ATTEMPTS} rounds")
+    print(f"  💸 Budget Mode: {AUTO_DISCOVER_BUDGET_MODE}")
+    print(f"  🧪 Analyze Gate: {'on' if AUTO_DISCOVER_ENABLE_ANALYZE_GATE else 'off'}")
+    print(f"  🛟 Quality Fallback: {'on' if AUTO_DISCOVER_QUALITY_FALLBACK else 'off'}")
     print(f"  📅 Keyword Pool: Day {datetime.now().weekday()} (0=Mon)")
     glm_status = 'enabled' if (ZHIPU_API_KEY and USE_GLM_FOR_CN) else 'disabled'
     pplx_status = 'enabled' if PERPLEXITY_API_KEY else 'missing key'
@@ -2684,23 +2912,23 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
     # 初始化跟踪
     found = {"dark_horses": 0, "rising_stars": 0}
     region_yield = {k: 0 for k in REGION_CONFIG.keys()}
-    provider_stats = {"perplexity": 0, "glm": 0}  # 跟踪两个 provider
+    provider_stats = {"perplexity": 0, "glm": 0}
     duplicates_skipped = 0
     quality_rejections = []
     attempts = 0
-    unique_domains = set()  # 跟踪唯一域名
+    unique_domains = set()
     demand_processed = 0
     demand_upgraded = 0
     demand_downgraded = 0
     demand_engine = None
+    keyword_stats = load_keyword_yield_stats()
 
-    # 使用增强去重检查器
     featured_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "products_featured.json")
     existing_products = []
     if os.path.exists(featured_path):
         with open(featured_path, 'r', encoding='utf-8') as f:
             existing_products = json.load(f)
-    
+
     dedup_checker = EnhancedDuplicateChecker(existing_products)
     if ENABLE_DEMAND_SIGNALS and HAS_DEMAND_SIGNALS:
         demand_engine = DemandSignalEngine(
@@ -2712,12 +2940,227 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
             github_max_star_pages=DEMAND_GITHUB_MAX_STAR_PAGES,
         )
 
+    region_flag_map = {
+        'us': '🇺🇸', 'cn': '🇨🇳', 'eu': '🇪🇺',
+        'jp': '🇯🇵🇰🇷', 'kr': '🇰🇷', 'sea': '🇸🇬'
+    }
+    keyword_pools: Dict[str, List[str]] = {}
+    keyword_cursors = {k: 0 for k in REGION_CONFIG.keys()}
+    prev_round_region_saved = {k: 1 for k in REGION_CONFIG.keys()}
+
     def quotas_met():
         return (found["dark_horses"] >= DAILY_QUOTA["dark_horses"] and
                 found["rising_stars"] >= DAILY_QUOTA["rising_stars"])
 
     def get_category(score):
         return "dark_horses" if score >= 4 else "rising_stars"
+
+    def get_keyword_pool(region_key: str) -> List[str]:
+        if region_key in keyword_pools:
+            return keyword_pools[region_key]
+        pool = get_keywords_for_today(region_key, product_type)
+        pool = apply_keyword_limit(region_key, pool)
+        if AUTO_DISCOVER_BUDGET_MODE == "adaptive":
+            pool = rank_keywords_by_yield(region_key, pool, keyword_stats)
+        keyword_pools[region_key] = pool
+        return pool
+
+    def select_keywords_for_round(region_key: str, attempt: int) -> List[str]:
+        pool = get_keyword_pool(region_key)
+        if AUTO_DISCOVER_BUDGET_MODE == "legacy":
+            return pool[:2] if attempt > 1 else list(pool)
+
+        cursor = keyword_cursors.get(region_key, 0)
+        if cursor >= len(pool):
+            return []
+        if attempt == 1:
+            take = AUTO_DISCOVER_ROUND1_KEYWORDS
+        else:
+            if prev_round_region_saved.get(region_key, 0) <= 0:
+                return []
+            take = AUTO_DISCOVER_ROUND_EXPAND_STEP
+        end = min(len(pool), cursor + max(1, take))
+        selected = pool[cursor:end]
+        keyword_cursors[region_key] = end
+        return selected
+
+    def process_keyword(
+        *,
+        region_key: str,
+        search_engine: str,
+        keyword: str,
+        keyword_type: str,
+        quota_remaining: Dict[str, int],
+        deferred_queue: List[Tuple[str, str, List[dict], str]],
+        search_results_override: Optional[List[dict]] = None,
+        bypass_gate: bool = False,
+    ) -> int:
+        nonlocal duplicates_skipped, demand_processed, demand_upgraded, demand_downgraded
+
+        search_requests = 0
+        if search_results_override is None:
+            search_results = search_with_provider(keyword, region_key, search_engine)
+            search_requests = 1
+        else:
+            search_results = list(search_results_override)
+
+        if not search_results:
+            update_keyword_yield_stats(
+                keyword_stats,
+                region_key=region_key,
+                keyword=keyword,
+                searches=search_requests,
+            )
+            return 0
+
+        if AUTO_DISCOVER_ENABLE_ANALYZE_GATE and not bypass_gate:
+            analyze_ok, analyze_reason = should_analyze_search_results(search_results, keyword)
+            if not analyze_ok:
+                deferred_queue.append((keyword, keyword_type, search_results, analyze_reason))
+                print(f"    ⏭️ Analyze gate skipped: {analyze_reason}")
+                update_keyword_yield_stats(
+                    keyword_stats,
+                    region_key=region_key,
+                    keyword=keyword,
+                    searches=search_requests,
+                )
+                return 0
+
+        search_text = build_search_text(search_results)
+        if not search_text.strip():
+            update_keyword_yield_stats(
+                keyword_stats,
+                region_key=region_key,
+                keyword=keyword,
+                searches=search_requests,
+            )
+            return 0
+
+        region_flag = region_flag_map.get(region_key, '🌍')
+        products = analyze_with_provider(
+            search_text,
+            "extract",
+            region_key,
+            region_flag,
+            quota_remaining,
+            product_type=keyword_type
+        )
+        if not isinstance(products, list):
+            products = []
+
+        print(f"    📦 Extracted: {len(products)} candidates")
+        saved_count = 0
+        dark_count = 0
+        current_provider = get_provider_for_region(region_key)
+
+        for product in products:
+            if quotas_met():
+                break
+
+            name = product.get('name', '')
+            if not name:
+                continue
+
+            is_dup, dup_reason = dedup_checker.is_duplicate(product)
+            if is_dup:
+                duplicates_skipped += 1
+                print(f"    ⏭️ Skip: {dup_reason}")
+                continue
+
+            attach_source_url(product, search_results)
+
+            if current_provider == "glm":
+                xref_valid, xref_reason = validate_against_search_results(product, search_results)
+                if not xref_valid:
+                    quality_rejections.append({"name": name, "reason": xref_reason})
+                    print(f"    🚫 Hallucination filter: {name} ({xref_reason})")
+                    continue
+
+            is_hardware = (
+                keyword_type == "hardware" or
+                product.get("category") == "hardware" or
+                product.get("is_hardware", False)
+            )
+            if is_hardware:
+                product.setdefault("category", "hardware")
+                product["is_hardware"] = True
+            if is_hardware and USE_MODULAR_PROMPTS:
+                is_valid, reason = validate_hardware_product(product)
+            else:
+                is_valid, reason = validate_product(product)
+            if not is_valid:
+                quality_rejections.append({"name": name, "reason": reason})
+                print(f"    ❌ Quality fail: {name} ({reason})")
+                continue
+
+            score = product.get('dark_horse_index')
+            if score is None:
+                product = analyze_and_score(product)
+                score = product.get('dark_horse_index', 2)
+            score = _coerce_score(score, default=2)
+            product['dark_horse_index'] = score
+
+            guardrail_applied = "none"
+            if demand_engine and demand_processed < max(DEMAND_MAX_PRODUCTS_PER_RUN, 0):
+                try:
+                    score, guardrail_applied = _apply_demand_signals_and_guardrail(
+                        product,
+                        demand_engine=demand_engine,
+                        llm_score=score,
+                        override_mode=DEMAND_OVERRIDE_MODE,
+                    )
+                    demand_processed += 1
+                    if guardrail_applied == 'upgraded':
+                        demand_upgraded += 1
+                    elif guardrail_applied == 'downgraded':
+                        demand_downgraded += 1
+                    product['dark_horse_index'] = score
+                    print(f"    🧭 Demand guardrail: {guardrail_applied} (score={score})")
+                except Exception as e:
+                    print(f"    ⚠️ Demand signal failed: {e}")
+            elif demand_engine and DEMAND_MAX_PRODUCTS_PER_RUN >= 0 and demand_processed >= DEMAND_MAX_PRODUCTS_PER_RUN:
+                print("    ⏭️ Demand skipped: per-run limit reached")
+
+            category = get_category(score)
+            if found[category] >= DAILY_QUOTA[category]:
+                print(f"    ⏭️ {category} quota full, skip: {name}")
+                continue
+            if region_yield[region_key] >= REGION_MAX.get(region_key, 3):
+                print(f"    ⏭️ Region max reached, skip: {name}")
+                continue
+
+            product['source_region'] = region_flag
+            product['discovered_at'] = datetime.utcnow().strftime('%Y-%m-%d')
+            product['discovery_method'] = f'{current_provider}_search'
+            product['search_keyword'] = keyword
+            apply_country_fields(product, fallback_region_flag=region_flag)
+            save_product(product, dry_run)
+
+            found[category] += 1
+            region_yield[region_key] += 1
+            provider_stats[current_provider] = provider_stats.get(current_provider, 0) + 1
+            dedup_checker.add_product(product)
+            saved_count += 1
+            if category == "dark_horses":
+                dark_count += 1
+
+            website = product.get('website', '')
+            if website:
+                unique_domains.add(normalize_url(website))
+
+            status_icon = "🦄" if category == "dark_horses" else "⭐"
+            print(f"    {status_icon} SAVED: {name} (score={score}, {category}, {current_provider})")
+
+        update_keyword_yield_stats(
+            keyword_stats,
+            region_key=region_key,
+            keyword=keyword,
+            searches=search_requests,
+            extracted=len(products),
+            saved=saved_count,
+            dark_horses=dark_count,
+        )
+        return saved_count
 
     # 主发现循环
     while not quotas_met() and attempts < MAX_ATTEMPTS:
@@ -2727,16 +3170,13 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
         print(f"  Progress: DH {found['dark_horses']}/{DAILY_QUOTA['dark_horses']} | RS {found['rising_stars']}/{DAILY_QUOTA['rising_stars']}")
         print(f"{'─'*70}")
 
-        # 随机化地区顺序
+        round_region_saved = {k: 0 for k in REGION_CONFIG.keys()}
         region_order = get_region_order()
 
         for region_key in region_order:
-            # 检查地区配额
             if region_yield[region_key] >= REGION_MAX.get(region_key, 3):
                 print(f"\n  ⏭️ Skip {region_key}: region max reached ({region_yield[region_key]})")
                 continue
-
-            # 检查全局配额
             if quotas_met():
                 break
 
@@ -2744,167 +3184,95 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
             region_name = config['name']
             search_engine = config['search_engine']
             current_provider = get_provider_for_region(region_key)
-
-            # 获取今日关键词（带轮换，支持产品类型）
-            keywords = get_keywords_for_today(region_key, product_type)
-            # 每轮只取部分关键词，避免重复
-            keywords_this_round = keywords[:2] if attempts > 1 else keywords
+            keywords_this_round = select_keywords_for_round(region_key, attempts)
+            if not keywords_this_round:
+                print(f"\n  ⏭️ {region_name} | no keywords in this round")
+                continue
 
             print(f"\n  📍 {region_name} | Provider: {current_provider} | Keywords: {len(keywords_this_round)}")
-
-            # 计算剩余配额（传给 prompt）
             quota_remaining = {
                 "dark_horses": DAILY_QUOTA["dark_horses"] - found["dark_horses"],
                 "rising_stars": DAILY_QUOTA["rising_stars"] - found["rising_stars"],
             }
+            deferred_keywords: List[Tuple[str, str, List[dict], str]] = []
 
-            for keyword in keywords_this_round:
+            for idx, keyword in enumerate(keywords_this_round, 1):
                 if quotas_met():
                     break
-
                 print(f"\n    🔍 Searching: {keyword[:50]}...")
                 keyword_type = resolve_keyword_type(keyword, region_key, product_type)
-
-                # 1. Search using provider routing
-                search_results = search_with_provider(keyword, region_key, search_engine)
-
-                if not search_results:
-                    continue
-
-                # 格式化搜索结果
-                search_text = "\n\n".join([
-                    f"### {r.get('title', 'No Title')}\n"
-                    f"URL: {r.get('url', 'N/A')}\n"
-                    f"{r.get('content', r.get('snippet', ''))}"
-                    for r in search_results
-                ])
-
-                if not search_text.strip():
-                    continue
-
-                # 2. Extract products using provider routing
-                region_flag_map = {
-                    'us': '🇺🇸', 'cn': '🇨🇳', 'eu': '🇪🇺',
-                    'jp': '🇯🇵🇰🇷', 'kr': '🇰🇷', 'sea': '🇸🇬'
-                }
-                region_flag = region_flag_map.get(region_key, '🌍')
-
-                products = analyze_with_provider(
-                    search_text,
-                    "extract",
-                    region_key,
-                    region_flag,
-                    quota_remaining,
-                    product_type=keyword_type
+                saved = process_keyword(
+                    region_key=region_key,
+                    search_engine=search_engine,
+                    keyword=keyword,
+                    keyword_type=keyword_type,
+                    quota_remaining=quota_remaining,
+                    deferred_queue=deferred_keywords,
                 )
+                round_region_saved[region_key] += saved
 
-                if not isinstance(products, list):
-                    products = []
+                if current_provider == "glm" and GLM_KEYWORD_DELAY > 0 and idx < len(keywords_this_round):
+                    print(f"    ⏳ GLM cooldown: sleeping {GLM_KEYWORD_DELAY:.1f}s")
+                    time.sleep(GLM_KEYWORD_DELAY)
 
-                print(f"    📦 Extracted: {len(products)} candidates")
-
-                # 3. 处理每个产品
-                for product in products:
+            if AUTO_DISCOVER_ENABLE_ANALYZE_GATE and deferred_keywords and round_region_saved[region_key] == 0 and not quotas_met():
+                print(f"    ♻️ Replaying deferred keywords for {region_key} (no saves in round)")
+                for keyword, keyword_type, cached_results, reason in deferred_keywords:
                     if quotas_met():
                         break
-
-                    name = product.get('name', '')
-                    if not name:
-                        continue
-
-                    # 使用增强去重检查器
-                    is_dup, dup_reason = dedup_checker.is_duplicate(product)
-                    if is_dup:
-                        duplicates_skipped += 1
-                        print(f"    ⏭️ Skip: {dup_reason}")
-                        continue
-
-                    # 质量验证
-                    is_hardware = (
-                        keyword_type == "hardware" or
-                        product.get("category") == "hardware" or
-                        product.get("is_hardware", False)
+                    print(f"    ↩ Replaying: {keyword[:50]}... (gate reason: {reason})")
+                    saved = process_keyword(
+                        region_key=region_key,
+                        search_engine=search_engine,
+                        keyword=keyword,
+                        keyword_type=keyword_type,
+                        quota_remaining=quota_remaining,
+                        deferred_queue=[],
+                        search_results_override=cached_results,
+                        bypass_gate=True,
                     )
-                    if is_hardware:
-                        product.setdefault("category", "hardware")
-                        product["is_hardware"] = True
-                    if is_hardware and USE_MODULAR_PROMPTS:
-                        is_valid, reason = validate_hardware_product(product)
-                    else:
-                        is_valid, reason = validate_product(product)
-                    if not is_valid:
-                        quality_rejections.append({"name": name, "reason": reason})
-                        print(f"    ❌ Quality fail: {name} ({reason})")
-                        continue
+                    round_region_saved[region_key] += saved
 
-                    # 补充元信息
-                    product['source_region'] = region_flag
-                    product['discovered_at'] = datetime.utcnow().strftime('%Y-%m-%d')
-                    product['discovery_method'] = f'{current_provider}_search'
-                    product['search_keyword'] = keyword
-                    apply_country_fields(product, fallback_region_flag=region_flag)
+        prev_round_region_saved = round_region_saved
 
-                    # 使用合并 prompt 的评分（无需额外 API 调用）
-                    # 如果提取结果已包含 dark_horse_index，直接使用
-                    # 否则使用规则评分作为 fallback
-                    score = product.get('dark_horse_index')
-                    if score is None:
-                        product = analyze_and_score(product)
-                        score = product.get('dark_horse_index', 2)
-                    score = _coerce_score(score, default=2)
-                    product['dark_horse_index'] = score
+    if (
+        AUTO_DISCOVER_BUDGET_MODE == "adaptive"
+        and AUTO_DISCOVER_QUALITY_FALLBACK
+        and not quotas_met()
+    ):
+        print("\n  🛟 Quality fallback: quotas unmet after adaptive rounds, replaying remaining keywords in legacy mode")
+        for region_key in get_region_order():
+            if quotas_met():
+                break
+            if region_yield[region_key] >= REGION_MAX.get(region_key, 3):
+                continue
+            config = REGION_CONFIG[region_key]
+            search_engine = config['search_engine']
+            pool = get_keyword_pool(region_key)
+            cursor = keyword_cursors.get(region_key, 0)
+            remaining = pool[cursor:]
+            if not remaining:
+                continue
+            quota_remaining = {
+                "dark_horses": DAILY_QUOTA["dark_horses"] - found["dark_horses"],
+                "rising_stars": DAILY_QUOTA["rising_stars"] - found["rising_stars"],
+            }
+            print(f"  ↪ {region_key}: fallback keywords={len(remaining)}")
+            for keyword in remaining:
+                if quotas_met():
+                    break
+                keyword_type = resolve_keyword_type(keyword, region_key, product_type)
+                process_keyword(
+                    region_key=region_key,
+                    search_engine=search_engine,
+                    keyword=keyword,
+                    keyword_type=keyword_type,
+                    quota_remaining=quota_remaining,
+                    deferred_queue=[],
+                )
+            keyword_cursors[region_key] = len(pool)
 
-                    # Demand signals + guardrail（仅对通过质量校验候选）
-                    guardrail_applied = "none"
-                    if demand_engine and demand_processed < max(DEMAND_MAX_PRODUCTS_PER_RUN, 0):
-                        try:
-                            score, guardrail_applied = _apply_demand_signals_and_guardrail(
-                                product,
-                                demand_engine=demand_engine,
-                                llm_score=score,
-                                override_mode=DEMAND_OVERRIDE_MODE,
-                            )
-                            demand_processed += 1
-                            if guardrail_applied == 'upgraded':
-                                demand_upgraded += 1
-                            elif guardrail_applied == 'downgraded':
-                                demand_downgraded += 1
-                            product['dark_horse_index'] = score
-                            print(f"    🧭 Demand guardrail: {guardrail_applied} (score={score})")
-                        except Exception as e:
-                            print(f"    ⚠️ Demand signal failed: {e}")
-                    elif demand_engine and DEMAND_MAX_PRODUCTS_PER_RUN >= 0 and demand_processed >= DEMAND_MAX_PRODUCTS_PER_RUN:
-                        print("    ⏭️ Demand skipped: per-run limit reached")
-
-                    category = get_category(score)
-
-                    # 检查分类配额
-                    if found[category] >= DAILY_QUOTA[category]:
-                        print(f"    ⏭️ {category} quota full, skip: {name}")
-                        continue
-
-                    # 检查地区配额
-                    if region_yield[region_key] >= REGION_MAX.get(region_key, 3):
-                        print(f"    ⏭️ Region max reached, skip: {name}")
-                        continue
-
-                    # 保存
-                    save_product(product, dry_run)
-
-                    # 更新计数和去重索引
-                    found[category] += 1
-                    region_yield[region_key] += 1
-                    current_provider = get_provider_for_region(region_key)
-                    provider_stats[current_provider] = provider_stats.get(current_provider, 0) + 1
-                    dedup_checker.add_product(product)
-
-                    # 跟踪唯一域名
-                    website = product.get('website', '')
-                    if website:
-                        unique_domains.add(normalize_url(website))
-
-                    status_icon = "🦄" if category == "dark_horses" else "⭐"
-                    print(f"    {status_icon} SAVED: {name} (score={score}, {category}, {current_provider})")
+    flush_keyword_yield_stats(keyword_stats)
 
     # ═══════════════════════════════════════════════════════════════════
     # 生成详细报告

@@ -11,6 +11,7 @@ Fallback path:
 
 from __future__ import annotations
 
+import json
 import os
 import re
 from collections import defaultdict
@@ -48,6 +49,9 @@ STATUS_URL_PATTERN = re.compile(
     r"https://(?:x|twitter)\.com/(?:[A-Za-z0-9_]+/status/\d+|i/(?:web/)?status/\d+)",
     re.IGNORECASE,
 )
+_SPIDER_DIR = os.path.dirname(os.path.abspath(__file__))
+_CRAWLER_DIR = os.path.dirname(_SPIDER_DIR)
+DEFAULT_X_STATE_FILE = os.path.join(_CRAWLER_DIR, "data", "x_spider_state.json")
 
 
 def _to_iso(dt: Optional[datetime]) -> Optional[str]:
@@ -70,6 +74,67 @@ def _parse_iso_or_date(value: str) -> Optional[datetime]:
         return datetime.strptime(value[:10], "%Y-%m-%d").replace(tzinfo=timezone.utc)
     except Exception:
         return None
+
+
+def _state_file_path() -> str:
+    override = (os.getenv("X_SPIDER_STATE_FILE") or "").strip()
+    return override or DEFAULT_X_STATE_FILE
+
+
+def _load_state() -> Dict[str, Any]:
+    path = _state_file_path()
+    if not os.path.exists(path):
+        return {
+            "last_primary_run_at": "",
+            "consecutive_fallback_empty_days": 0,
+            "last_fallback_run_at": "",
+            "updated_at": "",
+        }
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        if isinstance(data, dict):
+            return data
+    except Exception:
+        pass
+    return {
+        "last_primary_run_at": "",
+        "consecutive_fallback_empty_days": 0,
+        "last_fallback_run_at": "",
+        "updated_at": "",
+    }
+
+
+def _save_state(state: Dict[str, Any]) -> None:
+    path = _state_file_path()
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    payload = dict(state or {})
+    payload["updated_at"] = _to_iso(datetime.now(timezone.utc)) or ""
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+
+
+def _should_run_primary(state: Dict[str, Any], *, mode: str, now: datetime, interval_days: int) -> Tuple[bool, str]:
+    if mode == "perplexity_only":
+        return True, "mode_perplexity_only"
+    if mode != "hybrid":
+        return False, "mode_no_primary"
+
+    try:
+        streak = int(state.get("consecutive_fallback_empty_days", 0) or 0)
+    except Exception:
+        streak = 0
+    if streak >= 2:
+        return True, "fallback_empty_streak"
+
+    last_primary = _parse_iso_or_date(str(state.get("last_primary_run_at") or ""))
+    if not last_primary:
+        return True, "no_previous_primary"
+
+    elapsed = now - last_primary
+    if elapsed.total_seconds() >= max(1, interval_days) * 86400:
+        return True, "interval_elapsed"
+    return False, "interval_not_elapsed"
 
 
 def _extract_handle_and_id(url: str) -> Tuple[str, str]:
@@ -137,6 +202,7 @@ class XSpider(BaseSpider):
 
     def crawl(self) -> List[Dict[str, Any]]:
         mode = load_x_source_mode()
+        now_utc = datetime.now(timezone.utc)
         try:
             allowed_year = int(os.getenv("CONTENT_YEAR", str(datetime.now(timezone.utc).year)))
         except Exception:
@@ -152,17 +218,31 @@ class XSpider(BaseSpider):
         language_filter = None
         if languages_env:
             language_filter = [x.strip() for x in languages_env.split(",") if x.strip()][:10]
+        primary_interval_days = max(1, int(os.getenv("X_PRIMARY_INTERVAL_DAYS", "3")))
+        state = _load_state()
+        run_primary, primary_reason = _should_run_primary(
+            state,
+            mode=mode,
+            now=now_utc,
+            interval_days=primary_interval_days,
+        )
 
         print(
             f"  [X] Source mode={mode} (recency={recency}, last {hours}h, max_results={max_results})..."
         )
+        if mode in {"hybrid", "perplexity_only"}:
+            print(f"  [X] Primary interval={primary_interval_days}d, decision={run_primary} ({primary_reason})")
 
         items: List[Dict[str, Any]] = []
         seen_status_urls = set()
         counters: Dict[str, int] = defaultdict(int)
         primary_added = 0
+        primary_ran = False
+        fallback_ran = False
+        fallback_added = 0
 
-        if mode in {"hybrid", "perplexity_only"}:
+        if mode in {"hybrid", "perplexity_only"} and run_primary:
+            primary_ran = True
             primary_added = self._crawl_via_perplexity(
                 items=items,
                 seen_status_urls=seen_status_urls,
@@ -173,9 +253,13 @@ class XSpider(BaseSpider):
                 max_results=max_results,
                 language_filter=language_filter,
             )
+        elif mode in {"hybrid", "perplexity_only"}:
+            print("  [X] Primary skipped due to interval policy")
 
         should_run_fallback = mode == "fallback_only" or (mode == "hybrid" and primary_added == 0)
         if should_run_fallback:
+            fallback_ran = True
+            before = len(items)
             self._crawl_via_account_fallback(
                 items=items,
                 seen_status_urls=seen_status_urls,
@@ -183,6 +267,7 @@ class XSpider(BaseSpider):
                 cutoff=cutoff,
                 allowed_year=allowed_year,
             )
+            fallback_added = max(0, len(items) - before)
 
         ordered_keys = [
             "host_rejected",
@@ -196,6 +281,19 @@ class XSpider(BaseSpider):
         counter_summary = {k: int(counters.get(k, 0)) for k in ordered_keys if int(counters.get(k, 0)) > 0}
         print(f"  [X] Counters: {counter_summary or {}}")
         print(f"  [X] Collected {len(items)} items")
+
+        if primary_ran:
+            state["last_primary_run_at"] = _to_iso(now_utc) or ""
+            state["consecutive_fallback_empty_days"] = 0
+        if fallback_ran:
+            state["last_fallback_run_at"] = _to_iso(now_utc) or ""
+            try:
+                current_streak = int(state.get("consecutive_fallback_empty_days", 0) or 0)
+            except Exception:
+                current_streak = 0
+            state["consecutive_fallback_empty_days"] = 0 if fallback_added > 0 else current_streak + 1
+        _save_state(state)
+
         return items[:60]
 
     def _crawl_via_perplexity(

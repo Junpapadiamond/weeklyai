@@ -7,6 +7,7 @@ Run:
 
 from __future__ import annotations
 
+from datetime import datetime, timedelta, timezone
 import os
 import sys
 import unittest
@@ -64,6 +65,53 @@ class TestXUrlParsing(unittest.TestCase):
         handle, tid = _extract_handle_and_id("https://twitter.com/i/status/333")
         self.assertEqual(handle, "")
         self.assertEqual(tid, "333")
+
+
+class TestXPrimaryScheduling(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        _ensure_import_paths()
+
+    def test_primary_schedule_interval_and_streak(self) -> None:
+        from spiders.x_spider import _should_run_primary
+
+        now = datetime(2026, 2, 25, 3, 0, tzinfo=timezone.utc)
+        run, reason = _should_run_primary(
+            {"last_primary_run_at": "", "consecutive_fallback_empty_days": 0},
+            mode="hybrid",
+            now=now,
+            interval_days=3,
+        )
+        self.assertTrue(run)
+        self.assertEqual(reason, "no_previous_primary")
+
+        run2, reason2 = _should_run_primary(
+            {"last_primary_run_at": "2026-02-24T01:00:00Z", "consecutive_fallback_empty_days": 0},
+            mode="hybrid",
+            now=now,
+            interval_days=3,
+        )
+        self.assertFalse(run2)
+        self.assertEqual(reason2, "interval_not_elapsed")
+
+        run3, reason3 = _should_run_primary(
+            {"last_primary_run_at": "2026-02-24T01:00:00Z", "consecutive_fallback_empty_days": 2},
+            mode="hybrid",
+            now=now,
+            interval_days=3,
+        )
+        self.assertTrue(run3)
+        self.assertEqual(reason3, "fallback_empty_streak")
+
+        old_time = (now - timedelta(days=4)).isoformat().replace("+00:00", "Z")
+        run4, reason4 = _should_run_primary(
+            {"last_primary_run_at": old_time, "consecutive_fallback_empty_days": 0},
+            mode="hybrid",
+            now=now,
+            interval_days=3,
+        )
+        self.assertTrue(run4)
+        self.assertEqual(reason4, "interval_elapsed")
 
 
 class TestSocialSourceConfig(unittest.TestCase):
@@ -160,7 +208,7 @@ class TestXFallbackPath(unittest.TestCase):
                 os.environ,
                 {
                     "X_SOURCE_MODE": "fallback_only",
-                    "SOCIAL_HOURS": "96",
+                    "SOCIAL_HOURS": "1000",
                     "CONTENT_YEAR": "2026",
                 },
                 clear=False,
