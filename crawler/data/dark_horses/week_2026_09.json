@@ -151,5 +151,404 @@
         "guardrail_reason": "insufficient_demand_data"
       }
     }
+  },
+  {
+    "name": "Ineffable Intelligence",
+    "website": "https://ineffable.ai",
+    "description": "伦敦AI研究室，通过强化学习而非大语言模型构建超人类智能，目标是创建能自主学习和自我发现的无限学习系统",
+    "category": "agent",
+    "region": "🇬🇧",
+    "funding_total": "$1B seed round",
+    "dark_horse_index": 5,
+    "criteria_met": [
+      "funding_signal",
+      "founder_background",
+      "category_innovation"
+    ],
+    "why_matters": "David Silver（AlphaGo创造者）领导，$10亿种子轮由Sequoia领投，$40亿估值，欧洲历史最大种子轮。核心创新：放弃LLM范式，转向强化学习+体验循环，突破人类知识瓶颈。Nvidia、Google、Microsoft参与谈判。",
+    "latest_news": "2026-02: 融资接近完成，Sequoia Capital领投，估值$40亿",
+    "source": "Financial Times / Fortune / The Next Web",
+    "source_url": "https://economictimes.com/tech/artificial-intelligence/former-google-deepmind-scientist-to-raise-1-billion-led-by-sequoia-for-superhuman-intelligence/articleshow/128513567.cms",
+    "company_country": "UK",
+    "company_country_confidence": 0.95,
+    "confidence": 0.92,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-25T19:51:08.934151Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 1,
+          "top_story_id": "47073110",
+          "points": 3,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "HN 暂无足够评论样本用于形成社区结论。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "neutral",
+      "confidence": 0.3
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-02-25",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI Series A Europe",
+    "country_code": "GB",
+    "country_name": "United Kingdom",
+    "country_flag": "🇬🇧",
+    "country_display": "🇬🇧 United Kingdom",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Neo1",
+    "website": "https://neosapien.xyz",
+    "description": "India's first AI-native pendant wearable that listens to conversations, analyzes emotions, summarizes discussions, and acts as a second brain without a screen.",
+    "category": "hardware",
+    "hardware_type": "innovative",
+    "form_factor": "pendant",
+    "use_case": "memory_assistant",
+    "innovation_traits": [
+      "non_traditional_form",
+      "wearable",
+      "screenless",
+      "voice_first",
+      "single_use_case",
+      "proactive_ai",
+      "affordable"
+    ],
+    "region": "🇮🇳",
+    "funding_total": "$2M",
+    "price": "$144",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "form_innovation",
+      "use_case_clear",
+      "social_buzz"
+    ],
+    "why_matters": "Screenless AI pendant for conversation tracking and emotion analysis, priced affordably at ~$144 with unlimited subscription, backed by seed funding and media coverage from India AI Summit.",
+    "latest_news": "2026-02: Raised $2M seed funding; available for purchase on website and Amazon.",
+    "source": "Moneycontrol",
+    "source_url": "https://www.moneycontrol.com/technology/neosapien-neo-1-review-a-really-interesting-ai-wearable-article-13735411.html",
+    "company_country": "India",
+    "company_country_confidence": 1.0,
+    "confidence": 0.95,
+    "is_hardware": true,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-25T19:51:48.010772Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇸🇬",
+    "discovered_at": "2026-02-25",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI wearable device startup Asia 2026",
+    "country_code": "IN",
+    "country_name": "India",
+    "country_flag": "🇮🇳",
+    "country_display": "🇮🇳 India",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Dwelly",
+    "website": "https://dwelly.com",
+    "description": "AI驱动的租赁中介机构并购平台Dwelly，通过AI模式收购并数字化独立租赁机构。",
+    "category": "other",
+    "region": "🇬🇧",
+    "funding_total": "£69M股权+债务轮",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "2024年创立，获General Catalyst领投的£69M融资，用于通过一系列并购交易加速增长，展示AI在房地产租赁领域的并购创新。",
+    "latest_news": "2026-02-25: General Catalyst领投£69M轮次",
+    "source": "Sifted",
+    "source_url": "https://sifted.eu/articles/dwelly-general-catalyst-funding-round-rollup-property",
+    "company_country": "United Kingdom",
+    "company_country_confidence": 0.8,
+    "confidence": 0.85,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-25T19:52:33.354800Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-02-25",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:sifted.eu AI funding",
+    "country_code": "GB",
+    "country_name": "United Kingdom",
+    "country_flag": "🇬🇧",
+    "country_display": "🇬🇧 United Kingdom",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Bedrock Robotics",
+    "website": "https://bedrockrobotics.com",
+    "description": "使用AI和实时3D映射自动化建筑施工流程的proptech独角兽。",
+    "category": "other",
+    "region": "🇺🇸",
+    "funding_total": "$270M",
+    "dark_horse_index": 5,
+    "criteria_met": [
+      "growth_anomaly",
+      "funding_signal"
+    ],
+    "why_matters": "2024年创立，2026年2月获2.7亿美元融资达17.5亿美元估值，从0到独角兽不到2年，首创AI驱动建筑自动化平台解决万亿市场刚需。",
+    "latest_news": "2026-02: $270M融资，估值$1.75B",
+    "source": "The AI Consulting Network",
+    "source_url": "https://www.theaiconsultingnetwork.com/blog/proptech-ai-investment-surge-2026-cre-investors",
+    "company_country": "US",
+    "company_country_confidence": 0.8,
+    "confidence": 0.95,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-25T19:52:56.839912Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-02-25",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI unicorn startup valuation 2026",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Smart Bricks",
+    "website": "https://smartbricks.ai",
+    "description": "打造全球房地产AI原生基础设施层，支持端到端发现、承销和执行的代理AI系统。",
+    "category": "other",
+    "region": "🇦🇪",
+    "funding_total": "$5M Pre-seed",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "category_innovation"
+    ],
+    "why_matters": "a16z Speedrun计划领投500万美元pre-seed，专注代理AI重塑全球房地产基础设施，属新兴AI-native proptech赛道。",
+    "latest_news": "2026-01: $5M pre-seed by a16z",
+    "source": "The AI Consulting Network",
+    "source_url": "https://www.theaiconsultingnetwork.com/blog/proptech-ai-investment-surge-2026-cre-investors",
+    "company_country": "UAE",
+    "company_country_confidence": 0.9,
+    "confidence": 0.85,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-25T19:52:57.038010Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-02-25",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI unicorn startup valuation 2026",
+    "country_code": "AE",
+    "country_name": "United Arab Emirates",
+    "country_flag": "🇦🇪",
+    "country_display": "🇦🇪 United Arab Emirates",
+    "country_source": "explicit:company_country"
   }
 ]
