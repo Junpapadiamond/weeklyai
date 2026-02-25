@@ -1,9 +1,6 @@
 name: CN Zhipu Data Update
 
 on:
-  schedule:
-    # 19:00 UTC = 03:00 Asia/Shanghai (next day). GitHub cron is always UTC.
-    - cron: "0 19 * * *"
   workflow_dispatch:
     inputs:
       dry_run:
@@ -81,7 +78,7 @@ jobs:
           RUN_NEWS="${{ inputs.run_news }}"
           COMMIT_CHANGES="${{ inputs.commit_changes }}"
 
-          # Scheduled runs don't provide workflow_dispatch inputs.
+          # workflow_dispatch may omit inputs when triggered programmatically.
           DRY_RUN="${DRY_RUN:-false}"
           PRODUCT_TYPE="${PRODUCT_TYPE:-mixed}"
           RUN_NEWS="${RUN_NEWS:-true}"
@@ -132,7 +129,7 @@ jobs:
             echo "ℹ️ dry_run=true, skipped post-processing pipeline." >> "$GITHUB_STEP_SUMMARY"
           fi
 
-      - name: Run CN news-only signals (China-native RSS)
+      - name: Run CN news-only signals (RSS + GLM)
         if: ${{ env.WF_DRY_RUN != 'true' && env.WF_RUN_NEWS == 'true' }}
         working-directory: crawler
         env:
@@ -141,9 +138,10 @@ jobs:
           set -euo pipefail
 
           export CONTENT_YEAR="$(date -u +%Y)"
-          python tools/cn_news_only.py || true
+          python tools/cn_news_only.py
+          python tools/cn_news_glm.py
 
-          echo "✅ 已执行 cn_news_only（中国本土 RSS 源，未运行 YouTube/X 与 rss_to_products enrich）。" >> "$GITHUB_STEP_SUMMARY"
+          echo "✅ 已执行 cn_news_only + cn_news_glm（中国本土 RSS + Zhipu 搜索增强，未运行 YouTube/X 与 rss_to_products enrich）。" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Skip CN news-only signals
         if: ${{ env.WF_DRY_RUN == 'true' || env.WF_RUN_NEWS != 'true' }}

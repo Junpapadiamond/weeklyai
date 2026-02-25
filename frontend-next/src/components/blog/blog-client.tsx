@@ -16,6 +16,7 @@ import type { BlogPost } from "@/types/api";
 const SOURCE_LABELS: Record<string, string> = {
   "": "全部",
   cn_news: "中国本土源",
+  cn_news_glm: "中国本土源（GLM）",
   hackernews: "Hacker News",
   producthunt: "Product Hunt",
   youtube: "YouTube",
@@ -24,7 +25,7 @@ const SOURCE_LABELS: Record<string, string> = {
   tech_news: "Tech News",
 };
 
-const SOURCE_ORDER = ["cn_news", "hackernews", "reddit", "tech_news", "producthunt", "youtube", "x"] as const;
+const SOURCE_ORDER = ["cn_news", "cn_news_glm", "hackernews", "reddit", "tech_news", "producthunt", "youtube", "x"] as const;
 
 const MARKET_OPTIONS = [
   { value: "hybrid", label: "全球 Hybrid" },
@@ -75,6 +76,12 @@ function inferMarket(item: BlogPost): "cn" | "us" | "global" {
   const fromExtra = String(extra.news_market || "").trim().toLowerCase();
   if (fromExtra === "cn" || fromExtra === "us" || fromExtra === "global") return fromExtra as "cn" | "us" | "global";
   return "global";
+}
+
+function matchesMarket(item: BlogPost, selectedMarket: string): boolean {
+  const market = String(selectedMarket || "").trim().toLowerCase();
+  if (!market || market === "hybrid" || market === "global") return true;
+  return inferMarket(item) === market;
 }
 
 function buildSourceOptions(data: BlogPost[] | undefined) {
@@ -165,12 +172,15 @@ export function BlogClient() {
       try {
         return await getBlogsClient(selectedSource, 80, selectedMarket);
       } catch (err) {
-        // 部分环境下 market=cn 可能触发网关/代理失败，这里回退为 hybrid + 客户端过滤。
-        if (selectedMarket !== "cn") {
-          throw err;
+        // 当某些本地环境代理/端口冲突导致请求失败时，回退到 hybrid 并在前端过滤。
+        console.warn("Blog fetch failed, fallback to hybrid filter", err);
+        try {
+          const fallback = await getBlogsClient("", 120, "hybrid");
+          return fallback.filter((item) => matchesMarket(item, selectedMarket) && matchesSource(item, selectedSource));
+        } catch (fallbackError) {
+          console.warn("Blog fallback fetch failed, return empty list", fallbackError);
+          return [];
         }
-        const fallback = await getBlogsClient("", 120, "hybrid");
-        return fallback.filter((item) => inferMarket(item) === "cn" && matchesSource(item, selectedSource));
       }
     },
     {
@@ -184,6 +194,10 @@ export function BlogClient() {
 
   const sourceSummary = source ? `来源：${SOURCE_LABELS[source] || source}` : "来源：全部";
   const marketSummary = `区域：${MARKET_LABELS[market] || market}`;
+  const emptyStateText =
+    market === "cn"
+      ? "暂无中国区动态，请稍后重试或切换全球。"
+      : "暂无匹配数据，请切换来源或稍后再试。";
 
   return (
     <section className="section">
@@ -239,7 +253,7 @@ export function BlogClient() {
 
       {!isLoading && !error && posts.length === 0 ? (
         <div className="empty-state">
-          <p className="empty-state-text">暂无匹配数据，请切换来源或稍后再试。</p>
+          <p className="empty-state-text">{emptyStateText}</p>
         </div>
       ) : null}
     </section>

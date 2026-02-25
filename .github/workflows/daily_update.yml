@@ -60,9 +60,30 @@ jobs:
           python tools/cleanup_unknowns_and_duplicates.py || true
           python tools/fix_logos.py --input data/products_featured.json || true
 
+          BASELINE_BLOGS="/tmp/blogs_news.before_news.json"
+          if [ -f data/blogs_news.json ]; then
+            cp -f data/blogs_news.json "$BASELINE_BLOGS"
+          fi
+
           python main.py --news-only || true
-          # Merge China-native RSS news into blogs_news.json so CN + US/global coexist.
-          python tools/cn_news_only.py || true
+          # CN merge is required: if this fails, workflow should fail and alert.
+          if [ -f "$BASELINE_BLOGS" ]; then
+            if ! python tools/cn_news_only.py --baseline-file "$BASELINE_BLOGS"; then
+              echo "❌ CN merge failed: cn_news_only.py" >> "$GITHUB_STEP_SUMMARY"
+              exit 1
+            fi
+          else
+            if ! python tools/cn_news_only.py; then
+              echo "❌ CN merge failed: cn_news_only.py (no baseline file)" >> "$GITHUB_STEP_SUMMARY"
+              exit 1
+            fi
+          fi
+
+          if ! python tools/cn_news_glm.py; then
+            echo "❌ CN merge failed: cn_news_glm.py" >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+
           python tools/rss_to_products.py --input data/blogs_news.json --sources youtube,x,xhs,wechat --enrich-featured || true
 
       - name: Verify JSON data sources (LLM-assisted)

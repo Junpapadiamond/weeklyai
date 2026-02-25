@@ -14,14 +14,12 @@ import json
 import os
 import sys
 from datetime import datetime, timezone
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 
 TOOLS_DIR = os.path.dirname(os.path.abspath(__file__))
 CRAWLER_DIR = os.path.dirname(TOOLS_DIR)
 sys.path.insert(0, CRAWLER_DIR)
-
-from spiders.cn_news_spider import CNNewsSpider  # noqa: E402
 
 
 CN_SOURCE = "cn_news"
@@ -148,6 +146,11 @@ def _load_existing_blogs(blogs_file: str) -> List[Dict[str, Any]]:
     return []
 
 
+def count_market(items: List[Dict[str, Any]], market: str) -> int:
+    target = (market or "").strip().lower()
+    return sum(1 for item in items if _infer_market(item) == target)
+
+
 def _split_by_market(items: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
     cn: List[Dict[str, Any]] = []
     non_cn: List[Dict[str, Any]] = []
@@ -172,6 +175,39 @@ def _dedupe(items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     return deduped
 
 
+def merge_cn_blogs(
+    existing_blogs: List[Dict[str, Any]],
+    fresh_cn_blogs: List[Dict[str, Any]],
+    *,
+    baseline_blogs: Optional[List[Dict[str, Any]]] = None,
+    allowed_year: Optional[int] = None,
+) -> Tuple[List[Dict[str, Any]], str]:
+    existing_cn, existing_non_cn = _split_by_market(existing_blogs)
+    baseline_cn: List[Dict[str, Any]] = []
+    if baseline_blogs:
+        baseline_cn, _ = _split_by_market(baseline_blogs)
+
+    selected_cn = list(fresh_cn_blogs)
+    strategy = "fresh"
+    if not selected_cn:
+        if baseline_cn:
+            selected_cn = baseline_cn
+            strategy = "baseline"
+        else:
+            selected_cn = existing_cn
+            strategy = "existing"
+
+    merged = existing_non_cn + selected_cn
+    if allowed_year is not None:
+        merged = [_with_market_meta(item) for item in merged if _item_year_ok(item, allowed_year)]
+    else:
+        merged = [_with_market_meta(item) for item in merged]
+
+    merged = _dedupe(merged)
+    merged.sort(key=lambda x: _parse_dt(str(x.get("published_at") or "")).timestamp(), reverse=True)
+    return merged, strategy
+
+
 def _save_last_updated(output_dir: str) -> str:
     last_updated_file = os.path.join(output_dir, "last_updated.json")
     payload = {
@@ -185,12 +221,20 @@ def _save_last_updated(output_dir: str) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Collect CN-native RSS news and merge into blogs_news.json")
     parser.add_argument("--dry-run", action="store_true", help="Print summary only; do not write files")
+    parser.add_argument(
+        "--baseline-file",
+        type=str,
+        default="",
+        help="Optional baseline blogs file used to preserve CN slice when current run has no CN results",
+    )
     args = parser.parse_args()
 
     try:
         allowed_year = int(os.getenv("CONTENT_YEAR", str(datetime.now(timezone.utc).year)))
     except Exception:
         allowed_year = datetime.now(timezone.utc).year
+
+    from spiders.cn_news_spider import CNNewsSpider  # noqa: E402
 
     spider = CNNewsSpider()
     items = spider.crawl()
@@ -204,26 +248,32 @@ def main() -> int:
     output_dir = os.path.join(CRAWLER_DIR, "data")
     blogs_file = os.path.join(output_dir, "blogs_news.json")
     existing = _load_existing_blogs(blogs_file)
-    existing_cn, existing_non_cn = _split_by_market(existing)
-
-    if cn_blogs:
-        merged = existing_non_cn + cn_blogs
-    else:
-        # Keep old CN slice if this run failed to collect new CN sources.
-        merged = existing_non_cn + existing_cn
-
-    merged = [_with_market_meta(item) for item in merged if _item_year_ok(item, allowed_year)]
-    merged = _dedupe(merged)
-    merged.sort(key=lambda x: _parse_dt(str(x.get("published_at") or "")).timestamp(), reverse=True)
-
-    def _count_market(arr: List[Dict[str, Any]], market: str) -> int:
-        return sum(1 for item in arr if _infer_market(item) == market)
+    baseline_path = (args.baseline_file or "").strip()
+    baseline = _load_existing_blogs(baseline_path) if baseline_path else []
+    merged, strategy = merge_cn_blogs(
+        existing,
+        cn_blogs,
+        baseline_blogs=baseline,
+        allowed_year=allowed_year,
+    )
 
     print("\n📦 CN news merge result")
     print(f"  • total collected: {len(items)}")
     print(f"  • cn kept ({allowed_year}): {len(cn_blogs)}")
-    print(f"  • existing total: {len(existing)} (cn={_count_market(existing, 'cn')}, us={_count_market(existing, 'us')}, global={_count_market(existing, 'global')})")
-    print(f"  • merged total: {len(merged)} (cn={_count_market(merged, 'cn')}, us={_count_market(merged, 'us')}, global={_count_market(merged, 'global')})")
+    if baseline_path:
+        print(
+            f"  • baseline total: {len(baseline)} "
+            f"(cn={count_market(baseline, 'cn')}, us={count_market(baseline, 'us')}, global={count_market(baseline, 'global')})"
+        )
+    print(
+        f"  • existing total: {len(existing)} "
+        f"(cn={count_market(existing, 'cn')}, us={count_market(existing, 'us')}, global={count_market(existing, 'global')})"
+    )
+    print(
+        f"  • merged total: {len(merged)} "
+        f"(cn={count_market(merged, 'cn')}, us={count_market(merged, 'us')}, global={count_market(merged, 'global')})"
+    )
+    print(f"  • cn strategy: {strategy}")
     print(f"  • output file: {blogs_file}")
 
     if args.dry_run:
