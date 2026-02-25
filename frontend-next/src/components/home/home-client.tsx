@@ -4,12 +4,10 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { ChevronDown, ChevronUp, Cpu, Flame, Newspaper, Sparkles } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import useSWR from "swr";
 import type { Product } from "@/types/api";
 import type { WeeklyTopSort } from "@/lib/api-client";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { ProductCard } from "@/components/product/product-card";
-import { getWeeklyTopClient } from "@/lib/client-home-api";
 import { countFavorites, openFavoritesPanel, subscribeFavorites } from "@/lib/favorites";
 import {
   cleanDescription,
@@ -23,6 +21,7 @@ import {
   isValidWebsite,
   normalizeWebsite,
   resolveProductCountry,
+  sortProducts,
 } from "@/lib/product-utils";
 
 const HeroCanvas = dynamic(() => import("@/components/home/hero-canvas"), {
@@ -194,56 +193,13 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
   const [favoritesCount, setFavoritesCount] = useState(0);
   const [showAllDarkHorses, setShowAllDarkHorses] = useState(false);
 
-  const [shouldLoadFullProducts, setShouldLoadFullProducts] = useState(false);
-
-  const trendingSectionRef = useRef<HTMLElement | null>(null);
-  const shouldFetchSortedProducts = shouldLoadFullProducts || sortBy !== DEFAULT_WEEKLY_TOP_SORT;
-
-  const { data: fullProducts, isLoading: isHydratingAllProducts } = useSWR(
-    shouldFetchSortedProducts ? `home-full-products-${sortBy}` : null,
-    () => getWeeklyTopClient(0, sortBy),
-    {
-      revalidateOnFocus: false,
-      dedupingInterval: 60_000,
-    }
-  );
-
-  useEffect(() => {
-    const targets = [trendingSectionRef.current].filter(Boolean);
-    if (!targets.length) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          setShouldLoadFullProducts(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "260px 0px" }
-    );
-
-    targets.forEach((target) => observer.observe(target as Element));
-    return () => observer.disconnect();
-  }, []);
-
   useEffect(() => {
     const syncCount = () => setFavoritesCount(countFavorites());
     syncCount();
     return subscribeFavorites(syncCount);
   }, []);
 
-  const productPool = useMemo(() => {
-    if (fullProducts) {
-      return fullProducts;
-    }
-    if (sortBy === DEFAULT_WEEKLY_TOP_SORT) {
-      return allProducts;
-    }
-    return [];
-  }, [allProducts, fullProducts, sortBy]);
-
-  const hasLoadedAllProducts = !!fullProducts;
-  const isSwitchingSort = sortBy !== DEFAULT_WEEKLY_TOP_SORT && isHydratingAllProducts && !fullProducts;
+  const productPool = useMemo(() => sortProducts(allProducts, sortBy), [allProducts, sortBy]);
 
   const filteredDarkHorses = useMemo(() => {
     return darkHorses.filter((product) => {
@@ -427,14 +383,11 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
         ) : null}
       </section>
 
-      <section className="section trending-section" id="trendingSection" ref={trendingSectionRef}>
+      <section className="section trending-section" id="trendingSection">
         <div className="section-header">
           <h2 className="section-title">更多推荐</h2>
           <p className="section-desc">黑马 (4-5分) + 潜力股 (2-3分)</p>
           <p className="section-micro-note">默认按综合排序（热度 + 新鲜度），可切换热度或时间。</p>
-          {shouldLoadFullProducts && isHydratingAllProducts && !hasLoadedAllProducts ? (
-            <p className="section-desc">正在补全完整产品池...</p>
-          ) : null}
         </div>
 
         <div className="list-controls">
@@ -530,13 +483,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
         </div>
 
         <div className="products-grid">
-          {isSwitchingSort ? (
-            <div className="empty-state">
-              <p className="empty-state-text">正在按当前排序拉取推荐...</p>
-            </div>
-          ) : (
-            visibleProducts.map((product) => <ProductCard key={product._id || product.name} product={product} />)
-          )}
+          {visibleProducts.map((product) => <ProductCard key={product._id || product.name} product={product} />)}
         </div>
 
         {hasMore ? (

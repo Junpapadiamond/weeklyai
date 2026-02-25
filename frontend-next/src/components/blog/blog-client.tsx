@@ -1,8 +1,6 @@
 "use client";
 
-import useSWR from "swr";
 import { useMemo, useState } from "react";
-import { getBlogsClient } from "@/lib/api-client";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { FavoriteButton } from "@/components/favorites/favorite-button";
 import {
@@ -162,37 +160,24 @@ function BlogCard({ item }: { item: BlogPost }) {
   );
 }
 
-export function BlogClient() {
+type BlogClientProps = {
+  initialBlogs: BlogPost[];
+};
+
+export function BlogClient({ initialBlogs }: BlogClientProps) {
   const [source, setSource] = useState("");
   const [market, setMarket] = useState<(typeof MARKET_OPTIONS)[number]["value"]>("hybrid");
 
-  const { data, isLoading, error } = useSWR(
-    ["blogs", source, market],
-    async ([, selectedSource, selectedMarket]) => {
-      try {
-        return await getBlogsClient(selectedSource, 80, selectedMarket);
-      } catch (err) {
-        // 当某些本地环境代理/端口冲突导致请求失败时，回退到 hybrid 并在前端过滤。
-        console.warn("Blog fetch failed, fallback to hybrid filter", err);
-        try {
-          const fallback = await getBlogsClient("", 120, "hybrid");
-          return fallback.filter((item) => matchesMarket(item, selectedMarket) && matchesSource(item, selectedSource));
-        } catch (fallbackError) {
-          console.warn("Blog fallback fetch failed, return empty list", fallbackError);
-          return [];
-        }
-      }
-    },
-    {
-      dedupingInterval: 30_000,
-      revalidateOnFocus: false,
-    }
+  const marketBlogs = useMemo(() => initialBlogs.filter((item) => matchesMarket(item, market)), [initialBlogs, market]);
+  const sourceOptions = useMemo(() => buildSourceOptions(marketBlogs), [marketBlogs]);
+
+  const activeSource = source && sourceOptions.includes(source) ? source : "";
+  const posts = useMemo(
+    () => marketBlogs.filter((item) => matchesSource(item, activeSource)),
+    [activeSource, marketBlogs]
   );
 
-  const posts = data || [];
-  const sourceOptions = useMemo(() => buildSourceOptions(data), [data]);
-
-  const sourceSummary = source ? `来源：${SOURCE_LABELS[source] || source}` : "来源：全部";
+  const sourceSummary = activeSource ? `来源：${SOURCE_LABELS[activeSource] || activeSource}` : "来源：全部";
   const marketSummary = `区域：${MARKET_LABELS[market] || market}`;
   const emptyStateText =
     market === "cn"
@@ -228,7 +213,7 @@ export function BlogClient() {
 
       <div className="source-pills" role="tablist" aria-label="博客来源筛选">
         {sourceOptions.map((option) => {
-          const isActive = option === source;
+          const isActive = option === activeSource;
           return (
             <button
               key={option || "all-pill"}
@@ -242,16 +227,13 @@ export function BlogClient() {
         })}
       </div>
 
-      {isLoading ? <div className="loading-block">正在加载动态...</div> : null}
-      {error ? <div className="error-block">加载失败: {String(error)}</div> : null}
-
       <div className="products-grid">
         {posts.map((item) => (
           <BlogCard item={item} key={`${item.source || "source"}-${item.website || item.name}`} />
         ))}
       </div>
 
-      {!isLoading && !error && posts.length === 0 ? (
+      {posts.length === 0 ? (
         <div className="empty-state">
           <p className="empty-state-text">{emptyStateText}</p>
         </div>

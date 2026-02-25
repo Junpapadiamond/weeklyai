@@ -4,7 +4,7 @@
 
 import os
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
 
 # Sorting helpers for merge decisions
@@ -34,6 +34,23 @@ DARK_HORSES_DIR = os.path.join(CRAWLER_DATA_DIR, 'dark_horses')
 # MongoDB connection
 _mongo_client = None
 _mongo_db = None
+_mongo_fail_until = None
+
+
+def _get_env_int(name: str, default: int, minimum: int = 0) -> int:
+    """Read an integer environment variable with clamped fallback."""
+    raw = os.getenv(name, "").strip()
+    if not raw:
+        return default
+    try:
+        return max(minimum, int(raw))
+    except ValueError:
+        return default
+
+
+MONGO_SERVER_SELECTION_TIMEOUT_MS = _get_env_int("MONGO_SERVER_SELECTION_TIMEOUT_MS", 800, minimum=100)
+MONGO_FAILURE_COOLDOWN_SECONDS = _get_env_int("MONGO_FAILURE_COOLDOWN_SECONDS", 60, minimum=0)
+BLOG_CACHE_SECONDS = _get_env_int("BLOG_CACHE_SECONDS", 60, minimum=1)
 
 
 def _mongo_uri_configured() -> bool:
@@ -43,21 +60,32 @@ def _mongo_uri_configured() -> bool:
 
 def get_mongo_db():
     """Get MongoDB connection (lazy initialization)."""
-    global _mongo_client, _mongo_db
+    global _mongo_client, _mongo_db, _mongo_fail_until
     if not HAS_MONGO:
         return None
     if not _mongo_uri_configured():
         return None
     if _mongo_db is not None:
         return _mongo_db
+    if _mongo_fail_until and datetime.now() < _mongo_fail_until:
+        return None
     try:
         mongo_uri = os.environ['MONGO_URI']
-        _mongo_client = MongoClient(mongo_uri, serverSelectionTimeoutMS=3000)
+        _mongo_client = MongoClient(mongo_uri, serverSelectionTimeoutMS=MONGO_SERVER_SELECTION_TIMEOUT_MS)
         _mongo_client.admin.command('ping')
         _mongo_db = _mongo_client.get_database()
+        _mongo_fail_until = None
         print("  ✓ Backend connected to MongoDB")
         return _mongo_db
     except Exception as e:
+        if _mongo_client is not None:
+            try:
+                _mongo_client.close()
+            except Exception:
+                pass
+            _mongo_client = None
+        _mongo_db = None
+        _mongo_fail_until = datetime.now() + timedelta(seconds=MONGO_FAILURE_COOLDOWN_SECONDS)
         print(f"  ⚠ MongoDB connection failed: {e}, using JSON files")
         return None
 
@@ -298,12 +326,17 @@ class ProductRepository:
     _cached_products = None
     _cache_time = None
     _cache_duration = 300  # 5分钟缓存
+    _cached_blogs = None
+    _blogs_cache_time = None
+    _blogs_cache_duration = BLOG_CACHE_SECONDS
 
     @classmethod
     def refresh_cache(cls):
         """强制刷新缓存"""
         cls._cached_products = None
         cls._cache_time = None
+        cls._cached_blogs = None
+        cls._blogs_cache_time = None
 
     @classmethod
     def load_products(cls, filters_module=None) -> List[Dict]:
@@ -479,8 +512,10 @@ class ProductRepository:
         country_fields = {'region', 'country_code', 'country_name', 'country_flag', 'country_display', 'country_source'}
         country_source_priority = {
             'unknown': 0,
+            # Keep old region-based fallbacks at the lowest rank so better evidence can replace them.
+            'region:search_fallback': -1,
+            'region:fallback': -1,
             'website:cc_tld': 1,
-            'region:search_fallback': 1,
             'region:legacy': 2,
             'curated:region': 3,
         }
@@ -729,27 +764,40 @@ class ProductRepository:
     @classmethod
     def load_blogs(cls) -> List[Dict]:
         """加载博客/新闻/讨论数据（优先 MongoDB，回退 JSON）。"""
+        now = datetime.now()
+
+        # 检查缓存
+        if cls._cached_blogs is not None and cls._blogs_cache_time:
+            age = (now - cls._blogs_cache_time).total_seconds()
+            if age < cls._blogs_cache_duration:
+                return cls._cached_blogs
+
+        blogs: List[Dict] = []
+
         if _mongo_uri_configured():
             blogs = cls.load_blogs_from_mongodb()
-            if blogs:
-                return blogs
 
-        if not os.path.exists(BLOGS_NEWS_FILE):
-            return []
+        if not blogs:
+            if not os.path.exists(BLOGS_NEWS_FILE):
+                cls._cached_blogs = []
+                cls._blogs_cache_time = now
+                return []
 
-        try:
-            with open(BLOGS_NEWS_FILE, 'r', encoding='utf-8') as f:
-                blogs = json.load(f)
+            try:
+                with open(BLOGS_NEWS_FILE, 'r', encoding='utf-8') as f:
+                    blogs = json.load(f)
 
-            # 添加 _id 字段
-            for i, b in enumerate(blogs):
-                if '_id' not in b:
-                    b['_id'] = f"blog_{i + 1}"
+                # 添加 _id 字段
+                for i, b in enumerate(blogs):
+                    if '_id' not in b:
+                        b['_id'] = f"blog_{i + 1}"
+            except Exception as e:
+                print(f"加载博客数据失败: {e}")
+                blogs = []
 
-            return blogs
-        except Exception as e:
-            print(f"加载博客数据失败: {e}")
-            return []
+        cls._cached_blogs = blogs
+        cls._blogs_cache_time = now
+        return blogs
 
     @classmethod
     def load_blogs_from_mongodb(cls) -> List[Dict]:

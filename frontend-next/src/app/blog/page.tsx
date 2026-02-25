@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { BlogClient } from "@/components/blog/blog-client";
+import { BlogDataSection } from "@/components/blog/blog-data-section";
 
 export const metadata = {
   title: "WeeklyAI - 博客动态",
@@ -8,7 +8,7 @@ export const metadata = {
 export default function BlogPage() {
   return (
     <Suspense fallback={<div className="section"><div className="loading-block">加载博客中...</div></div>}>
-      <BlogClient />
+      <BlogDataSection />
     </Suspense>
   );
 }
