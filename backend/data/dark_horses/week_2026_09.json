@@ -956,5 +956,250 @@
     "country_flag": "🇮🇱",
     "country_display": "🇮🇱 Israel",
     "country_source": "explicit:company_country"
+  },
+  {
+    "name": "MatX",
+    "website": "https://matx.com",
+    "description": "由前谷歌硬件工程师创立的AI芯片初创公司，目标打造比NVIDIA GPU训练大语言模型快10倍的处理器。",
+    "category": "hardware",
+    "region": "🇺🇸",
+    "funding_total": "$500M Series B",
+    "dark_horse_index": 5,
+    "criteria_met": [
+      "funding_signal",
+      "founder_background",
+      "growth_anomaly"
+    ],
+    "why_matters": "前谷歌TPU负责人Reiner Pope和硬件设计师Mike Gunter创立，获前OpenAI研究员Leopold Aschenbrenner基金领投5亿美元B轮，总融超6亿美元，计划2027年通过TSMC量产MatX One芯片，专为LLM训练优化吞吐量和延迟。",
+    "latest_news": "2026-02-24: 完成5亿美元B轮融资，由Jane Street和Situational Awareness领投",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/02/24/nvidia-challenger-ai-chip-startup-matx-raised-500m/",
+    "company_country": "US",
+    "company_country_confidence": 0.9,
+    "confidence": 0.95,
+    "is_hardware": true,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-27T09:20:39.252437Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-02-27",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:techcrunch.com AI startup funding",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Harper",
+    "website": "https://harper.ai",
+    "description": "Y Combinator毕业生，AI原生保险经纪平台，帮助用户处理保险需求。",
+    "category": "finance",
+    "region": "🇺🇸",
+    "funding_total": "$46.8M Series A + Seed",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "demand_signal_hn"
+    ],
+    "why_matters": "创始人Dakotah Rice回归，完成4680万美元A轮+种子轮合并融资，YC背景专注AI驱动保险经纪，显示保险垂直领域AI化趋势。",
+    "latest_news": "2026-02-25: 完成4680万美元A轮和种子轮融资",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/02/25/ai-insurance-brokerage-harper-raises-45m-series-a-and-seed/",
+    "company_country": "US",
+    "company_country_confidence": 0.9,
+    "confidence": 0.9,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-27T09:20:39.930417Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 5,
+          "top_story_id": "47088685",
+          "points": 446,
+          "comments": 262,
+          "engagement_depth_ratio": 0.5874,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "\"What I discovered, though, is that behind all these small complaints, there’s something much more serious. Roy Lee is not like other people. He belongs to a new and possibly permanent overclass. One of the pervasive new doctrines of Silicon Valley is that we’re in the early stages of a bifurcation event. Some people will do incredibly well in the new AI era. They will become rich and powerful beyond anything we can currently imagine. But other people—a lot of other people—will become useless. They will be consigned to the same miserable fate as the people currently muttering on the streets of San Francisco, cold and helpless in a world they no longer understand. The skills that could lift y",
+            "AI can’t function without instructions from humans, but an increasing number of humans seem incapable of functioning without AI.",
+            "Devolution.",
+            ">The city is temperate and brightly colored, with plenty of pleasant trees, but on every corner it speaks to you in an aggressively alien nonsense. Here the world automatically assumes that instead of wanting food or drinks or a new phone or car, what you want is some kind of arcane B2B service for your startup. You are not a passive consumer. You are making something. I recently traveled to San Francisco and as an outsider this was pretty much the reaction I had.",
+            "The folks who keep the power grid running, write compilers, secure the internet, and design dependable systems don’t get viral fame, but their contributions are far more critical. That imbalance is no small thing; it shapes who gets funded, who feels validated, and who decides to pursue a challenge that doesn’t promise a quick TikTok moment or a crypto-style valuation bump. A complex technological civilization depends on people willing to go deep, to wrestle with fundamentals, to think in decades rather than funding cycles. If the next generation of capable minds concludes that visibility is more rational than depth, we’re not just changing startup culture. You can survive a lot of hype. You",
+            "> \"The future won’t reward effort. It’ll reward leverage.\" (From the Cluely ad) JFC kill me now that is NOT a future I want to live in.",
+            "I read Sam Kriss' substack and he's a wildly unique and talented writer.",
+            "Wordcel backlash, basically.",
+            "<< The highly agentic are people who just do things. They don’t timidly wait for permission or consensus; they drive like bulldozers through whatever’s in their way. I genuinely like the author's style ( not in the quote above; its here for a different reason ). It paints a picture in a way that I still am unable to. I suck at stories. Anyway, back to the quote. If that is true, then we are in pickle. Claw and its security issues is just a symptom of that 'break things' spirit. And yes, this has been true for a while, but we keep increasing both in terms of speed and scale. I am not sure what the breaking point is, but at certain point real world may balk.",
+            "To be fair SF has had incomprehensible (to normies) billboards since at least the early 90's."
+          ],
+          "llm_summary_used": true,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.662,
+        "demand_tier": "medium",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "Hacker News评论批评Roy Lee代表硅谷新兴精英阶层，利用AI工具如Cluely在技术面试中作弊，引发对社会分化的担忧。评论者指出AI依赖人类指令但许多人已无法独立运作，并质疑快速破坏式创新的安全性。部分人赞赏作者写作风格和对科技招聘问题的揭示，但整体氛围偏向负面。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "negative",
+      "confidence": 0.85
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-02-27",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:techcrunch.com AI startup funding",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "voize",
+    "website": "https://voize.ai",
+    "description": "AI语音助手，通过语音文档记录减少护士行政工作负担，让护士将更多时间用于患者护理",
+    "category": "healthcare",
+    "region": "🇩🇪",
+    "funding_total": "$50M Series A (2025年11月)",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "category_innovation"
+    ],
+    "why_matters": "获得5000万美元Series A融资（由Balderton Capital领投），已在600多家护理机构部署。独特之处：专为护理工作流设计的本地运行LLM，支持医学术语、地区口音和多语言，离线工作且符合GDPR，与竞争对手（Nuance/Microsoft、MModal/3M）的医生导向工具差异化明显。计划扩展至欧洲和美国市场",
+    "latest_news": "2025-11: 完成$50M Series A融资，宣布欧美扩张计划",
+    "source": "StartupResearcher, HLTH, EU-Startups",
+    "source_url": "https://www.startupresearcher.com/news/voize-raises-usd50-million-to-cut-nurse-paperwork",
+    "company_country": "Germany",
+    "company_country_confidence": 0.95,
+    "confidence": 0.9,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-27T09:22:07.496924Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-02-27",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "KI Startup Finanzierung",
+    "country_code": "DE",
+    "country_name": "Germany",
+    "country_flag": "🇩🇪",
+    "country_display": "🇩🇪 Germany",
+    "country_source": "explicit:company_country"
   }
 ]
