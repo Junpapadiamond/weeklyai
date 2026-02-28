@@ -416,6 +416,28 @@ export function isPlaceholderValue(value: string | undefined | null): boolean {
   return PLACEHOLDER_VALUES.has(normalized);
 }
 
+function isLikelyEnglish(text: string): boolean {
+  const trimmed = String(text || "").trim();
+  if (!trimmed) return false;
+  if (/[\u4e00-\u9fff]/.test(trimmed)) return false;
+  return /[A-Za-z]/.test(trimmed);
+}
+
+function pickLocalizedText(product: Product, field: keyof Product, locale: SiteLocale): string {
+  const zhField = String(product[field] || "").trim();
+  const enField = `${String(field)}_en` as keyof Product;
+  const zh = isPlaceholderValue(zhField) ? "" : zhField;
+  const en = isPlaceholderValue(String(product[enField] || "").trim())
+    ? ""
+    : String(product[enField] || "").trim();
+
+  if (locale === "en-US") {
+    return en || (isLikelyEnglish(zh) ? zh : "");
+  }
+
+  return zh || en;
+}
+
 export function parseFundingAmount(value: string | undefined): number {
   if (!value) return 0;
   const normalized = value.replace(/,/g, "").trim().toLowerCase();
@@ -618,22 +640,16 @@ export function cleanDescription(desc: string | undefined, locale: SiteLocale = 
 }
 
 export function getLocalizedProductDescription(product: Product, locale: SiteLocale = DEFAULT_LOCALE): string {
-  const zh = isPlaceholderValue(product.description) ? "" : product.description?.trim() || "";
-  const en = isPlaceholderValue(product.description_en) ? "" : product.description_en?.trim() || "";
-  const picked = locale === "en-US" ? en || zh : zh || en;
+  const picked = pickLocalizedText(product, "description", locale);
   return picked ? cleanDescription(picked, locale) : "";
 }
 
 export function getLocalizedProductWhyMatters(product: Product, locale: SiteLocale = DEFAULT_LOCALE): string {
-  const zh = isPlaceholderValue(product.why_matters) ? "" : product.why_matters?.trim() || "";
-  const en = isPlaceholderValue(product.why_matters_en) ? "" : product.why_matters_en?.trim() || "";
-  return locale === "en-US" ? en || zh : zh || en;
+  return pickLocalizedText(product, "why_matters", locale);
 }
 
 export function getLocalizedProductLatestNews(product: Product, locale: SiteLocale = DEFAULT_LOCALE): string {
-  const zh = isPlaceholderValue(product.latest_news) ? "" : product.latest_news?.trim() || "";
-  const en = isPlaceholderValue(product.latest_news_en) ? "" : product.latest_news_en?.trim() || "";
-  return locale === "en-US" ? en || zh : zh || en;
+  return pickLocalizedText(product, "latest_news", locale);
 }
 
 export function getMonogram(name: string | undefined): string {

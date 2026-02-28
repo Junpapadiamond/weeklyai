@@ -28,6 +28,11 @@ def _get_model() -> str:
     return sanitize_env_value(os.environ.get("PERPLEXITY_CHAT_MODEL", "sonar"), "sonar") or "sonar"
 
 
+def _is_placeholder_value(value: str) -> bool:
+    normalized = (value or "").strip().lower()
+    return normalized in {"", "unknown", "n/a", "na", "none", "null", "undefined", "tbd", "待定", "未公开", "暂无"}
+
+
 def _normalize_locale(locale: str | None) -> str:
     value = (locale or "zh").strip().lower()
     if value in ("en", "en-us"):
@@ -65,7 +70,23 @@ def _extract_content(payload: dict[str, Any]) -> str:
     return str(message.get("content", "")).strip()
 
 
-def _build_product_context() -> str:
+def _pick_localized_product_field(product: dict[str, Any], base_field: str, locale: str) -> str:
+    zh_value = str(product.get(base_field, "") or "").strip()
+    en_value = str(product.get(f"{base_field}_en", "") or "").strip()
+
+    if locale == "en":
+        if not _is_placeholder_value(en_value):
+            return en_value
+        if zh_value and not re.search(r"[\u4e00-\u9fff]", zh_value):
+            return zh_value
+        return ""
+
+    if zh_value and not _is_placeholder_value(zh_value):
+        return zh_value
+    return "" if _is_placeholder_value(en_value) else en_value
+
+
+def _build_product_context(locale: str) -> str:
     try:
         from app.services.product_service import ProductService
 
@@ -83,7 +104,8 @@ def _build_product_context() -> str:
             score = item.get("dark_horse_index", "")
             funding = str(item.get("funding_total", "")).strip() or "n/a"
             reason = _shorten(
-                str(item.get("why_matters", "")).strip() or str(item.get("description", "")).strip()
+                _pick_localized_product_field(item, "why_matters", locale)
+                or _pick_localized_product_field(item, "description", locale)
             )
             lines.append(f"- {name} ({score}): {reason} | Funding: {funding}")
 
@@ -93,7 +115,8 @@ def _build_product_context() -> str:
             name = str(item.get("name", "")).strip() or "Unknown"
             score = item.get("dark_horse_index", "")
             reason = _shorten(
-                str(item.get("why_matters", "")).strip() or str(item.get("description", "")).strip()
+                _pick_localized_product_field(item, "why_matters", locale)
+                or _pick_localized_product_field(item, "description", locale)
             )
             lines.append(f"- {name} ({score}): {reason}")
 
@@ -101,11 +124,16 @@ def _build_product_context() -> str:
 
 
 def _build_system_prompt(locale: str) -> str:
-    product_context = _build_product_context()
+    product_context = _build_product_context(locale)
     if locale == "en":
         return (
             "You are the WeeklyAI assistant.\n"
-            "Answer only AI product questions based on the data below.\n"
+            "You are the WeeklyAI assistant for AI products only.\n"
+            "Only answer questions about AI products using the data list below.\n"
+            "Do not answer sports, entertainment, politics, or other non-AI domains.\n"
+            "If a user asks for data outside this scope, reply briefly that AI-product insight is unavailable in current scope.\n"
+            "Only use product info from the list below and avoid introducing unverified facts.\n"
+            "When you lack enough data for a specific request, explicitly state that the current dataset is insufficient.\n"
             "Keep it concise, practical, and specific.\n"
             "Mention name, score, and key differentiator when recommending.\n\n"
             f"{product_context}"
@@ -113,7 +141,11 @@ def _build_system_prompt(locale: str) -> str:
 
     return (
         "你是 WeeklyAI 助手。\n"
-        "请基于下方产品数据回答 AI 产品相关问题。\n"
+        "你是 WeeklyAI 助手，仅负责 AI 产品咨询。\n"
+        "请只基于下方产品数据回答 AI 产品相关问题。\n"
+        "不得回答体育、娱乐、政治、社会新闻等非 AI 领域问题；如用户提问超出范围，请说明当前仅支持 AI 产品咨询。\n"
+        "只能使用下方数据回答，不要新增未验证的内容。\n"
+        "若数据不足以支持用户具体提问，请明确说明当前数据不足。\n"
         "回答要简洁、具体、可执行。\n"
         "做推荐时请提到产品名、评分和关键差异点。\n\n"
         f"{product_context}"
