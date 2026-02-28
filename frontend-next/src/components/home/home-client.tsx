@@ -5,10 +5,12 @@ import Link from "next/link";
 import { ChevronDown, ChevronUp, Cpu, Flame, Newspaper, Sparkles } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Product } from "@/types/api";
-import type { WeeklyTopSort } from "@/lib/api-client";
-import { ChatBar } from "@/components/chat/chat-bar";
+import type { SiteLocale } from "@/lib/locale";
+import { parseLastUpdatedLabel, type WeeklyTopSort } from "@/lib/api-client";
 import { SmartLogo } from "@/components/common/smart-logo";
+import { ChatBar } from "@/components/chat/chat-bar";
 import { ProductCard } from "@/components/product/product-card";
+import { useSiteLocale } from "@/components/layout/locale-provider";
 import { countFavorites, openFavoritesPanel, subscribeFavorites } from "@/lib/favorites";
 import {
   cleanDescription,
@@ -37,11 +39,14 @@ const DEFAULT_WEEKLY_TOP_SORT: WeeklyTopSort = "composite";
 type HomeClientProps = {
   darkHorses: Product[];
   allProducts: Product[];
-  freshnessLabel: string;
+  freshnessHoursAgo: number | null | undefined;
 };
 
-function formatScore(score: number): string {
-  if (score <= 0) return "待评";
+function formatScore(score: number, locale: SiteLocale): string {
+  if (score <= 0) return locale === "en-US" ? "Unrated" : "待评";
+  if (locale === "en-US") {
+    return Number.isInteger(score) ? `${score}/5` : `${score.toFixed(1)}/5`;
+  }
   return Number.isInteger(score) ? `${score}分` : `${score.toFixed(1)}分`;
 }
 
@@ -72,13 +77,14 @@ type DarkHorseSpotlightCardProps = {
 };
 
 function DarkHorseSpotlightCard({ product }: DarkHorseSpotlightCardProps) {
+  const { locale, t } = useSiteLocale();
   const [expanded, setExpanded] = useState(false);
   const [canExpand, setCanExpand] = useState(false);
   const whyMattersRef = useRef<HTMLParagraphElement | null>(null);
   const detailId = encodeURIComponent(product._id || product.name);
   const score = getProductScore(product);
-  const scoreLabel = formatScore(score);
-  const description = cleanDescription(product.description);
+  const scoreLabel = formatScore(score, locale);
+  const description = cleanDescription(product.description, locale);
   const website = normalizeWebsite(product.website);
   const hasWebsite = isValidWebsite(website);
   const country = resolveProductCountry(product);
@@ -127,7 +133,7 @@ function DarkHorseSpotlightCard({ product }: DarkHorseSpotlightCardProps) {
         <div className="darkhorse-spotlight__content">
           <header className="darkhorse-spotlight__header">
             <h3 className="darkhorse-spotlight__title">{product.name}</h3>
-            <p className="darkhorse-spotlight__categories">{formatCategories(product)}</p>
+            <p className="darkhorse-spotlight__categories">{formatCategories(product, locale)}</p>
           </header>
 
           <p className="darkhorse-spotlight__description">{description}</p>
@@ -135,7 +141,7 @@ function DarkHorseSpotlightCard({ product }: DarkHorseSpotlightCardProps) {
           <div className="darkhorse-spotlight__badges">
             <span className="darkhorse-spotlight__region-tag">{regionLabel}</span>
             <span className={`darkhorse-spotlight__badge darkhorse-spotlight__badge--funding ${fundingLabel ? "" : "is-muted"}`}>
-              {fundingLabel || "融资待补充"}
+              {fundingLabel || t("融资待补充", "Funding pending")}
             </span>
             <span className={`score-badge ${getScoreBadgeClass(score)} darkhorse-spotlight__badge darkhorse-spotlight__badge--score`}>
               {scoreLabel}
@@ -144,7 +150,7 @@ function DarkHorseSpotlightCard({ product }: DarkHorseSpotlightCardProps) {
 
           <div className="darkhorse-spotlight__why-wrap">
             <p ref={whyMattersRef} className={`darkhorse-spotlight__why ${expanded ? "is-expanded" : ""}`}>
-              {product.why_matters || "why_matters 待补充"}
+              {product.why_matters || t("why_matters 待补充", "Why this matters is pending")}
             </p>
             {canExpand ? (
               <button
@@ -155,11 +161,11 @@ function DarkHorseSpotlightCard({ product }: DarkHorseSpotlightCardProps) {
               >
                 {expanded ? (
                   <>
-                    <ChevronUp size={14} /> 收起
+                    <ChevronUp size={14} /> {t("收起", "Collapse")}
                   </>
                 ) : (
                   <>
-                    <ChevronDown size={14} /> 展开
+                    <ChevronDown size={14} /> {t("展开", "Expand")}
                   </>
                 )}
               </button>
@@ -168,14 +174,14 @@ function DarkHorseSpotlightCard({ product }: DarkHorseSpotlightCardProps) {
 
           <footer className="darkhorse-spotlight__footer">
             <Link href={`/product/${detailId}`} className="link-btn link-btn--card link-btn--card-primary">
-              详情
+              {t("详情", "Details")}
             </Link>
             {hasWebsite ? (
               <a className="link-btn link-btn--card" href={website} target="_blank" rel="noopener noreferrer">
-                官网
+                {t("官网", "Website")}
               </a>
             ) : (
-              <span className="pending-tag">官网待验证</span>
+              <span className="pending-tag">{t("官网待验证", "Website pending verification")}</span>
             )}
           </footer>
         </div>
@@ -184,7 +190,8 @@ function DarkHorseSpotlightCard({ product }: DarkHorseSpotlightCardProps) {
   );
 }
 
-export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClientProps) {
+export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeClientProps) {
+  const { locale, t } = useSiteLocale();
   const [darkFilter, setDarkFilter] = useState<"all" | "hardware" | "software">("all");
   const [tierFilter, setTierFilter] = useState<"all" | "darkhorse" | "rising">("all");
   const [typeFilter, setTypeFilter] = useState<"all" | "software" | "hardware">("all");
@@ -232,10 +239,10 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
       .map(([value, count]) => ({
         value,
         count,
-        label: getDirectionLabel(value) || value,
+        label: getDirectionLabel(value, locale) || value,
       }))
-      .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label, "zh-CN"));
-  }, [productPool, tierFilter, typeFilter]);
+      .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label, locale));
+  }, [locale, productPool, tierFilter, typeFilter]);
 
   const activeDirectionFilter =
     directionFilter === "all" || directionOptions.some((option) => option.value === directionFilter)
@@ -279,6 +286,11 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
     };
   }, [productPool]);
 
+  const freshnessLabel = useMemo(
+    () => parseLastUpdatedLabel(freshnessHoursAgo, locale),
+    [freshnessHoursAgo, locale]
+  );
+
   return (
     <div className="home-root" data-vibe="experimental">
       <section className="hero">
@@ -289,32 +301,43 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
           <div className="hero-content">
             <div className="hero-kicker">global signal board · weeklyai</div>
             <h1 className="hero-title">
-              发现全球最新<span className="gradient-text">AI产品</span>
+              {t("发现全球最新", "Discover the latest global")}<span className="gradient-text">AI {t("产品", "products")}</span>
             </h1>
-            <p className="hero-subtitle">每周 5 分钟，看完全球 AI 领域最值得关注的新产品</p>
+            <p className="hero-subtitle">
+              {t("每周 5 分钟，看完全球 AI 领域最值得关注的新产品", "Spend 5 minutes weekly to spot the most promising new AI products.")}
+            </p>
             <div className="data-freshness" aria-live="polite">
               {freshnessLabel}
             </div>
-            <div className="hero-stats" role="list" aria-label="本期信号概览">
+            <div className="hero-stats" role="list" aria-label={t("本期信号概览", "Current signal overview")}>
               <div className="hero-stat" role="listitem">
-                <span className="hero-stat__label">本周新增</span>
-                <strong className="hero-stat__value">{signalStats.weekNewCount} 款</strong>
+                <span className="hero-stat__label">{t("本周新增", "New this week")}</span>
+                <strong className="hero-stat__value">
+                  {signalStats.weekNewCount} {t("款", "items")}
+                </strong>
               </div>
               <div className="hero-stat" role="listitem">
-                <span className="hero-stat__label">获得融资</span>
-                <strong className="hero-stat__value">{signalStats.fundedCount} 款</strong>
+                <span className="hero-stat__label">{t("获得融资", "Funded")}</span>
+                <strong className="hero-stat__value">
+                  {signalStats.fundedCount} {t("款", "items")}
+                </strong>
               </div>
               <div className="hero-stat" role="listitem">
-                <span className="hero-stat__label">覆盖地区</span>
-                <strong className="hero-stat__value">{signalStats.regionCount} 个</strong>
+                <span className="hero-stat__label">{t("覆盖地区", "Regions covered")}</span>
+                <strong className="hero-stat__value">
+                  {signalStats.regionCount} {t("个", "regions")}
+                </strong>
               </div>
               <div className="hero-stat" role="listitem">
-                <span className="hero-stat__label">累计收录</span>
-                <strong className="hero-stat__value">{signalStats.total} 款</strong>
+                <span className="hero-stat__label">{t("累计收录", "Total tracked")}</span>
+                <strong className="hero-stat__value">
+                  {signalStats.total} {t("款", "items")}
+                </strong>
               </div>
             </div>
             <p className="hero-signal">
-              本周偏热：<span>Agent 原生工具</span> · <span>AI 硬件新形态</span> · <span>社交一手信号</span>
+              {t("本周偏热：", "Trending this week:")}<span>{t("Agent 原生工具", "Agent-native tools")}</span> ·{" "}
+              <span>{t("AI 硬件新形态", "new AI hardware form factors")}</span> · <span>{t("社交一手信号", "early social signals")}</span>
             </p>
           </div>
         </div>
@@ -329,10 +352,14 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
             <span className="title-icon">
               <Flame size={18} />
             </span>
-            本周黑马 <span className="score-badge score-badge--4">4-5分</span>
+            {t("本周黑马", "Dark Horses This Week")} <span className="score-badge score-badge--4">{t("4-5分", "4-5 score")}</span>
           </h2>
-          <p className="section-desc">不是最吵的项目，而是最可能突然起飞的项目。</p>
-          <p className="section-micro-note">优先看 4-5 分，按硬件/软件切流减少信息噪声。</p>
+          <p className="section-desc">
+            {t("不是最吵的项目，而是最可能突然起飞的项目。", "Not the loudest projects, but the ones most likely to take off suddenly.")}
+          </p>
+          <p className="section-micro-note">
+            {t("优先看 4-5 分，按硬件/软件切流减少信息噪声。", "Start with 4-5 scores, then split by hardware/software to reduce noise.")}
+          </p>
         </div>
 
         <div className="darkhorse-filters">
@@ -344,7 +371,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
               setShowAllDarkHorses(false);
             }}
           >
-            全部
+            {t("全部", "All")}
           </button>
           <button
             className={`filter-btn ${darkFilter === "hardware" ? "active" : ""}`}
@@ -354,7 +381,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
               setShowAllDarkHorses(false);
             }}
           >
-            <Cpu size={14} /> 硬件
+            <Cpu size={14} /> {t("硬件", "Hardware")}
           </button>
           <button
             className={`filter-btn ${darkFilter === "software" ? "active" : ""}`}
@@ -364,7 +391,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
               setShowAllDarkHorses(false);
             }}
           >
-            <Sparkles size={14} /> 软件
+            <Sparkles size={14} /> {t("软件", "Software")}
           </button>
         </div>
 
@@ -375,7 +402,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
             ))
           ) : (
             <div className="empty-state">
-              <p className="empty-state-text">该筛选下暂无黑马产品。</p>
+              <p className="empty-state-text">{t("该筛选下暂无黑马产品。", "No dark horse products found for this filter.")}</p>
             </div>
           )}
         </div>
@@ -383,7 +410,11 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
         {filteredDarkHorses.length > DARK_HORSE_COLLAPSE_LIMIT ? (
           <div className="darkhorse-expand-row">
             <button className="load-more-btn" type="button" onClick={() => setShowAllDarkHorses((value) => !value)}>
-              {showAllDarkHorses ? "收起" : `展开更多 (${filteredDarkHorses.length - DARK_HORSE_COLLAPSE_LIMIT} 款)`}
+              {showAllDarkHorses
+                ? t("收起", "Collapse")
+                : locale === "en-US"
+                  ? `Show more (${filteredDarkHorses.length - DARK_HORSE_COLLAPSE_LIMIT})`
+                  : `展开更多 (${filteredDarkHorses.length - DARK_HORSE_COLLAPSE_LIMIT} 款)`}
             </button>
           </div>
         ) : null}
@@ -391,9 +422,11 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
 
       <section className="section trending-section" id="trendingSection">
         <div className="section-header">
-          <h2 className="section-title">更多推荐</h2>
-          <p className="section-desc">黑马 (4-5分) + 潜力股 (2-3分)</p>
-          <p className="section-micro-note">默认按综合排序（热度 + 新鲜度），可切换热度或时间。</p>
+          <h2 className="section-title">{t("更多推荐", "More Picks")}</h2>
+          <p className="section-desc">{t("黑马 (4-5分) + 潜力股 (2-3分)", "Dark Horses (4-5) + Rising Stars (2-3)")}</p>
+          <p className="section-micro-note">
+            {t("默认按综合排序（热度 + 新鲜度），可切换热度或时间。", "Sorted by composite score by default (heat + freshness), switch to heat or time anytime.")}
+          </p>
         </div>
 
         <div className="list-controls">
@@ -406,7 +439,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
                 setCurrentPage(1);
               }}
             >
-              全部
+              {t("全部", "All")}
             </button>
             <button
               className={`tier-tab ${tierFilter === "darkhorse" ? "active" : ""}`}
@@ -416,7 +449,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
                 setCurrentPage(1);
               }}
             >
-              黑马
+              {t("黑马", "Dark Horses")}
             </button>
             <button
               className={`tier-tab ${tierFilter === "rising" ? "active" : ""}`}
@@ -426,13 +459,13 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
                 setCurrentPage(1);
               }}
             >
-              潜力股
+              {t("潜力股", "Rising Stars")}
             </button>
           </div>
 
           <div className="controls-right">
             <label>
-              排序
+              {t("排序", "Sort")}
               <select
                 value={sortBy}
                 onChange={(event) => {
@@ -440,13 +473,13 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
                   setCurrentPage(1);
                 }}
               >
-                <option value="composite">🧠 综合</option>
-                <option value="trending">🔥 热度</option>
-                <option value="recency">🕐 时间</option>
+                <option value="composite">🧠 {t("综合", "Composite")}</option>
+                <option value="trending">🔥 {t("热度", "Trending")}</option>
+                <option value="recency">🕐 {t("时间", "Recency")}</option>
               </select>
             </label>
             <label>
-              一级分类
+              {t("一级分类", "Category")}
               <select
                 value={typeFilter}
                 onChange={(event) => {
@@ -455,13 +488,13 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
                   setCurrentPage(1);
                 }}
               >
-                <option value="all">全部</option>
-                <option value="software">软件</option>
-                <option value="hardware">硬件</option>
+                <option value="all">{t("全部", "All")}</option>
+                <option value="software">{t("软件", "Software")}</option>
+                <option value="hardware">{t("硬件", "Hardware")}</option>
               </select>
             </label>
             <label>
-              二级方向
+              {t("二级方向", "Direction")}
               <select
                 value={activeDirectionFilter}
                 onChange={(event) => {
@@ -469,7 +502,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
                   setCurrentPage(1);
                 }}
               >
-                <option value="all">全部方向</option>
+                <option value="all">{t("全部方向", "All directions")}</option>
                 {directionOptions.map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.label} ({option.count})
@@ -480,7 +513,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
             <button
               className="favorites-toggle"
               type="button"
-              aria-label="打开收藏夹"
+              aria-label={t("打开收藏夹", "Open favorites")}
               onClick={() => openFavoritesPanel("product")}
             >
               ❤️ {favoritesCount}
@@ -495,7 +528,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
         {hasMore ? (
           <div className="load-more-container">
             <button className="load-more-btn" type="button" onClick={() => setCurrentPage((value) => value + 1)}>
-              加载更多
+              {t("加载更多", "Load more")}
             </button>
           </div>
         ) : null}
@@ -503,10 +536,10 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
 
       <section className="section section--linkout">
         <Link className="link-banner" href="/discover">
-          🎲 随机发现产品 →
+          🎲 {t("随机发现产品", "Discover random products")} →
         </Link>
         <Link className="link-banner" href="/blog">
-          <Newspaper size={18} /> 查看博客和动态信号
+          <Newspaper size={18} /> {t("查看博客和动态信号", "View news and social signals")}
         </Link>
       </section>
     </div>

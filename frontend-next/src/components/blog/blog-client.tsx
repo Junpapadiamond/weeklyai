@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { FavoriteButton } from "@/components/favorites/favorite-button";
+import { useSiteLocale } from "@/components/layout/locale-provider";
 import {
   cleanDescription,
   getFreshnessLabel,
@@ -11,7 +12,7 @@ import {
 } from "@/lib/product-utils";
 import type { BlogPost } from "@/types/api";
 
-const SOURCE_LABELS: Record<string, string> = {
+const SOURCE_LABELS_ZH: Record<string, string> = {
   "": "全部",
   cn_news: "中国本土源",
   cn_news_glm: "中国本土源（GLM）",
@@ -23,20 +24,34 @@ const SOURCE_LABELS: Record<string, string> = {
   tech_news: "Tech News",
 };
 
+const SOURCE_LABELS_EN: Record<string, string> = {
+  "": "All",
+  cn_news: "China Local Sources",
+  cn_news_glm: "China Local Sources (GLM)",
+  hackernews: "Hacker News",
+  producthunt: "Product Hunt",
+  youtube: "YouTube",
+  x: "X",
+  reddit: "Reddit",
+  tech_news: "Tech News",
+};
+
 const SOURCE_ORDER = ["cn_news", "cn_news_glm", "hackernews", "reddit", "tech_news", "producthunt", "youtube", "x"] as const;
 
-const MARKET_OPTIONS = [
-  { value: "hybrid", label: "全球 Hybrid" },
-  { value: "cn", label: "中国" },
-  { value: "us", label: "美国" },
-] as const;
-
-const MARKET_LABELS: Record<string, string> = {
+const MARKET_LABELS_ZH: Record<string, string> = {
   hybrid: "全球 Hybrid",
   cn: "中国",
   us: "美国",
   global: "全球",
 };
+
+const MARKET_LABELS_EN: Record<string, string> = {
+  hybrid: "Global Hybrid",
+  cn: "China",
+  us: "United States",
+  global: "Global",
+};
+type MarketValue = "hybrid" | "cn" | "us";
 
 const US_SOURCES = new Set(["hackernews", "producthunt", "youtube", "x", "reddit", "tech_news"]);
 const SOURCE_ALIASES: Record<string, string[]> = {
@@ -102,23 +117,26 @@ function buildSourceOptions(data: BlogPost[] | undefined) {
 }
 
 function BlogCard({ item }: { item: BlogPost }) {
+  const { locale, t } = useSiteLocale();
+  const sourceLabels = locale === "en-US" ? SOURCE_LABELS_EN : SOURCE_LABELS_ZH;
+  const marketLabels = locale === "en-US" ? MARKET_LABELS_EN : MARKET_LABELS_ZH;
   const website = normalizeWebsite(item.website);
   const hasWebsite = isValidWebsite(website);
-  const sourceLabel = SOURCE_LABELS[item.source || ""] || item.source || "Blog";
-  const marketLabel = MARKET_LABELS[inferMarket(item)] || "全球";
+  const sourceLabel = sourceLabels[item.source || ""] || item.source || "Blog";
+  const marketLabel = marketLabels[inferMarket(item)] || (locale === "en-US" ? "Global" : "全球");
   const freshness = getFreshnessLabel({
     name: item.name,
     description: item.description,
     published_at: item.published_at,
-  });
+  }, new Date(), locale);
   const publishedLabel = item.published_at
-    ? new Date(item.published_at).toLocaleString("zh-CN", {
+    ? new Date(item.published_at).toLocaleString(locale, {
         month: "2-digit",
         day: "2-digit",
         hour: "2-digit",
         minute: "2-digit",
       })
-    : "时间待补充";
+    : t("时间待补充", "Timestamp unavailable");
 
   return (
     <article className="product-card product-card--signal product-card--watch product-card--compact">
@@ -143,16 +161,16 @@ function BlogCard({ item }: { item: BlogPost }) {
           </div>
         </header>
 
-        <p className="product-card__desc">{cleanDescription(item.description)}</p>
+        <p className="product-card__desc">{cleanDescription(item.description, locale)}</p>
 
         <div className="product-card__actions blog-card__actions">
           <FavoriteButton blog={item} />
           {hasWebsite ? (
             <a className="link-btn link-btn--card" href={website} target="_blank" rel="noopener noreferrer">
-              原文
+              {t("原文", "Source")}
             </a>
           ) : (
-            <span className="pending-tag">链接待补充</span>
+            <span className="pending-tag">{t("链接待补充", "Link pending")}</span>
           )}
         </div>
       </div>
@@ -165,8 +183,16 @@ type BlogClientProps = {
 };
 
 export function BlogClient({ initialBlogs }: BlogClientProps) {
+  const { locale, t } = useSiteLocale();
   const [source, setSource] = useState("");
-  const [market, setMarket] = useState<(typeof MARKET_OPTIONS)[number]["value"]>("hybrid");
+  const [market, setMarket] = useState<MarketValue>("hybrid");
+  const sourceLabels = locale === "en-US" ? SOURCE_LABELS_EN : SOURCE_LABELS_ZH;
+  const marketLabels = locale === "en-US" ? MARKET_LABELS_EN : MARKET_LABELS_ZH;
+  const marketOptions = [
+    { value: "hybrid", label: marketLabels.hybrid },
+    { value: "cn", label: marketLabels.cn },
+    { value: "us", label: marketLabels.us },
+  ] as const;
 
   const marketBlogs = useMemo(() => initialBlogs.filter((item) => matchesMarket(item, market)), [initialBlogs, market]);
   const sourceOptions = useMemo(() => buildSourceOptions(marketBlogs), [marketBlogs]);
@@ -177,32 +203,36 @@ export function BlogClient({ initialBlogs }: BlogClientProps) {
     [activeSource, marketBlogs]
   );
 
-  const sourceSummary = activeSource ? `来源：${SOURCE_LABELS[activeSource] || activeSource}` : "来源：全部";
-  const marketSummary = `区域：${MARKET_LABELS[market] || market}`;
+  const sourceSummary = activeSource
+    ? `${t("来源", "Source")}: ${sourceLabels[activeSource] || activeSource}`
+    : `${t("来源", "Source")}: ${sourceLabels[""]}`;
+  const marketSummary = `${t("区域", "Region")}: ${marketLabels[market] || market}`;
   const emptyStateText =
     market === "cn"
-      ? "暂无中国区动态，请稍后重试或切换全球。"
-      : "暂无匹配数据，请切换来源或稍后再试。";
+      ? t("暂无中国区动态，请稍后重试或切换全球。", "No China updates yet. Please retry later or switch to global.")
+      : t("暂无匹配数据，请切换来源或稍后再试。", "No matching data. Switch source or retry later.");
 
   return (
     <section className="section">
       <div className="section-header">
-        <h1 className="section-title">博客 & 动态</h1>
-        <p className="section-desc">中国本土源与海外动态共存，可按区域快速切换</p>
-        <p className="section-micro-note">{marketSummary} · {sourceSummary} · 共 {posts.length} 条</p>
+        <h1 className="section-title">{t("博客 & 动态", "News & Signals")}</h1>
+        <p className="section-desc">{t("中国本土源与海外动态共存，可按区域快速切换", "China-local and global sources in one feed, with quick market switching.")}</p>
+        <p className="section-micro-note">
+          {marketSummary} · {sourceSummary} · {locale === "en-US" ? `${posts.length} items` : `共 ${posts.length} 条`}
+        </p>
       </div>
 
       <div className="blog-toolbar">
         <label>
-          区域
+          {t("区域", "Market")}
           <select
             value={market}
             onChange={(event) => {
-              setMarket(event.target.value as (typeof MARKET_OPTIONS)[number]["value"]);
+              setMarket(event.target.value as MarketValue);
               setSource("");
             }}
           >
-            {MARKET_OPTIONS.map((option) => (
+            {marketOptions.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>
@@ -211,7 +241,7 @@ export function BlogClient({ initialBlogs }: BlogClientProps) {
         </label>
       </div>
 
-      <div className="source-pills" role="tablist" aria-label="博客来源筛选">
+      <div className="source-pills" role="tablist" aria-label={t("博客来源筛选", "News source filters")}>
         {sourceOptions.map((option) => {
           const isActive = option === activeSource;
           return (
@@ -221,7 +251,7 @@ export function BlogClient({ initialBlogs }: BlogClientProps) {
               className={`source-pill ${isActive ? "active" : ""}`}
               onClick={() => setSource(option)}
             >
-              {SOURCE_LABELS[option] || option}
+              {sourceLabels[option] || option}
             </button>
           );
         })}

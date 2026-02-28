@@ -14,6 +14,7 @@ import {
   Wallet,
 } from "lucide-react";
 import { SmartLogo } from "@/components/common/smart-logo";
+import { useSiteLocale } from "@/components/layout/locale-provider";
 import { isValidWebsite, normalizeWebsite } from "@/lib/product-utils";
 
 type WebsiteScreenshotProps = {
@@ -68,18 +69,18 @@ function resolveCategoryToken(input: { category?: string; categories?: string[];
   return "other";
 }
 
-function categoryVisual(token: string) {
-  if (token === "hardware") return { label: "硬件方向", icon: Cpu, colors: ["#3b82f6", "#0891b2"] };
-  if (token === "coding") return { label: "编程开发", icon: Code2, colors: ["#2563eb", "#6d28d9"] };
-  if (token === "image") return { label: "图像生成", icon: ImageIcon, colors: ["#db2777", "#f97316"] };
-  if (token === "video") return { label: "视频创作", icon: Video, colors: ["#f59e0b", "#dc2626"] };
-  if (token === "voice") return { label: "语音交互", icon: Bot, colors: ["#0ea5e9", "#6366f1"] };
-  if (token === "writing") return { label: "写作助手", icon: PenSquare, colors: ["#0f766e", "#0ea5a3"] };
-  if (token === "education") return { label: "教育学习", icon: GraduationCap, colors: ["#16a34a", "#15803d"] };
-  if (token === "healthcare") return { label: "医疗健康", icon: HeartPulse, colors: ["#dc2626", "#f43f5e"] };
-  if (token === "finance") return { label: "金融工具", icon: Wallet, colors: ["#7c3aed", "#4f46e5"] };
-  if (token === "agent") return { label: "Agent 应用", icon: Bot, colors: ["#2563eb", "#7c3aed"] };
-  return { label: "AI 产品", icon: Sparkles, colors: ["#475569", "#334155"] };
+function categoryVisual(token: string, locale: "zh-CN" | "en-US") {
+  if (token === "hardware") return { label: locale === "en-US" ? "Hardware" : "硬件方向", icon: Cpu, colors: ["#3b82f6", "#0891b2"] };
+  if (token === "coding") return { label: locale === "en-US" ? "Coding" : "编程开发", icon: Code2, colors: ["#2563eb", "#6d28d9"] };
+  if (token === "image") return { label: locale === "en-US" ? "Image Generation" : "图像生成", icon: ImageIcon, colors: ["#db2777", "#f97316"] };
+  if (token === "video") return { label: locale === "en-US" ? "Video Creation" : "视频创作", icon: Video, colors: ["#f59e0b", "#dc2626"] };
+  if (token === "voice") return { label: locale === "en-US" ? "Voice Interaction" : "语音交互", icon: Bot, colors: ["#0ea5e9", "#6366f1"] };
+  if (token === "writing") return { label: locale === "en-US" ? "Writing Assistant" : "写作助手", icon: PenSquare, colors: ["#0f766e", "#0ea5a3"] };
+  if (token === "education") return { label: locale === "en-US" ? "Education" : "教育学习", icon: GraduationCap, colors: ["#16a34a", "#15803d"] };
+  if (token === "healthcare") return { label: locale === "en-US" ? "Healthcare" : "医疗健康", icon: HeartPulse, colors: ["#dc2626", "#f43f5e"] };
+  if (token === "finance") return { label: locale === "en-US" ? "Finance Tools" : "金融工具", icon: Wallet, colors: ["#7c3aed", "#4f46e5"] };
+  if (token === "agent") return { label: locale === "en-US" ? "Agent App" : "Agent 应用", icon: Bot, colors: ["#2563eb", "#7c3aed"] };
+  return { label: locale === "en-US" ? "AI Product" : "AI 产品", icon: Sparkles, colors: ["#475569", "#334155"] };
 }
 
 function analyzeScreenshotQuality(image: HTMLImageElement): boolean {
@@ -154,10 +155,11 @@ export function WebsiteScreenshot({
   alt,
   logoSize = 44,
 }: WebsiteScreenshotProps) {
+  const { locale, t } = useSiteLocale();
   const screenshotUrl = useMemo(() => getThumioUrl(website), [website]);
   const [fallbackState, setFallbackState] = useState<FallbackState>({ key: "", mode: null });
   const token = useMemo(() => resolveCategoryToken({ category, categories, isHardware }), [category, categories, isHardware]);
-  const visual = useMemo(() => categoryVisual(token), [token]);
+  const visual = useMemo(() => categoryVisual(token, locale), [locale, token]);
   const visualStyle = useMemo(
     () =>
       ({
@@ -176,7 +178,7 @@ export function WebsiteScreenshot({
         <img
           className="website-shot__image"
           src={screenshotUrl}
-          alt={alt || `${name || "产品"} 官网截图`}
+          alt={alt || `${name || t("产品", "product")} ${t("官网截图", "website screenshot")}`}
           crossOrigin="anonymous"
           loading="lazy"
           decoding="async"
@@ -190,13 +192,13 @@ export function WebsiteScreenshot({
       ) : (
         <>
           {fallbackMode === "category" ? (
-            <div className="website-shot__category" style={visualStyle} aria-label="截图质量一般，已切换分类占位图">
+            <div className="website-shot__category" style={visualStyle} aria-label={t("截图质量一般，已切换分类占位图", "Screenshot quality is low; switched to category placeholder")}>
               <visual.icon className="website-shot__category-icon" size={30} aria-hidden="true" />
               <strong className="website-shot__category-text">{visual.label}</strong>
-              <span className="website-shot__category-note">截图质量一般，已显示占位图</span>
+              <span className="website-shot__category-note">{t("截图质量一般，已显示占位图", "Low-quality screenshot, showing placeholder")}</span>
             </div>
           ) : (
-            <div className="website-shot__fallback" aria-label="官网截图加载失败，已显示 Logo">
+            <div className="website-shot__fallback" aria-label={t("官网截图加载失败，已显示 Logo", "Website screenshot failed to load, showing logo")}>
               <SmartLogo
                 className="website-shot__logo"
                 name={name}

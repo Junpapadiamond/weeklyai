@@ -4,6 +4,7 @@ import Link from "next/link";
 import { X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { FavoriteButton } from "@/components/favorites/favorite-button";
+import { useSiteLocale } from "@/components/layout/locale-provider";
 import {
   FAVORITES_OPEN_EVENT,
   type FavoriteKind,
@@ -30,11 +31,11 @@ const BLOG_SOURCE_LABELS: Record<string, string> = {
   tech_news: "Tech News",
 };
 
-function formatSavedTime(value: string | undefined) {
-  if (!value) return "刚刚";
+function formatSavedTime(value: string | undefined, locale: "zh-CN" | "en-US") {
+  if (!value) return locale === "en-US" ? "Just now" : "刚刚";
   const ts = new Date(value);
-  if (!Number.isFinite(ts.getTime())) return "刚刚";
-  return ts.toLocaleString("zh-CN", {
+  if (!Number.isFinite(ts.getTime())) return locale === "en-US" ? "Just now" : "刚刚";
+  return ts.toLocaleString(locale, {
     month: "2-digit",
     day: "2-digit",
     hour: "2-digit",
@@ -42,21 +43,22 @@ function formatSavedTime(value: string | undefined) {
   });
 }
 
-function scoreLabel(score: number | undefined): string {
+function scoreLabel(score: number | undefined, locale: "zh-CN" | "en-US"): string {
   const safe = score || 0;
-  if (safe >= 4) return `黑马 ${safe}分`;
-  if (safe >= 2) return `潜力 ${safe}分`;
-  if (safe > 0) return `${safe}分`;
-  return "待评";
+  if (safe >= 4) return locale === "en-US" ? `Dark Horse ${safe}/5` : `黑马 ${safe}分`;
+  if (safe >= 2) return locale === "en-US" ? `Rising ${safe}/5` : `潜力 ${safe}分`;
+  if (safe > 0) return locale === "en-US" ? `${safe}/5` : `${safe}分`;
+  return locale === "en-US" ? "Unrated" : "待评";
 }
 
-function toneLabel(tone: "darkhorse" | "rising" | "watch"): string {
-  if (tone === "darkhorse") return "黑马";
-  if (tone === "rising") return "潜力";
-  return "观察";
+function toneLabel(tone: "darkhorse" | "rising" | "watch", locale: "zh-CN" | "en-US"): string {
+  if (tone === "darkhorse") return locale === "en-US" ? "Dark Horse" : "黑马";
+  if (tone === "rising") return locale === "en-US" ? "Rising" : "潜力";
+  return locale === "en-US" ? "Watch" : "观察";
 }
 
 export function FavoritesPanel() {
+  const { locale, t } = useSiteLocale();
   const [store, setStore] = useState<ReturnType<typeof readFavorites>>({
     version: 3,
     products: [],
@@ -111,9 +113,9 @@ export function FavoritesPanel() {
       }
     }
     return [...counts.entries()]
-      .map(([value, count]) => ({ value, count, label: getDirectionLabel(value) || value }))
-      .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label, "zh-CN"));
-  }, [store.products]);
+      .map(([value, count]) => ({ value, count, label: getDirectionLabel(value, locale) || value }))
+      .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label, locale));
+  }, [locale, store.products]);
 
   const blogDirectionOptions = useMemo(() => {
     const counts = new Map<string, { label: string; count: number }>();
@@ -124,7 +126,7 @@ export function FavoritesPanel() {
         .toLowerCase();
       if (source) {
         const key = `source:${source}`;
-        const label = `来源 · ${BLOG_SOURCE_LABELS[source] || source}`;
+        const label = `${t("来源", "Source")} · ${BLOG_SOURCE_LABELS[source] || source}`;
         const current = counts.get(key);
         counts.set(key, { label, count: (current?.count || 0) + 1 });
       }
@@ -133,7 +135,7 @@ export function FavoritesPanel() {
         const normalized = normalizeDirectionToken(category);
         if (!normalized) continue;
         const key = `direction:${normalized}`;
-        const label = `方向 · ${getDirectionLabel(normalized) || normalized}`;
+        const label = `${t("方向", "Direction")} · ${getDirectionLabel(normalized, locale) || normalized}`;
         const current = counts.get(key);
         counts.set(key, { label, count: (current?.count || 0) + 1 });
       }
@@ -144,9 +146,9 @@ export function FavoritesPanel() {
       .sort((a, b) => {
         const sourceDelta = Number(a.value.startsWith("source:")) - Number(b.value.startsWith("source:"));
         if (sourceDelta !== 0) return sourceDelta * -1;
-        return b.count - a.count || a.label.localeCompare(b.label, "zh-CN");
+        return b.count - a.count || a.label.localeCompare(b.label, locale);
       });
-  }, [store.blogs]);
+  }, [locale, store.blogs, t]);
 
   const activeProductDirectionFilter =
     productDirectionFilter === "all" || productDirectionOptions.some((option) => option.value === productDirectionFilter)
@@ -190,10 +192,10 @@ export function FavoritesPanel() {
       <aside className={`favorites-panel ${isOpen ? "is-open" : ""}`} aria-hidden={!isOpen}>
         <header className="favorites-panel__header">
           <div>
-            <h2>收藏夹</h2>
-            <p>共 {totalCount} 条</p>
+            <h2>{t("收藏夹", "Favorites")}</h2>
+            <p>{t("共", "Total")} {totalCount} {t("条", "items")}</p>
           </div>
-          <button className="favorites-panel__close" type="button" aria-label="关闭收藏夹" onClick={() => setIsOpen(false)}>
+          <button className="favorites-panel__close" type="button" aria-label={t("关闭收藏夹", "Close favorites")} onClick={() => setIsOpen(false)}>
             <X size={16} />
           </button>
         </header>
@@ -204,14 +206,14 @@ export function FavoritesPanel() {
             type="button"
             onClick={() => setActiveKind("product")}
           >
-            产品 ({store.products.length})
+            {t("产品", "Products")} ({store.products.length})
           </button>
           <button
             className={`tier-tab ${activeKind === "blog" ? "active" : ""}`}
             type="button"
             onClick={() => setActiveKind("blog")}
           >
-            博客动态 ({store.blogs.length})
+            {t("博客动态", "News")} ({store.blogs.length})
           </button>
         </div>
 
@@ -223,7 +225,7 @@ export function FavoritesPanel() {
                 className={`tag-btn ${activeProductDirectionFilter === "all" ? "active" : ""}`}
                 onClick={() => setProductDirectionFilter("all")}
               >
-                全部方向
+                {t("全部方向", "All directions")}
               </button>
               {productDirectionOptions.map((option) => (
                 <button
@@ -245,7 +247,7 @@ export function FavoritesPanel() {
                 const website = normalizeWebsite(product.website);
                 const hasWebsite = isValidWebsite(website);
                 const directionLabel = getProductDirections(product)
-                  .map((value) => getDirectionLabel(value) || value)
+                  .map((value) => getDirectionLabel(value, locale) || value)
                   .join(" · ");
                 return (
                   <article className="favorites-panel__item" key={`product-${entry.key}`}>
@@ -254,21 +256,22 @@ export function FavoritesPanel() {
                       <FavoriteButton product={product} />
                     </div>
                     <p className="favorites-panel__item-meta">
-                      {toneLabel(tone)} · {scoreLabel(product.dark_horse_index || product.final_score || product.trending_score)} · 收藏于{" "}
-                      {formatSavedTime(entry.saved_at)}
+                      {toneLabel(tone, locale)} ·{" "}
+                      {scoreLabel(product.dark_horse_index || product.final_score || product.trending_score, locale)} ·{" "}
+                      {t("收藏于", "Saved")} {formatSavedTime(entry.saved_at, locale)}
                     </p>
-                    {directionLabel ? <p className="favorites-panel__item-tags">方向: {directionLabel}</p> : null}
-                    <p className="favorites-panel__item-desc">{cleanDescription(product.description)}</p>
+                    {directionLabel ? <p className="favorites-panel__item-tags">{t("方向", "Direction")}: {directionLabel}</p> : null}
+                    <p className="favorites-panel__item-desc">{cleanDescription(product.description, locale)}</p>
                     <div className="favorites-panel__item-actions">
                       <Link href={`/product/${detailId}`} className="link-btn link-btn--card link-btn--card-primary">
-                        详情
+                        {t("详情", "Details")}
                       </Link>
                       {hasWebsite ? (
                         <a className="link-btn link-btn--card" href={website} target="_blank" rel="noopener noreferrer">
-                          官网
+                          {t("官网", "Website")}
                         </a>
                       ) : (
-                        <span className="pending-tag">官网待验证</span>
+                        <span className="pending-tag">{t("官网待验证", "Website pending verification")}</span>
                       )}
                     </div>
                   </article>
@@ -284,7 +287,7 @@ export function FavoritesPanel() {
                 className={`tag-btn ${activeBlogDirectionFilter === "all" ? "active" : ""}`}
                 onClick={() => setBlogDirectionFilter("all")}
               >
-                全部分类
+                {t("全部分类", "All categories")}
               </button>
               {blogDirectionOptions.map((option) => (
                 <button
@@ -306,7 +309,7 @@ export function FavoritesPanel() {
                 const source = String(blog.source || "").toLowerCase();
                 const sourceLabel = BLOG_SOURCE_LABELS[source] || blog.source || "Blog";
                 const categoryLabel = (blog.categories || [])
-                  .map((value) => getDirectionLabel(normalizeDirectionToken(value)) || value)
+                  .map((value) => getDirectionLabel(normalizeDirectionToken(value), locale) || value)
                   .join(" · ");
                 return (
                   <article className="favorites-panel__item" key={`blog-${entry.key}`}>
@@ -315,17 +318,17 @@ export function FavoritesPanel() {
                       <FavoriteButton blog={blog} />
                     </div>
                     <p className="favorites-panel__item-meta">
-                      {sourceLabel} · 收藏于 {formatSavedTime(entry.saved_at)}
+                      {sourceLabel} · {t("收藏于", "Saved")} {formatSavedTime(entry.saved_at, locale)}
                     </p>
-                    {categoryLabel ? <p className="favorites-panel__item-tags">方向: {categoryLabel}</p> : null}
-                    <p className="favorites-panel__item-desc">{cleanDescription(blog.description)}</p>
+                    {categoryLabel ? <p className="favorites-panel__item-tags">{t("方向", "Direction")}: {categoryLabel}</p> : null}
+                    <p className="favorites-panel__item-desc">{cleanDescription(blog.description, locale)}</p>
                     <div className="favorites-panel__item-actions">
                       {hasWebsite ? (
                         <a className="link-btn link-btn--card link-btn--card-primary" href={website} target="_blank" rel="noopener noreferrer">
-                          原文
+                          {t("原文", "Source")}
                         </a>
                       ) : (
-                        <span className="pending-tag">链接待补充</span>
+                        <span className="pending-tag">{t("链接待补充", "Link pending")}</span>
                       )}
                     </div>
                   </article>
@@ -337,19 +340,22 @@ export function FavoritesPanel() {
 
         {activeKind === "product" && filteredProducts.length === 0 ? (
           <div className="empty-state">
-            <p className="empty-state-text">该分类下暂无收藏产品。</p>
+            <p className="empty-state-text">{t("该分类下暂无收藏产品。", "No saved products in this category.")}</p>
           </div>
         ) : null}
 
         {activeKind === "blog" && filteredBlogs.length === 0 ? (
           <div className="empty-state">
-            <p className="empty-state-text">该分类下暂无收藏博客动态。</p>
+            <p className="empty-state-text">{t("该分类下暂无收藏博客动态。", "No saved news posts in this category.")}</p>
           </div>
         ) : null}
 
         {legacyOnlyCount > 0 ? (
           <p className="favorites-panel__legacy-note">
-            另有 {legacyOnlyCount} 条历史收藏仅包含旧键值，建议重新收藏一次以补全产品信息。
+            {t(
+              `另有 ${legacyOnlyCount} 条历史收藏仅包含旧键值，建议重新收藏一次以补全产品信息。`,
+              `${legacyOnlyCount} legacy favorites use old keys only. Re-save them once to complete product details.`
+            )}
           </p>
         ) : null}
       </aside>

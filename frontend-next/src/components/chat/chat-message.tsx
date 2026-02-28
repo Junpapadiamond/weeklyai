@@ -1,16 +1,10 @@
 "use client";
 
 import { Sparkles, User } from "lucide-react";
+import { useSiteLocale } from "@/components/layout/locale-provider";
 import type { ChatMessage } from "./use-chat";
 
-type UiLocale = "zh" | "en";
-
-function t(locale: UiLocale, zh: string, en: string): string {
-  return locale === "en" ? en : zh;
-}
-
 type ChatMessageProps = {
-  locale: UiLocale;
   message: ChatMessage;
 };
 
@@ -23,7 +17,8 @@ function cleanDisplayText(text: string): string {
     .replace(/[ \t]+([,，。！？!?:;；])/g, "$1");
 }
 
-export function ChatMessageBubble({ locale, message }: ChatMessageProps) {
+export function ChatMessageBubble({ message }: ChatMessageProps) {
+  const { t } = useSiteLocale();
   const isUser = message.role === "user";
   const errorPrefixes = ["HTTP ", "Upstream API error", "Request timed out", "请求超时", "Request failed", "No streamed content"];
   const isError =
@@ -37,7 +32,7 @@ export function ChatMessageBubble({ locale, message }: ChatMessageProps) {
         {isError ? (
           <p className="chat-message__error">
             {message.content === "__ERROR__"
-              ? t(locale, "请求失败，请稍后重试。", "Request failed. Please try again.")
+              ? t("请求失败，请稍后重试。", "Request failed. Please try again.")
               : message.content}
           </p>
         ) : (

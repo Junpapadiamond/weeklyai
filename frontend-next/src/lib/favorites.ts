@@ -3,6 +3,7 @@ import { normalizeDirectionToken, normalizeWebsite, productKey } from "@/lib/pro
 
 export const FAVORITES_KEY = "weeklyai_favorites_v3";
 const LEGACY_FAVORITES_KEY = "weeklyai_favorites_v2";
+const LEGACY_FAVORITES_KEYS = [LEGACY_FAVORITES_KEY, "weeklyai_favorites"];
 export const FAVORITES_EVENT = "weeklyai:favorites";
 export const FAVORITES_OPEN_EVENT = "weeklyai:favorites-open";
 
@@ -117,23 +118,94 @@ function getLegacyProductCandidates(product: Product): string[] {
     .filter(Boolean);
 }
 
-function readLegacyFavorites(): string[] {
+function normalizeLegacyKey(value: unknown): string {
+  return String(value || "").trim().toLowerCase();
+}
+
+function readLegacyStore(storageKey: string): unknown[] {
   if (typeof window === "undefined") return [];
   try {
-    const raw = window.localStorage.getItem(LEGACY_FAVORITES_KEY) ?? "";
+    const raw = window.localStorage.getItem(storageKey) ?? "";
     if (!raw) return [];
     const parsed = JSON.parse(raw) as unknown;
-    if (!Array.isArray(parsed)) return [];
-    const deduped = new Set<string>();
-    for (const value of parsed) {
-      const normalized = String(value || "").trim().toLowerCase();
-      if (!normalized) continue;
-      deduped.add(normalized);
-    }
-    return [...deduped];
+    return Array.isArray(parsed) ? parsed : [];
   } catch {
     return [];
   }
+}
+
+function readLegacyFavorites(): string[] {
+  if (typeof window === "undefined") return [];
+
+  const deduped = new Set<string>();
+
+  for (const storageKey of LEGACY_FAVORITES_KEYS) {
+    const parsed = readLegacyStore(storageKey);
+    for (const value of parsed) {
+      if (isRecord(value)) {
+        for (const candidate of [value.key, value._id, value.id, value.name]) {
+          const normalized = normalizeLegacyKey(candidate);
+          if (normalized) deduped.add(normalized);
+        }
+        continue;
+      }
+
+      const normalized = normalizeLegacyKey(value);
+      if (!normalized) continue;
+      deduped.add(normalized);
+    }
+  }
+
+  return [...deduped];
+}
+
+function readLegacyProductEntries(): FavoriteProductEntry[] {
+  if (typeof window === "undefined") return [];
+
+  const entries: FavoriteProductEntry[] = [];
+  const seen = new Set<string>();
+
+  for (const storageKey of LEGACY_FAVORITES_KEYS) {
+    const parsed = readLegacyStore(storageKey);
+
+    for (const value of parsed) {
+      if (!isRecord(value)) continue;
+      const key = normalizeLegacyKey(value.key || value._id || value.id || value.name);
+      if (!key || seen.has(key)) continue;
+
+      const name = String(value.name || key).trim();
+      if (!name) continue;
+
+      const categories = Array.isArray(value.categories)
+        ? value.categories.map((item) => String(item || "").trim()).filter(Boolean)
+        : undefined;
+      const saved_at =
+        typeof value.saved_at === "string"
+          ? value.saved_at
+          : typeof value.addedAt === "string"
+            ? value.addedAt
+            : new Date().toISOString();
+
+      entries.push({
+        key,
+        saved_at,
+        item: sanitizeProduct({
+          _id: key,
+          id: key,
+          name,
+          website: typeof value.website === "string" ? value.website : "",
+          description: typeof value.description === "string" ? value.description : "",
+          logo_url: typeof value.logo_url === "string" ? value.logo_url : undefined,
+          logo: typeof value.logo === "string" ? value.logo : undefined,
+          categories,
+          source: typeof value.source === "string" ? value.source : undefined,
+        }),
+      });
+      seen.add(key);
+    }
+  }
+
+  return entries;
 }
 
 function writeLegacyFavorites(keys: string[]) {
@@ -186,9 +258,27 @@ export function readFavorites(): FavoritesStore {
   if (typeof window === "undefined") return EMPTY_STORE;
   try {
     const raw = window.localStorage.getItem(FAVORITES_KEY) ?? "";
-    if (!raw) return EMPTY_STORE;
-    const parsed = JSON.parse(raw) as unknown;
-    return normalizeStore(parsed);
+    if (raw) {
+      const parsed = JSON.parse(raw) as unknown;
+      const normalized = normalizeStore(parsed);
+      if (normalized.products.length || normalized.blogs.length) {
+        return normalized;
+      }
+    }
+
+    // One-time compatibility migration for old frontend favorites payloads.
+    const legacyProducts = readLegacyProductEntries();
+    if (legacyProducts.length) {
+      const migrated: FavoritesStore = {
+        version: 3,
+        products: legacyProducts,
+        blogs: [],
+      };
+      writeFavorites(migrated);
+      return migrated;
+    }
+
+    return EMPTY_STORE;
   } catch {
     return EMPTY_STORE;
   }

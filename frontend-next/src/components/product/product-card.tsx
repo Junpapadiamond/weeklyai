@@ -1,7 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import type { Product } from "@/types/api";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { FavoriteButton } from "@/components/favorites/favorite-button";
+import { useSiteLocale } from "@/components/layout/locale-provider";
 import {
   cleanDescription,
   formatCategories,
@@ -18,8 +21,11 @@ type ProductCardProps = {
   compact?: boolean;
 };
 
-function formatScore(score: number): string {
-  if (score <= 0) return "待评";
+function formatScore(score: number, locale: "zh-CN" | "en-US"): string {
+  if (score <= 0) return locale === "en-US" ? "Unrated" : "待评";
+  if (locale === "en-US") {
+    return Number.isInteger(score) ? `${score}/5` : `${score.toFixed(1)}/5`;
+  }
   return Number.isInteger(score) ? `${score}分` : `${score.toFixed(1)}分`;
 }
 
@@ -32,27 +38,28 @@ function scoreBadgeTone(score: number): string {
 }
 
 export function ProductCard({ product, compact = false }: ProductCardProps) {
+  const { locale, t } = useSiteLocale();
   const website = normalizeWebsite(product.website);
   const hasWebsite = isValidWebsite(website);
   const detailId = encodeURIComponent(product._id || product.name);
   const score = getProductScore(product);
-  const scoreLabel = formatScore(score);
-  const freshness = getFreshnessLabel(product);
+  const scoreLabel = formatScore(score, locale);
+  const freshness = getFreshnessLabel(product, new Date(), locale);
   const country = resolveProductCountry(product);
   const regionLabel = country.unknown ? "Unknown" : country.name;
   const regionMark = country.flag;
   const hasRegionText = true;
-  const microlineParts = [freshness, product.source || "来源待补充"];
-  const description = cleanDescription(product.description);
+  const microlineParts = [freshness, product.source || t("来源待补充", "Source pending")];
+  const description = cleanDescription(product.description, locale);
   const whyMatters = product.why_matters?.trim();
   const tierClass = score >= 4 ? "product-card--darkhorse" : score >= 2 ? "product-card--rising" : "product-card--watch";
-  const secondaryBadge = product.funding_total || (isHardware(product) ? "硬件" : "软件");
+  const secondaryBadge = product.funding_total || (isHardware(product) ? t("硬件", "Hardware") : t("软件", "Software"));
 
   return (
     <article className={`product-card product-card--signal ${tierClass} ${compact ? "product-card--compact" : ""}`}>
       <div className="product-card__content">
         <div className="product-card__topline">
-          <span className="product-card__region-pill" aria-label={`地区：${regionLabel}`} title={`地区：${regionLabel}`}>
+          <span className="product-card__region-pill" aria-label={`${t("地区", "Region")}: ${regionLabel}`} title={`${t("地区", "Region")}: ${regionLabel}`}>
             {regionMark ? (
               <span className="product-card__region-flag" aria-hidden="true">
                 {regionMark}
@@ -77,13 +84,13 @@ export function ProductCard({ product, compact = false }: ProductCardProps) {
             />
             <div className="product-card__identity-copy">
               <h3 className="product-card__title">{product.name}</h3>
-              <p className="product-card__meta">{formatCategories(product)}</p>
+              <p className="product-card__meta">{formatCategories(product, locale)}</p>
             </div>
           </div>
 
           <div className="product-card__badges">
             <span className={`product-badge ${scoreBadgeTone(score)}`}>
-              {score >= 4 ? `黑马 ${scoreLabel}` : score >= 2 ? `潜力 ${scoreLabel}` : scoreLabel}
+              {score >= 4 ? `${t("黑马", "Dark Horse")} ${scoreLabel}` : score >= 2 ? `${t("潜力", "Rising")} ${scoreLabel}` : scoreLabel}
             </span>
             <span className="product-badge">{secondaryBadge}</span>
           </div>
@@ -102,14 +109,14 @@ export function ProductCard({ product, compact = false }: ProductCardProps) {
         <footer className="product-card__footer">
           <FavoriteButton product={product} />
           <Link href={`/product/${detailId}`} className="link-btn link-btn--card link-btn--card-primary">
-            详情
+            {t("详情", "Details")}
           </Link>
           {hasWebsite ? (
             <a className="link-btn link-btn--card" href={website} target="_blank" rel="noopener noreferrer">
-              官网
+              {t("官网", "Website")}
             </a>
           ) : (
-            <span className="pending-tag">官网待验证</span>
+            <span className="pending-tag">{t("官网待验证", "Website pending verification")}</span>
           )}
         </footer>
       </div>

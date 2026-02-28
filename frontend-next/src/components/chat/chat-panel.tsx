@@ -2,26 +2,20 @@
 
 import { useEffect, useRef } from "react";
 import { ChevronDown, Sparkles } from "lucide-react";
+import { useSiteLocale } from "@/components/layout/locale-provider";
 import { ChatMessageBubble } from "./chat-message";
 import { ChatSuggestions } from "./chat-suggestions";
 import type { ChatMessage } from "./use-chat";
 
-type UiLocale = "zh" | "en";
-
-function t(locale: UiLocale, zh: string, en: string): string {
-  return locale === "en" ? en : zh;
-}
-
 type ChatPanelProps = {
-  locale: UiLocale;
   messages: ChatMessage[];
   isLoading: boolean;
   onSend: (text: string) => void;
-  onToggleLocale: () => void;
   onMinimize: () => void;
 };
 
-export function ChatPanel({ locale, messages, isLoading, onSend, onToggleLocale, onMinimize }: ChatPanelProps) {
+export function ChatPanel({ messages, isLoading, onSend, onMinimize }: ChatPanelProps) {
+  const { t } = useSiteLocale();
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -52,47 +46,28 @@ export function ChatPanel({ locale, messages, isLoading, onSend, onToggleLocale,
       <header className="chat-panel__header">
         <div className="chat-panel__title">
           <Sparkles size={16} />
-          <span>{t(locale, "WeeklyAI 助手", "WeeklyAI Assistant")}</span>
+          <span>{t("WeeklyAI 助手", "WeeklyAI Assistant")}</span>
         </div>
-        <div className="chat-panel__actions">
-          <button
-            type="button"
-            className="chat-locale-toggle"
-            onClick={onToggleLocale}
-            aria-label={t(locale, "切换到英文", "Switch to Chinese")}
-          >
-            {locale === "zh" ? "中" : "EN"}
-          </button>
-          <button
-            type="button"
-            className="chat-panel__minimize"
-            onClick={onMinimize}
-            aria-label={t(locale, "收起", "Minimize")}
-          >
-            <ChevronDown size={18} />
-          </button>
-        </div>
+        <button type="button" className="chat-panel__minimize" onClick={onMinimize} aria-label={t("收起", "Minimize")}>
+          <ChevronDown size={18} />
+        </button>
       </header>
 
       <div className="chat-panel__body" ref={scrollRef}>
         {!hasMessages ? (
           <div className="chat-welcome">
             <p className="chat-welcome__text">
-              {t(
-                locale,
-                "问我：黑马推荐、融资动态、硬件趋势、区域新产品。",
-                "Ask me about dark horses, funding trends, hardware, and regional product signals."
-              )}
+              {t("问我：黑马推荐、融资动态、硬件趋势、区域新产品。", "Ask me about dark horses, funding trends, hardware, and regional product signals.")}
             </p>
-            <ChatSuggestions locale={locale} onSelect={onSend} />
+            <ChatSuggestions onSelect={onSend} />
           </div>
         ) : (
           <div className="chat-messages">
             {messages.map((message) => (
-              <ChatMessageBubble key={message.id} locale={locale} message={message} />
+              <ChatMessageBubble key={message.id} message={message} />
             ))}
             {isLoading && messages[messages.length - 1]?.content === "" ? (
-              <div className="chat-thinking" aria-label={t(locale, "思考中", "Thinking")}>
+              <div className="chat-thinking" aria-label={t("思考中", "Thinking")}>
                 <span className="chat-thinking__dot" />
                 <span className="chat-thinking__dot" />
                 <span className="chat-thinking__dot" />
@@ -104,7 +79,7 @@ export function ChatPanel({ locale, messages, isLoading, onSend, onToggleLocale,
 
       {hasMessages ? (
         <div className="chat-panel__suggestions-row">
-          <ChatSuggestions locale={locale} onSelect={onSend} compact />
+          <ChatSuggestions onSelect={onSend} compact />
         </div>
       ) : null}
 
@@ -113,22 +88,17 @@ export function ChatPanel({ locale, messages, isLoading, onSend, onToggleLocale,
           ref={inputRef}
           type="text"
           className="chat-panel__input"
-          placeholder={t(locale, "输入你的问题…", "Ask your question…")}
+          placeholder={t("输入你的问题…", "Ask your question…")}
           disabled={isLoading}
           autoComplete="off"
         />
-        <button
-          type="submit"
-          className="chat-panel__send"
-          disabled={isLoading}
-          aria-label={t(locale, "发送", "Send")}
-        >
-          {t(locale, "发送", "Send")}
+        <button type="submit" className="chat-panel__send" disabled={isLoading} aria-label={t("发送", "Send")}>
+          {t("发送", "Send")}
         </button>
       </form>
 
       <div className="chat-panel__footer">
-        <span className="chat-panel__powered">{t(locale, "Powered by Perplexity", "Powered by Perplexity")}</span>
+        <span className="chat-panel__powered">{t("Powered by Perplexity", "Powered by Perplexity")}</span>
       </div>
     </div>
   );

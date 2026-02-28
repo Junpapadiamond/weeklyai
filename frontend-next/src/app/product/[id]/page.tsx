@@ -4,6 +4,8 @@ import { WebsiteScreenshot } from "@/components/common/website-screenshot";
 import { ProductCard } from "@/components/product/product-card";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { getProductById, getRelatedProducts } from "@/lib/api-client";
+import { pickLocaleText, type SiteLocale } from "@/lib/locale";
+import { getRequestLocale } from "@/lib/locale-server";
 import {
   formatCategories,
   getProductScore,
@@ -18,8 +20,11 @@ type ProductPageProps = {
   params: Promise<{ id: string }>;
 };
 
-function formatScore(score: number): string {
-  if (score <= 0) return "待评";
+function formatScore(score: number, locale: SiteLocale): string {
+  if (score <= 0) return locale === "en-US" ? "Unrated" : "待评";
+  if (locale === "en-US") {
+    return Number.isInteger(score) ? `${score}/5` : `${score.toFixed(1)}/5`;
+  }
   return Number.isInteger(score) ? `${score}分` : `${score.toFixed(1)}分`;
 }
 
@@ -40,6 +45,8 @@ function formatDate(value?: string): string {
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
+  const locale = await getRequestLocale();
+  const t = (zh: string, en: string) => pickLocaleText(locale, { zh, en });
   const { id } = await params;
   const decodedId = decodeURIComponent(id);
 
@@ -51,15 +58,15 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   const website = normalizeWebsite(product.website);
   const score = getProductScore(product);
-  const scoreLabel = formatScore(score);
-  const categoryLine = formatCategories(product);
+  const scoreLabel = formatScore(score, locale);
+  const categoryLine = formatCategories(product, locale);
   const regionLine = product.region?.trim();
-  const description = product.description?.trim() || "描述待补充";
+  const description = product.description?.trim() || t("描述待补充", "Description pending");
   const funding = !isPlaceholderValue(product.funding_total) ? product.funding_total?.trim() : "-";
   const valuation = !isPlaceholderValue(product.valuation) ? product.valuation?.trim() : "-";
   const discoveredDate = formatDate(product.discovered_at || product.first_seen || product.published_at);
-  const whyMatters = product.why_matters?.trim() || "why_matters 待补充";
-  const latestNews = product.latest_news?.trim() || "暂无最新动态";
+  const whyMatters = product.why_matters?.trim() || t("why_matters 待补充", "Why this matters is pending");
+  const latestNews = product.latest_news?.trim() || t("暂无最新动态", "No recent updates yet");
 
   return (
     <section className="section product-detail-page">
@@ -94,35 +101,35 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </header>
 
         <section className="detail-block">
-          <h2 className="detail-block__title">📊 关键指标</h2>
+          <h2 className="detail-block__title">📊 {t("关键指标", "Key Metrics")}</h2>
           <div className="detail-metrics-grid">
             <div className="detail-metric">
-              <span className="detail-metric__label">💰 融资</span>
+              <span className="detail-metric__label">💰 {t("融资", "Funding")}</span>
               <strong className="detail-metric__value">{funding || "-"}</strong>
             </div>
             <div className="detail-metric">
-              <span className="detail-metric__label">🏷️ 估值</span>
+              <span className="detail-metric__label">🏷️ {t("估值", "Valuation")}</span>
               <strong className="detail-metric__value">{valuation || "-"}</strong>
             </div>
             <div className="detail-metric">
-              <span className="detail-metric__label">📅 发现日期</span>
+              <span className="detail-metric__label">📅 {t("发现日期", "Discovery Date")}</span>
               <strong className="detail-metric__value">{discoveredDate}</strong>
             </div>
           </div>
         </section>
 
         <section className="detail-block">
-          <h2 className="detail-block__title">💡 为什么重要</h2>
+          <h2 className="detail-block__title">💡 {t("为什么重要", "Why It Matters")}</h2>
           <p className="detail-block__content">{whyMatters}</p>
         </section>
 
         <section className="detail-block">
-          <h2 className="detail-block__title">📰 最新动态</h2>
+          <h2 className="detail-block__title">📰 {t("最新动态", "Latest Update")}</h2>
           <p className="detail-block__content">{latestNews}</p>
         </section>
 
         <section className="detail-block">
-          <h2 className="detail-block__title">🖼️ 产品截图</h2>
+          <h2 className="detail-block__title">🖼️ {t("产品截图", "Product Screenshot")}</h2>
           <WebsiteScreenshot
             className="detail-site-shot"
             website={product.website}
@@ -133,7 +140,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             category={product.category}
             categories={product.categories}
             isHardware={product.is_hardware}
-            alt={`${product.name} 官网截图`}
+            alt={`${product.name} ${t("官网截图", "website screenshot")}`}
             logoSize={84}
           />
         </section>
@@ -141,20 +148,20 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <footer className="detail-actions">
           {isValidWebsite(website) ? (
             <a className="link-btn link-btn--primary" href={website} target="_blank" rel="noopener noreferrer">
-              访问官网
+              {t("访问官网", "Visit website")}
             </a>
           ) : (
-            <span className="pending-tag">官网待验证</span>
+            <span className="pending-tag">{t("官网待验证", "Website pending verification")}</span>
           )}
           <Link href="/" className="link-btn">
-            返回首页
+            {t("返回首页", "Back to home")}
           </Link>
         </footer>
       </article>
 
       <section className="detail-related">
         <div className="section-header">
-          <h2 className="section-title">🔗 相关产品</h2>
+          <h2 className="section-title">🔗 {t("相关产品", "Related Products")}</h2>
         </div>
 
         {related.length ? (
@@ -165,7 +172,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
         ) : (
           <div className="empty-state">
-            <p className="empty-state-text">暂无相关产品。</p>
+            <p className="empty-state-text">{t("暂无相关产品。", "No related products yet.")}</p>
           </div>
         )}
       </section>

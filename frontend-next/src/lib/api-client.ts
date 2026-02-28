@@ -8,6 +8,7 @@ import type {
   Product,
   SearchParams,
 } from "@/types/api";
+import { DEFAULT_LOCALE, pickLocaleText, type SiteLocale } from "@/lib/locale";
 import {
   BlogSchema,
   IndustryLeadersSchema,
@@ -231,14 +232,14 @@ export const getRelatedProducts = cache(async (id: string, limit = 6): Promise<P
   return parsed.data.filter(hasUsableWebsite);
 });
 
-export function parseLastUpdatedLabel(hoursAgo: number | null | undefined) {
+export function parseLastUpdatedLabel(hoursAgo: number | null | undefined, locale: SiteLocale = DEFAULT_LOCALE) {
   if (hoursAgo === null || hoursAgo === undefined || Number.isNaN(hoursAgo)) {
-    return "📡 数据更新时间未知";
+    return pickLocaleText(locale, { zh: "📡 数据更新时间未知", en: "📡 Last update time unavailable" });
   }
   if (hoursAgo < 1) {
-    return "📡 数据更新于 1 小时内";
+    return pickLocaleText(locale, { zh: "📡 数据更新于 1 小时内", en: "📡 Updated within the last hour" });
   }
-  return `📡 数据更新于 ${hoursAgo.toFixed(1)} 小时前`;
+  return locale === "en-US" ? `📡 Updated ${hoursAgo.toFixed(1)}h ago` : `📡 数据更新于 ${hoursAgo.toFixed(1)} 小时前`;
 }
 
 // Client-side helpers (SWR)

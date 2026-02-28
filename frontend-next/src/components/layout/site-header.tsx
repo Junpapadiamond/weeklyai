@@ -5,21 +5,17 @@ import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { Dice5, Heart, Flame, Newspaper, Search, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
+import type { SiteLocale } from "@/lib/locale";
 import { countFavorites, openFavoritesPanel, subscribeFavorites } from "@/lib/favorites";
+import { useSiteLocale } from "@/components/layout/locale-provider";
 
 const ThemeToggle = dynamic(() => import("@/components/layout/theme-toggle").then((mod) => mod.ThemeToggle), {
   ssr: false,
 });
 
-const navItems = [
-  { href: "/", label: "黑马推荐", icon: Flame },
-  { href: "/discover", label: "随机发现", icon: Dice5 },
-  { href: "/blog", label: "博客动态", icon: Newspaper },
-  { href: "/search", label: "搜索", icon: Search },
-];
-
 export function SiteHeader() {
   const pathname = usePathname();
+  const { locale, setLocale, t } = useSiteLocale();
   const [favoritesCount, setFavoritesCount] = useState(0);
 
   useEffect(() => {
@@ -28,17 +24,28 @@ export function SiteHeader() {
     return subscribeFavorites(sync);
   }, []);
 
+  const navItems = [
+    { href: "/", label: t("黑马推荐", "Dark Horses"), icon: Flame },
+    { href: "/discover", label: t("随机发现", "Discover"), icon: Dice5 },
+    { href: "/blog", label: t("博客动态", "News"), icon: Newspaper },
+    { href: "/search", label: t("搜索", "Search"), icon: Search },
+  ];
+
+  function applyLocale(nextLocale: SiteLocale) {
+    setLocale(nextLocale);
+  }
+
   return (
     <header className="navbar">
       <div className="nav-container">
-        <Link href="/" className="logo" aria-label="WeeklyAI 首页">
+        <Link href="/" className="logo" aria-label={t("WeeklyAI 首页", "WeeklyAI home")}>
           <span className="logo-icon">
             <Sparkles size={18} />
           </span>
           <span className="logo-text">WeeklyAI</span>
         </Link>
 
-        <nav className="nav-links" aria-label="主导航">
+        <nav className="nav-links" aria-label={t("主导航", "Main navigation")}>
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.href;
@@ -54,11 +61,34 @@ export function SiteHeader() {
         </nav>
 
         <div className="nav-actions">
-          <button className="nav-favorites" type="button" onClick={() => openFavoritesPanel("product")} aria-label="打开收藏夹">
+          <div className="locale-switcher" role="group" aria-label={t("切换语言", "Switch language")}>
+            <button
+              type="button"
+              className={`locale-switcher__btn ${locale === "zh-CN" ? "active" : ""}`}
+              onClick={() => applyLocale("zh-CN")}
+              aria-pressed={locale === "zh-CN"}
+            >
+              中文
+            </button>
+            <button
+              type="button"
+              className={`locale-switcher__btn ${locale === "en-US" ? "active" : ""}`}
+              onClick={() => applyLocale("en-US")}
+              aria-pressed={locale === "en-US"}
+            >
+              EN
+            </button>
+          </div>
+          <button
+            className="nav-favorites"
+            type="button"
+            onClick={() => openFavoritesPanel("product")}
+            aria-label={t("打开收藏夹", "Open favorites")}
+          >
             <Heart size={16} />
-            <span>收藏 {favoritesCount}</span>
+            <span>{t("收藏", "Favorites")} {favoritesCount}</span>
           </button>
-          <ThemeToggle />
+          <ThemeToggle ariaLabel={t("切换主题", "Toggle theme")} />
         </div>
       </div>
     </header>

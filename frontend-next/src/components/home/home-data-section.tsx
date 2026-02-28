@@ -1,5 +1,5 @@
 import { HomeClient } from "@/components/home/home-client";
-import { getDarkHorses, getLastUpdated, getWeeklyTop, parseLastUpdatedLabel } from "@/lib/api-client";
+import { getDarkHorses, getLastUpdated, getWeeklyTop } from "@/lib/api-client";
 
 const HOME_INITIAL_PRODUCTS_LIMIT = 0;
 const DARK_HORSE_FETCH_LIMIT = 30;
@@ -16,7 +16,7 @@ export async function HomeDataSection() {
     <HomeClient
       darkHorses={darkHorses}
       allProducts={allProducts}
-      freshnessLabel={parseLastUpdatedLabel(lastUpdated.hours_ago)}
+      freshnessHoursAgo={lastUpdated.hours_ago}
     />
   );
 }

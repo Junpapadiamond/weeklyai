@@ -266,6 +266,46 @@ a:focus-visible {
   gap: 0.5rem;
 }
 
+.locale-switcher {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.locale-switcher__btn {
+  min-width: 2.2rem;
+  height: 2.2rem;
+  border: 0;
+  border-left: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-soft);
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  transition: color var(--motion-fast), background-color var(--motion-fast);
+}
+
+.locale-switcher__btn:first-child {
+  border-left: 0;
+}
+
+.locale-switcher__btn:hover {
+  color: var(--text);
+}
+
+.locale-switcher__btn.active {
+  color: var(--surface);
+  background: var(--text);
+}
+
+[data-theme="dark"] .locale-switcher__btn.active {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.14);
+}
+
 .nav-favorites {
   display: inline-flex;
   align-items: center;
@@ -1812,6 +1852,11 @@ input {
 
   .nav-favorites span {
     font-size: 0.74rem;
+  }
+
+  .locale-switcher__btn {
+    min-width: 2rem;
+    font-size: 0.72rem;
   }
 }
 

@@ -3,6 +3,7 @@
 import { Heart } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import type { BlogPost, Product } from "@/types/api";
+import { useSiteLocale } from "@/components/layout/locale-provider";
 import {
   isBlogFavorited,
   isProductFavorited,
@@ -20,6 +21,7 @@ type FavoriteButtonProps = {
 };
 
 export function FavoriteButton({ product, blog, className = "", size = "sm", showLabel = false }: FavoriteButtonProps) {
+  const { t } = useSiteLocale();
   const mode = blog ? "blog" : "product";
   const fingerprint = useMemo(() => {
     if (blog) {
@@ -49,6 +51,10 @@ export function FavoriteButton({ product, blog, className = "", size = "sm", sho
 
   if (!blog && !product) return null;
 
+  const offLabel = t("收藏", "Favorite");
+  const onLabel = t("已收藏", "Saved");
+  const removeLabel = t("取消收藏", "Remove favorite");
+
   return (
     <button
       className={`favorite-btn favorite-btn--${size} ${favorited ? "is-active" : ""} ${className}`.trim()}
@@ -65,11 +71,11 @@ export function FavoriteButton({ product, blog, className = "", size = "sm", sho
         }
       }}
       aria-pressed={favorited}
-      aria-label={favorited ? "取消收藏" : "收藏"}
-      title={favorited ? "取消收藏" : "收藏"}
+      aria-label={favorited ? removeLabel : offLabel}
+      title={favorited ? removeLabel : offLabel}
     >
       <Heart size={size === "sm" ? 14 : 16} />
-      {showLabel ? <span>{favorited ? "已收藏" : "收藏"}</span> : null}
+      {showLabel ? <span>{favorited ? onLabel : offLabel}</span> : null}
     </button>
   );
 }
