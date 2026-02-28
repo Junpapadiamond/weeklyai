@@ -1508,5 +1508,417 @@
     "country_flag": "🇺🇸",
     "country_display": "🇺🇸 United States",
     "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Multiverse Computing",
+    "website": "https://multiversecomputing.com",
+    "description": "西班牙准独角兽公司，发布免费压缩AI模型HyperNova 60B，支持开发者访问。",
+    "description_en": "Spanish soonicorn releasing free compressed HyperNova 60B AI model on Hugging Face.",
+    "category": "other",
+    "region": "Unknown",
+    "funding_total": "€500M rumored",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "传闻以15亿欧元估值募资5亿欧元新轮，发布HyperNova 60B免费模型，推动量子启发AI计算创新。",
+    "why_matters_en": "Rumored €500M raise at >€1.5B valuation, released free HyperNova 60B model on Hugging Face.",
+    "latest_news": "2026-02: HyperNova 60B模型免费上线Hugging Face。",
+    "latest_news_en": "2026-02: HyperNova 60B model released for free on Hugging Face.",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/02/24/spanish-soonicorn-multiverse-computing-releases-free-compressed-ai-model/",
+    "company_country": "Spain",
+    "company_country_confidence": 0.95,
+    "confidence": 0.9,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-28T19:23:14.913535Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 1,
+          "top_story_id": "47151469",
+          "points": 3,
+          "comments": 1,
+          "engagement_depth_ratio": 0.3333,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "I know it’s brand new, but have you tried it for agentic coding using local inference? How does it stack up against something like qwen3-coder?"
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.1257,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "neutral",
+      "confidence": 0.45
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-02-28",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:techcrunch.com AI startup funding",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown"
+  },
+  {
+    "name": "Rokid スマートAIグラス",
+    "website": "https://jp.rokid.com/pages/rokid-glasses",
+    "description": "49gの軽量AIスマートグラスで、Micro LEDディスプレイ、12MPカメラ、GPT-5/Gemini搭載による視覚解析・89言語翻訳・ARナビを実現。",
+    "category": "hardware",
+    "hardware_type": "innovative",
+    "form_factor": "glasses",
+    "use_case": "productivity",
+    "innovation_traits": [
+      "non_traditional_form",
+      "wearable",
+      "voice_first",
+      "proactive_ai",
+      "always_on",
+      "affordable",
+      "crowdfunding",
+      "social_buzz",
+      "media_coverage"
+    ],
+    "region": "🇨🇳",
+    "funding_total": "unknown",
+    "price": "約$800",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "form_innovation",
+      "use_case_clear",
+      "social_buzz",
+      "crowdfunding"
+    ],
+    "why_matters": "普通のメガネのような軽量デザインでフルAI機能搭載、日本Makuake先行販売スタートでメディア・SNSで話題沸騰のARグラス。",
+    "latest_news": "2026-02-26: Makuake先行販売開始、価格7万9990円から",
+    "source": "ITmedia",
+    "source_url": "https://www.itmedia.co.jp/mobile/articles/2602/26/news071.html",
+    "company_country": "China",
+    "company_country_confidence": 0.95,
+    "confidence": 0.98,
+    "is_hardware": true,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-28T19:24:31.230484Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇯🇵🇰🇷",
+    "discovered_at": "2026-02-28",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AIメガネ デバイス 日本",
+    "country_code": "CN",
+    "country_name": "China",
+    "country_flag": "🇨🇳",
+    "country_display": "🇨🇳 China",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "KEWAZO",
+    "website": "https://kewazo.com",
+    "description": "Digitizing construction with robotics and data analytics.",
+    "description_en": "Digitizing construction with robotics and data analytics.",
+    "category": "hardware",
+    "region": "🇩🇪",
+    "funding_total": "$144.0m",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "Secured $144.0m across 4 funding rounds for AI-powered construction robotics.",
+    "why_matters_en": "Secured $144.0m across 4 funding rounds for AI-powered construction robotics.",
+    "latest_news": "",
+    "latest_news_en": "",
+    "source": "Seedtable",
+    "source_url": "https://www.seedtable.com/best-ai-startups-in-germany",
+    "company_country": "Germany",
+    "company_country_confidence": 0.95,
+    "confidence": 0.85,
+    "is_hardware": true,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-28T19:26:50.329475Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-02-28",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "UK France Germany AI startup",
+    "country_code": "DE",
+    "country_name": "Germany",
+    "country_flag": "🇩🇪",
+    "country_display": "🇩🇪 Germany",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "VNG Corporation (GreenNode Cloud & Zalo AI)",
+    "website": "https://vng.com.vn",
+    "description": "越南首个科技独角兽，通过GreenNode云服务和Zalo AI提供高性能AI计算和生成式AI服务，搭载NVIDIA H100 GPU",
+    "description_en": "Vietnam's first tech unicorn offering high-performance AI cloud computing and generative AI services through GreenNode (NVIDIA H100 GPUs) and Zalo AI with Vietnamese LLM capabilities",
+    "category": "agent",
+    "region": "Unknown",
+    "funding_total": "Unicorn status (undisclosed recent rounds)",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "category_innovation",
+      "funding_signal"
+    ],
+    "why_matters": "越南首个科技独角兽，GreenNode是东南亚首个由NVIDIA H100驱动的本地AI云服务；Zalo AI推出KilM越南语大语言模型，集成语音识别、NLP和AI聊天机器人；TrueID金融科技子公司采用AI进行eKYC/AML银行服务；与AWS/NVIDIA支持的加速器合作，计划扩展至东南亚市场[2]",
+    "why_matters_en": "Vietnam's first tech unicorn; GreenNode is Southeast Asia's first local AI cloud service powered by NVIDIA H100 GPUs; Zalo AI launched KilM Vietnamese LLM with speech recognition, NLP, and chatbot integration; TrueID fintech subsidiary uses AI for eKYC/AML banking; partnerships with AWS/NVIDIA-backed accelerators and SEA expansion plans[2]",
+    "latest_news": "2026-02: 持续投资AI云和生成式AI服务扩展",
+    "latest_news_en": "2026-02: Ongoing aggressive investment in AI cloud and generative AI services expansion",
+    "source": "DesignVeloper",
+    "source_url": "https://www.designveloper.com/blog/ai-development-companies-in-vietnam/",
+    "company_country": "Vietnam",
+    "company_country_confidence": 0.95,
+    "confidence": 0.88,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-28T19:27:25.977419Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇸🇬",
+    "discovered_at": "2026-02-28",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI startup Indonesia Vietnam",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown"
+  },
+  {
+    "name": "FPT Software (AI and Cloud Pioneer)",
+    "website": "https://www.fpt-software.com",
+    "description": "越南最大IT公司，2024年联合体投资1.74亿美元在平定省建立AI研发中心",
+    "description_en": "Vietnam's largest IT firm launched a $174 million AI R&D center in Binh Dinh province in 2024 via consortium partnership",
+    "category": "other",
+    "region": "Unknown",
+    "funding_total": "$174M AI R&D center (2024)",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "category_innovation"
+    ],
+    "why_matters": "越南最大IT公司，2024年通过联合体投资1.74亿美元在平定省建立专业AI研发中心，标志着越南在AI基础设施和研发能力的重大投资承诺[2]",
+    "why_matters_en": "Vietnam's largest IT firm; $174M consortium-backed AI R&D center in Binh Dinh province signals major infrastructure and research capability commitment[2]",
+    "latest_news": "2024-12: AI研发中心在平定省建立完成",
+    "latest_news_en": "2024-12: AI R&D center established in Binh Dinh province",
+    "source": "DesignVeloper",
+    "source_url": "https://www.designveloper.com/blog/ai-development-companies-in-vietnam/",
+    "company_country": "Vietnam",
+    "company_country_confidence": 0.95,
+    "confidence": 0.85,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-28T19:27:26.213168Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇸🇬",
+    "discovered_at": "2026-02-28",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI startup Indonesia Vietnam",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown"
   }
 ]
