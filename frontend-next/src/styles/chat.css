@@ -149,6 +149,30 @@
   box-shadow: 0 0 18px color-mix(in oklab, var(--primary-highlight) 36%, transparent);
 }
 
+.chat-locale-toggle {
+  min-width: 2.4rem;
+  height: 2rem;
+  border: 1px solid color-mix(in oklab, var(--primary) 24%, var(--border));
+  border-radius: var(--radius-pill);
+  background: color-mix(in oklab, var(--primary) 10%, var(--surface));
+  color: var(--text);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: border-color var(--motion-fast), background var(--motion-fast), color var(--motion-fast);
+}
+
+.chat-locale-toggle:hover {
+  border-color: color-mix(in oklab, var(--primary) 48%, var(--border));
+  background: color-mix(in oklab, var(--primary) 18%, var(--surface));
+  color: var(--primary);
+}
+
+.chat-locale-toggle--bar {
+  flex-shrink: 0;
+}
+
 .chat-suggestions {
   display: flex;
   flex-wrap: wrap;
@@ -242,6 +266,12 @@
 
 .chat-panel__title svg {
   color: var(--primary);
+}
+
+.chat-panel__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
 }
 
 .chat-panel__minimize {

@@ -17,10 +17,11 @@ type ChatPanelProps = {
   messages: ChatMessage[];
   isLoading: boolean;
   onSend: (text: string) => void;
+  onToggleLocale: () => void;
   onMinimize: () => void;
 };
 
-export function ChatPanel({ locale, messages, isLoading, onSend, onMinimize }: ChatPanelProps) {
+export function ChatPanel({ locale, messages, isLoading, onSend, onToggleLocale, onMinimize }: ChatPanelProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -53,14 +54,24 @@ export function ChatPanel({ locale, messages, isLoading, onSend, onMinimize }: C
           <Sparkles size={16} />
           <span>{t(locale, "WeeklyAI 助手", "WeeklyAI Assistant")}</span>
         </div>
-        <button
-          type="button"
-          className="chat-panel__minimize"
-          onClick={onMinimize}
-          aria-label={t(locale, "收起", "Minimize")}
-        >
-          <ChevronDown size={18} />
-        </button>
+        <div className="chat-panel__actions">
+          <button
+            type="button"
+            className="chat-locale-toggle"
+            onClick={onToggleLocale}
+            aria-label={t(locale, "切换到英文", "Switch to Chinese")}
+          >
+            {locale === "zh" ? "中" : "EN"}
+          </button>
+          <button
+            type="button"
+            className="chat-panel__minimize"
+            onClick={onMinimize}
+            aria-label={t(locale, "收起", "Minimize")}
+          >
+            <ChevronDown size={18} />
+          </button>
+        </div>
       </header>
 
       <div className="chat-panel__body" ref={scrollRef}>

@@ -1,18 +1,26 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowUp, Sparkles } from "lucide-react";
 import { ChatPanel } from "./chat-panel";
 import { ChatSuggestions } from "./chat-suggestions";
 import { useChat } from "./use-chat";
 
 type UiLocale = "zh" | "en";
+const CHAT_LOCALE_STORAGE_KEY = "weeklyai_chat_locale";
 
-function resolveLocale(): UiLocale {
+function resolveNavigatorLocale(): UiLocale {
   if (typeof navigator !== "undefined" && navigator.language.toLowerCase().startsWith("en")) {
     return "en";
   }
   return "zh";
+}
+
+function resolveInitialLocale(): UiLocale {
+  if (typeof window === "undefined") return "zh";
+  const saved = window.localStorage.getItem(CHAT_LOCALE_STORAGE_KEY);
+  if (saved === "zh" || saved === "en") return saved;
+  return resolveNavigatorLocale();
 }
 
 function t(locale: UiLocale, zh: string, en: string): string {
@@ -20,10 +28,15 @@ function t(locale: UiLocale, zh: string, en: string): string {
 }
 
 export function ChatBar() {
-  const locale = useMemo(resolveLocale, []);
+  const [locale, setLocale] = useState<UiLocale>(resolveInitialLocale);
   const [isOpen, setIsOpen] = useState(false);
   const chatLocale = locale === "en" ? "en-US" : "zh-CN";
   const { messages, isLoading, sendMessage } = useChat({ locale: chatLocale });
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem(CHAT_LOCALE_STORAGE_KEY, locale);
+  }, [locale]);
 
   function openPanel(initialText?: string) {
     setIsOpen(true);
@@ -32,6 +45,10 @@ export function ChatBar() {
 
   function minimizePanel() {
     setIsOpen(false);
+  }
+
+  function toggleLocale() {
+    setLocale((prev) => (prev === "zh" ? "en" : "zh"));
   }
 
   function handleBarSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -53,6 +70,7 @@ export function ChatBar() {
           messages={messages}
           isLoading={isLoading}
           onSend={sendMessage}
+          onToggleLocale={toggleLocale}
           onMinimize={minimizePanel}
         />
       </div>
@@ -75,6 +93,14 @@ export function ChatBar() {
             autoComplete="off"
             onFocus={() => openPanel()}
           />
+          <button
+            type="button"
+            className="chat-locale-toggle chat-locale-toggle--bar"
+            onClick={toggleLocale}
+            aria-label={t(locale, "切换到英文", "Switch to Chinese")}
+          >
+            {locale === "zh" ? "中" : "EN"}
+          </button>
           <button type="submit" className="chat-bar__send" aria-label={t(locale, "发送", "Send")}>
             <ArrowUp size={16} />
           </button>
