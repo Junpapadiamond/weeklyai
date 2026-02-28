@@ -64,9 +64,11 @@ def create_app():
     # 注册蓝图
     from app.routes.products import products_bp
     from app.routes.search import search_bp
+    from app.routes.chat import chat_bp
 
     app.register_blueprint(products_bp, url_prefix='/api/v1/products')
     app.register_blueprint(search_bp, url_prefix='/api/v1/search')
+    app.register_blueprint(chat_bp, url_prefix='/api/v1/chat')
 
     return app
 

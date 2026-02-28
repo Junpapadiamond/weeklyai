@@ -5,6 +5,7 @@ import "./globals.css";
 import "../styles/tokens.css";
 import "../styles/base.css";
 import "../styles/home.css";
+import "../styles/chat.css";
 
 const displayFont = Plus_Jakarta_Sans({
   subsets: ["latin"],

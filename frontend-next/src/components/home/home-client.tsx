@@ -6,6 +6,7 @@ import { ChevronDown, ChevronUp, Cpu, Flame, Newspaper, Sparkles } from "lucide-
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Product } from "@/types/api";
 import type { WeeklyTopSort } from "@/lib/api-client";
+import { ChatBar } from "@/components/chat/chat-bar";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { ProductCard } from "@/components/product/product-card";
 import { countFavorites, openFavoritesPanel, subscribeFavorites } from "@/lib/favorites";
@@ -316,6 +317,9 @@ export function HomeClient({ darkHorses, allProducts, freshnessLabel }: HomeClie
               本周偏热：<span>Agent 原生工具</span> · <span>AI 硬件新形态</span> · <span>社交一手信号</span>
             </p>
           </div>
+        </div>
+        <div className="hero-chat-slot">
+          <ChatBar />
         </div>
       </section>
 

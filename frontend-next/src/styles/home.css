@@ -42,6 +42,12 @@
   max-width: 640px;
 }
 
+.hero-chat-slot {
+  position: relative;
+  z-index: 2;
+  padding: 0 clamp(1.2rem, 3vw, 2.4rem) clamp(1.1rem, 2.4vw, 1.7rem);
+}
+
 .hero-kicker {
   display: inline-flex;
   align-items: center;
