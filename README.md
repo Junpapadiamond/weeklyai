@@ -1,282 +1,216 @@
 # WeeklyAI
 
-> 全球 AI 产品灵感库 + 黑马发现平台
+> Global AI Product Discovery Platform for Product Managers
 
-帮 PM 发现全球正在崛起的 AI 产品，从潜力股到黑马一网打尽。
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
+[![Node](https://img.shields.io/badge/Node-18+-green.svg)](https://nodejs.org/)
+[![GitHub](https://img.shields.io/badge/GitHub-Repo-black.svg)](https://github.com/your-username/WeeklyAI)
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Python](https://img.shields.io/badge/python-3.9+-green.svg)
-![Node](https://img.shields.io/badge/node-18+-green.svg)
+WeeklyAI is a product intelligence platform that continuously discovers, evaluates, and ranks high-potential AI startups and tools from multiple regions.
 
-## 特性
+It helps PMs, operators, and investors quickly spot:
+- **Dark Horses (4-5分)**: high potential + low exposure, priority recommendations
+- **Rising Stars (2-3分)**: early-stage innovation with emerging signals
+- **Industry Leaders**: known incumbents for context and benchmark
 
-- **全球视野** - 覆盖美国/中国/欧洲/日韩/东南亚
-- **智能发现** - 自动搜索 + AI 评分，每日更新
-- **分层收录** - 黑马(4-5分) / 潜力股(2-3分) 分级推荐
-- **创新硬件** - 重点发掘 AI 吊坠、别针、戒指等新形态硬件
-- **为什么重要** - 每个产品都有清晰的价值说明
+---
 
-## 快速开始
+## ✨ Product Value
 
-### 环境要求
+- **Global coverage**: US / China / Europe / Japan-Korea / SEA
+- **Daily automated discovery**: multi-source discovery and AI scoring
+- **Hardware-native signals**: special focus on emerging AI form factors
+- **Actionable ranking**: one-click consumption on homepage and category pages
+- **Dual data strategy**: MongoDB primary store + JSON fallback for stability
+
+---
+
+## 🧭 Platform Overview
+
+### Current architecture
+
+- **Frontend (active)**: `frontend-next/`
+  - Next.js 16, React 19, TypeScript, Tailwind CSS, SWR
+- **Backend**: `backend/`
+  - Flask 3.0, PyMongo 4.6, REST API design
+- **Crawler & pipeline**: `crawler/`
+  - Perplexity + GLM provider routing
+  - Data cleaning, dedup, enrichment, and publishing
+- **Legacy frontend**: `frontend/` (Express + EJS)
+  - Kept for compatibility only; no active development
+
+---
+
+## 🚀 Demo & API
+
+- Base API: `http://localhost:5000/api/v1`
+- Frontend (dev): `http://localhost:3001`
+
+### Main endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| `/products/weekly-top` | Weekly Top 15 |
+| `/products/dark-horses` | Dark Horses (4-5分) |
+| `/products/rising-stars` | Rising Stars (2-3分) |
+| `/products/trending` | Trending Top 5 |
+| `/products/today` | Today Picks |
+| `/products/<id>` | Product detail |
+| `/products/<id>/related` | Related products |
+| `/products/blogs` | News and blogs |
+| `/products/categories` | Category list |
+| `/products/industry-leaders` | Industry leader reference |
+| `/search?q=xxx` | Search |
+
+Full endpoint list is documented in source service layer and route handlers.
+
+---
+
+## 🛠️ Quick Start
+
+### Requirements
 
 - Python 3.9+
 - Node.js 18+
 - npm
+- MongoDB (optional, fallback to JSON if unavailable)
 
-### 安装
+### Install dependencies
 
 ```bash
-# 克隆项目
 git clone https://github.com/your-username/WeeklyAI.git
 cd WeeklyAI
 
-# 后端依赖
+# backend
 cd backend
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 
-# 前端依赖
-cd ../frontend
+# frontend
+cd ../frontend-next
 npm install
 
-# 爬虫依赖
+# crawler
 cd ../crawler
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
-### 配置
+### Environment setup
 
 ```bash
-# 创建环境变量文件
+cp .env.example .env
 cp crawler/.env.example crawler/.env
-
-# 编辑配置
-# PERPLEXITY_API_KEY=your_perplexity_key
 ```
 
-### 启动
+At minimum, configure one provider key:
 
-```bash
-# 启动后端 (localhost:5000)
-cd backend && python run.py
-
-# 启动前端 (localhost:3000)
-cd frontend && npm start
-```
-
-## 核心功能
-
-### 1. 自动发现
-
-每日自动搜索全球 AI 产品，使用 Perplexity 进行智能评分。
-
-```bash
-cd crawler
-
-# 搜索所有地区
-python3 tools/auto_discover.py --region all
-
-# 只搜索美国
-python3 tools/auto_discover.py --region us
-
-# 只搜索硬件产品
-python3 tools/auto_discover.py --type hardware
-
-# 预览模式（不保存）
-python3 tools/auto_discover.py --dry-run
-```
-
-### 2. 产品评分体系
-
-| 评分 | 层级 | 定义 | 示例 |
-|------|------|------|------|
-| 5分 | 现象级 | 融资>$100M / 社交爆火 / 品类开创 | Lovable, Friend Pendant |
-| 4分 | 黑马 | 融资>$30M / 顶级VC背书 / 形态创新 | Plaud NotePin, Vocci |
-| 3分 | 潜力股 | 融资$1M-$5M / ProductHunt上榜 | 早期有热度的产品 |
-| 2分 | 观察 | 刚发布/有创新点但数据不足 | 新发布的创新产品 |
-
-### 3. 创新硬件发掘
-
-重点发掘非传统形态的 AI 硬件产品：
-
-```
-评分权重：形态创新 (40%) > 使用场景 (30%) > 热度信号 (15%) > 商业可行 (15%)
-```
-
-支持的创新形态：
-- 可穿戴：吊坠、别针、戒指、眼镜、耳夹...
-- 随身携带：卡片、钥匙扣、手机配件...
-- 桌面/家居：AI 相框、台灯、镜子、玩偶...
-- 特定场景：宠物项圈、儿童手表、运动装备...
-
-### 4. 数据管理工具
-
-```bash
-cd crawler
-
-# 清理重复数据
-python3 tools/clean_duplicates.py --analyze-only  # 分析
-python3 tools/clean_duplicates.py --backup        # 清理并备份
-
-# 修复产品 Logo
-python3 tools/fix_logos.py --dry-run  # 预览
-python3 tools/fix_logos.py            # 执行
-
-# 手动添加产品
-python3 tools/add_product.py --quick "产品名" "URL" "描述"
-```
-
-## 项目结构
-
-```
-WeeklyAI/
-├── frontend/           # 前端 (EJS + Express)
-│   ├── views/         # 页面模板
-│   └── public/        # 静态资源
-├── backend/           # 后端 API (Python + Flask)
-│   └── app/
-│       └── routes/    # API 路由
-├── crawler/           # 爬虫和数据处理
-│   ├── tools/         # 工具脚本
-│   ├── prompts/       # AI Prompt 模块
-│   ├── utils/         # 工具函数
-│   └── data/          # 数据文件
-│       ├── products_featured.json  # 精选产品
-│       └── industry_leaders.json   # 行业领军
-└── ops/               # 运维
-    └── scheduling/    # 定时任务
-```
-
-## API 端点
-
-Base URL: `http://localhost:5000/api/v1`
-
-| 端点 | 方法 | 说明 |
-|------|------|------|
-| `/products/weekly-top` | GET | 本周 Top 15 |
-| `/products/dark-horses` | GET | 黑马产品 (4-5分) |
-| `/products/rising-stars` | GET | 潜力股 (2-3分) |
-| `/products/today` | GET | 今日精选 |
-| `/products/<id>` | GET | 产品详情 |
-| `/search?q=xxx` | GET | 搜索产品 |
-
-## 定时任务
-
-使用 macOS launchd 每日自动更新：
-
-```bash
-# 安装定时任务
-launchctl unload ~/Library/LaunchAgents/com.weeklyai.crawler.plist 2>/dev/null
-cp ops/scheduling/com.weeklyai.crawler.plist ~/Library/LaunchAgents/
-launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
-
-# 查看状态
-launchctl list | grep weeklyai
-
-# 手动运行
-./ops/scheduling/daily_update.sh
-
-# 查看日志
-tail -f crawler/logs/daily_update.log
-```
-
-**运行时间**: 每天凌晨 3:00
-
-## 数据模板
-
-### 创新硬件
-
-```json
-{
-  "name": "Friend Pendant",
-  "website": "https://friend.com",
-  "description": "AI 伴侣项链，Claude 驱动的 always-on 情感陪伴设备",
-  "category": "hardware",
-  "hardware_type": "innovative",
-  "form_factor": "pendant",
-  "use_case": "emotional_companion",
-  "innovation_traits": ["non_traditional_form", "voice_first", "affordable"],
-  "price": "$99",
-  "dark_horse_index": 5,
-  "why_matters": "AI 伴侣吊坠，Claude 驱动，$99 无订阅，Twitter 现象级爆火"
-}
-```
-
-### 软件产品
-
-```json
-{
-  "name": "Lovable",
-  "website": "https://lovable.dev",
-  "description": "AI-first full-stack development platform",
-  "category": "coding",
-  "funding_total": "$100M",
-  "dark_horse_index": 5,
-  "why_matters": "8个月从0到独角兽，AI原生代码编辑器，Sequoia领投"
-}
-```
-
-## 地区覆盖
-
-| 地区 | 权重 | 搜索引擎 |
-|------|------|----------|
-| 美国 | 40% | Bing |
-| 中国 | 25% | Sogou |
-| 欧洲 | 15% | Bing |
-| 日韩 | 10% | Bing |
-| 东南亚 | 10% | Bing |
-
-## 开发指南
-
-### 添加新的搜索关键词
-
-编辑 `crawler/tools/auto_discover.py` 中的 `KEYWORDS_SOFTWARE` 或 `KEYWORDS_HARDWARE`。
-
-### 修改评分标准
-
-编辑 `crawler/prompts/analysis_prompts.py` 中的评分 Prompt。
-
-### 添加新的 API 端点
-
-在 `backend/app/routes/products.py` 中添加新路由。
-
-## 技术栈
-
-- **前端**: Express.js, EJS, Tailwind CSS
-- **后端**: Python, Flask
-- **AI**: Perplexity Sonar
-- **数据**: JSON 文件存储
-- **定时任务**: macOS launchd
-
-## 前端 API 配置（部署必看）
-
-前端浏览器侧会按下面优先级选择 API Base URL：
-
-1. 如果页面注入了 `API_BASE_URL`（由 `frontend/app.js` 从环境变量 `API_BASE_URL` 注入 `window.__API_BASE_URL__`），则使用该值
-2. 如果是本地 `localhost`，使用 `http://localhost:5000/api/v1`
-3. 否则使用同源 `/api/v1`（适用于同域部署或反向代理）
-
-如果你把前端部署到 Vercel，但后端不在同域，请在 Vercel 项目里设置环境变量：
-
-- `API_BASE_URL=https://<your-backend-host>/api/v1`
-
-## CI / Tests
-
-- GitHub Actions workflow: `.github/workflows/ci.yml`
-- E2E 脚本: `tests/test_frontend.py`（Playwright，CI 会启动前后端后运行该脚本）
-
-本地运行 Playwright（只需安装一次）：
-
-```bash
-python3 -m pip install playwright
-python3 -m playwright install chromium
-python3 tests/test_frontend.py
-```
-
-## License
-
-MIT
+- `PERPLEXITY_API_KEY` (Perplexity)
+- `ZHIPU_API_KEY` (GLM)
 
 ---
 
-Made with AI for AI enthusiasts.
+## ▶️ Run the system
+
+```bash
+# backend
+cd backend && python run.py
+
+# frontend (next.js)
+cd frontend-next && npm run dev
+```
+
+Expected:
+- Backend: `http://localhost:5000`
+- Frontend: `http://localhost:3001`
+
+---
+
+## 📆 Daily pipeline
+
+Core update chain (`crawler/tools` + `ops/scheduling`):
+
+1. `auto_discover.py --region all`
+2. `auto_publish.py`
+3. `backfill_source_urls.py`
+4. `resolve_websites.py --aggressive`
+5. `validate_websites.py`
+6. `cleanup_unknowns_and_duplicates.py`
+7. `fix_logos.py`
+8. `main.py --news-only`
+9. `rss_to_products.py --enrich-featured`
+10. `sync_to_mongodb.py --all`
+
+Default schedule is `3:00 AM` via launchd.  
+Log file: `crawler/logs/daily_update.log`
+
+Common manual commands:
+
+```bash
+cd crawler
+python3 tools/auto_discover.py --region all
+python3 tools/rss_to_products.py --sources youtube,x --enrich-featured --dry-run
+python3 tools/sync_to_mongodb.py --all
+```
+
+---
+
+## 📂 Key data files
+
+- `crawler/data/products_featured.json` — main featured pool
+- `crawler/data/dark_horses/week_*.json` — weekly dark horses
+- `crawler/data/rising_stars/global_*.json` — weekly rising stars
+- `crawler/data/blogs_news.json` — news stream
+- `crawler/data/products_hot_search.json` — hot search terms
+- `crawler/data/source_watchlists.json` — social sources
+- `crawler/data/industry_leaders.json` — exclusion list
+- `crawler/data/logo_cache.json` — logo cache
+
+---
+
+## ⚙️ Provider routing
+
+- **cn** → GLM (`glm-4.7`, `search_pro` / `search_pro_quark` / `search_std`)
+- **us / eu / jp / sea** → Perplexity (`sonar`)
+- `USE_GLM_FOR_CN=false` falls back CN traffic to Perplexity
+
+---
+
+## ✅ Data quality rules
+
+- Required fields: `name`, `website`, `description`, `why_matters`, `dark_horse_index`
+- `website` must be valid `http/https` URL
+- `description` length > 20 chars
+- `why_matters` length > 30 chars with concrete evidence (numbers/differentiators)
+- Dedup key: `_sync_key` (normalized domain)
+- Exclude industry leaders in `crawler/data/industry_leaders.json`
+
+---
+
+## 📚 Environment variables
+
+- `MONGO_URI`
+- `PERPLEXITY_API_KEY`, `PERPLEXITY_MODEL` (default: `sonar`)
+- `ZHIPU_API_KEY`, `GLM_MODEL` (default: `glm-4.7`), `GLM_SEARCH_ENGINE`
+- `USE_GLM_FOR_CN`
+- `CONTENT_YEAR` (default: `2026`)
+- `SOCIAL_HOURS` (default: `96h`)
+- `DARK_HORSE_FRESH_DAYS` (default: `5`)
+- `DARK_HORSE_STICKY_DAYS` (default: `10`)
+
+---
+
+## 🤝 Contributing
+
+1. Fork and create your branch
+2. Keep changes scoped and include clear rationale in PR description
+3. Follow module boundaries:  
+   - backend logic in `backend/app/services`
+   - crawler tools in `crawler/tools`
+   - frontend features in `frontend-next/src`
+4. Provide validation screenshots or API examples for UI/API changes
+
+---
+
+## 🔒 License
+
+MIT
