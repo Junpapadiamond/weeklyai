@@ -39,8 +39,10 @@ def create_app():
 
     # CORS: use explicit allowlist in production when provided.
     cors_origins = app.config.get('CORS_ALLOWED_ORIGINS', [])
+    localhost_origin_pattern = r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$"
     if cors_origins:
-        CORS(app, resources={r"/api/*": {"origins": cors_origins}})
+        allowed_origins = [*cors_origins, localhost_origin_pattern]
+        CORS(app, resources={r"/api/*": {"origins": allowed_origins}})
     else:
         CORS(app, resources={r"/api/*": {"origins": "*"}})
 

@@ -27,8 +27,8 @@ const STREAM_MODE_RAW =
     : "auto";
 
 const TYPE_INTERVAL_MS = 18;
-const SSE_TIMEOUT_MS = 12000;
-const JSON_TIMEOUT_MS = 12000;
+const SSE_IDLE_TIMEOUT_MS = 25000;
+const JSON_TIMEOUT_MS = 20000;
 
 function resolveStreamMode(raw: string): StreamMode {
   if (raw === "sse" || raw === "json") return raw;
@@ -106,9 +106,19 @@ export function useChat({ locale }: UseChatOptions) {
       text: string,
       controller: AbortController
     ): Promise<{ ok: boolean; errorMessage?: string }> => {
-      const timeoutId = window.setTimeout(() => {
-        controller.abort();
-      }, SSE_TIMEOUT_MS);
+      let hasText = false;
+      let timeoutId: number | null = null;
+
+      const resetTimeout = () => {
+        if (timeoutId !== null) {
+          window.clearTimeout(timeoutId);
+        }
+        timeoutId = window.setTimeout(() => {
+          controller.abort();
+        }, SSE_IDLE_TIMEOUT_MS);
+      };
+
+      resetTimeout();
 
       try {
         const response = await fetch(`${API_BASE}/chat?stream=1`, {
@@ -139,12 +149,12 @@ export function useChat({ locale }: UseChatOptions) {
         const reader = response.body.getReader();
         const decoder = new TextDecoder();
         let buffer = "";
-        let hasText = false;
 
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
 
+          resetTimeout();
           buffer += decoder.decode(value, { stream: true });
           const lines = buffer.split("\n");
           buffer = lines.pop() || "";
@@ -166,6 +176,7 @@ export function useChat({ locale }: UseChatOptions) {
             if (parsed.type === "text" && parsed.content) {
               hasText = true;
               appendAssistantText(assistantId, parsed.content);
+              resetTimeout();
               continue;
             }
 
@@ -178,6 +189,7 @@ export function useChat({ locale }: UseChatOptions) {
 
             if (parsed.type === "done") {
               patchAssistant(assistantId, { isStreaming: false });
+              return { ok: true };
             }
           }
         }
@@ -190,11 +202,17 @@ export function useChat({ locale }: UseChatOptions) {
         return { ok: true };
       } catch (error) {
         if ((error as Error).name === "AbortError") {
+          if (hasText) {
+            patchAssistant(assistantId, { isStreaming: false });
+            return { ok: true };
+          }
           return { ok: false, errorMessage: "SSE timeout, switching to JSON mode." };
         }
         throw error;
       } finally {
-        window.clearTimeout(timeoutId);
+        if (timeoutId !== null) {
+          window.clearTimeout(timeoutId);
+        }
       }
     },
     [appendAssistantText, locale, patchAssistant]
