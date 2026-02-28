@@ -116,23 +116,23 @@ The source_url field should contain the NEWS ARTICLE URL from search results.
 ## Output Format (JSON ONLY)
 
 Return a JSON array. If no qualifying products found, return `[]`.
-Keep `description/why_matters/latest_news` as Chinese primary fields, and always provide `*_en` English counterparts when possible.
+Keep `description/why_matters/latest_news` compatible with existing fields, and always provide `*_en` English counterparts when possible.
 
 ```json
 [
   {{
     "name": "Product Name",
     "website": "https://company-website.com",  // MUST be from search results!
-    "description": "One-sentence description in Chinese (>20 chars, primary field)",
+    "description": "One-sentence description in source language or Chinese for compatibility (>20 chars, primary field)",
     "description_en": "One-sentence description in English (>20 chars)",
     "category": "coding|image|video|voice|writing|hardware|finance|education|healthcare|agent|other",
     "region": "{region}",
     "funding_total": "$50M Series A",
     "dark_horse_index": 4,
     "criteria_met": ["funding_signal", "category_innovation"],
-    "why_matters": "Specific numbers + specific differentiation (in Chinese, primary field)",
+    "why_matters": "Specific numbers + specific differentiation (source language / Chinese for compatibility)",
     "why_matters_en": "Specific numbers + specific differentiation (in English)",
-    "latest_news": "2026-01: Event description (Chinese, optional)",
+    "latest_news": "2026-01: Event description (optional)",
     "latest_news_en": "2026-01: Event description (English, optional)",
     "source": "TechCrunch",
     "source_url": "https://techcrunch.com/article-url",  // Article URL from search results

@@ -114,11 +114,11 @@ def _pick_available_provider(provider: str) -> str:
     has_perplexity = bool(os.getenv("PERPLEXITY_API_KEY", "").strip())
 
     if provider == "auto":
-        if has_perplexity:
-            return "perplexity"
         if has_glm:
             return "glm"
-        return "local"
+        if has_perplexity:
+            return "perplexity"
+        return "none"
 
     if provider == "glm":
         return "glm" if has_glm else "none"
@@ -318,7 +318,7 @@ def _format_coverage(rates: Dict[str, float]) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Backfill English fields for products_featured.json")
     parser.add_argument("--input", default=PRODUCTS_FILE, help="Input JSON file path")
-    parser.add_argument("--provider", choices=["local", "auto", "glm", "perplexity"], default="local", help="Translation provider")
+    parser.add_argument("--provider", choices=["local", "auto", "glm", "perplexity"], default="auto", help="Translation provider")
     parser.add_argument("--dry-run", action="store_true", help="Preview only; do not call provider or write file")
     parser.add_argument("--limit", type=int, default=0, help="Max products to process (0 = all)")
     parser.add_argument("--batch-size", type=int, default=8, help="Batch size for translation requests")

@@ -13,6 +13,7 @@ import { ProductCard } from "@/components/product/product-card";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import { countFavorites, openFavoritesPanel, subscribeFavorites } from "@/lib/favorites";
 import {
+  cleanDescription,
   filterProducts,
   formatCategories,
   getDirectionLabel,
@@ -85,13 +86,14 @@ function DarkHorseSpotlightCard({ product }: DarkHorseSpotlightCardProps) {
   const detailId = encodeURIComponent(product._id || product.name);
   const score = getProductScore(product);
   const scoreLabel = formatScore(score, locale);
-  const description = cleanDescription(product.description, locale);
+  const description = cleanDescription(getLocalizedProductDescription(product, locale), locale);
   const website = normalizeWebsite(product.website);
   const hasWebsite = isValidWebsite(website);
   const country = resolveProductCountry(product);
   const regionFlag = country.flag || "?";
   const regionLabel = country.unknown ? "Unknown" : country.name;
   const fundingLabel = !isPlaceholderValue(product.funding_total) ? product.funding_total?.trim() : "";
+  const whyMatters = getLocalizedProductWhyMatters(product, locale) || t("why_matters 待补充", "Why this matters is pending");
 
   useEffect(() => {
     const node = whyMattersRef.current;
@@ -151,7 +153,7 @@ function DarkHorseSpotlightCard({ product }: DarkHorseSpotlightCardProps) {
 
           <div className="darkhorse-spotlight__why-wrap">
             <p ref={whyMattersRef} className={`darkhorse-spotlight__why ${expanded ? "is-expanded" : ""}`}>
-              {product.why_matters || t("why_matters 待补充", "Why this matters is pending")}
+              {whyMatters}
             </p>
             {canExpand ? (
               <button

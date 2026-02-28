@@ -5,6 +5,7 @@ import type { Product } from "@/types/api";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import {
+  cleanDescription,
   formatCategories,
   getLocalizedProductDescription,
   getLocalizedProductWhyMatters,
@@ -565,6 +566,9 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
   const backCard = stack[2] ?? null;
   const website = normalizeWebsite(current.website);
   const currentWhyMatters = getLocalizedProductWhyMatters(current, locale);
+  const currentDescription = cleanDescription(getLocalizedProductDescription(current, locale), locale);
+  const nextDescription = nextCard ? cleanDescription(getLocalizedProductDescription(nextCard, locale), locale) : "";
+  const backDescription = backCard ? cleanDescription(getLocalizedProductDescription(backCard, locale), locale) : "";
   const feedbackDirection = swipeOutDirection || (dragX > SWIPE_FEEDBACK_MIN ? "right" : dragX < -SWIPE_FEEDBACK_MIN ? "left" : null);
   const dragThreshold = gestureInputType === "touch" ? SWIPE_THRESHOLD_TOUCH : SWIPE_THRESHOLD_POINTER;
   const dragProgress = clamp(Math.abs(dragX) / (dragThreshold * 1.45), 0, 1);
@@ -641,7 +645,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
                   : t("精选", "Featured")}
               </span>
             </header>
-            <p className="swipe-card-desc swipe-card-desc--ghost">{cleanDescription(backCard.description, locale)}</p>
+            <p className="swipe-card-desc swipe-card-desc--ghost">{backDescription}</p>
             <div className="swipe-card-meta swipe-card-meta--ghost">
               <span className="swipe-link swipe-link--pending">{t("稍后候选", "Queued next")}</span>
             </div>
@@ -660,7 +664,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
                   : t("精选", "Featured")}
               </span>
             </header>
-            <p className="swipe-card-desc swipe-card-desc--ghost">{cleanDescription(nextCard.description, locale)}</p>
+            <p className="swipe-card-desc swipe-card-desc--ghost">{nextDescription}</p>
             <div className="swipe-card-meta swipe-card-meta--ghost">
               <span className="swipe-link swipe-link--pending">{t("下一张候选", "Next candidate")}</span>
             </div>
@@ -697,7 +701,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
             </span>
           </header>
 
-          <p className="swipe-card-desc">{cleanDescription(current.description, locale)}</p>
+          <p className="swipe-card-desc">{currentDescription}</p>
 
           {currentWhyMatters ? <p className="swipe-card-highlight">💡 {currentWhyMatters}</p> : null}
           {current.funding_total ? <p className="swipe-card-highlight">💰 {current.funding_total}</p> : null}

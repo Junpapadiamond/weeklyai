@@ -27,6 +27,9 @@ const DIRECTION_IGNORED = new Set([
 ]);
 
 const DIRECTION_LABELS_ZH: Record<string, string> = {
+  hardware: "硬件",
+  software: "软件",
+  other: "其他",
   agent: "Agent",
   coding: "编程开发",
   image: "图像",
@@ -56,6 +59,9 @@ const DIRECTION_LABELS_ZH: Record<string, string> = {
 };
 
 const DIRECTION_LABELS_EN: Record<string, string> = {
+  hardware: "Hardware",
+  software: "Software",
+  other: "Other",
   agent: "Agent",
   coding: "Coding",
   image: "Image",
@@ -488,9 +494,39 @@ function getCompositeScore(product: Product, nowTs: number): number {
   );
 }
 
+function normalizeCategoryTokenForLabel(value: string | undefined | null): string {
+  const trimmed = String(value || "").trim();
+  if (!trimmed) return "";
+
+  const mapped = normalizeDirectionToken(trimmed);
+  if (mapped) return mapped;
+  return trimmed.toLowerCase().replace(/[_\s/-]+/g, "_");
+}
+
+function getCategoryLabel(category: string, locale: SiteLocale): string {
+  const labels = locale === "en-US" ? DIRECTION_LABELS_EN : DIRECTION_LABELS_ZH;
+  return labels[category] || category.replace(/_/g, " ");
+}
+
 export function formatCategories(product: Product, locale: SiteLocale = DEFAULT_LOCALE) {
-  if (product.categories?.length) return product.categories.join(" · ");
-  if (product.category) return product.category;
+  if (product.categories?.length) {
+    const localized = product.categories
+      .map((category) => {
+        const normalized = normalizeCategoryTokenForLabel(category);
+        if (!normalized) return "";
+        return getCategoryLabel(normalized, locale);
+      })
+      .filter(Boolean);
+
+    if (localized.length) {
+      return localized.join(" · ");
+    }
+  }
+  if (product.category) {
+    const normalized = normalizeCategoryTokenForLabel(product.category);
+    if (normalized) return getCategoryLabel(normalized, locale);
+    return product.category;
+  }
   return pickLocaleText(locale, { zh: "精选 AI 工具", en: "Featured AI tools" });
 }
 
@@ -579,6 +615,25 @@ export function cleanDescription(desc: string | undefined, locale: SiteLocale = 
     .replace(/[|] (下载量|downloads?): .+$/gi, "")
     .replace(/^\s*[|·]\s*/g, "")
     .trim();
+}
+
+export function getLocalizedProductDescription(product: Product, locale: SiteLocale = DEFAULT_LOCALE): string {
+  const zh = isPlaceholderValue(product.description) ? "" : product.description?.trim() || "";
+  const en = isPlaceholderValue(product.description_en) ? "" : product.description_en?.trim() || "";
+  const picked = locale === "en-US" ? en || zh : zh || en;
+  return picked ? cleanDescription(picked, locale) : "";
+}
+
+export function getLocalizedProductWhyMatters(product: Product, locale: SiteLocale = DEFAULT_LOCALE): string {
+  const zh = isPlaceholderValue(product.why_matters) ? "" : product.why_matters?.trim() || "";
+  const en = isPlaceholderValue(product.why_matters_en) ? "" : product.why_matters_en?.trim() || "";
+  return locale === "en-US" ? en || zh : zh || en;
+}
+
+export function getLocalizedProductLatestNews(product: Product, locale: SiteLocale = DEFAULT_LOCALE): string {
+  const zh = isPlaceholderValue(product.latest_news) ? "" : product.latest_news?.trim() || "";
+  const en = isPlaceholderValue(product.latest_news_en) ? "" : product.latest_news_en?.trim() || "";
+  return locale === "en-US" ? en || zh : zh || en;
 }
 
 export function getMonogram(name: string | undefined): string {

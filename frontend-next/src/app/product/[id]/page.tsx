@@ -8,6 +8,7 @@ import { pickLocaleText, type SiteLocale } from "@/lib/locale";
 import { getRequestLocale } from "@/lib/locale-server";
 import {
   formatCategories,
+  cleanDescription,
   getLocalizedProductDescription,
   getLocalizedProductLatestNews,
   getLocalizedProductWhyMatters,
@@ -64,12 +65,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const scoreLabel = formatScore(score, locale);
   const categoryLine = formatCategories(product, locale);
   const regionLine = product.region?.trim();
-  const description = product.description?.trim() || t("描述待补充", "Description pending");
+  const description = cleanDescription(getLocalizedProductDescription(product, locale), locale);
   const funding = !isPlaceholderValue(product.funding_total) ? product.funding_total?.trim() : "-";
   const valuation = !isPlaceholderValue(product.valuation) ? product.valuation?.trim() : "-";
   const discoveredDate = formatDate(product.discovered_at || product.first_seen || product.published_at);
-  const whyMatters = product.why_matters?.trim() || t("why_matters 待补充", "Why this matters is pending");
-  const latestNews = product.latest_news?.trim() || t("暂无最新动态", "No recent updates yet");
+  const whyMatters = getLocalizedProductWhyMatters(product, locale) || t("why_matters 待补充", "Why this matters is pending");
+  const latestNews = getLocalizedProductLatestNews(product, locale) || t("暂无最新动态", "No recent updates yet");
 
   return (
     <section className="section product-detail-page">

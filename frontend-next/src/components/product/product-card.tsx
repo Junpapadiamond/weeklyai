@@ -6,6 +6,7 @@ import { SmartLogo } from "@/components/common/smart-logo";
 import { FavoriteButton } from "@/components/favorites/favorite-button";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import {
+  cleanDescription,
   formatCategories,
   getFreshnessLabel,
   getLocalizedProductDescription,
@@ -51,8 +52,8 @@ export function ProductCard({ product, compact = false }: ProductCardProps) {
   const regionMark = country.flag;
   const hasRegionText = true;
   const microlineParts = [freshness, product.source || t("来源待补充", "Source pending")];
-  const description = cleanDescription(product.description, locale);
-  const whyMatters = product.why_matters?.trim();
+  const description = cleanDescription(getLocalizedProductDescription(product, locale), locale);
+  const whyMatters = getLocalizedProductWhyMatters(product, locale);
   const tierClass = score >= 4 ? "product-card--darkhorse" : score >= 2 ? "product-card--rising" : "product-card--watch";
   const secondaryBadge = product.funding_total || (isHardware(product) ? t("硬件", "Hardware") : t("软件", "Software"));
 

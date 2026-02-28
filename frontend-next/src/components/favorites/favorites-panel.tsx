@@ -262,7 +262,7 @@ export function FavoritesPanel() {
                       {t("收藏于", "Saved")} {formatSavedTime(entry.saved_at, locale)}
                     </p>
                     {directionLabel ? <p className="favorites-panel__item-tags">{t("方向", "Direction")}: {directionLabel}</p> : null}
-                    <p className="favorites-panel__item-desc">{cleanDescription(product.description, locale)}</p>
+                    <p className="favorites-panel__item-desc">{cleanDescription(getLocalizedProductDescription(product, locale), locale)}</p>
                     <div className="favorites-panel__item-actions">
                       <Link href={`/product/${detailId}`} className="link-btn link-btn--card link-btn--card-primary">
                         {t("详情", "Details")}
