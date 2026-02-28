@@ -14,11 +14,21 @@ type ChatMessageProps = {
   message: ChatMessage;
 };
 
+function cleanDisplayText(text: string): string {
+  const value = text || "";
+  return value
+    .replace(/\[(?:\d+(?:\s*[-,，]\s*\d+)*)\]/g, "")
+    .replace(/\[(?:product_data|products?_data|产品数据|source|sources)\]/gi, "")
+    .replace(/[ \t]{2,}/g, " ")
+    .replace(/[ \t]+([,，。！？!?:;；])/g, "$1");
+}
+
 export function ChatMessageBubble({ locale, message }: ChatMessageProps) {
   const isUser = message.role === "user";
   const errorPrefixes = ["HTTP ", "Upstream API error", "Request timed out", "请求超时", "Request failed", "No streamed content"];
   const isError =
     message.content === "__ERROR__" || errorPrefixes.some((prefix) => message.content.startsWith(prefix));
+  const displayContent = cleanDisplayText(message.content);
 
   return (
     <div className={`chat-message ${isUser ? "chat-message--user" : "chat-message--assistant"}`}>
@@ -33,7 +43,7 @@ export function ChatMessageBubble({ locale, message }: ChatMessageProps) {
         ) : (
           <>
             <div className="chat-message__text">
-              {message.content}
+              {displayContent}
               {message.isStreaming ? <span className="chat-cursor" /> : null}
             </div>
             {message.products?.length ? (

@@ -36,8 +36,15 @@ def _normalize_locale(locale: str | None) -> str:
 
 
 def _clean_output(text: str) -> str:
-    # Remove common citation markers like [1][2].
-    return re.sub(r"\[\d+\]", "", text or "").strip()
+    value = text or ""
+    # Remove numeric citation markers like [1], [2,3], [1-3].
+    value = re.sub(r"\[(?:\d+(?:\s*[-,，]\s*\d+)*)\]", "", value)
+    # Remove source placeholders occasionally produced by models.
+    value = re.sub(r"\[(?:product_data|products?_data|产品数据|source|sources)\]", "", value, flags=re.IGNORECASE)
+    # Normalize spacing after citation cleanup.
+    value = re.sub(r"[ \t]{2,}", " ", value)
+    value = re.sub(r"[ \t]+([,，。！？!?:;；])", r"\1", value)
+    return value.strip()
 
 
 def _shorten(text: str, max_len: int = 220) -> str:
