@@ -1,1 +1,146 @@
-{}
+{
+  "2026-02-25": {
+    "providers": {
+      "perplexity": {
+        "search_requests": 26,
+        "chat_requests": 14,
+        "input_tokens": 37095,
+        "output_tokens": 13554
+      },
+      "glm": {
+        "search_requests": 4,
+        "chat_requests": 3,
+        "input_tokens": 7384,
+        "output_tokens": 10
+      }
+    },
+    "scripts": {
+      "auto_discover.py": {
+        "perplexity": {
+          "search_requests": 21,
+          "chat_requests": 13,
+          "input_tokens": 36321,
+          "output_tokens": 13148
+        },
+        "glm": {
+          "search_requests": 4,
+          "chat_requests": 3,
+          "input_tokens": 7384,
+          "output_tokens": 10
+        }
+      },
+      "main.py": {
+        "perplexity": {
+          "search_requests": 5,
+          "chat_requests": 0,
+          "input_tokens": 0,
+          "output_tokens": 0
+        }
+      },
+      "rss_to_products.py": {
+        "perplexity": {
+          "search_requests": 0,
+          "chat_requests": 1,
+          "input_tokens": 774,
+          "output_tokens": 406
+        }
+      }
+    },
+    "updated_at": "2026-02-25T23:15:50Z"
+  },
+  "2026-02-26": {
+    "providers": {
+      "perplexity": {
+        "search_requests": 27,
+        "chat_requests": 18,
+        "input_tokens": 50179,
+        "output_tokens": 12648
+      },
+      "glm": {
+        "search_requests": 4,
+        "chat_requests": 4,
+        "input_tokens": 10090,
+        "output_tokens": 20
+      }
+    },
+    "scripts": {
+      "auto_discover.py": {
+        "perplexity": {
+          "search_requests": 27,
+          "chat_requests": 17,
+          "input_tokens": 49426,
+          "output_tokens": 12635
+        },
+        "glm": {
+          "search_requests": 4,
+          "chat_requests": 4,
+          "input_tokens": 10090,
+          "output_tokens": 20
+        }
+      },
+      "rss_to_products.py": {
+        "perplexity": {
+          "search_requests": 0,
+          "chat_requests": 1,
+          "input_tokens": 753,
+          "output_tokens": 13
+        }
+      }
+    },
+    "updated_at": "2026-02-26T22:49:50Z"
+  },
+  "2026-02-27": {
+    "providers": {
+      "glm": {
+        "search_requests": 4,
+        "chat_requests": 2,
+        "input_tokens": 4609,
+        "output_tokens": 4
+      }
+    },
+    "scripts": {
+      "auto_discover.py": {
+        "glm": {
+          "search_requests": 4,
+          "chat_requests": 2,
+          "input_tokens": 4609,
+          "output_tokens": 4
+        }
+      }
+    },
+    "updated_at": "2026-02-27T19:08:17Z"
+  },
+  "2026-02-28": {
+    "providers": {
+      "glm": {
+        "search_requests": 0,
+        "chat_requests": 11,
+        "input_tokens": 9526,
+        "output_tokens": 7552
+      },
+      "perplexity": {
+        "search_requests": 0,
+        "chat_requests": 3,
+        "input_tokens": 1340,
+        "output_tokens": 792
+      }
+    },
+    "scripts": {
+      "backfill_product_en_fields.py": {
+        "glm": {
+          "search_requests": 0,
+          "chat_requests": 11,
+          "input_tokens": 9526,
+          "output_tokens": 7552
+        },
+        "perplexity": {
+          "search_requests": 0,
+          "chat_requests": 3,
+          "input_tokens": 1340,
+          "output_tokens": 792
+        }
+      }
+    },
+    "updated_at": "2026-02-28T07:55:53Z"
+  }
+}

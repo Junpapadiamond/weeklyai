@@ -8,6 +8,9 @@ import { pickLocaleText, type SiteLocale } from "@/lib/locale";
 import { getRequestLocale } from "@/lib/locale-server";
 import {
   formatCategories,
+  getLocalizedProductDescription,
+  getLocalizedProductLatestNews,
+  getLocalizedProductWhyMatters,
   getProductScore,
   isPlaceholderValue,
   isValidWebsite,

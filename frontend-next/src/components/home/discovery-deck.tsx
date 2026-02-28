@@ -5,8 +5,9 @@ import type { Product } from "@/types/api";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import {
-  cleanDescription,
   formatCategories,
+  getLocalizedProductDescription,
+  getLocalizedProductWhyMatters,
   isValidWebsite,
   normalizeWebsite,
   productKey,
@@ -563,6 +564,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
   const nextCard = stack[1] ?? null;
   const backCard = stack[2] ?? null;
   const website = normalizeWebsite(current.website);
+  const currentWhyMatters = getLocalizedProductWhyMatters(current, locale);
   const feedbackDirection = swipeOutDirection || (dragX > SWIPE_FEEDBACK_MIN ? "right" : dragX < -SWIPE_FEEDBACK_MIN ? "left" : null);
   const dragThreshold = gestureInputType === "touch" ? SWIPE_THRESHOLD_TOUCH : SWIPE_THRESHOLD_POINTER;
   const dragProgress = clamp(Math.abs(dragX) / (dragThreshold * 1.45), 0, 1);
@@ -697,7 +699,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
 
           <p className="swipe-card-desc">{cleanDescription(current.description, locale)}</p>
 
-          {current.why_matters ? <p className="swipe-card-highlight">💡 {current.why_matters}</p> : null}
+          {currentWhyMatters ? <p className="swipe-card-highlight">💡 {currentWhyMatters}</p> : null}
           {current.funding_total ? <p className="swipe-card-highlight">💰 {current.funding_total}</p> : null}
 
           <div className="swipe-card-meta">

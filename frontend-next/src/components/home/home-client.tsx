@@ -13,10 +13,11 @@ import { ProductCard } from "@/components/product/product-card";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import { countFavorites, openFavoritesPanel, subscribeFavorites } from "@/lib/favorites";
 import {
-  cleanDescription,
   filterProducts,
   formatCategories,
   getDirectionLabel,
+  getLocalizedProductDescription,
+  getLocalizedProductWhyMatters,
   getProductDirections,
   getProductScore,
   isHardware,
@@ -94,7 +95,7 @@ function DarkHorseSpotlightCard({ product }: DarkHorseSpotlightCardProps) {
 
   useEffect(() => {
     const node = whyMattersRef.current;
-    if (!node || !product.why_matters) return;
+    if (!node || !whyMatters) return;
 
     const checkOverflow = () => {
       setCanExpand(node.scrollHeight - node.clientHeight > 2);
@@ -111,7 +112,7 @@ function DarkHorseSpotlightCard({ product }: DarkHorseSpotlightCardProps) {
       window.cancelAnimationFrame(rafId);
       observer.disconnect();
     };
-  }, [product.why_matters, expanded]);
+  }, [whyMatters, expanded]);
 
   return (
     <article className="darkhorse-spotlight-card">

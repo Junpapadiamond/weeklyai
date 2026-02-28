@@ -52,3 +52,52 @@ def test_hardware_type_filter_uses_inferred_hardware_logic():
     result = ProductService.search_products(keyword="AI", product_type="hardware", page=1, limit=40)
     assert result["total"] > 0
     assert all(ProductService._is_hardware(item) for item in result["products"])
+
+
+def test_search_matches_english_localized_fields(monkeypatch):
+    sample = [
+        {
+            "name": "本地化样本",
+            "description": "中文描述",
+            "description_en": "Agentic workflow builder for AI teams",
+            "why_matters": "中文理由",
+            "why_matters_en": "Raised $20M seed and shipped in 4 months",
+            "category": "agent",
+            "website": "https://example.com",
+        },
+        {
+            "name": "仅中文样本",
+            "description": "只有中文内容",
+            "why_matters": "没有英文字段",
+            "category": "other",
+            "website": "https://example.org",
+        },
+    ]
+
+    monkeypatch.setattr(ProductService, "_load_products", lambda: sample)
+
+    by_description = ProductService.search_products(keyword="workflow builder", page=1, limit=20)
+    assert by_description["total"] == 1
+    assert by_description["products"][0]["name"] == "本地化样本"
+
+    by_why = ProductService.search_products(keyword="20m seed", page=1, limit=20)
+    assert by_why["total"] == 1
+    assert by_why["products"][0]["name"] == "本地化样本"
+
+
+def test_search_remains_compatible_when_en_fields_missing(monkeypatch):
+    sample = [
+        {
+            "name": "兼容样本",
+            "description": "中文功能描述",
+            "why_matters": "支持旧数据结构",
+            "category": "other",
+            "website": "https://legacy.example.com",
+        }
+    ]
+
+    monkeypatch.setattr(ProductService, "_load_products", lambda: sample)
+
+    result = ProductService.search_products(keyword="功能描述", page=1, limit=20)
+    assert result["total"] == 1
+    assert result["products"][0]["name"] == "兼容样本"

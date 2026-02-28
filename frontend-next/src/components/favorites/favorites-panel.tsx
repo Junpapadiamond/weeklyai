@@ -15,6 +15,7 @@ import {
 import {
   cleanDescription,
   getDirectionLabel,
+  getLocalizedProductDescription,
   getProductDirections,
   getTierTone,
   isValidWebsite,

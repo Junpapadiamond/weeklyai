@@ -116,20 +116,24 @@ The source_url field should contain the NEWS ARTICLE URL from search results.
 ## Output Format (JSON ONLY)
 
 Return a JSON array. If no qualifying products found, return `[]`.
+Keep `description/why_matters/latest_news` as Chinese primary fields, and always provide `*_en` English counterparts when possible.
 
 ```json
 [
   {{
     "name": "Product Name",
     "website": "https://company-website.com",  // MUST be from search results!
-    "description": "One-sentence description in Chinese (>20 chars)",
+    "description": "One-sentence description in Chinese (>20 chars, primary field)",
+    "description_en": "One-sentence description in English (>20 chars)",
     "category": "coding|image|video|voice|writing|hardware|finance|education|healthcare|agent|other",
     "region": "{region}",
     "funding_total": "$50M Series A",
     "dark_horse_index": 4,
     "criteria_met": ["funding_signal", "category_innovation"],
-    "why_matters": "Specific numbers + specific differentiation (in Chinese)",
-    "latest_news": "2026-01: Event description",
+    "why_matters": "Specific numbers + specific differentiation (in Chinese, primary field)",
+    "why_matters_en": "Specific numbers + specific differentiation (in English)",
+    "latest_news": "2026-01: Event description (Chinese, optional)",
+    "latest_news_en": "2026-01: Event description (English, optional)",
     "source": "TechCrunch",
     "source_url": "https://techcrunch.com/article-url",  // Article URL from search results
     "company_country": "US",
@@ -322,6 +326,18 @@ TRANSLATION_PROMPT = """将以下 AI 产品信息翻译成中文，保持专业�
 4. 只返回翻译后的 JSON，不要其他内容"""
 
 
+TRANSLATION_TO_EN_PROMPT = """Translate the following AI product JSON fields into natural professional English.
+
+{content}
+
+Requirements:
+1. Keep product/company/model names unchanged.
+2. Preserve numbers, currencies, and dates exactly.
+3. Translate description / why_matters / latest_news only.
+4. Return JSON only, no markdown or extra text.
+5. For missing source fields, do not invent content."""
+
+
 # ═══════════════════════════════════════════════════════════════════════════════
 # Prompt 选择器
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -400,6 +416,19 @@ def get_translation_prompt(content: str) -> str:
         填充后的 prompt
     """
     return TRANSLATION_PROMPT.format(content=content)
+
+
+def get_translation_to_en_prompt(content: str) -> str:
+    """
+    获取翻译到英文 Prompt
+
+    Args:
+        content: 要翻译的内容
+
+    Returns:
+        填充后的 prompt
+    """
+    return TRANSLATION_TO_EN_PROMPT.format(content=content)
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -917,9 +946,11 @@ __all__ = [
     "ANALYSIS_PROMPT_CN",
     "SCORING_PROMPT",
     "TRANSLATION_PROMPT",
+    "TRANSLATION_TO_EN_PROMPT",
     "get_analysis_prompt",
     "get_scoring_prompt",
     "get_translation_prompt",
+    "get_translation_to_en_prompt",
     "WELL_KNOWN_PRODUCTS",
     "GENERIC_WHY_MATTERS",
     # 硬件相关

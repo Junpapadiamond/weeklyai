@@ -951,7 +951,7 @@ if not USE_MODULAR_PROMPTS:
 
 ## Output (JSON only)
 ```json
-[{{"name": "...", "website": "https://...", "description": "中文描述(>20字)", "category": "coding|image|video|...", "region": "{region}", "company_country": "US|CN|unknown", "company_country_confidence": 0.8, "funding_total": "$50M", "dark_horse_index": 4, "criteria_met": ["funding_signal"], "why_matters": "具体数字+差异化", "source": "...", "confidence": 0.85}}]
+[{{"name": "...", "website": "https://...", "description": "中文描述(>20字, 主字段)", "description_en": "English description (>20 chars)", "category": "coding|image|video|...", "region": "{region}", "company_country": "US|CN|unknown", "company_country_confidence": 0.8, "funding_total": "$50M", "dark_horse_index": 4, "criteria_met": ["funding_signal"], "why_matters": "具体数字+差异化(主字段)", "why_matters_en": "Specific numbers + differentiation", "latest_news_en": "Optional English event summary", "source": "...", "confidence": 0.85}}]
 ```
 
 Quota: Dark Horses: {quota_dark_horses} | Rising Stars: {quota_rising_stars}

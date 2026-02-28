@@ -32,7 +32,11 @@ BLOG_US_SOURCES = {'hackernews', 'reddit', 'tech_news', 'youtube', 'x', 'product
 SEARCH_TEXT_FIELDS = (
     'name',
     'description',
+    'description_en',
     'why_matters',
+    'why_matters_en',
+    'latest_news',
+    'latest_news_en',
     'category',
     'source_title',
     'search_keyword',
@@ -556,8 +560,14 @@ def _collect_search_blobs(product: Dict[str, Any]) -> Dict[str, str]:
         return ' '.join(normalized)
 
     name_text = _join_text(_flatten_values(product.get('name')))
-    description_text = _join_text(_flatten_values(product.get('description')))
-    why_text = _join_text(_flatten_values(product.get('why_matters')))
+    description_text = _join_text([
+        *_flatten_values(product.get('description')),
+        *_flatten_values(product.get('description_en')),
+    ])
+    why_text = _join_text([
+        *_flatten_values(product.get('why_matters')),
+        *_flatten_values(product.get('why_matters_en')),
+    ])
 
     category_values: List[str] = []
     for field in SEARCH_LIST_FIELDS:
@@ -577,7 +587,7 @@ def _collect_search_blobs(product: Dict[str, Any]) -> Dict[str, str]:
 
     meta_values: List[str] = []
     for field in SEARCH_TEXT_FIELDS:
-        if field == 'name' or field == 'description' or field == 'why_matters' or field == 'category':
+        if field in {'name', 'description', 'description_en', 'why_matters', 'why_matters_en', 'category'}:
             continue
         meta_values.extend(list(_flatten_values(product.get(field))))
     meta_text = _join_text(meta_values)

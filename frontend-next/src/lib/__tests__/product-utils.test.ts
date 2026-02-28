@@ -1,8 +1,13 @@
 import { describe, expect, it } from "vitest";
 import {
+  cleanDescription,
   filterProducts,
+  formatCategories,
   getDirectionLabel,
   getFreshnessLabel,
+  getLocalizedProductDescription,
+  getLocalizedProductLatestNews,
+  getLocalizedProductWhyMatters,
   getLogoCandidates,
   getLogoFallbacks,
   getProductDirections,
@@ -184,6 +189,46 @@ describe("product-utils", () => {
     expect(directions).toContain("robotics");
     expect(directions).toContain("driving");
     expect(directions).not.toContain("hardware");
+  });
+
+  it("localizes product text fields with en-first fallback under en-US", () => {
+    const product: Product = {
+      name: "Localize",
+      description: "中文描述",
+      description_en: "English description",
+      why_matters: "中文原因",
+      why_matters_en: "English rationale",
+      latest_news: "中文动态",
+      latest_news_en: "English update",
+    };
+
+    expect(getLocalizedProductDescription(product, "en-US")).toBe("English description");
+    expect(getLocalizedProductWhyMatters(product, "en-US")).toBe("English rationale");
+    expect(getLocalizedProductLatestNews(product, "en-US")).toBe("English update");
+  });
+
+  it("falls back to Chinese text under en-US when *_en fields are missing", () => {
+    const product: Product = {
+      name: "Fallback",
+      description: "中文描述",
+      why_matters: "中文原因",
+      latest_news: "中文动态",
+    };
+
+    expect(getLocalizedProductDescription(product, "en-US")).toBe(cleanDescription("中文描述", "en-US"));
+    expect(getLocalizedProductWhyMatters(product, "en-US")).toBe("中文原因");
+    expect(getLocalizedProductLatestNews(product, "en-US")).toBe("中文动态");
+  });
+
+  it("formats category labels by locale", () => {
+    const product: Product = {
+      name: "Category",
+      description: "x",
+      categories: ["hardware", "ai_chip", "other"],
+    };
+
+    expect(formatCategories(product, "zh-CN")).toBe("硬件 · AI芯片 · 其他");
+    expect(formatCategories(product, "en-US")).toBe("Hardware · AI Chips · Other");
   });
 
   it("generates freshness labels from available dates", () => {

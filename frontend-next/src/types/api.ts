@@ -10,7 +10,9 @@ export type Product = {
   name: string;
   website?: string;
   description: string;
+  description_en?: string;
   why_matters?: string;
+  why_matters_en?: string;
   logo_url?: string;
   logo?: string;
   dark_horse_index?: number;
@@ -25,6 +27,7 @@ export type Product = {
   funding_total?: string;
   valuation?: string;
   latest_news?: string;
+  latest_news_en?: string;
   source?: string;
   source_url?: string;
   region?: string;

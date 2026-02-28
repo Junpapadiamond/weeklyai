@@ -9,6 +9,7 @@ from typing import List, Dict, Any, Optional
 
 # Sorting helpers for merge decisions
 from . import product_sorting as sorting
+from .env_utils import sanitize_env_value
 
 # MongoDB support
 try:
@@ -55,7 +56,7 @@ BLOG_CACHE_SECONDS = _get_env_int("BLOG_CACHE_SECONDS", 60, minimum=1)
 
 def _mongo_uri_configured() -> bool:
     """Whether MONGO_URI is explicitly configured."""
-    return bool(os.getenv('MONGO_URI'))
+    return bool(sanitize_env_value(os.getenv('MONGO_URI', '')))
 
 
 def get_mongo_db():
@@ -70,7 +71,9 @@ def get_mongo_db():
     if _mongo_fail_until and datetime.now() < _mongo_fail_until:
         return None
     try:
-        mongo_uri = os.environ['MONGO_URI']
+        mongo_uri = sanitize_env_value(os.environ.get('MONGO_URI', ''))
+        if not mongo_uri:
+            return None
         _mongo_client = MongoClient(mongo_uri, serverSelectionTimeoutMS=MONGO_SERVER_SELECTION_TIMEOUT_MS)
         _mongo_client.admin.command('ping')
         _mongo_db = _mongo_client.get_database()

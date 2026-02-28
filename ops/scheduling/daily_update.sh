@@ -91,6 +91,14 @@ else
     echo "[$(date +%H:%M:%S)] rss_to_products.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
 fi
 
+# 3.5 Backfill English fields before Mongo sync
+echo "[$(date +%H:%M:%S)] Running backfill_product_en_fields.py..." >> "$LOG_DIR/daily_update.log"
+if $PYTHON_BIN crawler/tools/backfill_product_en_fields.py --provider auto --only-missing --batch-size 8 >> "$LOG_DIR/daily_update.log" 2>&1; then
+    echo "[$(date +%H:%M:%S)] backfill_product_en_fields.py completed successfully" >> "$LOG_DIR/daily_update.log"
+else
+    echo "[$(date +%H:%M:%S)] backfill_product_en_fields.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
+fi
+
 # 4. Sync to MongoDB (when MONGO_URI is configured)
 if [ -n "$MONGO_URI" ]; then
     echo "[$(date +%H:%M:%S)] Running sync_to_mongodb.py --all..." >> "$LOG_DIR/daily_update.log"

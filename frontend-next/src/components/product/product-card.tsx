@@ -6,9 +6,10 @@ import { SmartLogo } from "@/components/common/smart-logo";
 import { FavoriteButton } from "@/components/favorites/favorite-button";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import {
-  cleanDescription,
   formatCategories,
   getFreshnessLabel,
+  getLocalizedProductDescription,
+  getLocalizedProductWhyMatters,
   getProductScore,
   isHardware,
   isValidWebsite,
