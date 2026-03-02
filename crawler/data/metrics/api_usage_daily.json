@@ -113,10 +113,10 @@
   "2026-02-28": {
     "providers": {
       "glm": {
-        "search_requests": 0,
-        "chat_requests": 11,
-        "input_tokens": 9526,
-        "output_tokens": 7552
+        "search_requests": 4,
+        "chat_requests": 13,
+        "input_tokens": 15955,
+        "output_tokens": 8725
       },
       "perplexity": {
         "search_requests": 0,
@@ -139,8 +139,37 @@
           "input_tokens": 1340,
           "output_tokens": 792
         }
+      },
+      "auto_discover.py": {
+        "glm": {
+          "search_requests": 4,
+          "chat_requests": 2,
+          "input_tokens": 6429,
+          "output_tokens": 1173
+        }
       }
     },
-    "updated_at": "2026-02-28T07:55:53Z"
+    "updated_at": "2026-02-28T20:18:22Z"
+  },
+  "2026-03-01": {
+    "providers": {
+      "glm": {
+        "search_requests": 4,
+        "chat_requests": 3,
+        "input_tokens": 8082,
+        "output_tokens": 14
+      }
+    },
+    "scripts": {
+      "auto_discover.py": {
+        "glm": {
+          "search_requests": 4,
+          "chat_requests": 3,
+          "input_tokens": 8082,
+          "output_tokens": 14
+        }
+      }
+    },
+    "updated_at": "2026-03-01T21:53:34Z"
   }
 }

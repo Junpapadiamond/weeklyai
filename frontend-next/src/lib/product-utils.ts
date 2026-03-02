@@ -482,8 +482,12 @@ export function tierOf(product: Product): "darkhorse" | "rising" | "other" {
   return "other";
 }
 
+function resolvePrimaryProductDate(product: Product): string | undefined {
+  return product.discovered_at || product.first_seen || product.published_at;
+}
+
 export function productDate(product: Product): number {
-  const raw = product.first_seen || product.published_at || product.discovered_at;
+  const raw = resolvePrimaryProductDate(product);
   if (!raw) return 0;
   const ts = new Date(raw).getTime();
   return Number.isFinite(ts) ? ts : 0;
@@ -829,7 +833,7 @@ export function getFreshnessLabel(
   now: Date = new Date(),
   locale: SiteLocale = DEFAULT_LOCALE
 ): string {
-  const raw = product.discovered_at || product.first_seen || product.published_at;
+  const raw = resolvePrimaryProductDate(product);
   if (!raw) {
     return pickLocaleText(locale, { zh: "时间待补充", en: "Timestamp unavailable" });
   }
