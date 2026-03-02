@@ -17,6 +17,10 @@ export type Product = {
   why_matters_zh?: string;
   logo_url?: string;
   logo?: string;
+  logo_status?: "ok" | "missing" | "failed";
+  logo_source?: "site_icon" | "apple_touch_icon" | "manifest_icon" | "favicon_ico" | "manual";
+  logo_last_checked_at?: string;
+  logo_error_reason?: string;
   dark_horse_index?: number;
   category?: string;
   categories?: string[];

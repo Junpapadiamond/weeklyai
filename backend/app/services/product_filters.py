@@ -2,6 +2,7 @@
 产品过滤器 - 负责过滤和验证逻辑
 """
 
+import os
 import re
 from typing import List, Dict, Any, Optional, Iterable
 from urllib.parse import urlparse
@@ -184,6 +185,41 @@ COUNTRY_BY_CC_TLD = {
     'in': 'IN',
 }
 
+LOGO_STATUS_OK = 'ok'
+LOGO_STATUS_MISSING = 'missing'
+LOGO_STATUS_FAILED = 'failed'
+VALID_LOGO_STATUS = {LOGO_STATUS_OK, LOGO_STATUS_MISSING, LOGO_STATUS_FAILED}
+VALID_LOGO_SOURCES = {'site_icon', 'apple_touch_icon', 'manifest_icon', 'favicon_ico', 'manual'}
+
+
+def _read_bool_env(name: str, default: bool) -> bool:
+    raw = str(os.getenv(name, '')).strip().lower()
+    if not raw:
+        return default
+    if raw in {'1', 'true', 'yes', 'on'}:
+        return True
+    if raw in {'0', 'false', 'no', 'off'}:
+        return False
+    return default
+
+
+def _logo_strict_mode() -> bool:
+    return _read_bool_env('LOGO_STRICT_MODE', True)
+
+
+def _logo_cdn_host() -> str:
+    value = str(os.getenv('LOGO_CDN_BASE_URL', '')).strip()
+    if not value:
+        return ''
+    if not re.match(r'^https?://', value, re.IGNORECASE):
+        value = f'https://{value}'
+    try:
+        parsed = urlparse(value)
+        host = (parsed.netloc or '').strip().lower()
+        return re.sub(r'^www\.', '', host).split(':')[0]
+    except Exception:
+        return ''
+
 
 def _normalize_domain(url: str, include_path: bool = False) -> str:
     """Normalize domain for dedupe (strip scheme/www/port, optionally keep first path)."""
@@ -257,7 +293,7 @@ def _same_or_subdomain(host: str, root: str) -> bool:
 
 
 def _sanitize_logo_url(product: Dict[str, Any]) -> None:
-    """Drop remote logos that do not belong to the product's official website domain."""
+    """Allow only local/cdn logos by default, with optional domain fallback when strict mode is disabled."""
     candidate = (
         product.get('logo_url')
         or product.get('logo')
@@ -266,19 +302,17 @@ def _sanitize_logo_url(product: Dict[str, Any]) -> None:
     )
     logo = str(candidate or '').strip()
     if not logo:
+        product.pop('logo_error_reason', None)
         return
 
     if logo.startswith('/'):
         product['logo_url'] = logo
+        product.pop('logo_error_reason', None)
         return
 
     if not re.match(r'^https?://', logo, re.IGNORECASE):
         product['logo_url'] = ''
-        return
-
-    website_domain = _normalize_domain(str(product.get('website') or ''), include_path=False)
-    if not website_domain:
-        product['logo_url'] = ''
+        product['logo_error_reason'] = 'invalid_logo_url'
         return
 
     try:
@@ -287,14 +321,58 @@ def _sanitize_logo_url(product: Dict[str, Any]) -> None:
         logo_host = re.sub(r'^www\.', '', logo_host).split(':')[0]
     except Exception:
         product['logo_url'] = ''
+        product['logo_error_reason'] = 'invalid_logo_host'
         return
 
-    if _same_or_subdomain(logo_host, website_domain):
+    cdn_host = _logo_cdn_host()
+    if cdn_host and _same_or_subdomain(logo_host, cdn_host):
         product['logo_url'] = logo
+        product.pop('logo_error_reason', None)
         return
 
-    # Reject social/media/provider logos as primary logo source.
+    if not _logo_strict_mode():
+        website_domain = _normalize_domain(str(product.get('website') or ''), include_path=False)
+        if website_domain and _same_or_subdomain(logo_host, website_domain):
+            product['logo_url'] = logo
+            product.pop('logo_error_reason', None)
+            return
+
     product['logo_url'] = ''
+    product['logo_error_reason'] = 'logo_host_not_allowed'
+
+
+def _normalize_logo_fields(product: Dict[str, Any]) -> None:
+    logo_url = str(product.get('logo_url') or '').strip()
+    status = str(product.get('logo_status') or '').strip().lower()
+    source = str(product.get('logo_source') or '').strip()
+    checked = str(product.get('logo_last_checked_at') or '').strip()
+    error_reason = str(product.get('logo_error_reason') or '').strip()
+
+    if status not in VALID_LOGO_STATUS:
+        status = LOGO_STATUS_OK if logo_url else LOGO_STATUS_MISSING
+    if source and source not in VALID_LOGO_SOURCES:
+        source = 'manual'
+
+    if not logo_url:
+        source = ''
+        if error_reason:
+            status = LOGO_STATUS_FAILED
+        elif status == LOGO_STATUS_OK:
+            status = LOGO_STATUS_MISSING
+    else:
+        if status != LOGO_STATUS_OK:
+            status = LOGO_STATUS_OK
+        if not source:
+            source = 'manual'
+        error_reason = ''
+
+    product['logo_status'] = status
+    product['logo_source'] = source
+    product['logo_last_checked_at'] = checked
+    if error_reason:
+        product['logo_error_reason'] = error_reason
+    else:
+        product.pop('logo_error_reason', None)
 
 
 def _extract_region_flag(value: Any) -> str:
@@ -503,6 +581,7 @@ def normalize_products(products: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         if is_blocked(product) or is_well_known(product):
             continue
         _sanitize_logo_url(product)
+        _normalize_logo_fields(product)
         _normalize_country_fields(product)
         if '_id' not in product:
             product['_id'] = str(idx + 1)

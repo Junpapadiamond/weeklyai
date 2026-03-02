@@ -47,14 +47,7 @@ describe("product-utils", () => {
 
   it("builds logo fallback chain in expected order", () => {
     const fallbacks = getLogoFallbacks("https://www.example.com");
-    expect(fallbacks).toEqual([
-      "https://www.google.com/s2/favicons?domain=example.com&sz=128",
-      "https://icons.duckduckgo.com/ip3/example.com.ico",
-      "https://icon.horse/icon/example.com",
-      "https://example.com/favicon.ico",
-      "https://www.example.com/favicon.ico",
-      "https://logo.clearbit.com/example.com",
-    ]);
+    expect(fallbacks).toEqual([]);
   });
 
   it("combines trusted logos with fallback chain and removes untrusted provider logos", () => {
@@ -65,28 +58,19 @@ describe("product-utils", () => {
     });
 
     expect(candidates[0]).toBe("/logos/custom/example.png");
-    expect(candidates).toEqual([
-      "/logos/custom/example.png",
-      "https://www.google.com/s2/favicons?domain=example.com&sz=128",
-      "https://icons.duckduckgo.com/ip3/example.com.ico",
-      "https://icon.horse/icon/example.com",
-      "https://example.com/favicon.ico",
-      "https://www.example.com/favicon.ico",
-      "https://logo.clearbit.com/example.com",
-    ]);
+    expect(candidates).toEqual(["/logos/custom/example.png"]);
 
     const fallbackOnly = getLogoCandidates({
       logoUrl: "not-a-url",
       website: "example.com",
     });
-    expect(fallbackOnly[0]).toBe("https://www.google.com/s2/favicons?domain=example.com&sz=128");
+    expect(fallbackOnly).toEqual([]);
 
     const withBingPrimary = getLogoCandidates({
       logoUrl: "https://favicon.bing.com/favicon.ico?url=example.com&size=128",
       website: "example.com",
     });
-    expect(withBingPrimary[0]).toBe("https://www.google.com/s2/favicons?domain=example.com&sz=128");
-    expect(withBingPrimary[withBingPrimary.length - 1]).toBe("https://favicon.bing.com/favicon.ico?url=example.com&size=128");
+    expect(withBingPrimary).toEqual([]);
 
     const derivedFromLogoSource = getLogoCandidates({
       logoUrl: "https://logo.clearbit.com/example.com",
@@ -99,7 +83,7 @@ describe("product-utils", () => {
       logoUrl: "https://www.youtube.com/s/desktop/abc/img/favicon_32x32.png",
       website: "https://example.com",
     });
-    expect(rejectSocialLogo[0]).toBe("https://www.google.com/s2/favicons?domain=example.com&sz=128");
+    expect(rejectSocialLogo).toEqual([]);
     expect(rejectSocialLogo).not.toContain("https://www.youtube.com/s/desktop/abc/img/favicon_32x32.png");
   });
 

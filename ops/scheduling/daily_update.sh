@@ -67,12 +67,12 @@ else
     echo "[$(date +%H:%M:%S)] cleanup_unknowns_and_duplicates.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
 fi
 
-# 1.10 Fix logos
-echo "[$(date +%H:%M:%S)] Running fix_logos.py..." >> "$LOG_DIR/daily_update.log"
-if $PYTHON_BIN crawler/tools/fix_logos.py --input data/products_featured.json >> "$LOG_DIR/daily_update.log" 2>&1; then
-    echo "[$(date +%H:%M:%S)] fix_logos.py completed successfully" >> "$LOG_DIR/daily_update.log"
+# 1.10 Build stable logo assets
+echo "[$(date +%H:%M:%S)] Running build_logo_assets.py --mode incremental..." >> "$LOG_DIR/daily_update.log"
+if $PYTHON_BIN crawler/tools/build_logo_assets.py --mode incremental >> "$LOG_DIR/daily_update.log" 2>&1; then
+    echo "[$(date +%H:%M:%S)] build_logo_assets.py completed successfully" >> "$LOG_DIR/daily_update.log"
 else
-    echo "[$(date +%H:%M:%S)] fix_logos.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
+    echo "[$(date +%H:%M:%S)] build_logo_assets.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
 fi
 
 # 2-3. Social signals pipeline with delayed retry
