@@ -7,12 +7,13 @@ import { useSiteLocale } from "@/components/layout/locale-provider";
 import {
   cleanDescription,
   formatCategories,
+  getFreshnessLabel,
   getLocalizedProductDescription,
   getLocalizedProductWhyMatters,
+  getProductRegionDisplay,
   isValidWebsite,
   normalizeWebsite,
   productKey,
-  resolveProductCountry,
 } from "@/lib/product-utils";
 
 const SWIPED_KEY = "weeklyai_swiped";
@@ -57,6 +58,17 @@ type SwipeInput = {
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));
+}
+
+function formatDiscoveryAgeLabel(freshness: string, locale: "zh-CN" | "en-US") {
+  if (locale === "en-US") {
+    if (freshness === "Timestamp unavailable") return "Discovery time pending";
+    if (freshness === "Just updated") return "Discovered just now";
+    return `Discovered ${freshness}`;
+  }
+  if (freshness === "时间待补充") return "发现时间待补充";
+  if (freshness === "刚更新") return "刚发现";
+  return `${freshness}发现`;
 }
 
 function getSwipedProducts(): SwipedState {
@@ -120,8 +132,8 @@ type SwipeCardIdentityProps = {
 };
 
 function SwipeCardIdentity({ product, compact = false, locale, t }: SwipeCardIdentityProps) {
-  const country = resolveProductCountry(product);
-  const countryText = country.unknown ? "Unknown" : country.name;
+  const country = getProductRegionDisplay(product, locale);
+  const countryText = country.label;
   const logoSize = compact ? 42 : 48;
 
   return (
@@ -567,8 +579,11 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
   const website = normalizeWebsite(current.website);
   const currentWhyMatters = getLocalizedProductWhyMatters(current, locale);
   const currentDescription = cleanDescription(getLocalizedProductDescription(current, locale), locale);
+  const currentFreshness = formatDiscoveryAgeLabel(getFreshnessLabel(current, new Date(), locale), locale);
   const nextDescription = nextCard ? cleanDescription(getLocalizedProductDescription(nextCard, locale), locale) : "";
+  const nextFreshness = nextCard ? formatDiscoveryAgeLabel(getFreshnessLabel(nextCard, new Date(), locale), locale) : "";
   const backDescription = backCard ? cleanDescription(getLocalizedProductDescription(backCard, locale), locale) : "";
+  const backFreshness = backCard ? formatDiscoveryAgeLabel(getFreshnessLabel(backCard, new Date(), locale), locale) : "";
   const feedbackDirection = swipeOutDirection || (dragX > SWIPE_FEEDBACK_MIN ? "right" : dragX < -SWIPE_FEEDBACK_MIN ? "left" : null);
   const dragThreshold = gestureInputType === "touch" ? SWIPE_THRESHOLD_TOUCH : SWIPE_THRESHOLD_POINTER;
   const dragProgress = clamp(Math.abs(dragX) / (dragThreshold * 1.45), 0, 1);
@@ -647,6 +662,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
             </header>
             <p className="swipe-card-desc swipe-card-desc--ghost">{backDescription}</p>
             <div className="swipe-card-meta swipe-card-meta--ghost">
+              <span className="swipe-link swipe-link--pending">{backFreshness}</span>
               <span className="swipe-link swipe-link--pending">{t("稍后候选", "Queued next")}</span>
             </div>
           </article>
@@ -666,6 +682,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
             </header>
             <p className="swipe-card-desc swipe-card-desc--ghost">{nextDescription}</p>
             <div className="swipe-card-meta swipe-card-meta--ghost">
+              <span className="swipe-link swipe-link--pending">{nextFreshness}</span>
               <span className="swipe-link swipe-link--pending">{t("下一张候选", "Next candidate")}</span>
             </div>
           </article>
@@ -702,6 +719,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
           </header>
 
           <p className="swipe-card-desc">{currentDescription}</p>
+          <p className="swipe-card-highlight">🕒 {currentFreshness}</p>
 
           {currentWhyMatters ? <p className="swipe-card-highlight">💡 {currentWhyMatters}</p> : null}
           {current.funding_total ? <p className="swipe-card-highlight">💰 {current.funding_total}</p> : null}

@@ -32,7 +32,7 @@ sys.path.insert(0, PROJECT_ROOT)
 
 SUPPORTED_FIELDS = ("description", "why_matters", "latest_news")
 DEFAULT_FIELDS = ("description", "why_matters", "latest_news")
-TRANSLATE_PUBLIC_URL = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q="
+TRANSLATE_PUBLIC_URL = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&dt=t&q="
 TRANSLATE_TIMEOUT_SECONDS = float(os.getenv("PUBLIC_TRANSLATE_TIMEOUT_SECONDS", "6"))
 
 
@@ -212,11 +212,15 @@ def _contains_cjk(text: str) -> bool:
     return any("\u4e00" <= char <= "\u9fff" for char in text)
 
 
-def _translate_public(text: str) -> str:
+def _contains_japanese_kana(text: str) -> bool:
+    return any("\u3040" <= char <= "\u30ff" for char in text)
+
+
+def _translate_public(text: str, target_lang: str = "en") -> str:
     text = _normalize_text(text)
     if not text:
         return ""
-    if not _contains_cjk(text):
+    if target_lang == "en" and not _contains_cjk(text):
         return text
 
     try:
@@ -224,7 +228,7 @@ def _translate_public(text: str) -> str:
     except Exception:
         return text
 
-    url = f"{TRANSLATE_PUBLIC_URL}{quote(text)}"
+    url = f"{TRANSLATE_PUBLIC_URL}&tl={quote(target_lang)}&q={quote(text)}"
     try:
         response = requests.get(url, timeout=max(1.0, TRANSLATE_TIMEOUT_SECONDS))
         response.raise_for_status()
@@ -285,6 +289,49 @@ def _translate_batch(
         if translated:
             results[index] = translated
     return results
+
+
+def _backfill_zh_fields(
+    products: Sequence[Dict[str, Any]],
+    fields: Sequence[str],
+    only_missing: bool,
+    cache: Dict[str, str],
+) -> tuple[int, int]:
+    updated_products = 0
+    updated_fields = 0
+
+    for product in products:
+        if not isinstance(product, dict):
+            continue
+
+        changed = False
+        for field in fields:
+            source_text = _normalize_text(product.get(field))
+            if not source_text or not _contains_japanese_kana(source_text):
+                continue
+
+            target_key = f"{field}_zh"
+            if only_missing and _normalize_text(product.get(target_key)):
+                continue
+
+            cache_key = f"zh::{source_text}"
+            if cache_key not in cache:
+                cache[cache_key] = _translate_public(source_text, target_lang="zh-CN")
+                time.sleep(0.01)
+
+            translated_text = _normalize_text(cache.get(cache_key))
+            if not translated_text:
+                continue
+
+            if _normalize_text(product.get(target_key)) != translated_text:
+                product[target_key] = translated_text
+                changed = True
+                updated_fields += 1
+
+        if changed:
+            updated_products += 1
+
+    return updated_products, updated_fields
 
 
 def _candidate_fields(product: Dict[str, Any], fields: Sequence[str], only_missing: bool) -> List[str]:
@@ -362,62 +409,67 @@ def main() -> int:
         return 0
 
     if not candidates:
-        print("No candidates to process.")
-        return 0
+        print("No *_en candidates to process.")
 
     provider = _pick_available_provider(args.provider)
+    run_en_backfill = True
+    client = None
     if provider == "none":
-        print("⚠ No available translation provider (missing API keys). Skipping without changes.")
-        return 0
-
-    client = _create_client(provider)
-    if client is None:
-        print(f"⚠ Provider '{provider}' is not available in this environment. Skipping without changes.")
-        return 0
+        run_en_backfill = False
+        print("⚠ No available translation provider (missing API keys). Skip *_en backfill, continue *_zh backfill.")
+    else:
+        client = _create_client(provider)
+        if client is None:
+            run_en_backfill = False
+            print(f"⚠ Provider '{provider}' is not available in this environment. Skip *_en backfill, continue *_zh backfill.")
 
     updated_fields = 0
     updated_products = 0
     failed_batches = 0
     local_cache: Dict[str, str] = {}
+    zh_cache: Dict[str, str] = {}
 
-    batch_size = max(1, int(args.batch_size or 1))
-    total_batches = (len(candidates) + batch_size - 1) // batch_size
-    for batch_idx, batch in enumerate(_chunked(candidates, batch_size), start=1):
-        print(f"  … Batch {batch_idx}/{total_batches}: processing {len(batch)} items")
-        translated = _translate_batch(client, provider, batch, fields, local_cache=local_cache)
-        if not translated:
-            failed_batches += 1
-            print(f"  ⚠ Batch {batch_idx}: no translations returned")
-            continue
-
-        batch_product_updates = 0
-        for item in batch:
-            index = item["index"]
-            result = translated.get(index, {})
-            if not result:
+    if run_en_backfill and client is not None and candidates:
+        batch_size = max(1, int(args.batch_size or 1))
+        total_batches = (len(candidates) + batch_size - 1) // batch_size
+        for batch_idx, batch in enumerate(_chunked(candidates, batch_size), start=1):
+            print(f"  … Batch {batch_idx}/{total_batches}: processing {len(batch)} items")
+            translated = _translate_batch(client, provider, batch, fields, local_cache=local_cache)
+            if not translated:
+                failed_batches += 1
+                print(f"  ⚠ Batch {batch_idx}: no translations returned")
                 continue
-            product = products[index]
-            changed = False
-            for field in fields:
-                target_key = f"{field}_en"
-                source_text = _normalize_text(product.get(field))
-                if not source_text:
-                    continue
-                translated_text = _normalize_text(result.get(target_key))
-                if not translated_text:
-                    continue
-                if only_missing and _normalize_text(product.get(target_key)):
-                    continue
-                if _normalize_text(product.get(target_key)) != translated_text:
-                    product[target_key] = translated_text
-                    updated_fields += 1
-                    changed = True
-            if changed:
-                batch_product_updates += 1
-        updated_products += batch_product_updates
-        print(f"  ✓ Batch {batch_idx}: updated_products={batch_product_updates}")
 
-    if updated_fields > 0:
+            batch_product_updates = 0
+            for item in batch:
+                index = item["index"]
+                result = translated.get(index, {})
+                if not result:
+                    continue
+                product = products[index]
+                changed = False
+                for field in fields:
+                    target_key = f"{field}_en"
+                    source_text = _normalize_text(product.get(field))
+                    if not source_text:
+                        continue
+                    translated_text = _normalize_text(result.get(target_key))
+                    if not translated_text:
+                        continue
+                    if only_missing and _normalize_text(product.get(target_key)):
+                        continue
+                    if _normalize_text(product.get(target_key)) != translated_text:
+                        product[target_key] = translated_text
+                        updated_fields += 1
+                        changed = True
+                if changed:
+                    batch_product_updates += 1
+            updated_products += batch_product_updates
+            print(f"  ✓ Batch {batch_idx}: updated_products={batch_product_updates}")
+
+    zh_products, zh_fields = _backfill_zh_fields(products, fields, only_missing=only_missing, cache=zh_cache)
+
+    if updated_fields > 0 or zh_fields > 0:
         _save_json(args.input, products)
         print(f"Saved: {args.input}")
     else:
@@ -428,7 +480,8 @@ def main() -> int:
     print(
         "Summary: "
         f"provider={provider}, updated_products={updated_products}, "
-        f"updated_fields={updated_fields}, failed_batches={failed_batches}, "
+        f"updated_fields={updated_fields}, zh_products={zh_products}, zh_fields={zh_fields}, "
+        f"failed_batches={failed_batches}, "
         f"timestamp={datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace('+00:00', 'Z')}"
     )
     return 0

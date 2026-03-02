@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 export type ChatMessage = {
   id: string;
@@ -8,6 +8,13 @@ export type ChatMessage = {
   content: string;
   products?: string[];
   isStreaming?: boolean;
+};
+
+export type ChatRuntimeStatus = {
+  checking: boolean;
+  ready: boolean;
+  provider?: string;
+  model?: string;
 };
 
 type UseChatOptions = {
@@ -44,9 +51,49 @@ function nextMessageId() {
 export function useChat({ locale }: UseChatOptions) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [status, setStatus] = useState<ChatRuntimeStatus>({
+    checking: true,
+    ready: true,
+  });
   const abortRef = useRef<AbortController | null>(null);
   const typingRef = useRef<number | null>(null);
   const streamMode = useMemo(() => resolveStreamMode(STREAM_MODE_RAW), []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadStatus() {
+      try {
+        const response = await fetch(`${API_BASE}/chat/status`, {
+          headers: { Accept: "application/json" },
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const payload = (await response.json()) as {
+          has_api_key?: boolean;
+          provider?: string;
+          model?: string;
+        };
+        if (cancelled) return;
+        setStatus({
+          checking: false,
+          ready: !!payload.has_api_key,
+          provider: payload.provider,
+          model: payload.model,
+        });
+      } catch {
+        if (cancelled) return;
+        setStatus({
+          checking: false,
+          ready: false,
+        });
+      }
+    }
+
+    loadStatus();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const clearTyping = useCallback(() => {
     if (typingRef.current !== null) {
@@ -271,6 +318,26 @@ export function useChat({ locale }: UseChatOptions) {
       const trimmed = text.trim();
       if (!trimmed || isLoading) return;
 
+      if (!status.ready) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: nextMessageId(),
+            role: "user",
+            content: trimmed,
+          },
+          {
+            id: nextMessageId(),
+            role: "assistant",
+            content:
+              locale === "en-US"
+                ? "AI assistant is currently unavailable. Please try again after API configuration is restored."
+                : "AI 助手当前不可用，请在 API 配置恢复后重试。",
+          },
+        ]);
+        return;
+      }
+
       clearTyping();
 
       const userMessage: ChatMessage = {
@@ -332,7 +399,7 @@ export function useChat({ locale }: UseChatOptions) {
         setIsLoading(false);
       }
     },
-    [clearTyping, consumeJson, consumeSse, isLoading, patchAssistant, streamMode]
+    [clearTyping, consumeJson, consumeSse, isLoading, locale, patchAssistant, status.ready, streamMode]
   );
 
   const clearMessages = useCallback(() => {
@@ -343,5 +410,5 @@ export function useChat({ locale }: UseChatOptions) {
     setIsLoading(false);
   }, [clearTyping]);
 
-  return { messages, isLoading, sendMessage, clearMessages };
+  return { messages, isLoading, sendMessage, clearMessages, status };
 }

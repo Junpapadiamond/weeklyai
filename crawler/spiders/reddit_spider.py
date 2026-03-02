@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import os
 import re
+from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, List, Optional
 
@@ -19,6 +20,7 @@ except ImportError:
     HAS_FEEDPARSER = False
 
 from .base_spider import BaseSpider
+from utils.social_health import update_source_health
 from utils.social_sources import load_reddit_subreddits_with_source
 
 
@@ -117,6 +119,8 @@ class RedditSpider(BaseSpider):
 
     def __init__(self):
         super().__init__()
+        self._health_errors = defaultdict(int)
+        self._rss_fallback_hits = 0
         self.user_agent = os.getenv(
             "REDDIT_USER_AGENT",
             "WeeklyAI/1.0 (https://weeklyai.app)",
@@ -167,6 +171,7 @@ class RedditSpider(BaseSpider):
             )
 
             if not sub_items and HAS_FEEDPARSER:
+                self._rss_fallback_hits += 1
                 sub_items = self._fetch_subreddit_rss(
                     subreddit=subreddit,
                     cutoff=cutoff,
@@ -182,6 +187,15 @@ class RedditSpider(BaseSpider):
                 items.append(item)
 
         print(f"  [Reddit] Collected {len(items)} items")
+        update_source_health(
+            "reddit",
+            {
+                "count": len(items),
+                "subreddit_total": len(subreddits),
+                "rss_fallback_hits": int(self._rss_fallback_hits),
+                "errors": {k: int(v) for k, v in self._health_errors.items()},
+            },
+        )
         return items[:80]
 
     def _is_ai_relevant(self, text: str) -> bool:
@@ -193,11 +207,11 @@ class RedditSpider(BaseSpider):
     def _fetch_subreddit_json(self, subreddit: str, cutoff: datetime, allowed_year: int, limit: int) -> List[Dict[str, Any]]:
         url = f"https://www.reddit.com/r/{subreddit}/new.json?limit={limit}"
         try:
-            resp = self.session.get(url, timeout=20)
-            resp.raise_for_status()
+            resp = self.fetch(url, timeout=20)
             payload = resp.json()
         except Exception as exc:
             print(f"    ⚠ Reddit JSON failed r/{subreddit}: {exc}")
+            self._health_errors["json_failed"] += 1
             return []
 
         results: List[Dict[str, Any]] = []
@@ -268,9 +282,9 @@ class RedditSpider(BaseSpider):
     def _fetch_subreddit_rss(self, subreddit: str, cutoff: datetime, allowed_year: int, limit: int) -> List[Dict[str, Any]]:
         url = f"https://www.reddit.com/r/{subreddit}/.rss"
         try:
-            resp = self.session.get(url, timeout=20)
-            resp.raise_for_status()
+            resp = self.fetch(url, timeout=20)
         except Exception:
+            self._health_errors["rss_failed"] += 1
             return []
 
         feed = feedparser.parse(resp.content)

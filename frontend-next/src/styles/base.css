@@ -1840,10 +1840,25 @@ input {
 
   .nav-container {
     padding: 0.55rem 0.66rem;
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
   }
 
   .nav-links {
-    max-width: calc(100vw - 216px);
+    order: 3;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    padding-bottom: 0.16rem;
+  }
+
+  .nav-link {
+    white-space: nowrap;
+  }
+
+  .nav-actions {
+    order: 2;
+    margin-left: auto;
   }
 
   .nav-favorites {
