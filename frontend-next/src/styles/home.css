@@ -187,7 +187,7 @@
 .darkhorse-spotlight-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
+  gap: 1.12rem;
   align-items: stretch;
   grid-auto-rows: 1fr;
 }
@@ -198,8 +198,8 @@
   border-radius: var(--radius-md);
   background: var(--surface);
   box-shadow: var(--shadow-sm);
-  padding: 1rem;
-  min-height: 286px;
+  padding: 1.06rem;
+  min-height: 326px;
   height: 100%;
   transition: border-color var(--motion-fast), box-shadow var(--motion-fast), transform var(--motion-fast);
 }
@@ -295,21 +295,27 @@
   line-height: 1.35;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
   overflow: hidden;
 }
 
 .darkhorse-spotlight__freshness {
   margin: 0;
-  color: var(--text-muted);
-  font-size: 0.74rem;
+  color: color-mix(in oklab, var(--primary) 56%, var(--text-muted));
+  font-size: 0.72rem;
   font-family: var(--font-mono);
+  line-height: 1;
+  width: fit-content;
+  border-radius: var(--radius-pill);
+  border: 1px solid color-mix(in oklab, var(--primary) 20%, var(--border));
+  background: color-mix(in oklab, var(--primary) 8%, transparent);
+  padding: 0.2rem 0.48rem;
 }
 
 .darkhorse-spotlight__badges {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  gap: 0.4rem;
 }
 
 .darkhorse-spotlight__region-tag,
@@ -942,12 +948,6 @@
   }
 }
 
-@media (min-width: 1360px) {
-  .darkhorse-spotlight-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
 @media (max-width: 760px) {
   .hero {
     margin-top: 4.9rem;
@@ -963,7 +963,7 @@
   }
 
   .darkhorse-spotlight-card {
-    min-height: 272px;
+    min-height: 286px;
   }
 
   .discover-page .section-header,
