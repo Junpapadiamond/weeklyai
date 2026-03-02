@@ -2,9 +2,9 @@
 Tests for Weekly Dark Horses freshness rule.
 
 Goal:
-- When there are fresh candidates within DARK_HORSE_FRESH_DAYS, never backfill older products
-  just to reach `limit` (otherwise "本周黑马" shows non-week items).
-- Only when there are zero fresh candidates, fallback to top scored candidates.
+- Dark-horses endpoint is strictly fresh-only.
+- When there are fresh candidates within DARK_HORSE_FRESH_DAYS, never backfill older products.
+- When there are zero fresh candidates, return empty list.
 
 Run:
   cd <project-root>
@@ -58,9 +58,9 @@ class TestDarkHorseFreshness:
         # Old should NOT be backfilled to reach limit
         assert "OldOne" not in names
 
-    def test_fallback_kicks_in_only_when_no_fresh_candidates(self):
+    def test_returns_empty_when_no_fresh_candidates(self):
         """
-        If there are zero fresh candidates, fallback can return older top scored items.
+        If there are zero fresh candidates, endpoint should return empty.
         """
         from app.services.product_service import ProductService
 
@@ -72,6 +72,4 @@ class TestDarkHorseFreshness:
                  mock.patch("app.services.product_service.Config.DARK_HORSE_STICKY_DAYS", 10):
                 res = ProductService.get_dark_horse_products(limit=2, min_index=4)
 
-        names = [p["name"] for p in res]
-        assert "OldA" in names
-        assert "OldB" in names
+        assert res == []

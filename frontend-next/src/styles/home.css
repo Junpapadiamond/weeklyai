@@ -1,11 +1,12 @@
 .home-root {
   isolation: isolate;
+  padding-bottom: clamp(8.6rem, 14vh, 11rem);
 }
 
 .hero {
   margin-top: 1.25rem;
-  margin-bottom: 1.6rem;
-  min-height: 330px;
+  margin-bottom: 1.1rem;
+  min-height: 260px;
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
   overflow: hidden;
@@ -35,11 +36,11 @@
 .hero-layout {
   position: relative;
   z-index: 2;
-  padding: clamp(1.2rem, 3vw, 2.4rem);
+  padding: clamp(1rem, 2.2vw, 1.6rem);
 }
 
 .hero-content {
-  max-width: 640px;
+  max-width: 620px;
 }
 
 .hero-chat-slot {
@@ -138,7 +139,7 @@
 .hero-canvas--loading {
   width: 100%;
   height: 100%;
-  min-height: 330px;
+  min-height: 260px;
 }
 
 .hero-canvas--loading {
@@ -185,7 +186,7 @@
 
 .darkhorse-spotlight-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: 1rem;
   align-items: stretch;
   grid-auto-rows: 1fr;
@@ -198,7 +199,7 @@
   background: var(--surface);
   box-shadow: var(--shadow-sm);
   padding: 1rem;
-  min-height: 332px;
+  min-height: 286px;
   height: 100%;
   transition: border-color var(--motion-fast), box-shadow var(--motion-fast), transform var(--motion-fast);
 }
@@ -296,6 +297,13 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
   overflow: hidden;
+}
+
+.darkhorse-spotlight__freshness {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-family: var(--font-mono);
 }
 
 .darkhorse-spotlight__badges {
@@ -416,6 +424,22 @@
   display: grid;
   gap: 1rem;
   position: relative;
+}
+
+.discover-grid-shell {
+  display: grid;
+  gap: 0.72rem;
+}
+
+.discover-grid-shell__hint {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-family: var(--font-mono);
+}
+
+.discover-grid-shell__grid {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
 .swipe-onboarding {
@@ -912,9 +936,22 @@
   }
 }
 
+@media (min-width: 960px) {
+  .darkhorse-spotlight-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1360px) {
+  .darkhorse-spotlight-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 760px) {
   .hero {
     margin-top: 4.9rem;
+    min-height: 220px;
   }
 
   .hero-title {
@@ -926,7 +963,7 @@
   }
 
   .darkhorse-spotlight-card {
-    min-height: 308px;
+    min-height: 272px;
   }
 
   .discover-page .section-header,

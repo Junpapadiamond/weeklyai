@@ -11,8 +11,10 @@ export type Product = {
   website?: string;
   description: string;
   description_en?: string;
+  description_zh?: string;
   why_matters?: string;
   why_matters_en?: string;
+  why_matters_zh?: string;
   logo_url?: string;
   logo?: string;
   dark_horse_index?: number;
@@ -28,6 +30,7 @@ export type Product = {
   valuation?: string;
   latest_news?: string;
   latest_news_en?: string;
+  latest_news_zh?: string;
   source?: string;
   source_url?: string;
   region?: string;
@@ -105,7 +108,7 @@ export type SearchParams = {
   q?: string;
   categories?: string[];
   type?: "all" | "software" | "hardware";
-  sort?: "trending" | "rating" | "users";
+  sort?: "relevance" | "trending" | "rating" | "users";
   page?: number;
   limit?: number;
 };

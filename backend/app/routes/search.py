@@ -22,7 +22,7 @@ def search_products():
     - q: 搜索关键词
     - categories: 分类筛选（逗号分隔，支持多选）
     - type: 类型筛选 (software/hardware/all)
-    - sort: 排序方式 (trending/rating/users)
+    - sort: 排序方式 (relevance/trending/rating/users)
     - page: 页码
     - limit: 每页数量
     """

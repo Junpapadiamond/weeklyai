@@ -416,15 +416,12 @@ export function isPlaceholderValue(value: string | undefined | null): boolean {
   return PLACEHOLDER_VALUES.has(normalized);
 }
 
-function isLikelyEnglish(text: string): boolean {
-  const trimmed = String(text || "").trim();
-  if (!trimmed) return false;
-  if (/[\u4e00-\u9fff]/.test(trimmed)) return false;
-  return /[A-Za-z]/.test(trimmed);
-}
-
 function pickLocalizedText(product: Product, field: keyof Product, locale: SiteLocale): string {
+  const zhLocalizedField = `${String(field)}_zh` as keyof Product;
   const zhField = String(product[field] || "").trim();
+  const zhLocalized = isPlaceholderValue(String(product[zhLocalizedField] || "").trim())
+    ? ""
+    : String(product[zhLocalizedField] || "").trim();
   const enField = `${String(field)}_en` as keyof Product;
   const zh = isPlaceholderValue(zhField) ? "" : zhField;
   const en = isPlaceholderValue(String(product[enField] || "").trim())
@@ -432,10 +429,10 @@ function pickLocalizedText(product: Product, field: keyof Product, locale: SiteL
     : String(product[enField] || "").trim();
 
   if (locale === "en-US") {
-    return en || (isLikelyEnglish(zh) ? zh : "");
+    return en || zh || zhLocalized;
   }
 
-  return zh || en;
+  return zhLocalized || zh || en;
 }
 
 export function parseFundingAmount(value: string | undefined): number {
@@ -680,6 +677,13 @@ export type ProductCountryInfo = {
   unknown: boolean;
 };
 
+export type ProductRegionDisplayInfo = {
+  label: string;
+  flag: string;
+  unknown: boolean;
+  source: string;
+};
+
 function normalizeCountryCode(value: unknown): string {
   const text = String(value || "").trim();
   if (!text) return "";
@@ -724,6 +728,7 @@ export function resolveProductCountry(product: Product): ProductCountryInfo {
   const extra = (product.extra ?? {}) as Record<string, unknown>;
   const countrySourceHint = String(raw.country_source || "").trim().toLowerCase();
   const skipRegionDerivedCountryFields = REGION_DERIVED_COUNTRY_SOURCES.has(countrySourceHint);
+  const rawRegion = String(product.region || "").trim();
   const explicitFields = [
     raw.company_country_code,
     raw.hq_country_code,
@@ -779,7 +784,7 @@ export function resolveProductCountry(product: Product): ProductCountryInfo {
 
   const source = String(raw.source || "").trim().toLowerCase();
   const regionFlag = extractRegionFlag(product.region);
-  if (source === "curated" && regionFlag && FLAG_TO_COUNTRY_CODE[regionFlag]) {
+  if (source === "curated" && regionFlag && !DISCOVERY_REGION_FLAGS.has(rawRegion) && FLAG_TO_COUNTRY_CODE[regionFlag]) {
     const code = FLAG_TO_COUNTRY_CODE[regionFlag];
     const name = COUNTRY_CODE_TO_NAME[code] || code;
     return {
@@ -792,7 +797,12 @@ export function resolveProductCountry(product: Product): ProductCountryInfo {
     };
   }
 
-  if (regionFlag && !DISCOVERY_REGION_FLAGS.has(regionFlag) && FLAG_TO_COUNTRY_CODE[regionFlag]) {
+  if (
+    regionFlag
+    && !DISCOVERY_REGION_FLAGS.has(rawRegion)
+    && !DISCOVERY_REGION_FLAGS.has(regionFlag)
+    && FLAG_TO_COUNTRY_CODE[regionFlag]
+  ) {
     const code = FLAG_TO_COUNTRY_CODE[regionFlag];
     const name = COUNTRY_CODE_TO_NAME[code] || code;
     return {
@@ -825,6 +835,98 @@ export function resolveProductCountry(product: Product): ProductCountryInfo {
     display: UNKNOWN_COUNTRY_NAME,
     source: "unknown",
     unknown: true,
+  };
+}
+
+function normalizeMarketToken(value: string): "" | "us" | "cn" | "eu" | "jpkr" | "sea" | "global" {
+  const text = String(value || "")
+    .trim()
+    .toLowerCase();
+  if (!text) return "";
+
+  if (text.includes("🇺🇸") || text.includes("美国") || text.includes("united states") || text.includes(" us")) return "us";
+  if (text.includes("🇨🇳") || text.includes("中国") || text.includes("china") || text.includes(" cn")) return "cn";
+  if (text.includes("🇪🇺") || text.includes("欧洲") || text.includes("europe") || text.includes(" eu")) return "eu";
+  if (
+    text.includes("🇯🇵🇰🇷")
+    || text.includes("🇯🇵")
+    || text.includes("🇰🇷")
+    || text.includes("日韩")
+    || text.includes("日本")
+    || text.includes("韩国")
+    || text.includes("japan")
+    || text.includes("korea")
+  ) {
+    return "jpkr";
+  }
+  if (
+    text.includes("🇸🇬")
+    || text.includes("新加坡")
+    || text.includes("东南亚")
+    || text.includes("singapore")
+    || text.includes("sea")
+  ) {
+    return "sea";
+  }
+  if (text.includes("🌍") || text.includes("global") || text.includes("全球")) return "global";
+  return "";
+}
+
+function marketLabel(token: "us" | "cn" | "eu" | "jpkr" | "sea" | "global", locale: SiteLocale): string {
+  if (locale === "en-US") {
+    if (token === "us") return "US market";
+    if (token === "cn") return "China market";
+    if (token === "eu") return "Europe market";
+    if (token === "jpkr") return "Japan/Korea market";
+    if (token === "sea") return "SEA market";
+    return "Global market";
+  }
+
+  if (token === "us") return "美国市场";
+  if (token === "cn") return "中国市场";
+  if (token === "eu") return "欧洲市场";
+  if (token === "jpkr") return "日韩市场";
+  if (token === "sea") return "东南亚市场";
+  return "全球市场";
+}
+
+function marketFlag(token: "us" | "cn" | "eu" | "jpkr" | "sea" | "global"): string {
+  if (token === "us") return "🇺🇸";
+  if (token === "cn") return "🇨🇳";
+  if (token === "eu") return "🇪🇺";
+  if (token === "jpkr") return "🇯🇵🇰🇷";
+  if (token === "sea") return "🇸🇬";
+  return "🌍";
+}
+
+export function getProductRegionDisplay(product: Product, locale: SiteLocale = DEFAULT_LOCALE): ProductRegionDisplayInfo {
+  const country = resolveProductCountry(product);
+  if (!country.unknown) {
+    return {
+      label: country.name,
+      flag: country.flag,
+      unknown: false,
+      source: country.source,
+    };
+  }
+
+  const regionCandidates = [String(product.source_region || "").trim(), String(product.region || "").trim()].filter(Boolean);
+  for (const candidate of regionCandidates) {
+    const token = normalizeMarketToken(candidate);
+    if (!token) continue;
+    return {
+      label: marketLabel(token, locale),
+      flag: marketFlag(token),
+      unknown: false,
+      source: "market",
+    };
+  }
+
+  return {
+    label: UNKNOWN_COUNTRY_NAME,
+    flag: "",
+    unknown: true,
+    source: "unknown",
   };
 }
 

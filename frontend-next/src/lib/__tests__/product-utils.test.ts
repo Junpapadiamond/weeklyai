@@ -11,6 +11,7 @@ import {
   getLogoCandidates,
   getLogoFallbacks,
   getProductDirections,
+  getProductRegionDisplay,
   getMonogram,
   getTierTone,
   isValidLogoSource,
@@ -240,6 +241,39 @@ describe("product-utils", () => {
     expect(getLocalizedProductLatestNews(product, "en-US")).toBe("中文动态");
   });
 
+  it("prefers *_zh localized fields in zh-CN mode", () => {
+    const product: Product = {
+      name: "Localized",
+      description: "これは日本語の説明です",
+      description_zh: "这是中文说明",
+      why_matters: "これは日本語の理由です",
+      why_matters_zh: "这是中文理由",
+      latest_news: "これは日本語ニュースです",
+      latest_news_zh: "这是中文动态",
+    };
+
+    expect(getLocalizedProductDescription(product, "zh-CN")).toBe(cleanDescription("这是中文说明", "zh-CN"));
+    expect(getLocalizedProductWhyMatters(product, "zh-CN")).toBe("这是中文理由");
+    expect(getLocalizedProductLatestNews(product, "zh-CN")).toBe("这是中文动态");
+  });
+
+  it("falls back to market-level region labels when country is unknown", () => {
+    const product: Product = {
+      name: "MarketFallback",
+      description: "x",
+      region: "🇯🇵🇰🇷",
+      source_region: "🇯🇵🇰🇷",
+    };
+
+    const zh = getProductRegionDisplay(product, "zh-CN");
+    const en = getProductRegionDisplay(product, "en-US");
+
+    expect(zh.label).toBe("日韩市场");
+    expect(en.label).toBe("Japan/Korea market");
+    expect(zh.flag).toBe("🇯🇵🇰🇷");
+    expect(zh.unknown).toBe(false);
+  });
+
   it("formats category labels by locale", () => {
     const product: Product = {
       name: "Category",
@@ -255,6 +289,7 @@ describe("product-utils", () => {
     const now = new Date("2026-02-10T12:00:00.000Z");
 
     expect(getFreshnessLabel({ name: "A", description: "x", discovered_at: "2026-02-09T12:00:00.000Z" }, now)).toBe("1天前");
+    expect(getFreshnessLabel({ name: "A", description: "x", discovered_at: "2026-02-09T12:00:00.000Z" }, now, "en-US")).toBe("1d ago");
     expect(getFreshnessLabel({ name: "B", description: "x", first_seen: "2026-02-10T08:00:00.000Z" }, now)).toBe("4小时前");
     expect(getFreshnessLabel({ name: "C", description: "x", published_at: "2026-02-10T11:30:00.000Z" }, now)).toBe("1小时内");
     expect(getFreshnessLabel({ name: "D", description: "x" }, now)).toBe("时间待补充");

@@ -889,7 +889,8 @@ def validate_hardware_product(product: dict) -> tuple[bool, str]:
         product["website"] = website
 
     if website.lower() == "unknown":
-        return False, "unknown website not allowed"
+        # Allow unknown website for early hardware signals, but enforce manual verification downstream.
+        product["needs_verification"] = True
     elif not website.startswith(("http://", "https://")):
         return False, "invalid website URL"
     else:
