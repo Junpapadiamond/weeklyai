@@ -170,6 +170,26 @@ describe("product-utils", () => {
     expect(legacyDateSorted[0]?.name).toBe("FreshLowHeatRich");
   });
 
+  it("prioritizes discovered_at over first_seen in recency sorting", () => {
+    const products: Product[] = [
+      {
+        name: "OldDiscoveryRecentSeen",
+        description: "x",
+        discovered_at: "2026-02-25T08:00:00.000Z",
+        first_seen: "2026-03-01T09:00:00.000Z",
+      },
+      {
+        name: "LatestDiscovery",
+        description: "x",
+        discovered_at: "2026-03-01T10:00:00.000Z",
+        first_seen: "2026-02-20T08:00:00.000Z",
+      },
+    ];
+
+    const recencySorted = sortProducts(products, "recency");
+    expect(recencySorted[0]?.name).toBe("LatestDiscovery");
+  });
+
   it("normalizes product directions for second-level filtering", () => {
     expect(normalizeDirectionToken("AI voice assistant")).toBe("voice");
     expect(normalizeDirectionToken("智能驾驶")).toBe("driving");
