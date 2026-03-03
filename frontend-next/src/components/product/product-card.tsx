@@ -42,7 +42,7 @@ function scoreBadgeTone(score: number): string {
 export function ProductCard({ product, compact = false }: ProductCardProps) {
   const { locale, t } = useSiteLocale();
   const website = normalizeWebsite(product.website);
-  const hasWebsite = isValidWebsite(website);
+  const hasWebsite = isValidWebsite(website) && !product.needs_verification;
   const detailId = encodeURIComponent(product._id || product.name);
   const score = getProductScore(product);
   const scoreLabel = formatScore(score, locale);

@@ -272,6 +272,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
     if (typeof window === "undefined") return;
     const current = stack[0];
     if (!current) return;
+    if (current.needs_verification) return;
     const website = normalizeWebsite(current.website);
     if (!isValidWebsite(website)) return;
     window.open(website, "_blank", "noopener,noreferrer");
@@ -707,7 +708,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
           {current.funding_total ? <p className="swipe-card-highlight">💰 {current.funding_total}</p> : null}
 
           <div className="swipe-card-meta">
-            {isValidWebsite(website) ? (
+            {isValidWebsite(website) && !current.needs_verification ? (
               <a className="swipe-link" href={website} target="_blank" rel="noopener noreferrer">
                 {t("了解更多", "Learn more")} →
               </a>

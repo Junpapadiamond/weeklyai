@@ -246,7 +246,7 @@ export function FavoritesPanel() {
                 const detailId = encodeURIComponent(product._id || product.id || product.name);
                 const tone = getTierTone(product);
                 const website = normalizeWebsite(product.website);
-                const hasWebsite = isValidWebsite(website);
+                const hasWebsite = isValidWebsite(website) && !product.needs_verification;
                 const directionLabel = getProductDirections(product)
                   .map((value) => getDirectionLabel(value, locale) || value)
                   .join(" · ");

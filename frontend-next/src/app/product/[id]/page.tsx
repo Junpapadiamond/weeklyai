@@ -150,7 +150,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </section>
 
         <footer className="detail-actions">
-          {isValidWebsite(website) ? (
+          {isValidWebsite(website) && !product.needs_verification ? (
             <a className="link-btn link-btn--primary" href={website} target="_blank" rel="noopener noreferrer">
               {t("访问官网", "Visit website")}
             </a>

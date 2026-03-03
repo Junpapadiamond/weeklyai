@@ -53,7 +53,7 @@ fi
 
 # 1.8 Validate auto-resolved websites (avoid wrong domains)
 echo "[$(date +%H:%M:%S)] Running validate_websites.py..." >> "$LOG_DIR/daily_update.log"
-if $PYTHON_BIN crawler/tools/validate_websites.py >> "$LOG_DIR/daily_update.log" 2>&1; then
+if $PYTHON_BIN crawler/tools/validate_websites.py --scope provider --aggressive >> "$LOG_DIR/daily_update.log" 2>&1; then
     echo "[$(date +%H:%M:%S)] validate_websites.py completed successfully" >> "$LOG_DIR/daily_update.log"
 else
     echo "[$(date +%H:%M:%S)] validate_websites.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"

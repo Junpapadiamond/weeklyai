@@ -88,7 +88,7 @@ function DarkHorseSpotlightCard({ product }: DarkHorseSpotlightCardProps) {
   const scoreLabel = formatScore(score, locale);
   const description = cleanDescription(getLocalizedProductDescription(product, locale), locale);
   const website = normalizeWebsite(product.website);
-  const hasWebsite = isValidWebsite(website);
+  const hasWebsite = isValidWebsite(website) && !product.needs_verification;
   const country = resolveProductCountry(product);
   const regionFlag = country.flag || "?";
   const regionLabel = country.unknown ? "Unknown" : country.name;
