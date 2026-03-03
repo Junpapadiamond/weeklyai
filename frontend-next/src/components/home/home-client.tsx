@@ -2,11 +2,11 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { ChevronDown, ChevronUp, Cpu, Flame, Mail, Newspaper, Rss, Sparkles } from "lucide-react";
+import { ChevronDown, ChevronUp, Cpu, Flame, Newspaper, Sparkles } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Product } from "@/types/api";
 import type { SiteLocale } from "@/lib/locale";
-import { parseLastUpdatedLabel } from "@/lib/api-client";
+import { parseLastUpdatedLabel, type WeeklyTopSort } from "@/lib/api-client";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { ChatBar } from "@/components/chat/chat-bar";
 import { ProductCard } from "@/components/product/product-card";
@@ -17,16 +17,15 @@ import {
   filterProducts,
   formatCategories,
   getDirectionLabel,
-  getFreshnessLabel,
   getLocalizedProductDescription,
   getLocalizedProductWhyMatters,
   getProductDirections,
-  getProductRegionDisplay,
   getProductScore,
   isHardware,
   isPlaceholderValue,
   isValidWebsite,
   normalizeWebsite,
+  resolveProductCountry,
   sortProducts,
 } from "@/lib/product-utils";
 
@@ -37,6 +36,7 @@ const HeroCanvas = dynamic(() => import("@/components/home/hero-canvas"), {
 
 const PRODUCTS_PER_PAGE = 12;
 const DARK_HORSE_COLLAPSE_LIMIT = 10;
+const DEFAULT_WEEKLY_TOP_SORT: WeeklyTopSort = "composite";
 
 type HomeClientProps = {
   darkHorses: Product[];
@@ -65,20 +65,13 @@ function parseDateValue(value?: string): Date | null {
   return new Date(timestamp);
 }
 
-function resolvePrimaryDate(product: Product): Date | null {
-  return parseDateValue(product.discovered_at || product.first_seen || product.published_at);
-}
-
-function formatDiscoveryAgeLabel(freshness: string, locale: SiteLocale): string {
-  if (locale === "en-US") {
-    if (freshness === "Timestamp unavailable") return "Discovery time pending";
-    if (freshness === "Just updated") return "Discovered just now";
-    return `Discovered ${freshness}`;
-  }
-
-  if (freshness === "时间待补充") return "发现时间待补充";
-  if (freshness === "刚更新") return "刚发现";
-  return `${freshness}发现`;
+function getCurrentWeekStart(now: Date): Date {
+  const weekStart = new Date(now);
+  const day = weekStart.getDay();
+  const offset = day === 0 ? -6 : 1 - day;
+  weekStart.setDate(weekStart.getDate() + offset);
+  weekStart.setHours(0, 0, 0, 0);
+  return weekStart;
 }
 
 type DarkHorseSpotlightCardProps = {
@@ -96,13 +89,11 @@ function DarkHorseSpotlightCard({ product }: DarkHorseSpotlightCardProps) {
   const description = cleanDescription(getLocalizedProductDescription(product, locale), locale);
   const website = normalizeWebsite(product.website);
   const hasWebsite = isValidWebsite(website);
-  const region = getProductRegionDisplay(product, locale);
-  const regionFlag = region.flag || "🌍";
-  const regionLabel = region.label;
+  const country = resolveProductCountry(product);
+  const regionFlag = country.flag || "?";
+  const regionLabel = country.unknown ? "Unknown" : country.name;
   const fundingLabel = !isPlaceholderValue(product.funding_total) ? product.funding_total?.trim() : "";
   const whyMatters = getLocalizedProductWhyMatters(product, locale) || t("why_matters 待补充", "Why this matters is pending");
-  const freshness = getFreshnessLabel(product, new Date(), locale);
-  const discoveredLabel = formatDiscoveryAgeLabel(freshness, locale);
 
   useEffect(() => {
     const node = whyMattersRef.current;
@@ -149,7 +140,6 @@ function DarkHorseSpotlightCard({ product }: DarkHorseSpotlightCardProps) {
           </header>
 
           <p className="darkhorse-spotlight__description">{description}</p>
-          <p className="darkhorse-spotlight__freshness">{discoveredLabel}</p>
 
           <div className="darkhorse-spotlight__badges">
             <span className="darkhorse-spotlight__region-tag">{regionLabel}</span>
@@ -207,7 +197,9 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
   const { locale, t } = useSiteLocale();
   const [darkFilter, setDarkFilter] = useState<"all" | "hardware" | "software">("all");
   const [tierFilter, setTierFilter] = useState<"all" | "darkhorse" | "rising">("all");
-  const [focusFilter, setFocusFilter] = useState("all");
+  const [typeFilter, setTypeFilter] = useState<"all" | "software" | "hardware">("all");
+  const [directionFilter, setDirectionFilter] = useState("all");
+  const [sortBy, setSortBy] = useState<WeeklyTopSort>(DEFAULT_WEEKLY_TOP_SORT);
   const [currentPage, setCurrentPage] = useState(1);
   const [favoritesCount, setFavoritesCount] = useState(0);
   const [showAllDarkHorses, setShowAllDarkHorses] = useState(false);
@@ -218,7 +210,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
     return subscribeFavorites(syncCount);
   }, []);
 
-  const productPool = useMemo(() => sortProducts(allProducts, "composite"), [allProducts]);
+  const productPool = useMemo(() => sortProducts(allProducts, sortBy), [allProducts, sortBy]);
 
   const filteredDarkHorses = useMemo(() => {
     return darkHorses.filter((product) => {
@@ -236,7 +228,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
   const directionOptions = useMemo(() => {
     const filtered = filterProducts(productPool, {
       tier: tierFilter,
-      type: "all",
+      type: typeFilter,
     });
     const counts = new Map<string, number>();
 
@@ -253,59 +245,45 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
         label: getDirectionLabel(value, locale) || value,
       }))
       .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label, locale));
-  }, [locale, productPool, tierFilter]);
+  }, [locale, productPool, tierFilter, typeFilter]);
 
-  const focusOptions = useMemo(() => {
-    const base = [
-      { value: "all", label: t("全部焦点", "All focus") },
-      { value: "software", label: t("软件", "Software") },
-      { value: "hardware", label: t("硬件", "Hardware") },
-    ];
+  const activeDirectionFilter =
+    directionFilter === "all" || directionOptions.some((option) => option.value === directionFilter)
+      ? directionFilter
+      : "all";
 
-    const directions = directionOptions.map((option) => ({
-      value: option.value,
-      label: `${option.label} (${option.count})`,
-    }));
-
-    return [...base, ...directions];
-  }, [directionOptions, t]);
-
-  const activeFocusFilter = focusOptions.some((option) => option.value === focusFilter) ? focusFilter : "all";
-
-  const picksFiltered = useMemo(() => {
-    const byTier = filterProducts(productPool, {
+  const trendingFiltered = useMemo(() => {
+    const filtered = filterProducts(productPool, {
       tier: tierFilter,
-      type: "all",
+      type: typeFilter,
     });
-
-    if (activeFocusFilter === "all") return byTier;
-    if (activeFocusFilter === "software") return byTier.filter((product) => !isHardware(product));
-    if (activeFocusFilter === "hardware") return byTier.filter((product) => isHardware(product));
-    return byTier.filter((product) => getProductDirections(product).includes(activeFocusFilter));
-  }, [activeFocusFilter, productPool, tierFilter]);
+    return activeDirectionFilter === "all"
+      ? filtered
+      : filtered.filter((product) => getProductDirections(product).includes(activeDirectionFilter));
+  }, [activeDirectionFilter, productPool, tierFilter, typeFilter]);
 
   const visibleProducts = useMemo(() => {
-    return picksFiltered.slice(0, currentPage * PRODUCTS_PER_PAGE);
-  }, [currentPage, picksFiltered]);
+    return trendingFiltered.slice(0, currentPage * PRODUCTS_PER_PAGE);
+  }, [currentPage, trendingFiltered]);
 
-  const hasMore = visibleProducts.length < picksFiltered.length;
+  const hasMore = visibleProducts.length < trendingFiltered.length;
 
   const signalStats = useMemo(() => {
     const now = new Date();
+    const weekStart = getCurrentWeekStart(now).getTime();
     const nowTs = now.getTime();
-    const rollingWindowStart = nowTs - 7 * 24 * 60 * 60 * 1000;
-    const rolling7dCount = productPool.filter((product) => {
-      const discovered = resolvePrimaryDate(product);
+    const weekNewCount = productPool.filter((product) => {
+      const discovered = parseDateValue(product.discovered_at);
       if (!discovered) return false;
       const ts = discovered.getTime();
-      return ts >= rollingWindowStart && ts <= nowTs;
+      return ts >= weekStart && ts <= nowTs;
     }).length;
     const fundedCount = productPool.filter((product) => !isPlaceholderValue(product.funding_total)).length;
     const regionCount = new Set(productPool.map((product) => product.region).filter(Boolean)).size;
 
     return {
       total: productPool.length,
-      rolling7dCount,
+      weekNewCount,
       fundedCount,
       regionCount,
     };
@@ -315,9 +293,6 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
     () => parseLastUpdatedLabel(freshnessHoursAgo, locale),
     [freshnessHoursAgo, locale]
   );
-
-  const rssHref = `${(process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000/api/v1").replace(/\/$/, "")}/products/feed/rss`;
-  const newsletterHref = process.env.NEXT_PUBLIC_NEWSLETTER_URL || "mailto:hello@weeklyai.com?subject=WeeklyAI%20Newsletter";
 
   return (
     <div className="home-root" data-vibe="experimental">
@@ -339,9 +314,9 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
             </div>
             <div className="hero-stats" role="list" aria-label={t("本期信号概览", "Current signal overview")}>
               <div className="hero-stat" role="listitem">
-                <span className="hero-stat__label">{t("近 7 天新增", "New in last 7 days")}</span>
+                <span className="hero-stat__label">{t("本周新增", "New this week")}</span>
                 <strong className="hero-stat__value">
-                  {signalStats.rolling7dCount} {t("款", "items")}
+                  {signalStats.weekNewCount} {t("款", "items")}
                 </strong>
               </div>
               <div className="hero-stat" role="listitem">
@@ -368,6 +343,9 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
               <span>{t("AI 硬件新形态", "new AI hardware form factors")}</span> · <span>{t("社交一手信号", "early social signals")}</span>
             </p>
           </div>
+        </div>
+        <div className="hero-chat-slot">
+          <ChatBar />
         </div>
       </section>
 
@@ -427,10 +405,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
             ))
           ) : (
             <div className="empty-state">
-              <p className="empty-state-text">{t("本周暂无新黑马，建议查看更多推荐。", "No new dark horses this week. Explore more picks below.")}</p>
-              <a className="link-btn" href="#trendingSection">
-                {t("查看更多推荐", "See more picks")}
-              </a>
+              <p className="empty-state-text">{t("该筛选下暂无黑马产品。", "No dark horse products found for this filter.")}</p>
             </div>
           )}
         </div>
@@ -453,7 +428,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
           <h2 className="section-title">{t("更多推荐", "More Picks")}</h2>
           <p className="section-desc">{t("黑马 (4-5分) + 潜力股 (2-3分)", "Dark Horses (4-5) + Rising Stars (2-3)")}</p>
           <p className="section-micro-note">
-            {t("固定综合排序，先选层级，再聚焦方向。", "Fixed composite sorting: pick tier first, then focus.")}
+            {t("默认按综合排序（热度 + 新鲜度），可切换热度或时间。", "Sorted by composite score by default (heat + freshness), switch to heat or time anytime.")}
           </p>
         </div>
 
@@ -493,17 +468,47 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
 
           <div className="controls-right">
             <label>
-              {t("焦点", "Focus")}
+              {t("排序", "Sort")}
               <select
-                value={activeFocusFilter}
+                value={sortBy}
                 onChange={(event) => {
-                  setFocusFilter(event.target.value);
+                  setSortBy(event.target.value as typeof sortBy);
                   setCurrentPage(1);
                 }}
               >
-                {focusOptions.map((option) => (
+                <option value="composite">🧠 {t("综合", "Composite")}</option>
+                <option value="trending">🔥 {t("热度", "Trending")}</option>
+                <option value="recency">🕐 {t("时间", "Recency")}</option>
+              </select>
+            </label>
+            <label>
+              {t("一级分类", "Category")}
+              <select
+                value={typeFilter}
+                onChange={(event) => {
+                  setTypeFilter(event.target.value as typeof typeFilter);
+                  setDirectionFilter("all");
+                  setCurrentPage(1);
+                }}
+              >
+                <option value="all">{t("全部", "All")}</option>
+                <option value="software">{t("软件", "Software")}</option>
+                <option value="hardware">{t("硬件", "Hardware")}</option>
+              </select>
+            </label>
+            <label>
+              {t("二级方向", "Direction")}
+              <select
+                value={activeDirectionFilter}
+                onChange={(event) => {
+                  setDirectionFilter(event.target.value);
+                  setCurrentPage(1);
+                }}
+              >
+                <option value="all">{t("全部方向", "All directions")}</option>
+                {directionOptions.map((option) => (
                   <option key={option.value} value={option.value}>
-                    {option.label}
+                    {option.label} ({option.count})
                   </option>
                 ))}
               </select>
@@ -534,22 +539,12 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
 
       <section className="section section--linkout">
         <Link className="link-banner" href="/discover">
-          🎲 {t("进入速览模式", "Open quick scan")} →
+          🎲 {t("随机发现产品", "Discover random products")} →
         </Link>
         <Link className="link-banner" href="/blog">
           <Newspaper size={18} /> {t("查看博客和动态信号", "View news and social signals")}
         </Link>
-        <a className="link-banner" href={rssHref} target="_blank" rel="noopener noreferrer">
-          <Rss size={18} /> {t("订阅 RSS", "Subscribe RSS")}
-        </a>
-        <a className="link-banner" href={newsletterHref} target="_blank" rel="noopener noreferrer">
-          <Mail size={18} /> {t("订阅每周快报", "Join weekly newsletter")}
-        </a>
       </section>
-
-      <div className="home-chat-floating" aria-label={t("首页 AI 助手", "Homepage AI assistant")}>
-        <ChatBar />
-      </div>
     </div>
   );
 }

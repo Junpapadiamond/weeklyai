@@ -176,11 +176,6 @@ def main() -> int:
     parser.add_argument("--hours", type=int, default=int(os.getenv("SOCIAL_HOURS", "96")), help="Freshness window hours")
     parser.add_argument("--year", type=int, default=int(os.getenv("CONTENT_YEAR", str(datetime.now(timezone.utc).year))), help="Allowed content year")
     parser.add_argument("--limit", type=int, default=60, help="Max items per source")
-    parser.add_argument(
-        "--allow-state-write",
-        action="store_true",
-        help="Allow spiders to write runtime state files (disabled by default)",
-    )
     parser.add_argument("--write-subset", type=str, default="", help="Write a small subset JSON (for rss_to_products)")
     parser.add_argument("--subset-size", type=int, default=8, help="Items per source for subset file")
     args = parser.parse_args()
@@ -192,13 +187,6 @@ def main() -> int:
     # Keep spider behavior aligned with explicit verifier arguments.
     os.environ["SOCIAL_HOURS"] = str(args.hours)
     os.environ["CONTENT_YEAR"] = str(args.year)
-    if not args.allow_state_write:
-        os.environ["X_SPIDER_DISABLE_STATE_WRITE"] = "true"
-        os.environ["SOCIAL_HEALTH_DISABLE_WRITE"] = "true"
-    print(
-        f"State write disabled: "
-        f"{str((os.getenv('X_SPIDER_DISABLE_STATE_WRITE') or '').lower() in {'1', 'true', 'yes', 'on'})}"
-    )
 
     try:
         from spiders.youtube_spider import YouTubeSpider

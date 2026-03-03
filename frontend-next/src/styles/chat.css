@@ -1,20 +1,16 @@
-/* Homepage chat bar: fixed bottom floating launcher. */
+/* Chat bar lives inside Hero panel (non-sticky). */
 .chat-bar-anchor {
-  width: min(94vw, 720px);
-  margin: 0 auto;
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: max(0.72rem, calc(env(safe-area-inset-bottom) + 0.72rem));
-  z-index: 72;
-  pointer-events: auto;
+  width: min(100%, 680px);
+  margin: 0.3rem auto 0;
+  position: relative;
+  z-index: 3;
 }
 
 .chat-bar {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.44rem;
+  gap: 0.55rem;
 }
 
 .chat-bar__form {
@@ -182,21 +178,6 @@
   flex-wrap: wrap;
   gap: 0.4rem;
   justify-content: center;
-}
-
-.chat-bar__status {
-  margin: 0;
-  text-align: center;
-  font-size: 0.72rem;
-  font-family: var(--font-mono);
-}
-
-.chat-bar__status.is-ready {
-  color: color-mix(in oklab, var(--primary) 72%, var(--text));
-}
-
-.chat-bar__status.is-degraded {
-  color: color-mix(in oklab, var(--punch) 76%, var(--text));
 }
 
 .chat-chip {
@@ -536,17 +517,6 @@
 .chat-panel__send:disabled {
   opacity: 0.6;
   cursor: not-allowed;
-}
-
-@media (max-width: 760px) {
-  .chat-bar-anchor {
-    width: min(96vw, 720px);
-    bottom: max(0.56rem, calc(env(safe-area-inset-bottom) + 0.56rem));
-  }
-
-  .chat-bar__status {
-    font-size: 0.68rem;
-  }
 }
 
 .chat-panel__footer {

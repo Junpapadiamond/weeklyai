@@ -10,7 +10,7 @@ import { useChat } from "./use-chat";
 export function ChatBar() {
   const { locale, t } = useSiteLocale();
   const [isOpen, setIsOpen] = useState(false);
-  const { messages, isLoading, sendMessage, status } = useChat({ locale });
+  const { messages, isLoading, sendMessage } = useChat({ locale });
 
   function openPanel(initialText?: string) {
     setIsOpen(true);
@@ -60,13 +60,6 @@ export function ChatBar() {
             <ArrowUp size={16} />
           </button>
         </form>
-        <p className={`chat-bar__status ${status.ready ? "is-ready" : "is-degraded"}`}>
-          {status.checking
-            ? t("AI 能力检测中...", "Checking AI status...")
-            : status.ready
-              ? t("AI 助手已接入，可直接提问。", "AI assistant is online.")
-              : t("AI 助手暂不可用（配置缺失或服务异常）。", "AI assistant unavailable (config or service issue).")}
-        </p>
         <ChatSuggestions onSelect={(text) => openPanel(text)} compact />
       </div>
     </div>

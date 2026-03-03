@@ -329,29 +329,17 @@ class ProductRepository:
     _cached_products = None
     _cache_time = None
     _cache_duration = 300  # 5分钟缓存
-    _cache_signature = None
     _cached_blogs = None
     _blogs_cache_time = None
     _blogs_cache_duration = BLOG_CACHE_SECONDS
-    _blogs_cache_signature = None
 
     @classmethod
     def refresh_cache(cls):
         """强制刷新缓存"""
         cls._cached_products = None
         cls._cache_time = None
-        cls._cache_signature = None
         cls._cached_blogs = None
         cls._blogs_cache_time = None
-        cls._blogs_cache_signature = None
-
-    @staticmethod
-    def _runtime_data_signature() -> str:
-        """Build a lightweight signature so cache is isolated by data source context."""
-        mongo_uri = sanitize_env_value(os.getenv('MONGO_URI', ''))
-        if mongo_uri:
-            return f"mongo::{mongo_uri}"
-        return "json::local"
 
     @classmethod
     def load_products(cls, filters_module=None) -> List[Dict]:
@@ -362,10 +350,9 @@ class ProductRepository:
         2) 若 MongoDB 不可用或为空，则回退到本地 JSON 逻辑。
         """
         now = datetime.now()
-        runtime_signature = cls._runtime_data_signature()
 
         # 检查缓存
-        if cls._cached_products and cls._cache_time and cls._cache_signature == runtime_signature:
+        if cls._cached_products and cls._cache_time:
             age = (now - cls._cache_time).total_seconds()
             if age < cls._cache_duration:
                 return cls._cached_products
@@ -394,7 +381,6 @@ class ProductRepository:
         # 更新缓存
         cls._cached_products = products
         cls._cache_time = now
-        cls._cache_signature = runtime_signature
 
         return products
 
@@ -782,10 +768,9 @@ class ProductRepository:
     def load_blogs(cls) -> List[Dict]:
         """加载博客/新闻/讨论数据（优先 MongoDB，回退 JSON）。"""
         now = datetime.now()
-        runtime_signature = cls._runtime_data_signature()
 
         # 检查缓存
-        if cls._cached_blogs is not None and cls._blogs_cache_time and cls._blogs_cache_signature == runtime_signature:
+        if cls._cached_blogs is not None and cls._blogs_cache_time:
             age = (now - cls._blogs_cache_time).total_seconds()
             if age < cls._blogs_cache_duration:
                 return cls._cached_blogs
@@ -815,7 +800,6 @@ class ProductRepository:
 
         cls._cached_blogs = blogs
         cls._blogs_cache_time = now
-        cls._blogs_cache_signature = runtime_signature
         return blogs
 
     @classmethod

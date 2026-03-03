@@ -1,7 +1,6 @@
 """Search regression tests for keyword recall and basic filtering behavior."""
 
 import os
-from datetime import datetime, timedelta, timezone
 
 import pytest
 
@@ -102,38 +101,3 @@ def test_search_remains_compatible_when_en_fields_missing(monkeypatch):
     result = ProductService.search_products(keyword="功能描述", page=1, limit=20)
     assert result["total"] == 1
     assert result["products"][0]["name"] == "兼容样本"
-
-
-def test_search_relevance_prefers_recent_results_on_tie(monkeypatch):
-    now = datetime.now(timezone.utc)
-    fresh_date = (now - timedelta(days=1)).isoformat() + "Z"
-    stale_date = (now - timedelta(days=45)).isoformat() + "Z"
-
-    sample = [
-        {
-            "name": "Agent Legacy",
-            "description": "AI agent orchestration platform",
-            "why_matters": "Agent workflow with legacy release",
-            "category": "agent",
-            "website": "https://legacy-agent.example.com",
-            "dark_horse_index": 5,
-            "hot_score": 95,
-            "discovered_at": stale_date,
-        },
-        {
-            "name": "Agent Fresh",
-            "description": "AI agent orchestration platform",
-            "why_matters": "Agent workflow with recent release",
-            "category": "agent",
-            "website": "https://fresh-agent.example.com",
-            "dark_horse_index": 3,
-            "hot_score": 20,
-            "discovered_at": fresh_date,
-        },
-    ]
-
-    monkeypatch.setattr(ProductService, "_load_products", lambda: sample)
-
-    result = ProductService.search_products(keyword="agent", sort_by="relevance", page=1, limit=20)
-    assert result["total"] == 2
-    assert result["products"][0]["name"] == "Agent Fresh"

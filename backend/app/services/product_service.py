@@ -191,7 +191,7 @@ class ProductService:
         - keyword: 搜索关键词
         - categories: 分类列表
         - product_type: 类型 (software/hardware/all)
-        - sort_by: 排序方式 (relevance/trending/rating/users)
+        - sort_by: 排序方式 (trending/rating/users)
         - page: 页码
         - limit: 每页数量
         """
@@ -202,7 +202,7 @@ class ProductService:
 
         if product_type not in {'all', 'software', 'hardware'}:
             product_type = 'all'
-        if sort_by not in {'relevance', 'trending', 'rating', 'users'}:
+        if sort_by not in {'trending', 'rating', 'users'}:
             sort_by = 'trending'
 
         try:
@@ -245,35 +245,16 @@ class ProductService:
         else:
             sorted_results = sorting.sort_by_trending(results)
 
-        # 带关键词时优先相关性。relevance 模式下按“7天内优先 -> 更新时间 -> 热度”打平。
+        # 带关键词时优先相关性，再用所选排序作为次序。
         if keyword:
             sort_rank = {id(product): idx for idx, product in enumerate(sorted_results)}
-            if sort_by == 'relevance':
-                now = datetime.now()
-                recent_cutoff = now - timedelta(days=7)
-                epoch = datetime(1970, 1, 1)
-
-                def relevance_key(product: Dict[str, Any]):
-                    product_date = ProductService._get_product_date(product) or epoch
-                    is_recent = 1 if product_date >= recent_cutoff else 0
-                    heat = sorting.get_heat_score(product)
-                    return (
-                        keyword_scores.get(id(product), 0.0),
-                        is_recent,
-                        product_date,
-                        heat,
-                        -sort_rank.get(id(product), len(sorted_results)),
-                    )
-
-                results = sorted(sorted_results, key=relevance_key, reverse=True)
-            else:
-                results = sorted(
-                    sorted_results,
-                    key=lambda product: (
-                        -keyword_scores.get(id(product), 0.0),
-                        sort_rank.get(id(product), len(sorted_results))
-                    )
+            results = sorted(
+                sorted_results,
+                key=lambda product: (
+                    -keyword_scores.get(id(product), 0.0),
+                    sort_rank.get(id(product), len(sorted_results))
                 )
+            )
         else:
             results = sorted_results
 
@@ -336,10 +317,11 @@ class ProductService:
         - limit: 返回数量
         - min_index: 最低黑马指数 (1-5)
 
-        新鲜度规则:
-        - 仅展示最近 DARK_HORSE_FRESH_DAYS 天内的黑马
-        - 无新鲜黑马时返回空列表，由前端展示空状态
-        - latest_news 更新会通过 get_effective_date 刷新时效
+        刷新规则 (保持本周黑马新鲜度):
+        - 大部分产品: 严格 5 天后移出本周黑马 → 更多推荐
+        - TOP 1 产品 (最高评分+融资): 可保留 10 天
+        - 如果 latest_news 更新, 重置计时器
+        - 空状态回退: 按评分显示 top 10
 
         排序规则: 评分 > 融资金额 > 用户数/估值
         多样化规则: 硬件 ≤40%, 每个硬件子类别 ≤3
@@ -347,7 +329,7 @@ class ProductService:
         products = ProductService._load_products()
         now = datetime.now()
         fresh_cutoff = now - timedelta(days=Config.DARK_HORSE_FRESH_DAYS)  # 5 days
-        # no sticky fallback: dark-horses endpoint is strictly fresh-only.
+        sticky_cutoff = now - timedelta(days=Config.DARK_HORSE_STICKY_DAYS)  # 10 days
 
         # 筛选有 dark_horse_index 且 >= min_index 的产品
         all_candidates = filters.filter_by_dark_horse_index(products, min_index=min_index)
@@ -372,6 +354,13 @@ class ProductService:
         if not all_candidates:
             return []
 
+        # 找到 TOP 1 产品 (最高评分+融资, 可保留 10 天)
+        top_product = max(all_candidates, key=sorting.product_score_key)
+        top_product_date = sorting.get_effective_date(top_product)
+        top_product_eligible = (
+            top_product_date and top_product_date >= sticky_cutoff
+        )
+
         # 筛选新鲜产品 (5 天内)
         fresh_candidates = []
         for p in all_candidates:
@@ -379,15 +368,36 @@ class ProductService:
             if effective_date and effective_date >= fresh_cutoff:
                 fresh_candidates.append(p)
 
+        # 如果 TOP 1 产品不在新鲜列表但仍在 10 天内, 添加到候选
+        if top_product_eligible and top_product not in fresh_candidates:
+            fresh_candidates.append(top_product)
+
+        # 仅在“完全空状态”时回退到历史候选，避免把过期产品补回本周黑马
         if not fresh_candidates:
-            return []
+            # 按评分+融资排序所有候选
+            all_candidates_sorted = sorted(
+                all_candidates,
+                key=lambda x: (
+                    -(x.get('dark_horse_index', 0) or 0),
+                    -sorting.parse_funding(x.get('funding_total', '')),
+                    -sorting.get_valuation_score(x)
+                )
+            )
+            # 补充不在新鲜列表中的产品
+            for p in all_candidates_sorted:
+                if p not in fresh_candidates:
+                    fresh_candidates.append(p)
+                if len(fresh_candidates) >= limit:
+                    break
 
         def sort_key(product: Dict[str, Any]):
             """排序: 新鲜度优先, 然后评分 > 融资"""
             effective_date = sorting.get_effective_date(product) or datetime(1970, 1, 1)
+            is_fresh = effective_date >= fresh_cutoff
+            is_top_sticky = (product == top_product and top_product_eligible)
 
             return (
-                0 if effective_date >= fresh_cutoff else 1,
+                0 if (is_fresh or is_top_sticky) else 1,  # 新鲜/置顶优先
                 -(product.get('dark_horse_index', 0) or 0),
                 -sorting.parse_funding(product.get('funding_total', '')),
                 -sorting.get_valuation_score(product)

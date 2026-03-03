@@ -264,13 +264,7 @@ export function isValidLogoSource(url: string | undefined | null): boolean {
 export function shouldRenderLogoImage(url: string | undefined | null): boolean {
   const normalized = normalizeLogoSource(url);
   if (!isValidLogoSource(normalized)) return false;
-  if (normalized.startsWith("/")) return true;
-  try {
-    const host = normalizeHost(new URL(normalized).hostname);
-    return isAllowedCdnLogoHost(host);
-  } catch {
-    return false;
-  }
+  return normalized.startsWith("/");
 }
 
 function normalizeHost(value: string | undefined | null): string {
@@ -288,21 +282,6 @@ function normalizeHost(value: string | undefined | null): string {
   return withoutWww;
 }
 
-const ENABLE_EXTERNAL_LOGO_FALLBACK = (() => {
-  const raw = String(process.env.NEXT_PUBLIC_LOGO_EXTERNAL_FALLBACK || "")
-    .trim()
-    .toLowerCase();
-  if (!raw) return true;
-  return raw === "true";
-})();
-const LOGO_CDN_HOST = normalizeHost(process.env.NEXT_PUBLIC_LOGO_CDN_BASE_URL);
-
-function isAllowedCdnLogoHost(host: string): boolean {
-  if (!host) return false;
-  if (!LOGO_CDN_HOST) return false;
-  return isSameOrSubdomain(host, LOGO_CDN_HOST);
-}
-
 function resolveLogoHost(website: string | undefined | null): string {
   const primary = normalizeWebsite(website);
   if (isValidWebsite(primary)) {
@@ -315,11 +294,20 @@ function resolveLogoHost(website: string | undefined | null): string {
   return "";
 }
 
+function isLowPriorityProviderLogo(url: string | undefined | null): boolean {
+  const normalized = normalizeLogoSource(url);
+  if (!normalized || normalized.startsWith("/")) return false;
+  try {
+    const host = new URL(normalized).hostname.toLowerCase();
+    return host.includes("logo.clearbit.com") || host.includes("favicon.bing.com");
+  } catch {
+    return false;
+  }
+}
+
 export function getLogoFallbacks(
   website: string | undefined | null
 ): string[] {
-  if (!ENABLE_EXTERNAL_LOGO_FALLBACK) return [];
-
   const host = resolveLogoHost(website);
   if (!host) return [];
 
@@ -328,7 +316,13 @@ export function getLogoFallbacks(
     directFavicons.push(`https://www.${host}/favicon.ico`);
   }
 
-  return directFavicons;
+  return [
+    `https://www.google.com/s2/favicons?domain=${host}&sz=128`,
+    `https://icons.duckduckgo.com/ip3/${host}.ico`,
+    `https://icon.horse/icon/${host}`,
+    ...directFavicons,
+    `https://logo.clearbit.com/${host}`,
+  ];
 }
 
 type LogoCandidatesInput = {
@@ -347,7 +341,28 @@ function isSameOrSubdomain(host: string, root: string): boolean {
 function hostFromProviderCandidate(candidate: string): string {
   try {
     const parsed = new URL(candidate);
-    return normalizeHost(parsed.hostname);
+    const host = parsed.hostname.toLowerCase();
+
+    if (host.includes("logo.clearbit.com")) {
+      return normalizeHost(decodeURIComponent(parsed.pathname).replace(/^\/+/, ""));
+    }
+
+    if (host.includes("google.com") && parsed.pathname.includes("/s2/favicons")) {
+      return normalizeHost(parsed.searchParams.get("domain"));
+    }
+
+    if (host.includes("favicon.bing.com")) {
+      return normalizeHost(parsed.searchParams.get("url"));
+    }
+
+    if (host.includes("icons.duckduckgo.com")) {
+      return normalizeHost(parsed.pathname.replace(/^\/ip3\//, "").replace(/\.ico$/i, ""));
+    }
+
+    if (host.includes("icon.horse")) {
+      return normalizeHost(parsed.pathname.replace(/^\/icon\//, ""));
+    }
+    return normalizeHost(host);
   } catch {
     return "";
   }
@@ -356,34 +371,39 @@ function hostFromProviderCandidate(candidate: string): string {
 function isTrustedLogoSource(candidate: string, websiteHost: string): boolean {
   if (!candidate) return false;
   if (candidate.startsWith("/")) return true;
-
+  if (!websiteHost) return false;
   const derivedHost = hostFromProviderCandidate(candidate);
   if (!derivedHost) return false;
-  if (isAllowedCdnLogoHost(derivedHost)) return true;
-  if (!ENABLE_EXTERNAL_LOGO_FALLBACK) return false;
-  if (!websiteHost) return false;
   return isSameOrSubdomain(derivedHost, websiteHost);
 }
 
 export function getLogoCandidates(input: LogoCandidatesInput): string[] {
   const result: string[] = [];
   const seen = new Set<string>();
+  const deferredClearbit: string[] = [];
   const websiteHost = resolveLogoHost(input.website);
 
-  const pushIfValid = (value: string | undefined | null) => {
+  const pushIfValid = (value: string | undefined | null, opts?: { deferLowPriority?: boolean }) => {
     const normalized = normalizeLogoSource(value);
     if (!isValidLogoSource(normalized)) return;
     if (!isTrustedLogoSource(normalized, websiteHost)) return;
     if (seen.has(normalized)) return;
+    if (opts?.deferLowPriority && isLowPriorityProviderLogo(normalized)) {
+      deferredClearbit.push(normalized);
+      return;
+    }
     seen.add(normalized);
     result.push(normalized);
   };
 
-  pushIfValid(input.logoUrl);
-  pushIfValid(input.secondaryLogoUrl);
+  pushIfValid(input.logoUrl, { deferLowPriority: true });
+  pushIfValid(input.secondaryLogoUrl, { deferLowPriority: true });
   const fallbacks = getLogoFallbacks(input.website);
   for (const fallback of fallbacks) {
     pushIfValid(fallback);
+  }
+  for (const candidate of deferredClearbit) {
+    pushIfValid(candidate);
   }
 
   return result;
@@ -396,12 +416,15 @@ export function isPlaceholderValue(value: string | undefined | null): boolean {
   return PLACEHOLDER_VALUES.has(normalized);
 }
 
+function isLikelyEnglish(text: string): boolean {
+  const trimmed = String(text || "").trim();
+  if (!trimmed) return false;
+  if (/[\u4e00-\u9fff]/.test(trimmed)) return false;
+  return /[A-Za-z]/.test(trimmed);
+}
+
 function pickLocalizedText(product: Product, field: keyof Product, locale: SiteLocale): string {
-  const zhLocalizedField = `${String(field)}_zh` as keyof Product;
   const zhField = String(product[field] || "").trim();
-  const zhLocalized = isPlaceholderValue(String(product[zhLocalizedField] || "").trim())
-    ? ""
-    : String(product[zhLocalizedField] || "").trim();
   const enField = `${String(field)}_en` as keyof Product;
   const zh = isPlaceholderValue(zhField) ? "" : zhField;
   const en = isPlaceholderValue(String(product[enField] || "").trim())
@@ -409,10 +432,10 @@ function pickLocalizedText(product: Product, field: keyof Product, locale: SiteL
     : String(product[enField] || "").trim();
 
   if (locale === "en-US") {
-    return en || zh || zhLocalized;
+    return en || (isLikelyEnglish(zh) ? zh : "");
   }
 
-  return zhLocalized || zh || en;
+  return zh || en;
 }
 
 export function parseFundingAmount(value: string | undefined): number {
@@ -459,12 +482,8 @@ export function tierOf(product: Product): "darkhorse" | "rising" | "other" {
   return "other";
 }
 
-function resolvePrimaryProductDate(product: Product): string | undefined {
-  return product.discovered_at || product.first_seen || product.published_at;
-}
-
 export function productDate(product: Product): number {
-  const raw = resolvePrimaryProductDate(product);
+  const raw = product.first_seen || product.published_at || product.discovered_at;
   if (!raw) return 0;
   const ts = new Date(raw).getTime();
   return Number.isFinite(ts) ? ts : 0;
@@ -657,13 +676,6 @@ export type ProductCountryInfo = {
   unknown: boolean;
 };
 
-export type ProductRegionDisplayInfo = {
-  label: string;
-  flag: string;
-  unknown: boolean;
-  source: string;
-};
-
 function normalizeCountryCode(value: unknown): string {
   const text = String(value || "").trim();
   if (!text) return "";
@@ -708,7 +720,6 @@ export function resolveProductCountry(product: Product): ProductCountryInfo {
   const extra = (product.extra ?? {}) as Record<string, unknown>;
   const countrySourceHint = String(raw.country_source || "").trim().toLowerCase();
   const skipRegionDerivedCountryFields = REGION_DERIVED_COUNTRY_SOURCES.has(countrySourceHint);
-  const rawRegion = String(product.region || "").trim();
   const explicitFields = [
     raw.company_country_code,
     raw.hq_country_code,
@@ -764,7 +775,7 @@ export function resolveProductCountry(product: Product): ProductCountryInfo {
 
   const source = String(raw.source || "").trim().toLowerCase();
   const regionFlag = extractRegionFlag(product.region);
-  if (source === "curated" && regionFlag && !DISCOVERY_REGION_FLAGS.has(rawRegion) && FLAG_TO_COUNTRY_CODE[regionFlag]) {
+  if (source === "curated" && regionFlag && FLAG_TO_COUNTRY_CODE[regionFlag]) {
     const code = FLAG_TO_COUNTRY_CODE[regionFlag];
     const name = COUNTRY_CODE_TO_NAME[code] || code;
     return {
@@ -777,12 +788,7 @@ export function resolveProductCountry(product: Product): ProductCountryInfo {
     };
   }
 
-  if (
-    regionFlag
-    && !DISCOVERY_REGION_FLAGS.has(rawRegion)
-    && !DISCOVERY_REGION_FLAGS.has(regionFlag)
-    && FLAG_TO_COUNTRY_CODE[regionFlag]
-  ) {
+  if (regionFlag && !DISCOVERY_REGION_FLAGS.has(regionFlag) && FLAG_TO_COUNTRY_CODE[regionFlag]) {
     const code = FLAG_TO_COUNTRY_CODE[regionFlag];
     const name = COUNTRY_CODE_TO_NAME[code] || code;
     return {
@@ -818,104 +824,12 @@ export function resolveProductCountry(product: Product): ProductCountryInfo {
   };
 }
 
-function normalizeMarketToken(value: string): "" | "us" | "cn" | "eu" | "jpkr" | "sea" | "global" {
-  const text = String(value || "")
-    .trim()
-    .toLowerCase();
-  if (!text) return "";
-
-  if (text.includes("🇺🇸") || text.includes("美国") || text.includes("united states") || text.includes(" us")) return "us";
-  if (text.includes("🇨🇳") || text.includes("中国") || text.includes("china") || text.includes(" cn")) return "cn";
-  if (text.includes("🇪🇺") || text.includes("欧洲") || text.includes("europe") || text.includes(" eu")) return "eu";
-  if (
-    text.includes("🇯🇵🇰🇷")
-    || text.includes("🇯🇵")
-    || text.includes("🇰🇷")
-    || text.includes("日韩")
-    || text.includes("日本")
-    || text.includes("韩国")
-    || text.includes("japan")
-    || text.includes("korea")
-  ) {
-    return "jpkr";
-  }
-  if (
-    text.includes("🇸🇬")
-    || text.includes("新加坡")
-    || text.includes("东南亚")
-    || text.includes("singapore")
-    || text.includes("sea")
-  ) {
-    return "sea";
-  }
-  if (text.includes("🌍") || text.includes("global") || text.includes("全球")) return "global";
-  return "";
-}
-
-function marketLabel(token: "us" | "cn" | "eu" | "jpkr" | "sea" | "global", locale: SiteLocale): string {
-  if (locale === "en-US") {
-    if (token === "us") return "US market";
-    if (token === "cn") return "China market";
-    if (token === "eu") return "Europe market";
-    if (token === "jpkr") return "Japan/Korea market";
-    if (token === "sea") return "SEA market";
-    return "Global market";
-  }
-
-  if (token === "us") return "美国市场";
-  if (token === "cn") return "中国市场";
-  if (token === "eu") return "欧洲市场";
-  if (token === "jpkr") return "日韩市场";
-  if (token === "sea") return "东南亚市场";
-  return "全球市场";
-}
-
-function marketFlag(token: "us" | "cn" | "eu" | "jpkr" | "sea" | "global"): string {
-  if (token === "us") return "🇺🇸";
-  if (token === "cn") return "🇨🇳";
-  if (token === "eu") return "🇪🇺";
-  if (token === "jpkr") return "🇯🇵🇰🇷";
-  if (token === "sea") return "🇸🇬";
-  return "🌍";
-}
-
-export function getProductRegionDisplay(product: Product, locale: SiteLocale = DEFAULT_LOCALE): ProductRegionDisplayInfo {
-  const country = resolveProductCountry(product);
-  if (!country.unknown) {
-    return {
-      label: country.name,
-      flag: country.flag,
-      unknown: false,
-      source: country.source,
-    };
-  }
-
-  const regionCandidates = [String(product.source_region || "").trim(), String(product.region || "").trim()].filter(Boolean);
-  for (const candidate of regionCandidates) {
-    const token = normalizeMarketToken(candidate);
-    if (!token) continue;
-    return {
-      label: marketLabel(token, locale),
-      flag: marketFlag(token),
-      unknown: false,
-      source: "market",
-    };
-  }
-
-  return {
-    label: UNKNOWN_COUNTRY_NAME,
-    flag: "",
-    unknown: true,
-    source: "unknown",
-  };
-}
-
 export function getFreshnessLabel(
   product: Product,
   now: Date = new Date(),
   locale: SiteLocale = DEFAULT_LOCALE
 ): string {
-  const raw = resolvePrimaryProductDate(product);
+  const raw = product.discovered_at || product.first_seen || product.published_at;
   if (!raw) {
     return pickLocaleText(locale, { zh: "时间待补充", en: "Timestamp unavailable" });
   }

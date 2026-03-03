@@ -6,7 +6,6 @@ import { Dice5, Home } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { Product } from "@/types/api";
 import { useSiteLocale } from "@/components/layout/locale-provider";
-import { DiscoverGrid } from "@/components/discover/discover-grid";
 import { addProductFavorite, countFavorites, openFavoritesPanel, subscribeFavorites } from "@/lib/favorites";
 
 const DiscoveryDeck = dynamic(() => import("@/components/home/discovery-deck"), {
@@ -21,28 +20,11 @@ type DiscoverClientProps = {
 export function DiscoverClient({ products }: DiscoverClientProps) {
   const { t } = useSiteLocale();
   const [favoritesCount, setFavoritesCount] = useState(0);
-  const [useDesktopGrid, setUseDesktopGrid] = useState(false);
 
   useEffect(() => {
     const sync = () => setFavoritesCount(countFavorites());
     sync();
     return subscribeFavorites(sync);
-  }, []);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const media = window.matchMedia("(min-width: 1024px) and (pointer: fine)");
-    const applyMode = () => setUseDesktopGrid(media.matches);
-    applyMode();
-
-    if (typeof media.addEventListener === "function") {
-      media.addEventListener("change", applyMode);
-      return () => media.removeEventListener("change", applyMode);
-    }
-
-    media.addListener(applyMode);
-    return () => media.removeListener(applyMode);
   }, []);
 
   function addFavorite(product: Product) {
@@ -78,11 +60,7 @@ export function DiscoverClient({ products }: DiscoverClientProps) {
       </div>
 
       {products.length ? (
-        useDesktopGrid ? (
-          <DiscoverGrid products={products} />
-        ) : (
-          <DiscoveryDeck key={`discover-${products.length}`} products={products} onLike={addFavorite} />
-        )
+        <DiscoveryDeck key={`discover-${products.length}`} products={products} onLike={addFavorite} />
       ) : (
         <div className="empty-state">
           <p className="empty-state-text">{t("暂无可探索产品，请稍后再试。", "No products available to explore right now. Please try again later.")}</p>

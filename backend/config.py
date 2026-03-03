@@ -24,10 +24,6 @@ class Config:
     
     # MongoDB 配置
     MONGO_URI = os.getenv('MONGO_URI', 'mongodb://localhost:27017/weeklyai')
-
-    # Logo asset pipeline / logo gate
-    LOGO_CDN_BASE_URL = os.getenv('LOGO_CDN_BASE_URL', '')
-    LOGO_STRICT_MODE = os.getenv('LOGO_STRICT_MODE', 'true').lower() == 'true'
     
     # MySQL 配置
     MYSQL_HOST = os.getenv('MYSQL_HOST', 'localhost')

@@ -11,11 +11,11 @@ import {
   getFreshnessLabel,
   getLocalizedProductDescription,
   getLocalizedProductWhyMatters,
-  getProductRegionDisplay,
   getProductScore,
   isHardware,
   isValidWebsite,
   normalizeWebsite,
+  resolveProductCountry,
 } from "@/lib/product-utils";
 
 type ProductCardProps = {
@@ -47,23 +47,11 @@ export function ProductCard({ product, compact = false }: ProductCardProps) {
   const score = getProductScore(product);
   const scoreLabel = formatScore(score, locale);
   const freshness = getFreshnessLabel(product, new Date(), locale);
-  const discoveredLabel =
-    locale === "en-US"
-      ? freshness === "Timestamp unavailable"
-        ? "Discovery time pending"
-        : freshness === "Just updated"
-          ? "Discovered just now"
-          : `Discovered ${freshness}`
-      : freshness === "时间待补充"
-        ? "发现时间待补充"
-        : freshness === "刚更新"
-          ? "刚发现"
-          : `${freshness}发现`;
-  const region = getProductRegionDisplay(product, locale);
-  const regionLabel = region.label;
-  const regionMark = region.flag;
+  const country = resolveProductCountry(product);
+  const regionLabel = country.unknown ? "Unknown" : country.name;
+  const regionMark = country.flag;
   const hasRegionText = true;
-  const microlineParts = [discoveredLabel, product.source || t("来源待补充", "Source pending")];
+  const microlineParts = [freshness, product.source || t("来源待补充", "Source pending")];
   const description = cleanDescription(getLocalizedProductDescription(product, locale), locale);
   const whyMatters = getLocalizedProductWhyMatters(product, locale);
   const tierClass = score >= 4 ? "product-card--darkhorse" : score >= 2 ? "product-card--rising" : "product-card--watch";

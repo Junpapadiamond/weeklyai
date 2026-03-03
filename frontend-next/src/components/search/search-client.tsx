@@ -26,7 +26,7 @@ export function SearchClient({ initialQuery = "" }: SearchClientProps) {
       q: submittedQ,
       categories: [],
       type,
-      sort: "relevance",
+      sort: "trending",
       page,
       limit: 20,
     }),

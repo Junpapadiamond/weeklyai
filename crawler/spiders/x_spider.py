@@ -4,10 +4,9 @@ X/Twitter signals spider.
 Primary path:
 - Perplexity Search (query-driven discovery)
 
-Fallback path (free):
-- Nitter RSS
-- Browser-style timeline scraping
-- Optional r.jina.ai timeline fetch
+Fallback path:
+- Account watchlist timeline fetch via r.jina.ai
+- Tweet metadata fetch via syndication API
 """
 
 from __future__ import annotations
@@ -20,17 +19,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import urlparse
 
-import requests
-
-try:
-    import feedparser
-
-    HAS_FEEDPARSER = True
-except Exception:
-    HAS_FEEDPARSER = False
-
 from .base_spider import BaseSpider
-from utils.social_health import update_source_health
 from utils.social_sources import (
     load_x_accounts_with_source,
     load_x_fallback_config,
@@ -65,17 +54,6 @@ _CRAWLER_DIR = os.path.dirname(_SPIDER_DIR)
 DEFAULT_X_STATE_FILE = os.path.join(_CRAWLER_DIR, "data", "x_spider_state.json")
 
 
-def _truthy(value: str, default: bool = False) -> bool:
-    if not value:
-        return default
-    raw = value.strip().lower()
-    if raw in {"1", "true", "yes", "y", "on"}:
-        return True
-    if raw in {"0", "false", "no", "n", "off"}:
-        return False
-    return default
-
-
 def _to_iso(dt: Optional[datetime]) -> Optional[str]:
     if not dt:
         return None
@@ -96,25 +74,6 @@ def _parse_iso_or_date(value: str) -> Optional[datetime]:
         return datetime.strptime(value[:10], "%Y-%m-%d").replace(tzinfo=timezone.utc)
     except Exception:
         return None
-
-
-def _parse_feed_datetime(entry: Any) -> Optional[datetime]:
-    parsed = getattr(entry, "published_parsed", None) or getattr(entry, "updated_parsed", None)
-    if parsed:
-        try:
-            return datetime(*parsed[:6], tzinfo=timezone.utc)
-        except Exception:
-            pass
-    value = (entry.get("published") or entry.get("updated") or "").strip()
-    return _parse_iso_or_date(value)
-
-
-def _strip_html(text: str) -> str:
-    return re.sub(r"<[^>]+>", "", text or "").strip()
-
-
-def _state_write_disabled() -> bool:
-    return _truthy(os.getenv("X_SPIDER_DISABLE_STATE_WRITE", "false"), default=False)
 
 
 def _state_file_path() -> str:
@@ -147,8 +106,6 @@ def _load_state() -> Dict[str, Any]:
 
 
 def _save_state(state: Dict[str, Any]) -> None:
-    if _state_write_disabled():
-        return
     path = _state_file_path()
     os.makedirs(os.path.dirname(path), exist_ok=True)
     payload = dict(state or {})
@@ -157,14 +114,7 @@ def _save_state(state: Dict[str, Any]) -> None:
         json.dump(payload, f, ensure_ascii=False, indent=2)
 
 
-def _should_run_primary(
-    state: Dict[str, Any],
-    *,
-    mode: str,
-    now: datetime,
-    interval_days: int,
-    force_primary_after_empty: bool,
-) -> Tuple[bool, str]:
+def _should_run_primary(state: Dict[str, Any], *, mode: str, now: datetime, interval_days: int) -> Tuple[bool, str]:
     if mode == "perplexity_only":
         return True, "mode_perplexity_only"
     if mode != "hybrid":
@@ -174,8 +124,6 @@ def _should_run_primary(
         streak = int(state.get("consecutive_fallback_empty_days", 0) or 0)
     except Exception:
         streak = 0
-    if force_primary_after_empty and streak >= 1:
-        return True, "force_after_empty"
     if streak >= 2:
         return True, "fallback_empty_streak"
 
@@ -190,6 +138,10 @@ def _should_run_primary(
 
 
 def _extract_handle_and_id(url: str) -> Tuple[str, str]:
+    # Expected:
+    # - https://x.com/<handle>/status/<id>
+    # - https://twitter.com/<handle>/status/<id>
+    # - https://twitter.com/i/web/status/<id>
     try:
         parsed = urlparse(url)
         parts = [p for p in (parsed.path or "").split("/") if p]
@@ -237,7 +189,7 @@ def _canonical_status_url(handle: str, tweet_id: str) -> str:
 
 
 class XSpider(BaseSpider):
-    """Collect X signals via Perplexity plus multi-provider fallback."""
+    """Collect X signals via Perplexity search plus account-based fallback."""
 
     QUERIES = [
         '("introducing" OR "launched" OR "now live" OR "demo") (AI OR LLM OR agent) (site:x.com OR site:twitter.com)',
@@ -266,32 +218,28 @@ class XSpider(BaseSpider):
         language_filter = None
         if languages_env:
             language_filter = [x.strip() for x in languages_env.split(",") if x.strip()][:10]
-
-        primary_interval_days = max(1, int(os.getenv("X_PRIMARY_INTERVAL_DAYS", "1")))
-        force_primary_after_empty = _truthy(os.getenv("X_FORCE_PRIMARY_AFTER_EMPTY", "true"), default=True)
+        primary_interval_days = max(1, int(os.getenv("X_PRIMARY_INTERVAL_DAYS", "3")))
         state = _load_state()
         run_primary, primary_reason = _should_run_primary(
             state,
             mode=mode,
             now=now_utc,
             interval_days=primary_interval_days,
-            force_primary_after_empty=force_primary_after_empty,
         )
 
-        print(f"  [X] Source mode={mode} (recency={recency}, last {hours}h, max_results={max_results})...")
+        print(
+            f"  [X] Source mode={mode} (recency={recency}, last {hours}h, max_results={max_results})..."
+        )
         if mode in {"hybrid", "perplexity_only"}:
             print(f"  [X] Primary interval={primary_interval_days}d, decision={run_primary} ({primary_reason})")
 
         items: List[Dict[str, Any]] = []
         seen_status_urls = set()
         counters: Dict[str, int] = defaultdict(int)
-        provider_stats: Dict[str, Dict[str, int]] = {}
         primary_added = 0
         primary_ran = False
         fallback_ran = False
         fallback_added = 0
-        fallback_attempted_accounts = 0
-        fallback_success_accounts = 0
 
         if mode in {"hybrid", "perplexity_only"} and run_primary:
             primary_ran = True
@@ -312,13 +260,12 @@ class XSpider(BaseSpider):
         if should_run_fallback:
             fallback_ran = True
             before = len(items)
-            fallback_attempted_accounts, fallback_success_accounts = self._crawl_via_account_fallback(
+            self._crawl_via_account_fallback(
                 items=items,
                 seen_status_urls=seen_status_urls,
                 counters=counters,
                 cutoff=cutoff,
                 allowed_year=allowed_year,
-                provider_stats=provider_stats,
             )
             fallback_added = max(0, len(items) - before)
 
@@ -347,26 +294,6 @@ class XSpider(BaseSpider):
             state["consecutive_fallback_empty_days"] = 0 if fallback_added > 0 else current_streak + 1
         _save_state(state)
 
-        fallback_hit_rate = 0.0
-        if fallback_attempted_accounts > 0:
-            fallback_hit_rate = round(float(fallback_success_accounts) / float(fallback_attempted_accounts), 4)
-        update_source_health(
-            "x",
-            {
-                "count": len(items),
-                "mode": mode,
-                "primary_ran": bool(primary_ran),
-                "primary_reason": primary_reason,
-                "primary_added": int(primary_added),
-                "fallback_ran": bool(fallback_ran),
-                "fallback_added": int(fallback_added),
-                "fallback_attempted_accounts": int(fallback_attempted_accounts),
-                "fallback_success_accounts": int(fallback_success_accounts),
-                "fallback_hit_rate": fallback_hit_rate,
-                "errors": {k: int(v) for k, v in counter_summary.items()},
-                "providers": provider_stats,
-            },
-        )
         return items[:60]
 
     def _crawl_via_perplexity(
@@ -380,7 +307,7 @@ class XSpider(BaseSpider):
         recency: str,
         max_results: int,
         language_filter: Optional[List[str]],
-    ) -> Tuple[int, int]:
+    ) -> int:
         api_key = os.getenv("PERPLEXITY_API_KEY", "").strip()
         if not api_key or not PerplexityClient:
             print("  [X] Primary search disabled: PERPLEXITY_API_KEY not set or client unavailable")
@@ -481,54 +408,44 @@ class XSpider(BaseSpider):
         counters: Dict[str, int],
         cutoff: datetime,
         allowed_year: int,
-        provider_stats: Dict[str, Dict[str, int]],
-    ) -> Tuple[int, int]:
+    ) -> None:
         accounts, accounts_source = load_x_accounts_with_source()
         if not accounts:
             print("  [X] Fallback skipped: no accounts configured")
-            return 0, 0
+            return
 
         cfg = load_x_fallback_config()
-        timeline_provider = str(cfg.get("timeline_provider") or "auto").strip().lower()
-        tweet_provider = str(cfg.get("tweet_provider") or "x_syndication").strip().lower()
+        timeline_provider = str(cfg.get("timeline_provider") or "r_jina")
+        tweet_provider = str(cfg.get("tweet_provider") or "x_syndication")
         max_status = int(cfg.get("max_status_per_account") or 5)
         timeout = int(cfg.get("request_timeout_seconds") or 20)
-        nitter_instances = list(cfg.get("nitter_instances") or [])
-        browser_enabled = bool(cfg.get("browser_enabled", True))
 
         print(
             f"  [X] Fallback: account watchlist path (accounts={len(accounts)}, source={accounts_source}, "
-            f"timeline={timeline_provider}, tweet={tweet_provider}, browser={browser_enabled})"
+            f"timeline={timeline_provider}, tweet={tweet_provider})"
         )
 
-        attempted_accounts = 0
-        success_accounts = 0
         for account in accounts[:50]:
             handle = (account or "").strip().lstrip("@")
             if not handle:
                 continue
-            attempted_accounts += 1
-            candidates, provider_used, errors = self._fetch_account_candidates(
-                handle=handle,
-                timeline_provider=timeline_provider,
-                max_status=max_status,
-                timeout=timeout,
-                nitter_instances=nitter_instances,
-                browser_enabled=browser_enabled,
-            )
-
-            for provider_name, err_count in errors.items():
-                stats = provider_stats.setdefault(provider_name, {"ok": 0, "error": 0})
-                stats["error"] += int(err_count)
-
-            if not candidates:
+            try:
+                timeline_text = self._fetch_account_timeline_markdown(handle=handle, timeout=timeout)
+            except Exception as exc:
+                print(f"    ⚠ Fallback timeline failed @{handle}: {exc}")
                 continue
-            provider_stats.setdefault(provider_used, {"ok": 0, "error": 0})
-            provider_stats[provider_used]["ok"] += 1
+
+            status_urls = self._extract_status_urls_from_timeline(
+                timeline_text,
+                account=handle,
+                max_items=max_status,
+            )
+            if not status_urls:
+                continue
 
             account_added = 0
-            for candidate in candidates:
-                cleaned = _sanitize_status_url(str(candidate.get("url") or ""))
+            for status_url in status_urls:
+                cleaned = _sanitize_status_url(status_url)
                 status_check = self._status_url_check(cleaned)
                 if status_check != "ok":
                     counters[status_check] += 1
@@ -540,17 +457,10 @@ class XSpider(BaseSpider):
                     continue
                 seen_status_urls.add(canonical)
 
-                resolved = self._resolve_candidate_payload(
-                    candidate=candidate,
-                    tweet_id=tweet_id,
-                    fallback_handle=handle,
-                    fallback_url_handle=url_handle,
-                    tweet_provider=tweet_provider,
-                    timeout=timeout,
-                    provider=provider_used,
-                )
-                published = resolved.get("published")
-                if not isinstance(published, datetime):
+                payload = self._fetch_tweet_payload(tweet_id=tweet_id, timeout=timeout)
+                created_at = str(payload.get("created_at") or "")
+                published = _parse_iso_or_date(created_at)
+                if not published:
                     counters["published_at_missing"] += 1
                     continue
                 if published.year != allowed_year:
@@ -560,15 +470,14 @@ class XSpider(BaseSpider):
                     counters["freshness_rejected"] += 1
                     continue
 
-                text = str(resolved.get("text") or "").strip()
+                text = str(payload.get("text") or "").strip()
                 if not self._is_ai_relevant(text.lower()):
                     counters["ai_rejected"] += 1
                     continue
 
-                author_handle = str(resolved.get("author_handle") or handle).strip().lstrip("@")
-                title = str(resolved.get("title") or "").strip()
-                if not title:
-                    title = (text[:90] + "...") if len(text) > 90 else (text or f"X post by @{author_handle}")
+                user = payload.get("user") if isinstance(payload.get("user"), dict) else {}
+                author_handle = str((user or {}).get("screen_name") or url_handle or handle).strip().lstrip("@")
+                title = (text[:90] + "...") if len(text) > 90 else (text or f"X post by @{author_handle}")
 
                 items.append(
                     self._build_item(
@@ -576,7 +485,7 @@ class XSpider(BaseSpider):
                         description=text or title,
                         website=canonical,
                         published=published,
-                        query=f"account_fallback:{handle}:{provider_used}",
+                        query=f"account_fallback:{handle}",
                         author_handle=author_handle,
                         tweet_id=tweet_id,
                     )
@@ -585,215 +494,7 @@ class XSpider(BaseSpider):
                 counters["fallback_added"] += 1
 
             if account_added:
-                success_accounts += 1
-                print(f"    • @{handle} ({provider_used}) → candidates={len(candidates)}, added={account_added}")
-        return attempted_accounts, success_accounts
-
-    def _fetch_account_candidates(
-        self,
-        *,
-        handle: str,
-        timeline_provider: str,
-        max_status: int,
-        timeout: int,
-        nitter_instances: List[str],
-        browser_enabled: bool,
-    ) -> Tuple[List[Dict[str, Any]], str, Dict[str, int]]:
-        providers = self._provider_order(timeline_provider=timeline_provider, browser_enabled=browser_enabled)
-        errors: Dict[str, int] = defaultdict(int)
-
-        for provider in providers:
-            had_error = False
-            try:
-                if provider == "nitter_rss":
-                    candidates = self._fetch_account_candidates_via_nitter(
-                        handle=handle,
-                        max_status=max_status,
-                        timeout=timeout,
-                        instances=nitter_instances,
-                    )
-                elif provider == "r_jina":
-                    candidates = self._fetch_account_candidates_via_r_jina(
-                        handle=handle,
-                        max_status=max_status,
-                        timeout=timeout,
-                    )
-                elif provider == "browser":
-                    candidates = self._fetch_account_candidates_via_browser(
-                        handle=handle,
-                        max_status=max_status,
-                        timeout=timeout,
-                    )
-                else:
-                    candidates = []
-            except Exception:
-                had_error = True
-                candidates = []
-
-            if candidates:
-                return candidates, provider, dict(errors)
-            errors[provider] += 1
-        return [], "none", dict(errors)
-
-    @staticmethod
-    def _provider_order(*, timeline_provider: str, browser_enabled: bool) -> List[str]:
-        provider = (timeline_provider or "auto").strip().lower()
-        if provider == "nitter_rss":
-            ordered = ["nitter_rss", "browser"]
-        elif provider == "r_jina":
-            ordered = ["r_jina", "nitter_rss", "browser"]
-        elif provider == "browser":
-            ordered = ["browser"]
-        else:
-            # default auto: nitter first, then browser fallback.
-            ordered = ["nitter_rss", "browser"]
-
-        if not browser_enabled:
-            ordered = [x for x in ordered if x != "browser"]
-        out = []
-        seen = set()
-        for p in ordered:
-            if p not in seen:
-                out.append(p)
-                seen.add(p)
-        return out
-
-    def _fetch_account_candidates_via_nitter(
-        self,
-        *,
-        handle: str,
-        max_status: int,
-        timeout: int,
-        instances: List[str],
-    ) -> List[Dict[str, Any]]:
-        if not HAS_FEEDPARSER:
-            return []
-        bases = [str(x).strip().rstrip("/") for x in instances if str(x).strip()]
-        if not bases:
-            bases = ["https://nitter.net"]
-
-        for base in bases[:5]:
-            rss_url = f"{base}/{handle}/rss"
-            try:
-                resp = self.fetch(rss_url, timeout=timeout)
-            except Exception:
-                continue
-
-            feed = feedparser.parse(resp.content)
-            out: List[Dict[str, Any]] = []
-            seen = set()
-            for entry in feed.entries[: max_status * 2]:
-                link = str(entry.get("link") or "").strip()
-                raw_title = str(entry.get("title") or "").strip()
-                snippet = _strip_html(str(entry.get("summary") or ""))
-                published = _parse_feed_datetime(entry)
-                if not link:
-                    continue
-                url_handle, tweet_id = _extract_handle_and_id(link)
-                canonical = _canonical_status_url(url_handle, tweet_id)
-                if not tweet_id or canonical in seen:
-                    continue
-                seen.add(canonical)
-                title = re.sub(r"^[^:]+:\s*", "", raw_title).strip()
-                out.append(
-                    {
-                        "url": canonical,
-                        "title": title or raw_title,
-                        "snippet": snippet,
-                        "published_at": _to_iso(published),
-                        "author_handle": handle,
-                    }
-                )
-                if len(out) >= max_status:
-                    break
-            if out:
-                return out
-        return []
-
-    def _fetch_account_candidates_via_r_jina(
-        self,
-        *,
-        handle: str,
-        max_status: int,
-        timeout: int,
-    ) -> List[Dict[str, Any]]:
-        timeline_text = self._fetch_account_timeline_markdown(handle=handle, timeout=timeout)
-        urls = self._extract_status_urls_from_timeline(
-            timeline_text,
-            account=handle,
-            max_items=max_status,
-        )
-        return [{"url": x, "title": "", "snippet": "", "published_at": "", "author_handle": handle} for x in urls]
-
-    def _fetch_account_candidates_via_browser(
-        self,
-        *,
-        handle: str,
-        max_status: int,
-        timeout: int,
-    ) -> List[Dict[str, Any]]:
-        urls = [
-            f"https://x.com/{handle}",
-            f"https://twitter.com/{handle}",
-        ]
-        for url in urls:
-            try:
-                resp = self.fetch(url, timeout=timeout)
-            except Exception:
-                continue
-            status_urls = self._extract_status_urls_from_timeline(
-                resp.text or "",
-                account=handle,
-                max_items=max_status,
-            )
-            if status_urls:
-                return [{"url": x, "title": "", "snippet": "", "published_at": "", "author_handle": handle} for x in status_urls]
-        return []
-
-    def _resolve_candidate_payload(
-        self,
-        *,
-        candidate: Dict[str, Any],
-        tweet_id: str,
-        fallback_handle: str,
-        fallback_url_handle: str,
-        tweet_provider: str,
-        timeout: int,
-        provider: str,
-    ) -> Dict[str, Any]:
-        # Defaults from timeline candidate (e.g., Nitter RSS).
-        title = str(candidate.get("title") or "").strip()
-        text = str(candidate.get("snippet") or "").strip()
-        author_handle = str(candidate.get("author_handle") or fallback_url_handle or fallback_handle).strip().lstrip("@")
-        published = _parse_iso_or_date(str(candidate.get("published_at") or ""))
-
-        use_syndication = tweet_provider in {"x_syndication", "auto"}
-        if use_syndication:
-            payload = self._fetch_tweet_payload(tweet_id=tweet_id, timeout=timeout)
-            if payload:
-                created_at = str(payload.get("created_at") or "")
-                payload_published = _parse_iso_or_date(created_at)
-                if payload_published:
-                    published = payload_published
-                payload_text = str(payload.get("text") or "").strip()
-                if payload_text:
-                    text = payload_text
-                user = payload.get("user") if isinstance(payload.get("user"), dict) else {}
-                author = str((user or {}).get("screen_name") or "").strip().lstrip("@")
-                if author:
-                    author_handle = author
-
-        if not published:
-            published = _parse_iso_or_date(str(candidate.get("published_at") or ""))
-        if not title:
-            title = (text[:90] + "...") if len(text) > 90 else text
-        return {
-            "title": title,
-            "text": text,
-            "published": published,
-            "author_handle": author_handle,
-            "provider": provider,
-        }
+                print(f"    • @{handle} → statuses={len(status_urls)}, added={account_added}")
 
     def _fetch_account_timeline_markdown(self, *, handle: str, timeout: int) -> str:
         urls = [
@@ -803,7 +504,8 @@ class XSpider(BaseSpider):
         last_error: Optional[Exception] = None
         for url in urls:
             try:
-                resp = self.fetch(url, timeout=timeout)
+                resp = self.session.get(url, timeout=timeout)
+                resp.raise_for_status()
                 text = resp.text or ""
                 if text.strip():
                     return text
@@ -817,7 +519,8 @@ class XSpider(BaseSpider):
     def _fetch_tweet_payload(self, *, tweet_id: str, timeout: int) -> Dict[str, Any]:
         url = f"https://cdn.syndication.twimg.com/tweet-result?id={tweet_id}&token=a"
         try:
-            resp = self.fetch(url, timeout=timeout)
+            resp = self.session.get(url, timeout=timeout)
+            resp.raise_for_status()
             data = resp.json()
         except Exception:
             return {}

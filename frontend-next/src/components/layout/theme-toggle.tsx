@@ -33,13 +33,7 @@ export function ThemeToggle({ ariaLabel = "Toggle theme" }: ThemeToggleProps) {
   }
 
   return (
-    <button
-      className="theme-toggle"
-      type="button"
-      onClick={toggleTheme}
-      aria-label={ariaLabel}
-      title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-    >
+    <button className="theme-toggle" type="button" onClick={toggleTheme} aria-label={ariaLabel}>
       {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
     </button>
   );

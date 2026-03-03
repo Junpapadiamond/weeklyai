@@ -11,16 +11,10 @@ export type Product = {
   website?: string;
   description: string;
   description_en?: string;
-  description_zh?: string;
   why_matters?: string;
   why_matters_en?: string;
-  why_matters_zh?: string;
   logo_url?: string;
   logo?: string;
-  logo_status?: "ok" | "missing" | "failed";
-  logo_source?: "site_icon" | "apple_touch_icon" | "manifest_icon" | "favicon_ico" | "manual";
-  logo_last_checked_at?: string;
-  logo_error_reason?: string;
   dark_horse_index?: number;
   category?: string;
   categories?: string[];
@@ -34,7 +28,6 @@ export type Product = {
   valuation?: string;
   latest_news?: string;
   latest_news_en?: string;
-  latest_news_zh?: string;
   source?: string;
   source_url?: string;
   region?: string;
@@ -112,7 +105,7 @@ export type SearchParams = {
   q?: string;
   categories?: string[];
   type?: "all" | "software" | "hardware";
-  sort?: "relevance" | "trending" | "rating" | "users";
+  sort?: "trending" | "rating" | "users";
   page?: number;
   limit?: number;
 };

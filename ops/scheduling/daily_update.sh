@@ -67,115 +67,32 @@ else
     echo "[$(date +%H:%M:%S)] cleanup_unknowns_and_duplicates.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
 fi
 
-# 1.10 Build stable logo assets
-echo "[$(date +%H:%M:%S)] Running build_logo_assets.py --mode incremental..." >> "$LOG_DIR/daily_update.log"
-if $PYTHON_BIN crawler/tools/build_logo_assets.py --mode incremental >> "$LOG_DIR/daily_update.log" 2>&1; then
-    echo "[$(date +%H:%M:%S)] build_logo_assets.py completed successfully" >> "$LOG_DIR/daily_update.log"
+# 1.10 Fix logos
+echo "[$(date +%H:%M:%S)] Running fix_logos.py..." >> "$LOG_DIR/daily_update.log"
+if $PYTHON_BIN crawler/tools/fix_logos.py --input data/products_featured.json >> "$LOG_DIR/daily_update.log" 2>&1; then
+    echo "[$(date +%H:%M:%S)] fix_logos.py completed successfully" >> "$LOG_DIR/daily_update.log"
 else
-    echo "[$(date +%H:%M:%S)] build_logo_assets.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
+    echo "[$(date +%H:%M:%S)] fix_logos.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
 fi
 
-# 2-3. Social signals pipeline with delayed retry
-SOCIAL_HEALTH_FILE="$REPO_DIR/crawler/data/social_source_health.json"
-SOCIAL_RETRY_DELAY_SECONDS="${SOCIAL_RETRY_DELAY_SECONDS:-1200}"
-SOCIAL_MIN_SIGNALS="${SOCIAL_MIN_SIGNALS:-1}"
-
-run_social_pipeline_attempt() {
-    local attempt_label="$1"
-    echo "[$(date +%H:%M:%S)] [$attempt_label] Running main.py --news-only..." >> "$LOG_DIR/daily_update.log"
-    if $PYTHON_BIN crawler/main.py --news-only >> "$LOG_DIR/daily_update.log" 2>&1; then
-        echo "[$(date +%H:%M:%S)] [$attempt_label] main.py --news-only completed successfully" >> "$LOG_DIR/daily_update.log"
-    else
-        echo "[$(date +%H:%M:%S)] [$attempt_label] main.py --news-only failed with exit code $?" >> "$LOG_DIR/daily_update.log"
-    fi
-
-    echo "[$(date +%H:%M:%S)] [$attempt_label] Running rss_to_products.py (sources=youtube,x)..." >> "$LOG_DIR/daily_update.log"
-    if $PYTHON_BIN crawler/tools/rss_to_products.py --input crawler/data/blogs_news.json --sources youtube,x --enrich-featured >> "$LOG_DIR/daily_update.log" 2>&1; then
-        echo "[$(date +%H:%M:%S)] [$attempt_label] rss_to_products.py completed successfully" >> "$LOG_DIR/daily_update.log"
-    else
-        echo "[$(date +%H:%M:%S)] [$attempt_label] rss_to_products.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
-    fi
-
-    echo "[$(date +%H:%M:%S)] [$attempt_label] Running check_social_sources.py..." >> "$LOG_DIR/daily_update.log"
-    if $PYTHON_BIN crawler/tools/check_social_sources.py --write-health >> "$LOG_DIR/daily_update.log" 2>&1; then
-        echo "[$(date +%H:%M:%S)] [$attempt_label] check_social_sources.py completed successfully" >> "$LOG_DIR/daily_update.log"
-    else
-        echo "[$(date +%H:%M:%S)] [$attempt_label] check_social_sources.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
-    fi
-
-    SOCIAL_SIGNAL_TOTAL=$($PYTHON_BIN - <<PY
-import json
-from pathlib import Path
-path = Path("$SOCIAL_HEALTH_FILE")
-if not path.exists():
-    print(0)
-    raise SystemExit
-try:
-    data = json.loads(path.read_text(encoding="utf-8"))
-except Exception:
-    print(0)
-    raise SystemExit
-sources = data.get("sources") if isinstance(data, dict) else {}
-youtube = (sources.get("youtube") or {}).get("count", 0) if isinstance(sources, dict) else 0
-x = (sources.get("x") or {}).get("count", 0) if isinstance(sources, dict) else 0
-try:
-    y = int(youtube or 0)
-except Exception:
-    y = 0
-try:
-    xx = int(x or 0)
-except Exception:
-    xx = 0
-print(max(0, y) + max(0, xx))
-PY
-)
-    echo "[$(date +%H:%M:%S)] [$attempt_label] social signals (youtube+x) = ${SOCIAL_SIGNAL_TOTAL}" >> "$LOG_DIR/daily_update.log"
-
-    if [ "${SOCIAL_SIGNAL_TOTAL}" -ge "${SOCIAL_MIN_SIGNALS}" ]; then
-        return 0
-    fi
-    return 1
-}
-
-if run_social_pipeline_attempt "attempt-1"; then
-    echo "[$(date +%H:%M:%S)] Social pipeline succeeded on attempt-1" >> "$LOG_DIR/daily_update.log"
+# 2. Update news (optional, continues even if auto_discover fails)
+echo "[$(date +%H:%M:%S)] Running main.py --news-only..." >> "$LOG_DIR/daily_update.log"
+if $PYTHON_BIN crawler/main.py --news-only >> "$LOG_DIR/daily_update.log" 2>&1; then
+    echo "[$(date +%H:%M:%S)] main.py --news-only completed successfully" >> "$LOG_DIR/daily_update.log"
 else
-    echo "[$(date +%H:%M:%S)] Social pipeline low-signal (${SOCIAL_SIGNAL_TOTAL} < ${SOCIAL_MIN_SIGNALS}), retry after ${SOCIAL_RETRY_DELAY_SECONDS}s" >> "$LOG_DIR/daily_update.log"
-    sleep "$SOCIAL_RETRY_DELAY_SECONDS"
-    if run_social_pipeline_attempt "attempt-2"; then
-        echo "[$(date +%H:%M:%S)] Social pipeline recovered on attempt-2" >> "$LOG_DIR/daily_update.log"
-    else
-        echo "[$(date +%H:%M:%S)] Social pipeline still low after retry; actionable summary:" >> "$LOG_DIR/daily_update.log"
-        $PYTHON_BIN - <<PY >> "$LOG_DIR/daily_update.log" 2>&1
-import json
-from pathlib import Path
-path = Path("$SOCIAL_HEALTH_FILE")
-if not path.exists():
-    print("  - social health file missing")
-    raise SystemExit
-try:
-    data = json.loads(path.read_text(encoding="utf-8"))
-except Exception as exc:
-    print(f"  - failed to read social health: {exc}")
-    raise SystemExit
-sources = data.get("sources") if isinstance(data, dict) else {}
-for key in ("youtube", "x", "reddit"):
-    item = sources.get(key) if isinstance(sources, dict) else None
-    if not isinstance(item, dict):
-        continue
-    print(f"  - {key}: count={item.get('count', 0)}, errors={item.get('errors', {})}")
-diag = sources.get("diagnostics") if isinstance(sources, dict) else None
-if isinstance(diag, dict):
-    for key in ("youtube", "x", "reddit"):
-        recs = ((diag.get(key) or {}).get("recommendations") or []) if isinstance(diag.get(key), dict) else []
-        if recs:
-            print(f"    recommendations[{key}]={recs}")
-PY
-    fi
+    echo "[$(date +%H:%M:%S)] main.py --news-only failed with exit code $?" >> "$LOG_DIR/daily_update.log"
 fi
 
-# 3.5 Backfill localized fields before Mongo sync (*_en + Japanese *_zh)
-echo "[$(date +%H:%M:%S)] Running backfill_product_en_fields.py (en+zh)..." >> "$LOG_DIR/daily_update.log"
+# 3. Social signals → candidates / enrich featured
+echo "[$(date +%H:%M:%S)] Running rss_to_products.py (sources=youtube,x)..." >> "$LOG_DIR/daily_update.log"
+if $PYTHON_BIN crawler/tools/rss_to_products.py --input crawler/data/blogs_news.json --sources youtube,x --enrich-featured >> "$LOG_DIR/daily_update.log" 2>&1; then
+    echo "[$(date +%H:%M:%S)] rss_to_products.py completed successfully" >> "$LOG_DIR/daily_update.log"
+else
+    echo "[$(date +%H:%M:%S)] rss_to_products.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
+fi
+
+# 3.5 Backfill English fields before Mongo sync
+echo "[$(date +%H:%M:%S)] Running backfill_product_en_fields.py..." >> "$LOG_DIR/daily_update.log"
 if $PYTHON_BIN crawler/tools/backfill_product_en_fields.py --provider auto --only-missing --batch-size 8 >> "$LOG_DIR/daily_update.log" 2>&1; then
     echo "[$(date +%H:%M:%S)] backfill_product_en_fields.py completed successfully" >> "$LOG_DIR/daily_update.log"
 else
