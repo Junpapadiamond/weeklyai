@@ -47,7 +47,7 @@ describe("product-utils", () => {
 
   it("builds logo fallback chain in expected order", () => {
     const fallbacks = getLogoFallbacks("https://www.example.com");
-    expect(fallbacks).toEqual([]);
+    expect(fallbacks).toEqual(["https://example.com/favicon.ico", "https://www.example.com/favicon.ico"]);
   });
 
   it("combines trusted logos with fallback chain and removes untrusted provider logos", () => {
@@ -58,19 +58,23 @@ describe("product-utils", () => {
     });
 
     expect(candidates[0]).toBe("/logos/custom/example.png");
-    expect(candidates).toEqual(["/logos/custom/example.png"]);
+    expect(candidates).toEqual([
+      "/logos/custom/example.png",
+      "https://example.com/favicon.ico",
+      "https://www.example.com/favicon.ico",
+    ]);
 
     const fallbackOnly = getLogoCandidates({
       logoUrl: "not-a-url",
       website: "example.com",
     });
-    expect(fallbackOnly).toEqual([]);
+    expect(fallbackOnly).toEqual(["https://example.com/favicon.ico", "https://www.example.com/favicon.ico"]);
 
     const withBingPrimary = getLogoCandidates({
       logoUrl: "https://favicon.bing.com/favicon.ico?url=example.com&size=128",
       website: "example.com",
     });
-    expect(withBingPrimary).toEqual([]);
+    expect(withBingPrimary).toEqual(["https://example.com/favicon.ico", "https://www.example.com/favicon.ico"]);
 
     const derivedFromLogoSource = getLogoCandidates({
       logoUrl: "https://logo.clearbit.com/example.com",
@@ -83,7 +87,7 @@ describe("product-utils", () => {
       logoUrl: "https://www.youtube.com/s/desktop/abc/img/favicon_32x32.png",
       website: "https://example.com",
     });
-    expect(rejectSocialLogo).toEqual([]);
+    expect(rejectSocialLogo).toEqual(["https://example.com/favicon.ico", "https://www.example.com/favicon.ico"]);
     expect(rejectSocialLogo).not.toContain("https://www.youtube.com/s/desktop/abc/img/favicon_32x32.png");
   });
 

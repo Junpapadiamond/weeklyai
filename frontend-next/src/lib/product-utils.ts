@@ -288,9 +288,13 @@ function normalizeHost(value: string | undefined | null): string {
   return withoutWww;
 }
 
-const ENABLE_EXTERNAL_LOGO_FALLBACK = String(process.env.NEXT_PUBLIC_LOGO_EXTERNAL_FALLBACK || "")
-  .trim()
-  .toLowerCase() === "true";
+const ENABLE_EXTERNAL_LOGO_FALLBACK = (() => {
+  const raw = String(process.env.NEXT_PUBLIC_LOGO_EXTERNAL_FALLBACK || "")
+    .trim()
+    .toLowerCase();
+  if (!raw) return true;
+  return raw === "true";
+})();
 const LOGO_CDN_HOST = normalizeHost(process.env.NEXT_PUBLIC_LOGO_CDN_BASE_URL);
 
 function isAllowedCdnLogoHost(host: string): boolean {
