@@ -367,8 +367,14 @@ def _normalize_logo_fields(product: Dict[str, Any]) -> None:
         error_reason = ''
 
     product['logo_status'] = status
-    product['logo_source'] = source
-    product['logo_last_checked_at'] = checked
+    if source:
+        product['logo_source'] = source
+    else:
+        product.pop('logo_source', None)
+    if checked:
+        product['logo_last_checked_at'] = checked
+    else:
+        product.pop('logo_last_checked_at', None)
     if error_reason:
         product['logo_error_reason'] = error_reason
     else:

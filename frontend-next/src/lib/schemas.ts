@@ -6,6 +6,23 @@ const stringOrNumberToNumber = z.union([z.number(), z.string()]).transform((valu
   return Number.isFinite(parsed) ? parsed : 0;
 });
 
+const LOGO_STATUS_VALUES = ["ok", "missing", "failed"] as const;
+const LOGO_SOURCE_VALUES = ["site_icon", "apple_touch_icon", "manifest_icon", "favicon_ico", "manual"] as const;
+const LOGO_STATUS_SET = new Set<string>(LOGO_STATUS_VALUES);
+const LOGO_SOURCE_SET = new Set<string>(LOGO_SOURCE_VALUES);
+
+const LogoStatusSchema = z.preprocess((value) => {
+  if (typeof value !== "string") return undefined;
+  const normalized = value.trim().toLowerCase();
+  return LOGO_STATUS_SET.has(normalized) ? normalized : undefined;
+}, z.enum(LOGO_STATUS_VALUES).optional());
+
+const LogoSourceSchema = z.preprocess((value) => {
+  if (typeof value !== "string") return undefined;
+  const normalized = value.trim();
+  return LOGO_SOURCE_SET.has(normalized) ? normalized : undefined;
+}, z.enum(LOGO_SOURCE_VALUES).optional());
+
 export const ProductSchema = z
   .object({
     _id: z.union([z.string(), z.number()]).optional(),
@@ -20,8 +37,8 @@ export const ProductSchema = z
     why_matters_zh: z.string().optional(),
     logo_url: z.string().optional(),
     logo: z.string().optional(),
-    logo_status: z.enum(["ok", "missing", "failed"]).optional(),
-    logo_source: z.enum(["site_icon", "apple_touch_icon", "manifest_icon", "favicon_ico", "manual"]).optional(),
+    logo_status: LogoStatusSchema,
+    logo_source: LogoSourceSchema,
     logo_last_checked_at: z.string().optional(),
     logo_error_reason: z.string().optional(),
     dark_horse_index: stringOrNumberToNumber.optional(),

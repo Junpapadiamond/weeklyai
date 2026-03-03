@@ -78,4 +78,20 @@ def test_missing_logo_gets_missing_status(monkeypatch):
     product = products[0]
     assert product["logo_url"] == ""
     assert product["logo_status"] == "missing"
+    assert "logo_source" not in product
     assert "logo_error_reason" not in product
+
+
+def test_invalid_logo_source_is_not_emitted(monkeypatch):
+    monkeypatch.setenv("LOGO_STRICT_MODE", "true")
+    monkeypatch.setenv("LOGO_CDN_BASE_URL", "https://cdn.weeklyai.com")
+
+    products = product_filters.normalize_products(
+        [_base_product(logo_url="https://example.com/favicon.ico", logo_source="")]
+    )
+
+    assert len(products) == 1
+    product = products[0]
+    assert product["logo_status"] == "failed"
+    assert product["logo_error_reason"] == "logo_host_not_allowed"
+    assert "logo_source" not in product
