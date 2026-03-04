@@ -966,5 +966,646 @@
     "country_flag": "🇺🇸",
     "country_display": "🇺🇸 United States",
     "country_source": "explicit:company_country"
+  },
+  {
+    "name": "14.ai",
+    "website": "https://14.ai",
+    "description": "14.ai是由已婚创始人夫妇创立的AI客户支持初创公司，正在取代初创企业的客户支持团队。",
+    "description_en": "14.ai is a married founder duo's AI startup replacing customer support teams at startups in the evolving AI-powered customer service space.",
+    "category": "agent",
+    "region": "Unknown",
+    "funding_total": "unknown",
+    "dark_horse_index": 2,
+    "criteria_met": [
+      "just launched, clear innovation"
+    ],
+    "why_matters": "在AI重塑客户服务行业的背景下推出，与Decagon、Parloa和Sierra等竞争对手争夺数百万美元融资机会。",
+    "why_matters_en": "Launched amid AI disruption in customer service, competing with Decagon, Parloa, and Sierra for millions in VC funding.",
+    "latest_news": "2026-03-02: TechCrunch报道其正在取代初创企业客服团队",
+    "latest_news_en": "2026-03-02: Featured in TechCrunch for replacing startup customer support teams",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/03/02/a-married-founder-duos-company-14-ai-is-replacing-customer-support-teams-at-startups/",
+    "company_country": "unknown",
+    "company_country_confidence": 0.3,
+    "confidence": 0.75,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-04T19:40:44.701845Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-03-04",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:techcrunch.com AI startup funding",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown"
+  },
+  {
+    "name": "Pharos",
+    "website": "https://pharos.ai",
+    "description": "YC初创公司Pharos获得500万美元种子轮融资，由Felicis领投，将AI引入医院质量报告。",
+    "description_en": "YC startup Pharos raised $5M seed led by Felicis to bring AI to hospital quality reporting.",
+    "category": "healthcare",
+    "region": "🇺🇸",
+    "funding_total": "$5M seed",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding $1M-$5M",
+      "YC backed"
+    ],
+    "why_matters": "YC支持，Felicis领投500万美元种子轮，针对医院质量报告这一医疗AI细分领域。",
+    "why_matters_en": "YC-backed with $5M seed led by Felicis, targeting AI for hospital quality reporting in healthcare.",
+    "latest_news": "2026-02: 完成500万美元种子轮融资，由Felicis领投",
+    "latest_news_en": "2026-02: Raised $5M seed led by Felicis",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/tag/seed-funding/",
+    "company_country": "US",
+    "company_country_confidence": 0.7,
+    "confidence": 0.8,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-04T19:40:44.940481Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 1,
+          "top_story_id": "47178344",
+          "points": 74,
+          "comments": 7,
+          "engagement_depth_ratio": 0.0946,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "This is roughly the same problem as syntactical macros in non-Lisp syntax languages. There needs to be a way to indicate a \"hole\" (metavariable/unquote) in the syntax tree, and depending on the complexity of the language's grammar, that might be somewhat difficult, eg. in C++ having a hole for a type declaration runs into the common ambiguity between declarations (constructor calls) and expressions (regular calls). This needs to be worked around by eg. having multiple types of holes to disambiguate... For the article, the idea of using an \"any\" prefix on identifiers instead of eg. operators such as ` , ... (Lisp macros) is an interesting solution, as it does not require extending the grammar",
+            "This is so damn cool. And most people won’t even see why. They won’t realize just how amazingly cool it is that you can grab any block of code in a block closure (the [ ] syntax*), and extend that object with more behavior. And how if you have that object you can I introspect the craziest things out of it, including of course, the source it was derived from, and hence, an AST. There’s no need to make a new compiler pass, or a special tool mod. The “reserved” keyword of any doesn’t have to be bolted into the whole language, it’s just a variable that can be treated specially in this context, and only this context, so you don’t have to have special meta variables leak into the whole system. * d",
+            "Honestly, as much as I love Smalltalk, I see this post as an illustration of all that's wrong in that community. Instead of documenting the original solution well, making a cheat sheet for it, or gathering examples (which you otherwise need to \"hunt\" for, according to the author) in one place, we're given another solution on top of the original inscrutable one. That new solution is still undocumented; in the post, there's no explanation of how it was written and how it works; instead, we get another handful of examples. GToolkit has Lepiter, and Smalltalks in general have comments on classes that can be used to write long-form docs. Yet, the majority of Smalltalkers apparently believe that a",
+            "Would you tell us what, in your opinion, would be needed for smalltalk to be revived and become a first class language/runtime in modern day?",
+            "Depends on the person... One person's \"cool\" is other person's \"monkey-patched mess where runtime behavior does not correspond to code I wrote\"",
+            "Interesting. This has not been my experience. I have not regularly worked in Smalltalk for 12+ years, other than the occasional download and show some young programmer how cool the \"petri dish of objects\" was/is. For the last many years, I've been working in C, Swift, Kotlin, Python, and Elixir. In no case, have I felt that there was a step difference between the communities. I'm doing a lot of Elixir right now, which supposedly has \"the docs are great\". And yet, I often can't find the answer I need to figure something out. Sure there's some inscrutible parts of Smalltalk code bases, but my point is, journeying aboard in these other lands (I do quite a bit of Python too), hasn't made me feel",
+            "Is there a known example of that for any language?"
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0506,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.6
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-03-04",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:techcrunch.com AI startup funding",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Sarana AI",
+    "website": "https://sarana.ai",
+    "description": "印尼雅加达AI初创公司，F6S社区追踪重点企业",
+    "description_en": "Jakarta-based AI startup highlighted in F6S community tracking",
+    "category": "other",
+    "region": "Unknown",
+    "funding_total": "unknown",
+    "dark_horse_index": 2,
+    "criteria_met": [
+      "strong_local_traction"
+    ],
+    "why_matters": "成立于2024年，被F6S列为雅加达AI公司代表，近期成立增长潜力大",
+    "why_matters_en": "Founded 2024, listed by F6S as representative Jakarta AI company with recent founding and growth potential",
+    "latest_news": "2026-03: F6S 21 Top AI Companies in Jakarta",
+    "latest_news_en": "2026-03: F6S 21 Top AI Companies in Jakarta",
+    "source": "F6S",
+    "source_url": "https://www.f6s.com/companies/artificial-intelligence/indonesia/jakarta/co",
+    "company_country": "Indonesia",
+    "company_country_confidence": 0.9,
+    "confidence": 0.8,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-04T19:41:44.310182Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇸🇬",
+    "discovered_at": "2026-03-04",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "Southeast Asia AI company",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown"
+  },
+  {
+    "name": "Agaton",
+    "website": "https://agaton.ai",
+    "description": "Stockholm-basiertes agentisches KI-Startup mit $10 Mio. Seed für Voice-Analyse-Plattform im Vertrieb.",
+    "description_en": "Stockholm-based agentic AI startup raising $10M seed for voice analysis platform for sales teams.",
+    "category": "voice",
+    "region": "🇸🇪",
+    "funding_total": "$10M Seed",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "$10 Mio. Seed von Inception Fund und Alstin Capital co-geführt, aus Stealth-Modus für KI-gestützte Sales-Analyse.",
+    "why_matters_en": "$10M seed co-led by Inception Fund and Alstin Capital, emerging from stealth for AI-powered sales conversation analysis.",
+    "latest_news": "2026-02-19: $10 Mio. Seed-Finanzierung",
+    "latest_news_en": "2026-02-19: $10M seed funding",
+    "source": "Tech.eu",
+    "source_url": "https://tech.eu/2026/02/19/agaton-raises-9-million-to-expand-its-ai-platform-for-sales-teams/",
+    "company_country": "Sweden",
+    "company_country_confidence": 0.95,
+    "confidence": 0.9,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-04T19:42:01.745924Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-03-04",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "KI Startup Finanzierung",
+    "country_code": "SE",
+    "country_name": "Sweden",
+    "country_flag": "🇸🇪",
+    "country_display": "🇸🇪 Sweden",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "GreenNode",
+    "website": "https://greennode.vn",
+    "description": "越南VNG推出的AI云服务平台，提供NVIDIA H100 GPU算力支持",
+    "description_en": "VNG's AI cloud platform in Vietnam offering NVIDIA H100 GPU computing power",
+    "category": "hardware",
+    "region": "Unknown",
+    "funding_total": "unknown",
+    "dark_horse_index": 2,
+    "criteria_met": [
+      "clear_innovation"
+    ],
+    "latest_news": "2026: VNG推出基于NVIDIA GPU的AI云服务",
+    "latest_news_en": "2026: VNG launches NVIDIA GPU-powered AI cloud service",
+    "why_matters": "越南首个提供H100 GPU的AI云平台，为区域企业提供高性能AI训练算力[4]",
+    "why_matters_en": "Vietnam's first H100 GPU-powered AI cloud platform providing regional enterprises with high-performance AI training compute[4]",
+    "source": "Designveloper",
+    "source_url": "https://www.designveloper.com/blog/ai-development-companies-in-vietnam/",
+    "company_country": "Vietnam",
+    "company_country_confidence": 0.95,
+    "confidence": 0.85,
+    "is_hardware": true,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-04T19:42:23.310650Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇸🇬",
+    "discovered_at": "2026-03-04",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI startup Indonesia Vietnam",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown"
+  },
+  {
+    "name": "MiPA",
+    "website": "https://neura-robotics.com/products/mipa/",
+    "description": "Smart personal assistant robot for repetitive home tasks using advanced sensors and AI.",
+    "category": "hardware",
+    "hardware_type": "innovative",
+    "form_factor": "desktop_assistant",
+    "use_case": "home_assistant",
+    "innovation_traits": [
+      "new_form_factor",
+      "ambient",
+      "single_use_case"
+    ],
+    "region": "🇩🇪",
+    "funding_total": "unknown",
+    "price": "unknown",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "form_innovation",
+      "use_case_clear"
+    ],
+    "why_matters": "Open platform robot handles unsafe tasks in human environments.",
+    "latest_news": "Fully open platform for developers.",
+    "source": "Neura Robotics",
+    "source_url": "https://neura-robotics.com/products/mipa/",
+    "company_country": "DE",
+    "company_country_confidence": 0.7,
+    "confidence": 0.85,
+    "is_hardware": true,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-04T19:42:48.921015Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-03-04",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI pin badge wearable assistant",
+    "country_code": "DE",
+    "country_name": "Germany",
+    "country_flag": "🇩🇪",
+    "country_display": "🇩🇪 Germany",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "zypl.ai",
+    "website": "https://zypl.ai",
+    "description": "UAE初创公司，专注于金融服务中的合成异常值概念，已获得Prosus Ventures领投的300万美元融资。",
+    "description_en": "UAE-based startup pioneering synthetic outliers in financial services, secured $3M round led by Prosus Ventures.",
+    "category": "finance",
+    "region": "🇦🇪",
+    "funding_total": "$3M",
+    "dark_horse_index": 1,
+    "criteria_met": [],
+    "why_matters": "Prosus Ventures领投300万美元，斯坦福大学Knight-Hennessy学者创立，2022年从中亚上线。",
+    "why_matters_en": "Led by Prosus Ventures $3M round, founded by Stanford Knight-Hennessy Scholar alum, launched from Central Asia in 2022.",
+    "latest_news": "2026-03-02: Prosus Ventures领投300万美元轮次",
+    "latest_news_en": "2026-03-02: Prosus Ventures leads $3M round",
+    "source": "zypl.ai blog",
+    "source_url": "https://zypl.ai/blog/prosus-ventures-leads-3m-round-in-zypl-ai-to-pioneer-synthetic-ai",
+    "company_country": "United Arab Emirates",
+    "company_country_confidence": 0.9,
+    "confidence": 0.95,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-04T19:43:03.933260Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-03-04",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "generative AI startup Series A",
+    "country_code": "AE",
+    "country_name": "United Arab Emirates",
+    "country_flag": "🇦🇪",
+    "country_display": "🇦🇪 United Arab Emirates",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "7Rivers",
+    "website": "https://7riversinc.com",
+    "description": "美国数据分析和人工智能初创公司，完成500万美元A轮融资。",
+    "description_en": "US data analytics and AI startup raised $5M Series A in March 2026.",
+    "category": "other",
+    "region": "🇺🇸",
+    "funding_total": "$5M Series A",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "2026年3月完成500万美元A轮，涵盖数据分析、人工智能、云计算领域。",
+    "why_matters_en": "$5M Series A in March 2026, focuses on data analytics, AI, cloud computing.",
+    "latest_news": "2026-03: 500万美元A轮融资",
+    "latest_news_en": "March 2026: $5M Series A",
+    "source": "GrowthList",
+    "source_url": "https://growthlist.co/series-a-startups/",
+    "company_country": "United States",
+    "company_country_confidence": 0.95,
+    "confidence": 0.85,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-04T19:43:04.155899Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-03-04",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "generative AI startup Series A",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
   }
 ]
