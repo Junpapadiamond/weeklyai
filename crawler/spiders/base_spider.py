@@ -32,7 +32,8 @@ class BaseSpider(ABC):
         发送HTTP请求
         """
         try:
-            response = self.session.get(url, timeout=30, **kwargs)
+            timeout = kwargs.pop('timeout', 30)
+            response = self.session.get(url, timeout=timeout, **kwargs)
             response.raise_for_status()
             return response
         except Exception as e:
