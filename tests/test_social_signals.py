@@ -81,6 +81,7 @@ class TestXPrimaryScheduling(unittest.TestCase):
             mode="hybrid",
             now=now,
             interval_days=3,
+            force_primary_after_empty=True,
         )
         self.assertTrue(run)
         self.assertEqual(reason, "no_previous_primary")
@@ -90,18 +91,20 @@ class TestXPrimaryScheduling(unittest.TestCase):
             mode="hybrid",
             now=now,
             interval_days=3,
+            force_primary_after_empty=True,
         )
         self.assertFalse(run2)
         self.assertEqual(reason2, "interval_not_elapsed")
 
         run3, reason3 = _should_run_primary(
-            {"last_primary_run_at": "2026-02-24T01:00:00Z", "consecutive_fallback_empty_days": 2},
+            {"last_primary_run_at": "2026-02-24T01:00:00Z", "consecutive_fallback_empty_days": 1},
             mode="hybrid",
             now=now,
             interval_days=3,
+            force_primary_after_empty=True,
         )
         self.assertTrue(run3)
-        self.assertEqual(reason3, "fallback_empty_streak")
+        self.assertEqual(reason3, "force_after_empty")
 
         old_time = (now - timedelta(days=4)).isoformat().replace("+00:00", "Z")
         run4, reason4 = _should_run_primary(
@@ -109,6 +112,7 @@ class TestXPrimaryScheduling(unittest.TestCase):
             mode="hybrid",
             now=now,
             interval_days=3,
+            force_primary_after_empty=False,
         )
         self.assertTrue(run4)
         self.assertEqual(reason4, "interval_elapsed")
@@ -151,6 +155,7 @@ class TestSocialSourceConfig(unittest.TestCase):
                 {
                     "X_FALLBACK_MAX_STATUS_PER_ACCOUNT": "7",
                     "X_FALLBACK_TIMEOUT": "33",
+                    "X_ENABLE_BROWSER_FALLBACK": "false",
                 },
                 clear=False,
             ),
@@ -169,6 +174,7 @@ class TestSocialSourceConfig(unittest.TestCase):
 
         self.assertEqual(cfg["max_status_per_account"], 7)
         self.assertEqual(cfg["request_timeout_seconds"], 33)
+        self.assertFalse(cfg["browser_enabled"])
 
 
 class TestXFallbackPath(unittest.TestCase):
@@ -238,9 +244,120 @@ class TestXFallbackPath(unittest.TestCase):
         self.assertEqual(item.get("website"), "https://x.com/OpenAI/status/2019513755621843450")
         self.assertEqual(item.get("published_at"), "2026-02-08T10:00:00Z")
         extra = item.get("extra") or {}
-        self.assertEqual(extra.get("query"), "account_fallback:OpenAI")
+        self.assertEqual(extra.get("query"), "account_fallback:OpenAI:r_jina")
         self.assertEqual(extra.get("author_handle"), "OpenAI")
         self.assertEqual(extra.get("tweet_id"), "2019513755621843450")
+
+    def test_nitter_provider_path_builds_item(self) -> None:
+        from spiders.x_spider import XSpider
+
+        nitter_candidate = {
+            "url": "https://x.com/OpenAI/status/2019513755621843451",
+            "title": "Introducing a new AI agent release",
+            "snippet": "We launched an AI agent update for developers.",
+            "published_at": "2026-02-08T10:00:00Z",
+            "author_handle": "OpenAI",
+        }
+
+        with (
+            patch.dict(
+                os.environ,
+                {
+                    "X_SOURCE_MODE": "fallback_only",
+                    "SOCIAL_HOURS": "1000",
+                    "CONTENT_YEAR": "2026",
+                    "SOCIAL_HEALTH_DISABLE_WRITE": "true",
+                },
+                clear=False,
+            ),
+            patch("spiders.x_spider.load_x_accounts_with_source", return_value=(["OpenAI"], "test")),
+            patch(
+                "spiders.x_spider.load_x_fallback_config",
+                return_value={
+                    "timeline_provider": "nitter_rss",
+                    "tweet_provider": "timeline_only",
+                    "max_status_per_account": 3,
+                    "request_timeout_seconds": 10,
+                    "nitter_instances": ["https://nitter.net"],
+                    "browser_enabled": True,
+                },
+            ),
+            patch.object(XSpider, "_fetch_account_candidates_via_nitter", return_value=[nitter_candidate]),
+            patch.object(XSpider, "_fetch_account_candidates_via_browser", return_value=[]),
+        ):
+            items = XSpider().crawl()
+
+        self.assertEqual(len(items), 1)
+        item = items[0]
+        self.assertEqual(item.get("website"), "https://x.com/OpenAI/status/2019513755621843451")
+        self.assertEqual((item.get("extra") or {}).get("query"), "account_fallback:OpenAI:nitter_rss")
+
+
+class TestYouTubeChannelHealth(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        _ensure_import_paths()
+
+    def test_404_threshold_sets_cooldown(self) -> None:
+        from spiders.youtube_spider import YouTubeSpider
+
+        with (
+            patch.dict(
+                os.environ,
+                {
+                    "SOCIAL_HEALTH_DISABLE_WRITE": "true",
+                    "CONTENT_YEAR": "2026",
+                    "SOCIAL_HOURS": "96",
+                },
+                clear=False,
+            ),
+            patch(
+                "spiders.youtube_spider.load_youtube_channel_configs_with_source",
+                return_value=([{"channel_id": "UC404", "name": "broken", "enabled": True}], "test"),
+            ),
+            patch(
+                "spiders.youtube_spider.load_youtube_health_policy",
+                return_value={"consecutive_404_threshold": 3, "cooldown_days": 7},
+            ),
+            patch.object(
+                YouTubeSpider,
+                "_load_previous_channel_health",
+                return_value={"UC404": {"consecutive_404": 2, "status": "error"}},
+            ),
+            patch.object(
+                YouTubeSpider,
+                "_fetch_channel_with_fallback",
+                return_value=([], {"error": "http_404", "fallback_attempted": False, "fallback_used": False, "channel_title": "broken"}),
+            ),
+            patch("spiders.youtube_spider.update_source_health") as mock_health,
+        ):
+            items = YouTubeSpider().crawl()
+
+        self.assertEqual(items, [])
+        _, payload = mock_health.call_args[0]
+        channel_state = (payload.get("channels") or {}).get("UC404") or {}
+        self.assertEqual(int(channel_state.get("consecutive_404") or 0), 3)
+        self.assertEqual(channel_state.get("status"), "invalid_channel")
+        self.assertTrue(channel_state.get("cooldown_until"))
+
+
+class TestXStateWriteGuard(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        _ensure_import_paths()
+
+    def test_save_state_skipped_when_disabled(self) -> None:
+        from spiders.x_spider import _save_state
+
+        with (
+            patch.dict(os.environ, {"X_SPIDER_DISABLE_STATE_WRITE": "true"}, clear=False),
+            patch("spiders.x_spider.open", create=True) as mock_open,
+            patch("spiders.x_spider.os.makedirs") as mock_mkdir,
+        ):
+            _save_state({"last_primary_run_at": "2026-02-01T00:00:00Z"})
+
+        mock_open.assert_not_called()
+        mock_mkdir.assert_not_called()
 
 
 class TestRssToProductsEnrichOrder(unittest.TestCase):
