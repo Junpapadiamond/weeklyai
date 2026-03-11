@@ -9,9 +9,11 @@ import {
   cleanDescription,
   formatCategories,
   getFreshnessLabel,
+  getLocalizedCountryName,
   getLocalizedProductDescription,
   getLocalizedProductWhyMatters,
   getProductScore,
+  getScoreBadgeClass,
   isHardware,
   isValidWebsite,
   normalizeWebsite,
@@ -31,14 +33,6 @@ function formatScore(score: number, locale: "zh-CN" | "en-US"): string {
   return Number.isInteger(score) ? `${score}分` : `${score.toFixed(1)}分`;
 }
 
-function scoreBadgeTone(score: number): string {
-  if (score >= 5) return "product-badge--score-5";
-  if (score >= 4) return "product-badge--score-4";
-  if (score >= 3) return "product-badge--score-3";
-  if (score >= 2) return "product-badge--rising";
-  return "";
-}
-
 export function ProductCard({ product, compact = false }: ProductCardProps) {
   const { locale, t } = useSiteLocale();
   const website = normalizeWebsite(product.website);
@@ -48,12 +42,13 @@ export function ProductCard({ product, compact = false }: ProductCardProps) {
   const scoreLabel = formatScore(score, locale);
   const freshness = getFreshnessLabel(product, new Date(), locale);
   const country = resolveProductCountry(product);
-  const regionLabel = country.unknown ? "Unknown" : country.name;
+  const regionLabel = getLocalizedCountryName(country, locale);
   const regionMark = country.flag;
   const hasRegionText = true;
   const microlineParts = [freshness, product.source || t("来源待补充", "Source pending")];
   const description = cleanDescription(getLocalizedProductDescription(product, locale), locale);
   const whyMatters = getLocalizedProductWhyMatters(product, locale);
+  const summary = whyMatters || description || t("产品摘要待补充", "Product summary pending");
   const tierClass = score >= 4 ? "product-card--darkhorse" : score >= 2 ? "product-card--rising" : "product-card--watch";
   const secondaryBadge = product.funding_total || (isHardware(product) ? t("硬件", "Hardware") : t("软件", "Software"));
 
@@ -91,7 +86,7 @@ export function ProductCard({ product, compact = false }: ProductCardProps) {
           </div>
 
           <div className="product-card__badges">
-            <span className={`product-badge ${scoreBadgeTone(score)}`}>
+            <span className={`product-badge ${getScoreBadgeClass(score, "product")}`}>
               {score >= 4 ? `${t("黑马", "Dark Horse")} ${scoreLabel}` : score >= 2 ? `${t("潜力", "Rising")} ${scoreLabel}` : scoreLabel}
             </span>
             <span className="product-badge">{secondaryBadge}</span>
@@ -99,13 +94,10 @@ export function ProductCard({ product, compact = false }: ProductCardProps) {
         </header>
 
         <div className="product-card__summary">
-          <p className="product-card__summary-text">{description}</p>
-          {!compact && whyMatters ? (
-            <p className="product-card__summary-why">
-              <span className="product-card__summary-why-label">WHY</span>
-              {whyMatters}
-            </p>
-          ) : null}
+          <p className={`product-card__summary-text ${whyMatters ? "product-card__summary-text--why" : ""}`}>
+            {whyMatters ? <span className="product-card__summary-why-label">WHY</span> : null}
+            {summary}
+          </p>
         </div>
 
         <footer className="product-card__footer">

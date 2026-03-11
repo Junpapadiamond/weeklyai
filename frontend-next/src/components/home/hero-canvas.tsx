@@ -9,6 +9,7 @@ export default function HeroCanvas() {
   useEffect(() => {
     let p5Instance: P5 | null = null;
     let mounted = true;
+    let themeObserver: MutationObserver | null = null;
 
     const setupSketch = async () => {
       const p5Module = await import("p5");
@@ -21,6 +22,10 @@ export default function HeroCanvas() {
       const seed = 15421;
       const reduceMotion =
         window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const coarsePointer =
+        (window.matchMedia && window.matchMedia("(pointer: coarse)").matches)
+        || (window.matchMedia && window.matchMedia("(hover: none)").matches);
+      const canTrackPointer = !coarsePointer && window.innerWidth >= 980;
 
       const isDarkMode = () => document.documentElement.getAttribute("data-theme") === "dark";
       const lightPalette = ["#E61E4D", "#FFB400", "#222222", "#9CA3AF"];
@@ -60,7 +65,7 @@ export default function HeroCanvas() {
           const hero = container?.closest(".hero");
           const rect = (hero || container)?.getBoundingClientRect();
           const width = Math.max(320, Math.floor(rect?.width || 960));
-          const height = Math.max(260, Math.floor(rect?.height || 360));
+          const height = Math.max(180, Math.floor(rect?.height || 220));
           return { width, height };
         };
 
@@ -86,8 +91,8 @@ export default function HeroCanvas() {
           center = baseCenter.copy();
           targetCenter = baseCenter.copy();
 
-          const targetCount = Math.floor((p.width * p.height) / 1400);
-          const particleCount = Math.min(1300, Math.max(520, targetCount));
+          const targetCount = Math.floor((p.width * p.height) / 2400);
+          const particleCount = Math.min(520, Math.max(220, targetCount));
 
           particles = [];
           for (let i = 0; i < particleCount; i += 1) {
@@ -163,8 +168,14 @@ export default function HeroCanvas() {
           const canvas = p.createCanvas(width, height);
           canvas.parent(containerRef.current as Element);
           p.pixelDensity(1);
-          p.frameRate(30);
+          p.frameRate(24);
           initializeSystem();
+
+          if (canTrackPointer) {
+            canvas.elt.addEventListener("mouseleave", () => {
+              pointerActive = false;
+            });
+          }
 
           if (reduceMotion) {
             p.noLoop();
@@ -190,6 +201,7 @@ export default function HeroCanvas() {
         };
 
         p.mouseMoved = () => {
+          if (!canTrackPointer) return;
           pointerActive = true;
           targetCenter = p.createVector(p.mouseX, p.mouseY);
         };
@@ -204,7 +216,7 @@ export default function HeroCanvas() {
           }
         };
 
-        const observer = new MutationObserver((mutations) => {
+        themeObserver = new MutationObserver((mutations) => {
           for (const mutation of mutations) {
             if (mutation.attributeName === "data-theme") {
               initializeSystem();
@@ -212,7 +224,7 @@ export default function HeroCanvas() {
           }
         });
 
-        observer.observe(document.documentElement, { attributes: true });
+        themeObserver.observe(document.documentElement, { attributes: true });
       });
     };
 
@@ -220,6 +232,7 @@ export default function HeroCanvas() {
 
     return () => {
       mounted = false;
+      themeObserver?.disconnect();
       p5Instance?.remove();
       p5Instance = null;
     };

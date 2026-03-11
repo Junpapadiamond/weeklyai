@@ -2,21 +2,23 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { ChevronDown, ChevronUp, Cpu, Flame, Newspaper, Sparkles } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Cpu, Flame, Search, Sparkles } from "lucide-react";
+import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import type { Product } from "@/types/api";
 import type { SiteLocale } from "@/lib/locale";
 import { parseLastUpdatedLabel, type WeeklyTopSort } from "@/lib/api-client";
 import { SmartLogo } from "@/components/common/smart-logo";
-import { ChatBar } from "@/components/chat/chat-bar";
-import { ProductCard } from "@/components/product/product-card";
+import { FavoriteButton } from "@/components/favorites/favorite-button";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import { countFavorites, openFavoritesPanel, subscribeFavorites } from "@/lib/favorites";
 import {
   cleanDescription,
+  collectDirectionOptions,
+  filterDirectionOptions,
   filterProducts,
   formatCategories,
   getDirectionLabel,
+  getLocalizedCountryName,
   getLocalizedProductDescription,
   getLocalizedProductWhyMatters,
   getProductDirections,
@@ -25,6 +27,7 @@ import {
   isPlaceholderValue,
   isValidWebsite,
   normalizeWebsite,
+  productKey,
   resolveProductCountry,
   sortProducts,
 } from "@/lib/product-utils";
@@ -36,6 +39,7 @@ const HeroCanvas = dynamic(() => import("@/components/home/hero-canvas"), {
 
 const PRODUCTS_PER_PAGE = 12;
 const DARK_HORSE_COLLAPSE_LIMIT = 10;
+const POPULAR_DIRECTION_LIMIT = 10;
 const DEFAULT_WEEKLY_TOP_SORT: WeeklyTopSort = "composite";
 
 type HomeClientProps = {
@@ -43,6 +47,8 @@ type HomeClientProps = {
   allProducts: Product[];
   freshnessHoursAgo: number | null | undefined;
 };
+
+type ContentTypeFilter = "all" | "hardware" | "software";
 
 function formatScore(score: number, locale: SiteLocale): string {
   if (score <= 0) return locale === "en-US" ? "Unrated" : "待评";
@@ -52,76 +58,43 @@ function formatScore(score: number, locale: SiteLocale): string {
   return Number.isInteger(score) ? `${score}分` : `${score.toFixed(1)}分`;
 }
 
-function getScoreBadgeClass(score: number): string {
-  if (score >= 5) return "score-badge--5";
-  if (score >= 4) return "score-badge--4";
-  return "score-badge--3";
-}
-
-function parseDateValue(value?: string): Date | null {
-  if (!value) return null;
-  const timestamp = new Date(value).getTime();
-  if (!Number.isFinite(timestamp)) return null;
-  return new Date(timestamp);
-}
-
-function getCurrentWeekStart(now: Date): Date {
-  const weekStart = new Date(now);
-  const day = weekStart.getDay();
-  const offset = day === 0 ? -6 : 1 - day;
-  weekStart.setDate(weekStart.getDate() + offset);
-  weekStart.setHours(0, 0, 0, 0);
-  return weekStart;
-}
-
-type DarkHorseSpotlightCardProps = {
+type HomeProductCardProps = {
   product: Product;
+  highlighted?: boolean;
+  rank: number;
+  favoritable?: boolean;
 };
 
-function DarkHorseSpotlightCard({ product }: DarkHorseSpotlightCardProps) {
+function HomeProductCard({ product, highlighted = false, rank, favoritable = false }: HomeProductCardProps) {
   const { locale, t } = useSiteLocale();
-  const [expanded, setExpanded] = useState(false);
-  const [canExpand, setCanExpand] = useState(false);
-  const whyMattersRef = useRef<HTMLParagraphElement | null>(null);
   const detailId = encodeURIComponent(product._id || product.name);
   const score = getProductScore(product);
   const scoreLabel = formatScore(score, locale);
-  const description = cleanDescription(getLocalizedProductDescription(product, locale), locale);
   const website = normalizeWebsite(product.website);
   const hasWebsite = isValidWebsite(website) && !product.needs_verification;
   const country = resolveProductCountry(product);
-  const regionFlag = country.flag || "?";
-  const regionLabel = country.unknown ? "Unknown" : country.name;
+  const regionLabel = getLocalizedCountryName(country, locale);
   const fundingLabel = !isPlaceholderValue(product.funding_total) ? product.funding_total?.trim() : "";
-  const whyMatters = getLocalizedProductWhyMatters(product, locale) || t("why_matters 待补充", "Why this matters is pending");
+  const summary =
+    getLocalizedProductWhyMatters(product, locale)
+    || cleanDescription(getLocalizedProductDescription(product, locale), locale)
+    || t("产品摘要待补充", "Product summary pending");
 
-  useEffect(() => {
-    const node = whyMattersRef.current;
-    if (!node || !whyMatters) return;
-
-    const checkOverflow = () => {
-      setCanExpand(node.scrollHeight - node.clientHeight > 2);
-    };
-
-    const rafId = window.requestAnimationFrame(checkOverflow);
-    if (typeof ResizeObserver === "undefined") {
-      return () => window.cancelAnimationFrame(rafId);
-    }
-
-    const observer = new ResizeObserver(checkOverflow);
-    observer.observe(node);
-    return () => {
-      window.cancelAnimationFrame(rafId);
-      observer.disconnect();
-    };
-  }, [whyMatters, expanded]);
+  const metadata = [
+    country.flag ? `${country.flag} ${regionLabel}` : regionLabel,
+    fundingLabel || t("融资待补充", "Funding pending"),
+    scoreLabel,
+  ].join(" · ");
 
   return (
-    <article className="darkhorse-spotlight-card">
-      <span className="darkhorse-spotlight__region-flag-corner" aria-hidden="true" title={regionLabel}>
-        {regionFlag}
-      </span>
+    <article
+      className={`darkhorse-spotlight-card ${highlighted ? "darkhorse-spotlight-card--leading" : ""} ${favoritable ? "darkhorse-spotlight-card--pick" : ""}`}
+    >
       <div className="darkhorse-spotlight__body">
+        <div className="darkhorse-spotlight__rank-wrap" aria-label={t("排名", "Rank")}>
+          <span className="darkhorse-spotlight__rank">{String(rank).padStart(2, "0")}</span>
+        </div>
+
         <SmartLogo
           key={`${product._id || product.name}-${product.logo_url || ""}-${product.logo || ""}-${product.website || ""}-${product.source_url || ""}`}
           className="darkhorse-spotlight__logo"
@@ -131,49 +104,23 @@ function DarkHorseSpotlightCard({ product }: DarkHorseSpotlightCardProps) {
           website={product.website}
           sourceUrl={product.source_url}
           size={64}
+          loading={rank <= 3 ? "eager" : "lazy"}
         />
 
         <div className="darkhorse-spotlight__content">
           <header className="darkhorse-spotlight__header">
-            <h3 className="darkhorse-spotlight__title">{product.name}</h3>
-            <p className="darkhorse-spotlight__categories">{formatCategories(product, locale)}</p>
+            <div className="darkhorse-spotlight__header-main">
+              <h3 className="darkhorse-spotlight__title">{product.name}</h3>
+              <p className="darkhorse-spotlight__categories">{formatCategories(product, locale)}</p>
+            </div>
+            {favoritable ? <FavoriteButton product={product} className="darkhorse-spotlight__favorite" /> : null}
           </header>
 
-          <p className="darkhorse-spotlight__description">{description}</p>
+          <p className="darkhorse-spotlight__meta-line" title={regionLabel}>
+            {metadata}
+          </p>
 
-          <div className="darkhorse-spotlight__badges">
-            <span className="darkhorse-spotlight__region-tag">{regionLabel}</span>
-            <span className={`darkhorse-spotlight__badge darkhorse-spotlight__badge--funding ${fundingLabel ? "" : "is-muted"}`}>
-              {fundingLabel || t("融资待补充", "Funding pending")}
-            </span>
-            <span className={`score-badge ${getScoreBadgeClass(score)} darkhorse-spotlight__badge darkhorse-spotlight__badge--score`}>
-              {scoreLabel}
-            </span>
-          </div>
-
-          <div className="darkhorse-spotlight__why-wrap">
-            <p ref={whyMattersRef} className={`darkhorse-spotlight__why ${expanded ? "is-expanded" : ""}`}>
-              {whyMatters}
-            </p>
-            {canExpand ? (
-              <button
-                className="darkhorse-spotlight__expand-btn"
-                type="button"
-                onClick={() => setExpanded((value) => !value)}
-                aria-expanded={expanded}
-              >
-                {expanded ? (
-                  <>
-                    <ChevronUp size={14} /> {t("收起", "Collapse")}
-                  </>
-                ) : (
-                  <>
-                    <ChevronDown size={14} /> {t("展开", "Expand")}
-                  </>
-                )}
-              </button>
-            ) : null}
-          </div>
+          <p className="darkhorse-spotlight__why">{summary}</p>
 
           <footer className="darkhorse-spotlight__footer">
             <Link href={`/product/${detailId}`} className="link-btn link-btn--card link-btn--card-primary">
@@ -195,14 +142,20 @@ function DarkHorseSpotlightCard({ product }: DarkHorseSpotlightCardProps) {
 
 export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeClientProps) {
   const { locale, t } = useSiteLocale();
-  const [darkFilter, setDarkFilter] = useState<"all" | "hardware" | "software">("all");
+  const [contentTypeFilter, setContentTypeFilter] = useState<ContentTypeFilter>("all");
   const [tierFilter, setTierFilter] = useState<"all" | "darkhorse" | "rising">("all");
-  const [typeFilter, setTypeFilter] = useState<"all" | "software" | "hardware">("all");
   const [directionFilter, setDirectionFilter] = useState("all");
   const [sortBy, setSortBy] = useState<WeeklyTopSort>(DEFAULT_WEEKLY_TOP_SORT);
   const [currentPage, setCurrentPage] = useState(1);
   const [favoritesCount, setFavoritesCount] = useState(0);
   const [showAllDarkHorses, setShowAllDarkHorses] = useState(false);
+  const [isDirectionSheetOpen, setIsDirectionSheetOpen] = useState(false);
+  const [directionQuery, setDirectionQuery] = useState("");
+  const [isMobileHero, setIsMobileHero] = useState(false);
+  const [showHeroCanvas, setShowHeroCanvas] = useState(false);
+  const heroArtRef = useRef<HTMLDivElement | null>(null);
+  const listSentinelRef = useRef<HTMLDivElement | null>(null);
+  const deferredDirectionQuery = useDeferredValue(directionQuery);
 
   useEffect(() => {
     const syncCount = () => setFavoritesCount(countFavorites());
@@ -210,57 +163,108 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
     return subscribeFavorites(syncCount);
   }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const media = window.matchMedia("(max-width: 760px)");
+    const update = () => setIsMobileHero(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    if (isMobileHero) return;
+
+    const node = heroArtRef.current;
+    if (!node) return;
+    if (typeof IntersectionObserver === "undefined") {
+      const rafId = window.requestAnimationFrame(() => setShowHeroCanvas(true));
+      return () => window.cancelAnimationFrame(rafId);
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setShowHeroCanvas(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "120px" }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [isMobileHero]);
+
+  useEffect(() => {
+    if (!isDirectionSheetOpen) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsDirectionSheetOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isDirectionSheetOpen]);
+
   const productPool = useMemo(() => sortProducts(allProducts, sortBy), [allProducts, sortBy]);
 
   const filteredDarkHorses = useMemo(() => {
     return darkHorses.filter((product) => {
-      if (darkFilter === "all") return true;
-      if (darkFilter === "hardware") return isHardware(product);
+      if (contentTypeFilter === "all") return true;
+      if (contentTypeFilter === "hardware") return isHardware(product);
       return !isHardware(product);
     });
-  }, [darkFilter, darkHorses]);
+  }, [contentTypeFilter, darkHorses]);
 
   const visibleDarkHorses = useMemo(() => {
     if (showAllDarkHorses) return filteredDarkHorses;
     return filteredDarkHorses.slice(0, DARK_HORSE_COLLAPSE_LIMIT);
   }, [filteredDarkHorses, showAllDarkHorses]);
 
-  const directionOptions = useMemo(() => {
+  const visibleDarkHorseKeys = useMemo(() => {
+    return new Set(visibleDarkHorses.map((product) => productKey(product)));
+  }, [visibleDarkHorses]);
+
+  const allDirectionOptions = useMemo(() => {
     const filtered = filterProducts(productPool, {
       tier: tierFilter,
-      type: typeFilter,
+      type: contentTypeFilter === "all" ? "all" : contentTypeFilter,
     });
-    const counts = new Map<string, number>();
+    return collectDirectionOptions(filtered, locale);
+  }, [contentTypeFilter, locale, productPool, tierFilter]);
 
-    for (const product of filtered) {
-      for (const direction of getProductDirections(product)) {
-        counts.set(direction, (counts.get(direction) || 0) + 1);
-      }
-    }
+  const popularDirections = useMemo(
+    () => allDirectionOptions.slice(0, POPULAR_DIRECTION_LIMIT),
+    [allDirectionOptions]
+  );
 
-    return [...counts.entries()]
-      .map(([value, count]) => ({
-        value,
-        count,
-        label: getDirectionLabel(value, locale) || value,
-      }))
-      .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label, locale));
-  }, [locale, productPool, tierFilter, typeFilter]);
+  const filteredDirectionSheetOptions = useMemo(
+    () => filterDirectionOptions(allDirectionOptions, deferredDirectionQuery),
+    [allDirectionOptions, deferredDirectionQuery]
+  );
 
   const activeDirectionFilter =
-    directionFilter === "all" || directionOptions.some((option) => option.value === directionFilter)
+    directionFilter === "all" || allDirectionOptions.some((option) => option.value === directionFilter)
       ? directionFilter
       : "all";
 
   const trendingFiltered = useMemo(() => {
     const filtered = filterProducts(productPool, {
       tier: tierFilter,
-      type: typeFilter,
+      type: contentTypeFilter === "all" ? "all" : contentTypeFilter,
     });
-    return activeDirectionFilter === "all"
-      ? filtered
-      : filtered.filter((product) => getProductDirections(product).includes(activeDirectionFilter));
-  }, [activeDirectionFilter, productPool, tierFilter, typeFilter]);
+
+    const directionMatched =
+      activeDirectionFilter === "all"
+        ? filtered
+        : filtered.filter((product) => getProductDirections(product).includes(activeDirectionFilter));
+
+    return directionMatched.filter((product) => !visibleDarkHorseKeys.has(productKey(product)));
+  }, [activeDirectionFilter, contentTypeFilter, productPool, tierFilter, visibleDarkHorseKeys]);
 
   const visibleProducts = useMemo(() => {
     return trendingFiltered.slice(0, currentPage * PRODUCTS_PER_PAGE);
@@ -268,171 +272,173 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
 
   const hasMore = visibleProducts.length < trendingFiltered.length;
 
-  const signalStats = useMemo(() => {
-    const now = new Date();
-    const weekStart = getCurrentWeekStart(now).getTime();
-    const nowTs = now.getTime();
-    const weekNewCount = productPool.filter((product) => {
-      const discovered = parseDateValue(product.discovered_at);
-      if (!discovered) return false;
-      const ts = discovered.getTime();
-      return ts >= weekStart && ts <= nowTs;
-    }).length;
-    const fundedCount = productPool.filter((product) => !isPlaceholderValue(product.funding_total)).length;
-    const regionCount = new Set(productPool.map((product) => product.region).filter(Boolean)).size;
+  useEffect(() => {
+    if (!hasMore) return;
 
-    return {
-      total: productPool.length,
-      weekNewCount,
-      fundedCount,
-      regionCount,
-    };
-  }, [productPool]);
+    const node = listSentinelRef.current;
+    if (!node || typeof IntersectionObserver === "undefined") return;
+
+    let hasLoaded = false;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting) || hasLoaded) return;
+        hasLoaded = true;
+        setCurrentPage((value) => value + 1);
+      },
+      { rootMargin: "280px" }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [hasMore, visibleProducts.length]);
 
   const freshnessLabel = useMemo(
     () => parseLastUpdatedLabel(freshnessHoursAgo, locale),
     [freshnessHoursAgo, locale]
   );
+  const isEnglish = locale === "en-US";
+  const heroSubtitle = isEnglish
+    ? "Spend 5 minutes each week on the most promising breakouts, then widen out to the broader AI product board."
+    : "每周 5 分钟，看完最值得关注的黑马，再延伸到更大的 AI 产品盘面。";
+
+  const activeDirectionLabel =
+    activeDirectionFilter === "all" ? t("全部方向", "All directions") : getDirectionLabel(activeDirectionFilter, locale);
+
+  const shouldRenderHeroCanvas = !isMobileHero && showHeroCanvas;
+
+  const selectDirection = (value: string) => {
+    setDirectionFilter(value);
+    setCurrentPage(1);
+    setIsDirectionSheetOpen(false);
+  };
 
   return (
     <div className="home-root" data-vibe="experimental">
       <section className="hero">
-        <div className="hero-art">
-          <HeroCanvas />
+        <div className="hero-art" ref={heroArtRef}>
+          {shouldRenderHeroCanvas ? (
+            <HeroCanvas />
+          ) : !isMobileHero ? (
+            <div className="hero-canvas hero-canvas--loading" aria-hidden="true" />
+          ) : null}
         </div>
         <div className="hero-layout">
-          <div className="hero-content">
-            <div className="hero-kicker">global signal board · weeklyai</div>
-            <h1 className="hero-title">
-              {t("发现全球最新", "Discover the latest global")}<span className="gradient-text">AI {t("产品", "products")}</span>
+          <div className={`hero-content ${isEnglish ? "hero-content--en" : ""}`}>
+            <h1 className={`hero-title ${isEnglish ? "hero-title--en" : ""}`}>
+              {isEnglish ? (
+                <>
+                  <span className="hero-title__line">Discover the latest</span>
+                  <span className="hero-title__line">
+                    global <span className="gradient-text">AI products</span>
+                  </span>
+                </>
+              ) : (
+                <>
+                  发现全球最新 <span className="gradient-text">AI 产品</span>
+                </>
+              )}
             </h1>
-            <p className="hero-subtitle">
-              {t("每周 5 分钟，看完全球 AI 领域最值得关注的新产品", "Spend 5 minutes weekly to spot the most promising new AI products.")}
-            </p>
-            <div className="data-freshness" aria-live="polite">
-              {freshnessLabel}
-            </div>
-            <div className="hero-stats" role="list" aria-label={t("本期信号概览", "Current signal overview")}>
-              <div className="hero-stat" role="listitem">
-                <span className="hero-stat__label">{t("本周新增", "New this week")}</span>
-                <strong className="hero-stat__value">
-                  {signalStats.weekNewCount} {t("款", "items")}
-                </strong>
-              </div>
-              <div className="hero-stat" role="listitem">
-                <span className="hero-stat__label">{t("获得融资", "Funded")}</span>
-                <strong className="hero-stat__value">
-                  {signalStats.fundedCount} {t("款", "items")}
-                </strong>
-              </div>
-              <div className="hero-stat" role="listitem">
-                <span className="hero-stat__label">{t("覆盖地区", "Regions covered")}</span>
-                <strong className="hero-stat__value">
-                  {signalStats.regionCount} {t("个", "regions")}
-                </strong>
-              </div>
-              <div className="hero-stat" role="listitem">
-                <span className="hero-stat__label">{t("累计收录", "Total tracked")}</span>
-                <strong className="hero-stat__value">
-                  {signalStats.total} {t("款", "items")}
-                </strong>
-              </div>
-            </div>
-            <p className="hero-signal">
-              {t("本周偏热：", "Trending this week:")}<span>{t("Agent 原生工具", "Agent-native tools")}</span> ·{" "}
-              <span>{t("AI 硬件新形态", "new AI hardware form factors")}</span> · <span>{t("社交一手信号", "early social signals")}</span>
+            <p className={`hero-subtitle ${isEnglish ? "hero-subtitle--en" : ""}`}>
+              {heroSubtitle}
             </p>
           </div>
-        </div>
-        <div className="hero-chat-slot">
-          <ChatBar />
         </div>
       </section>
 
       <section className="section darkhorse-section" id="darkhorseSection">
-        <div className="section-header">
+        <div className="section-header section-header--tight">
           <h2 className="section-title">
             <span className="title-icon">
               <Flame size={18} />
             </span>
-            {t("本周黑马", "Dark Horses This Week")} <span className="score-badge score-badge--4">{t("4-5分", "4-5 score")}</span>
+            {t("本周黑马", "Dark Horses This Week")}
           </h2>
           <p className="section-desc">
-            {t("不是最吵的项目，而是最可能突然起飞的项目。", "Not the loudest projects, but the ones most likely to take off suddenly.")}
-          </p>
-          <p className="section-micro-note">
-            {t("优先看 4-5 分，按硬件/软件切流减少信息噪声。", "Start with 4-5 scores, then split by hardware/software to reduce noise.")}
+            {t("先看最值得盯住的 4-5 分产品，减少首页噪声。", "Start with the 4-5 score breakouts worth tracking first.")}
           </p>
         </div>
 
-        <div className="darkhorse-filters">
-          <button
-            className={`filter-btn ${darkFilter === "all" ? "active" : ""}`}
-            type="button"
-            onClick={() => {
-              setDarkFilter("all");
-              setShowAllDarkHorses(false);
-            }}
-          >
-            {t("全部", "All")}
-          </button>
-          <button
-            className={`filter-btn ${darkFilter === "hardware" ? "active" : ""}`}
-            type="button"
-            onClick={() => {
-              setDarkFilter("hardware");
-              setShowAllDarkHorses(false);
-            }}
-          >
-            <Cpu size={14} /> {t("硬件", "Hardware")}
-          </button>
-          <button
-            className={`filter-btn ${darkFilter === "software" ? "active" : ""}`}
-            type="button"
-            onClick={() => {
-              setDarkFilter("software");
-              setShowAllDarkHorses(false);
-            }}
-          >
-            <Sparkles size={14} /> {t("软件", "Software")}
-          </button>
+        <div className="section-utility">
+          <div className="section-utility__freshness" aria-live="polite">
+            {freshnessLabel}
+          </div>
+
+          <div className="section-utility__controls">
+            <button
+              className={`filter-btn ${contentTypeFilter === "all" ? "active" : ""}`}
+              type="button"
+              onClick={() => {
+                setContentTypeFilter("all");
+                setCurrentPage(1);
+                setShowAllDarkHorses(false);
+              }}
+            >
+              {t("全部", "All")}
+            </button>
+            <button
+              className={`filter-btn ${contentTypeFilter === "hardware" ? "active" : ""}`}
+              type="button"
+              onClick={() => {
+                setContentTypeFilter("hardware");
+                setCurrentPage(1);
+                setShowAllDarkHorses(false);
+              }}
+            >
+              <Cpu size={14} /> {t("硬件", "Hardware")}
+            </button>
+            <button
+              className={`filter-btn ${contentTypeFilter === "software" ? "active" : ""}`}
+              type="button"
+              onClick={() => {
+                setContentTypeFilter("software");
+                setCurrentPage(1);
+                setShowAllDarkHorses(false);
+              }}
+            >
+              <Sparkles size={14} /> {t("软件", "Software")}
+            </button>
+          </div>
         </div>
 
-        <div className="darkhorse-spotlight-grid">
-          {visibleDarkHorses.length ? (
-            visibleDarkHorses.map((product) => (
-              <DarkHorseSpotlightCard key={product._id || product.name} product={product} />
-            ))
-          ) : (
-            <div className="empty-state">
-              <p className="empty-state-text">{t("该筛选下暂无黑马产品。", "No dark horse products found for this filter.")}</p>
-            </div>
-          )}
-        </div>
+        {visibleDarkHorses.length ? (
+          <div className="darkhorse-spotlight-grid">
+            {visibleDarkHorses.map((product, index) => (
+              <HomeProductCard
+                key={product._id || product.name}
+                product={product}
+                highlighted={index < 3}
+                rank={index + 1}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="empty-state">
+            <p className="empty-state-text">{t("该筛选下暂无黑马产品。", "No dark horse products found for this filter.")}</p>
+          </div>
+        )}
 
         {filteredDarkHorses.length > DARK_HORSE_COLLAPSE_LIMIT ? (
           <div className="darkhorse-expand-row">
             <button className="load-more-btn" type="button" onClick={() => setShowAllDarkHorses((value) => !value)}>
               {showAllDarkHorses
-                ? t("收起", "Collapse")
+                ? t("收起黑马列表", "Collapse dark horse list")
                 : locale === "en-US"
-                  ? `Show more (${filteredDarkHorses.length - DARK_HORSE_COLLAPSE_LIMIT})`
-                  : `展开更多 (${filteredDarkHorses.length - DARK_HORSE_COLLAPSE_LIMIT} 款)`}
+                  ? `Show the rest (${filteredDarkHorses.length - DARK_HORSE_COLLAPSE_LIMIT})`
+                  : `展开剩余黑马 (${filteredDarkHorses.length - DARK_HORSE_COLLAPSE_LIMIT} 款)`}
             </button>
           </div>
         ) : null}
       </section>
 
       <section className="section trending-section" id="trendingSection">
-        <div className="section-header">
+        <div className="section-header section-header--tight">
           <h2 className="section-title">{t("更多推荐", "More Picks")}</h2>
-          <p className="section-desc">{t("黑马 (4-5分) + 潜力股 (2-3分)", "Dark Horses (4-5) + Rising Stars (2-3)")}</p>
-          <p className="section-micro-note">
-            {t("默认按综合排序（热度 + 新鲜度），可切换热度或时间。", "Sorted by composite score by default (heat + freshness), switch to heat or time anytime.")}
+          <p className="section-desc">
+            {t("黑马之外，继续看潜力股和剩余高信号产品。", "Move beyond the hero picks into the remaining high-signal products and rising stars.")}
           </p>
         </div>
 
-        <div className="list-controls">
+        <div className="list-controls list-controls--compact">
           <div className="tier-tabs">
             <button
               className={`tier-tab ${tierFilter === "all" ? "active" : ""}`}
@@ -481,38 +487,15 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
                 <option value="recency">🕐 {t("时间", "Recency")}</option>
               </select>
             </label>
-            <label>
-              {t("一级分类", "Category")}
-              <select
-                value={typeFilter}
-                onChange={(event) => {
-                  setTypeFilter(event.target.value as typeof typeFilter);
-                  setDirectionFilter("all");
-                  setCurrentPage(1);
-                }}
-              >
-                <option value="all">{t("全部", "All")}</option>
-                <option value="software">{t("软件", "Software")}</option>
-                <option value="hardware">{t("硬件", "Hardware")}</option>
-              </select>
-            </label>
-            <label>
-              {t("二级方向", "Direction")}
-              <select
-                value={activeDirectionFilter}
-                onChange={(event) => {
-                  setDirectionFilter(event.target.value);
-                  setCurrentPage(1);
-                }}
-              >
-                <option value="all">{t("全部方向", "All directions")}</option>
-                {directionOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label} ({option.count})
-                  </option>
-                ))}
-              </select>
-            </label>
+
+            <button
+              type="button"
+              className={`tag-btn direction-trigger ${activeDirectionFilter === "all" ? "" : "active"}`}
+              onClick={() => setIsDirectionSheetOpen(true)}
+            >
+              <Search size={14} /> {activeDirectionLabel}
+            </button>
+
             <button
               className="favorites-toggle"
               type="button"
@@ -524,27 +507,130 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
           </div>
         </div>
 
-        <div className="products-grid">
-          {visibleProducts.map((product) => <ProductCard key={product._id || product.name} product={product} />)}
+        {visibleProducts.length ? (
+          <div className="darkhorse-spotlight-grid picks-grid">
+            {visibleProducts.map((product, index) => (
+              <HomeProductCard
+                key={product._id || product.name}
+                product={product}
+                rank={index + 1}
+                favoritable
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="empty-state">
+            <p className="empty-state-text">{t("当前筛选下暂无更多推荐。", "No additional picks match this filter.")}</p>
+          </div>
+        )}
+
+        {hasMore ? <div ref={listSentinelRef} className="picks-list__sentinel" aria-hidden="true" /> : null}
+      </section>
+
+      <footer className="section home-footer">
+        <div className="home-footer__intro">
+          <p className="home-footer__eyebrow">WeeklyAI</p>
+          <p className="home-footer__summary">
+            {t(
+              "给 PM 和产品团队一个更快的全球 AI 发现入口，先看值得注意的，再决定要不要深挖。",
+              "A faster global AI discovery surface for PMs and product teams: scan the notable signals first, then decide what deserves deeper work."
+            )}
+          </p>
         </div>
 
-        {hasMore ? (
-          <div className="load-more-container">
-            <button className="load-more-btn" type="button" onClick={() => setCurrentPage((value) => value + 1)}>
-              {t("加载更多", "Load more")}
-            </button>
-          </div>
-        ) : null}
-      </section>
+        <div className="home-footer__links">
+          <Link className="home-footer__link" href="/discover">
+            {t("随机发现", "Discover")}
+          </Link>
+          <Link className="home-footer__link" href="/blog">
+            {t("博客动态", "News")}
+          </Link>
+          <Link className="home-footer__link" href="/search">
+            {t("搜索", "Search")}
+          </Link>
+        </div>
 
-      <section className="section section--linkout">
-        <Link className="link-banner" href="/discover">
-          🎲 {t("随机发现产品", "Discover random products")} →
-        </Link>
-        <Link className="link-banner" href="/blog">
-          <Newspaper size={18} /> {t("查看博客和动态信号", "View news and social signals")}
-        </Link>
-      </section>
+        <div className="home-footer__meta">
+          <span>{freshnessLabel}</span>
+          <span>{t("默认优先展示黑马与潜力股信号。", "Dark horses and rising stars surface first by default.")}</span>
+        </div>
+      </footer>
+
+      {isDirectionSheetOpen ? (
+        <div className="direction-sheet">
+          <button
+            type="button"
+            className="direction-sheet__backdrop"
+            aria-label={t("关闭方向筛选", "Close direction filter")}
+            onClick={() => setIsDirectionSheetOpen(false)}
+          />
+          <div className="direction-sheet__panel" role="dialog" aria-modal="true" aria-label={t("方向筛选", "Direction filter")}>
+            <div className="direction-sheet__header">
+              <div>
+                <h3>{t("更多方向", "More directions")}</h3>
+                <p>{t("搜索并切换方向筛选。", "Search and switch the direction filter.")}</p>
+              </div>
+              <button type="button" className="direction-sheet__close" onClick={() => setIsDirectionSheetOpen(false)}>
+                {t("关闭", "Close")}
+              </button>
+            </div>
+
+            <div className="direction-sheet__popular">
+              <span>{t("高频方向", "Popular directions")}</span>
+              <div className="direction-sheet__popular-tags">
+                <button
+                  type="button"
+                  className={`tag-btn ${activeDirectionFilter === "all" ? "active" : ""}`}
+                  onClick={() => selectDirection("all")}
+                >
+                  {t("全部方向", "All directions")}
+                </button>
+                {popularDirections.map((option) => (
+                  <button
+                    key={`popular-${option.value}`}
+                    type="button"
+                    className={`tag-btn ${activeDirectionFilter === option.value ? "active" : ""}`}
+                    onClick={() => selectDirection(option.value)}
+                  >
+                    {option.label} ({option.count})
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <label className="direction-sheet__search">
+              <span>{t("搜索方向", "Search directions")}</span>
+              <input
+                type="search"
+                value={directionQuery}
+                onChange={(event) => setDirectionQuery(event.target.value)}
+                placeholder={t("输入 Agent、Healthcare、Robotics...", "Search Agent, Healthcare, Robotics...")}
+                autoComplete="off"
+              />
+            </label>
+
+            <div className="direction-sheet__list">
+              <button
+                type="button"
+                className={`tag-btn ${activeDirectionFilter === "all" ? "active" : ""}`}
+                onClick={() => selectDirection("all")}
+              >
+                {t("全部方向", "All directions")}
+              </button>
+              {filteredDirectionSheetOptions.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  className={`tag-btn ${activeDirectionFilter === option.value ? "active" : ""}`}
+                  onClick={() => selectDirection(option.value)}
+                >
+                  {option.label} ({option.count})
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

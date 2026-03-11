@@ -7,6 +7,7 @@ import { useSiteLocale } from "@/components/layout/locale-provider";
 import {
   cleanDescription,
   formatCategories,
+  getLocalizedCountryName,
   getLocalizedProductDescription,
   getLocalizedProductWhyMatters,
   isValidWebsite,
@@ -121,7 +122,7 @@ type SwipeCardIdentityProps = {
 
 function SwipeCardIdentity({ product, compact = false, locale, t }: SwipeCardIdentityProps) {
   const country = resolveProductCountry(product);
-  const countryText = country.unknown ? "Unknown" : country.name;
+  const countryText = getLocalizedCountryName(country, locale);
   const logoSize = compact ? 42 : 48;
 
   return (
@@ -567,7 +568,11 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
   const backCard = stack[2] ?? null;
   const website = normalizeWebsite(current.website);
   const currentWhyMatters = getLocalizedProductWhyMatters(current, locale);
-  const currentDescription = cleanDescription(getLocalizedProductDescription(current, locale), locale);
+  const currentDescription =
+    cleanDescription(getLocalizedProductDescription(current, locale), locale)
+    || currentWhyMatters
+    || t("产品摘要待补充", "Product summary pending");
+  const currentHighlight = currentWhyMatters || current.funding_total || "";
   const nextDescription = nextCard ? cleanDescription(getLocalizedProductDescription(nextCard, locale), locale) : "";
   const backDescription = backCard ? cleanDescription(getLocalizedProductDescription(backCard, locale), locale) : "";
   const feedbackDirection = swipeOutDirection || (dragX > SWIPE_FEEDBACK_MIN ? "right" : dragX < -SWIPE_FEEDBACK_MIN ? "left" : null);
@@ -704,8 +709,9 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
 
           <p className="swipe-card-desc">{currentDescription}</p>
 
-          {currentWhyMatters ? <p className="swipe-card-highlight">💡 {currentWhyMatters}</p> : null}
-          {current.funding_total ? <p className="swipe-card-highlight">💰 {current.funding_total}</p> : null}
+          {currentHighlight ? (
+            <p className="swipe-card-highlight">{currentWhyMatters ? `WHY · ${currentHighlight}` : `FUNDING · ${currentHighlight}`}</p>
+          ) : null}
 
           <div className="swipe-card-meta">
             {isValidWebsite(website) && !current.needs_verification ? (

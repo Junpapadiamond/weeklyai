@@ -21,7 +21,7 @@ export type FavoriteBlogEntry = {
   item: BlogPost;
 };
 
-type FavoritesStore = {
+export type FavoritesStore = {
   version: 3;
   products: FavoriteProductEntry[];
   blogs: FavoriteBlogEntry[];
@@ -214,6 +214,9 @@ function readLegacyProductEntries(): FavoriteProductEntry[] {
 function writeLegacyFavorites(keys: string[]) {
   if (typeof window === "undefined") return;
   window.localStorage.setItem(LEGACY_FAVORITES_KEY, JSON.stringify(keys));
+  for (const storageKey of LEGACY_FAVORITES_KEYS.filter((candidate) => candidate !== LEGACY_FAVORITES_KEY)) {
+    window.localStorage.removeItem(storageKey);
+  }
 }
 
 function normalizeStore(payload: unknown): FavoritesStore {
@@ -444,6 +447,52 @@ export function toggleBlogFavorite(blog: BlogPost): boolean {
   }
   addBlogFavorite(blog);
   return true;
+}
+
+export function clearFavorites(kind: FavoriteKind | "all" = "all"): boolean {
+  const store = readFavorites();
+  const hadProducts = store.products.length > 0 || readLegacyFavorites().length > 0;
+  const hadBlogs = store.blogs.length > 0;
+
+  if (kind === "product") {
+    if (!hadProducts) return false;
+    writeFavorites({
+      ...store,
+      products: [],
+    });
+    writeLegacyFavorites([]);
+    emitFavoritesChanged();
+    return true;
+  }
+
+  if (kind === "blog") {
+    if (!hadBlogs) return false;
+    writeFavorites({
+      ...store,
+      blogs: [],
+    });
+    emitFavoritesChanged();
+    return true;
+  }
+
+  if (!hadProducts && !hadBlogs) return false;
+  writeFavorites(EMPTY_STORE);
+  writeLegacyFavorites([]);
+  emitFavoritesChanged();
+  return true;
+}
+
+export function exportFavorites(kind: FavoriteKind | "all" = "all"): string {
+  const store = readFavorites();
+  const payload = {
+    exported_at: new Date().toISOString(),
+    kind,
+    products: kind === "blog" ? [] : store.products,
+    blogs: kind === "product" ? [] : store.blogs,
+    legacy_only_count: kind === "blog" ? 0 : getLegacyOnlyFavoritesCount(store),
+  };
+
+  return JSON.stringify(payload, null, 2);
 }
 
 export function subscribeFavorites(handler: () => void): () => void {
