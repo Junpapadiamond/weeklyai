@@ -1,10 +1,14 @@
 import { describe, expect, it } from "vitest";
 import {
-  cleanDescription,
+  collectDirectionOptions,
   filterProducts,
+  filterDirectionOptions,
+  formatAbsoluteDate,
   formatCategories,
+  formatRelativeDate,
   getDirectionLabel,
   getFreshnessLabel,
+  getLocalizedCountryName,
   getLocalizedProductDescription,
   getLocalizedProductLatestNews,
   getLocalizedProductWhyMatters,
@@ -13,6 +17,7 @@ import {
   getProductDirections,
   getMonogram,
   getTierTone,
+  getScoreTone,
   isValidLogoSource,
   normalizeDirectionToken,
   normalizeLogoSource,
@@ -191,6 +196,22 @@ describe("product-utils", () => {
     expect(directions).not.toContain("hardware");
   });
 
+  it("collects and searches grouped direction options", () => {
+    const products: Product[] = [
+      { name: "A", description: "x", category: "agent", categories: ["healthcare"] },
+      { name: "B", description: "x", category: "agent", categories: ["robotics"] },
+      { name: "C", description: "x", category: "voice", categories: ["healthcare"] },
+    ];
+
+    const options = collectDirectionOptions(products, "en-US");
+    expect(options[0]).toMatchObject({ value: "agent", count: 2, label: "Agent" });
+    expect(options[1]).toMatchObject({ value: "healthcare", count: 2 });
+
+    const filtered = filterDirectionOptions(options, "health");
+    expect(filtered).toHaveLength(1);
+    expect(filtered[0]?.value).toBe("healthcare");
+  });
+
   it("localizes product text fields with en-first fallback under en-US", () => {
     const product: Product = {
       name: "Localize",
@@ -207,7 +228,7 @@ describe("product-utils", () => {
     expect(getLocalizedProductLatestNews(product, "en-US")).toBe("English update");
   });
 
-  it("falls back to Chinese text under en-US when *_en fields are missing", () => {
+  it("returns empty localized fields under en-US when *_en fields are missing", () => {
     const product: Product = {
       name: "Fallback",
       description: "中文描述",
@@ -215,9 +236,60 @@ describe("product-utils", () => {
       latest_news: "中文动态",
     };
 
-    expect(getLocalizedProductDescription(product, "en-US")).toBe(cleanDescription("中文描述", "en-US"));
-    expect(getLocalizedProductWhyMatters(product, "en-US")).toBe("中文原因");
-    expect(getLocalizedProductLatestNews(product, "en-US")).toBe("中文动态");
+    expect(getLocalizedProductDescription(product, "en-US")).toBe("");
+    expect(getLocalizedProductWhyMatters(product, "en-US")).toBe("");
+    expect(getLocalizedProductLatestNews(product, "en-US")).toBe("");
+  });
+
+  it("applies curated zh-CN overrides for mixed-language card copy", () => {
+    const product: Product = {
+      name: "Sakana AI",
+      description: "日本発の自然にインスパイアされた基盤モデル開発企業。",
+      why_matters: "Transformer論文の著者Llion Jones...",
+    };
+
+    expect(getLocalizedProductDescription(product, "zh-CN")).toContain("foundation model");
+    expect(getLocalizedProductWhyMatters(product, "zh-CN")).toContain("Sovereign AI");
+  });
+
+  it("localizes country metadata labels for zh-CN cards", () => {
+    const localized = getLocalizedCountryName(
+      {
+        code: "US",
+        name: "United States",
+        flag: "🇺🇸",
+        display: "🇺🇸 United States",
+        source: "explicit",
+        unknown: false,
+      },
+      "zh-CN"
+    );
+
+    expect(localized).toBe("美国");
+    expect(
+      getLocalizedCountryName(
+        {
+          code: "UNKNOWN",
+          name: "Unknown",
+          flag: "",
+          display: "Unknown",
+          source: "unknown",
+          unknown: true,
+        },
+        "zh-CN"
+      )
+    ).toBe("地区待补充");
+  });
+
+  it("applies curated zh-CN overrides for homepage english-only cards", () => {
+    const product: Product = {
+      name: "Ivee",
+      description: "AI upskilling platform that trains employees on AI tools.",
+      why_matters: "Raised $1M seed backed by Steven Bartlett.",
+    };
+
+    expect(getLocalizedProductDescription(product, "zh-CN")).toContain("AI upskilling");
+    expect(getLocalizedProductWhyMatters(product, "zh-CN")).toContain("英国政府");
   });
 
   it("formats category labels by locale", () => {
@@ -227,8 +299,8 @@ describe("product-utils", () => {
       categories: ["hardware", "ai_chip", "other"],
     };
 
-    expect(formatCategories(product, "zh-CN")).toBe("硬件 · AI芯片 · 其他");
-    expect(formatCategories(product, "en-US")).toBe("Hardware · AI Chips · Other");
+    expect(formatCategories(product, "zh-CN")).toBe("硬件 · AI芯片");
+    expect(formatCategories(product, "en-US")).toBe("Hardware · AI Chips");
   });
 
   it("generates freshness labels from available dates", () => {
@@ -238,6 +310,21 @@ describe("product-utils", () => {
     expect(getFreshnessLabel({ name: "B", description: "x", first_seen: "2026-02-10T08:00:00.000Z" }, now)).toBe("4小时前");
     expect(getFreshnessLabel({ name: "C", description: "x", published_at: "2026-02-10T11:30:00.000Z" }, now)).toBe("1小时内");
     expect(getFreshnessLabel({ name: "D", description: "x" }, now)).toBe("时间待补充");
+  });
+
+  it("formats relative and absolute dates consistently", () => {
+    const now = new Date("2026-03-09T12:00:00.000Z");
+    expect(formatRelativeDate("2026-03-08T12:00:00.000Z", "en-US", now)).toBe("1d ago");
+    expect(formatRelativeDate("2026-02-28T12:00:00.000Z", "en-US", now)).toBe("1w ago");
+    expect(formatAbsoluteDate("2026-03-08T12:00:00.000Z", "en-US")).toContain("2026");
+  });
+
+  it("maps score tone into ui tiers", () => {
+    expect(getScoreTone(5)).toBe("5");
+    expect(getScoreTone(4)).toBe("4");
+    expect(getScoreTone(3)).toBe("3");
+    expect(getScoreTone(2)).toBe("2");
+    expect(getScoreTone(1)).toBe("0");
   });
 
   it("generates monogram fallback for latin, chinese and empty names", () => {

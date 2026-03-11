@@ -143,6 +143,14 @@ Core update chain (`crawler/tools` + `ops/scheduling`):
 Default schedule is `3:00 AM` via launchd.  
 Log file: `crawler/logs/daily_update.log`
 
+OpenClaw enhancement layer (optional):
+
+- Daily run emits structured summary JSON to `crawler/logs/reports/openclaw_summary_*.json`
+- Optional webhook push controlled by `OPENCLAW_NOTIFY_ENABLED`
+- Safe rerun wrapper for approved commands: `python3 ops/openclaw/safe_rerun.py --list`
+
+Setup details: `ops/openclaw/README.md`
+
 Common manual commands:
 
 ```bash
@@ -196,6 +204,7 @@ python3 tools/sync_to_mongodb.py --all
 - `SOCIAL_HOURS` (default: `96h`)
 - `DARK_HORSE_FRESH_DAYS` (default: `5`)
 - `DARK_HORSE_STICKY_DAYS` (default: `10`)
+- `OPENCLAW_NOTIFY_ENABLED`, `OPENCLAW_WEBHOOK_URL`, `OPENCLAW_WEBHOOK_TOKEN`
 
 ---
 

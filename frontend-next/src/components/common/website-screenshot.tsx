@@ -37,10 +37,32 @@ type FallbackState = {
   mode: FallbackMode;
 };
 
-function getThumioUrl(website?: string): string {
+type CandidateState = {
+  key: string;
+  index: number;
+};
+
+type ScreenshotCandidate = {
+  url: string;
+  crossOrigin?: "anonymous";
+  enableQualityCheck?: boolean;
+};
+
+function getScreenshotCandidates(website?: string): ScreenshotCandidate[] {
   const normalized = normalizeWebsite(website);
-  if (!isValidWebsite(normalized)) return "";
-  return `https://image.thum.io/get/width/1200/noanimate/${encodeURI(normalized)}`;
+  if (!isValidWebsite(normalized)) return [];
+
+  const encoded = encodeURIComponent(normalized);
+  return [
+    {
+      url: `https://image.thum.io/get/width/1200/noanimate/${encodeURI(normalized)}`,
+    },
+    {
+      url: `https://api.microlink.io/?url=${encoded}&screenshot=true&meta=false&embed=screenshot.url`,
+      crossOrigin: "anonymous",
+      enableQualityCheck: true,
+    },
+  ];
 }
 
 function normalizeCategory(value?: string): string {
@@ -156,8 +178,14 @@ export function WebsiteScreenshot({
   logoSize = 44,
 }: WebsiteScreenshotProps) {
   const { locale, t } = useSiteLocale();
-  const screenshotUrl = useMemo(() => getThumioUrl(website), [website]);
+  const screenshotCandidates = useMemo(() => getScreenshotCandidates(website), [website]);
+  const candidatesKey = useMemo(() => screenshotCandidates.map((item) => item.url).join("|"), [screenshotCandidates]);
+  const [candidateState, setCandidateState] = useState<CandidateState>({ key: "", index: 0 });
   const [fallbackState, setFallbackState] = useState<FallbackState>({ key: "", mode: null });
+  const candidateIndex = candidateState.key === candidatesKey ? candidateState.index : 0;
+  const activeCandidate = screenshotCandidates[candidateIndex];
+  const screenshotUrl = activeCandidate?.url || "";
+  const fallbackToken = `${candidatesKey}::${screenshotUrl}`;
   const token = useMemo(() => resolveCategoryToken({ category, categories, isHardware }), [category, categories, isHardware]);
   const visual = useMemo(() => categoryVisual(token, locale), [locale, token]);
   const visualStyle = useMemo(
@@ -168,7 +196,8 @@ export function WebsiteScreenshot({
       }) as CSSProperties,
     [visual.colors]
   );
-  const fallbackMode = fallbackState.key === screenshotUrl ? fallbackState.mode : null;
+
+  const fallbackMode = fallbackState.key === fallbackToken ? fallbackState.mode : null;
   const showImage = !!screenshotUrl && fallbackMode === null;
 
   return (
@@ -179,13 +208,26 @@ export function WebsiteScreenshot({
           className="website-shot__image"
           src={screenshotUrl}
           alt={alt || `${name || t("产品", "product")} ${t("官网截图", "website screenshot")}`}
-          crossOrigin="anonymous"
+          crossOrigin={activeCandidate?.crossOrigin}
           loading="lazy"
           decoding="async"
-          onError={() => setFallbackState({ key: screenshotUrl, mode: "logo" })}
+          onError={() => {
+            const nextIndex = candidateIndex + 1;
+            if (nextIndex < screenshotCandidates.length) {
+              setCandidateState({ key: candidatesKey, index: nextIndex });
+              return;
+            }
+            setFallbackState({ key: fallbackToken, mode: "logo" });
+          }}
           onLoad={(event) => {
+            if (!activeCandidate?.enableQualityCheck) return;
             if (analyzeScreenshotQuality(event.currentTarget)) {
-              setFallbackState({ key: screenshotUrl, mode: "category" });
+              const nextIndex = candidateIndex + 1;
+              if (nextIndex < screenshotCandidates.length) {
+                setCandidateState({ key: candidatesKey, index: nextIndex });
+                return;
+              }
+              setFallbackState({ key: fallbackToken, mode: "category" });
             }
           }}
         />

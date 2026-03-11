@@ -1,0 +1,171 @@
+{
+  "updated_at": "2026-03-10T20:28:27.556244Z",
+  "sources": {
+    "x": {
+      "count": 0,
+      "mode": "hybrid",
+      "primary_ran": true,
+      "primary_reason": "force_after_empty",
+      "primary_added": 0,
+      "fallback_ran": true,
+      "fallback_added": 0,
+      "fallback_attempted_accounts": 18,
+      "fallback_success_accounts": 0,
+      "fallback_hit_rate": 0.0,
+      "errors": {},
+      "providers": {
+        "nitter_rss": {
+          "ok": 0,
+          "error": 18
+        },
+        "browser": {
+          "ok": 0,
+          "error": 18
+        }
+      },
+      "updated_at": "2026-03-10T20:28:27.556244Z"
+    },
+    "youtube": {
+      "count": 0,
+      "channel_total": 8,
+      "skipped_cooldown": 0,
+      "fallback_hits": 0,
+      "fallback_attempts": 0,
+      "fallback_hit_rate": 0.0,
+      "errors": {},
+      "channels": {
+        "UCbfYPyITQ-7l4upoX8nvctg": {
+          "consecutive_404": 0,
+          "cooldown_until": "",
+          "last_error": "",
+          "status": "ok",
+          "channel_title": "Two Minute Papers",
+          "last_checked": "2026-03-10T20:24:23.797511Z",
+          "updated_at": "2026-03-10T20:24:23.797511Z"
+        },
+        "UCNJ1Ymd5yFuUPtn21xtRbbw": {
+          "consecutive_404": 0,
+          "cooldown_until": "",
+          "last_error": "",
+          "status": "ok",
+          "channel_title": "AI Explained",
+          "last_checked": "2026-03-10T20:24:23.797511Z",
+          "updated_at": "2026-03-10T20:24:23.797511Z"
+        },
+        "UCJIfeSCssxSC_Dhc5s7woww": {
+          "consecutive_404": 0,
+          "cooldown_until": "",
+          "last_error": "",
+          "status": "ok",
+          "channel_title": "Lex Clips",
+          "last_checked": "2026-03-10T20:24:23.797511Z",
+          "updated_at": "2026-03-10T20:24:23.797511Z"
+        },
+        "UCsBjURrPoezykLs9EqgamOA": {
+          "consecutive_404": 0,
+          "cooldown_until": "",
+          "last_error": "",
+          "status": "ok",
+          "channel_title": "Fireship",
+          "last_checked": "2026-03-10T20:24:23.797511Z",
+          "updated_at": "2026-03-10T20:24:23.797511Z"
+        },
+        "UCZHmQk67mSJgfCCTn7xBfew": {
+          "consecutive_404": 0,
+          "cooldown_until": "",
+          "last_error": "",
+          "status": "ok",
+          "channel_title": "Yannic Kilcher",
+          "last_checked": "2026-03-10T20:24:23.797511Z",
+          "updated_at": "2026-03-10T20:24:23.797511Z"
+        },
+        "UCRJFAp0rewx8kzdhEqDHIlA": {
+          "consecutive_404": 0,
+          "cooldown_until": "",
+          "last_error": "",
+          "status": "ok",
+          "channel_title": "The AI Advantage",
+          "last_checked": "2026-03-10T20:24:23.797511Z",
+          "updated_at": "2026-03-10T20:24:23.797511Z"
+        },
+        "UCUyeluBRhGPCW4rPe_UvBZQ": {
+          "consecutive_404": 0,
+          "cooldown_until": "",
+          "last_error": "",
+          "status": "ok",
+          "channel_title": "The PrimeTime",
+          "last_checked": "2026-03-10T20:24:23.797511Z",
+          "updated_at": "2026-03-10T20:24:23.797511Z"
+        },
+        "UC8WCW6C3BWLKSZ5cMzD8Gyw": {
+          "consecutive_404": 0,
+          "cooldown_until": "",
+          "last_error": "",
+          "status": "ok",
+          "channel_title": "跟李沐学AI",
+          "last_checked": "2026-03-10T20:24:23.797511Z",
+          "updated_at": "2026-03-10T20:24:23.797511Z"
+        }
+      },
+      "updated_at": "2026-03-10T20:24:24.932905Z"
+    },
+    "reddit": {
+      "count": 73,
+      "subreddit_total": 7,
+      "rss_fallback_hits": 0,
+      "errors": {},
+      "updated_at": "2026-03-03T02:15:07.880641Z"
+    },
+    "diagnostics": {
+      "checked_at": "2026-03-03T02:18:33.575205Z",
+      "youtube": {
+        "configured_channels": 8,
+        "source": "file:/Users/jun/Desktop/Projects/WeeklyAI/crawler/data/source_watchlists.json",
+        "status_breakdown": {
+          "200": 5,
+          "404": 3
+        },
+        "invalid_channels": [
+          "UCZHmQk67mN2CWjyrAqjhmCQ",
+          "UCjq5DjGAP57dv_zdi1HVtXg",
+          "UCfeLGcQHpqVFBG1hCqVV6bg"
+        ],
+        "recommendations": [
+          "replace_invalid_channel_ids:UCZHmQk67mN2CWjyrAqjhmCQ,UCjq5DjGAP57dv_zdi1HVtXg,UCfeLGcQHpqVFBG1hCqVV6bg"
+        ]
+      },
+      "x": {
+        "configured_accounts": 18,
+        "source": "file:/Users/jun/Desktop/Projects/WeeklyAI/crawler/data/source_watchlists.json",
+        "timeline_provider": "auto",
+        "tweet_provider": "x_syndication",
+        "nitter_breakdown": {
+          "200": 1,
+          "403": 1
+        },
+        "r_jina_status": 0,
+        "r_jina_error": "timeout",
+        "perplexity_status": 401,
+        "perplexity_error": "",
+        "recommendations": [
+          "r_jina_timeline_unreliable"
+        ]
+      },
+      "reddit": {
+        "json_status": 200,
+        "json_error": "",
+        "rss_status": 200,
+        "rss_error": "",
+        "recommendations": []
+      },
+      "blogs_news_counts": {
+        "hackernews": 72,
+        "tech_news": 6,
+        "x": 18,
+        "reddit": 73,
+        "youtube": 1
+      },
+      "updated_at": "2026-03-03T02:18:57.401010Z"
+    }
+  }
+}

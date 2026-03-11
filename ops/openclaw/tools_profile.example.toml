@@ -1,0 +1,12 @@
+[tools]
+profile = "messaging"
+
+[exposed]
+allow = [
+  "webhook.notify",
+  "safe_rerun.rss_to_products",
+  "safe_rerun.sync_to_mongodb"
+]
+
+[policy]
+default = "deny"

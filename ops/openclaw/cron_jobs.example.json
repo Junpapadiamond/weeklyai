@@ -1,0 +1,10 @@
+{
+  "jobs": [
+    {
+      "name": "weeklyai-hourly-health-check",
+      "schedule": "0 * * * *",
+      "description": "OpenClaw health-check loop only; does not replace 3:00 main launchd schedule",
+      "command": "python3 /Users/jun/Desktop/Projects/WeeklyAI/ops/openclaw/safe_rerun.py --list"
+    }
+  ]
+}

@@ -57,6 +57,7 @@ export function SmartLogo({
           width={size}
           height={size}
           loading={loading}
+          fetchPriority={loading === "eager" ? "high" : "low"}
           decoding="async"
           onLoad={(event) => {
             if (event.currentTarget.naturalWidth > 0 && event.currentTarget.naturalHeight > 0) return;

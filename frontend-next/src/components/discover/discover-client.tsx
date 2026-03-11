@@ -10,7 +10,22 @@ import { addProductFavorite, countFavorites, openFavoritesPanel, subscribeFavori
 
 const DiscoveryDeck = dynamic(() => import("@/components/home/discovery-deck"), {
   ssr: false,
-  loading: () => <div className="swipe-card is-active">Loading cards...</div>,
+  loading: () => (
+    <div className="discover-skeleton">
+      <div className="discover-skeleton__card">
+        <div className="discover-skeleton__topline" />
+        <div className="discover-skeleton__hero" />
+        <div className="discover-skeleton__line discover-skeleton__line--lg" />
+        <div className="discover-skeleton__line" />
+        <div className="discover-skeleton__line discover-skeleton__line--short" />
+        <div className="discover-skeleton__actions">
+          <span />
+          <span />
+          <span />
+        </div>
+      </div>
+    </div>
+  ),
 });
 
 type DiscoverClientProps = {

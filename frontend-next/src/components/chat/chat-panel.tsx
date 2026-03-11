@@ -46,7 +46,7 @@ export function ChatPanel({ messages, isLoading, onSend, onMinimize }: ChatPanel
       <header className="chat-panel__header">
         <div className="chat-panel__title">
           <Sparkles size={16} />
-          <span>{t("WeeklyAI 助手", "WeeklyAI Assistant")}</span>
+          <span>{t("Ask AI · WeeklyAI 助手", "Ask AI · WeeklyAI Assistant")}</span>
         </div>
         <button type="button" className="chat-panel__minimize" onClick={onMinimize} aria-label={t("收起", "Minimize")}>
           <ChevronDown size={18} />
@@ -57,7 +57,7 @@ export function ChatPanel({ messages, isLoading, onSend, onMinimize }: ChatPanel
         {!hasMessages ? (
           <div className="chat-welcome">
             <p className="chat-welcome__text">
-              {t("问我：黑马推荐、融资动态、硬件趋势、区域新产品。", "Ask me about dark horses, funding trends, hardware, and regional product signals.")}
+              {t("直接问我：黑马推荐、融资动态、硬件趋势、区域新产品。", "Ask directly about dark horses, funding, hardware trends, and regional product signals.")}
             </p>
             <ChatSuggestions onSelect={onSend} />
           </div>

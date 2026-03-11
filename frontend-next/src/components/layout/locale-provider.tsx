@@ -23,20 +23,19 @@ type LocaleProviderProps = {
   children: ReactNode;
 };
 
-export function LocaleProvider({ initialLocale = DEFAULT_LOCALE, children }: LocaleProviderProps) {
-  const [locale, setLocale] = useState<SiteLocale>(initialLocale);
+function resolveInitialLocale(initialLocale: SiteLocale): SiteLocale {
+  if (typeof window === "undefined") return initialLocale;
 
-  useEffect(() => {
-    try {
-      const stored = window.localStorage.getItem(LOCALE_STORAGE_KEY);
-      const normalized = normalizeLocale(stored);
-      if (normalized !== locale) {
-        setLocale(normalized);
-      }
-    } catch {
-      // ignore localStorage access errors
-    }
-  }, []);
+  try {
+    const stored = window.localStorage.getItem(LOCALE_STORAGE_KEY);
+    return normalizeLocale(stored || initialLocale);
+  } catch {
+    return initialLocale;
+  }
+}
+
+export function LocaleProvider({ initialLocale = DEFAULT_LOCALE, children }: LocaleProviderProps) {
+  const [locale, setLocale] = useState<SiteLocale>(() => resolveInitialLocale(initialLocale));
 
   useEffect(() => {
     document.documentElement.lang = locale;

@@ -14,7 +14,11 @@ import json
 import os
 import re
 import sys
+import ssl
+from datetime import datetime, timezone
 from urllib.parse import urlparse
+from urllib.request import Request, urlopen
+from urllib.error import HTTPError
 
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -147,10 +151,8 @@ def _is_for_sale_html(html: str) -> bool:
     return any(pattern in lowered for pattern in FOR_SALE_PATTERNS)
 
 
-def _probe_url(url: str, timeout: int = 6):
-    """Return (ok, final_url, reason, html_snippet)."""
-    if not requests:
-        return False, "", "requests_missing", ""
+def _probe_url_requests(url: str, timeout: int = 6):
+    """requests backend: Return (ok, final_url, reason, html_snippet)."""
     target = _normalize_website(url)
     if not target:
         return False, "", "invalid_url", ""
@@ -179,6 +181,59 @@ def _probe_url(url: str, timeout: int = 6):
     if 200 <= status < 400:
         return True, final_url, f"status:{status}", html
     return False, final_url, f"status:{status}", html
+
+
+def _probe_url_urllib(url: str, timeout: int = 6):
+    """urllib backend: Return (ok, final_url, reason, html_snippet)."""
+    target = _normalize_website(url)
+    if not target:
+        return False, "", "invalid_url", ""
+
+    req = Request(
+        target,
+        headers={
+            "User-Agent": CHECK_HEADERS.get("User-Agent", "Mozilla/5.0"),
+            "Accept-Language": CHECK_HEADERS.get("Accept-Language", "en-US,en;q=0.9"),
+        },
+    )
+    context = ssl._create_unverified_context()
+
+    try:
+        with urlopen(req, timeout=timeout, context=context) as resp:
+            status = int(getattr(resp, "status", 0) or resp.getcode() or 0)
+            final_url = str(resp.geturl() or target).strip()
+            content_type = str(resp.headers.get("Content-Type") or "").lower()
+            html = ""
+            if "text/html" in content_type or "application/xhtml" in content_type or not content_type:
+                try:
+                    html = resp.read(16000).decode("utf-8", errors="ignore")
+                except Exception:
+                    html = ""
+
+            if 200 <= status < 400:
+                return True, final_url, f"status:{status}", html
+            return False, final_url, f"status:{status}", html
+    except HTTPError as e:
+        status = int(getattr(e, "code", 0) or 0)
+        final_url = str(getattr(e, "url", "") or target).strip()
+        headers = getattr(e, "headers", None)
+        content_type = str(headers.get("Content-Type") if headers else "").lower()
+        html = ""
+        if "text/html" in content_type or "application/xhtml" in content_type:
+            try:
+                html = e.read(16000).decode("utf-8", errors="ignore")
+            except Exception:
+                html = ""
+        return False, final_url, f"status:{status}", html
+    except Exception as e:
+        return False, "", f"error:{type(e).__name__}", ""
+
+
+def _probe_url(url: str, timeout: int = 6):
+    """Return (ok, final_url, reason, html_snippet)."""
+    if requests:
+        return _probe_url_requests(url, timeout=timeout)
+    return _probe_url_urllib(url, timeout=timeout)
 
 
 def _website_variants(url: str):
@@ -270,6 +325,7 @@ def main() -> int:
         action="store_true",
         help="Keep parked domain URLs instead of forcing website='unknown'",
     )
+    parser.add_argument("--report", default="", help="Optional JSON report output path")
     args = parser.parse_args()
 
     if not os.path.exists(args.input):
@@ -287,6 +343,8 @@ def main() -> int:
     parked_unknown = 0
     flagged_unreachable = 0
     probed = 0
+    reason_counts = {}
+    failure_examples = []
 
     for item in products:
         if not isinstance(item, dict):
@@ -324,6 +382,8 @@ def main() -> int:
         if _should_probe(item, args.scope):
             probed += 1
             ok, final_url, reason, html = _probe_url(website, timeout=max(2, args.timeout))
+            if reason:
+                reason_counts[reason] = reason_counts.get(reason, 0) + 1
             is_for_sale = _is_for_sale_html(html)
             normalized_final = _normalize_website(final_url) or website
 
@@ -367,6 +427,14 @@ def main() -> int:
                         flagged_unreachable += 1
                     if reason:
                         item["website_check_reason"] = reason
+                    if len(failure_examples) < 50:
+                        failure_examples.append(
+                            {
+                                "name": str(item.get("name") or ""),
+                                "website": website,
+                                "reason": reason or "",
+                            }
+                        )
 
         if json.dumps(item, ensure_ascii=False, sort_keys=True) != original_state:
             changed += 1
@@ -378,10 +446,41 @@ def main() -> int:
         f"repaired_variant={repaired_variant} repaired_source={repaired_source} "
         f"parked_unknown={parked_unknown} flagged_unreachable={flagged_unreachable}"
     )
+    probe_backend = "requests" if requests else "urllib"
+    print(f"{dry}probe_backend={probe_backend}")
     if not args.dry_run and changed:
         with open(args.input, "w", encoding="utf-8") as f:
             json.dump(products, f, ensure_ascii=False, indent=2)
         print(f"Saved {args.input}")
+    if args.report:
+        report = {
+            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "input": os.path.abspath(args.input),
+            "dry_run": bool(args.dry_run),
+            "scope": args.scope,
+            "timeout": int(args.timeout),
+            "probe_backend": probe_backend,
+            "summary": {
+                "total_products": len(products),
+                "changed": changed,
+                "probed": probed,
+                "mismatch_fixed": mismatch_fixed,
+                "mismatch_unknown": mismatch_unknown,
+                "repaired_variant": repaired_variant,
+                "repaired_source": repaired_source,
+                "parked_unknown": parked_unknown,
+                "flagged_unreachable": flagged_unreachable,
+            },
+            "reason_counts": reason_counts,
+            "failure_examples": failure_examples,
+        }
+        report_path = os.path.abspath(args.report)
+        report_dir = os.path.dirname(report_path)
+        if report_dir:
+            os.makedirs(report_dir, exist_ok=True)
+        with open(report_path, "w", encoding="utf-8") as f:
+            json.dump(report, f, ensure_ascii=False, indent=2)
+        print(f"{dry}Saved report: {report_path}")
 
     return 0
 

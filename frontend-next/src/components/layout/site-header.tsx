@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { Dice5, Heart, Flame, Newspaper, Search, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { SiteLocale } from "@/lib/locale";
+import { ChatBar } from "@/components/chat/chat-bar";
 import { countFavorites, openFavoritesPanel, subscribeFavorites } from "@/lib/favorites";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 
@@ -31,8 +32,18 @@ export function SiteHeader() {
     { href: "/search", label: t("搜索", "Search"), icon: Search },
   ];
 
+  const mobileNavItems = [
+    { href: "/", label: t("首页", "Home"), icon: Flame },
+    { href: "/discover", label: t("发现", "Discover"), icon: Dice5 },
+  ];
+
   function applyLocale(nextLocale: SiteLocale) {
     setLocale(nextLocale);
+  }
+
+  function isNavActive(href: string) {
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname.startsWith(`${href}/`);
   }
 
   return (
@@ -48,9 +59,14 @@ export function SiteHeader() {
         <nav className="nav-links" aria-label={t("主导航", "Main navigation")}>
           {navItems.map((item) => {
             const Icon = item.icon;
-            const isActive = pathname === item.href;
+            const isActive = isNavActive(item.href);
             return (
-              <Link key={item.href} href={item.href} className={`nav-link ${isActive ? "active" : ""}`}>
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`nav-link ${isActive ? "active" : ""}`}
+                aria-current={isActive ? "page" : undefined}
+              >
                 <span className="nav-icon">
                   <Icon size={16} />
                 </span>
@@ -61,6 +77,9 @@ export function SiteHeader() {
         </nav>
 
         <div className="nav-actions">
+          <div className="nav-ai">
+            <ChatBar variant="compactTrigger" />
+          </div>
           <div className="locale-switcher" role="group" aria-label={t("切换语言", "Switch language")}>
             <button
               type="button"
@@ -91,6 +110,38 @@ export function SiteHeader() {
           <ThemeToggle ariaLabel={t("切换主题", "Toggle theme")} />
         </div>
       </div>
+
+      <nav className="mobile-tabbar" aria-label={t("底部导航", "Bottom navigation")}>
+        {mobileNavItems.map((item) => {
+          const Icon = item.icon;
+          const isActive = isNavActive(item.href);
+          return (
+            <Link
+              key={`mobile-${item.href}`}
+              href={item.href}
+              className={`mobile-tabbar__link ${isActive ? "active" : ""}`}
+              aria-current={isActive ? "page" : undefined}
+            >
+              <span className="mobile-tabbar__icon">
+                <Icon size={16} />
+              </span>
+              <span>{item.label}</span>
+            </Link>
+          );
+        })}
+        <button
+          type="button"
+          className="mobile-tabbar__button"
+          aria-label={t("打开收藏夹", "Open favorites")}
+          onClick={() => openFavoritesPanel("product")}
+        >
+          <span className="mobile-tabbar__icon">
+            <Heart size={16} />
+          </span>
+          <span>{t("收藏", "Favorites")}</span>
+          <strong className="mobile-tabbar__badge">{favoritesCount}</strong>
+        </button>
+      </nav>
     </header>
   );
 }
