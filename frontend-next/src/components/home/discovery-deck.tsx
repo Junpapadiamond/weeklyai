@@ -14,6 +14,7 @@ import {
   isValidWebsite,
   normalizeWebsite,
   productKey,
+  resolveProductLogoSources,
   resolveProductCountry,
 } from "@/lib/product-utils";
 
@@ -125,17 +126,19 @@ function SwipeCardIdentity({ product, compact = false, locale, t }: SwipeCardIde
   const country = resolveProductCountry(product);
   const countryText = getLocalizedCountryName(country, locale);
   const logoSize = compact ? 42 : 48;
+  const resolvedLogo = resolveProductLogoSources(product);
 
   return (
     <div className="swipe-card-header__identity">
       <SmartLogo
-        key={`${product._id || product.name}-${product.logo_url || ""}-${product.logo || ""}-${product.website || ""}-${product.source_url || ""}`}
+        key={`${product._id || product.name}-${resolvedLogo.logoUrl}-${resolvedLogo.secondaryLogoUrl}-${product.website || ""}-${product.source_url || ""}`}
         className="swipe-card-logo"
         name={product.name}
-        logoUrl={product.logo_url}
-        secondaryLogoUrl={product.logo}
+        logoUrl={resolvedLogo.logoUrl}
+        secondaryLogoUrl={resolvedLogo.secondaryLogoUrl}
         website={product.website}
         sourceUrl={product.source_url}
+        trustPrimaryLogo
         size={logoSize}
         loading="eager"
       />

@@ -12,6 +12,7 @@ type SmartLogoProps = {
   sourceUrl?: string;
   size?: number;
   loading?: "lazy" | "eager";
+  trustPrimaryLogo?: boolean;
 };
 
 export function SmartLogo({
@@ -23,6 +24,7 @@ export function SmartLogo({
   sourceUrl,
   size = 48,
   loading = "lazy",
+  trustPrimaryLogo = false,
 }: SmartLogoProps) {
   const monogram = getMonogram(name);
   const candidates = useMemo(
@@ -32,8 +34,9 @@ export function SmartLogo({
         secondaryLogoUrl,
         website,
         sourceUrl,
+        trustPrimaryLogo,
       }),
-    [logoUrl, secondaryLogoUrl, sourceUrl, website]
+    [logoUrl, secondaryLogoUrl, sourceUrl, trustPrimaryLogo, website]
   );
   const [index, setIndex] = useState(0);
   const [isExhausted, setIsExhausted] = useState(false);

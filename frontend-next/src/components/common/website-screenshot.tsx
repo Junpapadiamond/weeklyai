@@ -24,6 +24,7 @@ type WebsiteScreenshotProps = {
   logoUrl?: string;
   secondaryLogoUrl?: string;
   sourceUrl?: string;
+  trustPrimaryLogo?: boolean;
   category?: string;
   categories?: string[];
   isHardware?: boolean;
@@ -149,6 +150,7 @@ export function WebsiteScreenshot({
   logoUrl,
   secondaryLogoUrl,
   sourceUrl,
+  trustPrimaryLogo = false,
   category,
   categories,
   isHardware,
@@ -206,6 +208,7 @@ export function WebsiteScreenshot({
                 secondaryLogoUrl={secondaryLogoUrl}
                 website={website}
                 sourceUrl={sourceUrl}
+                trustPrimaryLogo={trustPrimaryLogo}
                 size={logoSize}
               />
             </div>

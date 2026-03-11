@@ -29,6 +29,7 @@ import {
   isValidWebsite,
   normalizeWebsite,
   productKey,
+  resolveProductLogoSources,
   resolveProductCountry,
   sortProducts,
 } from "@/lib/product-utils";
@@ -81,6 +82,7 @@ function HomeProductCard({ product, highlighted = false, rank, favoritable = fal
     || cleanDescription(getLocalizedProductDescription(product, locale), locale)
     || t("产品摘要待补充", "Product summary pending");
   const websiteSearchUrl = getProductWebsiteSearchUrl(product.name, locale);
+  const resolvedLogo = resolveProductLogoSources(product);
 
   const metadata = [
     country.flag ? `${country.flag} ${regionLabel}` : regionLabel,
@@ -98,13 +100,14 @@ function HomeProductCard({ product, highlighted = false, rank, favoritable = fal
         </div>
 
         <SmartLogo
-          key={`${product._id || product.name}-${product.logo_url || ""}-${product.logo || ""}-${product.website || ""}-${product.source_url || ""}`}
+          key={`${product._id || product.name}-${resolvedLogo.logoUrl}-${resolvedLogo.secondaryLogoUrl}-${product.website || ""}-${product.source_url || ""}`}
           className="darkhorse-spotlight__logo"
           name={product.name}
-          logoUrl={product.logo_url}
-          secondaryLogoUrl={product.logo}
+          logoUrl={resolvedLogo.logoUrl}
+          secondaryLogoUrl={resolvedLogo.secondaryLogoUrl}
           website={product.website}
           sourceUrl={product.source_url}
+          trustPrimaryLogo
           size={64}
           loading={rank <= 3 ? "eager" : "lazy"}
         />

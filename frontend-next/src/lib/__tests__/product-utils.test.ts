@@ -22,6 +22,7 @@ import {
   normalizeDirectionToken,
   normalizeLogoSource,
   normalizeWebsite,
+  resolveProductLogoSources,
   shouldRenderLogoImage,
   parseFundingAmount,
   sortProducts,
@@ -110,6 +111,81 @@ describe("product-utils", () => {
     });
     expect(rejectSocialLogo[0]).toBe("https://example.com/apple-touch-icon.png");
     expect(rejectSocialLogo).not.toContain("https://www.youtube.com/s/desktop/abc/img/favicon_32x32.png");
+
+    const trustedExplicitLogo = getLogoCandidates({
+      logoUrl: "https://framerusercontent.com/images/3S1XMF1Wu7nO2vBUopvF7ajENkY.png",
+      website: "https://www.zyg.com/",
+      trustPrimaryLogo: true,
+    });
+    expect(trustedExplicitLogo[0]).toBe("https://framerusercontent.com/images/3S1XMF1Wu7nO2vBUopvF7ajENkY.png");
+  });
+
+  it("resolves curated logo sources from the manifest", () => {
+    expect(
+      resolveProductLogoSources({
+        name: "Science Corp.",
+        description: "",
+        website: "https://science.xyz/",
+        logo_url: "",
+      })
+    ).toEqual({
+      logoUrl: "https://science.xyz/images/meta/apple-touch-icon.png",
+      secondaryLogoUrl: "",
+    });
+
+    expect(
+      resolveProductLogoSources({
+        name: "ZyG",
+        description: "",
+        website: "https://www.zyg.com/",
+        logo_url: "",
+      })
+    ).toEqual({
+      logoUrl: "https://framerusercontent.com/images/3S1XMF1Wu7nO2vBUopvF7ajENkY.png",
+      secondaryLogoUrl: "",
+    });
+  });
+
+  it("drops generic placeholder and clearbit sources when resolving explicit logos", () => {
+    expect(
+      resolveProductLogoSources({
+        name: "Placeholder Co",
+        description: "",
+        website: "https://placeholder.example/",
+        logo_url: "/logos/custom/default-ai.svg",
+        logo: "https://cdn.placeholder.example/logo.png",
+      })
+    ).toEqual({
+      logoUrl: "https://cdn.placeholder.example/logo.png",
+      secondaryLogoUrl: "",
+    });
+
+    expect(
+      resolveProductLogoSources({
+        name: "Clearbit Co",
+        description: "",
+        website: "https://clearbit.example/",
+        logo_url: "https://logo.clearbit.com/clearbit.example",
+        logo: "https://assets.clearbit.example/logo.svg",
+      })
+    ).toEqual({
+      logoUrl: "https://assets.clearbit.example/logo.svg",
+      secondaryLogoUrl: "",
+    });
+  });
+
+  it("prefers manifest logos over derived website fallbacks", () => {
+    expect(
+      resolveProductLogoSources({
+        name: "ZyG",
+        description: "",
+        website: "https://zyg.ai/",
+        logo_url: "https://zyg.ai/apple-touch-icon.png",
+      })
+    ).toEqual({
+      logoUrl: "https://framerusercontent.com/images/3S1XMF1Wu7nO2vBUopvF7ajENkY.png",
+      secondaryLogoUrl: "https://zyg.ai/apple-touch-icon.png",
+    });
   });
 
   it("parses funding amounts with units", () => {

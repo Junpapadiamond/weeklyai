@@ -8,7 +8,8 @@
     "start": "next start -p 3001",
     "lint": "eslint .",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "generate:logo-manifest": "python3 scripts/generate_logo_manifest.py"
   },
   "dependencies": {
     "clsx": "^2.1.1",

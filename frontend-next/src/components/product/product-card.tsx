@@ -18,6 +18,7 @@ import {
   isHardware,
   isValidWebsite,
   normalizeWebsite,
+  resolveProductLogoSources,
   resolveProductCountry,
 } from "@/lib/product-utils";
 
@@ -53,6 +54,7 @@ export function ProductCard({ product, compact = false }: ProductCardProps) {
   const tierClass = score >= 4 ? "product-card--darkhorse" : score >= 2 ? "product-card--rising" : "product-card--watch";
   const secondaryBadge = product.funding_total || (isHardware(product) ? t("硬件", "Hardware") : t("软件", "Software"));
   const websiteSearchUrl = getProductWebsiteSearchUrl(product.name, locale);
+  const resolvedLogo = resolveProductLogoSources(product);
 
   return (
     <article className={`product-card product-card--signal ${tierClass} ${compact ? "product-card--compact" : ""}`}>
@@ -72,13 +74,14 @@ export function ProductCard({ product, compact = false }: ProductCardProps) {
         <header className="product-card__header">
           <div className="product-card__identity">
             <SmartLogo
-              key={`${product._id || product.name}-${product.logo_url || ""}-${product.logo || ""}-${product.website || ""}-${product.source_url || ""}`}
+              key={`${product._id || product.name}-${resolvedLogo.logoUrl}-${resolvedLogo.secondaryLogoUrl}-${product.website || ""}-${product.source_url || ""}`}
               className="product-card__logo"
               name={product.name}
-              logoUrl={product.logo_url}
-              secondaryLogoUrl={product.logo}
+              logoUrl={resolvedLogo.logoUrl}
+              secondaryLogoUrl={resolvedLogo.secondaryLogoUrl}
               website={product.website}
               sourceUrl={product.source_url}
+              trustPrimaryLogo
               size={compact ? 44 : 48}
             />
             <div className="product-card__identity-copy">

@@ -1,5 +1,6 @@
 import type { Product } from "@/types/api";
 import { DEFAULT_LOCALE, pickLocaleText, type SiteLocale } from "@/lib/locale";
+import logoManifest from "@/lib/generated/logo-manifest.json";
 
 const INVALID_WEBSITE_VALUES = new Set(["unknown", "n/a", "na", "none", "null", "undefined", ""]);
 const PLACEHOLDER_VALUES = new Set(["unknown", "n/a", "na", "none", "tbd", "暂无", "未公开", "待定", "unknown.", "n/a."]);
@@ -112,6 +113,19 @@ const DIRECTION_LABELS_EN: Record<string, string> = {
 const UNKNOWN_COUNTRY_CODE = "UNKNOWN";
 const UNKNOWN_COUNTRY_NAME = "Unknown";
 const REGION_FLAG_RE = /[\u{1F1E6}-\u{1F1FF}]{2}/u;
+const LOW_CONFIDENCE_LOGO_MARKERS = [
+  "favicon.bing.com",
+  "google.com/s2/favicons",
+  "icons.duckduckgo.com",
+  "icon.horse",
+  "favicon.yandex.net",
+  "api.faviconkit.com",
+] as const;
+const GENERIC_PLACEHOLDER_LOGO_MARKERS = [
+  "/logos/custom/default-ai.svg",
+  "/static/pwa-app/logo-default.png",
+] as const;
+const LOGO_MANIFEST = logoManifest as Record<string, string>;
 
 const COUNTRY_CODE_TO_NAME: Record<string, string> = {
   US: "United States",
@@ -564,6 +578,19 @@ export function isValidLogoSource(url: string | undefined | null): boolean {
   return !!normalized && (normalized.startsWith("/") || /^https?:\/\//i.test(normalized));
 }
 
+function isLowConfidenceLogoSource(url: string | undefined | null): boolean {
+  const normalized = normalizeLogoSource(url);
+  if (!normalized || normalized.startsWith("/")) return false;
+  return LOW_CONFIDENCE_LOGO_MARKERS.some((marker) => normalized.includes(marker));
+}
+
+function isGenericPlaceholderLogo(url: string | undefined | null): boolean {
+  const normalized = normalizeLogoSource(url);
+  if (!normalized) return false;
+  const lower = normalized.toLowerCase();
+  return GENERIC_PLACEHOLDER_LOGO_MARKERS.some((marker) => lower.includes(marker));
+}
+
 export function shouldRenderLogoImage(url: string | undefined | null): boolean {
   const normalized = normalizeLogoSource(url);
   if (!isValidLogoSource(normalized)) return false;
@@ -597,6 +624,88 @@ function resolveLogoHost(website: string | undefined | null): string {
   return "";
 }
 
+function normalizeProductNameKey(value: string | undefined | null): string {
+  return String(value || "")
+    .normalize("NFKC")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, " ");
+}
+
+type LogoBearingEntity = Pick<Product, "_id" | "id" | "name" | "website" | "logo_url" | "logo">;
+
+function getLogoManifestKeys(product: LogoBearingEntity): string[] {
+  const keys: string[] = [];
+  const id = String(product._id || product.id || "").trim();
+  if (id) keys.push(`id::${id}`);
+
+  const host = resolveLogoHost(product.website);
+  const name = normalizeProductNameKey(product.name);
+  if (host && name) keys.push(`hn::${host}::${name}`);
+  if (host) keys.push(`host::${host}`);
+  if (name) keys.push(`name::${name}`);
+
+  return keys;
+}
+
+function getManifestLogoUrl(product: LogoBearingEntity): string {
+  for (const key of getLogoManifestKeys(product)) {
+    const value = normalizeLogoSource(LOGO_MANIFEST[key]);
+    if (value && !isRejectedCuratedLogoSource(value)) return value;
+  }
+  return "";
+}
+
+function isDirectWebsiteFallbackLogo(
+  value: string | undefined | null,
+  website: string | undefined | null
+): boolean {
+  const normalized = normalizeLogoSource(value);
+  if (!normalized || normalized.startsWith("/")) return false;
+  const directFallbacks = getLogoFallbacks(website).filter((candidate) => !isLowPriorityProviderLogo(candidate));
+  return directFallbacks.includes(normalized);
+}
+
+function isStandardIconPathLogo(value: string | undefined | null): boolean {
+  const normalized = normalizeLogoSource(value);
+  if (!normalized || normalized.startsWith("/")) return false;
+  try {
+    const pathname = new URL(normalized).pathname.toLowerCase();
+    return pathname === "/apple-touch-icon.png" || pathname === "/favicon.ico";
+  } catch {
+    return false;
+  }
+}
+
+export function resolveProductLogoSources(product: LogoBearingEntity): {
+  logoUrl: string;
+  secondaryLogoUrl: string;
+} {
+  const explicitPrimary = normalizeLogoSource(product.logo_url);
+  const manifestPrimary = getManifestLogoUrl(product);
+  const ordered = [
+    ...(manifestPrimary && (isDirectWebsiteFallbackLogo(explicitPrimary, product.website) || isStandardIconPathLogo(explicitPrimary))
+      ? [manifestPrimary, explicitPrimary]
+      : [explicitPrimary, manifestPrimary]),
+    normalizeLogoSource(product.logo),
+  ];
+  const resolved: string[] = [];
+  const seen = new Set<string>();
+
+  for (const candidate of ordered) {
+    if (!candidate) continue;
+    if (isRejectedCuratedLogoSource(candidate)) continue;
+    if (seen.has(candidate)) continue;
+    seen.add(candidate);
+    resolved.push(candidate);
+  }
+
+  return {
+    logoUrl: resolved[0] || "",
+    secondaryLogoUrl: resolved[1] || "",
+  };
+}
+
 function isGeneratedFaviconProviderLogo(url: string | undefined | null): boolean {
   const normalized = normalizeLogoSource(url);
   if (!normalized || normalized.startsWith("/")) return false;
@@ -607,6 +716,8 @@ function isGeneratedFaviconProviderLogo(url: string | undefined | null): boolean
       || host.includes("google.com")
       || host.includes("icons.duckduckgo.com")
       || host.includes("icon.horse")
+      || host.includes("favicon.yandex.net")
+      || host.includes("faviconkit.com")
     );
   } catch {
     return false;
@@ -622,6 +733,15 @@ function isLowPriorityProviderLogo(url: string | undefined | null): boolean {
   } catch {
     return false;
   }
+}
+
+function isRejectedCuratedLogoSource(url: string | undefined | null): boolean {
+  return (
+    isGeneratedFaviconProviderLogo(url)
+    || isLowConfidenceLogoSource(url)
+    || isLowPriorityProviderLogo(url)
+    || isGenericPlaceholderLogo(url)
+  );
 }
 
 export function getLogoFallbacks(
@@ -652,6 +772,7 @@ type LogoCandidatesInput = {
   secondaryLogoUrl?: string | null;
   website?: string | null;
   sourceUrl?: string | null;
+  trustPrimaryLogo?: boolean;
 };
 
 function isSameOrSubdomain(host: string, root: string): boolean {
@@ -705,11 +826,15 @@ export function getLogoCandidates(input: LogoCandidatesInput): string[] {
   const deferredProviderLogos: string[] = [];
   const websiteHost = resolveLogoHost(input.website);
 
-  const pushIfValid = (value: string | undefined | null, opts?: { deferLowPriority?: boolean }) => {
+  const pushIfValid = (
+    value: string | undefined | null,
+    opts?: { deferLowPriority?: boolean; trustExplicit?: boolean }
+  ) => {
     const normalized = normalizeLogoSource(value);
     if (!isValidLogoSource(normalized)) return;
     if (isGeneratedFaviconProviderLogo(normalized)) return;
-    if (!isTrustedLogoSource(normalized, websiteHost)) return;
+    if (isGenericPlaceholderLogo(normalized)) return;
+    if (!opts?.trustExplicit && !isTrustedLogoSource(normalized, websiteHost)) return;
     if (seen.has(normalized)) return;
     if (opts?.deferLowPriority && isLowPriorityProviderLogo(normalized)) {
       deferredProviderLogos.push(normalized);
@@ -719,8 +844,8 @@ export function getLogoCandidates(input: LogoCandidatesInput): string[] {
     result.push(normalized);
   };
 
-  pushIfValid(input.logoUrl, { deferLowPriority: true });
-  pushIfValid(input.secondaryLogoUrl, { deferLowPriority: true });
+  pushIfValid(input.logoUrl, { deferLowPriority: true, trustExplicit: input.trustPrimaryLogo });
+  pushIfValid(input.secondaryLogoUrl, { deferLowPriority: true, trustExplicit: input.trustPrimaryLogo });
   const fallbacks = getLogoFallbacks(input.website);
   for (const fallback of fallbacks) {
     pushIfValid(fallback, { deferLowPriority: true });

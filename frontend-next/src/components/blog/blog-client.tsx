@@ -9,6 +9,7 @@ import {
   getFreshnessLabel,
   isValidWebsite,
   normalizeWebsite,
+  resolveProductLogoSources,
 } from "@/lib/product-utils";
 import type { BlogPost } from "@/types/api";
 
@@ -129,6 +130,7 @@ function BlogCard({ item }: { item: BlogPost }) {
     description: item.description,
     published_at: item.published_at,
   }, new Date(), locale);
+  const resolvedLogo = resolveProductLogoSources(item);
   const publishedLabel = item.published_at
     ? new Date(item.published_at).toLocaleString(locale, {
         month: "2-digit",
@@ -146,12 +148,13 @@ function BlogCard({ item }: { item: BlogPost }) {
         <header className="product-card__headline blog-card__headline">
           <div className="product-card__identity">
             <SmartLogo
-              key={`${item.name}-${item.logo_url || ""}-${item.logo || ""}-${item.website || ""}`}
+              key={`${item.name}-${resolvedLogo.logoUrl}-${resolvedLogo.secondaryLogoUrl}-${item.website || ""}`}
               className="product-card__logo"
               name={item.name}
-              logoUrl={item.logo_url}
-              secondaryLogoUrl={item.logo}
+              logoUrl={resolvedLogo.logoUrl}
+              secondaryLogoUrl={resolvedLogo.secondaryLogoUrl}
               website={item.website}
+              trustPrimaryLogo
               size={44}
             />
             <div className="product-card__identity-copy">

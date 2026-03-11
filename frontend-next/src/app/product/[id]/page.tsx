@@ -17,6 +17,7 @@ import {
   isPlaceholderValue,
   isValidWebsite,
   normalizeWebsite,
+  resolveProductLogoSources,
 } from "@/lib/product-utils";
 
 export const dynamic = "force-dynamic";
@@ -73,19 +74,21 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const whyMatters = getLocalizedProductWhyMatters(product, locale) || t("why_matters 待补充", "Why this matters is pending");
   const latestNews = getLocalizedProductLatestNews(product, locale) || t("暂无最新动态", "No recent updates yet");
   const websiteSearchUrl = getProductWebsiteSearchUrl(product.name, locale);
+  const resolvedLogo = resolveProductLogoSources(product);
 
   return (
     <section className="section product-detail-page">
       <article className="detail-card detail-card--rich">
         <header className="detail-hero">
           <SmartLogo
-            key={`${product._id || product.name}-${product.logo_url || ""}-${product.logo || ""}-${product.website || ""}-${product.source_url || ""}`}
+            key={`${product._id || product.name}-${resolvedLogo.logoUrl}-${resolvedLogo.secondaryLogoUrl}-${product.website || ""}-${product.source_url || ""}`}
             className="detail-hero__logo"
             name={product.name}
-            logoUrl={product.logo_url}
-            secondaryLogoUrl={product.logo}
+            logoUrl={resolvedLogo.logoUrl}
+            secondaryLogoUrl={resolvedLogo.secondaryLogoUrl}
             website={product.website}
             sourceUrl={product.source_url}
+            trustPrimaryLogo
             size={128}
           />
 
@@ -140,9 +143,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
             className="detail-site-shot"
             website={product.website}
             name={product.name}
-            logoUrl={product.logo_url}
-            secondaryLogoUrl={product.logo}
+            logoUrl={resolvedLogo.logoUrl}
+            secondaryLogoUrl={resolvedLogo.secondaryLogoUrl}
             sourceUrl={product.source_url}
+            trustPrimaryLogo
             category={product.category}
             categories={product.categories}
             isHardware={product.is_hardware}
