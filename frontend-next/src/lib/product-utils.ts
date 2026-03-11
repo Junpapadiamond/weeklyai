@@ -597,12 +597,28 @@ function resolveLogoHost(website: string | undefined | null): string {
   return "";
 }
 
+function isGeneratedFaviconProviderLogo(url: string | undefined | null): boolean {
+  const normalized = normalizeLogoSource(url);
+  if (!normalized || normalized.startsWith("/")) return false;
+  try {
+    const host = new URL(normalized).hostname.toLowerCase();
+    return (
+      host.includes("favicon.bing.com")
+      || host.includes("google.com")
+      || host.includes("icons.duckduckgo.com")
+      || host.includes("icon.horse")
+    );
+  } catch {
+    return false;
+  }
+}
+
 function isLowPriorityProviderLogo(url: string | undefined | null): boolean {
   const normalized = normalizeLogoSource(url);
   if (!normalized || normalized.startsWith("/")) return false;
   try {
     const host = new URL(normalized).hostname.toLowerCase();
-    return host.includes("logo.clearbit.com") || host.includes("favicon.bing.com");
+    return host.includes("logo.clearbit.com");
   } catch {
     return false;
   }
@@ -614,16 +630,19 @@ export function getLogoFallbacks(
   const host = resolveLogoHost(website);
   if (!host) return [];
 
-  const directFavicons = [`https://${host}/favicon.ico`];
+  const directIcons = [
+    `https://${host}/apple-touch-icon.png`,
+    `https://${host}/favicon.ico`,
+  ];
   if (!host.startsWith("www.")) {
-    directFavicons.push(`https://www.${host}/favicon.ico`);
+    directIcons.push(
+      `https://www.${host}/apple-touch-icon.png`,
+      `https://www.${host}/favicon.ico`,
+    );
   }
 
   return [
-    `https://www.google.com/s2/favicons?domain=${host}&sz=128`,
-    `https://icons.duckduckgo.com/ip3/${host}.ico`,
-    `https://icon.horse/icon/${host}`,
-    ...directFavicons,
+    ...directIcons,
     `https://logo.clearbit.com/${host}`,
   ];
 }
@@ -683,16 +702,17 @@ function isTrustedLogoSource(candidate: string, websiteHost: string): boolean {
 export function getLogoCandidates(input: LogoCandidatesInput): string[] {
   const result: string[] = [];
   const seen = new Set<string>();
-  const deferredClearbit: string[] = [];
+  const deferredProviderLogos: string[] = [];
   const websiteHost = resolveLogoHost(input.website);
 
   const pushIfValid = (value: string | undefined | null, opts?: { deferLowPriority?: boolean }) => {
     const normalized = normalizeLogoSource(value);
     if (!isValidLogoSource(normalized)) return;
+    if (isGeneratedFaviconProviderLogo(normalized)) return;
     if (!isTrustedLogoSource(normalized, websiteHost)) return;
     if (seen.has(normalized)) return;
     if (opts?.deferLowPriority && isLowPriorityProviderLogo(normalized)) {
-      deferredClearbit.push(normalized);
+      deferredProviderLogos.push(normalized);
       return;
     }
     seen.add(normalized);
@@ -703,9 +723,9 @@ export function getLogoCandidates(input: LogoCandidatesInput): string[] {
   pushIfValid(input.secondaryLogoUrl, { deferLowPriority: true });
   const fallbacks = getLogoFallbacks(input.website);
   for (const fallback of fallbacks) {
-    pushIfValid(fallback);
+    pushIfValid(fallback, { deferLowPriority: true });
   }
-  for (const candidate of deferredClearbit) {
+  for (const candidate of deferredProviderLogos) {
     pushIfValid(candidate);
   }
 

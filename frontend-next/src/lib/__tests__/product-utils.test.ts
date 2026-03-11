@@ -52,10 +52,9 @@ describe("product-utils", () => {
   it("builds logo fallback chain in expected order", () => {
     const fallbacks = getLogoFallbacks("https://www.example.com");
     expect(fallbacks).toEqual([
-      "https://www.google.com/s2/favicons?domain=example.com&sz=128",
-      "https://icons.duckduckgo.com/ip3/example.com.ico",
-      "https://icon.horse/icon/example.com",
+      "https://example.com/apple-touch-icon.png",
       "https://example.com/favicon.ico",
+      "https://www.example.com/apple-touch-icon.png",
       "https://www.example.com/favicon.ico",
       "https://logo.clearbit.com/example.com",
     ]);
@@ -71,10 +70,9 @@ describe("product-utils", () => {
     expect(candidates[0]).toBe("/logos/custom/example.png");
     expect(candidates).toEqual([
       "/logos/custom/example.png",
-      "https://www.google.com/s2/favicons?domain=example.com&sz=128",
-      "https://icons.duckduckgo.com/ip3/example.com.ico",
-      "https://icon.horse/icon/example.com",
+      "https://example.com/apple-touch-icon.png",
       "https://example.com/favicon.ico",
+      "https://www.example.com/apple-touch-icon.png",
       "https://www.example.com/favicon.ico",
       "https://logo.clearbit.com/example.com",
     ]);
@@ -83,14 +81,21 @@ describe("product-utils", () => {
       logoUrl: "not-a-url",
       website: "example.com",
     });
-    expect(fallbackOnly[0]).toBe("https://www.google.com/s2/favicons?domain=example.com&sz=128");
+    expect(fallbackOnly[0]).toBe("https://example.com/apple-touch-icon.png");
 
     const withBingPrimary = getLogoCandidates({
       logoUrl: "https://favicon.bing.com/favicon.ico?url=example.com&size=128",
       website: "example.com",
     });
-    expect(withBingPrimary[0]).toBe("https://www.google.com/s2/favicons?domain=example.com&sz=128");
-    expect(withBingPrimary[withBingPrimary.length - 1]).toBe("https://favicon.bing.com/favicon.ico?url=example.com&size=128");
+    expect(withBingPrimary[0]).toBe("https://example.com/apple-touch-icon.png");
+    expect(withBingPrimary).not.toContain("https://favicon.bing.com/favicon.ico?url=example.com&size=128");
+
+    const withGooglePrimary = getLogoCandidates({
+      logoUrl: "https://www.google.com/s2/favicons?domain=example.com&sz=128",
+      website: "example.com",
+    });
+    expect(withGooglePrimary[0]).toBe("https://example.com/apple-touch-icon.png");
+    expect(withGooglePrimary).not.toContain("https://www.google.com/s2/favicons?domain=example.com&sz=128");
 
     const derivedFromLogoSource = getLogoCandidates({
       logoUrl: "https://logo.clearbit.com/example.com",
@@ -103,7 +108,7 @@ describe("product-utils", () => {
       logoUrl: "https://www.youtube.com/s/desktop/abc/img/favicon_32x32.png",
       website: "https://example.com",
     });
-    expect(rejectSocialLogo[0]).toBe("https://www.google.com/s2/favicons?domain=example.com&sz=128");
+    expect(rejectSocialLogo[0]).toBe("https://example.com/apple-touch-icon.png");
     expect(rejectSocialLogo).not.toContain("https://www.youtube.com/s/desktop/abc/img/favicon_32x32.png");
   });
 
