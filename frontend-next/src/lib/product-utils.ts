@@ -528,6 +528,15 @@ export function isValidWebsite(url: string | undefined | null): boolean {
   return !!normalized && /^https?:\/\//i.test(normalized);
 }
 
+export function getProductWebsiteSearchUrl(name: string | undefined | null, locale: SiteLocale = DEFAULT_LOCALE): string {
+  const normalizedName = String(name || "").trim();
+  const query = locale === "en-US"
+    ? `${normalizedName || "AI product"} official website`
+    : `${normalizedName || "AI 产品"} 官网`;
+  const hl = locale === "en-US" ? "en" : "zh-CN";
+  return `https://www.google.com/search?hl=${encodeURIComponent(hl)}&q=${encodeURIComponent(query)}`;
+}
+
 export function normalizeLogoSource(url: string | undefined | null): string {
   if (!url) return "";
   const trimmed = String(url).trim();

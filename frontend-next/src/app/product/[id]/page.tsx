@@ -9,6 +9,7 @@ import { getRequestLocale } from "@/lib/locale-server";
 import {
   formatCategories,
   cleanDescription,
+  getProductWebsiteSearchUrl,
   getLocalizedProductDescription,
   getLocalizedProductLatestNews,
   getLocalizedProductWhyMatters,
@@ -71,6 +72,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const discoveredDate = formatDate(product.discovered_at || product.first_seen || product.published_at);
   const whyMatters = getLocalizedProductWhyMatters(product, locale) || t("why_matters 待补充", "Why this matters is pending");
   const latestNews = getLocalizedProductLatestNews(product, locale) || t("暂无最新动态", "No recent updates yet");
+  const websiteSearchUrl = getProductWebsiteSearchUrl(product.name, locale);
 
   return (
     <section className="section product-detail-page">
@@ -155,7 +157,15 @@ export default async function ProductPage({ params }: ProductPageProps) {
               {t("访问官网", "Visit website")}
             </a>
           ) : (
-            <span className="pending-tag">{t("官网待验证", "Website pending verification")}</span>
+            <a
+              className="pending-tag pending-tag--action"
+              href={websiteSearchUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={t("点击跳转 Google 搜索官网", "Open Google search for the official website")}
+            >
+              {t("官网待验证", "Website pending verification")}
+            </a>
           )}
           <Link href="/" className="link-btn">
             {t("返回首页", "Back to home")}

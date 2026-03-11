@@ -17,6 +17,7 @@ import {
 import {
   collectDirectionOptions,
   filterDirectionOptions,
+  getProductWebsiteSearchUrl,
   getDirectionLabel,
   getProductDirections,
   getTierTone,
@@ -328,6 +329,7 @@ export function FavoritesPanel() {
                 const tone = getTierTone(product);
                 const website = normalizeWebsite(product.website);
                 const hasWebsite = isValidWebsite(website) && !product.needs_verification;
+                const websiteSearchUrl = getProductWebsiteSearchUrl(product.name, locale);
 
                 return (
                   <article className="favorites-panel__item favorites-panel__item--compact" key={`product-${entry.key}`}>
@@ -351,7 +353,15 @@ export function FavoritesPanel() {
                           {t("官网", "Website")}
                         </a>
                       ) : (
-                        <span className="pending-tag">{t("官网待验证", "Website pending verification")}</span>
+                        <a
+                          className="pending-tag pending-tag--action"
+                          href={websiteSearchUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title={t("点击跳转 Google 搜索官网", "Open Google search for the official website")}
+                        >
+                          {t("官网待验证", "Website pending verification")}
+                        </a>
                       )}
                     </div>
                   </article>

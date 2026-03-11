@@ -7,6 +7,7 @@ import { useSiteLocale } from "@/components/layout/locale-provider";
 import {
   cleanDescription,
   formatCategories,
+  getProductWebsiteSearchUrl,
   getLocalizedCountryName,
   getLocalizedProductDescription,
   getLocalizedProductWhyMatters,
@@ -567,6 +568,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
   const nextCard = stack[1] ?? null;
   const backCard = stack[2] ?? null;
   const website = normalizeWebsite(current.website);
+  const websiteSearchUrl = getProductWebsiteSearchUrl(current.name, locale);
   const currentWhyMatters = getLocalizedProductWhyMatters(current, locale);
   const currentDescription =
     cleanDescription(getLocalizedProductDescription(current, locale), locale)
@@ -719,7 +721,15 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
                 {t("了解更多", "Learn more")} →
               </a>
             ) : (
-              <span className="swipe-link swipe-link--pending">{t("官网待验证", "Website pending verification")}</span>
+              <a
+                className="swipe-link swipe-link--pending"
+                href={websiteSearchUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={t("点击跳转 Google 搜索官网", "Open Google search for the official website")}
+              >
+                {t("官网待验证", "Website pending verification")}
+              </a>
             )}
           </div>
         </article>

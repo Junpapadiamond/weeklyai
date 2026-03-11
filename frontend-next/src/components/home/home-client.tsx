@@ -21,6 +21,7 @@ import {
   getLocalizedCountryName,
   getLocalizedProductDescription,
   getLocalizedProductWhyMatters,
+  getProductWebsiteSearchUrl,
   getProductDirections,
   getProductScore,
   isHardware,
@@ -79,6 +80,7 @@ function HomeProductCard({ product, highlighted = false, rank, favoritable = fal
     getLocalizedProductWhyMatters(product, locale)
     || cleanDescription(getLocalizedProductDescription(product, locale), locale)
     || t("产品摘要待补充", "Product summary pending");
+  const websiteSearchUrl = getProductWebsiteSearchUrl(product.name, locale);
 
   const metadata = [
     country.flag ? `${country.flag} ${regionLabel}` : regionLabel,
@@ -131,7 +133,15 @@ function HomeProductCard({ product, highlighted = false, rank, favoritable = fal
                 {t("官网", "Website")}
               </a>
             ) : (
-              <span className="pending-tag">{t("官网待验证", "Website pending verification")}</span>
+              <a
+                className="pending-tag pending-tag--action"
+                href={websiteSearchUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={t("点击跳转 Google 搜索官网", "Open Google search for the official website")}
+              >
+                {t("官网待验证", "Website pending verification")}
+              </a>
             )}
           </footer>
         </div>

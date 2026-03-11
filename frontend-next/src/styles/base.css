@@ -1224,6 +1224,24 @@ input {
   background: color-mix(in oklab, var(--surface) 92%, var(--surface-soft));
 }
 
+.pending-tag--action {
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.pending-tag--action:hover {
+  color: color-mix(in oklab, var(--primary) 76%, var(--text));
+  border-color: color-mix(in oklab, var(--primary) 28%, var(--line-soft));
+  background: color-mix(in oklab, var(--surface) 86%, var(--surface-soft));
+  transform: translateY(-1px);
+}
+
+.pending-tag--action:focus-visible {
+  outline: none;
+  box-shadow: var(--focus);
+}
+
 .list-controls,
 .darkhorse-filters,
 .tier-tabs,

@@ -12,6 +12,7 @@ import {
   getLocalizedCountryName,
   getLocalizedProductDescription,
   getLocalizedProductWhyMatters,
+  getProductWebsiteSearchUrl,
   getProductScore,
   getScoreBadgeClass,
   isHardware,
@@ -51,6 +52,7 @@ export function ProductCard({ product, compact = false }: ProductCardProps) {
   const summary = whyMatters || description || t("产品摘要待补充", "Product summary pending");
   const tierClass = score >= 4 ? "product-card--darkhorse" : score >= 2 ? "product-card--rising" : "product-card--watch";
   const secondaryBadge = product.funding_total || (isHardware(product) ? t("硬件", "Hardware") : t("软件", "Software"));
+  const websiteSearchUrl = getProductWebsiteSearchUrl(product.name, locale);
 
   return (
     <article className={`product-card product-card--signal ${tierClass} ${compact ? "product-card--compact" : ""}`}>
@@ -110,7 +112,15 @@ export function ProductCard({ product, compact = false }: ProductCardProps) {
               {t("官网", "Website")}
             </a>
           ) : (
-            <span className="pending-tag">{t("官网待验证", "Website pending verification")}</span>
+            <a
+              className="pending-tag pending-tag--action"
+              href={websiteSearchUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={t("点击跳转 Google 搜索官网", "Open Google search for the official website")}
+            >
+              {t("官网待验证", "Website pending verification")}
+            </a>
           )}
         </footer>
       </div>
