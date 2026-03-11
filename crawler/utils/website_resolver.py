@@ -134,6 +134,54 @@ def _should_skip_domain(domain: str) -> bool:
     return False
 
 
+def _domain_matches_name(domain: str, name_norm: str) -> bool:
+    if not domain or not name_norm:
+        return False
+
+    domain_norm = _normalize_name(domain.split(".")[0])
+    if not domain_norm:
+        return False
+    if name_norm in domain_norm or domain_norm in name_norm:
+        return True
+
+    tokens = re.findall(r"[a-z0-9]{3,}", name_norm)
+    return any(token in domain_norm for token in tokens)
+
+
+def _has_official_hint(text: str) -> bool:
+    return bool(re.search(r"(official|website|homepage|官网|官方网站|主页|官网链接|访问官网|进入官网|产品官网|公司官网)", text, re.IGNORECASE))
+
+
+def _looks_like_tracking_url(url: str) -> bool:
+    try:
+        parsed = urlparse(url)
+    except Exception:
+        return True
+
+    host = (parsed.netloc or "").lower()
+    path = (parsed.path or "").strip("/")
+    if host.startswith(("qs.", "trk.", "track.", "click.", "lnk.")):
+        return True
+    if path and re.fullmatch(r"\d{1,16}", path):
+        return True
+    return False
+
+
+def _looks_like_official_candidate(url: str, text: str, product_name: str) -> bool:
+    domain = _domain_from_url(url)
+    if _should_skip_domain(domain):
+        return False
+
+    if _looks_like_tracking_url(url):
+        return False
+
+    name_norm = _normalize_name(product_name)
+    if _domain_matches_name(domain, name_norm):
+        return True
+
+    return _has_official_hint(text)
+
+
 def _score_link(url: str, text: str, name_norm: str, source_domain: str) -> int:
     if not url:
         return -100
@@ -173,7 +221,7 @@ def _score_link(url: str, text: str, name_norm: str, source_domain: str) -> int:
                 score += 5
                 break
 
-    official_hint = bool(re.search(r"(official|website|homepage|官网|官方网站|主页|官网链接|访问官网|进入官网|产品官网|公司官网)", text, re.IGNORECASE))
+    official_hint = _has_official_hint(text)
 
     # Chinese sources often link as "官网" without repeating the company name in the anchor text.
     # If the product name is CJK-only, allow a strong "official" hint to qualify the link.
@@ -240,6 +288,7 @@ def extract_official_website_from_source(
 
     best_score = -100
     best_url = ""
+    best_text = ""
     for href, text in parser.links[:max_links]:
         if not href or href.startswith("#"):
             continue
@@ -251,14 +300,18 @@ def extract_official_website_from_source(
         if score > best_score:
             best_score = score
             best_url = full_url
+            best_text = text
 
     threshold = min_score
     if aggressive:
         threshold = max(8, min_score - 8)
 
     if best_score < threshold:
-        if aggressive and best_url and best_score > 0:
+        if aggressive and best_url and best_score > 0 and _looks_like_official_candidate(best_url, best_text, product_name):
             return best_url
+        return ""
+
+    if best_url and not _looks_like_official_candidate(best_url, best_text, product_name):
         return ""
 
     return best_url

@@ -238,12 +238,16 @@ def _clear_logo(item: dict) -> None:
         item["logo_source"] = ""
 
 
+def _mark_verified(item: dict) -> None:
+    item["needs_verification"] = False
+    item.pop("website_check_reason", None)
+
+
 def _apply_website(item: dict, website: str, source: str) -> None:
     item["website"] = website
     if source:
         item["website_source"] = source
-    if item.get("needs_verification"):
-        item["needs_verification"] = False
+    _mark_verified(item)
 
 
 def _mark_unknown(item: dict) -> None:
@@ -330,6 +334,8 @@ def main() -> int:
             if ok and not is_for_sale:
                 if normalized_final != website:
                     _apply_website(item, normalized_final, "redirect")
+                else:
+                    _mark_verified(item)
             else:
                 repaired = False
 
