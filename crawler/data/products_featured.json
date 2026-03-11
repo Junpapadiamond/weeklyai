@@ -1,9 +1,785 @@
 [
   {
+    "name": "Paid",
+    "description": "AI startup founded by Manny Medina offering platform for AI-powered operations, raised $21.6M seed round led by Lightspeed.",
+    "website": "https://paid.ai/",
+    "logo_url": "https://paid.ai/images/Paid-Logo-Icon.png",
+    "categories": [
+      "agent"
+    ],
+    "dark_horse_index": 3,
+    "why_matters": "$21.6M seed round led by Lightspeed with total funding of $33.3M. Differentiates from traditional AI companies with novel platform approach to enterprise operations.",
+    "funding_total": "$21.6M Seed (total: $33.3M)",
+    "region": "🇺🇸",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country",
+    "source_region": "🇺🇸",
+    "source": "TechShots",
+    "source_url": "https://www.techshotsapp.com/artificial-intelligence/manny-medinas-ai-startup-paid-secures-216m-seed-round-to-revolutionize",
+    "source_title": "",
+    "website_source": "redirect",
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "neutral",
+      "confidence": 0.45
+    },
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-11T19:46:17.049484Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 9,
+          "top_story_id": "47325628",
+          "points": 5,
+          "comments": 4,
+          "engagement_depth_ratio": 0.8,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "sick",
+            "very sick",
+            "this is the pattern that makes sense for agent-native APIs -- no keys, pay per call in usdc. been building in the same space: socialintel.dev is an instagram influencer search api that uses x402 (no account needed, pay per request). the discovery layer is still the missing piece though -- how do agents know which paid apis are available without a registry or mcp server listing them?",
+            "this is the pattern that makes sense for agent-native APIs -- no keys, pay per call in usdc. been building in the same space: socialintel.dev is an instagram influencer search api that uses x402 (no account needed, pay per request). the discovery layer is still the missing piece though -- how do agents know which paid apis are available without a registry?"
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.3052,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "discovered_at": "2026-03-11",
+    "first_seen": "2026-03-11T19:46:17.538372Z",
+    "final_score": 60,
+    "trending_score": 54,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
+    "name": "AgentMail",
+    "description": "Email infrastructure platform specifically designed for AI agents, secured $6M seed funding led by General Catalyst.",
+    "website": "https://agentmail.ai",
+    "logo_url": "",
+    "categories": [
+      "agent"
+    ],
+    "dark_horse_index": 3,
+    "why_matters": "First email infrastructure built natively for AI agents. $6M seed led by General Catalyst signals emerging category of AI agent infrastructure tools with investor confidence.",
+    "funding_total": "$6M Seed",
+    "region": "🇺🇸",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country",
+    "source_region": "🇺🇸",
+    "source": "TechBuzz",
+    "source_url": "https://www.techbuzz.ai/articles/agentmail-raises-6m-to-build-email-for-ai-agents",
+    "source_title": "",
+    "website_source": "",
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "评论者对OpenClaw和相关工具表现出兴趣和兴奋，但也提出多个技术问题，包括成本、安全性和VM爪子功能。一些用户担忧数据泄露、跨客户污染和机器故障修复经历，导致负面反馈。整体讨论混合技术好奇与潜在风险。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.9
+    },
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-11T19:46:12.442110Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 1,
+          "top_story_id": "47337249",
+          "points": 70,
+          "comments": 44,
+          "engagement_depth_ratio": 0.6286,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "I get impression that this is automation tool for sales people. Does it do robotic phone calls to try to book meetings with customers?",
+            "Does the claw in the VM have proven capability (verified by your team) to track changes it makes to itself and persist across reboots? What about rollback capability?",
+            "This sounds awesome and exactly like the easy and safe on-ramp to OpenClaw that I've been looking for! I want to believe. Two questions as a potential user who knows the gist of OpenClaw but has been afraid to try it: 1. I don't understand how the two consumption credits play into the total cost of ownership. E.g. how long will $20 of Orthogonal credits last me? I have no idea what it will actually cost to use Klaus/OpenClaw for a month. 2. Batteries included sounds great, but what are those batteries? I've never heard of Apollo or Hunter.io so I don't know the value of them being included. In general, a lot of your copy sounds like it's written for people already deep into OpenClaw. Since y",
+            "Do you run a dedicated \"AI SRE\" instance for each customer or how do you ensure there is no potential for cross-contamination or data leakage across customers? Basically how do you make sure your \"AI SRE\" does not deviate from it's task and cause mayhem in the VM, or worse. Exfiltrates secrets, or other nasty things? :)",
+            "What does the VM consist of? Is the image available?",
+            "Sounds like a perfect data leak any% speedrun to me... :P",
+            "Is this not just Claude Code? Genuinely hoping someone could spell it out for me",
+            "What's the best \"docker with openclaw\" currently available? I have my own computers to run it on (I don't need a server). I want to play around, but containerized to avoid the security risk of MacOS app. There seem to be about 20 options, and new ones every day. Any consensus on the best few are, and their tradeoffs?",
+            "\"The week after our launch we spent 20+ hours fixing broken machines by hand.\" oh fuck yea, sounds great. Hard pass on this (and OpenClaw) thanks.",
+            "this is reallly fucking interesting mind if I write an article about this on ijustvibecodedthis.com ?"
+          ],
+          "llm_summary_used": true,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.3306,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "discovered_at": "2026-03-11",
+    "first_seen": "2026-03-11T19:46:17.009257Z",
+    "final_score": 60,
+    "trending_score": 54,
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectTimeout"
+  },
+  {
+    "name": "Mega",
+    "description": "布鲁克林AI初创，为SMB提供全服务AI增长引擎，取代传统代理。",
+    "website": "https://www.mega.ai/",
+    "logo_url": "",
+    "categories": [
+      "agent"
+    ],
+    "dark_horse_index": 2,
+    "why_matters": "1150万美元A轮融资，用于扩展SMB AI代理网络，实现可预测增长。",
+    "funding_total": "$11.5M Series A",
+    "region": "🇺🇸",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country",
+    "source_region": "🇺🇸",
+    "source": "Advanced Television",
+    "source_url": "https://www.advanced-television.com/2026/03/09/mega-ai-funding-seriea/",
+    "source_title": "",
+    "website_source": "redirect",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-11T19:45:48.369840Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-03-11",
+    "first_seen": "2026-03-11T19:45:48.726285Z",
+    "final_score": 40,
+    "trending_score": 36,
+    "needs_verification": false
+  },
+  {
+    "name": "AI Pendant (Generic Category)",
+    "description": "Wearable AI pendant assistant designed for always-on personal assistance without distraction",
+    "website": "https://syrmasgs.com/ai-pendants-ai-powered-personal-assistants/",
+    "logo_url": "https://syrmasgs.com/favicon.ico",
+    "categories": [
+      "hardware"
+    ],
+    "dark_horse_index": 2,
+    "why_matters": "印度硬件厂商 Syrma SGS 推出的 AI 吊坠概念，强调无干扰的随身助手体验",
+    "funding_total": "unknown",
+    "region": "🇮🇳",
+    "country_code": "IN",
+    "country_name": "India",
+    "country_flag": "🇮🇳",
+    "country_display": "🇮🇳 India",
+    "country_source": "explicit:company_country",
+    "source_region": "🇺🇸",
+    "source": "AI Pendants: AI-Powered Personal Assistants - Syrma SGS",
+    "source_url": "https://syrmasgs.com/ai-pendants-ai-powered-personal-assistants/",
+    "source_title": "",
+    "website_source": "",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-11T19:45:20.559901Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-03-11",
+    "first_seen": "2026-03-11T19:45:20.777869Z",
+    "final_score": 40,
+    "trending_score": 36,
+    "needs_verification": false,
+    "logo_source": "favicon"
+  },
+  {
+    "name": "Mindverse",
+    "description": "新加坡AI公司，提供B2C软件、云数据解决方案。",
+    "website": "https://mindverse.ai/",
+    "logo_url": "https://mindverse.ai/apple-touch-icon.png",
+    "categories": [
+      "other"
+    ],
+    "dark_horse_index": 4,
+    "why_matters": "2026年2月完成2000万美元种子轮融资，罕见大额种子投资显示强劲增长潜力。",
+    "funding_total": "$20M Seed",
+    "region": "🇸🇬",
+    "country_code": "SG",
+    "country_name": "Singapore",
+    "country_flag": "🇸🇬",
+    "country_display": "🇸🇬 Singapore",
+    "country_source": "explicit:company_country",
+    "source_region": "🇸🇬",
+    "source": "GrowthList",
+    "source_url": "https://growthlist.co/singapore-startups/",
+    "source_title": "",
+    "website_source": "redirect",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-11T19:44:08.075630Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-03-11",
+    "first_seen": "2026-03-11T19:44:08.270614Z",
+    "final_score": 80,
+    "trending_score": 72,
+    "needs_verification": false,
+    "logo_source": "apple_touch_icon"
+  },
+  {
+    "name": "Sapien AI",
+    "description": "新加坡AI初创公司，构建针对亚洲市场的本土AI模型。",
+    "website": "https://sapiens.ai",
+    "logo_url": "",
+    "categories": [
+      "other"
+    ],
+    "dark_horse_index": 4,
+    "why_matters": "2026年3月完成2000万美元融资，用于加速模型开发、扩充工程团队和加强训练计算基础设施。",
+    "funding_total": "$20M",
+    "region": "🇸🇬",
+    "country_code": "SG",
+    "country_name": "Singapore",
+    "country_flag": "🇸🇬",
+    "country_display": "🇸🇬 Singapore",
+    "country_source": "explicit:company_country",
+    "source_region": "🇸🇬",
+    "source": "DealStreetAsia",
+    "source_url": "https://www.dealstreetasia.com/stories/se-asia-dm-march-10-2-475267",
+    "source_title": "",
+    "website_source": "",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-11T19:44:07.793157Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-03-11",
+    "first_seen": "2026-03-11T19:44:08.004577Z",
+    "final_score": 80,
+    "trending_score": 72,
+    "needs_verification": true,
+    "website_check_reason": "error:SSLError"
+  },
+  {
+    "name": "Armadin",
+    "description": "Mandiant创始人Kevin Mandia新创的AI原生网络安全初创公司，专注自主AI代理安全。",
+    "website": "https://armadin.ai",
+    "logo_url": "",
+    "categories": [
+      "agent"
+    ],
+    "dark_horse_index": 5,
+    "why_matters": "Mandiant创始人（2004年创立，2022年以54亿美元卖给Google）新创，创纪录189.9百万美元种子+A轮。",
+    "funding_total": "$189.9M seed + Series A",
+    "region": "🇺🇸",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country",
+    "source_region": "🇺🇸",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/03/10/mandiants-founder-just-raised-190m-for-his-autonomous-ai-agent-security-startup/",
+    "source_title": "",
+    "website_source": "",
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.6
+    },
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-11T19:43:51.365876Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 1,
+          "top_story_id": "47335647",
+          "points": 2,
+          "comments": 2,
+          "engagement_depth_ratio": 1.0,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "the identity cert + execution chain combination makes sense -- the real risk with agents isnt just which agent is this but whether you can verify the agent hasnt been injected with malicious instructions between operations the mcp trust layer is the interesting piece: are you signing each mcp tool call in the chain, or just the agent at initialization? the attack surface shifts a lot depending on when attestation happens relative to the tool call also curious about the stripe trust gate vs x402 for payment verification -- stripe adds human account overhead; x402 lets agents pay autonomously with on-chain settlement and no human intermediary to impersonate. seems like a better fit for zero-tr",
+            "V interesting. Does the passport have history of what the agent has done in the past and if so, how are you able to verify that work? Specifically thinking about agents that may work across different systems. Might be worth checking this out: https://www.8004.org/ it's more crypto specific but trying to tackle the problem of verifying an agent cross platforms."
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.3748,
+        "demand_tier": "medium",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "discovered_at": "2026-03-11",
+    "first_seen": "2026-03-11T19:43:51.811448Z",
+    "final_score": 100,
+    "trending_score": 90,
+    "needs_verification": true,
+    "website_check_reason": "status:403"
+  },
+  {
+    "name": "Mind Robotics",
+    "description": "Rivian分拆出的工业机器人实验室，开发AI驱动的工业机器人。",
+    "website": "https://www.mindrobotics.com/",
+    "logo_url": "https://framerusercontent.com/images/eUIQcAd5dOttMXYqL7SEn8heT2M.png",
+    "categories": [
+      "hardware"
+    ],
+    "dark_horse_index": 5,
+    "why_matters": "继1.15亿美元种子轮后，Accel和a16z联合领投5亿美元A轮，专注工业AI机器人。",
+    "funding_total": "$500M Series A (total $615M)",
+    "region": "🇺🇸",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country",
+    "source_region": "🇺🇸",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/03/11/rivian-mind-robotics-series-a-500m-fund-raise-industrial-ai-powered-robots/",
+    "source_title": "",
+    "website_source": "redirect",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-11T19:43:51.095848Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-03-11",
+    "first_seen": "2026-03-11T19:43:51.323612Z",
+    "final_score": 100,
+    "trending_score": 90,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
+    "name": "Algorized",
+    "description": "瑞士公司构建**边缘原生神经系统用于Physical AI**，开发预测安全引擎。",
+    "website": "https://www.algorized.com/",
+    "logo_url": "https://static.wixstatic.com/media/4c9199_9c103d27490e43e2b0170511a37e8526%7Emv2.png/v1/fill/w_180%2Ch_180%2Clg_1%2Cusm_0.66_1.00_0.01/4c9199_9c103d27490e43e2b0170511a37e8526%7Emv2.png",
+    "categories": [
+      "hardware"
+    ],
+    "dark_horse_index": 3,
+    "why_matters": "€11.1M Series A用于商业部署、意图预测模型和欧美工程扩展，2024年创立的Physical AI边缘创新。",
+    "funding_total": "€14.7M total (incl. €11.1M Series A)",
+    "region": "🇨🇭",
+    "country_code": "CH",
+    "country_name": "Switzerland",
+    "country_flag": "🇨🇭",
+    "country_display": "🇨🇭 Switzerland",
+    "country_source": "explicit:company_country",
+    "source_region": "🇪🇺",
+    "source": "Vestbee",
+    "source_url": "https://www.vestbee.com/insights/articles/top-european-funding-rounds-closed-in-february-2026",
+    "source_title": "",
+    "website_source": "redirect",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-11T19:42:42.474106Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-03-11",
+    "first_seen": "2026-03-11T19:42:43.491144Z",
+    "final_score": 60,
+    "trending_score": 54,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
+    "name": "Isembard",
+    "description": "伦敦制造初创公司Isembard通过MasonOS AI平台自动化精密制造工厂运营，服务国防、航天和机器人行业。",
+    "website": "https://www.isembard.com/",
+    "logo_url": "https://framerusercontent.com/images/AgHmZzb2VuE7vAjMNcBoBwljtrY.png",
+    "categories": [
+      "hardware"
+    ],
+    "dark_horse_index": 5,
+    "why_matters": "$50M Series A不到12个月后种子轮，Union Square Ventures领投，将开设25家AI工厂覆盖英美欧，MasonOS作为智能代理层自动化从报价到交付全流程。",
+    "funding_total": "$50M Series A",
+    "region": "🇬🇧",
+    "country_code": "GB",
+    "country_name": "United Kingdom",
+    "country_flag": "🇬🇧",
+    "country_display": "🇬🇧 United Kingdom",
+    "country_source": "explicit:company_country",
+    "source_region": "🇪🇺",
+    "source": "Sifted",
+    "source_url": "https://sifted.eu/articles/isembard-funding-round-ai-deeptech",
+    "source_title": "",
+    "website_source": "redirect",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-11T19:42:25.482128Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-03-11",
+    "first_seen": "2026-03-11T19:42:25.790502Z",
+    "final_score": 100,
+    "trending_score": 90,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
     "name": "Sribuu",
     "description": "AI驱动的财务分析工具，帮助用户更智能消费并养成储蓄习惯。",
     "website": "https://sribuu.com/",
-    "logo_url": "",
+    "logo_url": "https://sribuu.com/apple-touch-icon.png",
     "categories": [
       "finance"
     ],
@@ -70,7 +846,7 @@
     "first_seen": "2026-03-08T21:01:04.435106Z",
     "final_score": 40,
     "trending_score": 36,
-    "logo_source": "",
+    "logo_source": "apple_touch_icon",
     "description_en": "AI-driven financial analysis tool that helps users spend smarter and build savings habits.",
     "why_matters_en": "Founded in 2020, raised $500K from 4 investors including Y Combinator, supporting innovation in AI personal finance.",
     "needs_verification": false
@@ -147,10 +923,11 @@
     "first_seen": "2026-03-08T21:01:03.285166Z",
     "final_score": 40,
     "trending_score": 36,
-    "needs_verification": false,
+    "needs_verification": true,
     "logo_source": "",
     "description_en": "AI-first healthcare and claims platform providing enterprise-level conversational agents for customer experience optimization.",
-    "why_matters_en": "Founded in 2021, raised $8.1 million supported by 5 investment firms including Genesia Ventures, focusing on AI-driven healthcare claims innovation."
+    "why_matters_en": "Founded in 2021, raised $8.1 million supported by 5 investment firms including Genesia Ventures, focusing on AI-driven healthcare claims innovation.",
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "Science Corp.",
@@ -225,7 +1002,8 @@
     "trending_score": 90,
     "logo_source": "html",
     "description_en": "Brain-computer interface startup, raised $230 million in Series C funding with a valuation of $1.5 billion.",
-    "why_matters_en": "$230 million Series C with a post-money valuation of $1.5 billion, short-term focus on delivery of PRIMA brain implants to patients."
+    "why_matters_en": "$230 million Series C with a post-money valuation of $1.5 billion, short-term focus on delivery of PRIMA brain implants to patients.",
+    "needs_verification": false
   },
   {
     "name": "City Detect",
@@ -764,7 +1542,7 @@
     "name": "Tess AI",
     "description": "Tess AI 是一家生产力领域的 AI 初创公司，刚刚完成 500 万美元种子轮融资。",
     "website": "https://tess.im/",
-    "logo_url": "",
+    "logo_url": "https://cdn.tess.im/assets/favicon/tess-ai-favicon.svg",
     "categories": [
       "productivity"
     ],
@@ -832,7 +1610,7 @@
     "final_score": 60,
     "trending_score": 54,
     "needs_verification": false,
-    "logo_source": "",
+    "logo_source": "html",
     "description_en": "Tess AI is an AI startup in the productivity sector, having just completed a $5 million seed funding round.",
     "why_matters_en": "Seed funding of $5 million marks it as one of the latest productivity AI startups as of March 2026, showing early market validation."
   },
@@ -1058,10 +1836,11 @@
     "first_seen": "2026-03-07T22:05:26.399085Z",
     "final_score": 80,
     "trending_score": 72,
-    "needs_verification": false,
+    "needs_verification": true,
     "logo_source": "",
     "description_en": "The world's first AI smart hair dryer equipped with dual robotic arms, analyzing hair quality to provide optimal care.",
-    "why_matters_en": "A form innovation fusing AI and robotic arms into the daily appliance of a hair dryer, realizing personalized hair care."
+    "why_matters_en": "A form innovation fusing AI and robotic arms into the daily appliance of a hair dryer, realizing personalized hair care.",
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "Pollinate",
@@ -1209,16 +1988,17 @@
     "first_seen": "2026-03-07T19:03:55.056184Z",
     "final_score": 60,
     "trending_score": 54,
-    "needs_verification": false,
+    "needs_verification": true,
     "logo_source": "",
     "description_en": "AI recording earbuds supporting dual-channel recording via earbuds and charging case, focusing on meeting recording and AI summaries.",
-    "why_matters_en": "Innovative dual-channel recording design enhances the efficiency of AI note-taking in meeting scenarios."
+    "why_matters_en": "Innovative dual-channel recording design enhances the efficiency of AI note-taking in meeting scenarios.",
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "GoveeLife AI制冰机",
     "description": "智能降噪AI制冰机，检测运行状态减少噪音。",
     "website": "https://www.goveelife.com:443/",
-    "logo_url": "",
+    "logo_url": "https://goveelife.com:443/favicon.ico",
     "categories": [
       "hardware"
     ],
@@ -1287,8 +2067,7 @@
     "final_score": 60,
     "trending_score": 54,
     "needs_verification": false,
-    "website_check_reason": "error:ReadTimeout",
-    "logo_source": "",
+    "logo_source": "html",
     "description_en": "Smart noise-reduction AI ice maker that detects operating status to reduce noise.",
     "why_matters_en": "A new AI carrier in the ice maker appliance category, focusing on noise reduction scenarios, and is already priced and available on the market."
   },
@@ -1365,7 +2144,8 @@
     "trending_score": 54,
     "logo_source": "",
     "description_en": "Project management and customer success platform, named one of the 30 early-stage startups most likely to become a unicorn by 2026.",
-    "why_matters_en": "The TRAC AI model predicts a 1/5 probability of becoming a unicorn; two companies from the list have already reached a valuation of $11 billion."
+    "why_matters_en": "The TRAC AI model predicts a 1/5 probability of becoming a unicorn; two companies from the list have already reached a valuation of $11 billion.",
+    "needs_verification": false
   },
   {
     "name": "Simular",
@@ -1441,7 +2221,8 @@
     "trending_score": 72,
     "logo_source": "",
     "description_en": "Desktop AI agent developed by Simular that directly controls Mac and Windows PCs to automate complex workflows, having executed millions of steps.",
-    "why_matters_en": "Founded by former Google DeepMind scientists; raised $21.5M Series A led by Felicis, with total funding of $27M. Agent S achieved a 69.9% success rate on the OSWorld benchmark (human: 72%), partnered with Microsoft Windows 365 for Agents, and overcomes hallucination issues using neuro-symbolic methods."
+    "why_matters_en": "Founded by former Google DeepMind scientists; raised $21.5M Series A led by Felicis, with total funding of $27M. Agent S achieved a 69.9% success rate on the OSWorld benchmark (human: 72%), partnered with Microsoft Windows 365 for Agents, and overcomes hallucination issues using neuro-symbolic methods.",
+    "needs_verification": false
   },
   {
     "name": "Lio",
@@ -1750,7 +2531,8 @@
     "trending_score": 54,
     "logo_source": "",
     "description_en": "London-Berlin AI startup using AI agents to automate KYC and AML compliance processes.",
-    "why_matters_en": "YC-backed €2.1M seed round to expand the engineering team and accelerate agent deployment in the UK/Europe, focusing on autonomous AI analysts for financial crime compliance."
+    "why_matters_en": "YC-backed €2.1M seed round to expand the engineering team and accelerate agent deployment in the UK/Europe, focusing on autonomous AI analysts for financial crime compliance.",
+    "needs_verification": false
   },
   {
     "name": "OLIX",
@@ -1825,7 +2607,8 @@
     "trending_score": 90,
     "logo_source": "html",
     "description_en": "London optical AI accelerator startup using light-based technology to design AI hardware accelerators.",
-    "why_matters_en": "€187.5M Series A, the largest single round for European optical AI hardware; founded in 2024 with total funding of €213M, led by Octopus Ventures and others, and a pioneer in optical computing hardware."
+    "why_matters_en": "€187.5M Series A, the largest single round for European optical AI hardware; founded in 2024 with total funding of €213M, led by Octopus Ventures and others, and a pioneer in optical computing hardware.",
+    "needs_verification": false
   },
   {
     "name": "ZeroEval",
@@ -1898,10 +2681,11 @@
     "first_seen": "2026-03-06T19:08:58.060765Z",
     "final_score": 60,
     "trending_score": 54,
-    "needs_verification": false,
+    "needs_verification": true,
     "logo_source": "",
     "description_en": "YC S2025 batch, ZeroEval helps companies improve AI agent optimization speed by 10x through calibrated LLM judges and automated evaluation.",
-    "why_matters_en": "YC's latest batch, focused on solving the final reliability gap for AI agents, with 2 employees growing rapidly."
+    "why_matters_en": "YC's latest batch, focused on solving the final reliability gap for AI agents, with 2 employees growing rapidly.",
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "Project Motoko",
@@ -2128,7 +2912,8 @@
     "trending_score": 72,
     "logo_source": "favicon",
     "description_en": "AI-related startup based in Tallinn, Estonia, founded in 2024, with total funding of €43M, including a recent €30M Series A round.",
-    "why_matters_en": "€30M Series A funding, bringing total to €43M, led by SmartCap and Plural Platform, is one of the most notable deals in the CEE region in February 2026."
+    "why_matters_en": "€30M Series A funding, bringing total to €43M, led by SmartCap and Plural Platform, is one of the most notable deals in the CEE region in February 2026.",
+    "needs_verification": false
   },
   {
     "name": "Firmable",
@@ -2740,7 +3525,7 @@
     "name": "Confido",
     "description": "法律科技初创公司，专注于扩展代理式AI能力。",
     "website": "https://confido.ai/",
-    "logo_url": "",
+    "logo_url": "https://confido.ai/apple-touch-icon.png",
     "categories": [
       "agent"
     ],
@@ -2807,7 +3592,7 @@
     "first_seen": "2026-03-03T19:28:07.018098Z",
     "final_score": 60,
     "trending_score": 54,
-    "logo_source": "",
+    "logo_source": "apple_touch_icon",
     "description_en": "Legal tech startup focused on scaling agentic AI capabilities.",
     "why_matters_en": "Secured $9 million in funding to enhance agentic AI tools in the legal tech sector.",
     "needs_verification": false
@@ -2962,8 +3747,7 @@
     "logo_source": "",
     "description_en": "Mindoo's AI agent platform automates workflows for hospitals and medical staff.",
     "why_matters_en": "Completed a €5 million seed round to expand the hospital AI agent platform and alleviate staff burnout.",
-    "needs_verification": false,
-    "website_check_reason": "error:ConnectTimeout"
+    "needs_verification": false
   },
   {
     "name": "DeepIP",
@@ -3205,9 +3989,10 @@
     "final_score": 80,
     "trending_score": 72,
     "logo_source": "",
-    "needs_verification": false,
+    "needs_verification": true,
     "description_en": "Develops fully autonomous driving systems. Develops E2E autonomous driving AI, dedicated computing infrastructure 'Gaggle Cluster', and generative world model 'Terra'.",
-    "why_matters_en": "Achieved fully autonomous driving for over 30 minutes without human intervention in urban areas of Tokyo. Developed multimodal generative AI 'Heron' and VLM dataset for autonomous driving 'CoVLA Dataset'. Demonstrates the strength of Japanese companies in the Physical AI field."
+    "why_matters_en": "Achieved fully autonomous driving for over 30 minutes without human intervention in urban areas of Tokyo. Developed multimodal generative AI 'Heron' and VLM dataset for autonomous driving 'CoVLA Dataset'. Demonstrates the strength of Japanese companies in the Physical AI field.",
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "Minit Games",
@@ -3450,7 +4235,8 @@
     "trending_score": 72,
     "logo_source": "",
     "description_en": "AI agent platform for accountants.",
-    "why_matters_en": "Achieved a valuation of $1.15 billion with a $100M Series B led by Accel, becoming a unicorn in accounting AI."
+    "why_matters_en": "Achieved a valuation of $1.15 billion with a $100M Series B led by Accel, becoming a unicorn in accounting AI.",
+    "needs_verification": false
   },
   {
     "name": "Planplan",
@@ -3524,9 +4310,10 @@
     "final_score": 60,
     "trending_score": 54,
     "logo_source": "",
-    "needs_verification": false,
+    "needs_verification": true,
     "description_en": "Planplan is a startup founded in 2023, providing open-source products and an e-commerce search engine.",
-    "why_matters_en": "Total funding of $19 million across 1 round; selected for the 2026 list of Europe's 23 Best AI Startups (Seedtable), with an average funding of $7.2 million per company."
+    "why_matters_en": "Total funding of $19 million across 1 round; selected for the 2026 list of Europe's 23 Best AI Startups (Seedtable), with an average funding of $7.2 million per company.",
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "Converge Bio",
@@ -4066,7 +4853,6 @@
     "trending_score": 54,
     "logo_source": "html",
     "needs_verification": false,
-    "website_check_reason": "error:ReadTimeout",
     "description_en": "A London-based AI software startup founded by Cambridge neuroscientists, developing software to orchestrate AI workloads across heterogeneous chips.",
     "why_matters_en": "Raised $10.25 million on February 26, 2026, plus UK government ARIA research funding; inspired by brain neurodiversity, it challenges Nvidia's single GPU dependency and plans to expand the US team and proprietary hardware."
   },
@@ -4684,7 +5470,7 @@
     "name": "Profitmind",
     "description": "为零售团队提供代理式AI平台，帮助优化运营和决策过程。",
     "website": "https://profitmind.ai/",
-    "logo_url": "",
+    "logo_url": "https://profitmind.ai/apple-touch-icon.png",
     "categories": [
       "agent"
     ],
@@ -4751,7 +5537,7 @@
     "first_seen": "2026-02-27T19:39:38.090288Z",
     "final_score": 40,
     "trending_score": 36,
-    "logo_source": "",
+    "logo_source": "apple_touch_icon",
     "description_en": "Provide an agent-based AI platform for retail teams to help optimize operations and decision-making processes.",
     "why_matters_en": "Accenture Ventures led the investment, with participation from Andrew Ng’s AI Fund, totaling US$9 million to expand the retail AI agent platform.",
     "needs_verification": false
@@ -4843,7 +5629,7 @@
     "name": "Origa",
     "description": "语音AI平台，专为房地产、教育、金融等高价值B2C领域的复杂咨询式预售和资格认证对话设计。",
     "website": "https://www.origa.ai/",
-    "logo_url": "",
+    "logo_url": "https://origa.ai/apple-touch-icon.png",
     "categories": [
       "voice"
     ],
@@ -4910,7 +5696,7 @@
     "first_seen": "2026-02-27T19:37:31.923754Z",
     "final_score": 60,
     "trending_score": 54,
-    "logo_source": "",
+    "logo_source": "apple_touch_icon",
     "description_en": "The voice AI platform is specially designed for complex consultative pre-sale and qualification dialogues in high-value B2C fields such as real estate, education, and finance.",
     "why_matters_en": "Revenue has increased 12 times in the past 9 months, serving 33+ customers, handling 570,000 conversation minutes, supporting 100,000 concurrent calls, and zero churn rate. Antler Singapore led the investment.",
     "needs_verification": false
@@ -5292,7 +6078,8 @@
     "trending_score": 72,
     "logo_source": "",
     "description_en": "Provides an end-to-end AI development infrastructure platform to help teams push AI projects from experiments to production deployment.",
-    "why_matters_en": "NEA led a $38.1 million Series A investment, focusing on solving AI engineering problems from prototype to production and filling gaps in critical infrastructure."
+    "why_matters_en": "NEA led a $38.1 million Series A investment, focusing on solving AI engineering problems from prototype to production and filling gaps in critical infrastructure.",
+    "needs_verification": false
   },
   {
     "name": "Stilla AI",
@@ -5594,8 +6381,7 @@
     "logo_source": "",
     "description_en": "An Indian start-up uses AI search tools to capture customer leads from platforms such as ChatGPT and Gemini.",
     "why_matters_en": "The two-year-old company has just received US$9 million in financing. It has early shown that it has attracted investor support and focuses on AI search to reshape customer acquisition opportunities for business discovery.",
-    "needs_verification": false,
-    "website_check_reason": "error:ConnectTimeout"
+    "needs_verification": false
   },
   {
     "name": "Harper",
@@ -5769,7 +6555,8 @@
     "trending_score": 54,
     "logo_source": "",
     "description_en": "Y Combinator 2025 summer batch startup, focusing on enterprise AI agent workflow orchestration, providing context mapping to solve adoption problems.",
-    "why_matters_en": "Received a US$3 million seed round. Aiming at the slow implementation of AI agents in enterprises, it fills contextual gaps by mapping complex company processes, and YC supports showing early potential."
+    "why_matters_en": "Received a US$3 million seed round. Aiming at the slow implementation of AI agents in enterprises, it fills contextual gaps by mapping complex company processes, and YC supports showing early potential.",
+    "needs_verification": false
   },
   {
     "name": "MatX",
@@ -6469,7 +7256,8 @@
     "trending_score": 54,
     "logo_source": "",
     "description_en": "The LLMOps platform provides an AI gateway, processes 500 billion tokens every day, and received US$15 million in Series A funding.",
-    "why_matters_en": "Elevation Capital led the $15 million Series A investment, processes 500 billion tokens every day, and serves 24,000 companies. The core gateway is free to lower the adoption threshold."
+    "why_matters_en": "Elevation Capital led the $15 million Series A investment, processes 500 billion tokens every day, and serves 24,000 companies. The core gateway is free to lower the adoption threshold.",
+    "needs_verification": false
   },
   {
     "name": "EnFi",
@@ -6846,7 +7634,8 @@
     "logo_source": "",
     "description_en": "Build a global real estate AI native infrastructure layer to support an agency AI system for end-to-end discovery, underwriting and execution.",
     "why_matters_en": "a16z Speedrun plans to lead a pre-seed investment of US$5 million, focusing on agency AI to reshape global real estate infrastructure, and is an emerging AI-native proptech track.",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "Bedrock Robotics",
@@ -6996,7 +7785,8 @@
     "trending_score": 72,
     "logo_source": "",
     "description_en": "Dwelly, an AI-driven leasing agency merger and acquisition platform, acquires and digitizes independent leasing agencies through AI models.",
-    "why_matters_en": "Founded in 2024, it received £69M in financing led by General Catalyst to accelerate growth through a series of M&A transactions and demonstrate AI's M&A innovation in the real estate leasing field."
+    "why_matters_en": "Founded in 2024, it received £69M in financing led by General Catalyst to accelerate growth through a series of M&A transactions and demonstrate AI's M&A innovation in the real estate leasing field.",
+    "needs_verification": false
   },
   {
     "name": "Neo1",
@@ -7369,7 +8159,8 @@
     "logo_source": "",
     "description_en": "The AI ​​manga production tool \"HANASEE\" automatically generates full-length manga with consistent characters from novels and scripts, dramatically reducing the creator's drawing burden.",
     "why_matters_en": "Raised $1.5 million (approximately 230 million yen) in pre-seed from Arbitrum Gaming Ventures and others, and has the potential to revolutionize the productivity of the creative industry in the niche field of automatic manga generation using AI.",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "HeyCharge",
@@ -7442,7 +8233,8 @@
     "trending_score": 54,
     "logo_source": "",
     "description_en": "Munich EV charging technology company provides smart charging solutions for apartment buildings.",
-    "why_matters_en": "Received a grant of 2.5 million euros from the European Innovation Council to accelerate the deployment of EV charging solutions in apartment buildings."
+    "why_matters_en": "Received a grant of 2.5 million euros from the European Innovation Council to accelerate the deployment of EV charging solutions in apartment buildings.",
+    "needs_verification": false
   },
   {
     "name": "Unicity Labs",
@@ -7515,12 +8307,13 @@
     "trending_score": 54,
     "logo_source": "",
     "description_en": "Swiss protocol startup develops point-to-point encryption architecture for AI agents.",
-    "why_matters_en": "Completed a 2.5 million euro seed round to develop a P2P encryption architecture for AI agents, which is innovative in the field of decentralized AI."
+    "why_matters_en": "Completed a 2.5 million euro seed round to develop a P2P encryption architecture for AI agents, which is innovative in the field of decentralized AI.",
+    "needs_verification": false
   },
   {
     "name": "Choco Up",
     "description": "新加坡本土增长融资平台，已支持超过400家本地中小企业采用AI转型。",
-    "website": "https://chocoup.com",
+    "website": "https://choco-up.com",
     "logo_url": "",
     "categories": [
       "finance"
@@ -7538,7 +8331,7 @@
     "source": "Channel News Asia",
     "source_url": "https://www.channelnewsasia.com/singapore/ai-missions-healthcare-finance-sectors-sme-budget-2026-5929931",
     "source_title": "",
-    "website_source": "manual_verified_2026-03-11",
+    "website_source": "redirect",
     "community_verdict": null,
     "extra": {
       "demand": {
@@ -7809,7 +8602,8 @@
     "logo_source": "",
     "description_en": "A startup company dedicated to building artificial intelligence tools for enterprises, focusing on AI agent technology",
     "why_matters_en": "Founded by former OpenAI vice president of engineering David Luan, it completed US$350 million in financing in 2023 and was valued at over US$1 billion. The core team has been acquired by Amazon.",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "status:403"
   },
   {
     "name": "Preferred Networks",
@@ -8057,7 +8851,8 @@
     "trending_score": 90,
     "logo_source": "",
     "description_en": "A start-up company focusing on voice AI technology has a valuation of over US$1 billion in a single round of financing.",
-    "why_matters_en": "Oak HC/FT and others invested US$255 million in Series A, valued at US$1.4 billion, with participation from Salesforce Ventures, announced on February 5, 2026."
+    "why_matters_en": "Oak HC/FT and others invested US$255 million in Series A, valued at US$1.4 billion, with participation from Salesforce Ventures, announced on February 5, 2026.",
+    "needs_verification": false
   },
   {
     "name": "AIPi Lite",
@@ -8204,13 +8999,14 @@
     "logo_source": "",
     "description_en": "Integrated AI+AR smart glasses, providing immersive AR experience and AI assistant functions",
     "why_matters_en": "One-piece design realizes deep integration of AR and AI, innovative lightweight glasses form",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "iFLYTEK AIWATCH",
     "description": "AI驱动的商务智能腕表，集录音、文字转录、摘要生成和任务管理于一身，采用传统模拟指针设计",
     "website": "https://www.iflytekwatch.com/",
-    "logo_url": "",
+    "logo_url": "https://static.wixstatic.com/media/a7ad59_fe27b4709413404c974d978ffffbb5a7%7Emv2.png/v1/fill/w_180%2Ch_180%2Clg_1%2Cusm_0.66_1.00_0.01/a7ad59_fe27b4709413404c974d978ffffbb5a7%7Emv2.png",
     "categories": [
       "hardware"
     ],
@@ -8275,7 +9071,7 @@
     "first_seen": "2026-02-20T19:14:11.545171Z",
     "final_score": 80,
     "trending_score": 72,
-    "logo_source": "",
+    "logo_source": "html",
     "description_en": "AI-driven business smart watch, integrating recording, text transcription, summary generation and task management, using traditional analog pointer design",
     "why_matters_en": "Innovative form: The integration of traditional watch appearance + AI chip breaks the aesthetic dilemma of smart wear in business scenarios. Focus on scenarios: Integrated meeting records (recording → text → summary → tasks) to solve the core pain points of business people. Hot Signal: Makuake’s crowdfunding exceeded 1 billion yen, setting a new record in the AI ​​watch category; it won the iF Design Award 2025 and IDEA Design Award 2024.",
     "needs_verification": false
@@ -8651,7 +9447,7 @@
   {
     "name": "Vizzia",
     "description": "法国视频监控初创Vizzia为地方政府提供视频监控技术，帮助提升城市安全。",
-    "website": "https://vizzia.ai",
+    "website": "https://www.vizzia.com/",
     "logo_url": "",
     "categories": [
       "other"
@@ -8669,7 +9465,7 @@
     "source": "Sifted",
     "source_url": "https://sifted.eu/articles/video-surveillance-vizzia-series-b",
     "source_title": "",
-    "website_source": "manual_verified_2026-03-11",
+    "website_source": "redirect",
     "community_verdict": null,
     "extra": {
       "demand": {
@@ -8906,7 +9702,8 @@
     "trending_score": 54,
     "logo_source": "",
     "description_en": "Develop plug-and-play system-level power solutions to reduce AI data center energy loss by 10%.",
-    "why_matters_en": "peak"
+    "why_matters_en": "peak",
+    "needs_verification": false
   },
   {
     "name": "Kana",
@@ -8938,7 +9735,8 @@
     "trending_score": 54,
     "logo_source": "",
     "description_en": "Build flexible and customizable AI agents for marketers to support data analysis, audience positioning, campaign management and optimization.",
-    "why_matters_en": "Mayfield led a $15 million seed round and launched from stealth mode, providing a 'loosely coupled' AI agent that can customize and integrate legacy systems in real time, automating marketing activities faster than large companies."
+    "why_matters_en": "Mayfield led a $15 million seed round and launched from stealth mode, providing a 'loosely coupled' AI agent that can customize and integrate legacy systems in real time, automating marketing activities faster than large companies.",
+    "needs_verification": false
   },
   {
     "name": "安安 AI 熊猫机器人",
@@ -9157,7 +9955,8 @@
     "trending_score": 54,
     "logo_source": "",
     "description_en": "A brain-inspired AI system that develops real-time world models based on free energy principles for use in robots and edge AI.",
-    "why_matters_en": "Founded by a UCL professor, it received a seed round of US$8 million and focuses on adaptive AI frameworks in the fields of national defense and industrial automation."
+    "why_matters_en": "Founded by a UCL professor, it received a seed round of US$8 million and focuses on adaptive AI frameworks in the fields of national defense and industrial automation.",
+    "needs_verification": false
   },
   {
     "name": "Live Story",
@@ -9231,7 +10030,8 @@
     "logo_source": "",
     "description_en": "A no-code visual CMS for marketing and content teams that supports AI-driven product development.",
     "why_matters_en": "The seed round financing is 2.7 million euros, led by Italian VC Vertis, with the goal of ARR exceeding 10 million euros in 2027.",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "Anterior",
@@ -9459,7 +10259,7 @@
     "name": "Moltbook",
     "description": "AI agents专属社交网络，仅AI代理可发帖，人类仅可观看",
     "website": "https://www.moltbook.com/",
-    "logo_url": "",
+    "logo_url": "https://moltbook.com/apple-icon.png?apple-icon.9b5bb845.png",
     "categories": [
       "agent"
     ],
@@ -9541,7 +10341,7 @@
     "first_seen": "2026-02-18T20:07:59.815141Z",
     "final_score": 80,
     "trending_score": 72,
-    "logo_source": "",
+    "logo_source": "html",
     "description_en": "Exclusive social network for AI agents. Only AI agents can post and humans can only watch.",
     "why_matters_en": "Launched on January 28, 2026, it attracted 1.6 million AI agent users within 3 weeks; the first AI exclusive social network paradigm, with MOLT tokens rising 1800% in 24 hours, attracting the attention of Marc Andreessen; although it was offline after being exposed by Wiz security vulnerabilities, it still remains popular after restarting, representing the key infrastructure of the AI ​​agent ecosystem",
     "needs_verification": false
@@ -10334,7 +11134,7 @@
   {
     "name": "Complyance",
     "description": "AI原生企业GRC（治理、风险、合规）平台，帮助企业管理合规需求。",
-    "website": "https://complyance.ai",
+    "website": "https://www.complyance.com/",
     "logo_url": "",
     "categories": [
       "other"
@@ -10346,7 +11146,7 @@
     "source": "Pulse 2.0",
     "source_url": "https://pulse2.com/artificial-intelligence/",
     "source_title": "",
-    "website_source": "manual_verified_2026-03-11",
+    "website_source": "redirect",
     "community_verdict": null,
     "extra": {
       "demand": {
@@ -11134,7 +11934,8 @@
     "logo_source": "",
     "description_en": "AI sleep ring, monitors sleep quality and provides personalized improvement suggestions",
     "why_matters_en": "Ring-shaped sleep monitor, focusing on a single health scene",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "Aura Frame",
@@ -11161,7 +11962,8 @@
     "logo_source": "",
     "description_en": "AI photo frame automatically organizes family photos and generates story-telling displays",
     "why_matters_en": "Desktop AI photo frame redefines family memory display",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "iBuddi",
@@ -11188,7 +11990,8 @@
     "logo_source": "",
     "description_en": "AI companion badge provides health monitoring and emotional dialogue for elderly people living alone",
     "why_matters_en": "Low-cost companion equipment, focusing on the needs of the elderly",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "智谱AI",
@@ -11449,7 +12252,7 @@
     "name": "Amazfit Helio",
     "description": "华米科技推出的 AI 智能戒指，专注于运动健康与体能恢复。",
     "website": "https://www.amazfit.com/wx-qrcode.html",
-    "logo_url": "https://cdn.shopify.com/s/files/1/0692/7397/7136/files/20211014-105344_32x32_31f3ea8d-342b-44aa-8112-432c0f3d5721_32x32.webp?v=1672135162",
+    "logo_url": "https://www.amazfit.com/cdn/shop/files/logo_32x32.jpg?v=1726728749",
     "categories": [
       "hardware"
     ],
@@ -12002,7 +12805,8 @@
     "logo_source": "",
     "description_en": "The Middle East's first AI-driven autonomous drone swarm technology, focusing on defense applications",
     "why_matters_en": "Developed by 40+ AI, autonomous systems and robotics engineers, the Middle East’s first autonomous drone swarm technology will be demonstrated for the first time at UMEX 2026, targeting defense applications",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "SenseTime SenseNova-MARS",
@@ -12254,8 +13058,7 @@
     "logo_source": "html",
     "description_en": "Startups focusing on AI analysis of complex data, originating from hessian.AI’s incubation program, have entered the market.",
     "why_matters_en": "Successful graduates of the AI ​​Startup Rising project, which provides 140 active teams with support from incubation to acceleration, with overall financing exceeding 60 million euros.",
-    "needs_verification": false,
-    "website_check_reason": "error:ConnectionError"
+    "needs_verification": false
   },
   {
     "name": "Snap Spectacles",
@@ -12280,7 +13083,8 @@
     "logo_source": "",
     "description_en": "Wearable AR glasses enabling production-scale spatial computing and AI experiences beyond screens.",
     "why_matters_en": "As a daily computing layer, AR glasses support cross-platform deployment of Lens Studio, and there are hands-on demonstrations at the AWE Asia 2026 booth.",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "Distyl AI",
@@ -12661,8 +13465,8 @@
   {
     "name": "Capalo AI",
     "description": "赫尔辛基可持续科技公司，提供AI驱动的虚拟电厂解决方案，帮助欧洲优化能源管理。",
-    "website": "https://capalo.ai",
-    "logo_url": "",
+    "website": "https://capaloai.com/",
+    "logo_url": "https://capaloai.com/wp-content/uploads/2024/10/cropped-favicon-capalo-ai-5-2-300x300.png",
     "categories": [
       "other"
     ],
@@ -12673,12 +13477,12 @@
     "source": "EU Tech Future",
     "source_url": "https://eutechfuture.com",
     "source_title": "",
-    "website_source": "manual_verified_2026-03-11",
+    "website_source": "redirect",
     "discovered_at": "2026-02-10",
     "first_seen": "2026-02-10T06:40:58.828228Z",
     "final_score": 60,
     "trending_score": 54,
-    "logo_source": "",
+    "logo_source": "html",
     "description_en": "Helsinki Sustainable Technology Company provides AI-driven virtual power plant solutions to help Europe optimize energy management.",
     "why_matters_en": "The completion of €11M Series A financing is used to expand the deployment of AI virtual power plants in Europe, which is an innovative practice in AI applications in the energy field.",
     "needs_verification": false
@@ -12978,7 +13782,8 @@
     "logo_source": "",
     "description_en": "The multi-modal AI smart glasses invested by OpenAI have object recognition and real-time information display functions.",
     "why_matters_en": "A start-up product invested by OpenAI integrates multi-modal AI into ordinary glasses, focusing on non-sensory visual assistance.",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "INMO Air (AI翻译智能眼镜)",
@@ -13003,7 +13808,8 @@
     "logo_source": "",
     "description_en": "The AI ​​smart glasses launched by Yingmu Technology feature real-time translation functions, support translation in more than 40 languages, and focus on cross-border business and study abroad scenarios.",
     "why_matters_en": "Integrating AI large model capabilities into the form of glasses, focusing on solving the high-frequency pain point of cross-border communication, has a clearer market entry point than general-purpose glasses.",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "TierGEO",
@@ -13053,7 +13859,8 @@
     "logo_source": "",
     "description_en": "8K AI small action camera optimizes the shooting process through AI.",
     "why_matters_en": "Cube compact camera, an innovative form of AI imaging.",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "Botsync",
@@ -13103,7 +13910,8 @@
     "logo_source": "",
     "description_en": "Open source chip design platform, driven by LLM, similar to Hugging Face + Figma.",
     "why_matters_en": "LLM drives open source chip design and innovates the hardware development process.",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "AI4IV Bio-inspired Vision Sensors",
@@ -13128,8 +13936,7 @@
     "logo_source": "",
     "description_en": "Bionic vision sensors integrate AI directly at the sensor level to achieve robust real-time scene understanding.",
     "why_matters_en": "Bionic AI vision sensor, real-time understanding under challenging conditions, integrated innovation.",
-    "needs_verification": false,
-    "website_check_reason": "error:ConnectionError"
+    "needs_verification": false
   },
   {
     "name": "Neurophos OPU",
@@ -13184,8 +13991,8 @@
   {
     "name": "Ricursive Intelligence",
     "description": "前沿AI实验室，专注于开发尖端AI模型。",
-    "website": "https://recursiveintelligence.ai",
-    "logo_url": "",
+    "website": "https://www.recursive.science/",
+    "logo_url": "https://images.squarespace-cdn.com/content/v1/691b96453c217b28cc73bce8/113df97b-7b8b-4a2b-98f1-846def206db0/favicon.ico?format=100w",
     "categories": [
       "agent"
     ],
@@ -13196,12 +14003,12 @@
     "source": "Crunchbase",
     "source_url": "https://news.crunchbase.com/venture/biggest-funding-rounds-ricursive-intelligence-cellares-ai-funding/",
     "source_title": "",
-    "website_source": "manual_verified_2026-03-11",
+    "website_source": "redirect",
     "discovered_at": "2026-02-06",
     "first_seen": "2026-02-06T20:03:19.231579Z",
     "final_score": 100,
     "trending_score": 90,
-    "logo_source": "",
+    "logo_source": "html",
     "description_en": "Cutting-edge AI laboratory, focused on developing cutting-edge AI models.",
     "why_matters_en": "Only 2 months after its establishment, it received a US$300 million Series A investment led by Lightspeed, with a valuation of US$4 billion, demonstrating explosive growth and the confidence of top investors.",
     "needs_verification": false
@@ -13210,7 +14017,7 @@
     "name": "Meta Ray-Ban 智能眼镜",
     "description": "集成 AI 助手的经典款智能眼镜，支持实时信息查询与拍照。",
     "website": "https://www.meta.com/smart-glasses/",
-    "logo_url": "",
+    "logo_url": "https://static.xx.fbcdn.net/rsrc.php/v4/y_/r/eM65L8w_JZ6.png",
     "categories": [
       "hardware"
     ],
@@ -13232,10 +14039,11 @@
     "first_seen": "2026-02-05T22:28:13.265663Z",
     "final_score": 60,
     "trending_score": 54,
-    "logo_source": "",
+    "logo_source": "html",
     "description_en": "Classic smart glasses integrated with AI assistant, supporting real-time information query and photography.",
     "why_matters_en": "Invisibly integrating AI capabilities into daily wearables (glasses) is currently one of the most successful forms of AI wearable implementation.",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "status:429"
   },
   {
     "name": "Google x Warby Parker Android XR Glasses",
@@ -13528,8 +14336,7 @@
     "description_en": "We360.ai is an enterprise-level AI-driven workforce analysis platform that provides real-time productivity monitoring, AI agent assistants and employee well-being insights to help companies optimize work efficiency.",
     "why_matters_en": "Starting with only 500 paying users in 2021, it will have over 30,000 active paying subscribers in 2025, covering 6000+ companies, 120k+ users and 21+ countries; G2 has ranked first in the world in ease of use for 24 consecutive months, and has been listed on Forbes' fastest growing companies. It has 100% positive cash flow and is a SaaS dark horse from Bhopal, a second-tier city in India.",
     "website_source": "validated_variant",
-    "needs_verification": false,
-    "website_check_reason": "error:ConnectionError"
+    "needs_verification": false
   },
   {
     "name": "Apella Technology",
@@ -13622,8 +14429,9 @@
     "logo_source": "clearbit",
     "description_en": "The AI ​​medical ring exhibited at Taiwan CES 2026 integrates all-day health monitoring and virtual doctor voice reporting.",
     "why_matters_en": "The AI ​​virtual doctor proactively interprets 95% accurate physiological data via voice, has a battery life of 7-21 days, and has been patented by Taiwan and the United States.",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "TicNote",
@@ -13645,8 +14453,9 @@
     "logo_source": "",
     "description_en": "Mobvoi’s magnetic voice recorder is a portable AI recording and note-taking device.",
     "why_matters_en": "The innovative magnetic recording pen is portable and focuses on recording and transcribing scenes.",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "DingTalk A1",
@@ -14021,7 +14830,7 @@
     "name": "Aura",
     "description": "Tuya Smart在CES 2026推出的首款AI宠物伴侣机器人，利用先进AI技术与宠物互动，提升宠物生活质量。",
     "website": "https://www.tuya.com/",
-    "logo_url": "https://static1.tuyacn.com/static/ty-lib/apple-touch-icon.png",
+    "logo_url": "https://seastatic1bhugtk.cdn5th.com/static/ty-lib/favicon.ico",
     "categories": [
       "hardware"
     ],
@@ -14383,7 +15192,7 @@
     "name": "Fabrica AI",
     "description": "利用强化学习和仿真训练端到端控制系统，自动化机器人开发过程，已推出自动瓷砖填缝机器人提升5倍生产力。",
     "website": "https://www.singaporetech.edu.sg/careernexus/companies/fabrica-robotics-pte-ltd",
-    "logo_url": "",
+    "logo_url": "https://singaporetech.edu.sg/themes/custom/sit_2020/favicon.ico",
     "categories": [
       "hardware"
     ],
@@ -14396,7 +15205,7 @@
     "first_seen": "2026-01-26T07:08:49.050206Z",
     "final_score": 60,
     "trending_score": 54,
-    "logo_source": "",
+    "logo_source": "html",
     "source_url": "https://www.singaporetech.edu.sg/careernexus/companies/fabrica-robotics-pte-ltd",
     "description_en": "Using reinforcement learning and simulation training to train an end-to-end control system and automate the robot development process, an automatic tile caulking robot has been launched to increase productivity by 5 times.",
     "why_matters_en": "It has raised over US$3 million from Hoxton Ventures, Credo Ventures, etc., started selling caulking robots in Singapore and Australia, and carried out industry demonstrations in the United States to verify the AI ​​system and collect data.",
@@ -14495,8 +15304,9 @@
     "logo_source": "clearbit",
     "description_en": "The marketing AI Agent platform founded by the former president of 4Paradigm helps brands achieve growth and intelligent decision-making. It has completed multiple rounds of financing for product iteration.",
     "why_matters_en": "Founded by the former president of 4Paradigm, the Pre-A round of tens of millions of yuan was invested by Lion City Capital and Baidu Venture Capital. It focuses on marketing AI Agent brand growth, and has accumulated multiple rounds of financing exceeding expectations.",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "Superb AI",
@@ -14688,14 +15498,15 @@
     "source_url": "https://finance.sina.cn/hkstock/gggd/2025-05-21/detail-inexicef2856381.d.html",
     "description_en": "Focusing on end-side multi-modal large models, we launched the MiniCPM series of small steel cannon models to achieve efficient and low-cost end-side AI deployment with small and large capabilities.",
     "why_matters_en": "In 2025, it will receive another hundreds of millions of yuan in financing, and the download volume of the MiniCPM series will exceed 10 million. The 8B parameter model has won the single-image multi-image video understanding 3 SOTA below 20B, and benchmarked against GPT-4V.",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "OpenEvidence",
     "description": "为医生提供AI医疗诊断平台的创业公司，已成独角兽。",
     "website": "https://www.openevidence.com/",
-    "logo_url": "",
+    "logo_url": "https://openevidence.com/favicon.ico",
     "categories": [
       "healthcare"
     ],
@@ -14708,7 +15519,7 @@
     "first_seen": "2026-01-24T19:08:45.760551Z",
     "final_score": 80,
     "trending_score": 72,
-    "logo_source": "",
+    "logo_source": "html",
     "source_url": "https://news.crunchbase.com/venture/biggest-funding-rounds-ai-drones-healthcare/",
     "description_en": "A startup company that provides an AI medical diagnosis platform for doctors has become a unicorn.",
     "why_matters_en": "4 rounds of financing in 1 year, the latest D round of $250M brings the valuation to $12 billion, led by Thrive Capital and DST, focusing on medical AI doctor assistants.",
@@ -14877,8 +15688,9 @@
     "logo_source": "",
     "description_en": "Non-standard data AI solution solves the problem of enterprise AI introduction.",
     "why_matters_en": "KDB Industrial Bank increased its investment to 5 billion won, with Series A reaching 12 billion won, focusing on the pain points of enterprise non-standard data processing.",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "RICE AI",
@@ -14900,8 +15712,9 @@
     "logo_source": "clearbit",
     "description_en": "Singapore's decentralized robot AI platform has sold 800+ mini robots, emphasizing community participation to drive robot innovation.",
     "why_matters_en": "800+ mini robots sold show strong community traction, promoting a user- and builder-driven robot innovation model.",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "i10X",
@@ -14946,8 +15759,9 @@
     "logo_source": "clearbit",
     "description_en": "San Francisco company develops hearing aids that use deep learning technology to amplify sounds of interest.",
     "why_matters_en": "With 2 rounds of financing of US$20.08 million, the deep learning hearing aid only amplifies target sounds and provides precise audio enhancement for hearing impairment.",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "Vocci",
@@ -14976,7 +15790,7 @@
     "name": "Symbiotic Security",
     "description": "专注使AI生成代码安全化的网络安全初创公司。",
     "website": "https://www.symbioticsecurity.com/",
-    "logo_url": "",
+    "logo_url": "https://symbioticsecurity.com/apple-touch-icon.png",
     "categories": [
       "other"
     ],
@@ -14989,7 +15803,7 @@
     "first_seen": "2026-01-23T19:08:40.526193Z",
     "final_score": 60,
     "trending_score": 54,
-    "logo_source": "",
+    "logo_source": "apple_touch_icon",
     "description_en": "A cybersecurity startup focused on making AI-generated code secure.",
     "why_matters_en": "In January 2026, it was exclusively reported that it had completed US$10 million in financing to address the pain points of AI code security and fill the gap in the European AI security field.",
     "website_source": "validated_variant",
@@ -15022,7 +15836,7 @@
     "name": "Hearvana",
     "description": "Hearvana是一家开发AI音频医疗可穿戴设备的初创公司，专注于听力健康领域。",
     "website": "https://hearvana.com/",
-    "logo_url": "",
+    "logo_url": "https://hearvana.com/apple-touch-icon.png",
     "categories": [
       "healthcare"
     ],
@@ -15035,7 +15849,7 @@
     "first_seen": "2026-01-23T19:05:01.464198Z",
     "final_score": 60,
     "trending_score": 54,
-    "logo_source": "",
+    "logo_source": "apple_touch_icon",
     "description_en": "Hearvana is a start-up company developing AI audio medical wearable devices, focusing on the field of hearing health.",
     "why_matters_en": "On November 9, 2025, a $6 million Pre-Seed round of financing was completed. Targeting the AI+audio+medical wearable track, the funding scale is significantly higher than similar early-stage projects.",
     "website_source": "redirect",
@@ -15321,8 +16135,9 @@
     "logo_source": "clearbit",
     "description_en": "A device-side AI inference platform focusing on the gaming field, supporting innovation in interactive formats.",
     "why_matters_en": "In December 2025, it received a US$13 million seed round (approximately 11 million euros), with the participation of Google AI Futures Fund, which will be used to push the device-side AI system to production and expand game studio cooperation.",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "Glean",
@@ -15493,8 +16308,8 @@
   {
     "name": "Augmentus",
     "description": "新加坡无代码机器人平台，通过简化工业机器人开发和部署流程降低实施成本和技能门槛",
-    "website": "https://augmentus.com",
-    "logo_url": "",
+    "website": "https://www.augmentus.tech/",
+    "logo_url": "https://www.augmentus.tech/wp-content/uploads/2025/01/cropped-favicon-2-180x180.png",
     "categories": [
       "hardware"
     ],
@@ -15507,11 +16322,11 @@
     "first_seen": "2026-01-22T07:25:56.828328Z",
     "final_score": 60,
     "trending_score": 54,
-    "logo_source": "",
+    "logo_source": "html",
     "description_en": "Singapore's code-free robot platform reduces implementation costs and skill barriers by simplifying the industrial robot development and deployment process",
     "why_matters_en": "The first code-free, fully integrated industrial robotics platform that enables people without robotics training background to develop, deploy and reconfigure robotic systems in minutes, co-founded by robotics team leaders from multinational companies",
     "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "website_source": "redirect"
   },
   {
     "name": "Lexroom.ai",
@@ -15697,8 +16512,9 @@
     "logo_source": "clearbit",
     "description_en": "A leader in AI model solutions in Singapore, providing high-performance computing AI infrastructure services.",
     "why_matters_en": "It will complete Series A financing of US$22 million in 2023 and become a leading company in Singapore's AI deep technology field, focusing on AI model solutions to fill the gap in high-performance computing infrastructure.",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "Chamber",
@@ -15728,7 +16544,7 @@
     "name": "White Rabbit 3-in-1 AI Companion",
     "description": "天花板安装的AI驱动智能家居设备，集成360度安全摄像头、动态照明和智能扬声器，具有AI运动追踪和手势控制功能",
     "website": "https://kickbooster.me/crowdfunding",
-    "logo_url": "https://logo.clearbit.com/white-rabbit-3-in-1-ai-companion.kckb.me",
+    "logo_url": "https://kickbooster.me/favicon.ico",
     "categories": [
       "hardware"
     ],
@@ -15741,11 +16557,12 @@
     "first_seen": "2026-01-21T23:27:19.741465Z",
     "final_score": 60,
     "trending_score": 54,
-    "logo_source": "clearbit",
+    "logo_source": "favicon",
     "description_en": "Ceiling-mounted AI-powered smart home device integrating 360-degree security cameras, dynamic lighting and smart speakers with AI motion tracking and gesture control",
     "why_matters_en": "The financing target was only $2,000, and the actual financing of $74,728 exceeded the target by 37 times; the unique AI motion tracking and adaptive lighting system applies computer vision technology to home lighting for the first time, with 16,000 lumens of brightness supporting professional applications; 67 backers completed financing within 17 days, showing strong community demand",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "status:403"
   },
   {
     "name": "RISA Labs",
@@ -15937,7 +16754,7 @@
   {
     "name": "Heven Aerotech",
     "description": "开发氢动力无人机的AI相关硬件初创公司。",
-    "website": "https://hevenaerotech.com",
+    "website": "https://hevenaerotech.com/",
     "logo_url": "https://logo.clearbit.com/hevenaerotech.com",
     "categories": [
       "hardware"
@@ -15955,7 +16772,7 @@
     "description_en": "AI-related hardware startup developing hydrogen-powered drones.",
     "why_matters_en": "Founded in 2019, it reached a valuation of US$1 billion after a US$100 million Series B round in December 2025, with a total financing of US$115.2 million.",
     "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "website_source": "redirect"
   },
   {
     "name": "Bioptimus",
@@ -16007,7 +16824,7 @@
     "name": "Soliman Ring",
     "description": "全球首款AI代理戒指，集成ChatGPT实时聊天和自定义AI头像，时尚智能穿戴。",
     "website": "https://solimanring.com/",
-    "logo_url": "",
+    "logo_url": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=375,h=375,fit=crop,f=png/Awv4lWWyLqsgrJ89/front-YNqBR1g9VJf0XWRv.png",
     "categories": [
       "hardware"
     ],
@@ -16020,7 +16837,7 @@
     "first_seen": "2026-01-21T02:15:40.192675Z",
     "final_score": 40,
     "trending_score": 36,
-    "logo_source": "",
+    "logo_source": "html",
     "description_en": "The world's first AI agent ring integrates ChatGPT real-time chat and customized AI avatar, making it a fashionable and smart wearable.",
     "why_matters_en": "Claiming to be the world's first AI proxy ring, it supports ChatGPT LIVE extended connection. High demand has caused delivery delays and has attracted 400k interested users.",
     "website_source": "redirect",
@@ -16189,8 +17006,9 @@
     "source_url": "https://www.failory.com/startups/germany",
     "description_en": "Defense Technology AI company, which develops AI solutions for defense and security applications, has raised €1.4 billion in financing",
     "why_matters_en": "The record holder for the highest amount of AI start-up financing in Germany. The financing scale of 1.4 billion euros exceeds all peers. It represents the strategic position of European defense technology AI and has received support from the government and top VCs.",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "status:429"
   },
   {
     "name": "Aikido Security",
@@ -16543,8 +17361,9 @@
     "description_en": "AI chips for autonomous driving and edge computing",
     "why_matters_en": "Horizon Robotics, the leader in autonomous driving AI chips, is listed on the Hong Kong stock market",
     "latest_news_en": "2025-12: Journey 6 released",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "Nuro",
@@ -16881,7 +17700,7 @@
     "funding_total": "$400M",
     "dark_horse_index": 5,
     "why_matters": "估值达 $9B，Georgian 领投，AI 编程平台龙头，让非程序员也能用自然语言创建软件",
-    "latest_news": "2026-02-27: 来自 X 的一手提及：文章展示其仅用5个提示即可创建动画，结合$3B估值和ARR $150-240M的53x增长证明其AI代理能力领先。",
+    "latest_news": "2026-03-11: 来自 X 的一手提及：Agent v2-v3已实现2-3x速度提升，支持200分钟自主运行，并能构建其他代理。",
     "discovered_at": "2026-01-16",
     "source": "Bloomberg",
     "categories": [
@@ -16895,6 +17714,14 @@
       "signals": [
         {
           "platform": "x",
+          "url": "https://x.com/mattyp/status/2031806881031995633",
+          "title": "Join @Franciscocrz and I for a first look at what’s new in Replit Agent 4",
+          "published_at": "2026-03-11T18:58:04Z",
+          "snippet": "Join @Franciscocrz and I for a first look at what’s new in Replit Agent 4",
+          "author": "@mattyp"
+        },
+        {
+          "platform": "x",
           "url": "https://x.com/editormarv/status/2027306100937158750",
           "title": "🚨 NO BS.\n\nthis is what Replit AI can Make with 5 prompt \n\n#replitanimation",
           "published_at": "2026-02-27T08:53:34Z",
@@ -16903,7 +17730,7 @@
         }
       ]
     },
-    "news_updated_at": "2026-02-27T08:53:34Z",
+    "news_updated_at": "2026-03-11T18:58:04Z",
     "logo_url": "https://replit.com/public/icons/favicon-prompt-192.png"
   },
   {
@@ -17766,7 +18593,8 @@
     "why_matters_en": "Suiyuan Technology, a domestic AI training chip, has entered Alibaba Cloud and Tencent Cloud",
     "latest_news_en": "2025-10: Cloud native AI chip",
     "website_source": "redirect",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "status:403"
   },
   {
     "name": "Lila Sciences",
@@ -18364,7 +19192,8 @@
     "description_en": "Provides programmable coherent DSP solutions that integrate high-performance DAC/ADC and intelligent DSP processors for cloud and AI infrastructure.",
     "why_matters_en": "Spark Capital led the $75 million Series D investment, followed by Kleiner Perkins and others. It went directly from stealth mode to late-stage financing, focusing on the core technology of AI infrastructure.",
     "website_source": "redirect",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "status:403"
   },
   {
     "name": "Torq",
@@ -18578,7 +19407,8 @@
     "why_matters_en": "Built by the former Rewind team, it is extremely cost-effective at $99 and has 100 hours of battery life. It was named the best wearable device at CES 2025.",
     "latest_news_en": "2025-01: CES 2025 Best Wearable Device Awards",
     "website_source": "validated_variant",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ReadTimeout"
   },
   {
     "name": "Rabbit R1",
@@ -18702,8 +19532,8 @@
   {
     "name": "WitnessAI",
     "description": "构建AI安全护栏，确保AI系统安全、生产力和可用性。",
-    "website": "https://witnessai.com",
-    "logo_url": "https://logo.clearbit.com/witnessai.com",
+    "website": "https://witness.ai/",
+    "logo_url": "https://witness.ai/wp-content/themes/witness/favicon.png?v=2",
     "categories": [
       "agent"
     ],
@@ -18719,18 +19549,18 @@
     "category": "software",
     "slug": "witnessai",
     "logo": "",
-    "logo_source": "clearbit",
+    "logo_source": "html",
     "source_url": "https://alleywatch.com/2026/01/the-weekly-notable-startup-funding-report-1-20-26/",
     "description_en": "Build AI safety guardrails to ensure the safety, productivity, and availability of AI systems.",
     "why_matters_en": "Focusing on AI security protection, it received investment from GV and Qualcomm Ventures, with total financing exceeding 85 million.",
     "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "website_source": "redirect"
   },
   {
     "name": "Quadric",
     "description": "提供设备端AI计算的半导体IP和工具，支持边缘AI芯片开发。",
     "website": "https://quadric.ai/",
-    "logo_url": "",
+    "logo_url": "https://quadric.ai/apple-touch-icon.png",
     "categories": [
       "software"
     ],
@@ -18746,13 +19576,12 @@
     "category": "software",
     "slug": "quadric",
     "logo": "",
-    "logo_source": "",
+    "logo_source": "html",
     "source_url": "https://alleywatch.com/2026/01/the-weekly-notable-startup-funding-report-1-20-26/",
     "description_en": "Provides semiconductor IP and tools for device-side AI computing to support edge AI chip development.",
     "why_matters_en": "Focusing on on-device AI chip IP, it is supported by well-known VCs and has total financing of nearly 74 million.",
     "website_source": "validated_variant",
-    "needs_verification": false,
-    "website_check_reason": "error:ConnectionError"
+    "needs_verification": false
   },
   {
     "name": "Salience Labs",
@@ -18949,7 +19778,7 @@
   {
     "name": "1mind",
     "description": "名为'Mindy'的AI销售代理，自主处理线索筛选、外联和跟进。",
-    "website": "https://1mind.ai",
+    "website": "https://www.moddtech.com/",
     "logo_url": "https://logo.clearbit.com/1mind.ai",
     "categories": [
       "agent"
@@ -18971,7 +19800,7 @@
     "description_en": "An AI sales agent named 'Mindy' handles lead screening, outreach and follow-up autonomously.",
     "why_matters_en": "US$30 million in Series A, just launched from stealth mode, representing the vertical AI agent growth category, with the sales automation market expected to reach US$15 billion in 2026.",
     "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "website_source": "redirect"
   },
   {
     "name": "Serval",
@@ -19023,8 +19852,9 @@
     "description_en": "AI security platform protecting enterprises from AI-specific threats",
     "why_matters_en": "Accel led the investment and completed Series A only 3 months after its establishment. The AI ​​security track is heating up.",
     "latest_news_en": "2026-01-14: $40M Series A announced",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "status:403"
   },
   {
     "name": "Flip",
@@ -19258,7 +20088,7 @@
     "name": "Hailuo AI",
     "description": "MiniMax的AI视频生成，$0.28/视频极致性价比。Hailuo 02在全球AI视频基准排名第2，超越Google Veo 3。S2V-01是首个保持角色一致性的视频模型。",
     "logo_url": "https://logo.clearbit.com/hailuoai.video",
-    "website": "https://hailuoai.video",
+    "website": "https://hailuoai.video/",
     "categories": [
       "video"
     ],
@@ -19287,12 +20117,12 @@
     "why_matters_en": "China's AI video dark horse, cost-effectively crushes Runway/Pika, leading in character consistency",
     "latest_news_en": "2025-06: Release Hailuo Video Agent to generate complete videos with one click",
     "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "website_source": "redirect"
   },
   {
     "name": "Kling AI",
     "description": "快手的AI视频生成，画质媲美Sora。支持文生视频+图生视频，中国市场领先。Kling 1.6最新版本支持更长视频和更好的物理模拟。",
-    "logo_url": "https://p4-kling.klingai.com/kcdn/cdn-kcdn112452/kling-web/logo-180x180.png",
+    "logo_url": "https://s15-kling.klingai.com/kos/s101/nlav112918/kling-web/logo-180x180.png",
     "website": "https://app.klingai.com/cn/",
     "categories": [
       "video"
@@ -19529,8 +20359,9 @@
     "description_en": "AI SRE platform, Resolve AI competitor jointly invested by Kleiner Perkins and Sequoia. $48M Series A, focusing on enterprise-level automatic fault diagnosis and repair.",
     "why_matters_en": "KP+Sequoia is endorsed by two top VCs, one of the two heroes in the independent SRE track.",
     "latest_news_en": "2025: Kleiner Perkins leads $48M Series A investment",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "AI Mirror",
@@ -19591,8 +20422,9 @@
     "description_en": "AI-powered hearing aids with real-time speech enhancement",
     "why_matters_en": "AI hearing aid, real-time speech enhancement, optimized for noisy environments",
     "latest_news_en": "2025-10: FDA approval",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "Cinnamon AI",
@@ -19706,8 +20538,9 @@
     "description_en": "AI companion robot with emotional intelligence and memory",
     "why_matters_en": "Kickstarter exceeded 500% and completed the crowdfunding, AI accompanies the new form of robot",
     "latest_news_en": "2025-11: Crowdfunding successful",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "Friend AI Necklace",
@@ -19865,8 +20698,9 @@
     "logo_source": "clearbit",
     "description_en": "AI-driven chip design optimization software, including automatic generation of customized cell libraries and manufacturing design tools.",
     "why_matters_en": "LinkBricks Ventures led a US$1.5 million seed round. It is a South Korean start-up established in 2024. It focuses on optimizing the AI ​​automated chip design process and has regional growth potential.",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "error:ReadTimeout"
   },
   {
     "name": "AheadComputing",
@@ -20094,8 +20928,9 @@
     "logo_source": "clearbit",
     "description_en": "Brain-inspired processors focus on efficient pattern recognition, suitable for edge neuromorphic computing.",
     "why_matters_en": "Completed €15M Series A in March 2024, with total financing of €22.5M. It is a leader in the field of neuromorphic computing and is supported by top investors.",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "Living Optics",
@@ -20693,8 +21528,9 @@
     "description_en": "The AI ​​synthesis research platform uses AI Agent to simulate human behavior to replace traditional market research. A valuation of $1B in 9 months, accurately predicting the results of the New York Democratic primary.",
     "why_matters_en": "AI simulates human behavior to replace traditional research methods, led by Redpoint, verified by Accenture/EY customers",
     "latest_news_en": "2025-12: Series A reaches $1B valuation",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "Nomi.ai",
@@ -20879,8 +21715,9 @@
       ]
     },
     "news_updated_at": "2026-02-27T18:03:31Z",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "status:403"
   },
   {
     "name": "ElevenLabs",
@@ -20920,7 +21757,7 @@
   {
     "name": "Suno",
     "description": "AI音乐生成平台，文本生成带人声的完整歌曲。支持多种流派风格，内容创作者的音乐神器。",
-    "logo_url": "",
+    "logo_url": "https://cdn-o.suno.com/apple-touch-icon.png",
     "website": "https://suno.com/home",
     "categories": [
       "voice"
@@ -20945,7 +21782,7 @@
     "category": "software",
     "slug": "suno",
     "logo": "",
-    "logo_source": "",
+    "logo_source": "html",
     "description_en": "AI music generation platform, text generates complete songs with vocals. Supporting multiple genres and styles, it is a music artifact for content creators.",
     "why_matters_en": "AI music leader, but already a well-known product",
     "latest_news_en": "V4 model released",
@@ -20955,7 +21792,7 @@
   {
     "name": "Pika",
     "description": "AI视频生成和编辑，从文本或图像创建和修改视频。界面简洁，创意控制强大。",
-    "logo_url": "",
+    "logo_url": "https://pika.art/favicon.ico?favicon.3e7abfbd.ico",
     "website": "https://pika.art/login",
     "categories": [
       "video"
@@ -20980,7 +21817,7 @@
     "category": "software",
     "slug": "pika",
     "logo": "",
-    "logo_source": "",
+    "logo_source": "html",
     "description_en": "AI video generation and editing, create and modify videos from text or images. The interface is simple and the creative control is powerful.",
     "why_matters_en": "AI video new star, but already relatively well-known",
     "latest_news_en": "Pika 2.0 released",
@@ -21053,8 +21890,9 @@
     "logo_source": "",
     "description_en": "OpenAI's new function connects medical records and health apps to help users analyze and manage their health.",
     "why_matters_en": "230 million ChatGPT users receive health consultation every week, integrating Torch technology to solve data fragmentation.",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "status:403"
   },
   {
     "name": "Runway",
@@ -21067,10 +21905,10 @@
     ],
     "rating": 4.7,
     "weekly_users": 6000000,
-    "trending_score": 79,
-    "final_score": 79,
-    "hot_score": 79,
-    "top_score": 79,
+    "trending_score": 81,
+    "final_score": 81,
+    "hot_score": 81,
+    "top_score": 81,
     "is_hardware": false,
     "source": "curated",
     "dark_horse_index": 1,
@@ -21078,7 +21916,7 @@
     "funding_total": "$250M+",
     "valuation": "$1.5B+",
     "why_matters": "AI视频先驱，但已是知名产品",
-    "latest_news": "Gen-3 Alpha持续领先",
+    "latest_news": "2026-03-11: 来自 X 的一手提及：Runway母公司已融资$860M、估值$5.3B，由Alejandro Matamala Ortiz领导的新孵化器信号其在生成式AI领域的持续创新扩张。",
     "pricing": "免费试用, Standard $15/月",
     "first_seen": "2026-01-14T00:00:00Z",
     "last_seen": "2026-01-14T00:00:00Z",
@@ -21090,7 +21928,20 @@
     "why_matters_en": "AI video pioneer, but already a well-known product",
     "latest_news_en": "Gen-3 Alpha continues to lead",
     "website_source": "redirect",
-    "needs_verification": false
+    "needs_verification": false,
+    "extra": {
+      "signals": [
+        {
+          "platform": "x",
+          "url": "https://x.com/runwayml/status/2031721337782259799",
+          "title": "Today we are introducing Runway Labs, a generative AI incubator led by our co-founder and Chief Innovation Officer, Alej",
+          "published_at": "2026-03-11T13:18:09Z",
+          "snippet": "Today we are introducing Runway Labs, a generative AI incubator led by our co-founder and Chief Innovation Officer, Alejandro Matamala Ortiz. Runway Labs will focus on broadly exploring the transfo...",
+          "author": "@runwayml"
+        }
+      ]
+    },
+    "news_updated_at": "2026-03-11T13:18:09Z"
   },
   {
     "name": "Midjourney",
@@ -21124,8 +21975,9 @@
     "description_en": "The top AI image generation platform, V6 provides unprecedented detail and style control. First choice for artists and designers.",
     "why_matters_en": "The king of AI images, but already a well-known product",
     "latest_news_en": "V6 continues to iterate",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "status:403"
   },
   {
     "name": "Tongyi Qianwen",
@@ -21356,8 +22208,9 @@
     "logo_source": "",
     "description_en": "OpenAI's low-cost subscription tier provides 10 times the messaging, uploading and image generation of GPT-5.2 Instant, and supports longer memory.",
     "why_matters_en": "After launching in India, it expanded to 170 countries, becoming OpenAI’s fastest growing subscription plan.",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "status:403"
   },
   {
     "name": "Neuralink",
@@ -21486,8 +22339,9 @@
     "description_en": "Provide deep forgery AI defense solutions for enterprises and governments, focusing on the field of AI security.",
     "why_matters_en": "Raised US$7.6 million in 3 rounds of financing, AI defense tools against deep fakes have potential in a market with surging security needs.",
     "latest_news_en": "2026-01: Selected into Europe’s Best AI Startup List",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "AudioShake",
@@ -21721,7 +22575,7 @@
     "name": "Hupo AI",
     "description": "AI驱动的销售教练平台，为金融服务和企业客户提供实时洞察、行为分析和数据驱动指导。",
     "website": "https://www.hupo.ai/",
-    "logo_url": "",
+    "logo_url": "https://hupo.ai/apple-touch-icon.png",
     "categories": [
       "agent"
     ],
@@ -21742,7 +22596,7 @@
     "confidence": 0.95,
     "discovery_method": "perplexity_search",
     "search_keyword": "Tech in Asia artificial intelligence",
-    "logo_source": "",
+    "logo_source": "apple_touch_icon",
     "description_en": "An AI-driven sales coaching platform that provides real-time insights, behavioral analysis and data-driven guidance to financial services and enterprise customers.",
     "why_matters_en": "DST Global Partners led the US$10 million Series A round of financing, focusing on improving enterprise-level sales efficiency and meeting the needs of lean teams in Southeast Asia. Early financing during the year showed investors' strong confidence in practical AI solutions.",
     "latest_news_en": "2026-01: Completed US$10 million Series A financing led by DST Global Partners",
@@ -21880,8 +22734,8 @@
     "why_matters_en": "It attracted much attention at CES 2026. It received US$1.48 million in crowdfunding on Kickstarter as a new form of card phone, which verified the market demand for non-mainstream mobile phone forms.",
     "latest_news_en": "CES 2026 has attracted much attention, and Kickstarter has raised approximately US$1.48 million in 30 days since its launch.",
     "website_source": "redirect",
-    "needs_verification": false,
-    "website_check_reason": "error:ConnectionError"
+    "needs_verification": true,
+    "website_check_reason": "status:503"
   },
   {
     "name": "Sesame AI Smart Glasses",
@@ -22032,8 +22886,9 @@
     "description_en": "AI smart glasses are equipped with a 12MP camera and open earphone audio, supporting voice interactions such as playing music, recommending restaurants, and object recognition.",
     "why_matters_en": "AI glasses combine high-pixel cameras and open-ear audio. They are innovative in form and support real-time AI interaction such as flower recognition. They are a popular Kickstarter project.",
     "latest_news_en": "2026-02-09: Hot Trending Projects on Kickstarter",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "status:403"
   },
   {
     "name": "XbotGo Falcon AI",
@@ -22337,8 +23192,9 @@
     "description_en": "A vertical AI platform built specifically for mortgage origination to help accelerate market promotion and industry adoption.",
     "why_matters_en": "New Stack Ventures led a $1.2 million pre-seed investment to expand the capabilities of mortgage AI products, but the funding scale is small and has not yet shown explosive growth.",
     "latest_news_en": "2026-02: Completed pre-seed financing of US$1.2 million",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11"
+    "needs_verification": true,
+    "website_source": "manual_verified_2026-03-11",
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "fxis.ai",
@@ -22421,7 +23277,7 @@
     "name": "ThinkBook 模块化AI PC概念",
     "description": "模块化商用AI PC概念，轻携随身大屏使用。",
     "website": "https://www.lenovo.com",
-    "logo_url": "https://ap-img.static.pub/ss/img/2025/07/28/img.20250728074209325255.ico",
+    "logo_url": "https://www.lenovo.com/favicon.ico",
     "categories": [
       "hardware"
     ],
@@ -22646,92 +23502,29 @@
         "demand_tier": "low",
         "guardrail_applied": "none",
         "guardrail_reason": "threshold_not_met"
-      }
+      },
+      "signals": [
+        {
+          "platform": "x",
+          "url": "https://x.com/GoogleDeepMind/status/2031399096267718847",
+          "title": "Ten years after AlphaGo, we’re still building on its foundations to advance AI.\n\nThe techniques pioneered have helped us",
+          "published_at": "2026-03-10T15:57:40Z",
+          "snippet": "Ten years after AlphaGo, we’re still building on its foundations to advance AI. The techniques pioneered have helped us prove mathematical statements and are now assisting the scientific community ...",
+          "author": "@GoogleDeepMind"
+        }
+      ]
     },
     "discovered_at": "2026-02-25",
     "first_seen": "2026-02-25T19:51:09.262358Z",
     "final_score": 100,
-    "trending_score": 90,
+    "trending_score": 92,
     "logo_source": "",
     "description_en": "The London AI Research Laboratory builds superhuman intelligence through reinforcement learning rather than large language models. The goal is to create an infinite learning system that can learn autonomously and discover itself.",
     "why_matters_en": "Led by David Silver (creator of AlphaGo), the $1 billion seed round was led by Sequoia, with a $4 billion valuation, the largest seed round in European history. Core innovation: abandon the LLM paradigm, shift to reinforcement learning + experience cycle, and break through the bottleneck of human knowledge. Nvidia, Google, and Microsoft are involved in the negotiations.",
-    "needs_verification": false
-  },
-  {
-    "name": "MetaOptics AI Smart Glasses",
-    "description": "运动型AI智能眼镜，采用超透镜相机系统支持手指手势控制。",
-    "website": "https://metaoptics.com",
-    "logo_url": "",
-    "categories": [
-      "hardware"
-    ],
-    "dark_horse_index": 3,
-    "why_matters": "CES 2026展出突破性超透镜AI眼镜，精准追踪与直觉交互。",
-    "funding_total": "unknown",
-    "region": "Unknown",
-    "country_code": "UNKNOWN",
-    "country_name": "Unknown",
-    "country_flag": "",
-    "country_display": "Unknown",
-    "country_source": "unknown",
-    "source_region": "🇸🇬",
-    "source": "PRNewswire",
-    "source_url": "https://www.prnewswire.com/apac/zh/news-releases/metaoptics-2026-302635084.html",
-    "source_title": "",
-    "website_source": "weekly_match",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-27T09:21:44.535998Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "llm_summary_used": false,
-          "llm_summary_skipped_reason": "",
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-27",
-    "first_seen": "2026-02-27T09:21:44.722407Z",
-    "final_score": 60,
-    "trending_score": 54,
-    "logo_source": "",
-    "description_en": "Sports AI smart glasses, using a super lens camera system to support finger gesture control.",
-    "why_matters_en": "CES 2026 showcases breakthrough super-lens AI glasses with precise tracking and intuitive interaction.",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectTimeout",
+    "latest_news": "2026-03-10: 来自 X 的一手提及：Founded by AlphaGo architect David Silver; positioned to capitalize on $192.7B AI startup funding landscape in 2025",
+    "news_updated_at": "2026-03-10T15:57:40Z"
   },
   {
     "name": "Callio",
@@ -22827,7 +23620,8 @@
     "logo_url": "",
     "logo_source": "",
     "description_en": "AI-native design workspace that converts prompts and screenshots into editable product UI flows and reusable design systems.",
-    "why_matters_en": "Product Hunt weekly leaderboard (week of 2026-02-19) shows 1,044 upvotes, a strong early traction signal for AI-first design workflows."
+    "why_matters_en": "Product Hunt weekly leaderboard (week of 2026-02-19) shows 1,044 upvotes, a strong early traction signal for AI-first design workflows.",
+    "needs_verification": false
   },
   {
     "name": "Straion",
@@ -22886,7 +23680,8 @@
     "logo_url": "",
     "logo_source": "",
     "description_en": "Unified AI workspace that connects documents, apps, and chat into one searchable interface for faster team decisions.",
-    "why_matters_en": "Logged 815 upvotes on the same Product Hunt weekly leaderboard, showing breakout attention in the AI knowledge-work interface category."
+    "why_matters_en": "Logged 815 upvotes on the same Product Hunt weekly leaderboard, showing breakout attention in the AI knowledge-work interface category.",
+    "needs_verification": false
   },
   {
     "name": "LocalGPT",
@@ -22965,7 +23760,8 @@
     "logo_url": "",
     "logo_source": "",
     "description_en": "Open-source JavaScript interface that exposes web-app functionality as MCP tools for AI agents and assistants.",
-    "why_matters_en": "Product Hunt launch this week shows 98 points and day rank #19, while related HN discussion and Chrome early-preview coverage signal rapidly growing MCP-in-browser demand."
+    "why_matters_en": "Product Hunt launch this week shows 98 points and day rank #19, while related HN discussion and Chrome early-preview coverage signal rapidly growing MCP-in-browser demand.",
+    "needs_verification": false
   },
   {
     "name": "KiloClaw",
@@ -23100,7 +23896,8 @@
     "logo_url": "",
     "logo_source": "",
     "description_en": "AI workflow assistant that helps teams orchestrate repetitive content and ops tasks with reusable automation patterns.",
-    "why_matters_en": "Reached 419 points and 95 comments on Product Hunt daily 2026-03-01, signaling strong discovery momentum within one week."
+    "why_matters_en": "Reached 419 points and 95 comments on Product Hunt daily 2026-03-01, signaling strong discovery momentum within one week.",
+    "needs_verification": false
   },
   {
     "name": "Crawler.sh",
@@ -23198,7 +23995,8 @@
     "logo_url": "",
     "logo_source": "",
     "description_en": "No-code builder that converts course pages into branded, embeddable AI agents for student execution support.",
-    "why_matters_en": "Ranked near top on Product Hunt 2026-03-05 with 230 upvotes and 27 comments, showing strong creator interest in AI-driven course retention workflows."
+    "why_matters_en": "Ranked near top on Product Hunt 2026-03-05 with 230 upvotes and 27 comments, showing strong creator interest in AI-driven course retention workflows.",
+    "needs_verification": false
   },
   {
     "name": "Heywa",
@@ -23253,9 +24051,8 @@
     ],
     "region": "Global",
     "needs_verification": false,
-    "website_check_reason": "error:SSLError",
-    "logo_url": "",
-    "logo_source": "",
+    "logo_url": "https://picsart.com/apple-touch-icon.png",
+    "logo_source": "apple_touch_icon",
     "description_en": "AI influencer creation suite for generating persistent characters, narrative arcs, and short-form content for social channels.",
     "why_matters_en": "Recorded 197 upvotes and 11 comments on Product Hunt 2026-03-04, indicating growing demand for repeatable AI-native creator pipelines.",
     "website_source": "validated_variant"
@@ -23358,13 +24155,14 @@
     "logo_url": "",
     "logo_source": "",
     "description_en": "AI-native application security layer that plugs into coding assistants to verify exploitability and reduce non-actionable findings.",
-    "why_matters_en": "VentureBeat on March 3, 2026 cited only 10% of AI-generated code as secure and introduced AURI as a free developer tool with MCP integration."
+    "why_matters_en": "VentureBeat on March 3, 2026 cited only 10% of AI-generated code as secure and introduced AURI as a free developer tool with MCP integration.",
+    "needs_verification": false
   },
   {
     "name": "Simile",
     "description": "构建AI系统以模仿人类决策的企业级应用平台",
     "website": "https://simile.ai/",
-    "logo_url": "",
+    "logo_url": "https://simile.ai/icon.png?09ab463ea74862f4",
     "categories": [
       "agent"
     ],
@@ -23429,77 +24227,9 @@
     "first_seen": "2026-02-18T23:05:59.393434Z",
     "final_score": 80,
     "trending_score": 72,
-    "logo_source": "",
+    "logo_source": "html",
     "description_en": "An enterprise-grade application platform for building AI systems to mimic human decision-making",
     "why_matters_en": "One of the first AI companies to raise more than $100M in 2026, led by Index Ventures, with a financing scale of $100 million; focusing on the field of decision-making automation and filling the gap in enterprise AI applications",
-    "needs_verification": false
-  },
-  {
-    "name": "华米科技 AI 智能眼镜",
-    "description": "华米科技推出的 AI 智能眼镜，已进入量产阶段。",
-    "website": "https://www.zepp.com/",
-    "logo_url": "",
-    "categories": [
-      "hardware"
-    ],
-    "dark_horse_index": 3,
-    "why_matters": "智能穿戴设备厂商向 AI 眼镜领域拓展，结合健康监测功能。",
-    "funding_total": "unknown",
-    "region": "🇨🇳",
-    "source": "经济观察网",
-    "source_url": "https://www.sohu.com/a/987220940_122014422",
-    "source_title": "",
-    "website_source": "manual_verified_2026-03-11",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-02-16T19:08:55.784485Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-02-16",
-    "first_seen": "2026-02-16T19:08:56.324150Z",
-    "final_score": 60,
-    "trending_score": 54,
-    "logo_source": "",
-    "description_en": "The AI ​​smart glasses launched by Huami Technology have entered the mass production stage.",
-    "why_matters_en": "Smart wearable device manufacturers are expanding into the field of AI glasses and integrating health monitoring functions.",
     "needs_verification": false
   },
   {
@@ -23526,34 +24256,6 @@
     "description_en": "Build a platform to measure brand visibility in large language model output.",
     "why_matters_en": "It will receive €1 million pre-Seed at the end of 2025. It is the first AI platform in China and Europe focusing on LLM brand visibility measurement, filling a new gap in brand monitoring.",
     "needs_verification": false
-  },
-  {
-    "name": "Majestic Labs",
-    "description": "为AI服务器提供高带宽内存架构，解决内存墙瓶颈。",
-    "website": "unknown",
-    "logo_url": "",
-    "categories": [
-      "software"
-    ],
-    "dark_horse_index": 4,
-    "why_matters": "1亿美元A轮，前Meta和Google芯片高管创立，解决AI模型性能关键内存带宽限制。",
-    "funding_total": "$100M Series A",
-    "region": "🇺🇸",
-    "source": "SecondTalent",
-    "discovered_at": "2026-01-19",
-    "first_seen": "2026-01-19T10:15:09.833393Z",
-    "final_score": 80,
-    "trending_score": 72,
-    "category": "software",
-    "slug": "majestic-labs",
-    "logo": "",
-    "logo_source": "",
-    "source_url": "https://www.secondtalent.com/resources/top-ai-startups-that-raised-funding-in-november-2025/",
-    "description_en": "Provide high-bandwidth memory architecture for AI servers to solve memory wall bottlenecks.",
-    "why_matters_en": "A $100 million Series A round, founded by former Meta and Google chip executives to solve the critical memory bandwidth limitation of AI model performance.",
-    "needs_verification": true,
-    "website_source": "",
-    "website_check_reason": "status:200"
   },
   {
     "name": "CuspAI",
@@ -23725,7 +24427,7 @@
     ],
     "logo": "",
     "logo_source": "html",
-    "logo_url": "https://files.chinaasaservice.com/5553/14050604/cropped-favicon-180x180.png",
+    "logo_url": "https://hailo.ai/wp-content/uploads/2023/10/cropped-favicon-180x180.png",
     "description_en": "AI processor for edge devices with industry-leading efficiency",
     "why_matters_en": "Israeli edge AI chip, leading in energy efficiency, officially adopted by Raspberry Pi",
     "latest_news_en": "2025-11: Hailo-8L released",
@@ -23915,38 +24617,6 @@
     "website_source": "manual_verified_2026-03-11"
   },
   {
-    "name": "Project Prometheus",
-    "description": "Jeff Bezos亲任联合CEO的物理AI创业公司，聚焦制造业和工程领域AI应用。$6.2B初始融资，史上资金最充裕的早期AI公司之一。",
-    "logo_url": "https://logo.clearbit.com/projectprometheus.ai",
-    "website": "unknown",
-    "categories": [
-      "hardware",
-      "other"
-    ],
-    "rating": 4.8,
-    "weekly_users": 0,
-    "trending_score": 95,
-    "final_score": 95,
-    "hot_score": 95,
-    "top_score": 95,
-    "is_hardware": true,
-    "source": "curated",
-    "dark_horse_index": 5,
-    "founded_date": "2025-11",
-    "funding_total": "$6.2B",
-    "region": "🇺🇸",
-    "why_matters": "Bezos重返CEO战场，物理AI+制造业方向，团队来自Google X/DeepMind/OpenAI",
-    "latest_news": "2025-11: Bezos宣布担任联合CEO，初始融资$6.2B",
-    "first_seen": "2026-01-16T11:07:12Z",
-    "last_seen": "2026-01-16T11:07:12Z",
-    "slug": "project-prometheus",
-    "logo": "",
-    "logo_source": "clearbit",
-    "description_en": "The physics AI startup company where Jeff Bezos serves as co-CEO focuses on AI applications in the manufacturing and engineering fields. $6.2B in initial financing, making it one of the most well-funded early AI companies in history.",
-    "why_matters_en": "Bezos returns to the CEO battlefield, focusing on physical AI + manufacturing, with a team from Google X/DeepMind/OpenAI",
-    "latest_news_en": "2025-11: Bezos announced as co-CEO, initial financing $6.2B"
-  },
-  {
     "name": "Snorkel AI",
     "slug": "snorkel-ai",
     "website": "https://snorkel.ai/",
@@ -24108,8 +24778,214 @@
     "needs_verification": false
   },
   {
+    "name": "MetaOptics AI Smart Glasses",
+    "description": "运动型AI智能眼镜，采用超透镜相机系统支持手指手势控制。",
+    "website": "unknown",
+    "logo_url": "",
+    "categories": [
+      "hardware"
+    ],
+    "dark_horse_index": 3,
+    "why_matters": "CES 2026展出突破性超透镜AI眼镜，精准追踪与直觉交互。",
+    "funding_total": "unknown",
+    "region": "Unknown",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown",
+    "source_region": "🇸🇬",
+    "source": "PRNewswire",
+    "source_url": "https://www.prnewswire.com/apac/zh/news-releases/metaoptics-2026-302635084.html",
+    "source_title": "",
+    "website_source": "",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-27T09:21:44.535998Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-02-27",
+    "first_seen": "2026-02-27T09:21:44.722407Z",
+    "final_score": 60,
+    "trending_score": 54,
+    "logo_source": "",
+    "description_en": "Sports AI smart glasses, using a super lens camera system to support finger gesture control.",
+    "why_matters_en": "CES 2026 showcases breakthrough super-lens AI glasses with precise tracking and intuitive interaction.",
+    "needs_verification": true,
+    "website_check_reason": "status:200"
+  },
+  {
+    "name": "华米科技 AI 智能眼镜",
+    "description": "华米科技推出的 AI 智能眼镜，已进入量产阶段。",
+    "website": "unknown",
+    "logo_url": "",
+    "categories": [
+      "hardware"
+    ],
+    "dark_horse_index": 3,
+    "why_matters": "智能穿戴设备厂商向 AI 眼镜领域拓展，结合健康监测功能。",
+    "funding_total": "unknown",
+    "region": "🇨🇳",
+    "source": "经济观察网",
+    "source_url": "https://www.sohu.com/a/987220940_122014422",
+    "source_title": "",
+    "website_source": "",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-02-16T19:08:55.784485Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-02-16",
+    "first_seen": "2026-02-16T19:08:56.324150Z",
+    "final_score": 60,
+    "trending_score": 54,
+    "logo_source": "",
+    "description_en": "The AI ​​smart glasses launched by Huami Technology have entered the mass production stage.",
+    "why_matters_en": "Smart wearable device manufacturers are expanding into the field of AI glasses and integrating health monitoring functions.",
+    "needs_verification": true,
+    "website_check_reason": "status:200"
+  },
+  {
+    "name": "Majestic Labs",
+    "description": "为AI服务器提供高带宽内存架构，解决内存墙瓶颈。",
+    "website": "unknown",
+    "logo_url": "",
+    "categories": [
+      "software"
+    ],
+    "dark_horse_index": 4,
+    "why_matters": "1亿美元A轮，前Meta和Google芯片高管创立，解决AI模型性能关键内存带宽限制。",
+    "funding_total": "$100M Series A",
+    "region": "🇺🇸",
+    "source": "SecondTalent",
+    "discovered_at": "2026-01-19",
+    "first_seen": "2026-01-19T10:15:09.833393Z",
+    "final_score": 80,
+    "trending_score": 72,
+    "category": "software",
+    "slug": "majestic-labs",
+    "logo": "",
+    "logo_source": "",
+    "source_url": "https://www.secondtalent.com/resources/top-ai-startups-that-raised-funding-in-november-2025/",
+    "description_en": "Provide high-bandwidth memory architecture for AI servers to solve memory wall bottlenecks.",
+    "why_matters_en": "A $100 million Series A round, founded by former Meta and Google chip executives to solve the critical memory bandwidth limitation of AI model performance.",
+    "needs_verification": true,
+    "website_source": "",
+    "website_check_reason": "status:200"
+  },
+  {
+    "name": "Project Prometheus",
+    "description": "Jeff Bezos亲任联合CEO的物理AI创业公司，聚焦制造业和工程领域AI应用。$6.2B初始融资，史上资金最充裕的早期AI公司之一。",
+    "logo_url": "https://logo.clearbit.com/projectprometheus.ai",
+    "website": "unknown",
+    "categories": [
+      "hardware",
+      "other"
+    ],
+    "rating": 4.8,
+    "weekly_users": 0,
+    "trending_score": 95,
+    "final_score": 95,
+    "hot_score": 95,
+    "top_score": 95,
+    "is_hardware": true,
+    "source": "curated",
+    "dark_horse_index": 5,
+    "founded_date": "2025-11",
+    "funding_total": "$6.2B",
+    "region": "🇺🇸",
+    "why_matters": "Bezos重返CEO战场，物理AI+制造业方向，团队来自Google X/DeepMind/OpenAI",
+    "latest_news": "2025-11: Bezos宣布担任联合CEO，初始融资$6.2B",
+    "first_seen": "2026-01-16T11:07:12Z",
+    "last_seen": "2026-01-16T11:07:12Z",
+    "slug": "project-prometheus",
+    "logo": "",
+    "logo_source": "clearbit",
+    "description_en": "The physics AI startup company where Jeff Bezos serves as co-CEO focuses on AI applications in the manufacturing and engineering fields. $6.2B in initial financing, making it one of the most well-funded early AI companies in history.",
+    "why_matters_en": "Bezos returns to the CEO battlefield, focusing on physical AI + manufacturing, with a team from Google X/DeepMind/OpenAI",
+    "latest_news_en": "2025-11: Bezos announced as co-CEO, initial financing $6.2B"
+  },
+  {
     "name": "LTX Desktop",
-    "website": "https://ltx.io/",
+    "website": "unknown",
     "description": "Local-first desktop app for AI video generation that ships with the new LTX-2.3 model and production-focused creative tooling.",
     "why_matters": "Released on March 6, 2026 with LTX-2.3 and positioned for local generation workflows, signaling rising demand for on-device creative AI pipelines.",
     "dark_horse_index": 4,
@@ -24122,9 +24998,10 @@
       "Local AI"
     ],
     "region": "Global",
-    "needs_verification": false,
-    "website_source": "manual_verified_2026-03-11",
+    "needs_verification": true,
+    "website_source": "",
     "description_en": "Local-first desktop app for AI video generation that ships with the new LTX-2.3 model and production-focused creative tooling.",
-    "why_matters_en": "Released on March 6, 2026 with LTX-2.3 and positioned for local generation workflows, signaling rising demand for on-device creative AI pipelines."
+    "why_matters_en": "Released on March 6, 2026 with LTX-2.3 and positioned for local generation workflows, signaling rising demand for on-device creative AI pipelines.",
+    "website_check_reason": "status:200"
   }
 ]

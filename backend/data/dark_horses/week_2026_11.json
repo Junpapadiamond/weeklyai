@@ -21,7 +21,7 @@
     "company_country": "unknown",
     "company_country_confidence": 0.5,
     "confidence": 0.9,
-    "needs_verification": true,
+    "needs_verification": false,
     "categories": [
       "other"
     ],
@@ -77,7 +77,10 @@
     "country_name": "Unknown",
     "country_flag": "",
     "country_display": "Unknown",
-    "country_source": "unknown"
+    "country_source": "unknown",
+    "website_source": "manual_verified_2026-03-11",
+    "logo_url": "https://framerusercontent.com/images/3S1XMF1Wu7nO2vBUopvF7ajENkY.png",
+    "logo_source": "html"
   },
   {
     "name": "Osapiens",
@@ -157,7 +160,9 @@
     "country_name": "Germany",
     "country_flag": "🇩🇪",
     "country_display": "🇩🇪 Germany",
-    "country_source": "explicit:company_country"
+    "country_source": "explicit:company_country",
+    "logo_url": "https://osapiens.com/wp-content/uploads/2024/05/65081d253c3c6d169ca690f0_favicon.png",
+    "logo_source": "html"
   },
   {
     "name": "Vertical Compute",
@@ -234,7 +239,9 @@
     "country_name": "Belgium",
     "country_flag": "🇧🇪",
     "country_display": "🇧🇪 Belgium",
-    "country_source": "explicit:company_country"
+    "country_source": "explicit:company_country",
+    "logo_url": "https://verticalcompute.com/wp-content/uploads/2025/09/vcfavicon-1-300x300.png",
+    "logo_source": "html"
   },
   {
     "name": "City Detect",
@@ -312,7 +319,9 @@
     "country_name": "United States",
     "country_flag": "🇺🇸",
     "country_display": "🇺🇸 United States",
-    "country_source": "explicit:company_country"
+    "country_source": "explicit:company_country",
+    "logo_url": "https://img1.wsimg.com/isteam/ip/static/pwa-app/logo-default.png/:/rs=w:57,h:57,m",
+    "logo_source": "html"
   },
   {
     "name": "Science Corp.",
@@ -388,6 +397,405 @@
     "country_name": "United States",
     "country_flag": "🇺🇸",
     "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Isembard",
+    "website": "https://www.isembard.com",
+    "description": "伦敦制造初创公司Isembard通过MasonOS AI平台自动化精密制造工厂运营，服务国防、航天和机器人行业。",
+    "description_en": "London-based manufacturing startup Isembard uses MasonOS AI platform to automate end-to-end factory operations for precision components in defense, aerospace, and robotics.",
+    "category": "hardware",
+    "region": "🇬🇧",
+    "funding_total": "$50M Series A",
+    "dark_horse_index": 5,
+    "criteria_met": [
+      "funding_signal",
+      "growth_anomaly"
+    ],
+    "why_matters": "$50M Series A不到12个月后种子轮，Union Square Ventures领投，将开设25家AI工厂覆盖英美欧，MasonOS作为智能代理层自动化从报价到交付全流程。",
+    "why_matters_en": "$50M Series A less than 12 months after seed, led by Union Square Ventures (backed Twitter/Coinbase), to open 25 AI factories across UK/US/Europe by end-2026, MasonOS agentic OS automates quoting to delivery.",
+    "latest_news": "2026-03-09: 完成$50M Series A融资",
+    "latest_news_en": "2026-03-09: Raised $50M Series A",
+    "source": "Sifted",
+    "source_url": "https://sifted.eu/articles/isembard-funding-round-ai-deeptech",
+    "company_country": "United Kingdom",
+    "company_country_confidence": 0.95,
+    "confidence": 0.95,
+    "is_hardware": true,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-11T19:42:25.482128Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-03-11",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:sifted.eu AI funding",
+    "country_code": "GB",
+    "country_name": "United Kingdom",
+    "country_flag": "🇬🇧",
+    "country_display": "🇬🇧 United Kingdom",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Mind Robotics",
+    "website": "https://mindrobotics.com",
+    "description": "Rivian分拆出的工业机器人实验室，开发AI驱动的工业机器人。",
+    "description_en": "Industrial robotics lab spun out from Rivian, developing AI-powered industrial robots.",
+    "category": "hardware",
+    "region": "🇺🇸",
+    "funding_total": "$500M Series A (total $615M)",
+    "dark_horse_index": 5,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "继1.15亿美元种子轮后，Accel和a16z联合领投5亿美元A轮，专注工业AI机器人。",
+    "why_matters_en": "Following $115M seed, raised $500M Series A co-led by Accel and a16z for industrial AI robots.",
+    "latest_news": "2026-03-11: 完成5亿美元A轮融资",
+    "latest_news_en": "2026-03-11: Closed $500M Series A",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/03/11/rivian-mind-robotics-series-a-500m-fund-raise-industrial-ai-powered-robots/",
+    "company_country": "US",
+    "company_country_confidence": 0.9,
+    "confidence": 0.95,
+    "is_hardware": true,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-11T19:43:51.095848Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-03-11",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:techcrunch.com AI startup funding",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Armadin",
+    "website": "https://armadin.ai",
+    "description": "Mandiant创始人Kevin Mandia新创的AI原生网络安全初创公司，专注自主AI代理安全。",
+    "description_en": "AI-native cybersecurity startup by Mandiant founder Kevin Mandia, focusing on autonomous AI agent security.",
+    "category": "agent",
+    "region": "🇺🇸",
+    "funding_total": "$189.9M seed + Series A",
+    "dark_horse_index": 5,
+    "criteria_met": [
+      "funding_signal",
+      "founder_background",
+      "demand_signal_hn"
+    ],
+    "why_matters": "Mandiant创始人（2004年创立，2022年以54亿美元卖给Google）新创，创纪录189.9百万美元种子+A轮。",
+    "why_matters_en": "Founded by Mandiant creator (sold to Google for $5.4B), record-breaking $189.9M combined seed/Series A.",
+    "latest_news": "2026-03-10: 完成189.9百万美元融资",
+    "latest_news_en": "2026-03-10: Raised $189.9M in seed + Series A",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/03/10/mandiants-founder-just-raised-190m-for-his-autonomous-ai-agent-security-startup/",
+    "company_country": "US",
+    "company_country_confidence": 0.9,
+    "confidence": 0.95,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-11T19:43:51.365876Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 1,
+          "top_story_id": "47335647",
+          "points": 2,
+          "comments": 2,
+          "engagement_depth_ratio": 1.0,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "the identity cert + execution chain combination makes sense -- the real risk with agents isnt just which agent is this but whether you can verify the agent hasnt been injected with malicious instructions between operations the mcp trust layer is the interesting piece: are you signing each mcp tool call in the chain, or just the agent at initialization? the attack surface shifts a lot depending on when attestation happens relative to the tool call also curious about the stripe trust gate vs x402 for payment verification -- stripe adds human account overhead; x402 lets agents pay autonomously with on-chain settlement and no human intermediary to impersonate. seems like a better fit for zero-tr",
+            "V interesting. Does the passport have history of what the agent has done in the past and if so, how are you able to verify that work? Specifically thinking about agents that may work across different systems. Might be worth checking this out: https://www.8004.org/ it's more crypto specific but trying to tackle the problem of verifying an agent cross platforms."
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.3748,
+        "demand_tier": "medium",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.6
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-03-11",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:techcrunch.com AI startup funding",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Sapien AI",
+    "website": "https://sapiens.ai",
+    "description": "新加坡AI初创公司，构建针对亚洲市场的本土AI模型。",
+    "description_en": "Singapore-based AI startup building homegrown AI models tailored for Asian markets.",
+    "category": "other",
+    "region": "🇸🇬",
+    "funding_total": "$20M",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "2026年3月完成2000万美元融资，用于加速模型开发、扩充工程团队和加强训练计算基础设施。",
+    "why_matters_en": "$20M fresh funding in March 2026 to accelerate model development, expand engineering team, and strengthen training compute infrastructure.",
+    "latest_news": "2026-03-10: 完成2000万美元融资",
+    "latest_news_en": "2026-03-10: Raised $20M in fresh funding",
+    "source": "DealStreetAsia",
+    "source_url": "https://www.dealstreetasia.com/stories/se-asia-dm-march-10-2-475267",
+    "company_country": "Singapore",
+    "company_country_confidence": 1.0,
+    "confidence": 0.95,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-11T19:44:07.793157Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇸🇬",
+    "discovered_at": "2026-03-11",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "Singapore AI startup funding 2026",
+    "country_code": "SG",
+    "country_name": "Singapore",
+    "country_flag": "🇸🇬",
+    "country_display": "🇸🇬 Singapore",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Mindverse",
+    "website": "https://mindverse.ai",
+    "description": "新加坡AI公司，提供B2C软件、云数据解决方案。",
+    "description_en": "Singapore AI company offering B2C software, cloud computing, and data solutions.",
+    "category": "other",
+    "region": "🇸🇬",
+    "funding_total": "$20M Seed",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "2026年2月完成2000万美元种子轮融资，罕见大额种子投资显示强劲增长潜力。",
+    "why_matters_en": "$20M Seed in Feb 2026, unusually large seed round signaling strong growth potential.",
+    "latest_news": "2026-02: $20M Seed",
+    "latest_news_en": "2026-02: $20M Seed",
+    "source": "GrowthList",
+    "source_url": "https://growthlist.co/singapore-startups/",
+    "company_country": "Singapore",
+    "company_country_confidence": 1.0,
+    "confidence": 0.9,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-11T19:44:08.075630Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇸🇬",
+    "discovered_at": "2026-03-11",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "Singapore AI startup funding 2026",
+    "country_code": "SG",
+    "country_name": "Singapore",
+    "country_flag": "🇸🇬",
+    "country_display": "🇸🇬 Singapore",
     "country_source": "explicit:company_country"
   }
 ]
