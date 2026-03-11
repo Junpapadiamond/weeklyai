@@ -87,6 +87,30 @@ class TestFixLogosHelpers(unittest.TestCase):
 
         self.assertTrue(_is_low_confidence_logo(item))
 
+    def test_should_fix_product_only_missing_respects_existing_logo(self) -> None:
+        from tools.fix_logos import _should_fix_product
+
+        self.assertTrue(
+            _should_fix_product({"logo_url": "", "logo": ""}, only_missing=True)
+        )
+        self.assertFalse(
+            _should_fix_product(
+                {"logo_url": "https://cursor.com/favicon.ico", "logo": ""},
+                only_missing=True,
+            )
+        )
+
+    def test_should_fix_product_default_still_flags_low_confidence_logo(self) -> None:
+        from tools.fix_logos import _should_fix_product
+
+        item = {
+            "logo_url": "https://favicon.bing.com/favicon.ico?url=global.dreame.com&size=128",
+            "logo_source": "bing",
+            "website": "https://global.dreame.com",
+        }
+
+        self.assertTrue(_should_fix_product(item, only_missing=False))
+
 
 if __name__ == "__main__":
     unittest.main()

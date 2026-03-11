@@ -199,6 +199,25 @@ def get_logo_url(domain: str) -> tuple:
     return None, None
 
 
+def _should_fix_product(product: dict, only_missing: bool = False) -> bool:
+    current_logo = product.get("logo_url") or product.get("logo", "")
+
+    if only_missing:
+        return not current_logo
+
+    if not current_logo:
+        return True
+    if not current_logo.startswith("http"):
+        return True
+    if _is_low_confidence_logo(product):
+        return True
+
+    website = product.get("website", "")
+    website_domain = extract_domain(website)
+    logo_domain = _extract_logo_domain(current_logo)
+    return bool(website_domain and logo_domain and website_domain not in logo_domain)
+
+
 def process_product(product: dict) -> dict:
     """处理单个产品，尝试获取 logo"""
     name = product.get('name', 'Unknown')
@@ -248,7 +267,7 @@ def process_product(product: dict) -> dict:
     return product
 
 
-def fix_logos(input_path: str, output_path: str = None, dry_run: bool = False):
+def fix_logos(input_path: str, output_path: str = None, dry_run: bool = False, only_missing: bool = False):
     """
     批量修复产品 logo
     
@@ -282,18 +301,10 @@ def fix_logos(input_path: str, output_path: str = None, dry_run: bool = False):
         logo = p.get('logo_url') or p.get('logo', '')
         if not logo:
             stats["no_logo"] += 1
-            to_fix.append(p)
-        elif not logo.startswith('http'):
+        if not only_missing and logo and not logo.startswith('http'):
             stats["invalid_logo"] += 1
+        if _should_fix_product(p, only_missing=only_missing):
             to_fix.append(p)
-        elif _is_low_confidence_logo(p):
-            to_fix.append(p)
-        else:
-            website = p.get('website', '')
-            website_domain = extract_domain(website)
-            logo_domain = _extract_logo_domain(logo)
-            if website_domain and logo_domain and website_domain not in logo_domain:
-                to_fix.append(p)
     
     print(f"\n📊 统计:")
     print(f"   无 logo: {stats['no_logo']}")
@@ -302,6 +313,8 @@ def fix_logos(input_path: str, output_path: str = None, dry_run: bool = False):
     
     if dry_run:
         print("\n🔍 预览模式，不会修改文件")
+        if only_missing:
+            print("   模式: 仅补缺失 logo")
         print("\n需要修复的产品:")
         for p in to_fix[:20]:
             print(f"  - {p.get('name')}: {p.get('website', 'no url')}")
@@ -310,6 +323,8 @@ def fix_logos(input_path: str, output_path: str = None, dry_run: bool = False):
         return
     
     print(f"\n🔧 开始修复 {len(to_fix)} 个产品的 logo...")
+    if only_missing:
+        print("   模式: 仅补缺失 logo")
     
     # 使用线程池并行处理
     fixed_products = {p.get('name'): p for p in products}
@@ -362,6 +377,11 @@ def main():
         action="store_true",
         help="预览模式，不修改文件"
     )
+    parser.add_argument(
+        "--only-missing",
+        action="store_true",
+        help="只补缺失 logo，不修改已有 logo"
+    )
     
     args = parser.parse_args()
     
@@ -370,7 +390,7 @@ def main():
     input_path = os.path.join(script_dir, args.input)
     output_path = os.path.join(script_dir, args.output) if args.output else input_path
     
-    fix_logos(input_path, output_path, args.dry_run)
+    fix_logos(input_path, output_path, args.dry_run, args.only_missing)
 
 
 if __name__ == "__main__":
