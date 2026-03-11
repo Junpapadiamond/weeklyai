@@ -3,8 +3,9 @@
 批量修复和补充产品 Logo
 
 策略：
-1. Clearbit Logo API (最佳质量)
-2. Google Favicon API (备选)
+1. 官网 HTML 中声明的 apple-touch-icon / icon
+2. 官网常见高质量图标路径
+3. Clearbit Logo API (最后兜底)
 3. 官网 favicon 提取
 """
 
@@ -21,16 +22,23 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 TIMEOUT = 5
 MAX_WORKERS = 10
 
-# Logo 来源优先级
 LOGO_SOURCES = {
     "clearbit": "https://logo.clearbit.com/{domain}",
-    "bing": "https://favicon.bing.com/favicon.ico?url={domain}&size=128",
-    "yandex": "https://favicon.yandex.net/favicon/{domain}",
-    "faviconkit": "https://api.faviconkit.com/{domain}/128",
-    "duckduckgo": "https://icons.duckduckgo.com/ip3/{domain}.ico",
-    "google_favicon": "https://www.google.com/s2/favicons?domain={domain}&sz=128",
-    "iconhorse": "https://icon.horse/icon/{domain}",
 }
+LOW_CONFIDENCE_SOURCES = {"bing", "google_favicon", "google", "duckduckgo", "iconhorse", "icon_horse", "faviconkit", "yandex"}
+LOW_CONFIDENCE_HOST_MARKERS = (
+    "favicon.bing.com",
+    "google.com/s2/favicons",
+    "icons.duckduckgo.com",
+    "icon.horse",
+    "favicon.yandex.net",
+    "api.faviconkit.com",
+)
+
+
+def _has_low_confidence_marker(value: str) -> bool:
+    text = str(value or "").strip().lower()
+    return bool(text) and any(marker in text for marker in LOW_CONFIDENCE_HOST_MARKERS)
 
 
 def extract_domain(url: str) -> str:
@@ -133,6 +141,30 @@ def _extract_logo_domain(logo_url: str) -> str:
     except Exception:
         return ""
 
+
+def _is_low_confidence_logo(product: dict) -> bool:
+    source = str(product.get("logo_source") or "").strip().lower()
+    if source in LOW_CONFIDENCE_SOURCES:
+        return True
+
+    return _has_low_confidence_marker(product.get("logo_url")) or _has_low_confidence_marker(product.get("logo"))
+
+
+def _sanitize_logo_fields(product: dict) -> bool:
+    """删除低质量 provider 残留，但保留已经存在的正规 logo。"""
+    changed = False
+    for field in ("logo", "logo_url"):
+        if _has_low_confidence_marker(product.get(field)):
+            product[field] = ""
+            changed = True
+
+    source = str(product.get("logo_source") or "").strip().lower()
+    if source in LOW_CONFIDENCE_SOURCES:
+        product["logo_source"] = ""
+        changed = True
+
+    return changed
+
 def get_logo_url(domain: str) -> tuple:
     """
     获取产品 logo URL
@@ -142,21 +174,27 @@ def get_logo_url(domain: str) -> tuple:
     if not domain:
         return None, None
     
-    # 尝试外部 Logo/Favicon 服务
-    for source, pattern in LOGO_SOURCES.items():
-        url = pattern.format(domain=domain)
-        if check_url_exists(url):
-            return url, source
-
-    # 直接 favicon.ico
-    direct_favicon = f"https://{domain}/favicon.ico"
-    if check_url_exists(direct_favicon):
-        return direct_favicon, "favicon"
-
     # 尝试从主页 HTML 提取
     extracted = _extract_icon_from_html(domain)
     if extracted and check_url_exists(extracted):
         return extracted, "html"
+
+    # 常见的站点自带图标路径优先于第三方 favicon provider
+    direct_candidates = [
+        (f"https://{domain}/apple-touch-icon.png", "apple_touch_icon"),
+        (f"https://{domain}/apple-touch-icon-precomposed.png", "apple_touch_icon"),
+        (f"https://{domain}/favicon-32x32.png", "favicon"),
+        (f"https://{domain}/favicon.ico", "favicon"),
+    ]
+    for url, source in direct_candidates:
+        if check_url_exists(url):
+            return url, source
+
+    # 最后才兜底 Clearbit
+    for source, pattern in LOGO_SOURCES.items():
+        url = pattern.format(domain=domain)
+        if check_url_exists(url):
+            return url, source
     
     return None, None
 
@@ -165,6 +203,7 @@ def process_product(product: dict) -> dict:
     """处理单个产品，尝试获取 logo"""
     name = product.get('name', 'Unknown')
     website = product.get('website', '')
+    _sanitize_logo_fields(product)
     current_logo = product.get('logo_url') or product.get('logo', '')
     
     # 检查是否需要修复
@@ -174,8 +213,7 @@ def process_product(product: dict) -> dict:
         needs_fix = True
     elif not current_logo.startswith('http'):
         needs_fix = True
-    elif 'google.com/s2/favicons' in current_logo and 'sz=128' not in current_logo:
-        # 升级低分辨率 favicon
+    elif _is_low_confidence_logo(product):
         needs_fix = True
     else:
         # 如果 logo 域名与网站不匹配，强制更新
@@ -247,6 +285,8 @@ def fix_logos(input_path: str, output_path: str = None, dry_run: bool = False):
             to_fix.append(p)
         elif not logo.startswith('http'):
             stats["invalid_logo"] += 1
+            to_fix.append(p)
+        elif _is_low_confidence_logo(p):
             to_fix.append(p)
         else:
             website = p.get('website', '')
