@@ -40,6 +40,57 @@ class ProductService:
         """加载博客/新闻/讨论数据"""
         return ProductRepository.load_blogs()
 
+    @staticmethod
+    def _blog_identity(blog: Dict[str, Any]) -> str:
+        """Build stable identity key for blog dedupe in feed composition."""
+        source = str(blog.get("source") or "").strip().lower()
+        website = str(blog.get("website") or blog.get("url") or "").strip().lower()
+        name = str(blog.get("name") or blog.get("title") or "").strip().lower()
+        published_at = str(blog.get("published_at") or "").strip()
+        return f"{source}|{website}|{name}|{published_at}"
+
+    @staticmethod
+    def _inject_recent_cn_tail(blogs: List[Dict[str, Any]], limit: int) -> List[Dict[str, Any]]:
+        """Keep hybrid head ranking stable, but ensure CN recent items remain visible in tail."""
+        if limit <= 0:
+            return []
+
+        selected = blogs[:limit]
+        if not selected:
+            return selected
+
+        cn_in_selected = [b for b in selected if filters.infer_blog_market(b) == "cn"]
+        # 仅保证基础可见度，不改变 global 主视图头部排序体验
+        min_cn = min(limit, 12)
+        if len(cn_in_selected) >= min_cn:
+            return selected
+
+        cn_recent_all = [b for b in sorting.sort_by_recency(blogs) if filters.infer_blog_market(b) == "cn"]
+        if not cn_recent_all:
+            return selected
+
+        selected_keys = {ProductService._blog_identity(b) for b in selected}
+        missing_cn = [b for b in cn_recent_all if ProductService._blog_identity(b) not in selected_keys]
+        if not missing_cn:
+            return selected
+
+        need = min_cn - len(cn_in_selected)
+        if need <= 0:
+            return selected
+
+        protect_head = min(limit, 40)
+        replace_slots = [
+            idx
+            for idx in range(len(selected) - 1, protect_head - 1, -1)
+            if filters.infer_blog_market(selected[idx]) != "cn"
+        ]
+        if not replace_slots:
+            return selected
+
+        for idx, cn_blog in zip(replace_slots, missing_cn[:need]):
+            selected[idx] = cn_blog
+        return selected
+
     # ========== 排序工具方法 (委托给 sorting 模块) ==========
 
     @staticmethod
@@ -304,6 +355,9 @@ class ProductService:
         else:
             # 保持 global/hybrid/us 原有热度排序行为不变。
             blogs = sorting.sort_by_trending(blogs)
+
+        if target_market in {'', 'all', 'hybrid', 'global'}:
+            return ProductService._inject_recent_cn_tail(blogs, limit)
         return blogs[:limit]
 
     @staticmethod
