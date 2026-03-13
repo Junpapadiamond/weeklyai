@@ -80,7 +80,9 @@ function sanitizeProduct(product: Product): Product {
 function sanitizeBlog(blog: BlogPost): BlogPost {
   return {
     name: blog.name,
+    name_en: blog.name_en,
     description: blog.description,
+    description_en: blog.description_en,
     website: blog.website,
     logo_url: blog.logo_url,
     logo: blog.logo,

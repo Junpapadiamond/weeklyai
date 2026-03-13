@@ -116,21 +116,22 @@ The source_url field should contain the NEWS ARTICLE URL from search results.
 ## Output Format (JSON ONLY)
 
 Return a JSON array. If no qualifying products found, return `[]`.
-Keep `description/why_matters/latest_news` compatible with existing fields, and always provide `*_en` English counterparts when possible.
+`description/why_matters/latest_news` are PRIMARY zh-CN display fields and MUST be written in natural Chinese across all regions.
+Keep key technical terms in English when needed (e.g. LLM, API, GPU, Agent). Always provide `*_en` English counterparts when possible.
 
 ```json
 [
   {{
     "name": "Product Name",
     "website": "https://company-website.com",  // MUST be from search results!
-    "description": "One-sentence description in source language or Chinese for compatibility (>20 chars, primary field)",
+    "description": "One-sentence natural Chinese description (>20 chars, primary zh field; keep needed tech terms in English)",
     "description_en": "One-sentence description in English (>20 chars)",
     "category": "coding|image|video|voice|writing|hardware|finance|education|healthcare|agent|other",
     "region": "{region}",
     "funding_total": "$50M Series A",
     "dark_horse_index": 4,
     "criteria_met": ["funding_signal", "category_innovation"],
-    "why_matters": "Specific numbers + specific differentiation (source language / Chinese for compatibility)",
+    "why_matters": "Specific numbers + differentiation in natural Chinese (primary zh field)",
     "why_matters_en": "Specific numbers + specific differentiation (in English)",
     "latest_news": "2026-01: Event description (optional)",
     "latest_news_en": "2026-01: Event description (English, optional)",

@@ -4,6 +4,7 @@ import { PointerEvent, TouchEvent, useEffect, useRef, useState } from "react";
 import type { Product } from "@/types/api";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { useSiteLocale } from "@/components/layout/locale-provider";
+import { handleExternalAnchorClick, openExternalUrl } from "@/lib/external-navigation";
 import {
   cleanDescription,
   formatCategories,
@@ -274,13 +275,12 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
   }
 
   function tryOpenCurrentWebsite() {
-    if (typeof window === "undefined") return;
     const current = stack[0];
     if (!current) return;
     if (current.needs_verification) return;
     const website = normalizeWebsite(current.website);
     if (!isValidWebsite(website)) return;
-    window.open(website, "_blank", "noopener,noreferrer");
+    openExternalUrl(website);
   }
 
   function shouldIgnoreGestureStart(target: EventTarget | null) {
@@ -720,7 +720,13 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
 
           <div className="swipe-card-meta">
             {isValidWebsite(website) && !current.needs_verification ? (
-              <a className="swipe-link" href={website} target="_blank" rel="noopener noreferrer">
+              <a
+                className="swipe-link"
+                href={website}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(event) => handleExternalAnchorClick(event, website)}
+              >
                 {t("了解更多", "Learn more")} →
               </a>
             ) : (
@@ -729,6 +735,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
                 href={websiteSearchUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={(event) => handleExternalAnchorClick(event, websiteSearchUrl)}
                 title={t("点击跳转 Google 搜索官网", "Open Google search for the official website")}
               >
                 {t("官网待验证", "Website pending verification")}

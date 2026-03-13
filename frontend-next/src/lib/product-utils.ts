@@ -1175,6 +1175,37 @@ export function getLocalizedProductLatestNews(product: Product, locale: SiteLoca
   return pickLocalizedText(product, "latest_news", locale);
 }
 
+function pickLocalizedBlogText(
+  zhValue: string | undefined | null,
+  enValue: string | undefined | null,
+  locale: SiteLocale
+): string {
+  const zh = isPlaceholderValue(_normalizeText(zhValue)) ? "" : _normalizeText(zhValue);
+  const en = isPlaceholderValue(_normalizeText(enValue)) ? "" : _normalizeText(enValue);
+  if (locale === "en-US") {
+    return en || zh;
+  }
+  return zh || en;
+}
+
+function _normalizeText(value: string | undefined | null): string {
+  return String(value || "").trim();
+}
+
+export function getLocalizedBlogName(
+  blog: { name?: string; name_en?: string },
+  locale: SiteLocale = DEFAULT_LOCALE
+): string {
+  return pickLocalizedBlogText(blog.name, blog.name_en, locale);
+}
+
+export function getLocalizedBlogDescription(
+  blog: { description?: string; description_en?: string },
+  locale: SiteLocale = DEFAULT_LOCALE
+): string {
+  return pickLocalizedBlogText(blog.description, blog.description_en, locale);
+}
+
 export function getMonogram(name: string | undefined): string {
   if (!name) return "AI";
   const trimmed = name.trim();

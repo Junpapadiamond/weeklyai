@@ -14,7 +14,11 @@ const ThemeToggle = dynamic(() => import("@/components/layout/theme-toggle").the
   ssr: false,
 });
 
-export function SiteHeader() {
+type SiteHeaderProps = {
+  isAppShell?: boolean;
+};
+
+export function SiteHeader({ isAppShell = false }: SiteHeaderProps) {
   const pathname = usePathname();
   const { locale, setLocale, t } = useSiteLocale();
   const [favoritesCount, setFavoritesCount] = useState(0);
@@ -77,9 +81,11 @@ export function SiteHeader() {
         </nav>
 
         <div className="nav-actions">
-          <div className="nav-ai">
-            <ChatBar variant="compactTrigger" />
-          </div>
+          {!isAppShell ? (
+            <div className="nav-ai">
+              <ChatBar variant="compactTrigger" />
+            </div>
+          ) : null}
           <div className="locale-switcher" role="group" aria-label={t("切换语言", "Switch language")}>
             <button
               type="button"

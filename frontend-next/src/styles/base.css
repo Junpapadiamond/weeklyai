@@ -15,6 +15,17 @@ body {
 
 html {
   scroll-behavior: smooth;
+  --wa-safe-top: 0px;
+  --wa-safe-right: 0px;
+  --wa-safe-bottom: 0px;
+  --wa-safe-left: 0px;
+}
+
+html[data-app-shell="ios"] {
+  --wa-safe-top: env(safe-area-inset-top);
+  --wa-safe-right: env(safe-area-inset-right);
+  --wa-safe-bottom: env(safe-area-inset-bottom);
+  --wa-safe-left: env(safe-area-inset-left);
 }
 
 body {
@@ -25,6 +36,8 @@ body {
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding-left: var(--wa-safe-left);
+  padding-right: var(--wa-safe-right);
 }
 
 @keyframes waFadeUp {
@@ -85,7 +98,7 @@ a {
   position: relative;
   z-index: 2;
   padding-top: 1.25rem;
-  padding-bottom: 3rem;
+  padding-bottom: calc(3rem + var(--wa-safe-bottom));
 }
 
 .section,
@@ -135,6 +148,66 @@ a {
   margin-top: 0;
   background: var(--surface);
   border-bottom: 1px solid var(--border);
+  padding-top: var(--wa-safe-top);
+}
+
+.app-network-overlay {
+  position: fixed;
+  z-index: 120;
+  inset: 0;
+  padding:
+    calc(1rem + var(--wa-safe-top))
+    calc(1rem + var(--wa-safe-right))
+    calc(1rem + var(--wa-safe-bottom))
+    calc(1rem + var(--wa-safe-left));
+  display: grid;
+  place-items: center;
+  background: color-mix(in oklab, var(--bg) 76%, rgba(0, 0, 0, 0.35));
+  backdrop-filter: blur(4px);
+}
+
+.app-network-overlay__card {
+  width: min(100%, 420px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1rem;
+  background: var(--surface);
+  box-shadow: 0 16px 40px color-mix(in oklab, var(--line) 16%, transparent);
+  display: grid;
+  gap: 0.72rem;
+}
+
+.app-network-overlay__icon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: color-mix(in oklab, var(--primary) 86%, #fff);
+  background: color-mix(in oklab, var(--primary) 14%, transparent);
+}
+
+.app-network-overlay__card h2 {
+  margin: 0;
+  font-size: 1.06rem;
+  line-height: 1.3;
+}
+
+.app-network-overlay__card p {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 0.93rem;
+}
+
+.app-network-overlay__spin {
+  animation: waSpin 900ms linear infinite;
+}
+
+@keyframes waSpin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .nav-container {
@@ -1886,7 +1959,7 @@ input {
 
 @media (max-width: 760px) {
   .main-content {
-    padding-bottom: calc(5.6rem + env(safe-area-inset-bottom));
+    padding-bottom: calc(5.6rem + var(--wa-safe-bottom));
   }
 
   .products-grid {
@@ -1952,9 +2025,9 @@ input {
   .mobile-tabbar {
     position: fixed;
     z-index: 72;
-    left: max(0.5rem, env(safe-area-inset-left));
-    right: max(0.5rem, env(safe-area-inset-right));
-    bottom: calc(0.5rem + env(safe-area-inset-bottom));
+    left: max(0.5rem, var(--wa-safe-left));
+    right: max(0.5rem, var(--wa-safe-right));
+    bottom: calc(0.5rem + var(--wa-safe-bottom));
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 0.28rem;
@@ -1974,7 +2047,7 @@ input {
     width: 100%;
     max-width: 100vw;
     height: min(82vh, 680px);
-    padding: 0.86rem 0.82rem calc(0.82rem + env(safe-area-inset-bottom));
+    padding: 0.86rem 0.82rem calc(0.82rem + var(--wa-safe-bottom));
     border-top: 1px solid var(--border);
     border-left: 0;
     border-radius: 18px 18px 0 0;

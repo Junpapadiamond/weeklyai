@@ -98,11 +98,13 @@ def build_featured_product(raw: dict) -> dict:
     product = {
         'name': (raw.get('name') or '').strip(),
         'description': raw.get('description') or '',
+        'description_en': raw.get('description_en') or '',
         'website': (raw.get('website') or '').strip(),
         'logo_url': raw.get('logo_url') or raw.get('logo') or '',
         'categories': coerce_categories(raw),
         'dark_horse_index': dark_index,
         'why_matters': raw.get('why_matters') or '',
+        'why_matters_en': raw.get('why_matters_en') or '',
         'funding_total': raw.get('funding_total') or '',
         'region': resolve_region(raw),
         'country_code': raw.get('country_code') or UNKNOWN_COUNTRY_CODE,
@@ -120,6 +122,7 @@ def build_featured_product(raw: dict) -> dict:
 
     copy_optional_fields(raw, product, [
         'latest_news',
+        'latest_news_en',
         'news_updated_at',
         'criteria_met',
         'hardware_category',

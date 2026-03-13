@@ -976,6 +976,11 @@ if not USE_MODULAR_PROMPTS:
 ✅ GOOD: "Sequoia领投$50M，8个月ARR从0到$10M"
 ❌ BAD: "This is a promising AI product"
 
+## CRITICAL: zh-primary card copy
+- `description/why_matters/latest_news` must be natural Chinese in all regions.
+- Keep key technical terms in English when needed (LLM/API/GPU/Agent).
+- Provide English counterparts in `description_en/why_matters_en/latest_news_en` when possible.
+
 ## CRITICAL: Company Country Verification
 - `region` is search market only, not company nationality.
 - Fill `company_country` using evidence from search results.
@@ -983,7 +988,7 @@ if not USE_MODULAR_PROMPTS:
 
 ## Output (JSON only)
 ```json
-[{{"name": "...", "website": "https://...", "description": "中文描述(>20字, 主字段)", "description_en": "English description (>20 chars)", "category": "coding|image|video|...", "region": "{region}", "company_country": "US|CN|unknown", "company_country_confidence": 0.8, "funding_total": "$50M", "dark_horse_index": 4, "criteria_met": ["funding_signal"], "why_matters": "具体数字+差异化(主字段)", "why_matters_en": "Specific numbers + differentiation", "latest_news_en": "Optional English event summary", "source": "...", "confidence": 0.85}}]
+[{{"name": "...", "website": "https://...", "description": "中文描述(>20字, 主字段；必要技术词可保留英文)", "description_en": "English description (>20 chars)", "category": "coding|image|video|...", "region": "{region}", "company_country": "US|CN|unknown", "company_country_confidence": 0.8, "funding_total": "$50M", "dark_horse_index": 4, "criteria_met": ["funding_signal"], "why_matters": "具体数字+差异化(主字段)", "why_matters_en": "Specific numbers + differentiation", "latest_news": "可选：中文事件摘要", "latest_news_en": "Optional English event summary", "source": "...", "confidence": 0.85}}]
 ```
 
 Quota: Dark Horses: {quota_dark_horses} | Rising Stars: {quota_rising_stars}
@@ -2533,12 +2538,15 @@ def sync_to_featured(product: dict):
         featured_product = {
             'name': product.get('name'),
             'description': product.get('description'),
+            'description_en': product.get('description_en', ''),
             'website': product.get('website'),
             'logo_url': product.get('logo_url') or product.get('logo', ''),
             'categories': [product.get('category', 'other')],
             'dark_horse_index': product.get('dark_horse_index', 2),
             'why_matters': product.get('why_matters', ''),
+            'why_matters_en': product.get('why_matters_en', ''),
             'funding_total': product.get('funding_total', ''),
+            'latest_news': product.get('latest_news', ''),
             'region': product.get('region', UNKNOWN_COUNTRY_DISPLAY),
             'country_code': product.get('country_code', UNKNOWN_COUNTRY_CODE),
             'country_name': product.get('country_name', UNKNOWN_COUNTRY_NAME),
@@ -2550,6 +2558,7 @@ def sync_to_featured(product: dict):
             'source_url': product.get('source_url', ''),
             'source_title': product.get('source_title', ''),
             'website_source': product.get('website_source', ''),
+            'latest_news_en': product.get('latest_news_en', ''),
             'community_verdict': product.get('community_verdict'),
             'extra': product.get('extra', {}) if isinstance(product.get('extra'), dict) else {},
             'discovered_at': product.get('discovered_at', datetime.utcnow().strftime('%Y-%m-%d')),

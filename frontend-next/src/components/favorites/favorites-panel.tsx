@@ -5,6 +5,7 @@ import { Download, Search, Trash2, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { FavoriteButton } from "@/components/favorites/favorite-button";
 import { useSiteLocale } from "@/components/layout/locale-provider";
+import { handleExternalAnchorClick } from "@/lib/external-navigation";
 import {
   clearFavorites,
   exportFavorites,
@@ -349,7 +350,13 @@ export function FavoritesPanel() {
                         {t("详情", "Details")}
                       </Link>
                       {hasWebsite ? (
-                        <a className="link-btn link-btn--card" href={website} target="_blank" rel="noopener noreferrer">
+                        <a
+                          className="link-btn link-btn--card"
+                          href={website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(event) => handleExternalAnchorClick(event, website)}
+                        >
                           {t("官网", "Website")}
                         </a>
                       ) : (
@@ -358,6 +365,7 @@ export function FavoritesPanel() {
                           href={websiteSearchUrl}
                           target="_blank"
                           rel="noopener noreferrer"
+                          onClick={(event) => handleExternalAnchorClick(event, websiteSearchUrl)}
                           title={t("点击跳转 Google 搜索官网", "Open Google search for the official website")}
                         >
                           {t("官网待验证", "Website pending verification")}
@@ -439,7 +447,13 @@ export function FavoritesPanel() {
 
                     <div className="favorites-panel__item-actions">
                       {hasWebsite ? (
-                        <a className="link-btn link-btn--card link-btn--card-primary" href={website} target="_blank" rel="noopener noreferrer">
+                        <a
+                          className="link-btn link-btn--card link-btn--card-primary"
+                          href={website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(event) => handleExternalAnchorClick(event, website)}
+                        >
                           {t("原文", "Source")}
                         </a>
                       ) : null}

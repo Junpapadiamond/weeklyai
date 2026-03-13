@@ -7,6 +7,7 @@ from collections import defaultdict
 import time
 
 mongo = PyMongo()
+IOS_APP_UA_PREFIX = "WeeklyAIApp-iOS/"
 
 # Simple in-memory rate limiter
 class RateLimiter:
@@ -36,6 +37,8 @@ def create_app():
     """创建 Flask 应用"""
     app = Flask(__name__)
     app.config.from_object(Config)
+    if app.logger.level > 20:
+        app.logger.setLevel(20)
 
     # CORS: use explicit allowlist in production when provided.
     cors_origins = app.config.get('CORS_ALLOWED_ORIGINS', [])
@@ -56,6 +59,17 @@ def create_app():
             client_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
             if client_ip:
                 client_ip = client_ip.split(',')[0].strip()
+
+            user_agent = request.headers.get('User-Agent', '')
+            if IOS_APP_UA_PREFIX in user_agent:
+                app.logger.info(
+                    'ios_app_request method=%s path=%s status=incoming ip=%s ua_marker=%s',
+                    request.method,
+                    request.path,
+                    client_ip or '-',
+                    IOS_APP_UA_PREFIX.rstrip('/')
+                )
+
             if not rate_limiter.is_allowed(client_ip):
                 return jsonify({
                     'success': False,

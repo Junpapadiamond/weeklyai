@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useRef, useState } from "react";
+import { isAppShell } from "@/lib/app-shell";
 
 export type ChatMessage = {
   id: string;
@@ -270,6 +271,7 @@ export function useChat({ locale }: UseChatOptions) {
     async (text: string) => {
       const trimmed = text.trim();
       if (!trimmed || isLoading) return;
+      if (isAppShell()) return;
 
       clearTyping();
 

@@ -4,9 +4,12 @@ import { useMemo, useState } from "react";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { FavoriteButton } from "@/components/favorites/favorite-button";
 import { useSiteLocale } from "@/components/layout/locale-provider";
+import { handleExternalAnchorClick } from "@/lib/external-navigation";
 import {
   cleanDescription,
   getFreshnessLabel,
+  getLocalizedBlogDescription,
+  getLocalizedBlogName,
   isValidWebsite,
   normalizeWebsite,
   resolveProductLogoSources,
@@ -125,9 +128,11 @@ function BlogCard({ item }: { item: BlogPost }) {
   const hasWebsite = isValidWebsite(website);
   const sourceLabel = sourceLabels[item.source || ""] || item.source || "Blog";
   const marketLabel = marketLabels[inferMarket(item)] || (locale === "en-US" ? "Global" : "全球");
+  const localizedName = getLocalizedBlogName(item, locale) || item.name;
+  const localizedDescription = getLocalizedBlogDescription(item, locale) || item.description;
   const freshness = getFreshnessLabel({
-    name: item.name,
-    description: item.description,
+    name: localizedName,
+    description: localizedDescription,
     published_at: item.published_at,
   }, new Date(), locale);
   const resolvedLogo = resolveProductLogoSources(item);
@@ -158,18 +163,24 @@ function BlogCard({ item }: { item: BlogPost }) {
               size={44}
             />
             <div className="product-card__identity-copy">
-              <h3 className="product-card__title">{item.name}</h3>
+              <h3 className="product-card__title">{localizedName}</h3>
               <p className="product-card__meta">{publishedLabel}</p>
             </div>
           </div>
         </header>
 
-        <p className="product-card__desc">{cleanDescription(item.description, locale)}</p>
+        <p className="product-card__desc">{cleanDescription(localizedDescription, locale)}</p>
 
         <div className="product-card__actions blog-card__actions">
           <FavoriteButton blog={item} />
           {hasWebsite ? (
-            <a className="link-btn link-btn--card" href={website} target="_blank" rel="noopener noreferrer">
+            <a
+              className="link-btn link-btn--card"
+              href={website}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(event) => handleExternalAnchorClick(event, website)}
+            >
               {t("原文", "Source")}
             </a>
           ) : (

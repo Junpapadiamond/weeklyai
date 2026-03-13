@@ -134,6 +134,13 @@ _DESCRIPTION_PLACEHOLDERS = {
     "持续更新中",
 }
 
+STRICT_ZH_FOR_BLOGS = os.getenv("DATA_VERIFIER_STRICT_ZH_BLOG_FIELDS", "").strip().lower() in {
+    "1",
+    "true",
+    "yes",
+    "on",
+}
+
 
 def now_iso_utc() -> str:
     return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
@@ -147,6 +154,12 @@ def is_unknown_value(value: str) -> bool:
     if not isinstance(value, str):
         return False
     return value.strip().lower() in {"unknown", "n/a", "na", "none"}
+
+
+def contains_han_text(value: str) -> bool:
+    if not isinstance(value, str):
+        return False
+    return any("\u4e00" <= ch <= "\u9fff" for ch in value)
 
 
 def extract_domain(url: str) -> str:
@@ -469,6 +482,19 @@ def validate_item_heuristic(
             )
         )
         # Without name, other messages are much less useful; continue checking anyway.
+    elif is_blogs_stream and not contains_han_text(name):
+        issues.append(
+            Issue(
+                severity="ERROR" if STRICT_ZH_FOR_BLOGS else "WARN",
+                code="name_non_zh",
+                message="blog name should be Chinese-first for zh display",
+                file=file_path,
+                index=index,
+                name=name,
+                field="name",
+                details={"name": name[:120]},
+            )
+        )
 
     website = (item.get("website") or "").strip()
     if not website:
@@ -570,6 +596,59 @@ def validate_item_heuristic(
                 details={"description": description[:120]},
             )
         )
+    elif not contains_han_text(description):
+        issues.append(
+            Issue(
+                severity="ERROR" if (not is_blogs_stream or STRICT_ZH_FOR_BLOGS) else "WARN",
+                code="description_non_zh",
+                message="description should be Chinese-first for zh display",
+                file=file_path,
+                index=index,
+                name=name,
+                field="description",
+                details={"description": description[:120]},
+            )
+        )
+
+    if not is_blogs_stream:
+        why_matters = (item.get("why_matters") or "").strip()
+        if (
+            why_matters
+            and not is_unknown_value(why_matters)
+            and not description_has_placeholders(why_matters)
+            and not contains_han_text(why_matters)
+        ):
+            issues.append(
+                Issue(
+                    severity="ERROR",
+                    code="why_matters_non_zh",
+                    message="why_matters should be Chinese-first for zh display",
+                    file=file_path,
+                    index=index,
+                    name=name,
+                    field="why_matters",
+                    details={"why_matters": why_matters[:120]},
+                )
+            )
+        latest_news = (item.get("latest_news") or "").strip()
+        if (
+            latest_news
+            and not is_unknown_value(latest_news)
+            and not description_has_placeholders(latest_news)
+            and not contains_han_text(latest_news)
+        ):
+            issues.append(
+                Issue(
+                    severity="ERROR",
+                    code="latest_news_non_zh",
+                    message="latest_news should be Chinese-first for zh display",
+                    file=file_path,
+                    index=index,
+                    name=name,
+                    field="latest_news",
+                    details={"latest_news": latest_news[:120]},
+                )
+            )
 
     logo_url = (item.get("logo_url") or item.get("logo") or "").strip()
     if logo_url:

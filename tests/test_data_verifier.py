@@ -116,6 +116,52 @@ class TestValidationRules(unittest.TestCase):
         self.assertEqual(mismatch[0].severity, "WARN")
         self.assertEqual(mismatch[0].suggestion, "🇯🇵🇰🇷")
 
+    def test_product_non_zh_primary_fields_are_errors(self) -> None:
+        from utils.data_verifier import validate_item_heuristic
+
+        item = {
+            "name": "AgentMail",
+            "website": "https://agentmail.to",
+            "description": "Email infrastructure platform for AI agents.",
+            "why_matters": "Raised $6M seed led by General Catalyst.",
+            "latest_news": "2026-03 closed seed financing.",
+            "region": "🇺🇸",
+        }
+        issues = validate_item_heuristic(item, file_path="products_featured.json", index=0, check_network="none")
+        by_code = {i.code: i for i in issues}
+        self.assertEqual(by_code["description_non_zh"].severity, "ERROR")
+        self.assertEqual(by_code["why_matters_non_zh"].severity, "ERROR")
+        self.assertEqual(by_code["latest_news_non_zh"].severity, "ERROR")
+
+    def test_blog_non_zh_primary_fields_are_warn_by_default(self) -> None:
+        from utils.data_verifier import validate_item_heuristic
+
+        item = {
+            "name": "Kotlin creator's new language",
+            "website": "https://example.org/post",
+            "description": "A new formal language to talk to LLMs.",
+            "region": "🌍",
+        }
+        issues = validate_item_heuristic(item, file_path="blogs_news.json", index=0, check_network="none")
+        by_code = {i.code: i for i in issues}
+        self.assertEqual(by_code["name_non_zh"].severity, "WARN")
+        self.assertEqual(by_code["description_non_zh"].severity, "WARN")
+
+    def test_product_unknown_latest_news_not_flagged_as_non_zh(self) -> None:
+        from utils.data_verifier import validate_item_heuristic
+
+        item = {
+            "name": "Sample Product",
+            "website": "https://example.com",
+            "description": "这是一个用于企业自动化流程的中文产品说明，超过二十个字符。",
+            "why_matters": "帮助团队把流程执行时间缩短 35%，并提升准确率。",
+            "latest_news": "unknown",
+            "region": "🇺🇸",
+        }
+        issues = validate_item_heuristic(item, file_path="products_featured.json", index=0, check_network="none")
+        codes = {i.code for i in issues}
+        self.assertNotIn("latest_news_non_zh", codes)
+
 
 class TestReportRendering(unittest.TestCase):
     @classmethod
@@ -148,4 +194,3 @@ class TestReportRendering(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

@@ -7,6 +7,8 @@ import {
   formatCategories,
   formatRelativeDate,
   getDirectionLabel,
+  getLocalizedBlogDescription,
+  getLocalizedBlogName,
   getFreshnessLabel,
   getLocalizedCountryName,
   getLocalizedProductDescription,
@@ -318,6 +320,46 @@ describe("product-utils", () => {
     expect(getLocalizedProductDescription(product, "en-US")).toBe("");
     expect(getLocalizedProductWhyMatters(product, "en-US")).toBe("");
     expect(getLocalizedProductLatestNews(product, "en-US")).toBe("");
+  });
+
+  it("localizes blog text fields by locale with en fallback rules", () => {
+    expect(
+      getLocalizedBlogName(
+        {
+          name: "腾讯再推“养虾”新措施",
+          name_en: "Tencent launches localized SkillHub",
+        },
+        "zh-CN"
+      )
+    ).toBe("腾讯再推“养虾”新措施");
+    expect(
+      getLocalizedBlogDescription(
+        {
+          description: "据界面新闻，腾讯发布中国本土优化技能社区。",
+          description_en: "Tencent launched a localized AI skills hub.",
+        },
+        "en-US"
+      )
+    ).toBe("Tencent launched a localized AI skills hub.");
+  });
+
+  it("falls back to primary blog fields when *_en is missing under en-US", () => {
+    expect(
+      getLocalizedBlogName(
+        {
+          name: "中国 AI 新动态",
+        },
+        "en-US"
+      )
+    ).toBe("中国 AI 新动态");
+    expect(
+      getLocalizedBlogDescription(
+        {
+          description: "中文主字段描述",
+        },
+        "en-US"
+      )
+    ).toBe("中文主字段描述");
   });
 
   it("applies curated zh-CN overrides for mixed-language card copy", () => {

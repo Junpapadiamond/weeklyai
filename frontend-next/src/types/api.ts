@@ -51,7 +51,9 @@ export type Product = {
 
 export type BlogPost = {
   name: string;
+  name_en?: string;
   description: string;
+  description_en?: string;
   website?: string;
   logo_url?: string;
   logo?: string;

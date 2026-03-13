@@ -11,6 +11,7 @@ import { SmartLogo } from "@/components/common/smart-logo";
 import { FavoriteButton } from "@/components/favorites/favorite-button";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import { countFavorites, openFavoritesPanel, subscribeFavorites } from "@/lib/favorites";
+import { handleExternalAnchorClick } from "@/lib/external-navigation";
 import {
   cleanDescription,
   collectDirectionOptions,
@@ -132,7 +133,13 @@ function HomeProductCard({ product, highlighted = false, rank, favoritable = fal
               {t("详情", "Details")}
             </Link>
             {hasWebsite ? (
-              <a className="link-btn link-btn--card" href={website} target="_blank" rel="noopener noreferrer">
+              <a
+                className="link-btn link-btn--card"
+                href={website}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(event) => handleExternalAnchorClick(event, website)}
+              >
                 {t("官网", "Website")}
               </a>
             ) : (
@@ -141,6 +148,7 @@ function HomeProductCard({ product, highlighted = false, rank, favoritable = fal
                 href={websiteSearchUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={(event) => handleExternalAnchorClick(event, websiteSearchUrl)}
                 title={t("点击跳转 Google 搜索官网", "Open Google search for the official website")}
               >
                 {t("官网待验证", "Website pending verification")}

@@ -1,7 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 import { JetBrains_Mono, Noto_Sans_SC, Plus_Jakarta_Sans } from "next/font/google";
 import { LocaleProvider } from "@/components/layout/locale-provider";
 import { PageShell } from "@/components/layout/page-shell";
+import { isAppShellUserAgent } from "@/lib/app-shell";
 import { getRequestLocale } from "@/lib/locale-server";
 import "./globals.css";
 import "../styles/tokens.css";
@@ -38,10 +40,19 @@ export const metadata: Metadata = {
   description: "Global AI product discovery and inspiration platform",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const locale = await getRequestLocale();
+  const requestHeaders = await headers();
+  const appShell = isAppShellUserAgent(requestHeaders.get("user-agent"));
+
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning data-app-shell={appShell ? "ios" : undefined}>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -70,7 +81,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       </head>
       <body className={`${displayFont.variable} ${bodyLatinFont.variable} ${bodyFont.variable} ${monoFont.variable}`}>
         <LocaleProvider initialLocale={locale}>
-          <PageShell>{children}</PageShell>
+          <PageShell isAppShell={appShell}>{children}</PageShell>
         </LocaleProvider>
       </body>
     </html>

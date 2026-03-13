@@ -107,7 +107,15 @@ else
     echo "[$(date +%H:%M:%S)] rss_to_products.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
 fi
 
-# 3.5 Backfill English fields before Mongo sync
+# 3.4 Normalize zh primary fields (products + blogs) before EN backfill
+echo "[$(date +%H:%M:%S)] Running backfill_primary_zh_fields.py..." >> "$LOG_DIR/daily_update.log"
+if $PYTHON_BIN crawler/tools/backfill_primary_zh_fields.py --targets products,blogs --provider auto --batch-size 8 --residual-limit 8 >> "$LOG_DIR/daily_update.log" 2>&1; then
+    echo "[$(date +%H:%M:%S)] backfill_primary_zh_fields.py completed successfully" >> "$LOG_DIR/daily_update.log"
+else
+    echo "[$(date +%H:%M:%S)] backfill_primary_zh_fields.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
+fi
+
+# 3.5 Backfill English fields after zh normalization
 echo "[$(date +%H:%M:%S)] Running backfill_product_en_fields.py..." >> "$LOG_DIR/daily_update.log"
 if $PYTHON_BIN crawler/tools/backfill_product_en_fields.py --provider auto --only-missing --batch-size 8 >> "$LOG_DIR/daily_update.log" 2>&1; then
     echo "[$(date +%H:%M:%S)] backfill_product_en_fields.py completed successfully" >> "$LOG_DIR/daily_update.log"

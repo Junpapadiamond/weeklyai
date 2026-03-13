@@ -1,0 +1,24 @@
+{
+  "name": "mobile-ios",
+  "version": "0.1.0",
+  "description": "WeeklyAI iOS shell powered by Capacitor",
+  "main": "index.js",
+  "scripts": {
+    "ios:add": "npx cap add ios",
+    "ios:copy": "npx cap copy ios",
+    "ios:sync": "npx cap sync ios",
+    "ios:open": "npx cap open ios"
+  },
+  "keywords": [],
+  "author": "WeeklyAI",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "@capacitor/cli": "^8.2.0",
+    "@capacitor/core": "^8.2.0",
+    "@capacitor/ios": "^8.2.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

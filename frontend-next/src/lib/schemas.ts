@@ -59,7 +59,9 @@ export const ProductSchema = z
 
 export const BlogSchema = z.object({
   name: z.string().min(1),
+  name_en: z.string().optional(),
   description: z.string().default(""),
+  description_en: z.string().optional(),
   website: z.string().optional(),
   logo_url: z.string().optional(),
   logo: z.string().optional(),
