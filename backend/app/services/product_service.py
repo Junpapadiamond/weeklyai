@@ -59,14 +59,20 @@ class ProductService:
         if not selected:
             return selected
 
+        cn_recent_all = [b for b in sorting.sort_by_recency(blogs) if filters.infer_blog_market(b) == "cn"]
+        if not cn_recent_all:
+            return selected
+
+        # 先刷新已有 CN 槽位为最新 CN，避免 CN 视图首屏停留在旧条目。
+        cn_slots = [idx for idx, blog in enumerate(selected) if filters.infer_blog_market(blog) == "cn"]
+        refresh_count = min(len(cn_slots), len(cn_recent_all))
+        for slot_idx in range(refresh_count):
+            selected[cn_slots[slot_idx]] = cn_recent_all[slot_idx]
+
         cn_in_selected = [b for b in selected if filters.infer_blog_market(b) == "cn"]
         # 仅保证基础可见度，不改变 global 主视图头部排序体验
         min_cn = min(limit, 12)
         if len(cn_in_selected) >= min_cn:
-            return selected
-
-        cn_recent_all = [b for b in sorting.sort_by_recency(blogs) if filters.infer_blog_market(b) == "cn"]
-        if not cn_recent_all:
             return selected
 
         selected_keys = {ProductService._blog_identity(b) for b in selected}
