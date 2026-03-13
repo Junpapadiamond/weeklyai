@@ -141,7 +141,7 @@ def classify_product(product: Dict[str, Any]) -> str:
         return 'blog'
 
     # 3.5 Social signals → always blog
-    if source in ('youtube', 'x'):
+    if source in ('youtube', 'x', 'cn_news', 'cn_news_glm'):
         return 'blog'
 
     # 4. Exhibition items

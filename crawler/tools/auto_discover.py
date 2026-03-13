@@ -37,6 +37,12 @@ except ImportError:
     USE_NEW_DEDUP = False
     print("⚠️  新去重模块未加载，使用旧逻辑")
 
+try:
+    from utils.website_resolver import extract_official_website_from_source
+    HAS_WEBSITE_RESOLVER = True
+except ImportError:
+    HAS_WEBSITE_RESOLVER = False
+
 # 加载 .env 文件（如果存在）
 try:
     from dotenv import load_dotenv
@@ -385,8 +391,11 @@ MAX_ATTEMPTS = 3  # 最大搜索轮数
 
 # GLM 并发/节流配置（中国区）
 GLM_KEYWORD_DELAY = float(os.environ.get('GLM_KEYWORD_DELAY', '3'))  # 每个关键词之间的额外等待秒数
-MAX_KEYWORDS_CN = int(os.environ.get('AUTO_DISCOVER_MAX_KEYWORDS_CN', '4'))  # 0=不限制
+MAX_KEYWORDS_CN = int(os.environ.get('AUTO_DISCOVER_MAX_KEYWORDS_CN', '6'))  # 0=不限制
 MAX_KEYWORDS_DEFAULT = int(os.environ.get('AUTO_DISCOVER_MAX_KEYWORDS', '0'))  # 0=不限制
+AUTO_DISCOVER_CN_BYPASS_ANALYZE_GATE = os.environ.get('AUTO_DISCOVER_CN_BYPASS_ANALYZE_GATE', 'true').lower() == 'true'
+AUTO_DISCOVER_WEBSITE_RECOVERY = os.environ.get('AUTO_DISCOVER_WEBSITE_RECOVERY', 'true').lower() == 'true'
+AUTO_DISCOVER_WEBSITE_RECOVERY_TIMEOUT = max(3, int(os.environ.get('AUTO_DISCOVER_WEBSITE_RECOVERY_TIMEOUT', '8')))
 
 # 成本优化配置
 AUTO_DISCOVER_BUDGET_MODE = os.environ.get('AUTO_DISCOVER_BUDGET_MODE', 'adaptive').strip().lower()
@@ -704,6 +713,16 @@ REGION_CONFIG = {
     },
 }
 
+CN_PRIORITY_KEYWORDS = [
+    "site:36kr.com AI融资",
+    "site:jiqizhixin.com 融资 AI",
+    "site:tmtpost.com 人工智能 融资",
+    "AI融资 2026",
+    "人工智能创业公司",
+    "AI创业公司 A轮 B轮",
+    "AIGC融资",
+]
+
 # ============================================
 # 项目路径设置 (必须在导入 prompts 之前)
 # ============================================
@@ -724,6 +743,19 @@ except Exception as e:
 
 
 def apply_keyword_limit(region_key: str, keywords: List[str]) -> List[str]:
+    if region_key == "cn" and keywords:
+        ordered: List[str] = []
+        seen = set()
+        for kw in CN_PRIORITY_KEYWORDS:
+            if kw in keywords and kw not in seen:
+                ordered.append(kw)
+                seen.add(kw)
+        for kw in keywords:
+            if kw not in seen:
+                ordered.append(kw)
+                seen.add(kw)
+        keywords = ordered
+
     keyword_limit = 0
     if region_key == "cn" and MAX_KEYWORDS_CN > 0:
         keyword_limit = MAX_KEYWORDS_CN
@@ -2149,6 +2181,43 @@ def attach_source_url(product: dict, search_results: list, min_score: int = 4) -
             product['source_title'] = title
 
 
+def try_recover_unknown_website(product: dict, *, aggressive: bool = False) -> bool:
+    """Try to recover official website from source article when website is unknown."""
+    if not AUTO_DISCOVER_WEBSITE_RECOVERY or not HAS_WEBSITE_RESOLVER:
+        return False
+
+    website = str(product.get("website", "") or "").strip().lower()
+    if website and website != "unknown":
+        return False
+
+    source_url = str(product.get("source_url", "") or "").strip()
+    if not source_url.startswith(("http://", "https://")):
+        return False
+
+    try:
+        recovered = extract_official_website_from_source(
+            source_url=source_url,
+            product_name=str(product.get("name", "") or "").strip(),
+            timeout=AUTO_DISCOVER_WEBSITE_RECOVERY_TIMEOUT,
+            aggressive=aggressive,
+        )
+    except Exception:
+        return False
+
+    recovered = str(recovered or "").strip()
+    if not recovered.startswith(("http://", "https://")):
+        return False
+
+    product["website"] = recovered
+    extra = product.get("extra")
+    if not isinstance(extra, dict):
+        extra = {}
+    extra["website_recovered_from_source"] = True
+    extra["website_recovered_url"] = recovered
+    product["extra"] = extra
+    return True
+
+
 def fetch_with_provider(source_config: dict, limit: int = 10) -> list:
     """
     使用 Provider 路由分析来源页面内容
@@ -2656,7 +2725,10 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
         keyword_dark_horses = 0
         current_provider = get_provider_for_region(region_key)
 
-        if AUTO_DISCOVER_ENABLE_ANALYZE_GATE and not bypass_gate:
+        gate_disabled_for_cn = (
+            region_key == "cn" and AUTO_DISCOVER_CN_BYPASS_ANALYZE_GATE
+        )
+        if AUTO_DISCOVER_ENABLE_ANALYZE_GATE and not bypass_gate and not gate_disabled_for_cn:
             analyze_ok, analyze_reason = should_analyze_search_results(search_results, keyword)
             if not analyze_ok:
                 deferred_keywords.append((keyword, keyword_type, search_results, analyze_reason))
@@ -2692,7 +2764,13 @@ def discover_by_region(region_key: str, dry_run: bool = False, product_type: str
                 print(f"    ⏭️ Skip duplicate: {dup_reason}")
                 continue
 
-            attach_source_url(product, search_results)
+            attach_source_url(
+                product,
+                search_results,
+                min_score=1 if region_key == "cn" else 4,
+            )
+            if try_recover_unknown_website(product, aggressive=(region_key == "cn")):
+                print(f"    🔗 Recovered website: {product.get('website', '')}")
 
             if current_provider == "glm":
                 xref_valid, xref_reason = validate_against_search_results(
@@ -3013,7 +3091,10 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
             )
             return 0
 
-        if AUTO_DISCOVER_ENABLE_ANALYZE_GATE and not bypass_gate:
+        gate_disabled_for_cn = (
+            region_key == "cn" and AUTO_DISCOVER_CN_BYPASS_ANALYZE_GATE
+        )
+        if AUTO_DISCOVER_ENABLE_ANALYZE_GATE and not bypass_gate and not gate_disabled_for_cn:
             analyze_ok, analyze_reason = should_analyze_search_results(search_results, keyword)
             if not analyze_ok:
                 deferred_queue.append((keyword, keyword_type, search_results, analyze_reason))
@@ -3067,7 +3148,13 @@ def discover_all_regions(dry_run: bool = False, product_type: str = "mixed") -> 
                 print(f"    ⏭️ Skip: {dup_reason}")
                 continue
 
-            attach_source_url(product, search_results)
+            attach_source_url(
+                product,
+                search_results,
+                min_score=1 if region_key == "cn" else 4,
+            )
+            if try_recover_unknown_website(product, aggressive=(region_key == "cn")):
+                print(f"    🔗 Recovered website: {product.get('website', '')}")
 
             if current_provider == "glm":
                 xref_valid, xref_reason = validate_against_search_results(product, search_results)

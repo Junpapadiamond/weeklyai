@@ -16,10 +16,20 @@ import sys
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple
 
+try:
+    from dotenv import load_dotenv
+except Exception:
+    load_dotenv = None
+
 
 TOOLS_DIR = os.path.dirname(os.path.abspath(__file__))
 CRAWLER_DIR = os.path.dirname(TOOLS_DIR)
 sys.path.insert(0, CRAWLER_DIR)
+
+if load_dotenv:
+    REPO_DIR = os.path.dirname(CRAWLER_DIR)
+    load_dotenv(os.path.join(REPO_DIR, ".env"))
+    load_dotenv(os.path.join(CRAWLER_DIR, ".env"))
 
 from tools.cn_news_only import (  # noqa: E402
     _dedupe,
@@ -36,6 +46,8 @@ from utils.glm_client import glm_search, is_glm_available  # noqa: E402
 
 CN_GLM_SOURCE = "cn_news_glm"
 DEFAULT_CN_GLM_QUERIES = [
+    "site:36kr.com AI 融资 创业 公司",
+    "site:jiqizhixin.com AI 公司 发布 融资",
     "中国 AI 创业 公司 融资 发布 最新 动态",
     "中国 大模型 智能体 产品 发布 上线",
     "中国 AI 芯片 机器人 公司 新进展",

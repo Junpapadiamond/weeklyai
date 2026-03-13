@@ -142,5 +142,90 @@
       }
     },
     "updated_at": "2026-02-28T07:55:53Z"
+  },
+  "2026-03-11": {
+    "providers": {
+      "glm": {
+        "search_requests": 4,
+        "chat_requests": 2,
+        "input_tokens": 4979,
+        "output_tokens": 831
+      }
+    },
+    "scripts": {
+      "auto_discover.py": {
+        "glm": {
+          "search_requests": 4,
+          "chat_requests": 2,
+          "input_tokens": 4979,
+          "output_tokens": 831
+        }
+      }
+    },
+    "updated_at": "2026-03-11T19:49:54Z"
+  },
+  "2026-03-12": {
+    "providers": {
+      "glm": {
+        "search_requests": 4,
+        "chat_requests": 2,
+        "input_tokens": 4535,
+        "output_tokens": 735
+      }
+    },
+    "scripts": {
+      "auto_discover.py": {
+        "glm": {
+          "search_requests": 4,
+          "chat_requests": 2,
+          "input_tokens": 4535,
+          "output_tokens": 735
+        }
+      }
+    },
+    "updated_at": "2026-03-12T19:41:54Z"
+  },
+  "2026-03-13": {
+    "providers": {
+      "glm": {
+        "search_requests": 27,
+        "chat_requests": 11,
+        "input_tokens": 24249,
+        "output_tokens": 288
+      },
+      "perplexity": {
+        "search_requests": 13,
+        "chat_requests": 10,
+        "input_tokens": 9347,
+        "output_tokens": 3435
+      }
+    },
+    "scripts": {
+      "auto_discover.py": {
+        "glm": {
+          "search_requests": 17,
+          "chat_requests": 11,
+          "input_tokens": 24249,
+          "output_tokens": 288
+        }
+      },
+      "cn_news_glm.py": {
+        "glm": {
+          "search_requests": 10,
+          "chat_requests": 0,
+          "input_tokens": 0,
+          "output_tokens": 0
+        }
+      },
+      "rss_to_products.py": {
+        "perplexity": {
+          "search_requests": 13,
+          "chat_requests": 10,
+          "input_tokens": 9347,
+          "output_tokens": 3435
+        }
+      }
+    },
+    "updated_at": "2026-03-13T03:47:53Z"
   }
 }

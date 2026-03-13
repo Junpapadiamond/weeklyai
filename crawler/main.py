@@ -1071,11 +1071,89 @@ class CrawlerManager:
         blogs_list = [b for b in blogs_list if _item_year_ok(b)]
         dropped = before_count - len(blogs_list)
 
-        # Sort blogs by score
-        blogs_list.sort(key=lambda x: x.get('final_score', x.get('top_score', 0)), reverse=True)
+        def _blog_sort_key(item: Dict[str, Any]):
+            score = item.get("final_score", item.get("top_score", 0)) or 0
+            extra = item.get("extra") or {}
+            if not isinstance(extra, dict):
+                extra = {}
+            published_at = (
+                item.get("published_at")
+                or extra.get("published_at")
+                or item.get("discovered_at")
+                or item.get("first_seen")
+            )
+            dt = self._parse_datetime(published_at)
+            ts = dt.timestamp() if dt else 0
+            return (score, ts)
+
+        # Sort blogs by score/recency
+        blogs_list.sort(key=_blog_sort_key, reverse=True)
 
         # Only save blogs_news.json (NEVER touch products_featured.json)
         blogs_file = os.path.join(output_dir, 'blogs_news.json')
+
+        existing_same_year: List[Dict[str, Any]] = []
+        if os.path.exists(blogs_file):
+            try:
+                with open(blogs_file, 'r', encoding='utf-8') as f:
+                    existing_blogs = json.load(f)
+                if isinstance(existing_blogs, list):
+                    existing_same_year = [
+                        b for b in existing_blogs
+                        if isinstance(b, dict) and _item_year_ok(b)
+                    ]
+            except Exception:
+                existing_same_year = []
+
+        stability_min_count = max(0, int(os.getenv("BLOG_STABILITY_MIN_COUNT", "60")))
+        stability_drop_ratio = float(os.getenv("BLOG_STABILITY_DROP_RATIO", "0.55"))
+        stability_max_items = max(50, int(os.getenv("BLOG_STABILITY_MAX_ITEMS", "260")))
+
+        def _blog_key(item: Dict[str, Any]) -> str:
+            website = str(item.get("website") or "").strip().lower()
+            source = str(item.get("source") or "").strip().lower()
+            name = str(item.get("name") or "").strip().lower()
+            if website:
+                return f"{source}|w:{website}"
+            return f"{source}|n:{name}"
+
+        def _dedupe_blogs(items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+            deduped: List[Dict[str, Any]] = []
+            seen = set()
+            for item in items:
+                if not isinstance(item, dict):
+                    continue
+                key = _blog_key(item)
+                if key in seen:
+                    continue
+                seen.add(key)
+                deduped.append(item)
+            return deduped
+
+        use_stability_merge = False
+        stability_reason = ""
+        if not blogs_list and existing_same_year:
+            use_stability_merge = True
+            stability_reason = f"本次抓取为空，回退到已有 {len(existing_same_year)} 条"
+        elif existing_same_year:
+            existing_count = len(existing_same_year)
+            drop_threshold = int(existing_count * max(0.0, min(1.0, stability_drop_ratio)))
+            if stability_min_count and len(blogs_list) < stability_min_count:
+                use_stability_merge = True
+                stability_reason = (
+                    f"本次仅 {len(blogs_list)} 条，低于最小稳定阈值 {stability_min_count}"
+                )
+            elif drop_threshold > 0 and len(blogs_list) < drop_threshold:
+                use_stability_merge = True
+                stability_reason = (
+                    f"本次仅 {len(blogs_list)} 条，低于历史回落阈值 {drop_threshold}"
+                )
+
+        if use_stability_merge:
+            merged = _dedupe_blogs(blogs_list + existing_same_year)
+            merged.sort(key=_blog_sort_key, reverse=True)
+            blogs_list = merged[:stability_max_items]
+            print(f"  ⚠ 新闻稳定策略生效: {stability_reason}，合并后保留 {len(blogs_list)} 条")
 
         with open(blogs_file, 'w', encoding='utf-8') as f:
             json.dump(blogs_list, f, ensure_ascii=False, indent=2)

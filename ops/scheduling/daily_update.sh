@@ -83,9 +83,25 @@ else
     echo "[$(date +%H:%M:%S)] main.py --news-only failed with exit code $?" >> "$LOG_DIR/daily_update.log"
 fi
 
-# 3. Social signals → candidates / enrich featured
-echo "[$(date +%H:%M:%S)] Running rss_to_products.py (sources=youtube,x)..." >> "$LOG_DIR/daily_update.log"
-if $PYTHON_BIN crawler/tools/rss_to_products.py --input crawler/data/blogs_news.json --sources youtube,x --enrich-featured >> "$LOG_DIR/daily_update.log" 2>&1; then
+# 2.5 CN-native news补偿（RSS）
+echo "[$(date +%H:%M:%S)] Running cn_news_only.py..." >> "$LOG_DIR/daily_update.log"
+if $PYTHON_BIN crawler/tools/cn_news_only.py >> "$LOG_DIR/daily_update.log" 2>&1; then
+    echo "[$(date +%H:%M:%S)] cn_news_only.py completed successfully" >> "$LOG_DIR/daily_update.log"
+else
+    echo "[$(date +%H:%M:%S)] cn_news_only.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
+fi
+
+# 2.6 CN-native news补偿（GLM）
+echo "[$(date +%H:%M:%S)] Running cn_news_glm.py..." >> "$LOG_DIR/daily_update.log"
+if $PYTHON_BIN crawler/tools/cn_news_glm.py >> "$LOG_DIR/daily_update.log" 2>&1; then
+    echo "[$(date +%H:%M:%S)] cn_news_glm.py completed successfully" >> "$LOG_DIR/daily_update.log"
+else
+    echo "[$(date +%H:%M:%S)] cn_news_glm.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
+fi
+
+# 3. Social + CN signals → candidates / enrich featured
+echo "[$(date +%H:%M:%S)] Running rss_to_products.py (sources=youtube,x,cn_news,cn_news_glm)..." >> "$LOG_DIR/daily_update.log"
+if $PYTHON_BIN crawler/tools/rss_to_products.py --input crawler/data/blogs_news.json --sources youtube,x,cn_news,cn_news_glm --enrich-featured >> "$LOG_DIR/daily_update.log" 2>&1; then
     echo "[$(date +%H:%M:%S)] rss_to_products.py completed successfully" >> "$LOG_DIR/daily_update.log"
 else
     echo "[$(date +%H:%M:%S)] rss_to_products.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
