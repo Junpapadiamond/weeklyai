@@ -57,7 +57,6 @@ describe("product-utils", () => {
       "https://example.com/favicon.ico",
       "https://www.example.com/apple-touch-icon.png",
       "https://www.example.com/favicon.ico",
-      "https://logo.clearbit.com/example.com",
     ]);
   });
 
@@ -75,7 +74,6 @@ describe("product-utils", () => {
       "https://example.com/favicon.ico",
       "https://www.example.com/apple-touch-icon.png",
       "https://www.example.com/favicon.ico",
-      "https://logo.clearbit.com/example.com",
     ]);
 
     const fallbackOnly = getLogoCandidates({
@@ -129,7 +127,7 @@ describe("product-utils", () => {
         logo_url: "",
       })
     ).toEqual({
-      logoUrl: "https://science.xyz/images/meta/apple-touch-icon.png",
+      logoUrl: "https://science.xyz/favicon.svg",
       secondaryLogoUrl: "",
     });
 

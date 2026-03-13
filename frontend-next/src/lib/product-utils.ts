@@ -761,10 +761,7 @@ export function getLogoFallbacks(
     );
   }
 
-  return [
-    ...directIcons,
-    `https://logo.clearbit.com/${host}`,
-  ];
+  return directIcons;
 }
 
 type LogoCandidatesInput = {
@@ -823,35 +820,28 @@ function isTrustedLogoSource(candidate: string, websiteHost: string): boolean {
 export function getLogoCandidates(input: LogoCandidatesInput): string[] {
   const result: string[] = [];
   const seen = new Set<string>();
-  const deferredProviderLogos: string[] = [];
   const websiteHost = resolveLogoHost(input.website);
 
   const pushIfValid = (
     value: string | undefined | null,
-    opts?: { deferLowPriority?: boolean; trustExplicit?: boolean }
+    opts?: { trustExplicit?: boolean }
   ) => {
     const normalized = normalizeLogoSource(value);
     if (!isValidLogoSource(normalized)) return;
     if (isGeneratedFaviconProviderLogo(normalized)) return;
     if (isGenericPlaceholderLogo(normalized)) return;
+    if (isLowPriorityProviderLogo(normalized)) return;
     if (!opts?.trustExplicit && !isTrustedLogoSource(normalized, websiteHost)) return;
     if (seen.has(normalized)) return;
-    if (opts?.deferLowPriority && isLowPriorityProviderLogo(normalized)) {
-      deferredProviderLogos.push(normalized);
-      return;
-    }
     seen.add(normalized);
     result.push(normalized);
   };
 
-  pushIfValid(input.logoUrl, { deferLowPriority: true, trustExplicit: input.trustPrimaryLogo });
-  pushIfValid(input.secondaryLogoUrl, { deferLowPriority: true, trustExplicit: input.trustPrimaryLogo });
+  pushIfValid(input.logoUrl, { trustExplicit: input.trustPrimaryLogo });
+  pushIfValid(input.secondaryLogoUrl, { trustExplicit: input.trustPrimaryLogo });
   const fallbacks = getLogoFallbacks(input.website);
   for (const fallback of fallbacks) {
-    pushIfValid(fallback, { deferLowPriority: true });
-  }
-  for (const candidate of deferredProviderLogos) {
-    pushIfValid(candidate);
+    pushIfValid(fallback);
   }
 
   return result;

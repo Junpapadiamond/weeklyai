@@ -12,20 +12,26 @@
 import json
 import os
 import re
-import sys
-import time
 import requests
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urljoin
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # 配置
 TIMEOUT = 5
 MAX_WORKERS = 10
+USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
 
-LOGO_SOURCES = {
-    "clearbit": "https://logo.clearbit.com/{domain}",
+LOW_CONFIDENCE_SOURCES = {
+    "bing",
+    "google_favicon",
+    "google",
+    "duckduckgo",
+    "iconhorse",
+    "icon_horse",
+    "faviconkit",
+    "yandex",
+    "clearbit",
 }
-LOW_CONFIDENCE_SOURCES = {"bing", "google_favicon", "google", "duckduckgo", "iconhorse", "icon_horse", "faviconkit", "yandex"}
 LOW_CONFIDENCE_HOST_MARKERS = (
     "favicon.bing.com",
     "google.com/s2/favicons",
@@ -33,6 +39,9 @@ LOW_CONFIDENCE_HOST_MARKERS = (
     "icon.horse",
     "favicon.yandex.net",
     "api.faviconkit.com",
+    "logo.clearbit.com",
+    "/logos/custom/default-ai.svg",
+    "logo-default.png",
 )
 
 
@@ -59,87 +68,152 @@ def extract_domain(url: str) -> str:
 
 
 def check_url_exists(url: str, timeout: int = TIMEOUT) -> bool:
-    """检查 URL 是否可访问（部分站点不支持 HEAD）"""
-    headers = {"User-Agent": "Mozilla/5.0"}
+    """检查 URL 是否可访问且是图片类型。"""
+    headers = {"User-Agent": USER_AGENT}
+
+    def _is_image_response(resp: requests.Response) -> bool:
+        if not (200 <= resp.status_code < 400):
+            return False
+        content_type = str(resp.headers.get("content-type") or "").lower()
+        if not content_type:
+            return False
+        return (
+            content_type.startswith("image/")
+            or "image/svg+xml" in content_type
+            or "x-icon" in content_type
+            or "vnd.microsoft.icon" in content_type
+        )
+
     try:
         response = requests.head(
             url,
             timeout=timeout,
             allow_redirects=True,
-            headers=headers
+            headers=headers,
         )
-        if 200 <= response.status_code < 400:
+        if _is_image_response(response):
             return True
     except Exception:
         pass
+
     try:
         response = requests.get(
             url,
             timeout=timeout,
             allow_redirects=True,
             headers=headers,
-            stream=True
+            stream=True,
         )
-        return 200 <= response.status_code < 400
+        return _is_image_response(response)
     except Exception:
         return False
 
 
-def _absolute_url(base: str, href: str) -> str:
-    if href.startswith("//"):
-        return f"https:{href}"
-    if href.startswith("http://") or href.startswith("https://"):
-        return href
-    if href.startswith("/"):
-        return f"https://{base}{href}"
-    return f"https://{base}/{href}"
+def _extract_icon_size(tag: str) -> int:
+    match = re.search(r'sizes=["\']([^"\']+)["\']', tag, re.IGNORECASE)
+    if not match:
+        return 0
+    size_text = match.group(1).lower()
+    if "any" in size_text:
+        return 1024
+    values = re.findall(r"(\d+)\s*x\s*(\d+)", size_text)
+    if not values:
+        return 0
+    return max(int(w) * int(h) for w, h in values)
 
 
-def _extract_icon_from_html(domain: str) -> str:
-    """从主页 HTML 提取 favicon/icon 链接"""
-    try:
-        resp = requests.get(
-            f"https://{domain}",
-            timeout=TIMEOUT,
-            allow_redirects=True,
-            headers={"User-Agent": "Mozilla/5.0"}
-        )
-        if not (200 <= resp.status_code < 400):
-            return ""
-        html = resp.text
-        # 优先 apple-touch-icon，其次 icon/shortcut icon
-        patterns = [
-            r'rel=["\']apple-touch-icon["\'][^>]*href=["\']([^"\']+)["\']',
-            r'rel=["\']icon["\'][^>]*href=["\']([^"\']+)["\']',
-            r'rel=["\']shortcut icon["\'][^>]*href=["\']([^"\']+)["\']',
-        ]
-        for pat in patterns:
-            m = re.search(pat, html, re.IGNORECASE)
-            if m:
-                return _absolute_url(domain, m.group(1))
-    except Exception:
-        return ""
-    return ""
+def _extract_icon_candidates_from_html(base_url: str, html: str) -> list[tuple[int, str]]:
+    candidates: list[tuple[int, str]] = []
+    seen: set[str] = set()
+
+    for tag in re.findall(r"<link\b[^>]*>", html, re.IGNORECASE):
+        rel_match = re.search(r'rel=["\']([^"\']+)["\']', tag, re.IGNORECASE)
+        href_match = re.search(r'href=["\']([^"\']+)["\']', tag, re.IGNORECASE)
+        if not rel_match or not href_match:
+            continue
+        rel = rel_match.group(1).lower()
+        if "icon" not in rel:
+            continue
+        href = href_match.group(1).strip()
+        if not href or href.startswith("data:"):
+            continue
+
+        absolute = urljoin(base_url, href)
+        if _has_low_confidence_marker(absolute):
+            continue
+        if absolute in seen:
+            continue
+        seen.add(absolute)
+
+        score = _extract_icon_size(tag)
+        if "apple-touch-icon" in rel:
+            score += 10000
+        elif "shortcut icon" in rel:
+            score += 9000
+        else:
+            score += 8000
+
+        if absolute.lower().endswith(".svg"):
+            score += 500
+        if "favicon" in absolute.lower():
+            score += 200
+        if "logo" in absolute.lower():
+            score += 100
+
+        candidates.append((score, absolute))
+
+    for meta_pattern in (
+        r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']',
+        r'<meta[^>]+name=["\']twitter:image["\'][^>]+content=["\']([^"\']+)["\']',
+    ):
+        for match in re.finditer(meta_pattern, html, re.IGNORECASE):
+            href = match.group(1).strip()
+            if not href:
+                continue
+            absolute = urljoin(base_url, href)
+            if _has_low_confidence_marker(absolute):
+                continue
+            if absolute in seen:
+                continue
+            lower = absolute.lower()
+            if "logo" not in lower and "icon" not in lower and "favicon" not in lower:
+                continue
+            seen.add(absolute)
+            candidates.append((1500, absolute))
+
+    candidates.sort(key=lambda item: item[0], reverse=True)
+    return candidates
 
 
-def _extract_logo_domain(logo_url: str) -> str:
-    if not logo_url:
-        return ""
-    try:
-        if "domain=" in logo_url:
-            m = re.search(r"domain=([^&]+)", logo_url)
-            return (m.group(1) if m else "").lower()
-        if "url=" in logo_url:
-            m = re.search(r"url=([^&]+)", logo_url)
-            return (m.group(1) if m else "").lower()
-        parsed = urlparse(logo_url)
-        host = (parsed.netloc or "").lower()
-        path = (parsed.path or "").lower()
-        if "logo.clearbit.com" in host:
-            return path.strip("/").split("/")[0]
-        return host
-    except Exception:
-        return ""
+def _extract_icon_from_html(domain: str) -> list[str]:
+    """从主页 HTML 提取 icon 链接候选（按优先级排序）。"""
+    roots = [f"https://{domain}"]
+    if not str(domain).startswith("www."):
+        roots.append(f"https://www.{domain}")
+
+    candidates: list[tuple[int, str]] = []
+    seen: set[str] = set()
+    for root in roots:
+        try:
+            resp = requests.get(
+                root,
+                timeout=TIMEOUT,
+                allow_redirects=True,
+                headers={"User-Agent": USER_AGENT},
+            )
+            if not (200 <= resp.status_code < 400):
+                continue
+            html_candidates = _extract_icon_candidates_from_html(resp.url, resp.text)
+            for score, url in html_candidates:
+                if url in seen:
+                    continue
+                seen.add(url)
+                candidates.append((score, url))
+        except Exception:
+            continue
+
+    candidates.sort(key=lambda item: item[0], reverse=True)
+    return [url for _, url in candidates]
 
 
 def _is_low_confidence_logo(product: dict) -> bool:
@@ -165,7 +239,7 @@ def _sanitize_logo_fields(product: dict) -> bool:
 
     return changed
 
-def get_logo_url(domain: str) -> tuple:
+def get_logo_url(domain: str, allow_clearbit: bool = False) -> tuple:
     """
     获取产品 logo URL
     
@@ -174,27 +248,44 @@ def get_logo_url(domain: str) -> tuple:
     if not domain:
         return None, None
     
-    # 尝试从主页 HTML 提取
-    extracted = _extract_icon_from_html(domain)
-    if extracted and check_url_exists(extracted):
-        return extracted, "html"
+    # 先用 HTML 提取出的 icon 候选，优先级最高
+    extracted_candidates = _extract_icon_from_html(domain)
+    # 上限控制：只探测前几项高优先级 icon，避免个别站点返回超长列表导致超时。
+    for extracted in extracted_candidates[:8]:
+        if _has_low_confidence_marker(extracted):
+            continue
+        if check_url_exists(extracted):
+            return extracted, "html"
 
-    # 常见的站点自带图标路径优先于第三方 favicon provider
-    direct_candidates = [
-        (f"https://{domain}/apple-touch-icon.png", "apple_touch_icon"),
-        (f"https://{domain}/apple-touch-icon-precomposed.png", "apple_touch_icon"),
-        (f"https://{domain}/favicon-32x32.png", "favicon"),
-        (f"https://{domain}/favicon.ico", "favicon"),
-    ]
+    # 再走常见站点图标路径
+    hosts = [domain]
+    if not str(domain).startswith("www."):
+        hosts.append(f"www.{domain}")
+
+    direct_candidates = []
+    for host in hosts:
+        direct_candidates.extend([
+            (f"https://{host}/apple-touch-icon.png", "apple_touch_icon"),
+            (f"https://{host}/apple-touch-icon-precomposed.png", "apple_touch_icon"),
+            (f"https://{host}/favicon-196x196.png", "favicon"),
+            (f"https://{host}/favicon-96x96.png", "favicon"),
+            (f"https://{host}/favicon-32x32.png", "favicon"),
+            (f"https://{host}/favicon.svg", "favicon"),
+            (f"https://{host}/favicon.ico", "favicon"),
+        ])
     for url, source in direct_candidates:
+        if _has_low_confidence_marker(url):
+            continue
         if check_url_exists(url):
             return url, source
 
-    # 最后才兜底 Clearbit
-    for source, pattern in LOGO_SOURCES.items():
-        url = pattern.format(domain=domain)
-        if check_url_exists(url):
-            return url, source
+    # 可选 Clearbit 兜底（默认关闭，避免继续引入低质量来源）
+    if allow_clearbit:
+        clearbit = f"https://logo.clearbit.com/{domain}"
+        if _has_low_confidence_marker(clearbit):
+            return None, None
+        if check_url_exists(clearbit):
+            return clearbit, "clearbit"
     
     return None, None
 
@@ -211,37 +302,16 @@ def _should_fix_product(product: dict, only_missing: bool = False) -> bool:
         return True
     if _is_low_confidence_logo(product):
         return True
-
-    website = product.get("website", "")
-    website_domain = extract_domain(website)
-    logo_domain = _extract_logo_domain(current_logo)
-    return bool(website_domain and logo_domain and website_domain not in logo_domain)
+    return False
 
 
-def process_product(product: dict) -> dict:
+def process_product(product: dict, only_missing: bool = False, allow_clearbit: bool = False) -> dict:
     """处理单个产品，尝试获取 logo"""
-    name = product.get('name', 'Unknown')
-    website = product.get('website', '')
+    name = product.get("name", "Unknown")
+    website = product.get("website", "")
     _sanitize_logo_fields(product)
-    current_logo = product.get('logo_url') or product.get('logo', '')
-    
-    # 检查是否需要修复
-    needs_fix = False
 
-    if not current_logo:
-        needs_fix = True
-    elif not current_logo.startswith('http'):
-        needs_fix = True
-    elif _is_low_confidence_logo(product):
-        needs_fix = True
-    else:
-        # 如果 logo 域名与网站不匹配，强制更新
-        website_domain = extract_domain(website)
-        logo_domain = _extract_logo_domain(current_logo)
-        if website_domain and logo_domain and website_domain not in logo_domain:
-            needs_fix = True
-    
-    if not needs_fix:
+    if not _should_fix_product(product, only_missing=only_missing):
         return product
     
     # 提取域名
@@ -255,7 +325,7 @@ def process_product(product: dict) -> dict:
         return product
     
     # 获取 logo
-    logo_url, source = get_logo_url(domain)
+    logo_url, source = get_logo_url(domain, allow_clearbit=allow_clearbit)
     
     if logo_url:
         product['logo_url'] = logo_url
@@ -267,7 +337,13 @@ def process_product(product: dict) -> dict:
     return product
 
 
-def fix_logos(input_path: str, output_path: str = None, dry_run: bool = False, only_missing: bool = False):
+def fix_logos(
+    input_path: str,
+    output_path: str = None,
+    dry_run: bool = False,
+    only_missing: bool = False,
+    allow_clearbit: bool = False,
+):
     """
     批量修复产品 logo
     
@@ -325,20 +401,26 @@ def fix_logos(input_path: str, output_path: str = None, dry_run: bool = False, o
     print(f"\n🔧 开始修复 {len(to_fix)} 个产品的 logo...")
     if only_missing:
         print("   模式: 仅补缺失 logo")
+    if allow_clearbit:
+        print("   模式: 允许 Clearbit 兜底")
     
     # 使用线程池并行处理
-    fixed_products = {p.get('name'): p for p in products}
-    
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-        futures = {executor.submit(process_product, p): p for p in to_fix}
+        futures = {
+            executor.submit(
+                process_product,
+                p,
+                only_missing,
+                allow_clearbit,
+            ): p
+            for p in to_fix
+        }
         
         for future in as_completed(futures):
             try:
                 result = future.result()
-                name = result.get('name')
                 logo_val = result.get('logo_url') or result.get('logo', '')
-                if logo_val and logo_val.startswith('http'):
-                    fixed_products[name] = result
+                if logo_val and logo_val.startswith("http") and not _has_low_confidence_marker(logo_val):
                     stats["fixed"] += 1
                 else:
                     stats["failed"] += 1
@@ -346,8 +428,8 @@ def fix_logos(input_path: str, output_path: str = None, dry_run: bool = False, o
                 print(f"  ❌ Error: {e}")
                 stats["failed"] += 1
     
-    # 更新产品列表
-    updated_products = list(fixed_products.values())
+    # process_product 是原地更新，保持原始顺序
+    updated_products = products
     
     # 保存
     print(f"\n💾 保存到: {output_path}")
@@ -382,6 +464,11 @@ def main():
         action="store_true",
         help="只补缺失 logo，不修改已有 logo"
     )
+    parser.add_argument(
+        "--allow-clearbit",
+        action="store_true",
+        help="允许 clearbit 作为最后兜底（默认关闭）",
+    )
     
     args = parser.parse_args()
     
@@ -390,7 +477,13 @@ def main():
     input_path = os.path.join(script_dir, args.input)
     output_path = os.path.join(script_dir, args.output) if args.output else input_path
     
-    fix_logos(input_path, output_path, args.dry_run, args.only_missing)
+    fix_logos(
+        input_path,
+        output_path,
+        args.dry_run,
+        args.only_missing,
+        args.allow_clearbit,
+    )
 
 
 if __name__ == "__main__":

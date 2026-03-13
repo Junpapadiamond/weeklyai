@@ -30,6 +30,32 @@ REJECTED_MARKERS = (
     "/logos/custom/default-ai.svg",
     "/static/pwa-app/logo-default.png",
 )
+MANUAL_OVERRIDES = {
+    "host::armadin.ai": "https://cdn.prod.website-files.com/69831a4454f985916d15832e/69a7f7bc2c1338897be21c26_Armadin_favicon_1024x%201.png",
+    "host::armadin.com": "https://cdn.prod.website-files.com/69831a4454f985916d15832e/69a7f7bc2c1338897be21c26_Armadin_favicon_1024x%201.png",
+    "name::armadin": "https://cdn.prod.website-files.com/69831a4454f985916d15832e/69a7f7bc2c1338897be21c26_Armadin_favicon_1024x%201.png",
+    "host::mindrobotics.com": "https://framerusercontent.com/images/eUIQcAd5dOttMXYqL7SEn8heT2M.png",
+    "name::mind robotics": "https://framerusercontent.com/images/eUIQcAd5dOttMXYqL7SEn8heT2M.png",
+    "host::global.dreame.com": "https://global.dreametech.com/cdn/shop/files/dreame_favicon_180x180.png?v=1695195563",
+    "host::citydetect.ai": "https://framerusercontent.com/images/GLlwL41iXpOOPa1kpgg7xobzluo.png",
+    "host::sciencecorp.ai": "https://science.xyz/favicon.svg",
+    "host::zeroeval.ai": "https://zeroeval.com/logos/theta.svg",
+    "host::reyassurance.com": "https://rey.id/images/rey-logo-200x200.png",
+    "host::sribuu.com": "https://sribuu.id/wp-content/uploads/2022/06/Blue-2-1-300x68.png",
+    "host::olix.ai": "https://framerusercontent.com/images/3i4Xjk57Cu3LmzjLcgzvlAsBrAs.png",
+    "host::diligent.ai": "https://cdn.prod.website-files.com/68bdab1c8fb03044e2c8c8ae/68bdac781023b7fed634401c_diligent-webclip.png",
+    "host::tess.ai": "https://tess.im/favicon.ico",
+    "host::confido.ai": "https://cdn.prod.website-files.com/6863ce36b3742ef229f42f6a/688b505483a098e4d2312c12_confido_logo_dark%201.svg",
+    "host::xiaoyizhou.com": "https://growth-cdn.ticwear.com/ticbuy/img/common-logo.0.svg",
+    "name::zeroeval": "https://zeroeval.com/logos/theta.svg",
+    "name::science corp.": "https://science.xyz/favicon.svg",
+    "name::frankenburg technologies": "https://frankenburg.tech/wp-content/uploads/2026/02/Frankenburg-Tech-Logo-Black_Transparent-163x79.png",
+    "name::city detect": "https://framerusercontent.com/images/GLlwL41iXpOOPa1kpgg7xobzluo.png",
+    "name::dreame pilot 20": "https://global.dreametech.com/cdn/shop/files/dreame_favicon_180x180.png?v=1695195563",
+    "name::sribuu": "https://sribuu.id/wp-content/uploads/2022/06/Blue-2-1-300x68.png",
+    "name::rey assurance": "https://rey.id/images/rey-logo-200x200.png",
+    "name::出门问问 ticnote pods": "https://growth-cdn.ticwear.com/ticbuy/img/common-logo.0.svg",
+}
 
 
 def normalize_logo_source(value: object) -> str:
@@ -139,6 +165,9 @@ def build_manifest() -> dict[str, str]:
 
         for key in keys:
             manifest.setdefault(key, record["candidate"])
+
+    for key, value in MANUAL_OVERRIDES.items():
+        manifest[key] = value
 
     return manifest
 
