@@ -51,3 +51,7 @@ class Config:
     # STICKY_DAYS: Top 1 product (highest score+funding) can stay this long
     DARK_HORSE_FRESH_DAYS = int(os.getenv('DARK_HORSE_FRESH_DAYS', '5'))
     DARK_HORSE_STICKY_DAYS = int(os.getenv('DARK_HORSE_STICKY_DAYS', '10'))
+
+    # Blog feed defaults (hybrid)
+    # Ensure CN sources remain visible in hybrid market results.
+    BLOG_HYBRID_CN_MIN = int(os.getenv('BLOG_HYBRID_CN_MIN', '10'))

@@ -40,6 +40,69 @@ class ProductService:
         """加载博客/新闻/讨论数据"""
         return ProductRepository.load_blogs()
 
+    @staticmethod
+    def _build_hybrid_blog_feed(blogs: List[Dict[str, Any]], limit: int) -> List[Dict[str, Any]]:
+        """Hybrid 博客流：按新鲜度合并，同时保证 CN 最小占比可见。"""
+        if limit <= 0:
+            return []
+
+        cn_floor = max(0, min(Config.BLOG_HYBRID_CN_MIN, limit))
+        if cn_floor == 0:
+            return blogs[:limit]
+
+        cn_blogs: List[Dict[str, Any]] = []
+        non_cn_blogs: List[Dict[str, Any]] = []
+        for blog in blogs:
+            if filters.infer_blog_market(blog) == "cn":
+                cn_blogs.append(blog)
+            else:
+                non_cn_blogs.append(blog)
+
+        if not cn_blogs:
+            return blogs[:limit]
+
+        target_cn = min(cn_floor, len(cn_blogs))
+        merged: List[Dict[str, Any]] = []
+        cn_taken = 0
+        cn_idx = 0
+        non_cn_idx = 0
+        epoch = datetime(1970, 1, 1)
+
+        while len(merged) < limit and (cn_idx < len(cn_blogs) or non_cn_idx < len(non_cn_blogs)):
+            remaining_slots = limit - len(merged)
+            remaining_cn_needed = max(0, target_cn - cn_taken)
+
+            # 到尾段时强制补足 CN 配额
+            if remaining_cn_needed >= remaining_slots and cn_idx < len(cn_blogs):
+                merged.append(cn_blogs[cn_idx])
+                cn_idx += 1
+                cn_taken += 1
+                continue
+
+            if cn_idx >= len(cn_blogs):
+                merged.append(non_cn_blogs[non_cn_idx])
+                non_cn_idx += 1
+                continue
+
+            if non_cn_idx >= len(non_cn_blogs):
+                merged.append(cn_blogs[cn_idx])
+                cn_idx += 1
+                cn_taken += 1
+                continue
+
+            cn_date = sorting.get_product_date(cn_blogs[cn_idx]) or epoch
+            non_cn_date = sorting.get_product_date(non_cn_blogs[non_cn_idx]) or epoch
+
+            if cn_date >= non_cn_date:
+                merged.append(cn_blogs[cn_idx])
+                cn_idx += 1
+                cn_taken += 1
+            else:
+                merged.append(non_cn_blogs[non_cn_idx])
+                non_cn_idx += 1
+
+        return merged[:limit]
+
     # ========== 排序工具方法 (委托给 sorting 模块) ==========
 
     @staticmethod
@@ -297,8 +360,12 @@ class ProductService:
         blogs = ProductService._load_blogs()
         blogs = filters.filter_blogs_by_market(blogs, market)
 
-        # 按分数排序
-        blogs = sorting.sort_by_trending(blogs)
+        # 博客流优先看“新”，避免高热但过时内容长期压制最新更新
+        blogs = sorting.sort_by_recency(blogs)
+
+        target_market = (market or '').strip().lower()
+        if target_market in {'', 'all', 'hybrid', 'global'}:
+            return ProductService._build_hybrid_blog_feed(blogs, limit)
         return blogs[:limit]
 
     @staticmethod
@@ -307,6 +374,7 @@ class ProductService:
         blogs = ProductService._load_blogs()
         blogs = filters.filter_blogs_by_market(blogs, market)
         filtered = filters.filter_by_source(blogs, source)
+        filtered = sorting.sort_by_recency(filtered)
         return filtered[:limit]
 
     @staticmethod
