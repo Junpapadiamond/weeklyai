@@ -713,5 +713,502 @@
     "country_flag": "🇨🇳",
     "country_display": "🇨🇳 China",
     "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Sequen",
+    "website": "https://sequen.ai",
+    "description": "Sequen提供TikTok式实时个性化技术和排名基础设施，帮助消费公司提升用户体验。",
+    "description_en": "Sequen offers TikTok-style real-time personalization and ranking tech for consumer companies.",
+    "category": "other",
+    "region": "Unknown",
+    "funding_total": "$16M Series A",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal",
+      "demand_signal_hn"
+    ],
+    "why_matters": "创始人凭借多年AI研究经验获1600万美元A轮，专注将TikTok个性化技术扩展到任意消费业务。",
+    "why_matters_en": "$16M Series A funding leverages founders' AI research to bring TikTok personalization to any consumer business.",
+    "latest_news": "2026-03-18: 完成1600万美元A轮融资",
+    "latest_news_en": "2026-03-18: Closed $16M Series A",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/03/18/sequen-snags-16m-to-bring-tiktok-style-personalization-tech-to-any-consumer-company/",
+    "company_country": "unknown",
+    "company_country_confidence": 0.5,
+    "confidence": 0.85,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-18T19:51:35.925506Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 19,
+          "top_story_id": "47356098",
+          "points": 7,
+          "comments": 10,
+          "engagement_depth_ratio": 1.4286,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "I'm interested in this, but only passingly familiar with it from several years ago. Can you link to what you believe the current state of the art is?",
+            "great and neat project! I would like to ask, where do you see the value here? a lot of tools on memory, context, etc",
+            "Fascinating approach — using VSA to compress graph traversals into O(1) SIMD operations is a clever way to sidestep the RAG vs graph DB trade-off. Curious about a couple of things: how do you handle fact deletion or correction once something is superposed into the accumulators? And what does the query interface look like from the agent's perspective — is it purely similarity-based via Hamming distance, or do you support structured relational queries too?",
+            "the Squelch primitive for mathematical forgetting is really interesting. most memory systems I've worked with treat forgetting as an afterthought, just TTL-based eviction or manual deletion. having it built into the algebra itself is a much cleaner approach for agents that need to update beliefs over time without accumulating stale context.",
+            "State of the art for HDC/VSA? Or for agentic memory?",
+            "Thanks. Yes all spaces are crowded. IMO the value here will be quasi brain-like operations on data that are fast and efficient. We overuse LLMs which aren’t too fast and very inefficient. So the value here is being able to support a shift of some workloads from LLM to smart agentic memory.",
+            "Thanks for the question. Inlike vector databases that append embeddings to an HNSW graph, my working memory substrate natively supports mathematical forgetting. I use a Squelch primitive—a SIMD-parallelized saturating subtraction over an 8-bit probabilistic accumulator. When an agent finishes a chain-of-thought, we literally subtract the statistical mass of that specific reasoning path out of the 16,384-dimensional superposition. It intentionally drops the signal back below the Kanerva noise floor, freeing up capacity in the L3 cache without destroying the other superposed facts. It works similarly for episodic memory and procedural memory. Semantic memory, currently, is for invariants and “",
+            "Thinking about data in terms of energy basins, frequencies, and SNR is different than what I’ve done before. But pushing a signal below the noise floor is analogous to tombstoning a tuple in a database.",
+            "HDC/VSA.",
+            "Well probably this recent piece by Kanerva. https://arxiv.org/abs/2503.23608"
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.5513,
+        "demand_tier": "medium",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.6
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-03-18",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:techcrunch.com AI startup funding",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown"
+  },
+  {
+    "name": "Niv-AI",
+    "website": "https://niv-ai.com",
+    "description": "Niv-AI通过新传感器精确测量GPU功耗并优化管理，刚刚退出隐身模式。",
+    "description_en": "Niv-AI precisely measures GPU power usage with new sensors and optimizes management.",
+    "category": "hardware",
+    "region": "🇮🇱",
+    "funding_total": "$12M seed",
+    "dark_horse_index": 3,
+    "criteria_met": [],
+    "why_matters": "特拉维夫初创获1200万美元种子轮，由Glilot Capital领投，专注GPU功耗优化解决AI训练痛点。",
+    "why_matters_en": "$12M seed from Glilot Capital to optimize GPU power for AI training efficiency.",
+    "latest_news": "2026-03-17: 退出隐身获1200万美元种子轮",
+    "latest_news_en": "2026-03-17: Exited stealth with $12M seed",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/03/17/niv-ai-exits-stealth-to-wring-more-power-performance-out-of-gpus/",
+    "company_country": "Israel",
+    "company_country_confidence": 0.95,
+    "confidence": 0.9,
+    "is_hardware": true,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-18T19:51:36.603777Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-03-18",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:techcrunch.com AI startup funding",
+    "country_code": "IL",
+    "country_name": "Israel",
+    "country_flag": "🇮🇱",
+    "country_display": "🇮🇱 Israel",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "AVILEN",
+    "website": "https://avilen.co.jp/",
+    "description": "東大発ベンチャーで、自然言語処理や画像解析の最先端アルゴリズムを自社開発し、大手企業向けオーダーメイドAIソリューションを提供。",
+    "description_en": "University of Tokyo spin-off developing in-house NLP and image analysis algorithms for custom AI solutions to over 900 major enterprises.",
+    "category": "agent",
+    "region": "🇯🇵",
+    "funding_total": "unknown",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "Strong local traction"
+    ],
+    "why_matters": "大手企業900社以上へのAI導入実績を持ち、三菱UFJ銀行・NTTデータ・ダイハツ工業など導入、帳票処理・コールセンター向けAVILEN AIエージェントシリーズでB2B市場をリード。",
+    "why_matters_en": "Over 900 major enterprise implementations including MUFG, NTT Data, Daihatsu; offers tailored AI agents for document processing and call centers.",
+    "latest_news": "2026年最新: 日本のAIスタートアップ10選に選出",
+    "latest_news_en": "2026: Selected in Japan's top 10 AI startups",
+    "source": "AI活用研究所",
+    "source_url": "https://www.aidma-hd.jp/ai/ai-start-up-company/",
+    "company_country": "日本",
+    "company_country_confidence": 0.95,
+    "confidence": 0.85,
+    "extra": {
+      "website_recovered_from_source": true,
+      "website_recovered_url": "https://avilen.co.jp/",
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-18T19:52:15.244581Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "categories": [
+      "other"
+    ],
+    "source_region": "🇯🇵🇰🇷",
+    "discovered_at": "2026-03-18",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "日本 AI企業 シリーズA",
+    "country_code": "JP",
+    "country_name": "Japan",
+    "country_flag": "🇯🇵",
+    "country_display": "🇯🇵 Japan",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Handle",
+    "website": "https://handle.ai",
+    "description": "Handle开发AI代理平台自动化企业运营工作流，获a16z领投$6M Seed。",
+    "description_en": "Handle builds AI agent platform to automate complex enterprise operational workflows, raised $6M seed led by a16z.",
+    "category": "agent",
+    "region": "Unknown",
+    "funding_total": "$6M Seed",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal",
+      "demand_signal_hn"
+    ],
+    "why_matters": "Andreessen Horowitz领投$6M Seed，由前Nowports CEO（估值$11亿）创立，Signal引擎连接email/WhatsApp/Salesforce等，已服务墨西哥75+保险经纪商，并首扩国际市场。",
+    "why_matters_en": "$6M seed led by Andreessen Horowitz; founded by ex-Nowports CEO (unicorn), Signal engine integrates email/WhatsApp/Salesforce; serves 75+ Mexico insurance brokers, first international expansion.",
+    "latest_news": "2026-03-16: a16z领投$6M Seed，进军墨西哥",
+    "latest_news_en": "2026-03-16: $6M seed led by a16z, expanding to Mexico",
+    "source": "The AI Insider",
+    "source_url": "https://theaiinsider.tech/2026/03/16/handle-closes-6m-funding-round-to-expand-ai-agent-platform-for-enterprise-operations/",
+    "company_country": "Mexico",
+    "company_country_confidence": 0.85,
+    "confidence": 0.95,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-18T19:53:11.516054Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 27,
+          "top_story_id": "47422592",
+          "points": 2,
+          "comments": 5,
+          "engagement_depth_ratio": 2.5,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "Localization for ui only. Im- and exported data only in standard formats",
+            "A known issue.. have faced this personally long back (had to let it go back then since the use-cases was no more valid) ... but, will this help? https://github.com/freakynit/smart-date-parser This does maintain context based on past successful parses. Disclaimer: This is fully opus generated, but do have test cases (in usage.js ... i know.. it's not what it's for.. but it is what it is).",
+            "That's the ideal, but unfortunately not always an option when you're on the receiving end. We're building a data cleaning tool, so the whole point is dealing with messy user-uploaded CSVs where we don't control the export format. If we could mandate ISO 8601 everywhere, life would be much simpler. But the reality is people copy-paste from Excel, export from legacy systems, or hand-edit CSVs, and we need to handle what shows up.",
+            "Thanks for sharing this! The context-based approach is interesting. Maintaining state from past successful parses to resolve ambiguity is essentially what we do too, though we batch it (scan first 50 values) rather than doing it incrementally. The incremental approach has the advantage of adapting mid-column if formats shift, which we've seen in datasets that were manually concatenated from different sources. Will take a look at the repo.",
+            "All thanks to Opus :)"
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.5667,
+        "demand_tier": "medium",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.6
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-03-18",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI agent startup funding",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown"
+  },
+  {
+    "name": "Omnisent",
+    "website": "https://omnisent.ai",
+    "description": "慕尼黑初创公司Omnisent开发硬件+软件平台，利用Large Acoustic Model (LAM)将非语音声音转化为实时智能，针对制造业等场景。",
+    "description_en": "Munich-based Omnisent develops hardware + software platform using Large Acoustic Model (LAM) to transform non-speech audio into real-time intelligence for manufacturing and beyond.",
+    "category": "hardware",
+    "region": "🇩🇪",
+    "funding_total": "$3M Pre-Seed",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "2026年3月完成300万美元超额认购Pre-Seed轮，由Atlantic Labs领投；2024年底成立即获Fraunhofer Institute合作奖学金及德国联邦创始人奖，是剑桥牛津生态前10 AI初创；首创非语音音频LAM基础模型，针对工业噪声检测如压缩空气泄漏（占全球电力浪费1%以上）。",
+    "why_matters_en": "$3M oversubscribed Pre-Seed in March 2026 led by Atlantic Labs; launched late 2024 with awards from Fraunhofer Institute, German Federal founder scholarship, and top 10 AI startup in Cambridge/Oxford ecosystem; pioneers LAM foundation model for non-speech audio, targeting industrial leaks wasting >1% global electricity.",
+    "latest_news": "2026-03: 完成300万美元Pre-Seed融资，计划Q4 2025商业化推出。",
+    "latest_news_en": "March 2026: Closed $3M Pre-Seed, targeting Q4 2025 commercial launch.",
+    "source": "Tech.eu / Startuphub.ai",
+    "source_url": "https://tech.eu/2025/06/10/sound-is-the-next-ai-frontier-omnisent-raises-3m-to-build-acoustic-foundation-model/",
+    "company_country": "Germany",
+    "company_country_confidence": 1.0,
+    "confidence": 0.95,
+    "is_hardware": true,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-18T19:54:43.290160Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-03-18",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "KI Startup Finanzierung",
+    "country_code": "DE",
+    "country_name": "Germany",
+    "country_flag": "🇩🇪",
+    "country_display": "🇩🇪 Germany",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Neuramancer AI Solutions",
+    "website": "https://neuramancer.ai",
+    "description": "德国Landshut的Neuramancer AI Solutions开发Deepfake检测技术，帮助识别互联网上的AI伪造内容。",
+    "description_en": "Germany's Landshut-based Neuramancer AI Solutions develops Deepfake detection tech to identify AI-generated fakes on the internet.",
+    "category": "other",
+    "region": "🇩🇪",
+    "funding_total": "€1.7M Pre-Seed",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "2026年3月获170万欧元Pre-Seed融资，Bayern Kapital首次投资；专注Deepfake根源检测，前身为Neuraforge，已吸引Vanagon Ventures等支持。",
+    "why_matters_en": "Secured €1.7M Pre-Seed in March 2026 with first investment from Bayern Kapital; targets Deepfake detection at the root, backed by Vanagon Ventures (formerly Neuraforge).",
+    "latest_news": "2026-03-12: 完成170万欧元Pre-Seed轮。",
+    "latest_news_en": "March 12, 2026: Closed €1.7M Pre-Seed round.",
+    "source": "Startbase",
+    "source_url": "https://www.startbase.de/news/17-millionen-euro-fuer-deepfake-erkennung-von-neuramancer/",
+    "company_country": "Germany",
+    "company_country_confidence": 0.95,
+    "confidence": 0.9,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-18T19:54:43.541924Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-03-18",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "KI Startup Finanzierung",
+    "country_code": "DE",
+    "country_name": "Germany",
+    "country_flag": "🇩🇪",
+    "country_display": "🇩🇪 Germany",
+    "country_source": "explicit:company_country"
   }
 ]
