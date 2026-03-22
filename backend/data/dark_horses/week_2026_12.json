@@ -1859,5 +1859,105 @@
     "country_flag": "",
     "country_display": "Unknown",
     "country_source": "unknown"
+  },
+  {
+    "name": "Reco",
+    "website": "https://www.reco.ai/",
+    "description": "Reco提供SaaS安全平台，持续发现并管理企业中的AI工具、Copilot和自治Agent。",
+    "description_en": "Reco provides SaaS security platform for continuous discovery and management of AI tools, copilots, and autonomous agents in enterprises.",
+    "category": "agent",
+    "region": "🇺🇸",
+    "funding_total": "$85M total (latest $30M Series B)",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "growth_anomaly"
+    ],
+    "why_matters": "系列B轮30百万美元由Zeev Ventures领投，总融资8500万美元，服务Fortune 500企业如Nestle、UiPath，专注AI应用和自治Agent的安全发现与管理。",
+    "why_matters_en": "$30M Series B led by Zeev Ventures, total $85M raised; serves Fortune 500 like Nestle/UiPath, focuses on securing AI apps and autonomous agents at scale.",
+    "latest_news": "2026-02-10: 宣布30百万美元系列B融资，用于工程和市场扩张。",
+    "latest_news_en": "2026-02-10: Announces $30M Series B for engineering, product, and GTM expansion.",
+    "source": "SiliconANGLE",
+    "source_url": "https://siliconangle.com/2026/02/10/reco-raises-30m-lock-ai-apps-autonomous-agents/",
+    "company_country": "United States",
+    "company_country_confidence": 0.7,
+    "confidence": 0.85,
+    "needs_verification": true,
+    "extra": {
+      "website_recovered_from_source": true,
+      "website_recovered_url": "https://www.reco.ai/",
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-22T19:32:20.152754Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 4,
+          "top_story_id": "47479115",
+          "points": 107,
+          "comments": 12,
+          "engagement_depth_ratio": 0.1121,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "I hope you get this sorted !",
+            "'Recently', how long are we talking here? You've already emailed the execs, if they think it's worthy of review they'll assign someone to you, it can take a few days.",
+            "What did the employee do?",
+            "Honestly, HN is a great customer support forum considering so many posts actually get treated better than just using the standard customer support (many startups and other companies paying attention to it helps a bunch). It has to have more merit some of the time (this is not to say it is an assessment of what you are saying at all.",
+            "Just what sort of unauthorized activities are we talking here?",
+            "Unfortunately you probably need to think abou this from the point of view of an anti-fraud/abuse team. How would you differentiate between a business that had an employee go rogue and a business deliberately trying to cause harm and get away with it? Claiming you fired the party responsible isn’t very convincing, honestly, especially if it’s hard to verify: was it an alias? did the employee only exist on paper? are they still around just not “employeed”, were they a designated patsy? Nor are claims that you revamped your security, which doesn’t address the root problem of whether it was intentional behaviour or not. And what’s worse, the natural urgency and appeals to emotion that you includ",
+            "This post is so light on the details (what? when?) that it’s impossible for me to be supportive. OP: I suggest being MUCH more transparent when asking for help. For all we know you are running a scam center support app. Consider the outraged posts that make it to the front page, essentially complaining about how their MLM bitcoin scam has been shut down.",
+            "I mean, you're straight up saying your team violated the Dev Terms of Service. That's kinda game over.",
+            "What is their second chance policy for incidents of misuse, generally?",
+            "If we're going feudal, it would be a good idea to provide justice to the commoners like feudal lords were obliged to do. I.e. all these \"tech companies\" that want to people to have accounts (and be heavily invested and/or dependent on them) should not be able to cancel those accounts without due process. This should be a legal requirement for them to operate at all."
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0682,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "categories": [
+      "other"
+    ],
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.6
+    },
+    "source_region": "🇯🇵🇰🇷",
+    "discovered_at": "2026-03-22",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "日本 AI企業 シリーズA",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
   }
 ]
