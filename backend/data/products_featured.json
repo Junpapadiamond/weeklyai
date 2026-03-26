@@ -1,5 +1,502 @@
 [
   {
+    "name": "Bubble Lab",
+    "description": "AI原生企业软件开发平台，用户用自然语言创建工作流。",
+    "description_en": "AI-native enterprise software development platform enabling workflows via natural language.",
+    "website": "https://bubblelab.ai/",
+    "logo_url": "https://bubblelab.ai/favicon.ico",
+    "categories": [
+      "agent"
+    ],
+    "dark_horse_index": 2,
+    "why_matters": "YC W26批次公司，开源TypeScript原生代理工作流构建器，取代传统SaaS类别。",
+    "why_matters_en": "YC W26 company, open-source Typescript-native agentic workflow builder replacing traditional SaaS.",
+    "funding_total": "YC W26",
+    "latest_news": "2026: YC W26批次入选",
+    "region": "🇺🇸",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country",
+    "source_region": "🇺🇸",
+    "source": "Extruct AI",
+    "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-w26/",
+    "source_title": "",
+    "website_source": "redirect",
+    "latest_news_en": "2026: Selected for YC W26 batch",
+    "community_verdict": null,
+    "extra": {
+      "website_recovered_from_source": true,
+      "website_recovered_url": "https://bubblelab.ai",
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-26T20:01:03.040002Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-03-26",
+    "first_seen": "2026-03-26T20:01:03.270888Z",
+    "final_score": 40,
+    "trending_score": 36,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
+    "name": "Rivia",
+    "description": "苏黎世公司，使用agentic AI代理管理复杂临床试验运营。",
+    "description_en": "Zurich-based using agentic AI agents for managing complex clinical trial operations.",
+    "website": "https://www.rivia.ai/",
+    "logo_url": "https://cdn.prod.website-files.com/63e9fb1a748f5409c154e1c2/63ee1fc8c8d8184ce3e285c8_62b97fa7d9220d7fc89d26c3_Original%20on%20Transparent%20(1)%20(1).png",
+    "categories": [
+      "agent"
+    ],
+    "dark_horse_index": 2,
+    "why_matters": "获1300万欧元融资，部署agentic AI优化临床试验管理。",
+    "why_matters_en": "€13M funding for agentic AI in complex clinical trial operations.",
+    "funding_total": "€13M",
+    "latest_news": "2026-03-23: 获1300万欧元融资",
+    "region": "🇨🇭",
+    "country_code": "CH",
+    "country_name": "Switzerland",
+    "country_flag": "🇨🇭",
+    "country_display": "🇨🇭 Switzerland",
+    "country_source": "explicit:company_country",
+    "source_region": "🇺🇸",
+    "source": "NBot Tracker",
+    "source_url": "https://nbot.ai/curator/t5n8zmds/preview",
+    "source_title": "",
+    "website_source": "redirect",
+    "latest_news_en": "2026-03-23: Raised €13M funding",
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.6
+    },
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-26T20:00:12.169937Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 14,
+          "top_story_id": "47502481",
+          "points": 9,
+          "comments": 17,
+          "engagement_depth_ratio": 1.8889,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "While Lambda still has a pretty static GUI at the moment. My plan is to build it into a fully interactive, editable UI on all kinds of document data.",
+            "A game-changing programming language has just emerged! It’s time to say goodbye to those outdated, inefficient, and syntactically cumbersome languages.",
+            "The feature set looks compelling. I'm genuinely eager to dive in.",
+            "I'm particular interested in large PDF parsing, for those table form PDF content. Biggest problem of PDF parsing is the relativity of content according to content that output not the PDF internal layout box sequence. Sometime parse result had content sequence off.",
+            "Both the set of features and the benchmark results look really impressive. Well done",
+            "Searching and narrowing down to doubts in this language in google with this name will be difficult :/",
+            "I know this isn't quite the same thing but how does this compare to nushell, which is my current goto for data processing and cli related stuff. It took provides a standard language and processes the various data formats it can read into tanks and records.",
+            "Hope it will change the way people work with data and documents.",
+            "Glad to hear that. Note that the language is still being developed, and there're bugs here and there. So bear with those bugs. But it should be fun to try it out.",
+            "Lambda's PDF support is still very limited at moment. I do plan to enhance it in next release."
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.5933,
+        "demand_tier": "medium",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "discovered_at": "2026-03-26",
+    "first_seen": "2026-03-26T20:00:12.711748Z",
+    "final_score": 40,
+    "trending_score": 36,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
+    "name": "Scanner",
+    "description": "加州安全数据平台，支持团队以低成本云存储海量日志数据。",
+    "description_en": "CA-based security data platform for storing massive log volumes in low-cost cloud storage.",
+    "website": "https://scanner.dev/?ref=joyceshen.com",
+    "logo_url": "https://cdn.prod.website-files.com/6836573d3a1395f663d3daac/68d05b57bf98bcbb35bf76d1_scanner-webclip.png",
+    "categories": [
+      "other"
+    ],
+    "dark_horse_index": 2,
+    "why_matters": "完成2200万美元A轮融资，解决安全团队日志存储成本高的问题。",
+    "why_matters_en": "$22M Series A to enable low-cost cloud storage for massive security log data.",
+    "funding_total": "$22M Series A",
+    "latest_news": "2026-03-23: 获2200万美元A轮融资",
+    "region": "🇺🇸",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country",
+    "source_region": "🇺🇸",
+    "source": "Joyce Shen",
+    "source_url": "https://www.joyceshen.com/joyce-shens-picks-musings-and-readings-in-ai-ml-march-23-2026/",
+    "source_title": "",
+    "website_source": "source_url",
+    "latest_news_en": "2026-03-23: Raised $22M Series A funding",
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "neutral",
+      "confidence": 0.45
+    },
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-26T20:00:11.741188Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 7,
+          "top_story_id": "47523096",
+          "points": 2,
+          "comments": 1,
+          "engagement_depth_ratio": 0.5,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "try it!"
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.1874,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "discovered_at": "2026-03-26",
+    "first_seen": "2026-03-26T20:00:12.116155Z",
+    "final_score": 40,
+    "trending_score": 36,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
+    "name": "Proxima Fusion",
+    "description": "基于仿星器技术的核聚变反应堆开发商，提供清洁连续能源解决方案",
+    "description_en": "Stellarator-based fusion reactor developer providing clean and continuous energy through advanced simulation and engineering",
+    "website": "https://www.proximafusion.com/?ref=failory",
+    "logo_url": "https://cdn.prod.website-files.com/65b10cc303e570e609b235c8/66163bb5ce1eda0f3c9cecdc_webclip.png",
+    "categories": [
+      "hardware"
+    ],
+    "dark_horse_index": 5,
+    "why_matters": "2023年成立即融资$196.5M，专注下一代核聚变电厂工程，代表欧洲深科技突破方向，入选VivaTech Top 100",
+    "why_matters_en": "$196.5M raised since 2023 founding, pioneering next-generation fusion power plants with advanced stellarator technology, selected for VivaTech Top 100 Rising European Startups",
+    "funding_total": "$196.5M",
+    "latest_news": "2026-03: Featured in VivaTech Top 100 Rising European Startups ranking",
+    "region": "🇩🇪",
+    "country_code": "DE",
+    "country_name": "Germany",
+    "country_flag": "🇩🇪",
+    "country_display": "🇩🇪 Germany",
+    "country_source": "explicit:company_country",
+    "source_region": "🇪🇺",
+    "source": "Failory",
+    "source_url": "https://www.failory.com/startups/munich",
+    "source_title": "",
+    "website_source": "",
+    "latest_news_en": "2026-03: Recognized in VivaTech Top 100 Rising European Startups second edition",
+    "community_verdict": null,
+    "extra": {
+      "website_recovered_from_source": true,
+      "website_recovered_url": "https://www.proximafusion.com/?ref=failory",
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-26T19:59:11.960790Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-03-26",
+    "first_seen": "2026-03-26T19:59:12.151801Z",
+    "final_score": 100,
+    "trending_score": 90,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
+    "name": "wena X",
+    "description": "日本発の世界最小スマートウォッチで、腕時計とスマートバンドの2way使用が可能、省電力OS搭載で睡眠・運動追跡を強化。",
+    "description_en": "",
+    "website": "https://wena.jp/",
+    "logo_url": "https://wena.jp/assets/apple-touch-icon-Bewuq_WY.png",
+    "categories": [
+      "hardware"
+    ],
+    "dark_horse_index": 4,
+    "why_matters": "世界最小サイズのスマートウォッチとして形態革新、クラウドファンディング40分で1億円突破の爆発的热度。",
+    "why_matters_en": "",
+    "funding_total": "unknown",
+    "latest_news": "2026-03-20: クラウドファンディング開始4分で目標達成、40分で1億円超え。",
+    "region": "🇯🇵",
+    "country_code": "JP",
+    "country_name": "Japan",
+    "country_flag": "🇯🇵",
+    "country_display": "🇯🇵 Japan",
+    "country_source": "explicit:company_country",
+    "source_region": "🇯🇵🇰🇷",
+    "source": "PR TIMES",
+    "source_url": "https://prtimes.jp/main/html/rd/p/000000001.000179064.html",
+    "source_title": "",
+    "website_source": "redirect",
+    "latest_news_en": "",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-26T19:58:43.610218Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-03-26",
+    "first_seen": "2026-03-26T19:58:43.798769Z",
+    "final_score": 80,
+    "trending_score": 72,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
+    "name": "Notch",
+    "description": "Notch是一家专注于AI驱动的企业解决方案的初创公司，最近完成Series A融资。",
+    "description_en": "Notch is an AI startup focused on enterprise solutions, recently completing a Series A round.",
+    "website": "https://www.notch.ai/",
+    "logo_url": "https://www.notch.ai/notch-icon.ico",
+    "categories": [
+      "other"
+    ],
+    "dark_horse_index": 4,
+    "why_matters": "Headline领投3000万美元Series A，显示投资者对该AI初创公司在快速扩展阶段的信心。",
+    "why_matters_en": "Headline-led $30M Series A signals strong investor confidence in Notch's AI growth potential.",
+    "funding_total": "$30M Series A",
+    "latest_news": "2026-03: Headline领投$30M Series A",
+    "region": "🇺🇸",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country",
+    "source_region": "🇺🇸",
+    "source": "Startups Gallery",
+    "source_url": "https://startups.gallery/news",
+    "source_title": "",
+    "website_source": "redirect",
+    "latest_news_en": "2026-03: $30M Series A led by Headline",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-26T19:56:26.131671Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-03-26",
+    "first_seen": "2026-03-26T19:56:26.446620Z",
+    "final_score": 80,
+    "trending_score": 72,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
     "name": "Jizai",
     "description": "視覚・音声・動作入力に基づく汎用AIロボット「Mi-Mo」を開発するスタートアップ。",
     "description_en": "Startup developing general-purpose AI robot Mi-Mo that acts autonomously based on visual, audio, and motion inputs.",
@@ -22263,14 +22760,22 @@
     "website_source": "redirect",
     "discovered_at": "2026-02-10",
     "first_seen": "2026-02-10T08:38:36.417933Z",
-    "final_score": 86,
-    "trending_score": 78,
+    "final_score": 88,
+    "trending_score": 80,
     "logo_source": "html",
     "description_en": "Enterprise-level large language model platform, focusing on sovereign AI and secure deployment",
     "why_matters_en": "Founded by Google Brain alumni, it will reach $100 million ARR in 2025, with a valuation of $7B. It focuses on enterprise and sovereign AI rather than consumer chatbots. It is a representative of Canadian AI unicorns and has received strategic investments from Microsoft, Nvidia, etc.",
     "needs_verification": false,
     "extra": {
       "signals": [
+        {
+          "platform": "x",
+          "url": "https://x.com/cohere/status/2037159388717158804",
+          "title": "This is Cohere’s first speech-to-text model release and a huge step towards our goal of delivering enterprise speech int",
+          "published_at": "2026-03-26T13:27:01Z",
+          "snippet": "This is Cohere’s first speech-to-text model release and a huge step towards our goal of delivering enterprise speech intelligence into North, Cohere’s agentic AI orchestration platform.",
+          "author": "@cohere"
+        },
         {
           "platform": "x",
           "url": "https://x.com/cohere/status/2036740752877801519",
@@ -22297,8 +22802,8 @@
         }
       ]
     },
-    "latest_news": "2026-03-25: 来自 X 的一手提及：2019年创立的加拿大企业AI公司，其模型赋能RWS产品在31/32语言基准测试中领先。",
-    "news_updated_at": "2026-03-25T09:43:30Z"
+    "latest_news": "2026-03-26: 来自 X 的一手提及：Cohere首个speech-to-text模型发布，推动企业级speech intelligence平台North的发展。",
+    "news_updated_at": "2026-03-26T13:27:01Z"
   },
   {
     "name": "Gather AI",
@@ -26224,6 +26729,14 @@
       "signals": [
         {
           "platform": "x",
+          "url": "https://x.com/cursor_ai/status/2037205514975629493",
+          "title": "Earlier this week, we published our technical report on Composer 2.\n\nWe're sharing additional research on how we train n",
+          "published_at": "2026-03-26T16:30:18Z",
+          "snippet": "Earlier this week, we published our technical report on Composer 2. We're sharing additional research on how we train new checkpoints. With real-time RL, we can ship improved versions of the model ...",
+          "author": "@cursor_ai"
+        },
+        {
+          "platform": "x",
           "url": "https://x.com/cursor_ai/status/2036873885665419773",
           "title": "//cursor.com/blog/self-hosted-cloud-agents",
           "published_at": "2026-03-25T18:32:32Z",
@@ -26253,19 +26766,11 @@
           "published_at": "2026-03-17T18:04:03Z",
           "snippet": "We trained Composer to self-summarize through RL instead of a prompt. This reduces the error from compaction by 50% and allows Composer to succeed on challenging coding tasks requiring hundreds of ...",
           "author": "@cursor_ai"
-        },
-        {
-          "platform": "x",
-          "url": "https://x.com/cursor_ai/status/2034668943676244133",
-          "title": "Composer 2 is now available in Cursor.",
-          "published_at": "2026-03-19T16:30:53Z",
-          "snippet": "Composer 2 is now available in Cursor. https://t.co/Dl0EcpiLpf",
-          "author": "@cursor_ai"
         }
       ]
     },
-    "latest_news": "2026-03-25: 来自 X 的一手提及：新发布自托管版本，可在用户基础设施运行，保持代码和工具执行在私有网络内。",
-    "news_updated_at": "2026-03-25T18:32:32Z"
+    "latest_news": "2026-03-26: 来自 X 的一手提及：2025年1月ARR达$100M，日活超100万，包括Stripe和Figma等5万企业客户，正在寻求$50B估值融资。",
+    "news_updated_at": "2026-03-26T16:30:18Z"
   },
   {
     "name": "Safe Superintelligence",
@@ -26790,7 +27295,7 @@
     "funding_total": "$400M",
     "dark_horse_index": 5,
     "why_matters": "估值达 $9B，Georgian 领投，AI 编程平台龙头，让非程序员也能用自然语言创建软件",
-    "latest_news": "2026-03-24: 来自 X 的一手提及：Launched in September 2024 on a platform with 45M users and 22M+ creators, democratizing app creation for technical a...",
+    "latest_news": "2026-03-26: 来自 X 的一手提及：Replit的Agent 4是AI应用构建工具的最新演进，围绕设计自由、协作构建、发布任意内容和加速移动四大支柱，吸引4000名构建者参与Buildathon。",
     "discovered_at": "2026-01-16",
     "source": "Bloomberg",
     "categories": [
@@ -26802,6 +27307,14 @@
     "latest_news_en": "2026-01: Nearly completed $400M in new round of financing, valuation approximately tripled to $9B",
     "extra": {
       "signals": [
+        {
+          "platform": "x",
+          "url": "https://x.com/MannyBernabe/status/2037165401281327300",
+          "title": "4,000 builders joined the Agent 4 Buildathon and Week 1 is wrapping up.\n\nTomorrow we're going live to announce the Week",
+          "published_at": "2026-03-26T13:50:55Z",
+          "snippet": "4,000 builders joined the Agent 4 Buildathon and Week 1 is wrapping up. Tomorrow we're going live to announce the Week 1 winners, showcase the coolest projects, and chat with builders about what th...",
+          "author": "@MannyBernabe"
+        },
         {
           "platform": "x",
           "url": "https://x.com/etnshow/status/2036571862965297153",
@@ -26833,18 +27346,10 @@
           "published_at": "2026-03-23T16:03:54Z",
           "snippet": "Starting March 24th at 12pm EST, I'll be leading the @Replit Agent 4 Buildathon alongside @Franciscocrz and @MannyBernabe. Here's what to expect: &gt; Go from idea-to-launch in just 3 weeks! 🚀 &gt;...",
           "author": "@raymmar"
-        },
-        {
-          "platform": "x",
-          "url": "https://x.com/Replit/status/2035136547133989119",
-          "title": "Meet some of the people from our team that helped bring Agent 4 to life in this \"Live from Replit HQ\" series.\n \nPart 1 i",
-          "published_at": "2026-03-20T23:28:58Z",
-          "snippet": "Meet some of the people from our team that helped bring Agent 4 to life in this \"Live from Replit HQ\" series. Part 1 is live today, and includes our usual livestream hosts, in the same room this ti...",
-          "author": "@Replit"
         }
       ]
     },
-    "news_updated_at": "2026-03-24T22:32:24Z",
+    "news_updated_at": "2026-03-26T13:50:55Z",
     "logo_url": "https://replit.com/public/icons/favicon-prompt-192.png"
   },
   {
@@ -27418,6 +27923,22 @@
       "signals": [
         {
           "platform": "x",
+          "url": "https://x.com/SakanaAILabs/status/2037118877612859545",
+          "title": "//prtimes.jp/main/html/rd/p/000000378.000120285.html\n\n本パートナーシップを通じて、三菱電機が培ってきた製造現場のドメインナレッジや膨大なデータと、Sakana AIの最先端のAI技術を掛",
+          "published_at": "2026-03-26T10:46:02Z",
+          "snippet": "三菱電機株式会社より出資を受けました。 https://t.co/soPguWa52S 本パートナーシップを通じて、三菱電機が培ってきた製造現場のドメインナレッジや膨大なデータと、Sakana AIの最先端のAI技術を掛け合わせます。これにより、製造業を中心とする基幹産業の高度化に資するソリューション提供を進めて",
+          "author": "@SakanaAILabs"
+        },
+        {
+          "platform": "x",
+          "url": "https://x.com/hardmaru/status/2037123533357408415",
+          "title": "We’re excited to announce a strategic partnership and investment from Mitsubishi Electric 🇯🇵⚡\n\nBy combining their deep d",
+          "published_at": "2026-03-26T11:04:32Z",
+          "snippet": "We’re excited to announce a strategic partnership and investment from Mitsubishi Electric 🇯🇵⚡ By combining their deep domain knowledge and vast amounts of data in the manufacturing sector with Saka...",
+          "author": "@hardmaru"
+        },
+        {
+          "platform": "x",
           "url": "https://x.com/SakanaAILabs/status/2036424778861650113",
           "title": "//sakana.ai/doc-to-lora/）\nhttps://xtech.nikkei.com/atcl/nxt/column/18/00001/11603/",
           "published_at": "2026-03-24T12:47:56Z",
@@ -27439,27 +27960,11 @@
           "published_at": "2026-03-25T16:24:47Z",
           "snippet": "I’m incredibly proud of The AI Scientist team for this milestone publication in @Nature. We started this project to explore if foundation models could execute the entire research lifecycle. Seeing ...",
           "author": "@hardmaru"
-        },
-        {
-          "platform": "x",
-          "url": "https://x.com/asciijpeditors/status/2036266759582523680",
-          "title": "Sakana AI、「Sakana Chat」公開　日本向けに調整したオープンウェイトモデルを採用 https://ascii.jp/elem/000/004/383/4383494/",
-          "published_at": "2026-03-24T02:20:02Z",
-          "snippet": "Sakana AI、「Sakana Chat」公開 日本向けに調整したオープンウェイトモデルを採用 https://t.co/Cpi1M6smO6",
-          "author": "@asciijpeditors"
-        },
-        {
-          "platform": "x",
-          "url": "https://x.com/GearoidReidy/status/2036287316411703679",
-          "title": "Q: How tailored is Sakana AI’s chatbot to the local market? \n\nA: one of its three default settings is Osaka-ben mode",
-          "published_at": "2026-03-24T03:41:43Z",
-          "snippet": "Q: How tailored is Sakana AI’s chatbot to the local market? A: one of its three default settings is Osaka-ben mode https://t.co/ZlV09XxltP",
-          "author": "@GearoidReidy"
         }
       ]
     },
-    "latest_news": "2026-03-24: 来自 X 的一手提及：在长上下文任务中实现接近完美的准确率，处理长度超过基础模型上下文窗口4倍的序列，同时将更新延迟从分钟级降至亚秒级，KV缓存内存消耗从12GB降至50MB以下",
-    "news_updated_at": "2026-03-24T12:47:56Z",
+    "latest_news": "2026-03-26: 来自 X 的一手提及：三菱電機から出資を受け製造業AIソリューションを共同開発、創業1年で日本最速ユニコーン評価額10億ドル達成。",
+    "news_updated_at": "2026-03-26T10:46:02Z",
     "website_source": "validated_variant",
     "latest_news_en": "2026-03-01: Direct mention from X: Awarded as the only Japanese company among 60 global companies in the Defense Innovation Challenge; a unicorn company (valuation exceeding $1 billion).",
     "needs_verification": false
@@ -31035,10 +31540,10 @@
     ],
     "rating": 4.6,
     "weekly_users": 6000000,
-    "trending_score": 84,
-    "final_score": 84,
-    "hot_score": 84,
-    "top_score": 84,
+    "trending_score": 88,
+    "final_score": 88,
+    "hot_score": 88,
+    "top_score": 88,
     "is_hardware": false,
     "source": "curated",
     "dark_horse_index": 2,
@@ -31046,7 +31551,7 @@
     "funding_total": "$1.1B+",
     "valuation": "$6B+",
     "why_matters": "欧洲AI领头羊，但已是知名产品",
-    "latest_news": "2026-03-25: 来自 X 的一手提及：NVIDIA CEO Jensen Huang与领导者会谈，支持open models；Le Chat发布两周下载超100万，在法国iOS免费榜第一。",
+    "latest_news": "2026-03-26: 来自 X 的一手提及：轻量级4B参数模型实现业界领先性能，模型延迟70ms支持实时语音交互，成本仅为竞品ElevenLabs/OpenAI的一小部分，可在智能手表/手机等边缘设备运行",
     "pricing": "免费试用, API可用",
     "first_seen": "2026-01-14T00:00:00Z",
     "last_seen": "2026-01-14T00:00:00Z",
@@ -31061,6 +31566,22 @@
     "needs_verification": false,
     "extra": {
       "signals": [
+        {
+          "platform": "x",
+          "url": "https://x.com/MistralAI/status/2037183028531810513",
+          "title": "Voxtral TTS is built for global applications supporting 9 languages and powering voice workflows.\n✅ Full audio intellige",
+          "published_at": "2026-03-26T15:00:57Z",
+          "snippet": "Voxtral TTS is built for global applications supporting 9 languages and powering voice workflows. ✅ Full audio intelligence: Works with Voxtral Transcribe for end-to-end speech-to-speech, or plugs ...",
+          "author": "@MistralAI"
+        },
+        {
+          "platform": "x",
+          "url": "https://x.com/MistralAI/status/2037183035121029375",
+          "title": "Check out our blog post for details: https://mistral.ai/news/voxtral-tts",
+          "published_at": "2026-03-26T15:00:59Z",
+          "snippet": "Check out our blog post for details: https://t.co/DQpwYCIgTl",
+          "author": "@MistralAI"
+        },
         {
           "platform": "x",
           "url": "https://x.com/nvidia/status/2036881555574923361",
@@ -31084,26 +31605,10 @@
           "published_at": "2026-03-16T20:30:37Z",
           "snippet": "🚀Announcing a strategic partnership with NVIDIA to co-develop frontier open-source AI models, combining Mistral AI’s frontier model architecture and full-stack AI offering with NVIDIA’s leading com...",
           "author": "@MistralAI"
-        },
-        {
-          "platform": "x",
-          "url": "https://x.com/MistralAI/status/2031838391847764010",
-          "title": "link in 🧵",
-          "published_at": "2026-03-11T21:03:17Z",
-          "snippet": "Mistral AI is headed to San Jose for @NVIDIA GTC! 🚀 We’re demoing our newest frontier models, sharing our vision for the future of enterprise AI, and unveiling some big news you won't want to miss....",
-          "author": "@MistralAI"
-        },
-        {
-          "platform": "x",
-          "url": "https://x.com/MistralAI/status/2032094267640869085",
-          "title": "Own your AI transformation.\n📍 Paris | May 28\n\nJoin us to learn how AI is transforming leading organisations and hear fro",
-          "published_at": "2026-03-12T14:00:02Z",
-          "snippet": "📢 Introducing the AI Now Summit, Mistral AI’s first-ever flagship event! 🎯 One day, one mission: Own your AI transformation. 📍 Paris May 28 Join us to learn how AI is transforming leading organisat...",
-          "author": "@MistralAI"
         }
       ]
     },
-    "news_updated_at": "2026-03-25T19:03:00Z"
+    "news_updated_at": "2026-03-26T15:00:57Z"
   },
   {
     "name": "ChatGPT Health",
@@ -33081,7 +33586,21 @@
     "logo_url": "https://openclaw.ai/apple-touch-icon.png",
     "logo_source": "html",
     "description_en": "Open-source autonomous AI assistant that runs on user-controlled machines and executes tasks across chat apps and tools.",
-    "why_matters_en": "OpenClaw momentum remains high this week with 200k+ GitHub-star references in ecosystem reports and fresh media coverage, marking sustained breakout traction beyond launch day."
+    "why_matters_en": "OpenClaw momentum remains high this week with 200k+ GitHub-star references in ecosystem reports and fresh media coverage, marking sustained breakout traction beyond launch day.",
+    "extra": {
+      "signals": [
+        {
+          "platform": "youtube",
+          "url": "https://www.youtube.com/watch?v=wfeiCZK0mNs",
+          "title": "Anthropic just released its OpenClaw Killer...",
+          "published_at": "2026-03-26T18:11:51Z",
+          "snippet": "Try SerpApi for free to get real-time search data from a single API - https://serpapi.com/?utm_source=fireship Anthropic just dropped Claude Computer Use to try and take down OpenClaw. But is it ac...",
+          "author": "Fireship"
+        }
+      ]
+    },
+    "latest_news": "2026-03-26: 来自 YouTube 的一手提及：生态中最亮的明星，病毒式传播的always-on消息功能，被Anthropic快速复制并超越。[1][2]",
+    "news_updated_at": "2026-03-26T18:11:51Z"
   },
   {
     "name": "Stitch by Google",
@@ -34134,7 +34653,7 @@
       }
     },
     "needs_verification": true,
-    "website_check_reason": "error:SSLError"
+    "website_check_reason": "error:ReadTimeout"
   },
   {
     "name": "Mirage",

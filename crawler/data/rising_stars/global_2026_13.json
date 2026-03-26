@@ -938,5 +938,360 @@
     "country_flag": "🇯🇵",
     "country_display": "🇯🇵 Japan",
     "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Scanner",
+    "website": "https://scanner.ai",
+    "description": "加州安全数据平台，支持团队以低成本云存储海量日志数据。",
+    "description_en": "CA-based security data platform for storing massive log volumes in low-cost cloud storage.",
+    "category": "other",
+    "region": "🇺🇸",
+    "funding_total": "$22M Series A",
+    "dark_horse_index": 2,
+    "criteria_met": [],
+    "why_matters": "完成2200万美元A轮融资，解决安全团队日志存储成本高的问题。",
+    "why_matters_en": "$22M Series A to enable low-cost cloud storage for massive security log data.",
+    "latest_news": "2026-03-23: 获2200万美元A轮融资",
+    "latest_news_en": "2026-03-23: Raised $22M Series A funding",
+    "source": "Joyce Shen",
+    "source_url": "https://www.joyceshen.com/joyce-shens-picks-musings-and-readings-in-ai-ml-march-23-2026/",
+    "company_country": "US",
+    "company_country_confidence": 0.9,
+    "confidence": 0.8,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-26T20:00:11.741188Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 7,
+          "top_story_id": "47523096",
+          "points": 2,
+          "comments": 1,
+          "engagement_depth_ratio": 0.5,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "try it!"
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.1874,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "neutral",
+      "confidence": 0.45
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-03-26",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "generative AI startup Series A",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Rivia",
+    "website": "https://rivia.ai",
+    "description": "苏黎世公司，使用agentic AI代理管理复杂临床试验运营。",
+    "description_en": "Zurich-based using agentic AI agents for managing complex clinical trial operations.",
+    "category": "agent",
+    "region": "🇨🇭",
+    "funding_total": "€13M",
+    "dark_horse_index": 2,
+    "criteria_met": [
+      "demand_signal_hn"
+    ],
+    "why_matters": "获1300万欧元融资，部署agentic AI优化临床试验管理。",
+    "why_matters_en": "€13M funding for agentic AI in complex clinical trial operations.",
+    "latest_news": "2026-03-23: 获1300万欧元融资",
+    "latest_news_en": "2026-03-23: Raised €13M funding",
+    "source": "NBot Tracker",
+    "source_url": "https://nbot.ai/curator/t5n8zmds/preview",
+    "company_country": "Switzerland",
+    "company_country_confidence": 0.95,
+    "confidence": 0.8,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-26T20:00:12.169937Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 14,
+          "top_story_id": "47502481",
+          "points": 9,
+          "comments": 17,
+          "engagement_depth_ratio": 1.8889,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "While Lambda still has a pretty static GUI at the moment. My plan is to build it into a fully interactive, editable UI on all kinds of document data.",
+            "A game-changing programming language has just emerged! It’s time to say goodbye to those outdated, inefficient, and syntactically cumbersome languages.",
+            "The feature set looks compelling. I'm genuinely eager to dive in.",
+            "I'm particular interested in large PDF parsing, for those table form PDF content. Biggest problem of PDF parsing is the relativity of content according to content that output not the PDF internal layout box sequence. Sometime parse result had content sequence off.",
+            "Both the set of features and the benchmark results look really impressive. Well done",
+            "Searching and narrowing down to doubts in this language in google with this name will be difficult :/",
+            "I know this isn't quite the same thing but how does this compare to nushell, which is my current goto for data processing and cli related stuff. It took provides a standard language and processes the various data formats it can read into tanks and records.",
+            "Hope it will change the way people work with data and documents.",
+            "Glad to hear that. Note that the language is still being developed, and there're bugs here and there. So bear with those bugs. But it should be fun to try it out.",
+            "Lambda's PDF support is still very limited at moment. I do plan to enhance it in next release."
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.5933,
+        "demand_tier": "medium",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.6
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-03-26",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "generative AI startup Series A",
+    "country_code": "CH",
+    "country_name": "Switzerland",
+    "country_flag": "🇨🇭",
+    "country_display": "🇨🇭 Switzerland",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Autumn",
+    "website": "https://www.ycombinator.com/launches/O7l-autumn-stripe-for-ai-startups",
+    "description": "专为AI初创公司设计的Stripe支付层，使计费集成10倍简化并管理增长中的订阅基础设施。",
+    "description_en": "Stripe layer for AI startups that makes billing integration 10x easier and manages subscription infra as you grow.",
+    "category": "finance",
+    "region": "🇺🇸",
+    "funding_total": "YC W26",
+    "dark_horse_index": 2,
+    "criteria_met": [
+      "YC/a16z backed",
+      "demand_signal_hn"
+    ],
+    "why_matters": "YC Launch YC项目，针对AI初创痛点解决Stripe集成复杂性，提供免费/付费计划管理和客户订阅数据库功能。",
+    "why_matters_en": "YC Launch YC project solving Stripe integration complexity for AI startups, handling free/paid plans and subscription DB.",
+    "latest_news": "2026-03-24: YC推出Autumn，Stripe for AI Startups",
+    "latest_news_en": "2026-03-24: YC launches Autumn, Stripe for AI Startups",
+    "source": "Y Combinator",
+    "source_url": "https://www.ycombinator.com/launches/O7l-autumn-stripe-for-ai-startups",
+    "company_country": "US",
+    "company_country_confidence": 0.9,
+    "confidence": 0.9,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-26T20:01:01.624537Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 1,
+          "top_story_id": "47473569",
+          "points": 1,
+          "comments": 6,
+          "engagement_depth_ratio": 6.0,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "From a non-technical user... I used Chat and Claude to tailor my resumes depending on the position and what not. I completely agree with your take on building \"experiences\" that you can recycle depending on the job. What I had personally found, is that it takes a while to dive through all my \"experiences\" and recall everything I did in specific jobs. I ended up going on voice mode and having a natural convo with the AI and have it ask me questions like a psychologist. We were able to extract a ton of experiences without the fatigue of having to figure that part out. I wonder if that would ever hit your users because this was my main barrier to even try free tools that did this.",
+            "Good stuff getting this shipped with no web experience, that's a real accomplishment. Used agents to build some internal security tooling at a previous role and found the high/low model split invaluable for keeping costs down and maintaining focus. The \"tutorial trap\" is spot on; seen that play out too many times. Most users just want to jump in and figure things out. If it isn't intuitive, they'll bounce. Prioritization of features is always key, especially when you can build things quickly.",
+            "The \"tutorial trap\" you hit is so relatable; I've found that users almost deliberately avoid tutorials, even when they're stuck. Your high/low model splitting for cost and performance is exactly the right strategy, I've seen that work wonders. On the voice mode idea, I think that's where the real value is for something like this; getting those unstated experiences out of people without them feeling like they're writing a report.",
+            "That is an excellent idea! I had experimented with chat based approaches but that was not very successful. Would you mind sharing your approach for the voice mode? I would love to understand it better!",
+            "Absolutely. I honestly worked out a big converation about indrustries that I wanted to explore and landed on a prompt like... you are my career coach... ask me any relevant questions that would help you clearly understand my strenghths, skills and experiences so we can use the STAR method later when building a resume for x industry. The chat was honestly pretty good at asking those questions once it had my resume. \"Have you ever had to fire someone? Why?\"- This led to uncovering a time when the team had to go and ended up in a prety good experience: \"Built a team of X people from stratch that led to X metric increasing etc. \" This was gold for me.",
+            "That is awesome! Thanks a lot! I will experiment with it and see what I can do."
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.5689,
+        "demand_tier": "medium",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.6
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-03-26",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "YC AI companies winter 2026",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Bubble Lab",
+    "website": "https://bubblelab.ai",
+    "description": "AI原生企业软件开发平台，用户用自然语言创建工作流。",
+    "description_en": "AI-native enterprise software development platform enabling workflows via natural language.",
+    "category": "agent",
+    "region": "🇺🇸",
+    "funding_total": "YC W26",
+    "dark_horse_index": 2,
+    "criteria_met": [
+      "YC/a16z backed"
+    ],
+    "why_matters": "YC W26批次公司，开源TypeScript原生代理工作流构建器，取代传统SaaS类别。",
+    "why_matters_en": "YC W26 company, open-source Typescript-native agentic workflow builder replacing traditional SaaS.",
+    "latest_news": "2026: YC W26批次入选",
+    "latest_news_en": "2026: Selected for YC W26 batch",
+    "source": "Extruct AI",
+    "source_url": "https://www.extruct.ai/data-room/ycombinator-companies-w26/",
+    "company_country": "US",
+    "company_country_confidence": 0.8,
+    "confidence": 0.85,
+    "needs_verification": true,
+    "extra": {
+      "website_recovered_from_source": true,
+      "website_recovered_url": "https://bubblelab.ai",
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-26T20:01:03.040002Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "categories": [
+      "other"
+    ],
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-03-26",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "YC AI companies winter 2026",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
   }
 ]
