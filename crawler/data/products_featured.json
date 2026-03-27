@@ -1,5 +1,801 @@
 [
   {
+    "name": "Asimov",
+    "description": "采集人类运动数据，用于训练人形机器人使其动作更自然流畅。",
+    "description_en": "Collects human movement data to train humanoid robots for more natural movements.",
+    "website": "https://asimov.ai/",
+    "logo_url": "",
+    "categories": [
+      "hardware"
+    ],
+    "dark_horse_index": 3,
+    "why_matters": "YC W26 Demo Day上入选16家最值得关注初创之一，聚焦人形机器人训练平台，反映投资者对机器人基础设施的兴趣。",
+    "why_matters_en": "Featured in TechCrunch's 16 most interesting YC W26 startups; focuses on humanoid robot training, signaling investor shift to robotics infrastructure.",
+    "funding_total": "YC W26",
+    "latest_news": "2026-03-26: YC W26 Demo Day展示",
+    "region": "🇺🇸",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country",
+    "source_region": "🇺🇸",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/03/26/16-of-the-most-interesting-startups-from-yc-w26-demo-day/",
+    "source_title": "",
+    "website_source": "redirect",
+    "latest_news_en": "2026-03-26: Showcased at YC W26 Demo Day",
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.6
+    },
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-27T19:47:15.445108Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 8,
+          "top_story_id": "47493194",
+          "points": 77,
+          "comments": 45,
+          "engagement_depth_ratio": 0.5844,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "I wasn’t aware of the map empire, thank you! Taking away some complexity comes at a price, and for some people, it’s hard to see that it outweighs the practicality.",
+            "Please don't editorialize titles unless they're clearly clickbait. \"Designing AI for Disruptive Science\" is a bit market-ey, but \"AI Risks 'Hypernormal' Science\" is just a trimmed section heading \"Current AI Training Risks Hypernormal Science\".",
+            "I find it funny how people are so concerned that AI cannot innovate, that AI coding agents only give the most bland solutions to any problem etc. when the next step in OpenAI's 5 stages to AGI is literally called \"Innovators\".",
+            "The article presumes that the models we have today describing everything could still be subject to a major paradigm shift. Maybe they could be, but it seems pretty unlikely. The edges of a lot of scientific understanding are now past practical applicability. The edges are essentially models of things impossible to test. In fact, relativity was only recently fully backed up with experimental data.",
+            "My hot take is that mathematical and scientific 'soundness' is ultimately more of an aesthetic preference than an objective quality of reality. Good science makes sense to humans, and 'what makes sense' is ultimately what fits satisfyingly in your brain. There's nothing inherently wrong with an enormous epicycle model of reality from the perspective of the God of Math; so long as your formal system is consistent and expressive enough to represent everything then meh, it's a model. But the model that humans want to elevate to canonical status has far stricter requirements, and ultimately it's the one which the majority of sufficiently credentialed tastemakers decide is 'best'. Parsimony works",
+            "What's more alarming isn't that AI is limited to existing domain data, it's that when people push it to deviate outside those known data points it confidently hallucinates nonsense.",
+            "I got stuck for a minute on the caption \"Harry Beck’s 1933 map of the London Underground\" to: https://substackcdn.com/image/fetch/$s_!VsWm!,f_auto,q_auto:... which contains Heathrow Terminals 1, 2, 3, 4 & 5 on the Picadilly line. For about 15 seconds I imagined a world where Heathrow has had 5 terminals since 1933, then I read the map itself: \"Recreated by Arthurs D\". Phew. Awesome example of improving information conveyance through abstractions though!",
+            "> AI could repeat this pattern at a larger scale — generating faster results within the existing paradigm, while the structural conditions for disruptive science remain unchanged or worsen. Worsen. LLMs discard/loses and mixes data on their statistical \"compression\" to create their vectorial database model. Across the time, successive feed back will be homologous to create a jpg image sourcing a jpg image that was created from another jpg image, through this \"gaussian\" loop. Those faster (but worst) results will degrade real valuable data and science at a speed/rate that will statistically discard good done science on a regular basis, systematically. IMHO.",
+            "The piano accompaniment and human narration are a nice touch.",
+            "meh. I would be happier with this article if it demonstrated familiarity with the source material. \"Del Rigor en la Ciencia\" (On Exactitude in Science) was Borges (hilarious) investigation into Korzybski's General Semantics, a fact that was surprisingly absent from the text. Borges implied \"the map is not the territory,\" but Korzybski actually came out in said it a decade or so before Borges wrote the story in question. Understanding the themes of Borges story is greatly informed by a passing familiarity with Korzybski's work. WorldCat tells me the 4th edition of \"Science and Sanity\" is widely held by libraries, and if you're interested in the assertions made in this article, you might enjoy"
+          ],
+          "llm_summary_used": true,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.3164,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "discovered_at": "2026-03-27",
+    "first_seen": "2026-03-27T19:47:24.793112Z",
+    "final_score": 60,
+    "trending_score": 54,
+    "needs_verification": false
+  },
+  {
+    "name": "Copperlane",
+    "description": "AI驱动的抵押贷款初创公司，帮助用户快速处理贷款申请和审批流程。",
+    "description_en": "AI-powered mortgage startup that streamlines loan applications and approvals for users.",
+    "website": "https://www.copperlane.ai/",
+    "logo_url": "https://www.copperlane.ai/favicon.ico?favicon.9db55e18.ico",
+    "categories": [
+      "finance"
+    ],
+    "dark_horse_index": 2,
+    "why_matters": "宾夕法尼亚大学沃顿和工程专业大四生Brianna Lin与普林斯顿学生Athan Zhang联合创办，通过YC W26批次加速器入选，针对抵押贷款市场推出AI自动化解决方案。",
+    "why_matters_en": "Founded by UPenn Wharton/Engineering senior Brianna Lin and Princeton student Athan Zhang, accepted into YC W26 batch for AI mortgage processing.",
+    "funding_total": "YC W26",
+    "latest_news": "2026-03-26: 通过Y Combinator W26批次推出",
+    "region": "🇺🇸",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country",
+    "source_region": "🇺🇸",
+    "source": "The Daily Pennsylvanian",
+    "source_url": "https://www.thedp.com/article/2026/03/penn-management-technology-startup-y-combinator-accelerator",
+    "source_title": "",
+    "website_source": "redirect",
+    "latest_news_en": "2026-03-26: Launched through Y Combinator W26 batch",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-27T19:47:15.148974Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-03-27",
+    "first_seen": "2026-03-27T19:47:15.388020Z",
+    "final_score": 40,
+    "trending_score": 36,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
+    "name": "Kandou AI",
+    "description": "开发用于AI芯片的铜基互连技术，帮助优化AI硬件连接效率。",
+    "description_en": "Developer of copper-based interconnects for AI chips to enhance connectivity efficiency.",
+    "website": "https://kandou.ai/",
+    "logo_url": "https://kandou.ai/wp-content/themes/kandou/assets/images/favicon.svg",
+    "categories": [
+      "hardware"
+    ],
+    "dark_horse_index": 5,
+    "why_matters": "融资2.25亿美元，估值4亿美元，专注AI芯片铜基互连技术，解决高性能计算瓶颈。",
+    "why_matters_en": "Raised $225M at $400M valuation for copper-based interconnects targeting AI chip performance bottlenecks.",
+    "funding_total": "$225M",
+    "latest_news": "2026-03-23: 完成2.25亿美元融资",
+    "region": "Unknown",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown",
+    "source_region": "🇺🇸",
+    "source": "Cyber Daily Report",
+    "source_url": "https://cyberdailyreport.com/news/18f8611a4f5bf710af7ed00d7b3fd6ff",
+    "source_title": "",
+    "website_source": "redirect",
+    "latest_news_en": "2026-03-23: Raised $225M in funding",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-27T19:47:00.076986Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-03-27",
+    "first_seen": "2026-03-27T19:47:00.315202Z",
+    "final_score": 100,
+    "trending_score": 90,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
+    "name": "Interloom",
+    "description": "Interloom是一家AI初创公司，开发平台捕捉专家知识并供AI代理使用。",
+    "description_en": "Interloom is an AI startup developing a platform that captures expert knowledge for use by AI agents.",
+    "website": "https://interloom.com/en",
+    "logo_url": "https://interloom.com/images/favicon.ico",
+    "categories": [
+      "agent"
+    ],
+    "dark_horse_index": 4,
+    "why_matters": "Interloom完成1420万欧元（1650万美元）Seed轮融资，由DN Capital领投，Bek Ventures和Air Street Capital跟投，用于推进专家知识捕捉平台开发。",
+    "why_matters_en": "Interloom raised €14.2M ($16.5M) in Seed funding led by DN Capital, with Bek Ventures and Air Street Capital, to advance its expert knowledge capture platform for AI agents.",
+    "funding_total": "$14.2M Seed",
+    "latest_news": "2026-03-26: 完成1420万欧元Seed融资",
+    "region": "🇩🇪",
+    "country_code": "DE",
+    "country_name": "Germany",
+    "country_flag": "🇩🇪",
+    "country_display": "🇩🇪 Germany",
+    "country_source": "explicit:company_country",
+    "source_region": "🇪🇺",
+    "source": "munich-startup.de",
+    "source_url": "https://www.munich-startup.de/118713/interloom-seed-finanzierung/",
+    "source_title": "",
+    "website_source": "redirect",
+    "latest_news_en": "2026-03-26: Closed €14.2M Seed round",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-27T19:46:10.699888Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-03-27",
+    "first_seen": "2026-03-27T19:46:10.934097Z",
+    "final_score": 80,
+    "trending_score": 72,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
+    "name": "Cancilico",
+    "description": "Cancilico是一家专注于AI辅助骨髓诊断的医疗初创公司，针对血液癌症诊断需求。",
+    "description_en": "Cancilico is a medtech startup specializing in AI-supported bone marrow diagnostics for blood cancer.",
+    "website": "https://cancilico.com/",
+    "logo_url": "https://cancilico.com/wp-content/uploads/2024/09/cropped-cancilico_zentriert_ohne_claim_invertiert-1to1-192x192.png",
+    "categories": [
+      "healthcare"
+    ],
+    "dark_horse_index": 3,
+    "why_matters": "Cancilico启动250万欧元融资轮，用于扩展AI骨髓诊断技术，以应对全球血液学专家短缺和诊断案例激增的挑战。",
+    "why_matters_en": "Cancilico launched a €2.5M funding round to scale AI-powered bone marrow diagnostics amid global hematology specialist shortages and rising case complexity.",
+    "funding_total": "$2.5M",
+    "latest_news": "2026-03-27: 启动2.5百万欧元融资轮",
+    "region": "Unknown",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown",
+    "source_region": "🇪🇺",
+    "source": "analytica-world.com",
+    "source_url": "https://www.analytica-world.com/de/news/1187946/cancilicostellt-2-5-mio-euro-finanzierungsrunde-zur-skalierung-ki-gestuetzter-knochenmarkdiagnostik-auf.html",
+    "source_title": "",
+    "website_source": "redirect",
+    "latest_news_en": "2026-03-27: Launched €2.5M funding round",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-27T19:46:10.421101Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-03-27",
+    "first_seen": "2026-03-27T19:46:10.642354Z",
+    "final_score": 60,
+    "trending_score": 54,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
+    "name": "Kini",
+    "description": "Kini是一家德国HR科技初创公司，提供全数字化数据基础设施，优化Talent渠道、代理和申请人管理系统的工作流程。",
+    "description_en": "Kini is a German HR-tech startup offering a fully digitalized data infrastructure that optimizes workflows for talent channels, agencies, and applicant management systems.",
+    "website": "https://kini.com/",
+    "logo_url": "https://kini.com/favicon.ico",
+    "categories": [
+      "other"
+    ],
+    "dark_horse_index": 2,
+    "why_matters": "2023年创立的Kini获得bmh Beteiligungs-Managementgesellschaft Hessen mbH、Vimajo及知名天使投资人如ESADE教授Dr. Jan Brinckmann支持的高六位数Pre-Seed融资，用于推进HR领域数字化转型。",
+    "why_matters_en": "Founded in 2023, Kini secured high six-figure Pre-Seed funding from bmh Beteiligungs-Managementgesellschaft Hessen mbH, Vimajo, and notable angels like ESADE professor Dr. Jan Brinckmann, to drive HR digitalization.",
+    "funding_total": "高六位数欧元 Pre-Seed",
+    "latest_news": "2026-03-24: 宣布完成Pre-Seed融资",
+    "region": "🇩🇪",
+    "country_code": "DE",
+    "country_name": "Germany",
+    "country_flag": "🇩🇪",
+    "country_display": "🇩🇪 Germany",
+    "country_source": "explicit:company_country",
+    "source_region": "🇪🇺",
+    "source": "starting-up.de",
+    "source_url": "https://www.starting-up.de/news/news-investments/kini-hr-tech-start-up-sichert-sich-sechsstellige-pre-seed-finanzierung.html",
+    "source_title": "",
+    "website_source": "redirect",
+    "latest_news_en": "2026-03-24: Announced Pre-Seed funding round",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-27T19:46:10.066035Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-03-27",
+    "first_seen": "2026-03-27T19:46:10.362406Z",
+    "final_score": 40,
+    "trending_score": 36,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
+    "name": "Zaimo.ai",
+    "description": "企业管理AI代理工具，支持経営管理和自动化决策。",
+    "description_en": "AI agent for business management and operational decision-making automation.",
+    "website": "https://www.zaimo.ai/",
+    "logo_url": "https://zaimo.ai/favicon.ico",
+    "categories": [
+      "agent"
+    ],
+    "dark_horse_index": 2,
+    "why_matters": "Zaimo株式会社近期出现在2026年3月16-20日日本startup融资汇总中，总融资活跃于105亿日元生态，专注経営管理AI代理属企业级创新。",
+    "why_matters_en": "Featured in Japan's March 16-20, 2026 startup funding summary amid 105亿日元 total raises; focuses on enterprise management AI agents.",
+    "funding_total": "未知（近期活跃于日本AI融资周报）",
+    "latest_news": "2026-03：列入周融资报告",
+    "region": "🇯🇵",
+    "country_code": "JP",
+    "country_name": "Japan",
+    "country_flag": "🇯🇵",
+    "country_display": "🇯🇵 Japan",
+    "country_source": "explicit:company_country",
+    "source_region": "🇯🇵🇰🇷",
+    "source": "note.com/zaimo_ai",
+    "source_url": "https://note.com/zaimo_ai/n/n464bef95a6da",
+    "source_title": "",
+    "website_source": "validated_variant",
+    "latest_news_en": "March 2026: Included in weekly funding summary",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-27T19:45:19.540586Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-03-27",
+    "first_seen": "2026-03-27T19:45:19.782646Z",
+    "final_score": 40,
+    "trending_score": 36,
+    "needs_verification": false,
+    "logo_source": "favicon"
+  },
+  {
+    "name": "NeoSapien Neo 1",
+    "description": "Screen-free AI pendant wearable that listens to conversations, transcribes them, and generates organized notes with action items",
+    "description_en": "",
+    "website": "https://shop.neosapien.xyz/",
+    "logo_url": "https://shop.neosapien.xyz/cdn/shop/t/4/assets/favicon.ico?v=41847699277618938501749210453",
+    "categories": [
+      "hardware"
+    ],
+    "dark_horse_index": 4,
+    "why_matters": "India's first AI-native wearable with novel pendant form factor, supports 40+ Indic languages, solves specific productivity use case (meeting transcription), already shipping with thousands of monthly sales",
+    "why_matters_en": "",
+    "funding_total": "$2M",
+    "latest_news": "Launched March 2025, featured on Shark Tank India Season 4, units stolen at 2026 India AI Impact Summit indicating market interest",
+    "region": "🇮🇳",
+    "country_code": "IN",
+    "country_name": "India",
+    "country_flag": "🇮🇳",
+    "country_display": "🇮🇳 India",
+    "country_source": "explicit:company_country",
+    "source_region": "🇸🇬",
+    "source": "Business Standard",
+    "source_url": "https://www.business-standard.com/technology/tech-reviews/neosapien-neo-1-ai-pendant-review-price-features-india-126030200848_1.html",
+    "source_title": "",
+    "website_source": "redirect",
+    "latest_news_en": "",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-27T19:42:19.810355Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-03-27",
+    "first_seen": "2026-03-27T19:42:20.064137Z",
+    "final_score": 80,
+    "trending_score": 72,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
+    "name": "Conntour",
+    "description": "Conntour 构建安全视频系统的 AI 搜索引擎，帮助快速检索视频内容。",
+    "description_en": "Conntour builds an AI search engine for security video systems to quickly retrieve video content.",
+    "website": "https://www.conntour.com/",
+    "logo_url": "https://cdn.prod.website-files.com/69500347184f7fad9df81549/69860198ce15c34a0bcb8dc1_256.png",
+    "categories": [
+      "other"
+    ],
+    "dark_horse_index": 3,
+    "why_matters": "获 General Catalyst、Y Combinator 领投 $7M 种子轮，72 小时内关闭融资，安排 90 场会议显示强劲 traction。",
+    "why_matters_en": "Raised $7M seed from General Catalyst, YC in 72 hours after 90 meetings, showing strong early traction.",
+    "funding_total": "$7M Seed",
+    "latest_news": "2026-03: 完成 $7M 种子轮融资",
+    "region": "🇺🇸",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country",
+    "source_region": "🇺🇸",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/03/26/conntour-raises-7m-from-general-catalyst-yc-to-build-an-ai-search-engine-for-security-video-systems/",
+    "source_title": "",
+    "website_source": "validated_variant",
+    "latest_news_en": "2026-03: Closed $7M seed round",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-27T19:42:00.610615Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-03-27",
+    "first_seen": "2026-03-27T19:42:00.840631Z",
+    "final_score": 60,
+    "trending_score": 54,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
+    "name": "Deccan AI",
+    "description": "Deccan AI 提供 AI 模型后训练数据和评估服务，利用印度专家团队满足训练需求。",
+    "description_en": "Deccan AI supplies post-training data and evaluation for AI models using India-based expert workforce.",
+    "website": "https://www.deccan.ai/",
+    "logo_url": "https://cdn.prod.website-files.com/66d017bee914d25aa0a45529/6750363d7b9c1eacdb536b3d_Frame%20122.png",
+    "categories": [
+      "other"
+    ],
+    "dark_horse_index": 4,
+    "why_matters": "获 A91 Partners 领投 $25M 全股权 A 轮，针对 AI 模型训练后数据需求，利用印度专家团队快速扩展。",
+    "why_matters_en": "Raised $25M all-equity Series A led by A91 Partners, addressing growing demand for AI model post-training data via India-based experts.",
+    "funding_total": "$25M Series A",
+    "latest_news": "2026-03: 完成 $25M Series A 融资",
+    "region": "Unknown",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown",
+    "source_region": "🇺🇸",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/03/25/deccan-ai-raises-25m-as-ai-training-push-relies-on-india-based-workforce/",
+    "source_title": "",
+    "website_source": "redirect",
+    "latest_news_en": "2026-03: Closed $25M Series A",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-27T19:42:00.244405Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-03-27",
+    "first_seen": "2026-03-27T19:42:00.553808Z",
+    "final_score": 80,
+    "trending_score": 72,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
     "name": "Bubble Lab",
     "description": "AI原生企业软件开发平台，用户用自然语言创建工作流。",
     "description_en": "AI-native enterprise software development platform enabling workflows via natural language.",
@@ -22760,14 +23556,22 @@
     "website_source": "redirect",
     "discovered_at": "2026-02-10",
     "first_seen": "2026-02-10T08:38:36.417933Z",
-    "final_score": 88,
-    "trending_score": 80,
+    "final_score": 90,
+    "trending_score": 82,
     "logo_source": "html",
     "description_en": "Enterprise-level large language model platform, focusing on sovereign AI and secure deployment",
     "why_matters_en": "Founded by Google Brain alumni, it will reach $100 million ARR in 2025, with a valuation of $7B. It focuses on enterprise and sovereign AI rather than consumer chatbots. It is a representative of Canadian AI unicorns and has received strategic investments from Microsoft, Nvidia, etc.",
     "needs_verification": false,
     "extra": {
       "signals": [
+        {
+          "platform": "x",
+          "url": "https://x.com/cohere/status/2037159450876760274",
+          "title": "“We’re genuinely impressed with what Cohere has built with Transcribe. The speed is exceptional - turning minutes of aud",
+          "published_at": "2026-03-26T13:27:16Z",
+          "snippet": "“We’re genuinely impressed with what Cohere has built with Transcribe. The speed is exceptional - turning minutes of audio into usable transcripts in seconds - and it immediately unlocks new possib...",
+          "author": "@cohere"
+        },
         {
           "platform": "x",
           "url": "https://x.com/cohere/status/2037159388717158804",
@@ -22802,8 +23606,8 @@
         }
       ]
     },
-    "latest_news": "2026-03-26: 来自 X 的一手提及：Cohere首个speech-to-text模型发布，推动企业级speech intelligence平台North的发展。",
-    "news_updated_at": "2026-03-26T13:27:01Z"
+    "latest_news": "2026-03-26: 来自 X 的一手提及：HuggingFace Open ASR排行榜#1，平均WER 5.42%，处理525分钟音频仅需1分钟，速度和准确率领先Whisper Large v3等竞品。",
+    "news_updated_at": "2026-03-26T13:27:16Z"
   },
   {
     "name": "Gather AI",
@@ -27295,7 +28099,7 @@
     "funding_total": "$400M",
     "dark_horse_index": 5,
     "why_matters": "估值达 $9B，Georgian 领投，AI 编程平台龙头，让非程序员也能用自然语言创建软件",
-    "latest_news": "2026-03-26: 来自 X 的一手提及：Replit的Agent 4是AI应用构建工具的最新演进，围绕设计自由、协作构建、发布任意内容和加速移动四大支柱，吸引4000名构建者参与Buildathon。",
+    "latest_news": "2026-03-27: 来自 X 的一手提及：吸引超过4700人参与Buildathon，奖金超过50K美元，展示快速增长社区。[1][4]",
     "discovered_at": "2026-01-16",
     "source": "Bloomberg",
     "categories": [
@@ -27307,6 +28111,14 @@
     "latest_news_en": "2026-01: Nearly completed $400M in new round of financing, valuation approximately tripled to $9B",
     "extra": {
       "signals": [
+        {
+          "platform": "x",
+          "url": "https://x.com/MannyBernabe/status/2037534489023324474",
+          "title": "We have over 4,700 people participating in the Agent 4 Buildathon. Amazing!🤯\n\nThat's the good news. The bad news is that",
+          "published_at": "2026-03-27T14:17:32Z",
+          "snippet": "We have over 4,700 people participating in the Agent 4 Buildathon. Amazing!🤯 That's the good news. The bad news is that @raymmar, @Franciscocrz and I have way more submissions to go through. But th...",
+          "author": "@MannyBernabe"
+        },
         {
           "platform": "x",
           "url": "https://x.com/MannyBernabe/status/2037165401281327300",
@@ -27338,18 +28150,10 @@
           "published_at": "2026-03-23T16:01:12Z",
           "snippet": "We went live from HQ to show you exactly how Agent 4 was built, and the people who built it said it best. Here are the highlights from Part 2. https://t.co/aKPuy8indZ",
           "author": "@Replit"
-        },
-        {
-          "platform": "x",
-          "url": "https://x.com/raymmar/status/2036111704199770302",
-          "title": "Starting March 24th at 12pm EST, I'll be leading the @Replit Agent 4 Buildathon alongside @Franciscocrz and @MannyBernab",
-          "published_at": "2026-03-23T16:03:54Z",
-          "snippet": "Starting March 24th at 12pm EST, I'll be leading the @Replit Agent 4 Buildathon alongside @Franciscocrz and @MannyBernabe. Here's what to expect: &gt; Go from idea-to-launch in just 3 weeks! 🚀 &gt;...",
-          "author": "@raymmar"
         }
       ]
     },
-    "news_updated_at": "2026-03-26T13:50:55Z",
+    "news_updated_at": "2026-03-27T14:17:32Z",
     "logo_url": "https://replit.com/public/icons/favicon-prompt-192.png"
   },
   {
@@ -31144,10 +31948,10 @@
     ],
     "rating": 4.7,
     "weekly_users": 2500000,
-    "trending_score": 71,
-    "final_score": 71,
-    "hot_score": 71,
-    "top_score": 71,
+    "trending_score": 73,
+    "final_score": 73,
+    "hot_score": 73,
+    "top_score": 73,
     "is_hardware": false,
     "source": "curated",
     "dark_horse_index": 3,
@@ -31155,7 +31959,7 @@
     "funding_total": "$30M+",
     "valuation": "",
     "why_matters": "开源自动化标杆，AI Agent时代复兴",
-    "latest_news": "AI节点持续扩展",
+    "latest_news": "2026-03-26: 来自 X 的一手提及：在AI Agents Buildathon中作为官方推荐工具，被用于Track 2 AI Agent Builder赛道",
     "pricing": "免费自托管, Cloud $20/月起",
     "first_seen": "2026-01-14T00:00:00Z",
     "last_seen": "2026-01-14T00:00:00Z",
@@ -31167,7 +31971,20 @@
     "why_matters_en": "Open source automation benchmark, renaissance of AI Agent era",
     "latest_news_en": "AI nodes continue to expand",
     "website_source": "redirect",
-    "needs_verification": false
+    "needs_verification": false,
+    "extra": {
+      "signals": [
+        {
+          "platform": "x",
+          "url": "https://x.com/MannyBernabe/status/2037165401281327300",
+          "title": "4,000 builders joined the Agent 4 Buildathon and Week 1 is wrapping up.\n\nTomorrow we're going live to announce the Week",
+          "published_at": "2026-03-26T13:50:55Z",
+          "snippet": "4,000 builders joined the Agent 4 Buildathon and Week 1 is wrapping up. Tomorrow we're going live to announce the Week 1 winners, showcase the coolest projects, and chat with builders about what th...",
+          "author": "@MannyBernabe"
+        }
+      ]
+    },
+    "news_updated_at": "2026-03-26T13:50:55Z"
   },
   {
     "name": "Aaru",
@@ -31271,8 +32088,8 @@
     "source": "Bloomberg Technology",
     "discovered_at": "2026-01-20",
     "first_seen": "2026-01-20T02:23:33.981939Z",
-    "final_score": 40,
-    "trending_score": 36,
+    "final_score": 42,
+    "trending_score": 38,
     "category": "hardware",
     "hardware_category": "robotics",
     "is_hardware": true,
@@ -31280,7 +32097,21 @@
     "logo": "",
     "logo_source": "manual_verified_2026-03-03",
     "description_en": "The 4-foot-2-inch, 77-pound consumer-grade humanoid robot agent launched by Hangzhou Unitree supports functions such as running, jumping, and fetching coffee.",
-    "why_matters_en": "As a pioneer of consumer robots in China, it sold the G1 humanoid agent on its website for US$16,000, demonstrating the flexibility of multi-joint motors to support the execution of daily tasks and leading China's embodied AI consumer market."
+    "why_matters_en": "As a pioneer of consumer robots in China, it sold the G1 humanoid agent on its website for US$16,000, demonstrating the flexibility of multi-joint motors to support the execution of daily tasks and leading China's embodied AI consumer market.",
+    "extra": {
+      "signals": [
+        {
+          "platform": "x",
+          "url": "https://x.com/UnitreeRobotics/status/2037440578275946551",
+          "title": "🚀 Unitree open-sources UnifoLM-WBT-Dataset — a high-quality real-world humanoid robot whole-body teleoperation (WBT) dat",
+          "published_at": "2026-03-27T08:04:22Z",
+          "snippet": "🚀 Unitree open-sources UnifoLM-WBT-Dataset — a high-quality real-world humanoid robot whole-body teleoperation (WBT) dataset for open environments. 🥳Publicly available since March 5, 2026, the data...",
+          "author": "@UnitreeRobotics"
+        }
+      ]
+    },
+    "latest_news": "2026-03-27: 来自 X 的一手提及：计划IPO募资约6亿美元，是中国具身AI人形机器人行业风向标，全球最早公开零售高性能机器人。",
+    "news_updated_at": "2026-03-27T08:04:22Z"
   },
   {
     "name": "Listen Labs",
