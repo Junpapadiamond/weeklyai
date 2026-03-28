@@ -1787,5 +1787,99 @@
     "country_flag": "",
     "country_display": "Unknown",
     "country_source": "unknown"
+  },
+  {
+    "name": "Render",
+    "website": "https://render.com",
+    "description": "云基础设施初创公司，2026年2月成为新独角兽，估值14亿美元。",
+    "description_en": "Cloud infrastructure startup that became a new unicorn in Feb 2026 at $1.4B valuation.",
+    "category": "hardware",
+    "region": "🇺🇸",
+    "funding_total": "$1.4B valuation",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "2026年2月由Georgian领投成为独角兽，估值14亿美元，参与者包括Bessemer和General Catalyst。",
+    "why_matters_en": "Feb 2026 new unicorn at $1.4B valuation led by Georgian with Bessemer, General Catalyst; strong infrastructure play.",
+    "latest_news": "2026-02: 估值14亿美元新独角兽",
+    "latest_news_en": "Feb 2026: $1.4B valuation new unicorn",
+    "source": "CDP Center",
+    "source_url": "https://www.cdp.center/post/startup-report-venture-funds-deals-and-trends-february-2026",
+    "company_country": "US",
+    "company_country_confidence": 0.7,
+    "confidence": 0.8,
+    "is_hardware": true,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-28T19:36:51.846084Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 14,
+          "top_story_id": "47529306",
+          "points": 96,
+          "comments": 28,
+          "engagement_depth_ratio": 0.2917,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "Have you considered, since you can extract the images via the mask, selectively inverting them? One can fairly reliably use a small NN to classify images by whether they should be inverted or just dimmed, and I've used it with great success for years now on my site: https://invertornot.com/ https://gwern.net/invertornot --- On a side note, it'd be nice to have an API or something to let one 'compile' a PDF to dark-mode version PDF. Ephemeral browser-based is a drawback as often as a benefit.",
+            "As a PhD student doing my fair share of midnight paper-reading I think I'm the exact target market - thank you for sharing!",
+            "Doesn't work for me with this document: https://ajsonline.org/article/63137-double-star-discoveries-... I just get a dark border around a block of white page with black text.",
+            "This is shockingly good, even better saved to iPad Pro Home Screen as an app with beautiful UX. Hey, HN, look at what you don't need an App Store approval for! // Commenting from my iPad in dark mode, using Noir extension so HN is in dark mode, reading Shifty Shades of Grey - The different risk profiles of the dark fleet explained in dark mode in the veil pwa app, which was distributed as simply as: visit app, save to Home Screen (the original vision for apps).",
+            "This is cool! I use Zotero [1] to manage/read/annotate all my papers and it's got a built-in PDF inverter that works pretty well. I'll take Veil out for a spin some time and see if it works well in places where Zotero's algorithm fails. [1]: https://zotero.org",
+            "This is really cool. Most dark mode tools break images, so this solves a real problem. I like that it runs locally too. Starred it",
+            "Love this. Everything should be dark mode capable. Save the eyes!",
+            "\"Reading in the factory the books that eventually helped me get out of it\" — that's a hell of a backstory for a side project, and it shows. The best tools come from a real, specific frustration rather than a market gap someone identified on a spreadsheet. The 0.86 inversion value being tuned for hours of actual reading rather than just looking right in a demo is exactly that kind of detail.",
+            "How would it work on e-Ink Displays, can we jailbreak kindle and readers to add it like a plugin?",
+            "This is cool. My eyes hurt on a lot of pdfs."
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.1703,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.6
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-03-28",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI unicorn startup valuation 2026",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
   }
 ]
