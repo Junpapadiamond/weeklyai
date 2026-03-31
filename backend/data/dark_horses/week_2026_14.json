@@ -228,5 +228,84 @@
     "country_flag": "🇰🇷",
     "country_display": "🇰🇷 South Korea",
     "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Sycamore",
+    "website": "https://sycamore.ai",
+    "description": "帮助企业构建、安全和编排AI代理的初创公司，由前Coatue合伙人创立。",
+    "description_en": "Startup helping enterprises build, secure, and orchestrate AI agents, founded by former Coatue partner.",
+    "category": "agent",
+    "region": "🇺🇸",
+    "funding_total": "$65M seed",
+    "dark_horse_index": 5,
+    "criteria_met": [
+      "funding_signal",
+      "founder_background"
+    ],
+    "why_matters": "前Coatue合伙人创立，种子轮即获Coatue和Lightspeed领投6500万美元，天使包括前OpenAI首席科学家Bob McGrew和Intel CEO Lip-Bu Tan，显示顶级人脉和企业AI代理赛道强势背书。",
+    "why_matters_en": "Founded by ex-Coatue partner, $65M seed led by Coatue/Lightspeed with angels like ex-OpenAI CSO Bob McGrew and Intel CEO Lip-Bu Tan, signaling elite network and strong enterprise AI agent momentum.",
+    "latest_news": "2026-03-30: 宣布6500万美元种子轮融资",
+    "latest_news_en": "2026-03-30: Announced $65M seed funding",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/03/30/former-coatue-partner-raises-huge-65m-seed-for-enterprise-ai-agent-startup/",
+    "company_country": "US",
+    "company_country_confidence": 0.9,
+    "confidence": 0.95,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-31T19:58:04.625370Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-03-31",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:techcrunch.com AI startup funding",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
   }
 ]
