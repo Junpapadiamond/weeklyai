@@ -786,5 +786,362 @@
     "country_flag": "🇺🇸",
     "country_display": "🇺🇸 United States",
     "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Arago",
+    "website": "https://arago.ai",
+    "description": "巴黎半导体初创公司，挑战Nvidia，已完成首款芯片tape out，准备1.5亿美元A轮融资。",
+    "description_en": "Paris-based semiconductor startup challenging Nvidia, taped out first chip, preparing $150M Series A.",
+    "category": "hardware",
+    "region": "🇫🇷",
+    "funding_total": "$150M Series A (preparing)",
+    "dark_horse_index": 5,
+    "criteria_met": [
+      "funding_signal",
+      "category_innovation"
+    ],
+    "why_matters": "作为Nvidia挑战者完成首芯片tape out里程碑，正筹备1.5亿美元A轮以扩大生产，是欧洲半导体AI硬件新星。",
+    "why_matters_en": "Milestone first chip tape out at GlobalFoundries, preparing $150M Series A to ramp production as Nvidia challenger.",
+    "latest_news": "2026-04-08: 完成首芯片tape out",
+    "latest_news_en": "2026-04-08: Taped out first chip",
+    "source": "Sifted",
+    "source_url": "https://sifted.eu/articles/arago-tape-out-globalfoundries",
+    "company_country": "France",
+    "company_country_confidence": 0.95,
+    "confidence": 0.9,
+    "is_hardware": true,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-09T20:03:32.595491Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 1,
+          "top_story_id": "47692097",
+          "points": 2,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "HN 暂无足够评论样本用于形成社区结论。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "neutral",
+      "confidence": 0.3
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-04-09",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:sifted.eu AI funding",
+    "country_code": "FR",
+    "country_name": "France",
+    "country_flag": "🇫🇷",
+    "country_display": "🇫🇷 France",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Meta Ray-Ban Display",
+    "website": "https://www.meta.com/tw/ai-glasses/meta-ray-ban-display/",
+    "description": "首款带屏幕的 AI 智能眼镜，采用彩色光波导 HUD 和 Neural Band 腕带控制",
+    "category": "hardware",
+    "hardware_type": "innovative",
+    "form_factor": "smart_glasses_with_display",
+    "use_case": "hands_free_productivity",
+    "innovation_traits": [
+      "non_traditional_form",
+      "new_form_factor",
+      "wearable",
+      "gesture",
+      "voice_first",
+      "always_on",
+      "proactive_ai"
+    ],
+    "region": "🇺🇸",
+    "funding_total": "unknown",
+    "price": "$799",
+    "dark_horse_index": 5,
+    "criteria_met": [
+      "form_innovation",
+      "use_case_clear",
+      "social_buzz",
+      "commercial_viability"
+    ],
+    "why_matters": "Meta 首款带显示屏的 AI 眼镜，通过镜片内 HUD 和神经腕带实现完全手机解放的交互体验。已销售超 100 万台，证明消费级 AR 眼镜市场可行性",
+    "latest_news": "2026-04: 销售超 100 万台；EU 市场因电池和 AI 合规被延期",
+    "source": "Meta Official Store (Taiwan)",
+    "source_url": "https://www.meta.com/tw/ai-glasses/meta-ray-ban-display/",
+    "company_country": "US",
+    "company_country_confidence": 0.95,
+    "confidence": 0.92,
+    "is_hardware": true,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-09T20:06:58.525517Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-04-09",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI glasses pendant Europe startup",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "ANYPIN Note Pod P1",
+    "website": "https://anypin.ai",
+    "description": "Wi-Fi enabled wearable AI voice recorder in pebble-shaped form with clip/lanyard options for effortless one-tap recording, transcription, and summarization.",
+    "category": "hardware",
+    "hardware_type": "innovative",
+    "form_factor": "pin",
+    "use_case": "meeting_notes",
+    "innovation_traits": [
+      "non_traditional_form",
+      "wearable",
+      "voice_first",
+      "screenless",
+      "single_use_case",
+      "crowdfunding"
+    ],
+    "region": "Unknown",
+    "funding_total": "unknown",
+    "price": "$149",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "form_innovation",
+      "use_case_clear",
+      "crowdfunding"
+    ],
+    "why_matters": "Pebble-shaped Wi-Fi wearable pin with spatial speaker separation, 120+ languages, and 20x faster cloud sync than Bluetooth rivals; Kickstarter campaign with early bird pricing.",
+    "latest_news": "2026-04: Active Kickstarter with Super Early Bird at $149 (35% off MSRP).",
+    "source": "backerclub.co",
+    "source_url": "https://backerclub.co/projects/3719/anypin-note-pod-p1-your-wi-fi-wearable-ai-voice-recorder",
+    "company_country": "unknown",
+    "company_country_confidence": 0.5,
+    "confidence": 0.95,
+    "is_hardware": true,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-09T20:07:41.969460Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-04-09",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI pin badge wearable assistant",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown"
+  },
+  {
+    "name": "Glimpse",
+    "website": "https://glimpse.com",
+    "description": "AI平台自动化CPG品牌的扣款、收入回收和后台运营，帮助消费品企业优化财务流程。",
+    "description_en": "AI platform automating deductions, revenue recovery, and back-office ops for CPG brands.",
+    "category": "finance",
+    "region": "🇺🇸",
+    "funding_total": "$35M Series A",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "demand_signal_hn"
+    ],
+    "why_matters": "由a16z领投3500万美元A轮，纽约基地，针对CPG品牌提供AI自动化财务工具，抓住消费品数字化转型机会。",
+    "why_matters_en": "a16z-led $35M Series A, New York-based, targets CPG brands with AI for financial automation in digitization wave.",
+    "latest_news": "2026-04-06: 完成3500万美元A轮融资",
+    "latest_news_en": "2026-04-06: Raised $35M Series A",
+    "source": "The AI World",
+    "source_url": "https://theaiworld.org/news/glimpse-raises-35m-series-a-for-ai-cpg-platform",
+    "company_country": "US",
+    "company_country_confidence": 0.9,
+    "confidence": 0.9,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-09T20:08:32.262861Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 2,
+          "top_story_id": "47649721",
+          "points": 523,
+          "comments": 428,
+          "engagement_depth_ratio": 0.8184,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "Incredible achievement but I'll be honest — if you showed me this photo without context I would have no idea it was the far side. Just looks like the Moon. Also didn't realize we could capture an image like this in what I assumed was total darkness.",
+            "They have live tracker you can follow https://www.nasa.gov/missions/artemis-ii/arow/",
+            "I'm going to be VERY disappointed if there's no Pink Floyd music or commentary from the Artemis mission. Particularly now. Life's short, and one can't be serious all the time... Wallis and Gromit would be a partial substitute, but the boomers are still around.",
+            "Far side != Dark side",
+            "I like how most people's reactions at this point are \"yeah, whatever\", as if it's every day that humans observe the far side of the moon with a naked eye through a window :). We do know what it looks like and we have photos from the surface, yes, but seeing the reaction from real people who're actually there does hit different, at least for me",
+            "FYI: https://issinfo.net/artemis",
+            "There’s too many problems here on earth for me to get excited about a trip to the moon",
+            "I am curious. If it is on the far side, where does the light come from for the photos? Other stars?",
+            "Am I losing it? They can’t be seeing the far side of the moon right now, because they haven’t adjusted course to go round the far side of the moon yet… So does this suggest the BBC is wrong and it’s the side of the moon we’re used to seeing, but just it’s “dark”? But then the astronauts are saying it’s weird seeing the moon in a whole new light (excuse the paraphrasing pun). I don’t understand.",
+            "It makes me tear up seeing the absolute 'best of us' as humanity striving and exploring in the midst of so much wretched evil and awfulness."
+          ],
+          "llm_summary_used": true,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.7476,
+        "demand_tier": "high",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "评论者对Artemis II宇航员首次目睹月球远侧表达了惊奇和成就感，尽管有些人指出照片看起来平凡或对远侧与暗侧的区别进行澄清。部分评论显示出兴奋和情感共鸣，如感动于人类探索精神，但也存在困惑关于照明和航行路径，以及对地球问题优先的冷漠态度。整体讨论反映了成就认可与现实主义质疑的混合。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.85
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-04-09",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "generative AI startup Series A",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
   }
 ]
