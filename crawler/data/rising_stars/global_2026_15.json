@@ -2365,5 +2365,339 @@
     "country_flag": "",
     "country_display": "Unknown",
     "country_source": "unknown"
+  },
+  {
+    "name": "Arc",
+    "website": "https://arcboats.com",
+    "description": "Arc开发商用和国防用途的电动船，属于物理AI领域的硬件创新。",
+    "description_en": "Arc develops electric boats for commercial and defense use in the physical AI space.",
+    "category": "hardware",
+    "region": "🇺🇸",
+    "funding_total": "unknown",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "获Eclipse VC近期投资，该VC刚于2026年4月7日关闭13亿美元基金专注物理AI，已有电动船等交易。",
+    "why_matters_en": "Recent investment from Eclipse VC, which closed $1.3B fund on April 7, 2026, focused on physical AI including electric boats.",
+    "latest_news": "2026-04-07: 被Eclipse 13亿美元物理AI基金投资。",
+    "latest_news_en": "2026-04-07: Backed by Eclipse's new $1.3B physical AI fund.",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/04/07/vc-eclipse-has-a-new-1-3b-to-back-and-build-physical-ai-startups/",
+    "company_country": "US",
+    "company_country_confidence": 0.7,
+    "confidence": 0.75,
+    "is_hardware": true,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-11T19:36:45.554509Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 3,
+          "top_story_id": "47732675",
+          "points": 2,
+          "comments": 1,
+          "engagement_depth_ratio": 0.5,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "Write up that stuff on a file and tell the agent to look at it. Say “take a look at file A as an example of how we do this sort of thing.” Good comments in the code help that explain how it works and what that patterns are are helpful, but you don’t need to go line by line duplicating the code."
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.1874,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.6
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-04-11",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:techcrunch.com AI startup funding",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Nothing AI Smart Glasses",
+    "website": "https://nothing.tech",
+    "description": "AI-powered smart glasses from hardware startup Nothing.",
+    "category": "hardware",
+    "hardware_type": "innovative",
+    "form_factor": "glasses",
+    "use_case": "general_ai_wearable",
+    "innovation_traits": [
+      "wearable",
+      "media_coverage"
+    ],
+    "region": "🇬🇧",
+    "funding_total": "unknown",
+    "price": "unknown",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "form_innovation"
+    ],
+    "why_matters": "London startup entering smart glasses market in 2027.",
+    "latest_news": "2026-04-07: Reports confirm development.",
+    "source": "AI Hardware",
+    "source_url": "https://aihardware.ai/nothing-is-working-on-ai-smart-glasses-heres-what-we-know-so-far/",
+    "company_country": "UK",
+    "company_country_confidence": 0.95,
+    "confidence": 0.8,
+    "is_hardware": true,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-11T19:39:45.491455Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-04-11",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI glasses pendant Europe startup",
+    "country_code": "GB",
+    "country_name": "United Kingdom",
+    "country_flag": "🇬🇧",
+    "country_display": "🇬🇧 United Kingdom",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Wehead AI穿戴产品",
+    "website": "https://wehead.com",
+    "description": "AI智能穿戴产品，代表近年AI硬件创新的甜点区",
+    "category": "hardware",
+    "hardware_type": "innovative",
+    "form_factor": "wearable",
+    "use_case": "ai_assistant",
+    "innovation_traits": [
+      "wearable",
+      "portable",
+      "voice_first"
+    ],
+    "region": "🇨🇳",
+    "funding_total": "unknown",
+    "price": "unknown",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "form_innovation",
+      "use_case_clear"
+    ],
+    "why_matters": "AI穿戴赛道代表产品，离人更近、离服务更近，更容易发挥AI价值，具有感知为主的技术特点，实现难度相对较低",
+    "latest_news": "作为AI硬件创新甜点区的代表被重点提及",
+    "source": "ABVR360",
+    "source_url": "https://www.abvr360.com/a/27841",
+    "company_country": "CN",
+    "company_country_confidence": 0.65,
+    "confidence": 0.72,
+    "is_hardware": true,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-11T19:41:50.227605Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-04-11",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI chip startup funding 2026",
+    "country_code": "CN",
+    "country_name": "China",
+    "country_flag": "🇨🇳",
+    "country_display": "🇨🇳 China",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Pomo",
+    "website": "https://pomo.ai",
+    "description": "Pomo 是一个代理式 AI 营销平台，自动化从市场监测到战役执行的决策密集任务。",
+    "description_en": "Pomo is an agentic AI marketing platform automating decision-dense tasks from monitoring to campaign execution.",
+    "category": "agent",
+    "region": "🇺🇸",
+    "funding_total": "$4.5M Seed",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "帕洛阿尔托初创公司获 Kindred Ventures 领投 450 万美元种子轮，用于扩展代理式营销平台。",
+    "why_matters_en": "Palo Alto startup raised $4.5M seed led by Kindred Ventures to expand agentic AI marketing platform.",
+    "latest_news": "2026-04-08: 宣布 450 万美元种子轮融资。",
+    "latest_news_en": "2026-04-08: Announced $4.5M seed funding.",
+    "source": "TAMradar",
+    "source_url": "https://www.tamradar.com/funding-rounds/pomo-seed-4-5m-agentic-marketing",
+    "company_country": "US",
+    "company_country_confidence": 0.9,
+    "confidence": 0.85,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-11T19:42:19.887983Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 1,
+          "top_story_id": "47730322",
+          "points": 1,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "HN 暂无足够评论样本用于形成社区结论。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "neutral",
+      "confidence": 0.3
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-04-11",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI agent startup funding",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
   }
 ]
