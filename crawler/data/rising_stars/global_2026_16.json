@@ -1101,5 +1101,258 @@
     "country_flag": "🇯🇵",
     "country_display": "🇯🇵 Japan",
     "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Patron GO",
+    "website": "https://patrongo.com",
+    "description": "AI驱动的金融平台，结合风险投资和公共支持加速开发并扩展至西欧。",
+    "description_en": "AI-driven financial platform blending VC and public grants to fast-track development and Western Europe expansion.",
+    "category": "finance",
+    "region": "Unknown",
+    "funding_total": "€2M",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "捷克金融科技公司获€2M混合融资（含€800k政府补助），由Venture to Future Fund和天使投资人支持，用于AI平台开发。",
+    "why_matters_en": "Czech fintech raised over €2M including €800k Czech Ministry grant, backed by Venture to Future Fund and angel Josef Novotný.",
+    "latest_news": "2026-04-10: 完成超€2M融资轮次",
+    "latest_news_en": "2026-04-10: Raised over €2M funding round",
+    "source": "The Recursive",
+    "source_url": "https://therecursive.com/cee-startup-tech-weekly-ai-funding-deals-europe/",
+    "company_country": "Czech Republic",
+    "company_country_confidence": 1.0,
+    "confidence": 0.95,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-15T20:04:36.447712Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-04-15",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI Series A Europe",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown"
+  },
+  {
+    "name": "Gizmo",
+    "website": "https://gizmo.ai",
+    "description": "AI学习应用，用户达1300万，获2200万美元投资。",
+    "description_en": "AI learning app with 13M users and $22M investment.",
+    "category": "education",
+    "region": "🇺🇸",
+    "funding_total": "$22M",
+    "dark_horse_index": 2,
+    "criteria_met": [
+      "funding_signal",
+      "demand_signal_hn"
+    ],
+    "why_matters": "用户规模达1300万并获2200万美元投资，证明AI教育应用的市场牵引力。",
+    "why_matters_en": "13M users and $22M funding validate strong market traction for AI learning app.",
+    "latest_news": "2026-04: 用户1300万，获2200万美元投资",
+    "latest_news_en": "2026-04: Levels up with 13M users and $22M investment",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com",
+    "company_country": "US",
+    "company_country_confidence": 0.7,
+    "confidence": 0.8,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-15T20:05:55.615178Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 10,
+          "top_story_id": "47774971",
+          "points": 249,
+          "comments": 161,
+          "engagement_depth_ratio": 0.6466,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "is there a comparison of it running on iPhone vs. Android phones?",
+            "It runs on Android too, with AI Core or even with llama.cpp",
+            "Is the output coherent though? I am yet to see a local model working on consumer grade hardware being actually useful.",
+            "> edge AI deployment Isn't the \"edge\" meant to be computing near the user, but not on their devices?",
+            "Unfortunately Apple appears to be blocking the use of these llms within apps on their app store. I've been trying to ship an app that contains local llms and have hit a brick wall with issue 2.5.2",
+            "Related: Gemma 4 on iPhone (254 comments) - https://news.ycombinator.com/item?id=47652561",
+            "For those who would like an example of its output, I'm currently working through creating a small, free (cc0, public domain) encyclopedia (just a couple of thousand entries) of core concepts in Biology and Health Sciences, Physical Sciences, and Technology. Each entry is being entirely written by Gemma 4:e4b (the 10 GB model.) I believe that this may be slightly larger than the size of the model that runs locally on phones, so perhaps this model is slightly better, but the output is similar. Here is an example entry: https://pastebin.com/ZfSKmfWp Seems pretty good to me!",
+            "ESET is blocking this site saying: Threat found This web page may contain dangerous content that can provide remote access to an infected device, leak sensitive data from the device or harm the targeted device. Threat: JS/Agent.RDW trojan",
+            "There are many apps to run local LLMs on both iOS & Android",
+            "Is it me, or does the article sound like LLM output? The pattern \"It's not mere X — it's Y\", occurs like 4 times in the text :v"
+          ],
+          "llm_summary_used": true,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.5973,
+        "demand_tier": "medium",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "评论讨论了Ensu应用在iPhone和Android上运行本地LLM的可能性，并提到苹果App Store审核障碍。用户分享了Gemma 4在iPhone上的输出示例，认为质量不错，尽管不如云端模型。整体上存在对本地模型在消费级硬件上实用性的疑问，以及一些安全和平台兼容性问题。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.85
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-04-15",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:techcrunch.com AI startup funding",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Replenit",
+    "website": "https://replenit.ai",
+    "description": "华沙AI驱动的Retail初创公司，提供实时决策优化库存管理。",
+    "description_en": "Warsaw-based AI-driven Retail startup enabling real-time decisions for next-level inventory evolution.",
+    "category": "other",
+    "region": "Unknown",
+    "funding_total": "$2.5M Pre-Seed",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "获250万美元Pre-Seed融资，支持KI驱动的实时Retail决策，被视为具爆炸性潜力的创新想法。",
+    "why_matters_en": "Raised $2.5M Pre-Seed for KI-driven real-time Retail decisions, positioned as a high-impact evolutionary idea.",
+    "latest_news": "2026-04-14: 完成250万美元Pre-Seed融资",
+    "latest_news_en": "2026-04-14: Closed $2.5M Pre-Seed funding",
+    "source": "Startbase",
+    "source_url": "https://www.startbase.de/news/pre-seed-finanzierung-in-hoehe-von-25-millionen-us-dollar-fuer-replenit/",
+    "company_country": "Poland",
+    "company_country_confidence": 0.8,
+    "confidence": 0.75,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-15T20:06:42.925375Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-04-15",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "KI Startup Finanzierung",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown"
   }
 ]
