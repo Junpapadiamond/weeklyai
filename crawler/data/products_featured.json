@@ -1,5 +1,819 @@
 [
   {
+    "name": "Avoice",
+    "description": "为建筑事务所自动化非设计工作的AI工具，包括审查规格、图纸、合同和提案。",
+    "description_en": "AI tool automating tedious non-design work for architecture firms, like reviewing specs, drawings, contracts, and proposals.",
+    "website": "https://www.avoice.co/",
+    "logo_url": "https://cdn.prod.website-files.com/6937bff6d8e3ccfe22518d4a/69c9e4f43d2fa2e0f8db1ac9_Avoice%20Logo%202%20(1).png",
+    "categories": [
+      "other"
+    ],
+    "dark_horse_index": 2,
+    "why_matters": "YC W26 Demo Day入选16家最有趣初创之一，针对建筑师重复性任务，提供AI自动化提升效率。",
+    "why_matters_en": "Selected among 16 most interesting from YC W26 Demo Day, targets repetitive tasks for architects with AI automation.",
+    "funding_total": "YC W26 funding",
+    "latest_news": "2026-03-26: YC W26 Demo Day亮点公司",
+    "region": "🇺🇸",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country",
+    "source_region": "🇺🇸",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/03/26/16-of-the-most-interesting-startups-from-yc-w26-demo-day/",
+    "source_title": "",
+    "website_source": "",
+    "latest_news_en": "2026-03-26: Highlighted at YC W26 Demo Day",
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.6
+    },
+    "extra": {
+      "website_recovered_from_source": true,
+      "website_recovered_url": "https://www.avoice.co/",
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-24T19:58:46.988391Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 2,
+          "top_story_id": "47833747",
+          "points": 15,
+          "comments": 6,
+          "engagement_depth_ratio": 0.4,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "Love that your landing page is the product itself. However, I think the app icon and the screenshots on the App Store can be improved that will lead to better downloads.",
+            "I agree with last comment, I like your landing page, App have a good design",
+            "i hate purple, otherwise landing page is very good",
+            "Feels like the interesting part is not the model itself, but how these local capabilities are exposed. Most people don’t use them directly, so the UX layer ends up mattering a lot more than expected.",
+            "thanks, I am probably the worst designer and didn't want to use AI, but you're not wrong",
+            "exactly, but even moreso that Apple exposed the API in a fairly complete way. I integrated their local model in less than a day - creating embeddings and RAG essentially on an entire document vault in about 2 seconds- for people who dont have local AI configured, is pretty crazy"
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.1615,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "discovered_at": "2026-04-24",
+    "first_seen": "2026-04-24T19:58:47.521420Z",
+    "final_score": 40,
+    "trending_score": 36,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
+    "name": "tmNyad",
+    "description": "为废水处理行业提供AI软件，帮助管理复杂系统并做出关键决策。",
+    "description_en": "AI software for wastewater industry managing complex systems and critical decision-making.",
+    "website": "https://tmnyad.com",
+    "logo_url": "",
+    "categories": [
+      "other"
+    ],
+    "dark_horse_index": 2,
+    "why_matters": "130万美元Pre-seed轮，代表AI进入垂直重资产行业趋势，自动化流程密集型废水处理工作流。",
+    "why_matters_en": "$1.3M pre-seed exemplifies AI trend into niche heavy-asset industries, automating process-heavy wastewater workflows.",
+    "funding_total": "$1.3M Pre-seed",
+    "latest_news": "2026: 完成130万美元Pre-seed融资",
+    "region": "🇺🇸",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country",
+    "source_region": "🇺🇸",
+    "source": "Crunchbase News",
+    "source_url": "https://news.crunchbase.com/venture/interesting-startup-deals-robots-ai-agent-inboxes-defense-space-tech/",
+    "source_title": "",
+    "website_source": "",
+    "latest_news_en": "2026: Raised $1.3M pre-seed",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-24T19:57:49.414835Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-04-24",
+    "first_seen": "2026-04-24T19:57:49.627970Z",
+    "final_score": 40,
+    "trending_score": 36,
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectionError"
+  },
+  {
+    "name": "Iridius",
+    "description": "专为受监管工作流执行设计的合规优先AI平台，帮助企业安全自动化复杂合规流程。",
+    "description_en": "Compliance-by-design AI platform for regulated workflow execution, enabling secure automation of compliance-heavy processes.",
+    "website": "https://iridius.ai",
+    "logo_url": "https://iridius.ai/favicon.ico",
+    "categories": [
+      "agent"
+    ],
+    "dark_horse_index": 2,
+    "why_matters": "种子轮融资860万美元，由Chalfen Ventures领投，针对受监管行业痛点打造合规优先AI，填补企业自动化与法规遵守的空白。",
+    "why_matters_en": "Raised $8.6M seed led by Chalfen Ventures, addresses critical gap in compliance-first AI for regulated workflows where automation meets strict regulatory needs.",
+    "funding_total": "$8.6M Seed",
+    "latest_news": "2026-04-24: 完成860万美元种子轮融资",
+    "region": "🇺🇸",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country",
+    "source_region": "🇺🇸",
+    "source": "VC News Daily",
+    "source_url": "https://vcnewsdaily.com",
+    "source_title": "",
+    "website_source": "",
+    "latest_news_en": "2026-04-24: Closed $8.6M seed funding round",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-24T19:57:48.796418Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-04-24",
+    "first_seen": "2026-04-24T19:57:49.017154Z",
+    "final_score": 40,
+    "trending_score": 36,
+    "needs_verification": true,
+    "website_check_reason": "status:403",
+    "logo_source": "favicon"
+  },
+  {
+    "name": "Konstruksi.ai",
+    "description": "亚太地区首个端到端AI驱动的建筑管理平台，为开发商和承包商提供实时项目可视化、质量控制、进度跟踪和预算监控",
+    "description_en": "Asia-Pacific's first end-to-end AI-powered construction management platform providing real-time project visibility, quality control, progress tracking, and budget monitoring",
+    "website": "https://konstruksi.ai/en",
+    "logo_url": "https://konstruksi.ai/favicon.ico",
+    "categories": [
+      "other"
+    ],
+    "dark_horse_index": 3,
+    "why_matters": "首个为印尼本地建筑行业从零开始设计的AI操作系统，覆盖从现场主管到CFO的完整可视化和控制能力，解决东南亚建筑行业数字化空白",
+    "why_matters_en": "First AI operating system designed from ground up for Indonesia's construction industry, providing complete visibility from site supervisors to CFOs, addressing Southeast Asia's construction digitalization gap",
+    "funding_total": "unknown",
+    "latest_news": "2026-04: Positioned as #1 AI operating system for construction across Asia-Pacific",
+    "region": "Unknown",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown",
+    "source_region": "🇸🇬",
+    "source": "Konstruksi.ai",
+    "source_url": "https://konstruksi.ai/en",
+    "source_title": "",
+    "website_source": "redirect",
+    "latest_news_en": "2026-04: Positioned as #1 AI operating system for construction across Asia-Pacific",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-24T19:57:33.342077Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-04-24",
+    "first_seen": "2026-04-24T19:57:33.566336Z",
+    "final_score": 60,
+    "trending_score": 54,
+    "needs_verification": false,
+    "logo_source": "favicon"
+  },
+  {
+    "name": "Tractian",
+    "description": "Tractian 是一家机器智能公司，提供工业设备监控解决方案。",
+    "description_en": "Tractian is a machine intelligence company providing industrial equipment monitoring solutions.",
+    "website": "https://tractian.com/en",
+    "logo_url": "https://tractian.com/apple-icon.png?e3518f36365d4e16",
+    "categories": [
+      "hardware"
+    ],
+    "dark_horse_index": 5,
+    "why_matters": "2024 年 12 月完成 1.2 亿美元 C 轮融资，估值达 7.2 亿美元，由 Sapphire Ventures、NGP Capital 和 General Catalyst 等领投。",
+    "why_matters_en": "$120M Series C in Dec 2024 valuing at $720M, led by Sapphire Ventures, NGP Capital, General Catalyst; Atlanta-based.",
+    "funding_total": "$120M Series C",
+    "latest_news": "2024-12-05: 完成 1.2 亿美元 C 轮融资，估值 7.2 亿美元",
+    "region": "🇺🇸",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country",
+    "source_region": "🇸🇬",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2024/12/20/heres-the-full-list-of-49-us-ai-startups-that-have-raised-100m-or-more-in-2024/",
+    "source_title": "",
+    "website_source": "redirect",
+    "latest_news_en": "2024-12-05: $120M Series C at $720M valuation",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-24T19:56:52.649214Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-04-24",
+    "first_seen": "2026-04-24T19:56:52.928055Z",
+    "final_score": 100,
+    "trending_score": 90,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
+    "name": "10x Science",
+    "description": "10x Science 使用 AI 从海量潜在药物中筛选出真正有效的候选药物。",
+    "description_en": "10x Science uses AI to identify which AI-generated drug candidates truly matter from massive outputs.",
+    "website": "https://10xscience.com",
+    "logo_url": "https://10xscience.com/apple-touch-icon.png",
+    "categories": [
+      "healthcare"
+    ],
+    "dark_horse_index": 3,
+    "why_matters": "2025 年 12 月创立，获 480 万美元种子轮，由 Initialized Capital 领投，Y Combinator 支持，专注解决 AI 药物发现中的筛选难题。",
+    "why_matters_en": "Founded Dec 2025, raised $4.8M seed led by Initialized Capital with YC backing, targets filtering meaningful drugs from AI outputs.",
+    "funding_total": "$4.8M seed",
+    "latest_news": "2026-04-22: 宣布 480 万美元种子轮融资",
+    "region": "🇺🇸",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country",
+    "source_region": "🇺🇸",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/04/22/ai-is-spitting-out-more-potential-drugs-than-ever-this-start-up-wants-to-figure-out-which-ones-matter/",
+    "source_title": "",
+    "website_source": "",
+    "latest_news_en": "2026-04-22: Announced $4.8M seed round",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-24T19:55:43.929471Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-04-24",
+    "first_seen": "2026-04-24T19:55:44.184421Z",
+    "final_score": 60,
+    "trending_score": 54,
+    "needs_verification": true,
+    "website_check_reason": "status:403",
+    "logo_source": "apple_touch_icon"
+  },
+  {
+    "name": "Fragment",
+    "description": "Fragment 帮助企业将 AI 集成到工作流程中，提升业务自动化效率。",
+    "description_en": "Fragment helps businesses integrate AI into workflows to enhance automation.",
+    "website": "https://fragment.ai/",
+    "logo_url": "https://cdn.prod.website-files.com/69675d6a6e75a8f7e51e74d0/696f58f6897b8629379ce828_webclip-image-256x256px(1).png",
+    "categories": [
+      "agent"
+    ],
+    "dark_horse_index": 2,
+    "why_matters": "YC 支持的法国初创公司，种子轮融资约 200 万美元，被 Bret Taylor 的 Sierra 收购，客户包括 Casper。",
+    "why_matters_en": "YC-backed French startup with ~$2M seed, acquired by Bret Taylor's Sierra, clients include Casper.",
+    "funding_total": "$2M seed",
+    "latest_news": "2026-04-23: 被 Sierra 收购",
+    "region": "🇫🇷",
+    "country_code": "FR",
+    "country_name": "France",
+    "country_flag": "🇫🇷",
+    "country_display": "🇫🇷 France",
+    "country_source": "explicit:company_country",
+    "source_region": "🇺🇸",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/04/23/bret-taylors-sierra-buys-yc-backed-ai-startup-fragment/",
+    "source_title": "",
+    "website_source": "redirect",
+    "latest_news_en": "2026-04-23: Acquired by Bret Taylor's Sierra",
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "评论者讨论了Martin Fowler关于技术意图和认知债务的观点，认为AI生成的代码有时过于懒惰或选择错误抽象层，导致问题。许多人指出LLM缺乏'懒惰美德'，倾向于过度编辑或重构无关文件，需要AGENTS.md等提示来约束行为。整体上，参与者分享经验，强调通过提示工程引导AI像资深开发者一样工作，同时批评默认设置下的过度热情。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.9
+    },
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-24T19:55:30.118344Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 7,
+          "top_story_id": "47865661",
+          "points": 340,
+          "comments": 94,
+          "engagement_depth_ratio": 0.2765,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "I see what Martin is saying here, but you could make that argument for moving up the abstraction layers at any point. Assembly to Python creates a lot of Intent & Cognitive debt by his definition, because you didn't think through how to manipulate the bits on the hardware, you just allowed the interpereter to do it. My counter is that technical intent, in the way he is describing it, only exists because we needed to translate human intent into machine language. You can still think deeply about problems without needed to formulate them as domain driven abstractions in code. You could mind map it, or journal about it, or put post-it notes all over the wall. Creating object oriented abstraction",
+            "Hits the spot for me. I am always pushing back on AI to simplify and improve concision.",
+            "LLMs don't lack the virtue of laziness: it has it if you want it to, by just having a base prompt that matches intent. I've had good success convincing claude backed agents to aim for minimal code changes, make deduplication passes, and basically every other reasonable \"instinct\" of a very senior dev. It's not knowledge that the models haven't integrated, but one that many don't have on their forefront with default settings. I bet we've all seen the models that over-edit everything, and act like the crazy mid-level dev that fiddles with the entire codebase without caring one bit about anyone else's changes, or any risk of knowledge loss due to overfiddling. And on Jess' comments on validatin",
+            "> ...to develop the powerful abstractions that then allow us to do much more, much more easily. Of course, the implicit wink here is that it takes a lot of work to be lazy This lines up with YAGNI, but most people believe the opposite, often using YAGNI to justify NOT building the necessary abstractions.",
+            "I think Martin isn't wrong here, but I've first hand seen AI produce \"lazy\" code, where the answer was actually more code. A concrete example, I had a set of python models that defined a database schema for a given set of logical concepts. I added a new logical concept to the system, very analogous to the existing logical set. Claude decided that it should just re-use the existing model set, which worked in theory, but caused the consumers to have to do all sorts of gymnastics to do type inference at runtime. It \"worked\", but it was definitely the wrong layer of abstraction.",
+            "Wrong link. Technical, Cognitive and Intent Debt was discussed here: https://martinfowler.com/fragments/2026-04-02.html",
+            "> The problem is that LLMs inherently lack the virtue of laziness. I assure you, they do not.",
+            "the framing as \"debt\" is fair but in our case the bigger pain isn't lazy code, it's overzealous code. claude will happily refactor three unrelated files because it spotted a \"pattern\". we've ended up with a CLAUDE.md that's basically a list of \"do not touch unless asked\". probably says more about us than the model but yeah.",
+            "This is my current visualization of the problem: https://excalidraw.com/#json=y1fSSx2z8-0nFs7CDnqhp,d9Di8JdGU... I think the \"cognitive bottlenecks\" in software engineering live between artifacts, where code is simply one of them. outcome → requirements → spec → acceptance criteria → executable proof → review I'm making experimental tooling that automates the boring parts around those transitions, while keeping humans focused on validating that intent survived each step.",
+            "I heard that LLMs imitate humans. Let's add laziness, impatience, and arrogance—the virtues of programmers—to AGENTS.md and improve it."
+          ],
+          "llm_summary_used": true,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.3113,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "discovered_at": "2026-04-24",
+    "first_seen": "2026-04-24T19:55:43.847331Z",
+    "final_score": 40,
+    "trending_score": 36,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
+    "name": "Verda",
+    "description": "赫尔辛基总部的前Datacrunch，构建欧洲超大规模计算平台，获1亿欧元债务股权融资。",
+    "description_en": "Helsinki-based ex-Datacrunch building European hyperscaler, raised €100M debt and equity.",
+    "website": "https://verda.com/",
+    "logo_url": "https://verda.com/apple-touch-icon.png?v=20251113",
+    "categories": [
+      "hardware"
+    ],
+    "dark_horse_index": 5,
+    "why_matters": "1亿欧元融资由Lifeline Ventures领投，用于加速欧洲本土超大规模计算基础设施建设。",
+    "why_matters_en": "€100M round led by Lifeline Ventures to build European hyperscaler infrastructure.",
+    "funding_total": "€100M debt and equity",
+    "latest_news": "2026-04-24: 宣布1亿欧元融资并计划大规模招聘",
+    "region": "Unknown",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown",
+    "source_region": "🇪🇺",
+    "source": "Sifted",
+    "source_url": "https://sifted.eu/articles/verda-raises-e100m-to-build-european-hyperscaler",
+    "source_title": "",
+    "website_source": "redirect",
+    "latest_news_en": "2026-04-24: Announced €100M raise and hiring plans",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-24T19:54:31.547170Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-04-24",
+    "first_seen": "2026-04-24T19:54:31.762050Z",
+    "final_score": 100,
+    "trending_score": 90,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
+    "name": "エーアイ・アンド (AI and)",
+    "description": "提供AI开发基盘和数据中心的日本公司，2026年3月融资75億円排名第二。",
+    "description_en": "Japanese company providing AI development platforms and data centers, raised 75億円 in March 2026 ranking 2nd.",
+    "website": "https://ai-and.co.jp",
+    "logo_url": "",
+    "categories": [
+      "other"
+    ],
+    "dark_horse_index": 3,
+    "why_matters": "2026年3月融资75億円位列当月第二，专注AI开发基盘和数据中心，支持日本AI基础设施建设热潮。",
+    "why_matters_en": "Raised 75億円 in March 2026, ranking 2nd monthly, focusing on AI dev platforms and data centers amid Japan AI infra boom.",
+    "funding_total": "75億円",
+    "latest_news": "2026-03：融资75億円",
+    "region": "🇯🇵",
+    "country_code": "JP",
+    "country_name": "Japan",
+    "country_flag": "🇯🇵",
+    "country_display": "🇯🇵 Japan",
+    "country_source": "explicit:company_country",
+    "source_region": "🇯🇵🇰🇷",
+    "source": "STARTUP DB",
+    "source_url": "https://www.forstartups.com/news/fund-ranking-202603",
+    "source_title": "",
+    "website_source": "",
+    "latest_news_en": "2026-03: Raised 75億円",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-24T19:54:17.341531Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-04-24",
+    "first_seen": "2026-04-24T19:54:17.570591Z",
+    "final_score": 60,
+    "trending_score": 54,
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectionError"
+  },
+  {
+    "name": "Ludens AI",
+    "description": "开发AI伴侣机器人的日本初创公司，通过天使轮融资加速产品研发和工程师招聘。",
+    "description_en": "Japanese startup developing AI companion robots, raising angel round to accelerate product development and engineering hires.",
+    "website": "https://ludensai.com/",
+    "logo_url": "https://ludensai.com/assets/landing/logo-red.svg",
+    "categories": [
+      "hardware"
+    ],
+    "dark_horse_index": 3,
+    "why_matters": "天使轮融资6億円，由CWB Capital、Linear Capital和PKSHA Algorithm Fund领投，用于AI伴侣机器人研发加速、工程师招聘和国内外业务开发，显示日本机器人AI领域的强劲投资兴趣。",
+    "why_matters_en": "Raised 6億円 (~$40M) in angel round led by CWB Capital, Linear Capital, PKSHA Algorithm Fund for AI companion robot R&D acceleration, engineering hires, and global partnerships.",
+    "funding_total": "6億円天使轮",
+    "latest_news": "2026-04-21：完成6億円天使轮融资",
+    "region": "🇯🇵",
+    "country_code": "JP",
+    "country_name": "Japan",
+    "country_flag": "🇯🇵",
+    "country_display": "🇯🇵 Japan",
+    "country_source": "explicit:company_country",
+    "source_region": "🇯🇵🇰🇷",
+    "source": "ベンチャー.jp",
+    "source_url": "https://venture.jp/news/2026/04/21/21799/",
+    "source_title": "",
+    "website_source": "source_url",
+    "latest_news_en": "2026-04-21: Closed 6億円 angel round",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-24T19:54:16.914690Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-04-24",
+    "first_seen": "2026-04-24T19:54:17.239423Z",
+    "final_score": 60,
+    "trending_score": 54,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
     "name": "FlowPilot",
     "description": "专注自主AI工作流自动化的平台，帮助企业实现复杂任务自动化",
     "description_en": "Focuses on autonomous AI workflow automation for enterprise task automation",
@@ -549,8 +1363,8 @@
     "name": "Era",
     "description": "为AI硬件设备构建软件平台的初创公司，已融资$11M用于开发AI gadgets生态系统",
     "description_en": "Software platform startup for AI gadgets that has raised $11M in funding to build developer ecosystem for AI hardware devices",
-    "website": "https://www.era.computer/",
-    "logo_url": "",
+    "website": "https://era.world",
+    "logo_url": "https://era.world/icon.png?5039bd8c98045b14",
     "categories": [
       "hardware"
     ],
@@ -628,7 +1442,8 @@
     "first_seen": "2026-04-23T20:08:17.197057Z",
     "final_score": 60,
     "trending_score": 54,
-    "needs_verification": false
+    "needs_verification": false,
+    "logo_source": "html"
   },
   {
     "name": "Mosaic",
@@ -9645,7 +10460,7 @@
     "final_score": 100,
     "trending_score": 90,
     "needs_verification": true,
-    "website_check_reason": "error:ReadTimeout"
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "OnSite",
@@ -17704,7 +18519,7 @@
     "why_matters": "2026年估值102亿美元（约1.5万亿日元），月费仅20美元起，提供Cursor和GitHub Copilot无法比拟的全自主编码能力；创始人Scott Wu专注AI工程哲学，已获Goldman Sachs和DeNA等巨头企业级部署。",
     "why_matters_en": "$10.2B valuation in 2026, $20/mo pricing with full autonomous coding beyond Cursor/GitHub Copilot; founder Scott Wu's AI engineering focus, deployed enterprise-wide at Goldman Sachs and DeNA (2000 users).",
     "funding_total": "$10.2B valuation",
-    "latest_news": "2026最新版：DeNA全社2000人引入，功能与竞品对比详解。",
+    "latest_news": "2026-04-24: 来自 X 的一手提及：GPT-5.5在Devin中作为Agent Preview可用，运行比任何测试过的GPT模型更长更自主，标志代理编码进入生产阶段。",
     "region": "🇺🇸",
     "country_code": "US",
     "country_name": "United States",
@@ -17760,14 +18575,25 @@
         "demand_tier": "low",
         "guardrail_applied": "none",
         "guardrail_reason": "insufficient_demand_data"
-      }
+      },
+      "signals": [
+        {
+          "platform": "x",
+          "url": "https://x.com/cognition/status/2047743153461936257",
+          "title": "GPT-5.5 is now available in Devin as an Agent Preview!\n\nGPT-5.5 has set a new bar for what's possible with Devin. It run",
+          "published_at": "2026-04-24T18:23:07Z",
+          "snippet": "GPT-5.5 is now available in Devin as an Agent Preview! GPT-5.5 has set a new bar for what's possible with Devin. It runs longer and more autonomously than any GPT model we've tested, surfacing bugs...",
+          "author": "@cognition"
+        }
+      ]
     },
     "discovered_at": "2026-03-23",
     "first_seen": "2026-03-23T19:55:42.746276Z",
     "final_score": 100,
-    "trending_score": 90,
+    "trending_score": 92,
     "needs_verification": false,
-    "logo_source": "html"
+    "logo_source": "html",
+    "news_updated_at": "2026-04-24T18:23:07Z"
   },
   {
     "name": "R3 Robotics EV Disassembly Platform",
@@ -38841,13 +39667,21 @@
     "discovered_at": "2026-02-10",
     "first_seen": "2026-02-10T08:38:36.417933Z",
     "final_score": 100,
-    "trending_score": 92,
+    "trending_score": 94,
     "logo_source": "html",
     "description_en": "Enterprise-level large language model platform, focusing on sovereign AI and secure deployment",
     "why_matters_en": "Founded by Google Brain alumni, it will reach $100 million ARR in 2025, with a valuation of $7B. It focuses on enterprise and sovereign AI rather than consumer chatbots. It is a representative of Canadian AI unicorns and has received strategic investments from Microsoft, Nvidia, etc.",
     "needs_verification": false,
     "extra": {
       "signals": [
+        {
+          "platform": "x",
+          "url": "https://x.com/cohere/status/2047631725426000268",
+          "title": "https://www.businesswire.com/news/home/20260424174908/en/Sovereign-AI-for-the-World-Cohere-and-Aleph-Alpha-to-Form-Globa",
+          "published_at": "2026-04-24T11:00:21Z",
+          "snippet": "🚀 Sovereign AI for the world. Cohere &amp; Aleph Alpha form transatlantic AI powerhouse anchored in Canada &amp; Germany! Combining our global scale with European R&amp;D excellence to build sovere...",
+          "author": "@cohere"
+        },
         {
           "platform": "x",
           "url": "https://x.com/madisonmcla/status/2046260351885279308",
@@ -38879,19 +39713,11 @@
           "published_at": "2026-04-10T14:44:39Z",
           "snippet": "We worked with @RWSGroup to fine-tune our Command translation model, which improved language and cultural expertise. Now, that model is the “brain” that powers RWS’ Language Weaver AI translation s...",
           "author": "@cohere"
-        },
-        {
-          "platform": "x",
-          "url": "https://x.com/NVIDIAAI/status/2036910998498546155",
-          "title": ".@Cohere is defining the future of sovereign AI.\n\nAutumn Moulder, VP of Engineering at Cohere, breaks down the requireme",
-          "published_at": "2026-03-25T21:00:00Z",
-          "snippet": ".@Cohere is defining the future of sovereign AI. Autumn Moulder, VP of Engineering at Cohere, breaks down the requirements for a full AI sovereign stack at #NVIDIAGTC: ✅ Full-Stack Sovereignty: Dep...",
-          "author": "@NVIDIAAI"
         }
       ]
     },
-    "latest_news": "2026-04-20: 来自 X 的一手提及：在Hugging Face Open ASR排行榜英语WER 5.42%排名第一，胜率61%，处理速度525分钟音频/分钟。",
-    "news_updated_at": "2026-04-20T16:11:00Z"
+    "latest_news": "2026-04-24: 来自 X 的一手提及：Schwarz Group承诺$600M融资加速德国-加拿大主权AI合作，针对公共、金融、国防等领域定制AI。",
+    "news_updated_at": "2026-04-24T11:00:21Z"
   },
   {
     "name": "Gather AI",
@@ -40593,14 +41419,28 @@
     "source": "Kanerika",
     "discovered_at": "2026-01-26",
     "first_seen": "2026-01-26T19:15:55.695721Z",
-    "final_score": 80,
-    "trending_score": 72,
+    "final_score": 82,
+    "trending_score": 74,
     "logo_source": "html",
     "source_url": "https://kanerika.com/blogs/ai-companies-in-europe/",
     "description_en": "The German company develops a European-centric large-scale language model that emphasizes data sovereignty, transparency and EU compliance to serve the legal, medical and government industries.",
     "why_matters_en": "Financing approximately 500 million euros, supported by Bosch Ventures and Schwarz Group; focusing on interpretable AI and multi-language multi-modal models, compliant with EU strict standards and customized for regulated industries.",
     "website_source": "redirect",
-    "needs_verification": false
+    "needs_verification": false,
+    "extra": {
+      "signals": [
+        {
+          "platform": "x",
+          "url": "https://x.com/cohere/status/2047631725426000268",
+          "title": "https://www.businesswire.com/news/home/20260424174908/en/Sovereign-AI-for-the-World-Cohere-and-Aleph-Alpha-to-Form-Globa",
+          "published_at": "2026-04-24T11:00:21Z",
+          "snippet": "🚀 Sovereign AI for the world. Cohere &amp; Aleph Alpha form transatlantic AI powerhouse anchored in Canada &amp; Germany! Combining our global scale with European R&amp;D excellence to build sovere...",
+          "author": "@cohere"
+        }
+      ]
+    },
+    "latest_news": "2026-04-24: 来自 X 的一手提及：与Cohere合作获Schwarz Group $600M融资，结合欧洲R&D优势构建跨大西洋主权AI平台。",
+    "news_updated_at": "2026-04-24T11:00:21Z"
   },
   {
     "name": "生数科技",
@@ -42795,6 +43635,30 @@
       "signals": [
         {
           "platform": "x",
+          "url": "https://x.com/cursor_ai/status/2047764651363180839",
+          "title": "Introducing /multitask in the new Cursor 3 interface.\n\nCursor can now run async subagents to parallelize your requests i",
+          "published_at": "2026-04-24T19:48:33Z",
+          "snippet": "Introducing /multitask in the new Cursor 3 interface. Cursor can now run async subagents to parallelize your requests instead of adding them to the queue. For already queued messages, you can ask C...",
+          "author": "@cursor_ai"
+        },
+        {
+          "platform": "x",
+          "url": "https://x.com/cursor_ai/status/2047764652977958938",
+          "title": "Another way to parallelize work is with new and improved worktrees in the agents window.\n\nRun isolated tasks in the back",
+          "published_at": "2026-04-24T19:48:33Z",
+          "snippet": "Another way to parallelize work is with new and improved worktrees in the agents window. Run isolated tasks in the background across different branches. When you're ready to test changes, move any ...",
+          "author": "@cursor_ai"
+        },
+        {
+          "platform": "x",
+          "url": "https://x.com/cursor_ai/status/2047764656165646786",
+          "title": "Download Cursor 3.2 to try these new features in the agents window: http://cursor.com/download",
+          "published_at": "2026-04-24T19:48:34Z",
+          "snippet": "Download Cursor 3.2 to try these new features in the agents window: https://t.co/4cZEcTPbFM",
+          "author": "@cursor_ai"
+        },
+        {
+          "platform": "x",
           "url": "https://x.com/SpaceX/status/2046713419978453374",
           "title": "SpaceXAI and @cursor_ai are now working closely together to create the world’s best coding and knowledge work AI.\n\nThe c",
           "published_at": "2026-04-21T22:11:20Z",
@@ -42808,35 +43672,11 @@
           "published_at": "2026-04-17T20:22:44Z",
           "snippet": "Through the end of this weekend, we are doubling Composer 2 usage limits inside of Cursor's new agents window. Enjoy!",
           "author": "@cursor_ai"
-        },
-        {
-          "platform": "x",
-          "url": "https://x.com/cursor_ai/status/2045236541887516713",
-          "title": "Download Cursor to use the agents window: http://cursor.com/download",
-          "published_at": "2026-04-17T20:22:44Z",
-          "snippet": "Download Cursor to use the agents window: https://t.co/4cZEcTPbFM",
-          "author": "@cursor_ai"
-        },
-        {
-          "platform": "x",
-          "url": "https://x.com/cursor_ai/status/2044841478913130930",
-          "title": "We partnered with University of Chicago economist @SuproteemSarkar to study how more capable models have changed the way",
-          "published_at": "2026-04-16T18:12:54Z",
-          "snippet": "We partnered with University of Chicago economist @SuproteemSarkar to study how more capable models have changed the way people use Cursor. Across 500 teams, we find that developers are tackling mo...",
-          "author": "@cursor_ai"
-        },
-        {
-          "platform": "x",
-          "url": "https://x.com/cursor_ai/status/2044136957924782300",
-          "title": "The multi-agent system delivered optimizations that typically take experienced kernel engineers months or years.\n\nCUDA k",
-          "published_at": "2026-04-14T19:33:23Z",
-          "snippet": "The multi-agent system delivered optimizations that typically take experienced kernel engineers months or years. CUDA kernels are the core software supporting model training and inference. Faster k...",
-          "author": "@cursor_ai"
         }
       ]
     },
-    "latest_news": "2026-04-21: 来自 X 的一手提及：与SpaceXAI紧密合作开发全球最佳编码AI，SpaceX获得60亿美元收购期权或10亿美元伙伴关系。[6]",
-    "news_updated_at": "2026-04-21T22:11:20Z"
+    "latest_news": "2026-04-24: 来自 X 的一手提及：Cursor 3发布标志产品向多代理工作空间转型，已集成移动/Slack/GitHub多端触发。",
+    "news_updated_at": "2026-04-24T19:48:33Z"
   },
   {
     "name": "Safe Superintelligence",
@@ -43374,7 +44214,7 @@
     "funding_total": "$400M",
     "dark_horse_index": 5,
     "why_matters": "估值达 $9B，Georgian 领投，AI 编程平台龙头，让非程序员也能用自然语言创建软件",
-    "latest_news": "2026-04-22: 来自 X 的一手提及：Michele Catasta担任President & Head of AI，在Google Cloud Next 2026上发表关于Gemini和代理应用的演讲，获得Google Cloud年度合作伙伴认可",
+    "latest_news": "2026-04-24: 来自 X 的一手提及：支持50+百万创作者，从自然语言描述快速构建并发布到App Store，仅需几分钟。[3]",
     "discovered_at": "2026-01-16",
     "source": "Bloomberg",
     "categories": [
@@ -43386,6 +44226,14 @@
     "latest_news_en": "2026-01: Nearly completed $400M in new round of financing, valuation approximately tripled to $9B",
     "extra": {
       "signals": [
+        {
+          "platform": "x",
+          "url": "https://x.com/Replit/status/2047727263245070400",
+          "title": "You can also easily add a mobile app to your project once imported.\n \nMore details here: https://replit.com/mobile",
+          "published_at": "2026-04-24T17:19:59Z",
+          "snippet": "You can also easily add a mobile app to your project once imported. More details here: https://t.co/10OuoGQuaY",
+          "author": "@Replit"
+        },
         {
           "platform": "x",
           "url": "https://x.com/MannyBernabe/status/2047064397726838839",
@@ -43417,18 +44265,10 @@
           "published_at": "2026-04-17T17:32:16Z",
           "snippet": "This feature is powered by Replit’s parallel agents, introduced in Agent 4. Replit can spin up separate copies of your project, work on them in parallel, and then combine the results at the end- ha...",
           "author": "@Replit"
-        },
-        {
-          "platform": "x",
-          "url": "https://x.com/pirroh/status/2044837792384249886",
-          "title": "Replit Agent 4 is even smarter now with Claude Opus 4.7!\n\n50% off for a limited time. Go try it now ↓",
-          "published_at": "2026-04-16T17:58:15Z",
-          "snippet": "Replit Agent 4 is even smarter now with Claude Opus 4.7! 50% off for a limited time. Go try it now ↓ https://t.co/DQNgZevhxN",
-          "author": "@pirroh"
         }
       ]
     },
-    "news_updated_at": "2026-04-22T21:25:59Z",
+    "news_updated_at": "2026-04-24T17:19:59Z",
     "logo_url": "https://replit.com/public/icons/favicon-prompt-192.png"
   },
   {
@@ -44015,6 +44855,22 @@
       "signals": [
         {
           "platform": "x",
+          "url": "https://x.com/hardmaru/status/2047483027719348520",
+          "title": "We’ve been using Sakana Fugu internally for our own research and coding. Instead of relying on a single model, it dynami",
+          "published_at": "2026-04-24T01:09:28Z",
+          "snippet": "We’ve been using Sakana Fugu internally for our own research and coding. Instead of relying on a single model, it dynamically orchestrates the best combination of open and closed models for any tas...",
+          "author": "@hardmaru"
+        },
+        {
+          "platform": "x",
+          "url": "https://x.com/SakanaAILabs/status/2047596110815056338",
+          "title": "https://sakana.ai/fugu-beta/#Japanese\n\n複数のフロンティア基盤モデルを動的に協調させ、タスクごとに最適なエージェントの組み合わせと役割分担を自律的に選び出す システムです。SWE-Pro、GPQA-D、",
+          "published_at": "2026-04-24T08:38:49Z",
+          "snippet": "Sakana AIは新しい商用AIプロダクトとして、マルチエージェント・オーケストレーションシステム「Sakana Fugu」のβテストを開始します🐡 ブログ: https://t.co/dkNQUwdmvu 複数のフロンティア基盤モデルを動的に協調させ、タスクごとに最適なエージェントの組み合わせと役割分担を自律的に選び出す https://t.co/1T6JuIXyZj",
+          "author": "@SakanaAILabs"
+        },
+        {
+          "platform": "x",
           "url": "https://x.com/SakanaAILabs/status/2046959066438947167",
           "title": "//sakana.ai/careers/#principal-platform-engineer\n\nAt Sakana AI, we are building a sovereign, unified data platform for J",
           "published_at": "2026-04-22T14:27:26Z",
@@ -44036,27 +44892,11 @@
           "published_at": "2026-04-18T07:13:35Z",
           "snippet": "日経ポッドキャストにて、Sakana AIの防衛領域での取り組みを取り上げていただきました。 「防衛のAI、国産に託す 日本発サカナの分析システム受注」というテーマで、NIKKEI Digital Governanceの中西豊紀編集長に解説いただいています。ぜひお聴きください。 @nikkeipodcast https://t.co/F2oBDccdj5",
           "author": "@SakanaAILabs"
-        },
-        {
-          "platform": "x",
-          "url": "https://x.com/Nids1952/status/2045025857765597469",
-          "title": "【第２期安全保障戦略課程】\n４月８日（水）、第２期安全保障戦略課程の研修員はSakana AI株式会社を訪問し、最新のAI技術や防衛分野におけるAIの活用など、同社の取り組みについて理解を深めました。\n→https://www.nids.m",
-          "published_at": "2026-04-17T06:25:33Z",
-          "snippet": "【第２期安全保障戦略課程】 ４月８日（水）、第２期安全保障戦略課程の研修員はSakana AI株式会社を訪問し、最新のAI技術や防衛分野におけるAIの活用など、同社の取り組みについて理解を深めました。 →https://t.co/GXnXkspSP7 https://t.co/moQPJuGX0U",
-          "author": "@Nids1952"
-        },
-        {
-          "platform": "x",
-          "url": "https://x.com/hardmaru/status/2044423881960923352",
-          "title": "We are hiring Software Engineers in Tokyo to help us scale Sakana AI’s R&D. If you’re interested in building the data pi",
-          "published_at": "2026-04-15T14:33:31Z",
-          "snippet": "We are hiring Software Engineers in Tokyo to help us scale Sakana AI’s R&amp;D. If you’re interested in building the data pipelines and full stack infrastructure needed to push the boundaries of au...",
-          "author": "@hardmaru"
         }
       ]
     },
-    "latest_news": "2026-04-22: 来自 X 的一手提及：成立1年估值超11亿美元，成为日本史上最快独角兽，获NVIDIA、Sony、NTT等投资。",
-    "news_updated_at": "2026-04-22T14:27:26Z",
+    "latest_news": "2026-04-24: 来自 X 的一手提及：Sakana AI已成为日本最快达到独角兽估值的创业公司（超$1B），采用进化算法合并模型的创新方法，已在内部用于研究和编码",
+    "news_updated_at": "2026-04-24T01:09:28Z",
     "website_source": "validated_variant",
     "latest_news_en": "2026-03-01: Direct mention from X: Awarded as the only Japanese company among 60 global companies in the Defense Innovation Challenge; a unicorn company (valuation exceeding $1 billion).",
     "needs_verification": false
@@ -47146,10 +47986,10 @@
     ],
     "rating": 4.8,
     "weekly_users": 10000000,
-    "trending_score": 85,
-    "final_score": 85,
-    "hot_score": 85,
-    "top_score": 85,
+    "trending_score": 89,
+    "final_score": 89,
+    "hot_score": 89,
+    "top_score": 89,
     "is_hardware": false,
     "source": "curated",
     "dark_horse_index": 3,
@@ -47157,7 +47997,7 @@
     "funding_total": "幻方量化背书",
     "valuation": "",
     "why_matters": "中国开源LLM领头羊，性价比之王，但已广为人知",
-    "latest_news": "DeepSeek-V3持续领先开源榜单",
+    "latest_news": "2026-04-24: 来自 YouTube 的一手提及：文章标题突出其论文发布，与GPT 5.5比较，显示在AI模型竞争中的重要位置。",
     "pricing": "$0.07-1.10/1M tokens",
     "first_seen": "2026-01-14T00:00:00Z",
     "last_seen": "2026-01-14T00:00:00Z",
@@ -47170,7 +48010,28 @@
     "latest_news_en": "DeepSeek-V3 continues to lead the open source list",
     "website_source": "redirect",
     "needs_verification": false,
-    "website_check_reason": "error:ConnectionError"
+    "website_check_reason": "error:ConnectionError",
+    "extra": {
+      "signals": [
+        {
+          "platform": "youtube",
+          "url": "https://www.youtube.com/watch?v=jz0rNhfAKo8",
+          "title": "GPT 5.5 Arrives, DeepSeek V4 Drops, and the Compute War Intensifies",
+          "published_at": "2026-04-24T18:45:02Z",
+          "snippet": "GPT 5.5 full analysis, plus DeepSeek V4 paper highlights, comparisons with Mythos, a vibe-coded game w/ GPT Image 2, and 50 data-points you wouldn’t get from just reading the headlines. https://800...",
+          "author": "AI Explained"
+        },
+        {
+          "platform": "x",
+          "url": "https://x.com/NVIDIAAI/status/2047765637808664759",
+          "title": "✨ DeepSeek-V4 is here — a million-token context, 1.6T parameter powerhouse optimized for agentic workflows. \n\nOut of the",
+          "published_at": "2026-04-24T19:52:28Z",
+          "snippet": "✨ DeepSeek-V4 is here — a million-token context, 1.6T parameter powerhouse optimized for agentic workflows. Out of the box, on DeepSeek-V4-Pro, NVIDIA Blackwell Ultra delivers over 150 TPS/user int...",
+          "author": "@NVIDIAAI"
+        }
+      ]
+    },
+    "news_updated_at": "2026-04-24T18:45:02Z"
   },
   {
     "name": "Kimi",
@@ -48185,7 +49046,7 @@
     "description_en": "Develop Grok basic model and general AI system for commercialization through Musk ecosystem (X Platform, Tesla)",
     "why_matters_en": "It will reach a valuation of $50B within one year after its establishment in 2023, and raise $1 billion in financing in 2025; supported by Elon Musk, integrating the X platform and Tesla ecology, a mixed model of open source and enterprise payment, and rapid talent acquisition",
     "latest_news_en": "2025-01: $10B financing round to accelerate talent recruitment and model development",
-    "website_source": "source_url",
+    "website_source": "validated_variant",
     "needs_verification": false
   },
   {
@@ -49359,7 +50220,7 @@
     "description_en": "The London AI Research Laboratory builds superhuman intelligence through reinforcement learning rather than large language models. The goal is to create an infinite learning system that can learn autonomously and discover itself.",
     "why_matters_en": "Led by David Silver (creator of AlphaGo), the $1 billion seed round was led by Sequoia, with a $4 billion valuation, the largest seed round in European history. Core innovation: abandon the LLM paradigm, shift to reinforcement learning + experience cycle, and break through the bottleneck of human knowledge. Nvidia, Google, and Microsoft are involved in the negotiations.",
     "needs_verification": true,
-    "website_check_reason": "error:ReadTimeout",
+    "website_check_reason": "status:404",
     "latest_news": "2026-03-10: 来自 X 的一手提及：Founded by AlphaGo architect David Silver; positioned to capitalize on $192.7B AI startup funding landscape in 2025",
     "news_updated_at": "2026-03-10T15:57:40Z"
   },
@@ -50729,7 +51590,7 @@
       }
     },
     "needs_verification": true,
-    "website_check_reason": "error:SSLError"
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "Lightblue Technology",
@@ -50837,6 +51698,158 @@
     "website_source": "weekly_match",
     "needs_verification": true,
     "website_check_reason": "status:403"
+  },
+  {
+    "name": "RobCo",
+    "description": "慕尼黑RobCo开发AI驱动模块化机器人，已达C轮融资。",
+    "website": "https://robco.ai",
+    "logo_url": "",
+    "categories": [
+      "hardware"
+    ],
+    "dark_horse_index": 3,
+    "why_matters": "AI模块化机器人，C轮融资，慕尼黑远程团队，德国顶级初创。",
+    "funding_total": "Series C",
+    "region": "🇩🇪",
+    "country_code": "DE",
+    "country_name": "Germany",
+    "country_flag": "🇩🇪",
+    "country_display": "🇩🇪 Germany",
+    "country_source": "explicit:company_country",
+    "source_region": "🇪🇺",
+    "source": "startups.gallery",
+    "source_url": "https://startups.gallery/categories/locations/countries/germany",
+    "source_title": "",
+    "website_source": "weekly_match",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-12T19:49:32.476277Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-03-12",
+    "first_seen": "2026-03-12T19:49:32.772468Z",
+    "final_score": 60,
+    "trending_score": 54,
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectionError"
+  },
+  {
+    "name": "Cavela",
+    "description": "AI驱动平台自动化消费品牌采购与制造，使用AI代理与供应商谈判并管理物流。",
+    "description_en": "AI platform automating sourcing and manufacturing for consumer brands via AI agents negotiating with suppliers.",
+    "website": "unknown",
+    "logo_url": "",
+    "categories": [
+      "agent"
+    ],
+    "dark_horse_index": 3,
+    "why_matters": "660万美元种子轮，帮助中小品牌降低生产成本并分散供应链，应对关税风险，让小企业拥有大企业制造效率。",
+    "why_matters_en": "$6.6M seed enables SMBs to achieve enterprise-level manufacturing efficiency, cutting costs and diversifying supply chains.",
+    "funding_total": "$6.6M Seed",
+    "latest_news": "2026: 完成660万美元种子轮融资",
+    "region": "🇺🇸",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country",
+    "source_region": "🇺🇸",
+    "source": "Crescendo AI",
+    "source_url": "https://www.crescendo.ai/news/latest-vc-investment-deals-in-ai-startups",
+    "source_title": "",
+    "website_source": "",
+    "latest_news_en": "2026: Closed $6.6M seed funding",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-24T19:57:49.094258Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-04-24",
+    "first_seen": "2026-04-24T19:57:49.336771Z",
+    "final_score": 60,
+    "trending_score": 54,
+    "needs_verification": true,
+    "website_check_reason": "status:200"
   },
   {
     "name": "Qodo",
@@ -51729,80 +52742,6 @@
     "trending_score": 72,
     "needs_verification": true,
     "website_check_reason": "status:404"
-  },
-  {
-    "name": "RobCo",
-    "description": "慕尼黑RobCo开发AI驱动模块化机器人，已达C轮融资。",
-    "website": "unknown",
-    "logo_url": "",
-    "categories": [
-      "hardware"
-    ],
-    "dark_horse_index": 3,
-    "why_matters": "AI模块化机器人，C轮融资，慕尼黑远程团队，德国顶级初创。",
-    "funding_total": "Series C",
-    "region": "🇩🇪",
-    "country_code": "DE",
-    "country_name": "Germany",
-    "country_flag": "🇩🇪",
-    "country_display": "🇩🇪 Germany",
-    "country_source": "explicit:company_country",
-    "source_region": "🇪🇺",
-    "source": "startups.gallery",
-    "source_url": "https://startups.gallery/categories/locations/countries/germany",
-    "source_title": "",
-    "website_source": "",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-03-12T19:49:32.476277Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "llm_summary_used": false,
-          "llm_summary_skipped_reason": "",
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-03-12",
-    "first_seen": "2026-03-12T19:49:32.772468Z",
-    "final_score": 60,
-    "trending_score": 54,
-    "needs_verification": true,
-    "website_check_reason": "status:200"
   },
   {
     "name": "MetaOptics AI Smart Glasses",
