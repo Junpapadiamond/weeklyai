@@ -2340,5 +2340,432 @@
     "country_flag": "🇮🇱",
     "country_display": "🇮🇱 Israel",
     "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Series",
+    "website": "https://series.app",
+    "description": "Series 是大学生创办的AI社交网络app，集成在iMessage中。",
+    "description_en": "Series is an AI social network app built by college students, integrated into iMessage.",
+    "category": "other",
+    "region": "🇺🇸",
+    "funding_total": "$5.1M pre-seed",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "两名大学生获Venmo联合创始人、Pear VC、Reddit CEO Steve Huffman等投资510万美元pre-seed轮，专注iMessage内AI社交网络。",
+    "why_matters_en": "Two college kids raised $5.1M pre-seed from Venmo co-founder, Pear VC, Reddit CEO Steve Huffman, for AI social network in iMessage.",
+    "latest_news": "2026-04-24: 宣布510万美元pre-seed融资",
+    "latest_news_en": "2026-04-24: Announced $5.1M pre-seed round",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/04/24/two-college-kids-raise-a-5-1-million-pre-seed-to-build-an-ai-social-network-in-imessage/",
+    "company_country": "US",
+    "company_country_confidence": 0.8,
+    "confidence": 0.9,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-26T19:49:24.604650Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 23,
+          "top_story_id": "47875843",
+          "points": 195,
+          "comments": 56,
+          "engagement_depth_ratio": 0.2872,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "> It has given 20,000 researchers around the world access under strict agreements that prohibit sharing data further. To me it seems rather naive to have done that. After all, you can't un-leak medical data. So even if the \"strict agreement\" included huge punishments, there's no getting the toothpaste back in the tube. If you want to ensure compliance before a leak happens you have to (ugh) audit their compliance. And that isn't something that scales to 20,000 researchers. Too late to do anything about it now though :(",
+            "What are the pros/cons of just open-sourcing everything for future bio bank projects?",
+            "Took me 5 minutes to find more: https://github.com/tanaylab/Mendelson_et_al_2023/blob/9c5a65... (Uses Date of Birth column). And some information on how they were distributing it to researchers: https://github.com/broadinstitute/ml4h/blob/master/ingest/uk... > The following steps require the ukbunpack and ukbconv utilities from the UK Biobank website. The file decrypt_all.sh will run through the following steps on one of the on-prem servers. > Once the data is downloaded, it needs to be \"ukbunpacked\" which decrypts it, and then converts it to a file format of choice. Both ukbunpack and ukbconv are available from the UK Biobank's website. The decryption has to happen on a linux system if you ",
+            "The irony is, they don’t even provide the data to the participants themselves.",
+            "That's the least of it: https://www.bbc.co.uk/news/articles/cpvxgl3n138o All 500,000 participants for sale on Alibaba... And official response: https://www.ukbiobank.ac.uk/news/a-message-to-our-participan...",
+            "From the perspective of someone who's worked with (biostatisticians who touch) Medicaid and Medicare billing data... It looks like they've identified the institutions, at least... but aren't identifying it to the public for now. Are there going to be consequences? Are they going to be identified and sanctioned beyond \"having their access suspended?\" In the US, HHS wouldn't hestitate to name, shame, and impose a sanction with corrective action plans. Not knowing much about how things work across the pond, I'm sure CMS PII gets used more often in research without these leaks left and right.",
+            "I've opted in to Australia's version of the biobank knowing that it's inevitable that it will be leaked some day, I think the data is so valuable in perpetuity that it's worth it. I remember Ben Goldacre has been working on how to make data more accessible in a safer way to (in part) avoid this very thing, but I haven't heard much of it since [0] [0] https://www.bennett.ox.ac.uk/blog/2025/02/opensafely-in-brie...",
+            "the issue is with jupyter notebooks because they keep some of the data in the output (typically a few rows, but still). They should strongly recommend to use regular python scripts, and keep the jupyter books just for verification, which is a very sane thing to do also from a SW engineering perspective.",
+            "so.. where can i get this data? XD",
+            "Thank you for sharing. I work in a central RSE team and have raised this topic to the team, with a view of bringing attention to this issue and better educating our researchers (as part of our training offerings and documentation)."
+          ],
+          "llm_summary_used": true,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.2308,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "Unable to generate - source comments not found in provided search results。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "neutral",
+      "confidence": 0.0
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-04-26",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:techcrunch.com AI startup funding",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "E3 Group",
+    "website": "https://e3group.ai",
+    "description": "E3 Group 是专为中型和企业级货运公司打造的 AI 转型合作伙伴，推出专利待批的 E3 Shield 平台，使用 AI 和生物识别技术实时验证司机身份，防止货运欺诈和盗窃。",
+    "description_en": "E3 Group is an AI-first transformation partner for middle-market and enterprise freight companies, launching patent-pending E3 Shield for real-time AI and biometric driver verification to combat freight fraud and theft.",
+    "category": "agent",
+    "region": "🇺🇸",
+    "funding_total": "unknown",
+    "dark_horse_index": 2,
+    "criteria_met": [
+      "🆕 category_innovation"
+    ],
+    "why_matters": "作为货运物流领域首个 AI-first 转型伙伴，部署 agentic AI 工作流实现实时司机身份确认，优先数据主权和运营效率，帮助中型经纪商消除传统手动瓶颈并领先竞争。",
+    "why_matters_en": "First AI-first partner in freight logistics with agentic AI workflows for real-time biometric driver verification, prioritizing data sovereignty and efficiency to eliminate manual bottlenecks for middle-market brokers.",
+    "latest_news": "2026-04-15: 推出 E3 Shield 平台对抗货运欺诈",
+    "latest_news_en": "2026-04-15: Launched E3 Shield platform to combat freight fraud",
+    "source": "Morningstar / PRNewswire",
+    "source_url": "https://www.morningstar.com/news/pr-newswire/20260415ny35032/ai-startup-e3-group-launches-shield-to-combat-freight-fraud-and-theft",
+    "company_country": "United States",
+    "company_country_confidence": 0.95,
+    "confidence": 0.9,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-26T19:50:36.637433Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-04-26",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI Series A Europe",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Evion",
+    "website": "https://evion.ai",
+    "description": "16岁高中生开发的KI农业应用，帮助中小型农场提升产量，已在北美、东南亚和印度使用。",
+    "description_en": "KI farming app developed by 16-year-old high school student to boost yields for small to medium farms, used in North America, SE Asia, and India.",
+    "category": "other",
+    "region": "🇺🇸",
+    "funding_total": "unknown",
+    "dark_horse_index": 2,
+    "criteria_met": [
+      "growth_anomaly"
+    ],
+    "why_matters": "创始人为16岁高中生，已实现跨洲际部署并拒绝30万美元收购，专注为中小农场提供经济型KI解决方案。",
+    "why_matters_en": "Founded by 16-year-old, achieved international deployment across continents and rejected $300K acquisition, targeting affordable KI for small-medium farms.",
+    "latest_news": "2026-04-21: 拒绝30万美元收购，继续扩展全球使用",
+    "latest_news_en": "2026-04-21: Rejected $300K acquisition, continues global expansion",
+    "source": "Chip.de",
+    "source_url": "https://www.chip.de/news/business/mehr-ertrag-per-ki-16-jaehriger-hilft-landwirten-und-lehnt-300-000-dollar-ab_f5e45a5a-40cc-4d0f-83cc-5ec74b25d07d.html",
+    "company_country": "US",
+    "company_country_confidence": 0.9,
+    "confidence": 0.85,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-26T19:51:25.421967Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-04-26",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "KI Startup Finanzierung",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "yasp",
+    "website": "https://yasp.ai",
+    "description": "DeepTech startup专注未知AI应用，获500万美元种子轮融资。",
+    "description_en": "DeepTech startup secured $5M seed funding for AI applications.",
+    "category": "other",
+    "region": "🇩🇪",
+    "funding_total": "$5M Seed",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal",
+      "demand_signal_hn"
+    ],
+    "why_matters": "完成500万美元种子轮融资，作为DeepTech玩家显示早期资本吸引力。",
+    "why_matters_en": "Secured $5M seed funding as DeepTech player showing early investor interest.",
+    "latest_news": "2026-04-20: 完成500万美元种子轮融资",
+    "latest_news_en": "2026-04-20: Closed $5M seed funding",
+    "source": "Starting-Up.de",
+    "source_url": "https://www.starting-up.de/news/news-investments/deeptech-start-up-yasp-sichert-sich-5-mio-us-dollar-seed-finanzierung.html",
+    "company_country": "Germany",
+    "company_country_confidence": 0.7,
+    "confidence": 0.75,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-26T19:51:25.722631Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 1,
+          "top_story_id": "47884294",
+          "points": 24,
+          "comments": 24,
+          "engagement_depth_ratio": 1.0,
+          "is_controversial": true,
+          "top_comments_sample": [
+            "Probably because anytime I work from home I watch TV all day and just respond to Slacks on my phone.",
+            "For one thing there is the nightmare scenario that the guy who shows up for the job interview is the front man for a North Korean team. Also the Bay Area is like https://en.wikipedia.org/wiki/View_of_the_World_from_9th_Ave... but much worse and they’d hate more than anything if you “think different”",
+            "It's about control. If a middle manager (or higher) can't see you, they don't believe that you're working. No matter how much work you actually get done.",
+            "I think part of it is also that most companies never built good ways to measure output in the first place. In an office, “being there” becomes a proxy for productivity, even if it’s not accurate. Once you remove that, the gap becomes very visible, and instead of fixing measurement, a lot of companies just revert back to what they’re used to. So it ends up looking like a remote work problem, but it’s really a management/measurement problem.",
+            "As someone who works from home, and has for a long time, and would do it no differently -- and also as someone who has been up in the chain a bit and had an opportunity to look closely at things like productivity and other working patterns -- I can tell you that I've seen the most deeply unethical things, things that could never ever happen in an office. The whole \"Quiet Quitting\" movement, and just taking advantage in all kinds of ways. I've seen it again and again, particularly with younger employees. If you are a remote work company and hire someone who is not passionate about what they do, they will, for certain, take advantage. And why wouldn't they? So it is easier to just lean on the ",
+            "As a counterpoint, I've worked remotely since like 2000 ... It gets easier and more 'normal' every year. So I wouldn't worry about it too much.",
+            "There's more to being an employee than just being able to \"complete every aspect of my job remotely\". If the company just wanted to have some job done, be it on site, or especially remotely, they'd use a vendor or contractor. That's what they do for moving the furniture, painting, watering the plants, payroll, advertising, legal, auditing, etc. An employee is someone who, as well as just doing their job, sporadically does other things like maintaining relationships, product ideas, interviewing candidates, training new hires, and whatever other ad-hoc stuff is required to keep a company operational. If you want to be hired as an employee, and potentially get promoted, etc, then doing your act",
+            "> I just passed on a job for a quality company in the Bay area because they wouldn't budge on remote work You're assuming they don't trust remote employees? They may just not want remote employees. It's a perfectly valid stance for a company to say, \"You know what, remote work just isn't for us.\" They don't need to justify it any more than you need to justify your preference for remote work. It's not right or wrong, it's just a preference.",
+            "It’s partly because of cases like this https://www.nbcnews.com/tech/internet/man-goes-viral-working ... This is Parekh, the guy who was working for some 3-7 well funded valley companies simultaneously last year.",
+            "Because unless they can see you toiling away you aren’t “working”. Because generally speaking, middle managers are children with business degrees that mean nothing. Corporate America is going to have to grow the fuck up if we’re ever again going to lead this world."
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.4237,
+        "demand_tier": "medium",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.6
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-04-26",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "KI Startup Finanzierung",
+    "country_code": "DE",
+    "country_name": "Germany",
+    "country_flag": "🇩🇪",
+    "country_display": "🇩🇪 Germany",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Sakana Edge",
+    "website": "https://strout.jp",
+    "description": "AI与IoT融合的陆上养殖DX解决方案，提升养殖生产效率。",
+    "description_en": "AI and IoT integrated solution for land-based aquaculture DX, boosting productivity.",
+    "category": "other",
+    "region": "🇯🇵",
+    "funding_total": "1.5亿日元",
+    "dark_horse_index": 2,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "1.5亿日元融资由Yanmar Ventures领投，用于Sakana Edge功能开发和国内外扩张，结合AI与养殖专有技术。",
+    "why_matters_en": "1.5亿日元 funding led by Yanmar Ventures for Sakana Edge development and global expansion, merging AI with aquaculture expertise.",
+    "latest_news": "2026-04-21: 完成1.5亿日元第三者割当增资",
+    "latest_news_en": "2026-04-21: Raised 150M JPY via third-party allotment",
+    "source": "Kepple",
+    "source_url": "https://kepple.co.jp/articles/ueoafg9p4",
+    "company_country": "Japan",
+    "company_country_confidence": 0.9,
+    "confidence": 0.85,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-26T19:55:13.265890Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇯🇵🇰🇷",
+    "discovered_at": "2026-04-26",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "日本 AI企業 シリーズA",
+    "country_code": "JP",
+    "country_name": "Japan",
+    "country_flag": "🇯🇵",
+    "country_display": "🇯🇵 Japan",
+    "country_source": "explicit:company_country"
   }
 ]
