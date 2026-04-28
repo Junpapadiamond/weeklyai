@@ -391,5 +391,83 @@
     "country_flag": "",
     "country_display": "Unknown",
     "country_source": "unknown"
+  },
+  {
+    "name": "Redpine",
+    "website": "https://www.redpine.ai",
+    "description": "Redpine 是一个为 AI 代理提供非公开、高质量多模态数据访问的 API 平台，专注于科学、医疗、法律等领域数据。",
+    "description_en": "Redpine is an API platform providing AI agents access to licensed, high-quality multimodal non-public data, focusing on scientific, medical, legal domains.",
+    "category": "agent",
+    "region": "🇸🇪",
+    "funding_total": "€6.8M seed",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "刚刚完成 €6.8M 种子轮融资（总融资 €9M），由 NordicNinja 领投，已与国际 AI 实验室和 AsedaSciences 合作，提供超过千亿 token 的优质数据，支持实时 RAG 管道，解决 AI 幻觉问题并为数据所有者分成。",
+    "why_matters_en": "Just raised €6.8M seed (total €9M) led by NordicNinja, partnering with international AI labs and AsedaSciences, offers 100B+ tokens of premium data for real-time RAG, reduces hallucinations with revenue sharing for data owners.",
+    "latest_news": "2026-04-28: 宣布 €6.8M 种子轮融资，用于全球扩张和平台开发。",
+    "latest_news_en": "2026-04-28: Announced €6.8M seed round for global expansion and platform development.",
+    "source": "Sifted",
+    "source_url": "https://sifted.eu/articles/redpine-raises-e6-8m-to-give-ai-agents-access-to-non-public-data",
+    "company_country": "Sweden",
+    "company_country_confidence": 1.0,
+    "confidence": 0.95,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-04-28T20:19:26.239352Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-04-28",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:sifted.eu AI funding",
+    "country_code": "SE",
+    "country_name": "Sweden",
+    "country_flag": "🇸🇪",
+    "country_display": "🇸🇪 Sweden",
+    "country_source": "explicit:company_country"
   }
 ]
