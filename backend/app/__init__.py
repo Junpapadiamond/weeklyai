@@ -1,10 +1,12 @@
+import os
+import time
+from collections import defaultdict
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_pymongo import PyMongo
 from config import Config
-from functools import wraps
-from collections import defaultdict
-import time
+from app.services.env_utils import sanitize_env_value
 
 mongo = PyMongo()
 IOS_APP_UA_PREFIX = "WeeklyAIApp-iOS/"
@@ -33,6 +35,14 @@ class RateLimiter:
 
 rate_limiter = RateLimiter(requests_per_minute=100)
 
+
+def _configured_mongo_uri() -> str:
+    """Return a sanitized Mongo URI only when explicitly configured."""
+    uri = sanitize_env_value(os.getenv("MONGO_URI", ""))
+    if uri.startswith(("mongodb://", "mongodb+srv://")):
+        return uri
+    return ""
+
 def create_app():
     """创建 Flask 应用"""
     app = Flask(__name__)
@@ -49,8 +59,15 @@ def create_app():
     else:
         CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-    # 初始化 MongoDB
-    mongo.init_app(app)
+    # The product repository owns Mongo access and falls back to JSON snapshots.
+    # Keep app startup resilient when Vercel has a missing or malformed MONGO_URI.
+    mongo_uri = _configured_mongo_uri()
+    if mongo_uri:
+        app.config["MONGO_URI"] = mongo_uri
+        try:
+            mongo.init_app(app)
+        except Exception as exc:
+            app.logger.warning("Skipping Flask-PyMongo init: %s", exc)
 
     # Rate limiting middleware
     @app.before_request
