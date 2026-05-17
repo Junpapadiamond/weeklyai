@@ -1716,5 +1716,86 @@
     "country_flag": "🇺🇸",
     "country_display": "🇺🇸 United States",
     "country_source": "explicit:company_country"
+  },
+  {
+    "name": "White Circle",
+    "website": "https://whitecircle.ai/?ref=siliconsnark.com",
+    "description": "White Circle 是一家面向 AI 安全与治理的新创公司，位于用户与模型之间，负责检查输入和输出是否符合企业规则。",
+    "description_en": "White Circle is a new AI safety and governance company that sits between users and models to check inputs and outputs against company rules.",
+    "category": "other",
+    "region": "🇫🇷",
+    "funding_total": "$11M Seed",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "category_innovation"
+    ],
+    "why_matters": "该公司由 founder Denis Shilov 将病毒式 jailbreak 研究产品化，完成 1100 万美元 seed 融资；它不是简单的护栏工具，而是把企业规则执行放在模型交互链路中间，切中了 AI agent 上线后最现实的安全与合规需求。",
+    "why_matters_en": "Founder Denis Shilov turned viral jailbreak research into a company and raised an $11M seed round; it is not just a guardrail tool, but a policy-enforcement layer placed directly in the model interaction path.",
+    "latest_news": "2026-05: Fortune 报道其完成 1100 万美元 seed 融资，并以公司规则检查 AI 输入输出的方式进入市场。",
+    "latest_news_en": "2026-05: Fortune reported the company raised an $11M seed round and is entering the market with a rules-checking layer for AI inputs and outputs.",
+    "source": "Silicon Snark",
+    "source_url": "https://www.siliconsnark.com/white-circle-raised-11m-to-put-a-chaperone-on-your-ai-agents/",
+    "company_country": "France",
+    "company_country_confidence": 0.78,
+    "confidence": 0.8,
+    "extra": {
+      "website_recovered_from_source": true,
+      "website_recovered_url": "https://whitecircle.ai/?ref=siliconsnark.com",
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-17T20:07:39.139026Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "categories": [
+      "other"
+    ],
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-05-17",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI agent startup funding",
+    "country_code": "FR",
+    "country_name": "France",
+    "country_flag": "🇫🇷",
+    "country_display": "🇫🇷 France",
+    "country_source": "explicit:company_country"
   }
 ]
