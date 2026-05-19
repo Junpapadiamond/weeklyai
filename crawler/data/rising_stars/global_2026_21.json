@@ -404,5 +404,510 @@
     "country_flag": "🇳🇱",
     "country_display": "🇳🇱 Netherlands",
     "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Synthetic",
+    "website": "https://synthetic.ai/",
+    "description": "Synthetic 正在打造一款全自动 AI bookkeeper，目标是无需人工直接介入即可生成 accrual-based financials，面向会计自动化场景。",
+    "description_en": "Synthetic is building a fully autonomous AI bookkeeper designed to generate accrual-based financials without direct human involvement.",
+    "category": "finance",
+    "region": "🇺🇸",
+    "funding_total": "$10M seed",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "TechCrunch 报道其已获得 1000 万美元 seed 轮融资，且产品瞄准“完全自治”的财务记账，这是会计自动化里难度很高、差异化很强的方向。",
+    "why_matters_en": "TechCrunch reports a $10M seed round, and the product targets a fully autonomous bookkeeping workflow, which is a highly differentiated and technically demanding finance automation category.",
+    "latest_news": "2026-05: TechCrunch 报道 Synthetic 获得 1000 万美元 seed 融资，正在设计一款可自动生成 accrual-based financials 的 AI bookkeeper。",
+    "latest_news_en": "2026-05: TechCrunch reported that Synthetic raised a $10M seed round to design an AI bookkeeper that can generate accrual-based financials.",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/05/14/khosla-ventures-is-betting-10m-on-ian-crosby-whose-last-startup-bench-imploded/",
+    "company_country": "US",
+    "company_country_confidence": 0.78,
+    "confidence": 0.84,
+    "extra": {
+      "website_recovered_from_source": true,
+      "website_recovered_url": "https://synthetic.ai/",
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-19T20:46:23.822570Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 5,
+          "top_story_id": "48151392",
+          "points": 4,
+          "comments": 1,
+          "engagement_depth_ratio": 0.25,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "Amazon isn't alone here, of course. Since writing this article, I also found Dr. Elias Thorne's YouTube channel, where another operator appears to be producing AI-generated health videos for seniors."
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0948,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "categories": [
+      "other"
+    ],
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "neutral",
+      "confidence": 0.45
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-05-19",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:techcrunch.com AI startup funding",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Origin Lab",
+    "website": "https://originlab.ai/",
+    "description": "Origin Lab 正在把游戏公司产生的数据变成可供 world model builders 使用的供给侧数据源，连接 video game 与 AI 训练数据市场。",
+    "description_en": "Origin Lab is turning video game industry data into a supply source for world model builders, linking games to AI training data markets.",
+    "category": "other",
+    "region": "🇺🇸",
+    "funding_total": "$8M seed",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal",
+      "category_innovation"
+    ],
+    "why_matters": "8 百万美元 seed 轮由 Lightspeed 领投，方向是把视频游戏数据卖给 world model builders，这是一种相对少见的数据供给型创新路径。",
+    "why_matters_en": "The startup raised an $8M seed round led by Lightspeed, and its thesis—selling video game data to world model builders—is an uncommon data-supply innovation.",
+    "latest_news": "2026-05: TechCrunch 报道 Origin Lab 完成 800 万美元 seed 融资，帮助游戏公司向 world model builders 出售数据。",
+    "latest_news_en": "2026-05: TechCrunch reported Origin Lab raised an $8M seed round to help video game companies sell data to world model builders.",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/05/13/origin-lab-raises-8m-to-help-video-game-companies-sell-data-to-world-model-builders/",
+    "company_country": "US",
+    "company_country_confidence": 0.76,
+    "confidence": 0.81,
+    "extra": {
+      "website_recovered_from_source": true,
+      "website_recovered_url": "https://originlab.ai/",
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-19T20:46:24.410336Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "categories": [
+      "other"
+    ],
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-05-19",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:techcrunch.com AI startup funding",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Atech",
+    "website": "https://atech.dev/",
+    "description": "Atech 正在把 vibe coding 概念带入 hardware 开发流程，尝试让硬件创建过程像软件生成一样更快、更自然。",
+    "description_en": "Atech is bringing vibe coding to hardware development, aiming to make hardware creation faster and more intuitive like software generation.",
+    "category": "hardware",
+    "region": "Unknown",
+    "funding_total": "$800K pre-seed",
+    "dark_horse_index": 2,
+    "criteria_met": [
+      "category_innovation"
+    ],
+    "why_matters": "虽然融资规模不大，但它把“vibe coding”从软件扩展到 hardware 制造流程，是一个很清晰的新概念迁移，值得早期跟踪。",
+    "why_matters_en": "While the funding is small, it extends the vibe-coding concept from software into hardware creation, which is a clear early-stage innovation worth tracking.",
+    "latest_news": "2026-05: TechCrunch 报道 Lovable 参与了 Atech 的 80 万美元 pre-seed 轮，这家公司想把 vibe coding 引入硬件开发。",
+    "latest_news_en": "2026-05: TechCrunch reported Lovable backed Atech in an $800K pre-seed round to bring vibe coding to hardware.",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/05/14/lovable-just-backed-a-company-thats-looking-to-bring-vibe-coding-to-hardware/",
+    "company_country": "Denmark",
+    "company_country_confidence": 0.76,
+    "confidence": 0.7,
+    "extra": {
+      "website_recovered_from_source": true,
+      "website_recovered_url": "https://atech.dev/",
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-19T20:46:24.860561Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "is_hardware": true,
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-05-19",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:techcrunch.com AI startup funding",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown"
+  },
+  {
+    "name": "Deep-Tech Startups Support Program (DTSU)",
+    "website": "https://www.nedo.go.jp/english/activities/activities_ZZJP_100250.html",
+    "description": "DTSU 是 NEDO 面向深科技创业公司的分阶段 R&D 与商业化支持计划，覆盖长周期高风险技术验证与落地。",
+    "description_en": "DTSU is NEDO's phased R&D and commercialization support program for deep-tech startups, covering long-cycle, high-risk technology validation and deployment.",
+    "category": "other",
+    "region": "🇯🇵",
+    "funding_total": "Up to ¥2.5 billion",
+    "dark_horse_index": 2,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "虽然它不是创业公司产品，但对日本深科技 AI 团队非常关键：单个项目最高可达25亿日元支持，并强调三阶段 R&D 到商业化衔接，适合早期 AI 基础模型、机器人和产业 AI 团队申请。",
+    "why_matters_en": "Although not a startup product, it is highly relevant for Japanese deep-tech AI teams: projects can receive up to ¥2.5 billion in support with a three-phase path from R&D to commercialization, making it valuable for early foundation-model, robotics, and industrial AI teams.",
+    "latest_news": "2026-05: NEDO 继续通过 DTSU 为深科技创业公司提供分阶段研发与商业化支持。",
+    "latest_news_en": "2026-05: NEDO continued to support deep-tech startups through DTSU with phased R&D and commercialization funding.",
+    "source": "NEDO",
+    "source_url": "https://www.nedo.go.jp/english/activities/activities_ZZJP_100250.html",
+    "company_country": "Japan",
+    "company_country_confidence": 0.99,
+    "confidence": 0.74,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-19T20:46:40.011568Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇯🇵🇰🇷",
+    "discovered_at": "2026-05-19",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "Japan AI startup funding",
+    "country_code": "JP",
+    "country_name": "Japan",
+    "country_flag": "🇯🇵",
+    "country_display": "🇯🇵 Japan",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Scope",
+    "website": "https://scope.ai",
+    "description": "Scope 是一家伦敦创业公司，正在打造用于工业巡检的 AI workflow platform，面向复杂工业场景提升检查效率与自动化水平。",
+    "description_en": "Scope is a London startup building an AI workflow platform for industrial inspections, aiming to improve efficiency and automation in complex industrial settings.",
+    "category": "other",
+    "region": "🇬🇧",
+    "funding_total": "$20M round",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "Scope 由 Index Ventures 领投拿到 2000 万美元融资，结合其工业巡检 AI workflow 方向，属于典型的高客单价 B2B 深度场景。",
+    "why_matters_en": "Scope raised $20M led by Index Ventures, and its AI workflow platform for industrial inspections targets a high-value B2B deep workflow niche.",
+    "latest_news": "2026-05: 获 Index Ventures 领投 2000 万美元融资。",
+    "latest_news_en": "2026-05: Secured a $20M round led by Index Ventures.",
+    "source": "Sifted",
+    "source_url": "https://sifted.eu/articles/index-ventures-20m-scope",
+    "company_country": "United Kingdom",
+    "company_country_confidence": 0.92,
+    "confidence": 0.86,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-19T20:47:07.324320Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 9,
+          "top_story_id": "48155570",
+          "points": 90,
+          "comments": 47,
+          "engagement_depth_ratio": 0.5222,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "I think this is a cool project. I see a lot of use cases for this, for cases where it is preferable to keep issues local to the repo, distributed via git only, and not the least for all kinds of personal task management. Avoiding the context switching to a web based tool is a nice plus.",
+            "There was a small surge in popularity in distributed git issue trackers a bit over a decade ago, and all of them had some sort of problem baked in to the design that made them not very good. Two weeks ago I had listed out the problems I could remember offhand: https://news.ycombinator.com/item?id=47956979 It sounds like there's intentionally no attempt to handle the last one (that this is by devs for devs), and points 3 and 4 might be addressed somehow since it mentions syncing automatically. Does it store data separate from git to avoid the first two?",
+            "It’s very slick, but I would be interested to know how separable the UI and the data layer are. I love vim but asking a collaborative group to all use a TUI is difficult. A local web server would be a nice alternative UI",
+            "I really like the idea of a distributed issue tracker. I'd encourage you to look at git-bug if you haven't already done so for some prior art / inspiration / hard learned lessons.",
+            "> Agent interactions > The MCP server lets AI tools interact with Epiq in a predictable way. Or maybe just publish a skill for the agent to use your CLI? The agent alredy uses CLI commands to interact with git itself",
+            "I would prefer a single binary and skill over mcp.",
+            "You have my upvote because I love Git-based apps. There’s something cool about Git being an effective database with loads of free hosting options. I’d (re)consider a couple of things if you intend to work on it and make it viable for a wider audience. 1. Who is it aimed for? If product managers and designers _are_ in scope e.g. you imagine full engineering teams using it, then a TUI isn’t gonna cut it. It’s a great interface choice for devs but I don’t think it’s organizationally viable to force everyone else in the terminal. 2. I’d think about either having a central issues repository as a default / recommended option or creating an easy way for linking issues together across repos. To me, ",
+            "Really elegant solution to the distributed issue state problem. Using user-scoped immutable event logs to prevent git conflicts is a clever architectural choice. Congrats on the launch!",
+            "> Conflict handling model: Later events take precedence when conflicts occur Do I understand correctly that if 2 people add a lot of information to one issue only one of them 'wins' and becomes visible? Or is it more subtle? If only the latter one becomes visible, how do you get to the edits of the other person and 'merge' it again?",
+            "cool Project but global npm install is a no for me, and there seem to be no similar to python venvs in node.js ecosystem."
+          ],
+          "llm_summary_used": true,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.2979,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "这些评论总体上认可这个项目的思路，认为基于 Git 的分布式 issue tracker 很有吸引力，也有实际用途。很多人同时在讨论它的可用性和产品形态，比如是否要支持网页界面、数据层如何与 UI 解耦，以及是否适合团队协作。也有评论提出了实现层面的疑问和改进建议，包括冲突处理、同步机制、与 git-bug 等已有方案对比，以及安装方式是否足够友好。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.89
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-05-19",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:sifted.eu AI funding",
+    "country_code": "GB",
+    "country_name": "United Kingdom",
+    "country_flag": "🇬🇧",
+    "country_display": "🇬🇧 United Kingdom",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "NIKKO Dynamic Electronic Badge",
+    "website": "https://droix.net/product/nikko-dynamic-electronic-badge/",
+    "description": "一款可显示图片和动画、支持 AI 及近距离分享的电子徽章硬件。",
+    "category": "hardware",
+    "hardware_type": "innovative",
+    "form_factor": "badge",
+    "use_case": "lifestyle",
+    "innovation_traits": [
+      "non_traditional_form",
+      "wearable",
+      "ambient",
+      "social_buzz"
+    ],
+    "region": "Unknown",
+    "funding_total": "unknown",
+    "price": "unknown",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "form_innovation"
+    ],
+    "why_matters": "徽章作为 AI 载体的思路较少见，适合做轻社交、身份展示和内容分享场景。",
+    "latest_news": "2026-05: DROIX 商品页描述其具备触控屏、多媒体和 AI/Peer Sharing。",
+    "source": "DROIX Global",
+    "source_url": "https://droix.net/product/nikko-dynamic-electronic-badge/",
+    "company_country": "unknown",
+    "company_country_confidence": 0.3,
+    "confidence": 0.8,
+    "is_hardware": true,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-19T20:48:40.624881Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-05-19",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI pin badge wearable assistant",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown"
   }
 ]

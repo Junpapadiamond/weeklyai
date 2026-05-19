@@ -167,5 +167,433 @@
     "country_flag": "",
     "country_display": "Unknown",
     "country_source": "unknown"
+  },
+  {
+    "name": "Nectar Social",
+    "website": "https://nectarsocial.com",
+    "description": "Nectar Social 是一个 AI 驱动的社交营销平台，帮助品牌把社交内容、受众洞察和转化动作连接起来，提高营销投放效率。",
+    "description_en": "Nectar Social is an AI-driven social marketing platform that helps brands connect social content, audience insights, and conversion actions to improve marketing efficiency.",
+    "category": "other",
+    "region": "🇺🇸",
+    "funding_total": "$30M Series A",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "category_innovation"
+    ],
+    "why_matters": "Nectar Social 在 2026-05-15 完成 3000 万美元 Series A，由 Menlo Ventures 和 Anthology Fund 领投，且 Anthology Fund 与 Anthropic 合作成立；这说明它已获得一线资本对 AI 原生营销/社交发现路径的明确押注。",
+    "why_matters_en": "Nectar Social closed a $30M Series A on 2026-05-15, led by Menlo Ventures and Anthology Fund, which was created in partnership with Anthropic; this signals strong top-tier investor conviction in AI-native social marketing and discovery workflows.",
+    "latest_news": "2026-05: 完成 3000 万美元 Series A 融资，Menlo Ventures 与 Anthology Fund 领投。",
+    "latest_news_en": "2026-05: Raised a $30M Series A led by Menlo Ventures and Anthology Fund.",
+    "source": "The Fashion Law",
+    "source_url": "https://www.thefashionlaw.com/generative-ai-investment-and-ma-tracker/",
+    "company_country": "US",
+    "company_country_confidence": 0.78,
+    "confidence": 0.82,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-19T20:46:08.950091Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-05-19",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI Series A 2026",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Bunch",
+    "website": "https://bunch.ai",
+    "description": "Bunch 是一个面向 private markets 运营的 AI-native 平台，重点帮助 VC 和投资团队提升尽调、运营与协作效率。",
+    "description_en": "Bunch is an AI-native platform for private markets operations, designed to help VC and investment teams improve diligence, operations, and collaboration efficiency.",
+    "category": "finance",
+    "region": "Unknown",
+    "funding_total": "$35M Series B",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "Bunch 在 Series B 融资中拿到 3500 万美元，定位又是 private markets 运营层的 AI-native 平台，说明它在金融基础设施里有明确的产品化空间。",
+    "why_matters_en": "Bunch raised $35M in Series B funding and targets AI-native private markets operations, giving it a clear product lane in financial infrastructure.",
+    "latest_news": "2026-05: 宣布完成 3500 万美元 Series B。",
+    "latest_news_en": "2026-05: Announced a $35M Series B round.",
+    "source": "Sifted",
+    "source_url": "https://sifted.eu/articles/ai-platform-for-vcs-raises-35m",
+    "company_country": "unknown",
+    "company_country_confidence": 0.45,
+    "confidence": 0.88,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-19T20:47:06.762303Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 11,
+          "top_story_id": "48181342",
+          "points": 54,
+          "comments": 6,
+          "engagement_depth_ratio": 0.1111,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "Here are few things we're working on next around safety: - Dynamic permissions for agents: agents get API keys with limited scope. Whenever they need to expand the permission, they will ask you for approval. And the expanded scope only applies to the CURRENT task. - Reversible: Git for backend. All the write operations will be snapshotted, so if agents make terrible mistakes, you can always roll back.",
+            "Congrats on the launch! I recently tried InsForge for a personal project a few weeks ago and thought the getting started experience was really smooth.",
+            "Nice one!",
+            "Congrats on the launch. Currently all my hobby projects go like procure auth from clerk, database from neon, vercel/cloudflare for deployment, etc etc. This could actually solve that problem. Is there a local simulator that can be used for testing and then replicated easily in prod?",
+            "Hey Hang, thanks for sharing it and a cool product, I will try this out, just noticed that https://insforge.dev/ does not have any trust portal or security page, you can create one by using sekorti in 5 minutes.",
+            "We're open source so you can self host: https://github.com/InsForge/InsForge"
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0545,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.6
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-05-19",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:sifted.eu AI funding",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown"
+  },
+  {
+    "name": "Ray-Ban Meta (Gen 2)",
+    "website": "https://www.meta.com/smart-glasses/ray-ban-meta/",
+    "description": "搭载 Meta AI 的拍摄型智能眼镜，支持手势/语音拍照、视频录制和实时 AI 问答。",
+    "category": "hardware",
+    "hardware_type": "innovative",
+    "form_factor": "glasses",
+    "use_case": "lifestyle",
+    "innovation_traits": [
+      "non_traditional_form",
+      "wearable",
+      "voice_first",
+      "screenless",
+      "proactive_ai",
+      "media_coverage"
+    ],
+    "region": "🇺🇸",
+    "funding_total": "unknown",
+    "price": "$73700",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "form_innovation",
+      "use_case_clear",
+      "media_coverage"
+    ],
+    "why_matters": "把摄像头、麦克风、开放式扬声器和 AI 助手塞进日常眼镜形态，是当前最成熟的消费级 AI 载体之一。",
+    "latest_news": "2026-05: 宣布 5 月 21 日起在日本发售，支持拍照/视频、Meta AI 问答与翻译能力。",
+    "source": "ITmedia",
+    "source_url": "https://www.itmedia.co.jp/news/articles/2605/19/news114.html",
+    "company_country": "US",
+    "company_country_confidence": 0.98,
+    "confidence": 0.96,
+    "is_hardware": true,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-19T20:48:16.323816Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇯🇵🇰🇷",
+    "discovered_at": "2026-05-19",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AIメガネ デバイス 日本",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "NIKKO Dynamic E-Badge",
+    "website": "https://droix.eu/product/nikko-dynamic-electronic-badge/",
+    "description": "一款带 1.8 英寸触控屏的动态电子徽章，支持 AI 和附近同伴分享内容。",
+    "category": "hardware",
+    "hardware_type": "innovative",
+    "form_factor": "badge",
+    "use_case": "lifestyle",
+    "innovation_traits": [
+      "non_traditional_form",
+      "wearable",
+      "ambient",
+      "social_buzz"
+    ],
+    "region": "Unknown",
+    "funding_total": "unknown",
+    "price": "unknown",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "form_innovation",
+      "use_case_clear",
+      "social_buzz"
+    ],
+    "why_matters": "把电子徽章做成可穿戴 AI 载体，强调触控屏、近场分享和内容展示，属于有趣的非传统形态创新。",
+    "latest_news": "2026-05: 产品页在 DROIX 上线，主打触控屏与 AI/Peer Sharing。",
+    "source": "DROIX Global",
+    "source_url": "https://droix.net/product/nikko-dynamic-electronic-badge/",
+    "company_country": "unknown",
+    "company_country_confidence": 0.3,
+    "confidence": 0.82,
+    "is_hardware": true,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-19T20:48:37.820662Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-05-19",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI pin badge wearable assistant",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown"
+  },
+  {
+    "name": "LetinAR AI Glasses Optics",
+    "website": "https://letinar.com",
+    "description": "为 AI 眼镜提供纳米级微型光学方案，让“像指甲盖一样小”的镜片支撑真正可穿戴的 AI 眼镜。",
+    "category": "hardware",
+    "hardware_type": "innovative",
+    "form_factor": "glasses",
+    "use_case": "lifestyle",
+    "innovation_traits": [
+      "non_traditional_form",
+      "wearable",
+      "ambient",
+      "media_coverage"
+    ],
+    "region": "🇰🇷",
+    "funding_total": "$41.7M",
+    "price": "unknown",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "form_innovation",
+      "use_case_clear",
+      "media_coverage"
+    ],
+    "why_matters": "它不是普通眼镜产品本体，而是 AI 眼镜时代的核心光学底座；镜片缩小到指甲盖级别，直接推动轻量化与可穿戴性，是形态创新链条里的关键环节。",
+    "latest_news": "2026-05: 获得 1850 万美元新融资，累计融资 4170 万美元，面向 AI 眼镜市场扩产。",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/05/18/south-koreas-letinar-is-building-the-optics-behind-ai-glasses/",
+    "company_country": "KR",
+    "company_country_confidence": 0.98,
+    "confidence": 0.9,
+    "is_hardware": true,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-19T20:50:02.031325Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-05-19",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI glasses pendant Europe startup",
+    "country_code": "KR",
+    "country_name": "South Korea",
+    "country_flag": "🇰🇷",
+    "country_display": "🇰🇷 South Korea",
+    "country_source": "explicit:company_country"
   }
 ]
