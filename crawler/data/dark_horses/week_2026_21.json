@@ -1031,5 +1031,171 @@
     "country_flag": "",
     "country_display": "Unknown",
     "country_source": "unknown"
+  },
+  {
+    "name": "Humanoid",
+    "website": "https://humanoid.com",
+    "description": "Humanoid 正在推进面向工厂部署的人形机器人方案，将 AI、机器人控制与工业场景结合，目标是大规模进入制造业。",
+    "description_en": "Humanoid is advancing humanoid robot solutions for factory deployment, combining AI, robot control, and industrial use cases at manufacturing scale.",
+    "category": "hardware",
+    "region": "Unknown",
+    "funding_total": "unknown",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "category_innovation",
+      "funding_signal"
+    ],
+    "why_matters": "Scaling Europe Daily 提到 Humanoid 与德国工厂签署部署协议，计划向工厂投放数千台机器人；这意味着它已从概念验证进入真实工业落地阶段，属于强场景牵引的机器人创业公司。",
+    "why_matters_en": "Scaling Europe Daily says Humanoid signed a German factory deal to deploy thousands of robots; this suggests it has moved beyond proof-of-concept into real industrial deployment, a strong use-case-driven robotics startup.",
+    "latest_news": "2026-05: 与德国工厂签署部署协议，计划投放数千台机器人。",
+    "latest_news_en": "2026-05: Signed a German factory deployment deal aimed at placing thousands of robots.",
+    "source": "Scaling Europe Daily",
+    "source_url": "https://scalingeurope.substack.com/p/scalingeurope-daily-195",
+    "company_country": "unknown",
+    "company_country_confidence": 0.4,
+    "confidence": 0.74,
+    "is_hardware": true,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-21T20:57:12.620249Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 11,
+          "top_story_id": "48145142",
+          "points": 6,
+          "comments": 4,
+          "engagement_depth_ratio": 0.6667,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "Genuine question. Define cleaning? Does it mostly wipe off surfaces or can it also do things like scrub toilets, make beds, take out trash, etc? Also is this fully automated or is someone sitting in an office with a VR headset? How monitored is the whole process? Lastly, specs on the robot you used in the landing page? I'm genuinely curious. When I get back to SF in a few weeks I may hit you up. My place could use a deep cleaning.",
+            "Awesome job! It really frees up my hands. As another reviewer mentioned, I’m so curious to know exactly what this robot can do when cleaning a room, how thoroughly it cleans, and who can monitor its status and how.",
+            "Almost definitely 100% teleoperated -- the robot might move between places autonomously, but all the manipulation tasks, i.e., the actual cleaning, is not something anyone yet knows how to do autonomously reliably. And that's OK. However I'd like to know whether the data you gather from these cleanings is shared with other companies (who would be willing to pay a lot of money for it in order to train their own physical AI models).",
+            "> Almost definitely 100% teleoperated Looking at X Ai's Figure parcel sorting live-stream, the current robots seem way too clumsy to even pick up an object, I doubt they are precise enough to do scrubbing."
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.2558,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "neutral",
+      "confidence": 0.45
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-05-21",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "UK France Germany AI startup",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown"
+  },
+  {
+    "name": "DIC D2S Ventures AG / DIC Physical AI Investment Platform",
+    "website": "https://www.dic-global.com/en/",
+    "description": "DIC在苏黎世设立投资平台，专注支持把 AI 融入机器人、传感器和自动化等真实世界系统的 Physical AI 初创公司。",
+    "description_en": "DIC has set up a Zurich-based investment platform focused on backing Physical AI startups that bring AI into robotics, sensors, and automation.",
+    "category": "hardware",
+    "region": "🇯🇵",
+    "funding_total": "$62M fund",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "category_innovation"
+    ],
+    "why_matters": "这是DIC首次扩张到欧洲，并以 6200 万美元基金切入 Physical AI 赛道；该方向直接面向机器人、传感器与自动化的产业化落地，属于“把AI装进机器里”的新型硬件投资布局。",
+    "why_matters_en": "This is DIC’s first expansion into Europe, backed by a $62M fund aimed at Physical AI; it targets commercialization in robotics, sensors, and automation, making it a notable hardware-plus-AI investment move.",
+    "latest_news": "2026-05: Global Venturing 报道 DIC 以苏黎世为基地设立 DIC D2S Ventures AG，启动 6200 万美元 Physical AI 投资平台。",
+    "latest_news_en": "2026-05: Global Venturing reported that DIC launched DIC D2S Ventures AG in Zurich to run a $62M Physical AI investment platform.",
+    "source": "Global Venturing",
+    "source_url": "https://globalventuring.com/corporate/europe/japans-dic-launches-zurich-based-fund-to-back-physical-ai-startups/",
+    "company_country": "Japan",
+    "company_country_confidence": 0.98,
+    "confidence": 0.91,
+    "is_hardware": true,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-21T20:58:17.182782Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇯🇵🇰🇷",
+    "discovered_at": "2026-05-21",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "Japan AI startup funding",
+    "country_code": "JP",
+    "country_name": "Japan",
+    "country_flag": "🇯🇵",
+    "country_display": "🇯🇵 Japan",
+    "country_source": "explicit:company_country"
   }
 ]

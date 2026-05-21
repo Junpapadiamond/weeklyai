@@ -1,5 +1,427 @@
 [
   {
+    "name": "DIC D2S Ventures AG / DIC Physical AI Investment Platform",
+    "description": "DIC在苏黎世设立投资平台，专注支持把 AI 融入机器人、传感器和自动化等真实世界系统的 Physical AI 初创公司。",
+    "description_en": "DIC has set up a Zurich-based investment platform focused on backing Physical AI startups that bring AI into robotics, sensors, and automation.",
+    "website": "https://www.dic-global.com/en/",
+    "logo_url": "https://www.dic-global.com:443/common/images/favicon/apple-touch-icon.png",
+    "categories": [
+      "hardware"
+    ],
+    "dark_horse_index": 4,
+    "why_matters": "这是DIC首次扩张到欧洲，并以 6200 万美元基金切入 Physical AI 赛道；该方向直接面向机器人、传感器与自动化的产业化落地，属于“把AI装进机器里”的新型硬件投资布局。",
+    "why_matters_en": "This is DIC’s first expansion into Europe, backed by a $62M fund aimed at Physical AI; it targets commercialization in robotics, sensors, and automation, making it a notable hardware-plus-AI investment move.",
+    "funding_total": "$62M fund",
+    "latest_news": "2026-05: Global Venturing 报道 DIC 以苏黎世为基地设立 DIC D2S Ventures AG，启动 6200 万美元 Physical AI 投资平台。",
+    "region": "🇯🇵",
+    "country_code": "JP",
+    "country_name": "Japan",
+    "country_flag": "🇯🇵",
+    "country_display": "🇯🇵 Japan",
+    "country_source": "explicit:company_country",
+    "source_region": "🇯🇵🇰🇷",
+    "source": "Global Venturing",
+    "source_url": "https://globalventuring.com/corporate/europe/japans-dic-launches-zurich-based-fund-to-back-physical-ai-startups/",
+    "source_title": "",
+    "website_source": "",
+    "latest_news_en": "2026-05: Global Venturing reported that DIC launched DIC D2S Ventures AG in Zurich to run a $62M Physical AI investment platform.",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-21T20:58:17.182782Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-05-21",
+    "first_seen": "2026-05-21T20:58:17.434856Z",
+    "final_score": 80,
+    "trending_score": 72,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
+    "name": "Humanoid",
+    "description": "Humanoid 正在推进面向工厂部署的人形机器人方案，将 AI、机器人控制与工业场景结合，目标是大规模进入制造业。",
+    "description_en": "Humanoid is advancing humanoid robot solutions for factory deployment, combining AI, robot control, and industrial use cases at manufacturing scale.",
+    "website": "https://humanoid.com",
+    "logo_url": "",
+    "categories": [
+      "hardware"
+    ],
+    "dark_horse_index": 4,
+    "why_matters": "Scaling Europe Daily 提到 Humanoid 与德国工厂签署部署协议，计划向工厂投放数千台机器人；这意味着它已从概念验证进入真实工业落地阶段，属于强场景牵引的机器人创业公司。",
+    "why_matters_en": "Scaling Europe Daily says Humanoid signed a German factory deal to deploy thousands of robots; this suggests it has moved beyond proof-of-concept into real industrial deployment, a strong use-case-driven robotics startup.",
+    "funding_total": "unknown",
+    "latest_news": "2026-05: 与德国工厂签署部署协议，计划投放数千台机器人。",
+    "region": "Unknown",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown",
+    "source_region": "🇪🇺",
+    "source": "Scaling Europe Daily",
+    "source_url": "https://scalingeurope.substack.com/p/scalingeurope-daily-195",
+    "source_title": "",
+    "website_source": "",
+    "latest_news_en": "2026-05: Signed a German factory deployment deal aimed at placing thousands of robots.",
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "neutral",
+      "confidence": 0.45
+    },
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-21T20:57:12.620249Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 11,
+          "top_story_id": "48145142",
+          "points": 6,
+          "comments": 4,
+          "engagement_depth_ratio": 0.6667,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "Genuine question. Define cleaning? Does it mostly wipe off surfaces or can it also do things like scrub toilets, make beds, take out trash, etc? Also is this fully automated or is someone sitting in an office with a VR headset? How monitored is the whole process? Lastly, specs on the robot you used in the landing page? I'm genuinely curious. When I get back to SF in a few weeks I may hit you up. My place could use a deep cleaning.",
+            "Awesome job! It really frees up my hands. As another reviewer mentioned, I’m so curious to know exactly what this robot can do when cleaning a room, how thoroughly it cleans, and who can monitor its status and how.",
+            "Almost definitely 100% teleoperated -- the robot might move between places autonomously, but all the manipulation tasks, i.e., the actual cleaning, is not something anyone yet knows how to do autonomously reliably. And that's OK. However I'd like to know whether the data you gather from these cleanings is shared with other companies (who would be willing to pay a lot of money for it in order to train their own physical AI models).",
+            "> Almost definitely 100% teleoperated Looking at X Ai's Figure parcel sorting live-stream, the current robots seem way too clumsy to even pick up an object, I doubt they are precise enough to do scrubbing."
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.2558,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "discovered_at": "2026-05-21",
+    "first_seen": "2026-05-21T20:57:13.101359Z",
+    "final_score": 80,
+    "trending_score": 72,
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectionError"
+  },
+  {
+    "name": "IrisGo",
+    "description": "IrisGo 正在打造一款 PC 端的 AI desktop buddy，能够学习用户日常工作流，并在少量甚至无需人工提示的情况下自动执行任务。",
+    "description_en": "IrisGo is building an AI desktop buddy for PCs that learns daily workflows and automates tasks with limited to no human prompting.",
+    "website": "https://irisgo.ai/privacy",
+    "logo_url": "https://irisgo.ai/favicon-dark.ico",
+    "categories": [
+      "agent"
+    ],
+    "dark_horse_index": 3,
+    "why_matters": "这家公司已获得由 Andrew Ng 的 AI Fund 领投的 $2.8 million seed，定位是面向 PC 的持续型桌面 Agent，而不是单次问答工具；如果能稳定捕捉工作流，它可能切入个人生产力自动化的新入口。",
+    "why_matters_en": "The company has already raised a $2.8 million seed round led by Andrew Ng's AI Fund. It is positioning itself as a persistent desktop agent for PCs rather than a one-off chatbot, which could make it a new entry point for personal productivity automation if it reliably captures workflows.",
+    "funding_total": "$2.8 million seed",
+    "latest_news": "2026-05: 公开披露由 Andrew Ng 支持的 $2.8 million seed 融资，并描述其桌面自动化产品方向。",
+    "region": "🇺🇸",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country",
+    "source_region": "🇺🇸",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/05/20/irisgo-a-startup-backed-by-andrew-ng-looks-to-become-the-ai-desktop-buddy-you-never-knew-you-needed/",
+    "source_title": "",
+    "website_source": "",
+    "latest_news_en": "2026-05: Publicly disclosed a $2.8 million seed round backed by Andrew Ng and outlined its desktop automation product direction.",
+    "community_verdict": null,
+    "extra": {
+      "website_recovered_from_source": true,
+      "website_recovered_url": "https://irisgo.ai/privacy",
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-21T20:53:45.532110Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-05-21",
+    "first_seen": "2026-05-21T20:53:45.759438Z",
+    "final_score": 60,
+    "trending_score": 54,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
+    "name": "Imperagen",
+    "description": "Imperagen 是一家将 quantum physics 与 AI 结合来重塑 enzyme engineering 的生物技术公司，目标是加速酶设计与优化流程。",
+    "description_en": "Imperagen is a biotech company combining quantum physics and AI to reshape enzyme engineering and speed up enzyme design and optimization.",
+    "website": "https://imperagen.com/",
+    "logo_url": "https://imperagen.com/favicon.ico",
+    "categories": [
+      "healthcare"
+    ],
+    "dark_horse_index": 3,
+    "why_matters": "公司刚完成 £5 million seed，由 PXN Ventures 领投，累计融资达 £8.5 million；它把 quantum physics 和 AI 用于 enzyme engineering，属于较明确的类别创新，适合追踪后续在生物制造和药物研发上的落地效果。",
+    "why_matters_en": "The company just raised a £5 million seed round led by PXN Ventures, bringing total funding to £8.5 million. It applies quantum physics and AI to enzyme engineering, making it a notable category innovator with potential impact in biomanufacturing and drug discovery.",
+    "funding_total": "£5 million seed",
+    "latest_news": "2026-05: 完成 £5 million seed 融资，资金将用于继续招人并推进 AI specialists 扩充与产品研发。",
+    "region": "🇬🇧",
+    "country_code": "GB",
+    "country_name": "United Kingdom",
+    "country_flag": "🇬🇧",
+    "country_display": "🇬🇧 United Kingdom",
+    "country_source": "explicit:company_country",
+    "source_region": "🇺🇸",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/05/20/imperagen-raises-5-million-to-redefine-enzyme-engineering/",
+    "source_title": "",
+    "website_source": "",
+    "latest_news_en": "2026-05: Closed a £5 million seed round to hire more AI specialists and continue product development.",
+    "community_verdict": null,
+    "extra": {
+      "website_recovered_from_source": true,
+      "website_recovered_url": "https://imperagen.com/",
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-21T20:53:45.142967Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-05-21",
+    "first_seen": "2026-05-21T20:53:45.384677Z",
+    "final_score": 60,
+    "trending_score": 54,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
+    "name": "AntAI",
+    "description": "一家日本 AI 服务公司，与 GUILD 合作推出可按企业课题定制的 AI Hackathon 方案，强调共创与落地转化。",
+    "description_en": "A Japanese AI services company that co-launched a customized AI hackathon program with GUILD for enterprise co-creation and implementation.",
+    "website": "https://ant-ai.co.jp/",
+    "logo_url": "https://ant-ai.co.jp/favicon.svg",
+    "categories": [
+      "other"
+    ],
+    "dark_horse_index": 2,
+    "why_matters": "它不是通用咨询，而是把企业课题、招募、场地与活动运营打包成标准化但可定制的 AI 共创服务；不过公开信息未见融资、增长或大规模市场验证，因此评分维持在 Rising Star。",
+    "why_matters_en": "It packages enterprise problem discovery, recruitment, venue coordination, and event operations into a standardized yet customizable AI co-creation service, but there is no public funding or scale signal, so it remains a Rising Star.",
+    "funding_total": "unknown",
+    "latest_news": "2026-05: 开始提供“パーソナライズドAIハッカソン”企业定制服务。",
+    "region": "🇯🇵",
+    "country_code": "JP",
+    "country_name": "Japan",
+    "country_flag": "🇯🇵",
+    "country_display": "🇯🇵 Japan",
+    "country_source": "explicit:company_country",
+    "source_region": "🇯🇵🇰🇷",
+    "source": "livedoor News PR",
+    "source_url": "https://news.livedoor.com/pr_article/detail/31313872/",
+    "source_title": "",
+    "website_source": "redirect",
+    "latest_news_en": "2026-05: Started offering the enterprise-customized “Personalized AI Hackathon” service.",
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.6
+    },
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-21T20:51:53.730318Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 1,
+          "top_story_id": "48225040",
+          "points": 44,
+          "comments": 17,
+          "engagement_depth_ratio": 0.3864,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "I wonder how this would be looked upon by the ever changing rules of claude code. If someone from Anthropic sees this, would love to know if I can use my max plan here.",
+            "Hi, this looks really powerful, in that it seems to have many use cases. One question I had: Does every sandbox change end (when ready for production) in a pull request? If marketing sends me a pull request and I hate the code, what's the flow like for me to fix it?",
+            "I have a suggestion - an assistant which can help to set up all these agents, perhaps based on templates. You already covered various use cases, but it's not clear if it's something concrete. I think a lot of people who might be interested in this product might be interested in an easy set-up process. Even if it doesn't really save time for an experienced ops person, a lot of people would rather talk to a bot than fill a form.",
+            "Really cool! We're working on something similar over at https://norisessions.com/ A few questions - you mention proxying keys. One issue that we run into is that there are a bunch of tools that are really useful but require keys to be on disk (e.g. aws cli -- yes yes you can do IAM permissions but still). How do you guys think about those? (Especially since your setup onboarding is 'just install from npm or mise') - poking around on the github, saw that you guys were at one point on fly.io. Did you guys end up switching off them? What motivated that if so? - the CLI integration is cool! Is that actually teleporting remote sessions down to a local machine? Or is it more a window into the remo",
+            "Checked license it said copyrighted which makes this unsuable for me. my question is what advantage does this have over real FOSS agentic sandboxes",
+            "This is amazing, what was the inspiration?",
+            "Congrats on the launch! Tiny bit of feedback on the demo video: the beginning makes me dizzy and I'm not sure what's going on (was watching on my phone).",
+            "all of our customers are using Anthropic APIs for programmatic use. Codex and other providers let you use Oauth. But inside of a sandbox, you can technically use max plan since it is the same as using Claude locally.",
+            "Thanks! Lots of use cases. For the workflow you mentioned, the idea is marketing sends you a PR with the live preview. You can see the UI changes and if you need to change anything, you can open the session, which will let you modify, backtrack, or continue their work inside the same sandbox they used.",
+            "The sandbox’s lifecycle is independent of the PR so that the same user or someone else in your team, like an engineer can come back to the same session and keep building until the result is ready to merge. So you can choose to iterate on the first drafts on the same sandbox. Curious, what flow you envision in your case?"
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.1809,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "discovered_at": "2026-05-21",
+    "first_seen": "2026-05-21T20:51:54.298560Z",
+    "final_score": 40,
+    "trending_score": 36,
+    "needs_verification": false,
+    "logo_source": "html"
+  },
+  {
     "name": "Viktor",
     "description": "Viktor 是一款 AI coworker 产品，融资后已展现出较强营收基础，属于兼具产品增长和收入信号的创业项目。",
     "description_en": "Viktor is an AI coworker product that already shows meaningful revenue traction after funding, making it a strong growth-stage startup.",
@@ -6571,7 +6993,7 @@
     "name": "Kohort",
     "description": "伦敦初创公司Kohort开发AI用户获取代理，帮助移动游戏工作室自动化用户增长。",
     "description_en": "London-based Kohort builds AI user acquisition agents for mobile game studios to automate user growth.",
-    "website": "https://www.kohort.ai/",
+    "website": "https://kohort.ai/",
     "logo_url": "",
     "categories": [
       "agent"
@@ -16205,7 +16627,7 @@
     "why_matters": "Radical Ventures领投的$18M Series A融资，专注于私募市场的确定性交易建模平台，是唯一商业级软件能生成近乎实时的交易数学分析，解决PE行业长期依赖手工Excel模型的痛点",
     "why_matters_en": "$18M Series A led by Radical Ventures; only commercial-grade platform generating near-instantaneous deal math for private markets; addresses PE industry's reliance on manual Excel modeling with deterministic AI-driven analysis",
     "funding_total": "$18M Series A",
-    "latest_news": "2026-04-22: Mosaic宣布完成$18M Series A融资，由Radical Ventures领投，用于扩展交易建模平台覆盖投资工作流和资产类别",
+    "latest_news": "2026-05-20: 来自 X 的一手提及：文章提到它能与最先进模型持平，同时输出24成员、10天的概率预报，说明在天气预测精度和不确定性建模上有明显进展。",
     "region": "🇺🇸",
     "country_code": "US",
     "country_name": "United States",
@@ -16267,14 +16689,25 @@
         "demand_tier": "low",
         "guardrail_applied": "none",
         "guardrail_reason": "threshold_not_met"
-      }
+      },
+      "signals": [
+        {
+          "platform": "x",
+          "url": "https://x.com/maxxxzdn/status/2057026766380659085",
+          "title": "🌍Today we release Mosaic, a probabilistic weather model that shifts the Pareto frontier of ML weather forecasting.\n\nIt m",
+          "published_at": "2026-05-20T09:12:53Z",
+          "snippet": "🌍Today we release Mosaic, a probabilistic weather model that shifts the Pareto frontier of ML weather forecasting. It matches the skill of state-of-the-art models while generating a 24-member, 10-d...",
+          "author": "@maxxxzdn"
+        }
+      ]
     },
     "discovered_at": "2026-04-23",
     "first_seen": "2026-04-23T20:08:16.669431Z",
-    "final_score": 80,
-    "trending_score": 72,
+    "final_score": 82,
+    "trending_score": 74,
     "needs_verification": false,
-    "logo_source": "html"
+    "logo_source": "html",
+    "news_updated_at": "2026-05-20T09:12:53Z"
   },
   {
     "name": "H Company",
@@ -46504,15 +46937,27 @@
         "demand_tier": "low",
         "guardrail_applied": "none",
         "guardrail_reason": "threshold_not_met"
-      }
+      },
+      "signals": [
+        {
+          "platform": "x",
+          "url": "https://x.com/cohere/status/2057146257634725915",
+          "title": "//cohere.com/blog/cohere-announces-strategic-mous-with-indragroup-and-multiverse-computing",
+          "published_at": "2026-05-20T17:07:42Z",
+          "snippet": "Cohere has signed two significant Memorandums of Understanding (MOUs) across Spain and Canada that mark important milestones in our mission to deliver sovereign AI worldwide. These partnerships wit...",
+          "author": "@cohere"
+        }
+      ]
     },
     "discovered_at": "2026-02-28",
     "first_seen": "2026-02-28T19:23:15.297896Z",
-    "final_score": 80,
-    "trending_score": 72,
+    "final_score": 82,
+    "trending_score": 74,
     "logo_source": "html",
     "description_en": "Spanish quasi-unicorn company, released the free compressed AI model HyperNova 60B to support developer access.",
-    "why_matters_en": "Reportedly raising €500 million in a new round at a €1.5 billion valuation, and released the free model HyperNova 60B to drive innovation in quantum-inspired AI computing."
+    "why_matters_en": "Reportedly raising €500 million in a new round at a €1.5 billion valuation, and released the free model HyperNova 60B to drive innovation in quantum-inspired AI computing.",
+    "latest_news": "2026-05-20: 来自 X 的一手提及：与Cohere合作把CompactifAI接入企业部署流程，可将模型体积最多减少约80%，且仅2-3%精度损失。",
+    "news_updated_at": "2026-05-20T17:07:42Z"
   },
   {
     "name": "Profitmind",
@@ -57411,7 +57856,7 @@
     "why_matters_en": "It will complete Series A financing of US$22 million in 2023 and become a leading company in Singapore's AI deep technology field, focusing on AI model solutions to fill the gap in high-performance computing infrastructure.",
     "needs_verification": true,
     "website_source": "manual_verified_2026-03-11",
-    "website_check_reason": "error:ConnectTimeout"
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "Chamber",
@@ -59333,6 +59778,14 @@
       "signals": [
         {
           "platform": "x",
+          "url": "https://x.com/SakanaAILabs/status/2057292154666708992",
+          "title": "//x.com/zuzanna_pathway/status/2056783201549299936\n🐟 @zuzanna_pathway",
+          "published_at": "2026-05-21T02:47:26Z",
+          "snippet": "先日サンフランシスコで開催された討論会「Transformers vs Post-Transformers」に、Sakana AIの共同創業者兼CTOであるLlion Jones @YesThisIsLion が登壇しました。 本イベントは、現在のAI界を牽引するアーキテクチャ「トランスフォーマー」について、論文共著者を含む4人が、トランスフォーマー https://t.co/ql0GpZQN1n",
+          "author": "@SakanaAILabs"
+        },
+        {
+          "platform": "x",
           "url": "https://x.com/SakanaAILabs/status/2054802981934231914",
           "title": "//sakana.ai/careers/#public-sector-specialist\n\nSakana AIの最先端技術を官公庁と連携し社会実装していくための ドキュメンテーション戦略の立案・実行を担っていただきます。\n\n👉 このような",
           "published_at": "2026-05-14T05:56:21Z",
@@ -59362,19 +59815,11 @@
           "published_at": "2026-05-08T17:24:13Z",
           "snippet": "Great collab with @SakanaAILabs on an #ICML26 paper about sparse transformer kernels + formats optimized for modern NVIDIA GPU execution. • TwELL sparse packing • Fused CUDA kernels • 20%+ inferenc...",
           "author": "@NVIDIAAI"
-        },
-        {
-          "platform": "x",
-          "url": "https://x.com/SakanaAILabs/status/2050809932447170573",
-          "title": "KAME: Tandem Architecture for Enhancing Knowledge in Real-Time Speech-to-Speech Conversational AI\nhttps://arxiv.org/abs/",
-          "published_at": "2026-05-03T05:29:24Z",
-          "snippet": "KAME: Tandem Architecture for Enhancing Knowledge in Real-Time Speech-to-Speech Conversational AI https://t.co/PVYPIcHyyM",
-          "author": "@SakanaAILabs"
         }
       ]
     },
-    "latest_news": "2026-05-14: 来自 X 的一手提及：公司已披露累计融资约$130M，并在Series B中明确将资源投向前沿研发、Sovereign AI和政府/防务等应用场景，显示出强烈的国家级AI落地野心。",
-    "news_updated_at": "2026-05-14T05:56:21Z",
+    "latest_news": "2026-05-21: 来自 X 的一手提及：文章提到其共同创始人兼CTO Llion Jones出席“Transformers vs Post-Transformers”讨论会，说明这家2023年成立的东京AI公司持续活跃在前沿模型架构讨论与研究中。",
+    "news_updated_at": "2026-05-21T02:47:26Z",
     "website_source": "validated_variant",
     "latest_news_en": "2026-03-01: Direct mention from X: Awarded as the only Japanese company among 60 global companies in the Defense Innovation Challenge; a unicorn company (valuation exceeding $1 billion).",
     "needs_verification": false
