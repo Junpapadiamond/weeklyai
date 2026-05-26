@@ -18809,7 +18809,7 @@
     "final_score": 100,
     "trending_score": 90,
     "needs_verification": true,
-    "website_check_reason": "error:SSLError"
+    "website_check_reason": "error:ReadTimeout"
   },
   {
     "name": "Seapoint",
@@ -24359,7 +24359,8 @@
     "first_seen": "2026-04-11T19:37:54.347410Z",
     "final_score": 80,
     "trending_score": 72,
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "Arc",
