@@ -528,5 +528,346 @@
     "country_flag": "",
     "country_display": "Unknown",
     "country_source": "unknown"
+  },
+  {
+    "name": "allO",
+    "website": "https://allo.restaurant/",
+    "description": "allO 是一家慕尼黑的 AI-native 餐厅 operating system，为餐饮门店提供 AI-powered digital employees 以提升运营自动化与跨欧洲扩张能力。",
+    "description_en": "allO is a Munich-based AI-native operating system for restaurants that provides AI-powered digital employees to automate operations and scale across Europe.",
+    "category": "agent",
+    "region": "🇩🇪",
+    "funding_total": "€12M Series A",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "demand_signal_hn"
+    ],
+    "why_matters": "allO 融资 €12M Series A，由 Zigg Capital 领投，并明确定位为面向餐厅的 AI-native operating system 与 digital employees，这类垂直 agent 产品更接近可落地的业务自动化，而不是通用聊天工具。",
+    "why_matters_en": "allO raised a €12M Series A led by Zigg Capital and positions itself as an AI-native operating system with digital employees for restaurants, making it a practical vertical agent product rather than a generic chatbot.",
+    "latest_news": "2026-05: 完成 €12M Series A，准备加速在欧洲的产品 rollout。",
+    "latest_news_en": "2026-05: Closed a €12M Series A and is accelerating product rollout across Europe.",
+    "source": "BeBeez",
+    "source_url": "https://bebeez.eu/2026/05/27/munichs-allo-raises-e12-million-series-a-to-expand-its-ai-operating-system-for-restaurants-across-europe/",
+    "company_country": "Germany",
+    "company_country_confidence": 0.98,
+    "confidence": 0.92,
+    "extra": {
+      "website_recovered_from_source": true,
+      "website_recovered_url": "https://allo.restaurant/",
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-29T21:10:16.096876Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 10,
+          "top_story_id": "48327281",
+          "points": 1,
+          "comments": 7,
+          "engagement_depth_ratio": 7.0,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "You try, we follow",
+            "would like to have some encourage for my first project & first 50 user will be free as a founding user!",
+            "I'm going to die N decades from now, where N is hopefully \"several\" or a similar order of magnitude. if I pay you for this service...what stops you from closing up shop a year or two from now, and just walking away with the money?",
+            "Is this for one person, one family unit (2 adults), or can this be extended over a wider family (my own, parents close to EoL, brother, etc.)? Because the one person scenario is incredibly limiting by itself, and I would argue that the 2 adult option can be the most useful for a couple whose lives are very intertwined.",
+            "please follow me to try and advise if some questions missing.",
+            "Thank you for this question. I won't give an answer like \"I won't close up\" or \"walking away with money\". What my plan is try to make this website alive as long as I can, but if really sad story happen, my back up plan is allow every user directly download PDF(after unlock by user itself since we dont have it). That is why I am trying to collecting more user experience and fix it until fulfill of majority users. thank you.",
+            "For those of us with a technical bent, the answer would be to allow self-hosting even on a removable device. That way, you could go titsup on your own, and as long as the system is simple and has no need to be upgraded over long time scales (compiled cross-platform binaries instead of scripting languages that constantly go EoL), said software would continue to run for the user indefinitely. Hell, I have a video game package from 1991 - Moraff Games - that still works perfectly fine on the latest Win11 for Workstations (44C/88T, 256Gb). So it can be done, especially if you craft the installer to be a suggestion rather than a requirement (some really old ones no longer work right, and I have t"
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.5711,
+        "demand_tier": "medium",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "categories": [
+      "other"
+    ],
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏中性分歧，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "mixed",
+      "confidence": 0.6
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-05-29",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "AI Series A Europe",
+    "country_code": "DE",
+    "country_name": "Germany",
+    "country_flag": "🇩🇪",
+    "country_display": "🇩🇪 Germany",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Seldon",
+    "website": "https://seldon.io",
+    "description": "这是一家英国 AI 平台公司，提供企业级 AI/ML 部署与管理能力，帮助客户把模型更快落地到生产环境。",
+    "description_en": "This is a UK AI platform company providing enterprise AI/ML deployment and management tools to help customers productionize models faster.",
+    "category": "other",
+    "region": "🇬🇧",
+    "funding_total": "$55M",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "其在欧洲 AI 融资报道中获得 5500 万美元资金，属于明显的增长信号，适合关注企业级 AI 基础设施与 MLOps 赛道。",
+    "why_matters_en": "It was highlighted in European AI funding coverage with a $55M raise, a clear growth signal for enterprise AI infrastructure and MLOps.",
+    "latest_news": "2026-05: 欧洲 AI 交易汇总提到，Seldon 刚完成 5500 万美元融资。",
+    "latest_news_en": "2026-05: European AI deal roundup noted that Seldon recently raised $55M.",
+    "source": "fizzdesigns.co.uk",
+    "source_url": "https://fizzdesigns.co.uk/top-ai-deals-in-europe/",
+    "company_country": "United Kingdom",
+    "company_country_confidence": 0.95,
+    "confidence": 0.84,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-29T21:12:58.138448Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-05-29",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "European AI startup funding 2026",
+    "country_code": "GB",
+    "country_name": "United Kingdom",
+    "country_flag": "🇬🇧",
+    "country_display": "🇬🇧 United Kingdom",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Tractable",
+    "website": "https://tractable.ai",
+    "description": "这是一家英国 AI 公司，专注于视觉评估与图像分析，用 AI 自动化保险、检测与资产评估等流程。",
+    "description_en": "This is a UK AI company focused on visual assessment and image analysis, using AI to automate insurance, inspection, and asset evaluation workflows.",
+    "category": "other",
+    "region": "🇬🇧",
+    "funding_total": "$65M",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "报道显示其获得 6500 万美元融资，说明视觉 AI 在欧洲仍然具备强融资能力，并且其应用场景清晰、商业化路径明确。",
+    "why_matters_en": "It reportedly raised $65M, showing visual AI still attracts strong funding in Europe, with clear use cases and commercialization paths.",
+    "latest_news": "2026-05: 欧洲 AI 交易报道提到，Tractable 获得 6500 万美元融资以扩展视觉评估工具。",
+    "latest_news_en": "2026-05: European AI deal coverage said Tractable raised $65M to expand its visual assessment tools.",
+    "source": "fizzdesigns.co.uk",
+    "source_url": "https://fizzdesigns.co.uk/top-ai-deals-in-europe/",
+    "company_country": "United Kingdom",
+    "company_country_confidence": 0.95,
+    "confidence": 0.83,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-29T21:12:58.467273Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇪🇺",
+    "discovered_at": "2026-05-29",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "European AI startup funding 2026",
+    "country_code": "GB",
+    "country_name": "United Kingdom",
+    "country_flag": "🇬🇧",
+    "country_display": "🇬🇧 United Kingdom",
+    "country_source": "explicit:company_country"
+  },
+  {
+    "name": "Fitbit Air",
+    "website": "https://go.skimresources.com?id=803X112721&xs=1&url=https://store.google.com/gb/product/google_fitbit_air?hl=en-GB&xcust=4-0-3148029-1-0-0-0-0&sref=https://www.techadvisor.com/article/3148029/google-fitbit-air-review.html",
+    "description": "Google 推出的**无屏幕**AI 运动健康手环，主打被动健康监测与 Gemini 驱动的 AI 教练。",
+    "category": "hardware",
+    "hardware_type": "innovative",
+    "form_factor": "band",
+    "use_case": "health_monitoring",
+    "innovation_traits": [
+      "wearable",
+      "screenless",
+      "health",
+      "affordable",
+      "media_coverage"
+    ],
+    "region": "🇺🇸",
+    "funding_total": "unknown",
+    "price": "$99.99",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "form_innovation",
+      "use_case_clear",
+      "affordable",
+      "media_coverage"
+    ],
+    "why_matters": "以**无屏幕**手环承载 AI 健康教练，把原本偏订阅制的健康分析能力做成更低门槛的消费级硬件。",
+    "latest_news": "2026-05: 发布并获得早期评测关注，强调轻量设计与 AI coaching。",
+    "source": "TechAdvisor",
+    "source_url": "https://www.techadvisor.com/article/3148029/google-fitbit-air-review.html",
+    "company_country": "US",
+    "company_country_confidence": 0.95,
+    "confidence": 0.84,
+    "extra": {
+      "website_recovered_from_source": true,
+      "website_recovered_url": "https://go.skimresources.com?id=803X112721&xs=1&url=https://store.google.com/gb/product/google_fitbit_air?hl=en-GB&xcust=4-0-3148029-1-0-0-0-0&sref=https://www.techadvisor.com/article/3148029/google-fitbit-air-review.html",
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-29T21:15:18.591935Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "is_hardware": true,
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-05-29",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "screenless AI device wearable",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
   }
 ]
