@@ -869,5 +869,162 @@
     "country_flag": "🇺🇸",
     "country_display": "🇺🇸 United States",
     "country_source": "explicit:company_country"
+  },
+  {
+    "name": "XCENA",
+    "website": "https://xcena.com/",
+    "needs_verification": true,
+    "description": "XCENA 是一家聚焦 AI memory bottleneck 的芯片创业公司，试图用新硬件降低 AI 基础设施成本。",
+    "description_en": "XCENA is a chip startup focused on the AI memory bottleneck, aiming to reduce AI infrastructure costs with new hardware.",
+    "category": "hardware",
+    "region": "Unknown",
+    "funding_total": "$135M Series B",
+    "dark_horse_index": 5,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "公司刚完成 1.35 亿美元 Series B，估值达到 5.7 亿美元，总融资额升至 1.85 亿美元；如果其 memory 方案可规模化，可能显著影响 AI 推理与训练成本结构。",
+    "why_matters_en": "The company just closed a $135M Series B at a $570M valuation, bringing total funding to $185M; scalable memory tech could materially change AI infrastructure costs.",
+    "latest_news": "2026-05: TechCrunch 报道 XCENA 以 5.7 亿美元估值完成 1.35 亿美元 Series B。",
+    "latest_news_en": "2026-05: TechCrunch reported XCENA raised $135M in Series B at a $570M valuation.",
+    "source": "TechCrunch",
+    "source_url": "https://techcrunch.com/2026/05/29/xcena-secures-135m-at-570m-valuation-betting-on-memory-as-ais-real-bottleneck/",
+    "company_country": "unknown",
+    "company_country_confidence": 0.4,
+    "confidence": 0.82,
+    "extra": {
+      "website_recovered_from_source": true,
+      "website_recovered_url": "https://xcena.com/",
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-30T20:10:05.502757Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "is_hardware": true,
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-05-30",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "site:techcrunch.com AI startup funding",
+    "country_code": "UNKNOWN",
+    "country_name": "Unknown",
+    "country_flag": "",
+    "country_display": "Unknown",
+    "country_source": "unknown"
+  },
+  {
+    "name": "Daloopa",
+    "website": "https://daloopa.com",
+    "description": "Daloopa 提供面向金融行业的 AI 与 agentic workflows 数据基础设施，帮助机构在财务数据与自动化工作流中更高效地使用 AI。",
+    "description_en": "Daloopa provides data infrastructure for AI and agentic workflows in finance, helping institutions use AI more efficiently in financial data and automation.",
+    "category": "finance",
+    "region": "🇺🇸",
+    "funding_total": "$47M Series C",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "why_matters": "公司刚宣布完成 4700 万美元 C 轮融资，面向金融场景的 AI 数据基础设施具有明确行业落地价值，且融资规模已达到 dark horse 阈值。",
+    "why_matters_en": "The company just announced a $47M Series C for AI data infrastructure in finance, with a clear industry use case and a funding level that meets the dark horse threshold.",
+    "latest_news": "2026-05: 宣布完成 4700 万美元 C 轮融资，定位为金融领域的 AI 数据基础设施。",
+    "latest_news_en": "2026-05: Announced a $47M Series C, positioned as AI data infrastructure for finance.",
+    "source": "VC News Daily",
+    "source_url": "https://vcnewsdaily.com",
+    "company_country": "US",
+    "company_country_confidence": 0.8,
+    "confidence": 0.9,
+    "categories": [
+      "other"
+    ],
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-30T20:13:58.754231Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "source_region": "🇺🇸",
+    "discovered_at": "2026-05-30",
+    "discovery_method": "perplexity_search",
+    "search_keyword": "artificial intelligence company raised funding",
+    "country_code": "US",
+    "country_name": "United States",
+    "country_flag": "🇺🇸",
+    "country_display": "🇺🇸 United States",
+    "country_source": "explicit:company_country"
   }
 ]
