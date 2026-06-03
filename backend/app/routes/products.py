@@ -256,6 +256,64 @@ def get_rss_feed():
         }), 500
 
 
+@products_bp.route('/daily-featured', methods=['GET'])
+def get_daily_featured():
+    """获取「今日精选」单品 - 每天固定展示当周最高分黑马产品"""
+    try:
+        product = ProductService.get_daily_featured()
+        if product:
+            return jsonify({
+                'success': True,
+                'data': product,
+                'message': '获取今日精选成功'
+            })
+        return jsonify({
+            'success': False,
+            'data': None,
+            'message': '暂无今日精选产品'
+        }), 404
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'data': None,
+            'message': str(e)
+        }), 500
+
+
+@products_bp.route('/<product_id>/try', methods=['POST'])
+def try_product(product_id):
+    """「Try it now」体验端点 - 用 LLM 模拟产品核心功能，SSE 流式输出
+
+    Body: { "input": "用户输入文字", "locale": "zh" }
+    """
+    from flask import Response, stream_with_context
+    from app.services import try_service
+
+    try:
+        body = request.get_json(silent=True) or {}
+        user_input = str(body.get('input', '')).strip()
+        locale = str(body.get('locale', 'zh')).strip() or 'zh'
+
+        if not user_input:
+            return jsonify({'success': False, 'message': '请输入内容'}), 400
+
+        product = ProductService.get_product_by_id(product_id)
+        if not product:
+            return jsonify({'success': False, 'message': '产品不存在'}), 404
+
+        generator = try_service.stream_try_response(product, user_input, locale)
+        return Response(
+            stream_with_context(generator),
+            mimetype='text/event-stream',
+            headers={
+                'Cache-Control': 'no-cache',
+                'X-Accel-Buffering': 'no',
+            }
+        )
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+
 @products_bp.route('/industry-leaders', methods=['GET'])
 def get_industry_leaders():
     """获取行业领军产品 - 已知名的成熟 AI 产品参考列表"""

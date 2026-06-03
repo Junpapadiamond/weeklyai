@@ -698,6 +698,28 @@ class ProductService:
         return rss
 
     @staticmethod
+    def get_daily_featured() -> Optional[Dict]:
+        """获取「今日精选」单品。
+
+        从当周黑马（4-5 分）里按评分+融资取 top 产品，并用当天日期做
+        deterministic 选择，保证同一天返回同一个产品。
+        """
+        products = ProductService._load_products()
+
+        # 按评分+融资对 4-5 分产品排序
+        candidates = [p for p in products if (p.get("dark_horse_index") or 0) >= 4]
+        if not candidates:
+            candidates = [p for p in products if (p.get("dark_horse_index") or 0) >= 3]
+        if not candidates:
+            return None
+
+        candidates_sorted = sorted(candidates, key=sorting.product_score_key)
+
+        # 用当天的 day-of-year 做 deterministic 选择，避免频繁切换
+        day_index = datetime.now().timetuple().tm_yday % len(candidates_sorted)
+        return candidates_sorted[day_index]
+
+    @staticmethod
     def get_industry_leaders() -> Dict:
         """获取行业领军产品 - 已知名的成熟 AI 产品参考列表"""
         return ProductRepository.load_industry_leaders()

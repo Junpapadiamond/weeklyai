@@ -3,7 +3,7 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
-import { Dice5, Heart, Flame, Newspaper, Search, Sparkles } from "lucide-react";
+import { Dice5, Heart, Flame, Newspaper, Search, Sparkles, Star } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { SiteLocale } from "@/lib/locale";
 import { ChatBar } from "@/components/chat/chat-bar";
@@ -31,6 +31,7 @@ export function SiteHeader({ isAppShell = false }: SiteHeaderProps) {
 
   const navItems = [
     { href: "/", label: t("黑马推荐", "Dark Horses"), icon: Flame },
+    { href: "/today", label: t("每日一品", "Today's Pick"), icon: Star },
     { href: "/discover", label: t("随机发现", "Discover"), icon: Dice5 },
     { href: "/blog", label: t("博客动态", "News"), icon: Newspaper },
     { href: "/search", label: t("搜索", "Search"), icon: Search },

@@ -75,6 +75,14 @@ else
     echo "[$(date +%H:%M:%S)] fix_logos.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
 fi
 
+# 1.11 Generate experience config for new products (breakdown + Try it now)
+echo "[$(date +%H:%M:%S)] Running generate_experience.py --new-only..." >> "$LOG_DIR/daily_update.log"
+if $PYTHON_BIN crawler/tools/generate_experience.py --new-only >> "$LOG_DIR/daily_update.log" 2>&1; then
+    echo "[$(date +%H:%M:%S)] generate_experience.py completed successfully" >> "$LOG_DIR/daily_update.log"
+else
+    echo "[$(date +%H:%M:%S)] generate_experience.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
+fi
+
 # 2. Update news (optional, continues even if auto_discover fails)
 echo "[$(date +%H:%M:%S)] Running main.py --news-only..." >> "$LOG_DIR/daily_update.log"
 if $PYTHON_BIN crawler/main.py --news-only >> "$LOG_DIR/daily_update.log" 2>&1; then

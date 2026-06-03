@@ -242,6 +242,24 @@ export function parseLastUpdatedLabel(hoursAgo: number | null | undefined, local
   return locale === "en-US" ? `📡 Updated ${hoursAgo.toFixed(1)}h ago` : `📡 数据更新于 ${hoursAgo.toFixed(1)} 小时前`;
 }
 
+export const getDailyFeatured = cache(async (): Promise<Product | null> => {
+  const json = await fetchJson("/products/daily-featured", {
+    next: { revalidate: 3600, tags: ["products", "daily-featured"] },
+  });
+  const parsed = safeParse(productItemSchema, json, { data: null });
+  if (!parsed.data) return null;
+  return hasUsableWebsite(parsed.data) ? parsed.data : null;
+});
+
+export async function tryProduct(id: string, input: string, locale = "zh"): Promise<Response> {
+  const baseUrl = resolveApiBaseUrl().replace(/\/$/, "");
+  return fetch(`${baseUrl}/products/${encodeURIComponent(id)}/try`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "text/event-stream" },
+    body: JSON.stringify({ input, locale }),
+  });
+}
+
 // Client-side helpers (SWR)
 export async function getBlogsClient(source = "", limit = 30, market = "hybrid"): Promise<BlogPost[]> {
   return getBlogs(source, limit, market);

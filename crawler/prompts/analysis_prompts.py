@@ -390,13 +390,86 @@ def get_analysis_prompt(
     )
 
 
+def get_experience_config_prompt(product: dict) -> str:
+    """
+    为单个产品生成「体验配置」Prompt。
+
+    输出两块结构化 JSON：
+    1. breakdown — 6 个维度洞察（核心价值 / 用户流程 / aha 时刻 / 目标用户 / 商业模式 / 护城河）
+    2. experience — 轻量交互配置（demo 类型 / prompt 模板 / 示例输入 / 占位符 / 官方链接）
+    """
+    import json as _json
+    product_json = _json.dumps(
+        {k: v for k, v in product.items() if k not in ("extra",)},
+        ensure_ascii=False,
+        indent=2,
+    )
+
+    return f"""You are WeeklyAI's Product Experience Analyst.
+
+Given this AI product, generate two JSON objects: `breakdown` and `experience`.
+
+## Product Data
+{product_json}
+
+---
+
+## BREAKDOWN — Product Insights (all fields in Chinese, brief and specific)
+
+| Field | Description |
+|---|---|
+| core_value_proposition | One sentence: the essential value this product delivers |
+| key_user_workflow | 3-5 steps showing how a user achieves the main value (use → arrows) |
+| aha_moment | The specific moment a new user realizes this is genuinely useful |
+| target_users | Primary persona; Secondary persona |
+| business_model | How it monetizes: freemium/subscription/one-time/API/usage-based + price hint |
+| competitive_moat | What makes it hard to copy: data / team / network / tech / speed |
+
+## EXPERIENCE — Demo Config
+
+Choose `demo_type` based on what can meaningfully be simulated:
+- `text_generation` — writing / coding / agent / LLM output tools
+- `analysis` — data interpretation / research / Q&A tools
+- `transform` — translation / conversion / rewrite tools
+- `iframe` — product has a public playground that can be embedded
+- `static` — hardware / image / video generation (LLM simulation adds no value; show pre-built examples)
+
+| Field | Description |
+|---|---|
+| demo_type | One of: text_generation, analysis, transform, iframe, static |
+| demo_prompt_template | System prompt for the LLM to simulate this product (2-4 sentences, specific to the product's style and capabilities). Leave empty string if demo_type is iframe or static. |
+| example_inputs | Array of 2-3 short, realistic user inputs for this product in Chinese |
+| demo_placeholder | Input placeholder text in Chinese (≤20 chars) |
+| fallback_url | Official demo/playground URL if known, else empty string |
+
+## Output Format (JSON ONLY, no markdown wrapping)
+
+{{
+  "breakdown": {{
+    "core_value_proposition": "...",
+    "key_user_workflow": "...",
+    "aha_moment": "...",
+    "target_users": "...",
+    "business_model": "...",
+    "competitive_moat": "..."
+  }},
+  "experience": {{
+    "demo_type": "text_generation",
+    "demo_prompt_template": "...",
+    "example_inputs": ["...", "...", "..."],
+    "demo_placeholder": "输入你的需求...",
+    "fallback_url": ""
+  }}
+}}"""
+
+
 def get_scoring_prompt(product: dict) -> str:
     """
     获取单独评分 Prompt
-    
+
     Args:
         product: 产品信息字典
-        
+
     Returns:
         填充后的 prompt
     """

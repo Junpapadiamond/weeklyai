@@ -46,7 +46,25 @@ export type Product = {
   discovered_at?: string;
   is_hardware?: boolean;
   needs_verification?: boolean;
-  extra?: Record<string, unknown>;
+  extra?: {
+    breakdown?: {
+      core_value_proposition?: string;
+      key_user_workflow?: string;
+      aha_moment?: string;
+      target_users?: string;
+      business_model?: string;
+      competitive_moat?: string;
+    };
+    experience?: {
+      demo_type?: "text_generation" | "analysis" | "transform" | "iframe" | "static";
+      demo_prompt_template?: string;
+      example_inputs?: string[];
+      demo_placeholder?: string;
+      fallback_url?: string;
+    };
+    demand?: Record<string, unknown>;
+    [key: string]: unknown;
+  };
 };
 
 export type BlogPost = {
