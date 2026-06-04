@@ -23473,7 +23473,8 @@
     "first_seen": "2026-04-15T20:06:43.140366Z",
     "final_score": 60,
     "trending_score": 54,
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "Elorian",
@@ -26233,8 +26234,9 @@
     "first_seen": "2026-04-11T19:42:20.336108Z",
     "final_score": 60,
     "trending_score": 54,
-    "needs_verification": false,
-    "logo_source": "html"
+    "needs_verification": true,
+    "logo_source": "html",
+    "website_check_reason": "status:403"
   },
   {
     "name": "Wehead AI穿戴产品",
@@ -28626,7 +28628,7 @@
     "final_score": 100,
     "trending_score": 90,
     "needs_verification": true,
-    "website_check_reason": "error:ReadTimeout"
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "OnSite",
@@ -31024,7 +31026,8 @@
     "first_seen": "2026-04-03T19:43:40.446056Z",
     "final_score": 80,
     "trending_score": 72,
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "status:415"
   },
   {
     "name": "Sonarly",
@@ -42555,7 +42558,8 @@
     "first_seen": "2026-03-15T19:30:58.209656Z",
     "final_score": 40,
     "trending_score": 36,
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "status:403"
   },
   {
     "name": "Kata.ai",
@@ -54194,7 +54198,8 @@
     "logo_source": "",
     "description_en": "Develop plug-and-play system-level power solutions to reduce AI data center energy loss by 10%.",
     "why_matters_en": "peak",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "Kana",
@@ -55262,7 +55267,8 @@
     "logo_source": "html",
     "description_en": "The Japanese enterprise AI platform automates expense management, invoice processing and compliance workflows, serving more than 15,000 companies.",
     "why_matters_en": "Received US$100 million in Series B financing, totaling US$192.2 million, led by TCV, one of the largest Series B rounds among Japanese 7-year-old startups; customers increased from 10,000 in February 2024 to 15,000 in April 2025, and employees doubled to 430, targeting the paper-based office pain points in Japan.",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "status:403"
   },
   {
     "name": "etalytics",
@@ -70201,6 +70207,101 @@
     "logo_source": "html"
   },
   {
+    "name": "Sett",
+    "description": "以色列AI初创公司，提供基于AI agent的游戏行业营销自动化平台，针对用户获取数十亿支出。",
+    "description_en": "Israeli startup offering AI agent-based platform to automate game marketing, targeting billions in user acquisition spend.",
+    "website": "https://sett.ai",
+    "logo_url": "",
+    "categories": [
+      "agent"
+    ],
+    "dark_horse_index": 4,
+    "why_matters": "Greenfield Partners领投$30M B轮，专注游戏行业agent自动化，瞄准用户获取市场数十亿规模。",
+    "why_matters_en": "$30M Series B led by Greenfield Partners, agent-based automation for gaming industry targeting billions in UA spend.",
+    "funding_total": "$30M Series B",
+    "latest_news": "2026-03-29: 完成$30M B轮融资",
+    "region": "🇮🇱",
+    "country_code": "IL",
+    "country_name": "Israel",
+    "country_flag": "🇮🇱",
+    "country_display": "🇮🇱 Israel",
+    "country_source": "explicit:company_country",
+    "source_region": "🇺🇸",
+    "source": "Calcalistech",
+    "source_url": "https://www.calcalistech.com/ctechnews/article/rjxbyqisze",
+    "source_title": "",
+    "website_source": "weekly_match",
+    "latest_news_en": "2026-03-29: Secures $30M Series B",
+    "community_verdict": {
+      "source": "hackernews",
+      "window_days": 7,
+      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏正向，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
+      "sentiment": "positive",
+      "confidence": 0.66
+    },
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-03-29T19:37:44.371877Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 5,
+          "top_story_id": "47561773",
+          "points": 6,
+          "comments": 14,
+          "engagement_depth_ratio": 2.3333,
+          "is_controversial": false,
+          "top_comments_sample": [
+            "You need to filter out unavailable and obsolete products. My prompt (in Fast mode, as a guest): \"\"\" I need to take a trip to Turkey for a week. I would like to take a camera with me, but my Nikon Coolpix P1100 is too heavy for that (1.5 kg). I do need some zoom, let's say up to 250 mm but the exact maximum focal length is negotiable. \"\"\" The model seemingly failed to realize that the request is about a high-zoom compact camera. Only one of three different suggestions featured a compact camera, \"Canon - PowerShot ELPH 360 HS - A Full HD Video 20.2-Megapixel Digital Camera - Black\", on BestBuy ( https://www.bestbuy.com/product/p/J7C86SHZLX ), and it's unavailable there. So, zero success, but t",
+            "I would like to know why those combination is recommended, tbh.",
+            "Nice overall! It would be good if we it can take my location into consideration.. So it suggests items available in the closest place nearby.",
+            "Tried it for a birthday party setup and got a reasonable list of things I hadn't thought about. Saved me the usual back-and-forth between Pinterest, Google & Amazon.The tier breakdown is actually useful, most of the time I just want the middle option and it's right there. The Deep mode worked better for me. it asked follow up questions before building the cart and the results were more personalized than quick mode.",
+            "Thanks for the great comments guys. Trying to reply to all. Appreciate all of you using the product.",
+            "This is great. thanks for taking your time to try such an ellaborate prompt. Interestingly the recommended bestbuy link is available in my location (California). Fastmode doesn't look at your location unless you are signed in. Wondering if time permits, can you try completing your profile and try deep mode? Or i can give a try as well if you share your city or country and share you the cart link to validate. Thanks!",
+            "Great thought. We initially thought about adding an interpretability view to show users on why they got each products. Will consider adding that.",
+            "Thanks for the feedback. Seems like a bug, if the profile includes the location, it should be used. Let me look into it.",
+            "Appreciate your time in testing our product. Glad it worked better in deep mode. Will note that feedback. Can you confirm if the fast mode was used after completing your profile? Generally if the profile is complete and if you signed-in for the fast mode, the results should be reasonably good if you are searching for any family members like \"birthday party for my daughter\", \"beach trip with my kids\" etc. Since deep mode gets more context we expect it be far superior in terms of result quality. Feel free to try more queries. Use support@whattobuy.app for any direct feedback or post it here. Thanks again!",
+            "\"Cebu, Philippines\" would be a good-enough approximation."
+          ],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "comments_below_threshold",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.5867,
+        "demand_tier": "medium",
+        "guardrail_applied": "none",
+        "guardrail_reason": "threshold_not_met"
+      }
+    },
+    "discovered_at": "2026-03-29",
+    "first_seen": "2026-03-29T19:37:45.013495Z",
+    "final_score": 80,
+    "trending_score": 72,
+    "needs_verification": true,
+    "website_check_reason": "status:415"
+  },
+  {
     "name": "MetaOptics AI Smart Glasses",
     "description": "运动型AI智能眼镜，采用超透镜相机系统支持手指手势控制。",
     "website": "unknown",
@@ -70630,101 +70731,6 @@
     "trending_score": 54,
     "needs_verification": true,
     "website_check_reason": "status:403"
-  },
-  {
-    "name": "Sett",
-    "description": "以色列AI初创公司，提供基于AI agent的游戏行业营销自动化平台，针对用户获取数十亿支出。",
-    "description_en": "Israeli startup offering AI agent-based platform to automate game marketing, targeting billions in user acquisition spend.",
-    "website": "unknown",
-    "logo_url": "",
-    "categories": [
-      "agent"
-    ],
-    "dark_horse_index": 4,
-    "why_matters": "Greenfield Partners领投$30M B轮，专注游戏行业agent自动化，瞄准用户获取市场数十亿规模。",
-    "why_matters_en": "$30M Series B led by Greenfield Partners, agent-based automation for gaming industry targeting billions in UA spend.",
-    "funding_total": "$30M Series B",
-    "latest_news": "2026-03-29: 完成$30M B轮融资",
-    "region": "🇮🇱",
-    "country_code": "IL",
-    "country_name": "Israel",
-    "country_flag": "🇮🇱",
-    "country_display": "🇮🇱 Israel",
-    "country_source": "explicit:company_country",
-    "source_region": "🇺🇸",
-    "source": "Calcalistech",
-    "source_url": "https://www.calcalistech.com/ctechnews/article/rjxbyqisze",
-    "source_title": "",
-    "website_source": "",
-    "latest_news_en": "2026-03-29: Secures $30M Series B",
-    "community_verdict": {
-      "source": "hackernews",
-      "window_days": 7,
-      "summary": "社区重点讨论了产品价值与落地细节。评论情绪整体偏正向，并反复提及可用性与真实场景。这类反馈可用于判断短期需求强度是否能转化为持续增长。 用户反馈既包含认可，也提出了执行层面的质疑。 对 PM 来说，关键是验证需求强度与可持续增长。",
-      "sentiment": "positive",
-      "confidence": 0.66
-    },
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-03-29T19:37:44.371877Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 5,
-          "top_story_id": "47561773",
-          "points": 6,
-          "comments": 14,
-          "engagement_depth_ratio": 2.3333,
-          "is_controversial": false,
-          "top_comments_sample": [
-            "You need to filter out unavailable and obsolete products. My prompt (in Fast mode, as a guest): \"\"\" I need to take a trip to Turkey for a week. I would like to take a camera with me, but my Nikon Coolpix P1100 is too heavy for that (1.5 kg). I do need some zoom, let's say up to 250 mm but the exact maximum focal length is negotiable. \"\"\" The model seemingly failed to realize that the request is about a high-zoom compact camera. Only one of three different suggestions featured a compact camera, \"Canon - PowerShot ELPH 360 HS - A Full HD Video 20.2-Megapixel Digital Camera - Black\", on BestBuy ( https://www.bestbuy.com/product/p/J7C86SHZLX ), and it's unavailable there. So, zero success, but t",
-            "I would like to know why those combination is recommended, tbh.",
-            "Nice overall! It would be good if we it can take my location into consideration.. So it suggests items available in the closest place nearby.",
-            "Tried it for a birthday party setup and got a reasonable list of things I hadn't thought about. Saved me the usual back-and-forth between Pinterest, Google & Amazon.The tier breakdown is actually useful, most of the time I just want the middle option and it's right there. The Deep mode worked better for me. it asked follow up questions before building the cart and the results were more personalized than quick mode.",
-            "Thanks for the great comments guys. Trying to reply to all. Appreciate all of you using the product.",
-            "This is great. thanks for taking your time to try such an ellaborate prompt. Interestingly the recommended bestbuy link is available in my location (California). Fastmode doesn't look at your location unless you are signed in. Wondering if time permits, can you try completing your profile and try deep mode? Or i can give a try as well if you share your city or country and share you the cart link to validate. Thanks!",
-            "Great thought. We initially thought about adding an interpretability view to show users on why they got each products. Will consider adding that.",
-            "Thanks for the feedback. Seems like a bug, if the profile includes the location, it should be used. Let me look into it.",
-            "Appreciate your time in testing our product. Glad it worked better in deep mode. Will note that feedback. Can you confirm if the fast mode was used after completing your profile? Generally if the profile is complete and if you signed-in for the fast mode, the results should be reasonably good if you are searching for any family members like \"birthday party for my daughter\", \"beach trip with my kids\" etc. Since deep mode gets more context we expect it be far superior in terms of result quality. Feel free to try more queries. Use support@whattobuy.app for any direct feedback or post it here. Thanks again!",
-            "\"Cebu, Philippines\" would be a good-enough approximation."
-          ],
-          "llm_summary_used": false,
-          "llm_summary_skipped_reason": "comments_below_threshold",
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.5867,
-        "demand_tier": "medium",
-        "guardrail_applied": "none",
-        "guardrail_reason": "threshold_not_met"
-      }
-    },
-    "discovered_at": "2026-03-29",
-    "first_seen": "2026-03-29T19:37:45.013495Z",
-    "final_score": 80,
-    "trending_score": 72,
-    "needs_verification": true,
-    "website_check_reason": "status:200"
   },
   {
     "name": "鉄道インフラ維持管理ロボット",
