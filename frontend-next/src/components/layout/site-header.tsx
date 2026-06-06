@@ -39,6 +39,7 @@ export function SiteHeader({ isAppShell = false }: SiteHeaderProps) {
 
   const mobileNavItems = [
     { href: "/", label: t("首页", "Home"), icon: Flame },
+    { href: "/today", label: t("今日", "Today"), icon: Star },
     { href: "/discover", label: t("发现", "Discover"), icon: Dice5 },
   ];
 

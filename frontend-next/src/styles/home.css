@@ -158,7 +158,7 @@
   margin-top: 4px;
   padding: 12px 12px 13px;
   border: 0.5px solid rgba(31, 31, 28, 0.1);
-  background: color-mix(in oklab, var(--hook-color, #496575) 9%, white);
+  background: color-mix(in oklab, var(--hook-color, #496575) 9%, var(--v2-bg-primary));
 }
 
 .v2-pick-reason span {
@@ -393,7 +393,7 @@
   justify-content: flex-start;
   background:
     linear-gradient(90deg, var(--hook-color, #496575) 0 4px, transparent 4px),
-    color-mix(in oklab, var(--hook-color, #496575) 9%, white);
+    color-mix(in oklab, var(--hook-color, #496575) 9%, var(--v2-bg-secondary));
   color: var(--hook-color, #496575);
   font-size: 10px;
   font-weight: 600;
@@ -528,6 +528,48 @@
   text-align: center;
 }
 
+/* ── Dark mode ──────────────────────────────────────────────── */
+[data-theme="dark"] .v2-home-root {
+  --v2-bg-primary: #1c2128;
+  --v2-bg-secondary: #232a34;
+  --v2-text-primary: #f8fafc;
+  --v2-text-secondary: #94a3b8;
+  --v2-text-tertiary: #64748b;
+  --v2-text-info: #60a5fa;
+  --v2-border-tertiary: rgba(255, 255, 255, 0.08);
+  --v2-border-secondary: rgba(255, 255, 255, 0.16);
+  --v2-accent-soft: rgba(57, 111, 79, 0.2);
+}
+
+[data-theme="dark"] .v2-hero-card--fallback {
+  background: var(--v2-bg-primary);
+}
+
+[data-theme="dark"] .v2-pick-reason {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .v2-mini-card {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .v2-rubric-panel {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .v2-news-item {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .v2-news-list {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .v2-strip-empty {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Desktop ────────────────────────────────────────────────── */
 @media (min-width: 760px) {
   .v2-home-root {
     margin-top: -0.25rem;
@@ -536,14 +578,15 @@
   }
 }
 
+/* ── Mobile ─────────────────────────────────────────────────── */
 @media (max-width: 760px) {
   .v2-home-root {
     width: 100%;
-    padding-bottom: calc(122px + var(--wa-safe-bottom));
+    padding-bottom: calc(6rem + var(--wa-safe-bottom));
   }
 
   .v2-hero-card {
-    min-height: min(580px, calc(100vh - 122px));
+    min-height: min(520px, calc(100svh - 130px));
   }
 
   .v2-empty-pill {
@@ -555,10 +598,18 @@
   }
 
   .v2-fallback-title {
-    font-size: 26px;
+    font-size: 22px;
+  }
+
+  .v2-fallback-quote {
+    font-size: 13px;
   }
 
   .v2-picks-strip {
-    grid-auto-columns: 154px;
+    grid-auto-columns: 140px;
+  }
+
+  .v2-hero-copy h1 {
+    font-size: clamp(22px, 7vw, 28px);
   }
 }
