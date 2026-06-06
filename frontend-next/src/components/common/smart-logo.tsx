@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useRef, useMemo, useState } from "react";
 import { getLogoCandidates, getMonogram } from "@/lib/product-utils";
 
 type SmartLogoProps = {
@@ -41,6 +41,7 @@ export function SmartLogo({
   const [index, setIndex] = useState(0);
   const [isExhausted, setIsExhausted] = useState(false);
   const current = !isExhausted ? candidates[index] : undefined;
+  const imgRef = useRef<HTMLImageElement>(null);
 
   const moveToNextCandidate = () => {
     if (index + 1 < candidates.length) {
@@ -50,11 +51,23 @@ export function SmartLogo({
     setIsExhausted(true);
   };
 
+  // If the image finished loading/erroring before React hydrated and attached
+  // onError, the error event is permanently missed. Check img.complete on each
+  // candidate change to catch those pre-hydration failures.
+  useEffect(() => {
+    const img = imgRef.current;
+    if (!img || !img.complete) return;
+    if (img.naturalWidth > 0 && img.naturalHeight > 0) return;
+    moveToNextCandidate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [current]);
+
   return (
     <span className={className} aria-hidden="true">
       {current ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
+          ref={imgRef}
           src={current}
           alt=""
           width={size}
