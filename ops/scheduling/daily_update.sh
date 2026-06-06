@@ -27,13 +27,13 @@ else
     echo "[$(date +%H:%M:%S)] auto_discover.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
 fi
 
-# 1.5 Auto publish to products_featured.json
-echo "[$(date +%H:%M:%S)] Running auto_publish.py..." >> "$LOG_DIR/daily_update.log"
-if $PYTHON_BIN crawler/tools/auto_publish.py >> "$LOG_DIR/daily_update.log" 2>&1; then
-    echo "[$(date +%H:%M:%S)] auto_publish.py completed successfully" >> "$LOG_DIR/daily_update.log"
+# 1.5 Editorial gate notification (v2: no auto-publish)
+if [ -f "$REPO_DIR/crawler/data/candidates/pending_review.json" ]; then
+    CANDIDATE_COUNT=$($PYTHON_BIN -c "import json; p='$REPO_DIR/crawler/data/candidates/pending_review.json'; data=json.load(open(p, encoding='utf-8')); print(len(data) if isinstance(data, list) else 0)" 2>/dev/null || echo 0)
 else
-    echo "[$(date +%H:%M:%S)] auto_publish.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
+    CANDIDATE_COUNT=0
 fi
+echo "[$(date +%H:%M:%S)] $CANDIDATE_COUNT new candidates ready — run python3 crawler/tools/curate.py" >> "$LOG_DIR/daily_update.log"
 
 # 1.6 Backfill source_url into featured (from weekly files)
 echo "[$(date +%H:%M:%S)] Running backfill_source_urls.py..." >> "$LOG_DIR/daily_update.log"
@@ -80,7 +80,7 @@ echo "[$(date +%H:%M:%S)] Running generate_experience.py --new-only..." >> "$LOG
 if $PYTHON_BIN crawler/tools/generate_experience.py --new-only >> "$LOG_DIR/daily_update.log" 2>&1; then
     echo "[$(date +%H:%M:%S)] generate_experience.py completed successfully" >> "$LOG_DIR/daily_update.log"
 else
-    echo "[$(date +%H:%M:%S)] generate_experience.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
+    echo "[$(date +%H:%M:%S)] generate_experience.py failed with exit code $? (non-fatal)" >> "$LOG_DIR/daily_update.log"
 fi
 
 # 2. Update news (optional, continues even if auto_discover fails)

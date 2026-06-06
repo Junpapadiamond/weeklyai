@@ -4,6 +4,14 @@ export type ApiResponse<T> = {
   message?: string;
 };
 
+export type HookType =
+  | "weird_form"
+  | "new_behavior"
+  | "unexpected_combo"
+  | "quiet_real_problem"
+  | "new_interaction"
+  | "niche_depth";
+
 export type Product = {
   _id?: string;
   id?: string;
@@ -15,7 +23,23 @@ export type Product = {
   why_matters_en?: string;
   logo_url?: string;
   logo?: string;
+  screenshot_worthy?: boolean;
+  hook?: HookType;
+  has_strong_image?: boolean;
+  is_bootstrap_pick?: boolean;
+  pick_reason?: string;
+  pick_reason_en?: string;
+  v2_score?: number;
+  v2_signals?: string[];
+  is_yesterday?: boolean;
+  image_url?: string;
+  cover_image?: string;
+  hero_image?: string;
+  og_image?: string;
+  /** @deprecated v2 uses screenshot_worthy + hook instead. */
   dark_horse_index?: number;
+  /** @deprecated v2 uses screenshot_worthy + hook instead. */
+  criteria_met?: string[];
   category?: string;
   categories?: string[];
   hardware_category?: string;
@@ -44,6 +68,7 @@ export type Product = {
   first_seen?: string;
   published_at?: string;
   discovered_at?: string;
+  curated_at?: string;
   is_hardware?: boolean;
   needs_verification?: boolean;
   extra?: {

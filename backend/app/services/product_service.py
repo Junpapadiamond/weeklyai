@@ -9,6 +9,7 @@
 
 from collections import defaultdict
 from datetime import datetime, timedelta
+import re
 from typing import List, Dict, Any, Optional
 
 # 导入配置
@@ -18,6 +19,124 @@ from config import Config
 from . import product_filters as filters
 from . import product_sorting as sorting
 from .product_repository import ProductRepository
+
+
+V2_HOOKS = {
+    'weird_form',
+    'new_behavior',
+    'unexpected_combo',
+    'quiet_real_problem',
+    'new_interaction',
+    'niche_depth',
+}
+
+V2_HOOK_LABEL_ZH = {
+    'weird_form': '形态奇特',
+    'new_behavior': '新行为',
+    'unexpected_combo': '意外组合',
+    'quiet_real_problem': '真实痛点',
+    'new_interaction': '新交互',
+    'niche_depth': '垂直深挖',
+}
+
+V2_HOOK_LABEL_EN = {
+    'weird_form': 'weird form',
+    'new_behavior': 'new behavior',
+    'unexpected_combo': 'unexpected combo',
+    'quiet_real_problem': 'real problem',
+    'new_interaction': 'new interaction',
+    'niche_depth': 'niche depth',
+}
+
+V2_HOOK_PATTERNS = {
+    'weird_form': (
+        'bonsai', '盆栽', 'plant', 'pendant', 'necklace', 'ring', 'smart ring',
+        'glasses', '眼镜', 'badge', 'e-badge', 'pin', 'mirror', 'lamp',
+        'plush', 'collar', 'wearable', '可穿戴', 'robot', '机器人',
+        'lifeform', 'physical ai', 'humanoid', 'smart glasses', 'screenless',
+        'wrist strap', 'card', '3mm', 'ceramic', '电子徽章', '吊坠'
+    ),
+    'new_behavior': (
+        'autonomous', 'self-operating', 'unsupervised', 'proactive',
+        'automatically', 'auto ', 'agent can', 'agentic', 'run your',
+        'execute', 'learns workflow', 'without prompt', 'remembers',
+        '记住', '自主', '主动', '自动执行', '全天', '实时', '会主动',
+        '能感知', 'understand unspoken', 'records your entire life'
+    ),
+    'unexpected_combo': (
+        'ai social world', 'social world', 'gamified', 'payments',
+        'procurement', 'bookkeeper', 'vibe coding', 'hardware development',
+        'world model', 'video game', 'quantum physics', 'enzyme',
+        'brand agent', 'ai +', 'ai-powered fitness', 'screenless ai',
+        '社交世界', '游戏', '支付', '采购', '会计', '硬件开发',
+        '世界模型', '量子', '品牌体验', 'ai native'
+    ),
+    'new_interaction': (
+        'voice', 'gesture', 'haptic', 'tactile', 'screenless', 'ambient',
+        'touch', 'nearby sharing', 'pov', 'camera', 'conversation',
+        'conversational', 'assistant', 'companion', 'emotion', '表达',
+        '手势', '触觉', '无屏', '环境式', '近场分享', '触控屏',
+        '陪伴', '情绪', '语音', '对话'
+    ),
+    'quiet_real_problem': (
+        'error', 'inconsistency', 'cross-reference', 'compliance', 'claims',
+        'documentation', 'phishing', 'security', 'admin', 'hospital',
+        'contract', 'legal', 'workflow', 'approval', '供应商', '采购流程',
+        '合规', '错误', '不一致', '病历', '理赔', '安全', '合同',
+        '审批', '客户看到之前'
+    ),
+    'niche_depth': (
+        'railway', 'warehouse', 'pallet', 'factory', 'industrial',
+        'semiconductor', 'agriculture', 'beauty', 'wellness', 'law firm',
+        'lawyers', 'broadcast media', 'sports', 'hospital', 'pelvic',
+        'mineral', 'rail', '仓储', '铁路', '工厂', '工业', '农业',
+        '美业', '医院', '律师', '运动', '矿产', '女性健康'
+    ),
+}
+
+V2_FUNDING_TERMS = (
+    'funding', 'raised', 'financing', 'series a', 'series b', 'series c',
+    'seed round', 'pre-seed', 'valuation', 'investor', 'led by', '融资',
+    '领投', '估值', '种子轮', 'a轮', 'b轮', 'c轮', '完成', '募资'
+)
+
+V2_NON_PRODUCT_TERMS = (
+    'fund', 'investment platform', 'support program', 'accelerator',
+    'venture capital', 'customer experience centre', '体验中心',
+    '投资平台', '支持计划', '资助项目', '基金'
+)
+
+V2_FAMOUS_BRAND_TERMS = (
+    'openai', 'chatgpt', 'anthropic', 'claude', 'google', 'gemini',
+    'deepmind', 'meta ', 'meta-', 'ray-ban meta', 'apple', 'microsoft',
+    'cursor', 'xiaomi', '小米', 'bytedance', '字节',
+    'alibaba', '阿里', 'qianwen', '千问', 'tencent', '腾讯'
+)
+
+V2_FAMOUS_SURPRISE_TERMS = (
+    'first', '首次', 'radical departure', 'new behavior', '新行为',
+    'screenless', '无屏', 'unsupervised', '自主', 'terminal',
+    'can now', '现在可以', 'quietly shipped', '新能力', 'new capability',
+    'new form', '新形态', 'prototype', '首款'
+)
+
+V2_REASON_ZH = {
+    'weird_form': '通过了形态惊喜门槛：AI 不再只是聊天框，而是进入一个可截图、可转发的新载体。',
+    'new_behavior': '通过了行为惊喜门槛：重点是产品现在能做的新动作，而不是模型号或融资额。',
+    'unexpected_combo': '通过了组合惊喜门槛：把 AI 放进一个不太常见的场景组合里，值得点进去看。',
+    'quiet_real_problem': '通过了真问题门槛：不是炫技，而是把一个高频、烦人的真实流程明显压短。',
+    'new_interaction': '通过了交互惊喜门槛：用户和 AI 的接触方式发生变化，不只是多一个按钮。',
+    'niche_depth': '通过了垂直深挖门槛：切进一个足够具体的行业场景，问题窄但价值清楚。',
+}
+
+V2_REASON_EN = {
+    'weird_form': 'Passes the form-surprise gate: AI leaves the chat box and lands in a click-worthy object.',
+    'new_behavior': 'Passes the behavior-surprise gate: the product can do something materially new, not just run a newer model.',
+    'unexpected_combo': 'Passes the combo-surprise gate: AI is being placed into an unexpected product context.',
+    'quiet_real_problem': 'Passes the real-problem gate: it shortens a frequent painful workflow instead of chasing novelty.',
+    'new_interaction': 'Passes the interaction-surprise gate: the way a person touches or talks to AI changes.',
+    'niche_depth': 'Passes the niche-depth gate: the problem is narrow, but the use case is concrete enough to matter.',
+}
 
 
 class ProductService:
@@ -224,6 +343,250 @@ class ProductService:
         )
 
     @staticmethod
+    def _screenshot_worthy_products() -> List[Dict]:
+        """Return v2 editor-approved picks, newest first."""
+        products = ProductService._load_products()
+        picks = [ProductService._decorate_v2_pick(p) for p in products if p.get('screenshot_worthy') is True]
+        return sorting.sort_by_recency(picks)
+
+    @staticmethod
+    def _v2_text(product: Dict[str, Any]) -> str:
+        fields = [
+            product.get('name'),
+            product.get('description'),
+            product.get('description_en'),
+            product.get('why_matters'),
+            product.get('why_matters_en'),
+            product.get('latest_news'),
+            product.get('latest_news_en'),
+            product.get('category'),
+            product.get('hardware_category'),
+            product.get('hardware_type'),
+            product.get('form_factor'),
+            product.get('use_case'),
+            product.get('source'),
+            product.get('funding_total'),
+        ]
+        fields.extend(product.get('categories') or [])
+        fields.extend(product.get('innovation_traits') or [])
+        extra = product.get('extra') if isinstance(product.get('extra'), dict) else {}
+        fields.extend(str(value) for value in extra.values() if isinstance(value, (str, int, float)))
+        return ' '.join(str(value or '') for value in fields).lower()
+
+    @staticmethod
+    def _count_terms(text: str, terms) -> int:
+        return sum(1 for term in terms if term in text)
+
+    @staticmethod
+    def _first_sentence(value: Any, max_chars: int = 86) -> str:
+        text = str(value or '').strip()
+        if not text:
+            return ''
+        text = re.split(r'(?<=[。.!?])\s+', text)[0].strip()
+        text = text.replace('\n', ' ')
+        if len(text) <= max_chars:
+            return text
+        return text[: max_chars - 1].rstrip('，,；;。.') + '…'
+
+    @staticmethod
+    def _score_v2_candidate(product: Dict[str, Any]) -> Dict[str, Any]:
+        text = ProductService._v2_text(product)
+        hook_scores: Dict[str, float] = defaultdict(float)
+        hook_terms: Dict[str, List[str]] = defaultdict(list)
+
+        for hook, terms in V2_HOOK_PATTERNS.items():
+            for term in terms:
+                if term in text:
+                    hook_scores[hook] += 1.0
+                    if len(hook_terms[hook]) < 3:
+                        hook_terms[hook].append(term)
+
+        weights = {
+            'weird_form': 30,
+            'new_behavior': 28,
+            'unexpected_combo': 24,
+            'new_interaction': 23,
+            'niche_depth': 18,
+            'quiet_real_problem': 17,
+        }
+        weighted_scores = {
+            hook: min(58.0, weights[hook] + (hits - 1) * 8.0)
+            for hook, hits in hook_scores.items()
+            if hits > 0
+        }
+        if weighted_scores:
+            hook = max(weighted_scores, key=lambda key: (weighted_scores[key], weights[key]))
+            surprise_score = weighted_scores[hook]
+        else:
+            hook = 'quiet_real_problem'
+            surprise_score = 4.0
+
+        multi_hook_bonus = min(18.0, max(0, len(weighted_scores) - 1) * 6.0)
+        freshness = sorting.get_freshness_score(product) * 0.10
+        heat = sorting.get_heat_score(product) * 0.03
+        funding_hits = ProductService._count_terms(text, V2_FUNDING_TERMS)
+        non_product_hits = ProductService._count_terms(text, V2_NON_PRODUCT_TERMS)
+
+        funding_penalty = min(26.0, funding_hits * (4.5 if surprise_score < 30 else 2.0))
+        non_product_penalty = 36.0 if non_product_hits and surprise_score < 46 else 0.0
+        famous_hits = ProductService._count_terms(text, V2_FAMOUS_BRAND_TERMS)
+        famous_surprise_hits = ProductService._count_terms(text, V2_FAMOUS_SURPRISE_TERMS)
+        famous_penalty = 0.0
+        if famous_hits:
+            # Big labs are allowed, but legacy/bootstrap data must explain what is
+            # specifically surprising about this launch before it outranks indies.
+            famous_penalty = 22.0 if famous_surprise_hits == 0 else 10.0
+            if surprise_score < 46:
+                famous_penalty += 10.0
+
+        score = max(
+            0.0,
+            surprise_score
+            + multi_hook_bonus
+            + freshness
+            + heat
+            - funding_penalty
+            - non_product_penalty
+            - famous_penalty
+        )
+
+        signals = []
+        for candidate_hook in sorted(weighted_scores, key=weighted_scores.get, reverse=True)[:3]:
+            signals.append(V2_HOOK_LABEL_EN[candidate_hook])
+        if surprise_score >= 30:
+            signals.append('not funding-led')
+
+        return {
+            'score': round(score, 1),
+            'hook': hook,
+            'signals': signals[:4],
+            'matched_terms': hook_terms.get(hook, []),
+            'funding_heavy': funding_hits >= 2 and surprise_score < 36,
+            'non_product': bool(non_product_hits and surprise_score < 46),
+            'famous_brand': bool(famous_hits),
+            'famous_surprise': bool(famous_surprise_hits),
+        }
+
+    @staticmethod
+    def _decorate_v2_pick(product: Dict[str, Any], force_bootstrap: bool = False) -> Dict[str, Any]:
+        """Attach v2 editorial metadata without mutating the stored record."""
+        clone = dict(product)
+        clone['screenshot_worthy'] = True
+        score = ProductService._score_v2_candidate(clone)
+        if clone.get('hook') not in V2_HOOKS or force_bootstrap:
+            clone['hook'] = score['hook']
+        clone.setdefault('has_strong_image', bool(clone.get('logo_url') or clone.get('logo')))
+        clone.setdefault('is_bootstrap_pick', force_bootstrap)
+        clone['v2_score'] = score['score']
+        clone['v2_signals'] = score['signals']
+
+        hook = clone.get('hook') if clone.get('hook') in V2_HOOKS else score['hook']
+        summary = ProductService._first_sentence(clone.get('description') or clone.get('why_matters'))
+        summary_en = ProductService._first_sentence(clone.get('description_en') or clone.get('why_matters_en') or clone.get('description'))
+        if not summary:
+            summary = f"{clone.get('name') or '这个产品'} 有明确的产品惊喜点。"
+        if not summary_en:
+            summary_en = f"{clone.get('name') or 'This product'} has a concrete product surprise."
+
+        clone.setdefault('pick_reason', f"{V2_REASON_ZH[hook]} 这次选择看的是“会不会让人停下来点开”，不是融资大小。")
+        clone.setdefault('pick_reason_en', f"{V2_REASON_EN[hook]} This pick is ranked by stop-scroll surprise, not funding size.")
+
+        why_text = str(clone.get('why_matters') or '').lower()
+        why_en_text = str(clone.get('why_matters_en') or '').lower()
+        if force_bootstrap and (not clone.get('why_matters') or ProductService._count_terms(why_text, V2_FUNDING_TERMS) >= 2):
+            clone['why_matters'] = f"{summary} {V2_REASON_ZH[hook]}"
+        if force_bootstrap and (not clone.get('why_matters_en') or ProductService._count_terms(why_en_text, V2_FUNDING_TERMS) >= 2):
+            clone['why_matters_en'] = f"{summary_en} {V2_REASON_EN[hook]}"
+        return clone
+
+    @staticmethod
+    def _bootstrap_v2_products(limit: int) -> List[Dict[str, Any]]:
+        """Rank legacy data by the v2 stop-scroll rubric until curated picks exist."""
+        products = ProductService._load_products()
+        scored: List[Dict[str, Any]] = []
+        seen_keys = set()
+        for product in products:
+            website = str(product.get('website') or '').strip().lower()
+            if website in {'', 'unknown', 'n/a', 'na', 'none', 'null'}:
+                continue
+            key = ProductService._build_product_key(product)
+            if key and key in seen_keys:
+                continue
+            seen_keys.add(key)
+
+            decorated = ProductService._decorate_v2_pick(product, force_bootstrap=True)
+            if decorated.get('v2_score', 0) < 18:
+                continue
+            scored.append(decorated)
+
+        epoch = datetime(1970, 1, 1)
+        scored.sort(
+            key=lambda item: (
+                item.get('v2_score', 0),
+                sorting.get_product_date(item) or epoch,
+                sorting.get_heat_score(item),
+            ),
+            reverse=True
+        )
+
+        if limit <= 0:
+            return scored
+
+        selected: List[Dict[str, Any]] = []
+        hook_counts: Dict[str, int] = defaultdict(int)
+        max_per_hook = 2 if limit > 3 else 1
+        for item in scored:
+            hook = item.get('hook') or 'quiet_real_problem'
+            if hook_counts[hook] >= max_per_hook:
+                continue
+            selected.append(item)
+            hook_counts[hook] += 1
+            if len(selected) >= limit:
+                return selected
+
+        selected_keys = {ProductService._build_product_key(item) for item in selected}
+        for item in scored:
+            key = ProductService._build_product_key(item)
+            if key in selected_keys:
+                continue
+            selected.append(item)
+            if len(selected) >= limit:
+                break
+        return selected
+
+    @staticmethod
+    def get_hero_product() -> Optional[Dict]:
+        """获取 v2 今日 Hero pick；今日无则回退最近一个并标记 is_yesterday."""
+        picks = ProductService._screenshot_worthy_products()
+        if not picks:
+            fallback = ProductService._bootstrap_v2_products(limit=1)
+            if not fallback:
+                return None
+            hero = fallback[0]
+            hero['is_yesterday'] = True
+            return hero
+
+        hero = dict(picks[0])
+        product_date = sorting.get_product_date(hero)
+        if product_date and product_date.date() < datetime.now().date():
+            hero['is_yesterday'] = True
+        else:
+            hero['is_yesterday'] = False
+        return hero
+
+    @staticmethod
+    def get_picks(limit: int = 7) -> List[Dict]:
+        """获取最近 N 个 v2 screenshot-worthy picks."""
+        try:
+            limit = max(1, min(50, int(limit)))
+        except (TypeError, ValueError):
+            limit = 7
+        picks = ProductService._screenshot_worthy_products()
+        if picks:
+            return picks[:limit]
+        return ProductService._bootstrap_v2_products(limit=limit)
+
+    @staticmethod
     def get_product_by_id(product_id: str) -> Optional[Dict]:
         """根据ID获取产品"""
         products = ProductService._load_products()
@@ -381,7 +744,7 @@ class ProductService:
 
     @staticmethod
     def get_dark_horse_products(limit: int = 10, min_index: int = 4) -> List[Dict]:
-        """获取黑马产品 - 高潜力新兴产品 (多样化)
+        """Deprecated: 获取旧黑马端点兼容数据，v2 优先返回 screenshot_worthy picks.
 
         参数:
         - limit: 返回数量
@@ -397,6 +760,9 @@ class ProductService:
         多样化规则: 硬件 ≤40%, 每个硬件子类别 ≤3
         """
         products = ProductService._load_products()
+        v2_picks = [p for p in products if p.get('screenshot_worthy') is True]
+        if v2_picks:
+            return sorting.sort_by_recency(v2_picks)[:limit]
         now = datetime.now()
         fresh_cutoff = now - timedelta(days=Config.DARK_HORSE_FRESH_DAYS)  # 5 days
         sticky_cutoff = now - timedelta(days=Config.DARK_HORSE_STICKY_DAYS)  # 10 days
@@ -489,7 +855,7 @@ class ProductService:
 
     @staticmethod
     def get_rising_star_products(limit: int = 20) -> List[Dict]:
-        """获取潜力股产品 - 2-3分的有潜力产品
+        """Deprecated: 获取旧潜力股端点兼容数据，v2 优先返回 screenshot_worthy picks.
 
         参数:
         - limit: 返回数量
@@ -497,6 +863,9 @@ class ProductService:
         排序规则: 评分 > 融资金额 > 用户数/估值
         """
         products = ProductService._load_products()
+        v2_picks = [p for p in products if p.get('screenshot_worthy') is True]
+        if v2_picks:
+            return sorting.sort_by_recency(v2_picks)[:limit]
 
         # 筛选 dark_horse_index 为 2-3 的产品
         rising_stars = filters.filter_by_dark_horse_index(products, min_index=2, max_index=3)
@@ -699,23 +1068,14 @@ class ProductService:
 
     @staticmethod
     def get_daily_featured() -> Optional[Dict]:
-        """获取「今日精选」单品。
-
-        从当周黑马（4-5 分）里按评分+融资取 top 产品，并用当天日期做
-        deterministic 选择，保证同一天返回同一个产品。
-        """
-        products = ProductService._load_products()
-
-        # 按评分+融资对 4-5 分产品排序
+        """获取「今日精选」单品 - 每天固定展示当周最高分黑马产品"""
+        products = ProductRepository.load_products()
         candidates = [p for p in products if (p.get("dark_horse_index") or 0) >= 4]
         if not candidates:
             candidates = [p for p in products if (p.get("dark_horse_index") or 0) >= 3]
         if not candidates:
             return None
-
-        candidates_sorted = sorted(candidates, key=sorting.product_score_key)
-
-        # 用当天的 day-of-year 做 deterministic 选择，避免频繁切换
+        candidates_sorted = sorted(candidates, key=sorting.product_score_key, reverse=True)
         day_index = datetime.now().timetuple().tm_yday % len(candidates_sorted)
         return candidates_sorted[day_index]
 
