@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WeeklyAI Hero 卡片设计稿 v2</title>
+<style>
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f6f6f3;
+    --text-primary: #1f1f1c;
+    --text-secondary: #6f6f6a;
+    --text-tertiary: #9a9a94;
+    --text-info: #185fa5;
+    --border-tertiary: rgba(0,0,0,0.08);
+    --border-secondary: rgba(0,0,0,0.16);
+    --font-sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --font-serif: Georgia, "Times New Roman", "Songti SC", "STSong", serif;
+    --hook-weird-form: #5d8a4e;
+    --hook-new-behavior: #d85a30;
+    --hook-unexpected-combo: #b94c87;
+    --hook-quiet-real-problem: #5a6c7d;
+    --hook-new-interaction: #b8a13a;
+    --hook-niche-depth: #6d4ea5;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); background: var(--bg-secondary); color: var(--text-primary); padding: 40px 24px; line-height: 1.5; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  h1 { font-size: 22px; font-weight: 500; margin-bottom: 6px; }
+  .lede { font-size: 14px; color: var(--text-secondary); margin-bottom: 36px; max-width: 640px; line-height: 1.65; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 36px 20px; }
+  .wrap { display: flex; flex-direction: column; gap: 10px; }
+  .phone { width: 100%; max-width: 320px; margin: 0 auto; aspect-ratio: 9/19; background: var(--bg-primary); border-radius: 28px; border: 0.5px solid var(--border-secondary); overflow: hidden; display: flex; flex-direction: column; position: relative; }
+  .label { font-size: 14px; font-weight: 500; text-align: center; color: var(--text-primary); margin-top: 6px; }
+  .sub { font-size: 12px; color: var(--text-secondary); text-align: center; line-height: 1.55; max-width: 280px; margin: 0 auto; }
+  .arrow::after { content: " →"; }
+
+  /* 1 · default */
+  .h-default { flex: 1; background: var(--hook-weird-form); display: flex; flex-direction: column; padding: 20px 18px; color: white; position: relative; }
+  .def-top { display: flex; justify-content: space-between; font-size: 11px; color: rgba(255,255,255,0.85); letter-spacing: 0.3px; }
+  .def-photo { flex: 1; display: flex; align-items: center; justify-content: center; opacity: 0.3; font-size: 13px; color: white; letter-spacing: 1.5px; }
+  .def-content { display: flex; flex-direction: column; gap: 8px; }
+  .def-badge { display: inline-flex; background: rgba(255,255,255,0.22); color: white; padding: 4px 10px; border-radius: 100px; font-size: 11px; align-self: flex-start; }
+  .def-name { font-size: 22px; font-weight: 500; line-height: 1.18; }
+  .def-line { font-size: 12px; line-height: 1.55; color: rgba(255,255,255,0.92); }
+  .def-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; margin-top: 4px; border-top: 0.5px solid rgba(255,255,255,0.25); font-size: 11px; color: rgba(255,255,255,0.78); }
+
+  /* 2 · active / long press */
+  .h-active { flex: 1; background: var(--hook-weird-form); padding: 20px 18px; color: white; position: relative; display: flex; flex-direction: column; }
+  .act-dim { position: absolute; inset: 0; background: rgba(0,0,0,0.18); z-index: 1; }
+  .act-body { position: relative; z-index: 2; display: flex; flex-direction: column; height: 100%; }
+  .act-sheet { position: absolute; left: 12px; right: 12px; bottom: 12px; background: var(--bg-primary); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 6px; z-index: 3; border: 0.5px solid var(--border-tertiary); }
+  .act-sheet-h { font-size: 11px; color: var(--text-tertiary); }
+  .act-sheet-title { font-size: 13px; font-weight: 500; color: var(--text-primary); line-height: 1.3; }
+  .act-sheet-line { font-size: 11px; color: var(--text-secondary); line-height: 1.55; }
+  .act-sheet-cta { font-size: 12px; color: var(--text-info); font-weight: 500; display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
+
+  /* 3 · empty */
+  .h-empty { flex: 1; background: #b8946a; padding: 20px 18px; color: white; position: relative; display: flex; flex-direction: column; }
+  .emp-pill { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.96); color: #6f4f2c; padding: 6px 12px; border-radius: 100px; font-size: 11px; font-weight: 500; z-index: 3; white-space: nowrap; }
+  .emp-dim { position: absolute; inset: 0; background: rgba(0,0,0,0.18); z-index: 1; }
+  .emp-body { position: relative; z-index: 2; display: flex; flex-direction: column; height: 100%; padding-top: 32px; }
+  .emp-top { display: flex; justify-content: space-between; font-size: 11px; color: rgba(255,255,255,0.82); letter-spacing: 0.3px; }
+  .emp-photo { flex: 1; display: flex; align-items: center; justify-content: center; opacity: 0.35; font-size: 13px; color: white; letter-spacing: 1.5px; }
+  .emp-bottom { display: flex; flex-direction: column; gap: 6px; }
+  .emp-prefix { font-size: 11px; color: rgba(255,255,255,0.78); }
+  .emp-name { font-size: 18px; font-weight: 500; line-height: 1.22; }
+  .emp-line { font-size: 11px; color: rgba(255,255,255,0.88); line-height: 1.55; }
+
+  /* 4 · fallback (C 风格) */
+  .h-fallback { flex: 1; background: var(--bg-primary); padding: 20px 18px; display: flex; flex-direction: column; position: relative; }
+  .fb-bar { position: absolute; left: 0; top: 20px; bottom: 20px; width: 4px; background: var(--hook-new-behavior); }
+  .fb-top { font-size: 11px; color: var(--text-tertiary); padding-left: 14px; display: flex; justify-content: space-between; }
+  .fb-hook { font-size: 11px; color: var(--hook-new-behavior); padding-left: 14px; margin: 20px 0 6px; font-weight: 500; letter-spacing: 0.3px; }
+  .fb-name { font-size: 24px; font-weight: 500; line-height: 1.1; padding-left: 14px; margin: 0 0 14px; color: var(--text-primary); }
+  .fb-quote { font-family: var(--font-serif); font-size: 13px; line-height: 1.6; padding-left: 14px; color: var(--text-primary); flex: 1; }
+  .fb-logo { padding-left: 14px; display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+  .fb-logo-box { width: 30px; height: 30px; border-radius: 6px; background: var(--bg-secondary); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--text-tertiary); font-weight: 500; }
+  .fb-logo-name { font-size: 12px; color: var(--text-secondary); }
+  .fb-cta { padding: 12px 0 0 14px; font-size: 12px; color: var(--text-info); font-weight: 500; }
+
+  /* spec notes */
+  .spec { margin-top: 48px; padding: 24px; background: var(--bg-primary); border-radius: 12px; border: 0.5px solid var(--border-tertiary); max-width: 1200px; }
+  .spec h2 { font-size: 18px; font-weight: 500; margin-bottom: 12px; }
+  .spec h3 { font-size: 14px; font-weight: 500; margin-top: 20px; margin-bottom: 6px; }
+  .spec p, .spec li { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+  .spec ul { padding-left: 20px; }
+  .spec code { font-family: ui-monospace, monospace; background: var(--bg-secondary); padding: 1px 6px; border-radius: 4px; font-size: 12px; color: var(--text-primary); }
+  .swatches { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+  .sw { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); }
+  .sw-box { width: 16px; height: 16px; border-radius: 4px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>WeeklyAI Hero 卡片设计稿 v2</h1>
+  <p class="lede">移动优先 · 杂志封面气质 · 今日 Pick 节奏。四种状态：默认（有图） / 长按预览 / 空状态 / 无图兜底。Hook 决定主色，配图决定版式。</p>
+
+  <div class="grid">
+    <div class="wrap">
+      <div class="phone">
+        <div class="h-default">
+          <div class="def-top">
+            <span>Today · 5.30</span>
+            <span>No.127</span>
+          </div>
+          <div class="def-photo">photo</div>
+          <div class="def-content">
+            <span class="def-badge">Weird form</span>
+            <div class="def-name">AI 盆栽，会自己喊渴</div>
+            <div class="def-line">日本独立团队，Makuake 卖 5k 颗，¥8,000 一台</div>
+            <div class="def-foot">
+              <span>WeeklyAI</span>
+              <span class="arrow">看详情</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="label">1 · 默认（有图）</div>
+      <div class="sub">理想态：实物 / 硬件 / 有强视觉的产品。配图为主，标题压字</div>
+    </div>
+
+    <div class="wrap">
+      <div class="phone">
+        <div class="h-active">
+          <div class="act-dim"></div>
+          <div class="act-body">
+            <div class="def-top">
+              <span>Today · 5.30</span>
+              <span>No.127</span>
+            </div>
+            <div class="def-photo">photo</div>
+            <div class="def-content">
+              <span class="def-badge">Weird form</span>
+              <div class="def-name">AI 盆栽，会自己喊渴</div>
+            </div>
+          </div>
+          <div class="act-sheet">
+            <div class="act-sheet-h">长按预览</div>
+            <div class="act-sheet-title">AI 盆栽，会自己喊渴</div>
+            <div class="act-sheet-line">¥8,000 · 内置麦克 + 湿度传感器 + GLM-4 语音 · 已发货</div>
+            <div class="act-sheet-cta">
+              <span>跳转详情页</span>
+              <span>→</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="label">2 · 长按预览</div>
+      <div class="sub">点进详情前的微交互，弹出补充关键信息</div>
+    </div>
+
+    <div class="wrap">
+      <div class="phone">
+        <div class="h-empty">
+          <div class="emp-dim"></div>
+          <span class="emp-pill">今天编辑还在选 · 24h 内更新</span>
+          <div class="emp-body">
+            <div class="emp-top">
+              <span>Yesterday · 5.29</span>
+              <span>No.126</span>
+            </div>
+            <div class="emp-photo">photo</div>
+            <div class="emp-bottom">
+              <span class="emp-prefix">— 昨日 pick —</span>
+              <div class="emp-name">AI 复古相框，照片自己讲故事</div>
+              <div class="emp-line">小作坊作品，挂家里相框接 GPT-4o，路人经过开聊</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="label">3 · 空状态</div>
+      <div class="sub">今日还没 pick：昨日延续 + 顶部 pill 提示，不留白</div>
+    </div>
+
+    <div class="wrap">
+      <div class="phone">
+        <div class="h-fallback">
+          <div class="fb-bar"></div>
+          <div class="fb-top">
+            <span>Today · 5.30</span>
+            <span>No.127</span>
+          </div>
+          <div class="fb-hook">New behavior</div>
+          <div class="fb-name">Operator-2 跑 20 分钟无监督</div>
+          <div class="fb-quote">"OpenAI 悄悄推了 Operator-2：ChatGPT 现在能无监督完成 20 分钟编程任务。"</div>
+          <div class="fb-logo">
+            <div class="fb-logo-box">O</div>
+            <span class="fb-logo-name">openai.com</span>
+          </div>
+          <div class="fb-cta arrow">看详情</div>
+        </div>
+      </div>
+      <div class="label">4 · 无图兜底（C 风格）</div>
+      <div class="sub">软件 / 大厂发布 / 无强图：字体即视觉 + hook 色条</div>
+    </div>
+  </div>
+
+  <div class="spec">
+    <h2>设计规范</h2>
+
+    <h3>版式选择规则</h3>
+    <ul>
+      <li>有 <code>has_strong_image=true</code> 且 <code>screenshot_worthy=true</code> → 使用「默认」版式（满屏图 + hook 色背景）</li>
+      <li>没有强图 → 使用「无图兜底」版式（C 风格 · hook 色条 + 衬线引言）</li>
+      <li>今日还没编辑选出 pick → 使用「空状态」版式（昨日 pick 降饱和 + 顶部 pill）</li>
+      <li>长按 / 悬停 → 「长按预览」叠层，露出价格、技术原理、状态等补充信息</li>
+    </ul>
+
+    <h3>Hook 颜色系统</h3>
+    <div class="swatches">
+      <div class="sw"><div class="sw-box" style="background:#5d8a4e"></div><code>weird_form</code> 形态奇特</div>
+      <div class="sw"><div class="sw-box" style="background:#d85a30"></div><code>new_behavior</code> 新行为</div>
+      <div class="sw"><div class="sw-box" style="background:#b94c87"></div><code>unexpected_combo</code> 意外组合</div>
+      <div class="sw"><div class="sw-box" style="background:#5a6c7d"></div><code>quiet_real_problem</code> 沉默解决</div>
+      <div class="sw"><div class="sw-box" style="background:#b8a13a"></div><code>new_interaction</code> 新交互</div>
+      <div class="sw"><div class="sw-box" style="background:#6d4ea5"></div><code>niche_depth</code> 垂直深耕</div>
+    </div>
+
+    <h3>字体规范</h3>
+    <ul>
+      <li>主字体：系统 sans（中文优先 PingFang / 微软雅黑）</li>
+      <li>引言 / 杂志感：<code>var(--font-serif)</code>（Georgia / 宋体）</li>
+      <li>字重只用 400（正文） / 500（标题），不用 600/700</li>
+      <li>大小写：句首大写，不用 ALL CAPS、不用 Title Case</li>
+    </ul>
+
+    <h3>固定元素</h3>
+    <ul>
+      <li>顶栏：左 <code>Today · M.DD</code>，右 <code>No.XXX</code>（自动累加期号）</li>
+      <li>底栏：左 <code>WeeklyAI</code>（或域名），右"看详情 →"</li>
+      <li>所有 hero 卡共用同一份顶 / 底栏结构，仅内容部分按版式切换</li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

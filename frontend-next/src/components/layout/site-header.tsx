@@ -30,7 +30,7 @@ export function SiteHeader({ isAppShell = false }: SiteHeaderProps) {
   }, []);
 
   const navItems = [
-    { href: "/", label: t("黑马推荐", "Dark Horses"), icon: Flame },
+    { href: "/", label: t("每日精选", "Daily Pick"), icon: Flame },
     { href: "/discover", label: t("随机发现", "Discover"), icon: Dice5 },
     { href: "/blog", label: t("博客动态", "News"), icon: Newspaper },
     { href: "/search", label: t("搜索", "Search"), icon: Search },

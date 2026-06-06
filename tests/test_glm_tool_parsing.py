@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 import os
 import sys
+import tempfile
 import unittest
 from unittest.mock import MagicMock, patch
 
@@ -19,6 +20,12 @@ def _ensure_import_paths() -> None:
     crawler_root = os.path.join(repo_root, "crawler")
     if crawler_root not in sys.path:
         sys.path.insert(0, crawler_root)
+
+
+def _isolated_metrics_env() -> dict[str, str]:
+    fd, path = tempfile.mkstemp(prefix="weeklyai-api-usage-", suffix=".json")
+    os.close(fd)
+    return {"API_USAGE_DAILY_FILE": path}
 
 
 class TestGLMWebSearchAPI(unittest.TestCase):
@@ -68,7 +75,8 @@ class TestGLMWebSearchAPI(unittest.TestCase):
             },
         ])
 
-        results = client.search("AI融资 2026", max_results=10)
+        with patch.dict(os.environ, _isolated_metrics_env(), clear=False):
+            results = client.search("AI融资 2026", max_results=10)
 
         self.assertEqual(len(results), 2)
         self.assertEqual(results[0].title, "AI融资新闻")
@@ -89,7 +97,8 @@ class TestGLMWebSearchAPI(unittest.TestCase):
         ]
         client._search_session.post.return_value = self._mock_response(items)
 
-        results = client.search("test", max_results=5)
+        with patch.dict(os.environ, _isolated_metrics_env(), clear=False):
+            results = client.search("test", max_results=5)
         self.assertEqual(len(results), 5)
 
     def test_skips_items_without_url_or_title(self) -> None:
@@ -101,7 +110,8 @@ class TestGLMWebSearchAPI(unittest.TestCase):
             {"title": "Valid", "link": "https://b.com", "content": "ok"},
         ])
 
-        results = client.search("test")
+        with patch.dict(os.environ, _isolated_metrics_env(), clear=False):
+            results = client.search("test")
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].title, "Valid")
 
@@ -118,7 +128,8 @@ class TestGLMWebSearchAPI(unittest.TestCase):
             }
         ])
 
-        results = client.search("test")
+        with patch.dict(os.environ, _isolated_metrics_env(), clear=False):
+            results = client.search("test")
         d = results[0].to_dict()
         self.assertEqual(d["title"], "Test")
         self.assertEqual(d["url"], "https://test.com")
@@ -131,7 +142,8 @@ class TestGLMWebSearchAPI(unittest.TestCase):
         client = self._make_client()
         client._search_session.post.return_value = self._mock_response([])
 
-        results = client.search("nonexistent query")
+        with patch.dict(os.environ, _isolated_metrics_env(), clear=False):
+            results = client.search("nonexistent query")
         self.assertEqual(results, [])
 
     def test_no_session_returns_empty(self) -> None:
@@ -147,7 +159,8 @@ class TestGLMWebSearchAPI(unittest.TestCase):
         client = self._make_client()
         client._search_session.post.return_value = self._mock_response([])
 
-        client.search("AI test", search_engine="search_pro_sogou")
+        with patch.dict(os.environ, _isolated_metrics_env(), clear=False):
+            client.search("AI test", search_engine="search_pro_sogou")
 
         call_args = client._search_session.post.call_args
         payload = call_args.kwargs.get("json") or call_args[1].get("json")

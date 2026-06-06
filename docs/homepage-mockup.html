@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WeeklyAI v2 首页 mockup</title>
+<style>
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f6f6f3;
+    --text-primary: #1f1f1c;
+    --text-secondary: #6f6f6a;
+    --text-tertiary: #9a9a94;
+    --text-info: #185fa5;
+    --border-tertiary: rgba(0,0,0,0.08);
+    --border-secondary: rgba(0,0,0,0.16);
+    --font-sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --font-serif: Georgia, "Times New Roman", "Songti SC", "STSong", serif;
+    --hook-weird-form: #5d8a4e;
+    --hook-new-behavior: #d85a30;
+    --hook-unexpected-combo: #b94c87;
+    --hook-quiet-real-problem: #5a6c7d;
+    --hook-new-interaction: #b8a13a;
+    --hook-niche-depth: #6d4ea5;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+  }
+
+  .page {
+    width: min(100%, 430px);
+    margin: 0 auto;
+    background: var(--bg-primary);
+    min-height: 100vh;
+    padding: 14px 14px 24px;
+  }
+
+  .mast {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 8px 2px 14px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .brand {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    color: var(--text-primary);
+  }
+
+  .hero-card {
+    min-height: 520px;
+    border-radius: 0;
+    background: var(--hook-weird-form);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 18px;
+  }
+
+  .hero-top,
+  .hero-foot {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: rgba(255,255,255,0.84);
+  }
+
+  .hero-photo {
+    flex: 1;
+    display: grid;
+    place-items: center;
+    margin: 24px 0;
+    border: 0.5px solid rgba(255,255,255,0.22);
+    background:
+      radial-gradient(circle at 50% 42%, rgba(255,255,255,0.20), transparent 34%),
+      rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.72);
+    font-size: 13px;
+    letter-spacing: 1.5px;
+  }
+
+  .hero-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .badge {
+    align-self: flex-start;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.22);
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+
+  .hero-title {
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.12;
+  }
+
+  .hero-line {
+    font-size: 13px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.92);
+  }
+
+  .hero-foot {
+    border-top: 0.5px solid rgba(255,255,255,0.25);
+    margin-top: 14px;
+    padding-top: 12px;
+  }
+
+  .section {
+    padding: 28px 0 0;
+  }
+
+  .section h2 {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 12px;
+  }
+
+  .picks-strip {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 120px;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 2px 0 10px;
+    scrollbar-width: none;
+  }
+
+  .picks-strip::-webkit-scrollbar { display: none; }
+
+  .mini-card {
+    height: 160px;
+    background: var(--bg-secondary);
+    border: 0.5px solid var(--border-tertiary);
+    padding: 10px;
+    display: grid;
+    grid-template-rows: 72px auto auto;
+    gap: 8px;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .mini-art {
+    background: var(--hook-new-behavior);
+    color: rgba(255,255,255,0.84);
+    display: grid;
+    place-items: center;
+    font-size: 11px;
+  }
+
+  .mini-card:nth-child(2) .mini-art { background: var(--hook-unexpected-combo); }
+  .mini-card:nth-child(3) .mini-art { background: var(--hook-quiet-real-problem); }
+  .mini-card:nth-child(4) .mini-art { background: var(--hook-new-interaction); }
+  .mini-card:nth-child(5) .mini-art { background: var(--hook-niche-depth); }
+  .mini-card:nth-child(6) .mini-art { background: var(--hook-weird-form); }
+
+  .mini-name {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mini-date {
+    font-size: 11px;
+    color: var(--text-tertiary);
+  }
+
+  .news-list {
+    display: grid;
+    gap: 0;
+    border-top: 0.5px solid var(--border-tertiary);
+  }
+
+  .news-item {
+    display: grid;
+    grid-template-columns: 18px minmax(0, 1fr);
+    gap: 10px;
+    padding: 16px 0;
+    border-bottom: 0.5px solid var(--border-tertiary);
+  }
+
+  .source-mark {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--text-primary);
+    margin-top: 3px;
+  }
+
+  .news-meta {
+    font-family: var(--font-serif);
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+  }
+
+  .news-title {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.38;
+  }
+
+  .news-desc {
+    margin-top: 5px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  footer {
+    padding: 30px 0 4px;
+    font-size: 10px;
+    color: var(--text-tertiary);
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+  <main class="page">
+    <header class="mast">
+      <div class="brand">WeeklyAI</div>
+      <div>No.127</div>
+    </header>
+
+    <article class="hero-card">
+      <div class="hero-top">
+        <span>Today · 5.30</span>
+        <span>No.127</span>
+      </div>
+      <div class="hero-photo">photo</div>
+      <div class="hero-copy">
+        <span class="badge">Weird form</span>
+        <h1 class="hero-title">AI 盆栽，会自己喊渴</h1>
+        <p class="hero-line">日本独立团队，Makuake 卖 5k 颗，¥8,000 一台</p>
+        <div class="hero-foot">
+          <span>WeeklyAI</span>
+          <span>看详情 →</span>
+        </div>
+      </div>
+    </article>
+
+    <section class="section">
+      <h2>Recent picks</h2>
+      <div class="picks-strip" aria-label="最近 7 个精选">
+        <a class="mini-card" href="#"><div class="mini-art">new</div><div class="mini-name">Operator-2</div><div class="mini-date">5.29</div></a>
+        <a class="mini-card" href="#"><div class="mini-art">combo</div><div class="mini-name">AI 宠物项圈</div><div class="mini-date">5.28</div></a>
+        <a class="mini-card" href="#"><div class="mini-art">quiet</div><div class="mini-name">法律脱敏代理</div><div class="mini-date">5.27</div></a>
+        <a class="mini-card" href="#"><div class="mini-art">sense</div><div class="mini-name">手势式聊天灯</div><div class="mini-date">5.26</div></a>
+        <a class="mini-card" href="#"><div class="mini-art">niche</div><div class="mini-name">鱼缸水质 Copilot</div><div class="mini-date">5.25</div></a>
+        <a class="mini-card" href="#"><div class="mini-art">form</div><div class="mini-name">AI 复古相框</div><div class="mini-date">5.24</div></a>
+        <a class="mini-card" href="#"><div class="mini-art">lab</div><div class="mini-name">Claude Lab mode</div><div class="mini-date">5.23</div></a>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>AI news</h2>
+      <div class="news-list">
+        <article class="news-item">
+          <div class="source-mark"></div>
+          <div>
+            <div class="news-meta">Simon Willison · 5.30</div>
+            <div class="news-title">A quiet agent release changes how terminal work gets delegated</div>
+            <p class="news-desc">The interesting bit is not a bigger model number, but a longer autonomous work loop.</p>
+          </div>
+        </article>
+        <article class="news-item">
+          <div class="source-mark"></div>
+          <div>
+            <div class="news-meta">Hacker News · 5.30</div>
+            <div class="news-title">Show HN: an AI picture frame that interviews visitors</div>
+            <p class="news-desc">Small maker energy, but the interaction pattern is sticky enough to remember.</p>
+          </div>
+        </article>
+        <article class="news-item">
+          <div class="source-mark"></div>
+          <div>
+            <div class="news-meta">36Kr · 5.29</div>
+            <div class="news-title">AI 硬件开始从眼镜转向更奇怪的家居形态</div>
+            <p class="news-desc">不是又一个耳机，而是把模型接到灯、镜子、相框和植物上。</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer>WeeklyAI · No.127 · 2026.5.30 · curated by ChenJunHsu</footer>
+  </main>
+</body>
+</html>

@@ -2,6 +2,19 @@
 
 > 全球 AI 产品灵感库 + 黑马发现平台
 
+## v2 — Daily Picks
+
+WeeklyAI v2 不再以融资规模和 1-5 分黑马指数作为主目标。新的核心是：每天挑一个任何对 AI 感兴趣的人都会想点进去看的产品。
+
+- ✅ **截图欲优先** — 判断标准是“刷 AI Twitter / 即刻时会不会停下来点开”
+- ✅ **来源无关** — OpenAI、Anthropic、Google、小米、字节、大厂和独立开发者都可以入选
+- ✅ **惊喜优先** — 新形态、新行为、意外组合、新交互、安静解决真实问题、窄但深
+- ✅ **编辑制发布** — discovery 只进 `crawler/data/candidates/pending_review.json`，用 `python3 crawler/tools/curate.py` 人工选
+- ❌ **融资不是门槛** — funding 只是上下文，不再决定是否上首页
+- ❌ **知名产品不是硬排除** — 但大厂/知名产品必须证明“这次发布”不是正常版本演进
+
+新增字段：`screenshot_worthy: bool` + `hook: weird_form | new_behavior | unexpected_combo | quiet_real_problem | new_interaction | niche_depth`。旧字段 `dark_horse_index` / `criteria_met` 保留用于兼容，但不再作为 v2 首页决策依据。
+
 ## 第一原则
 
 > **"帮 PM 发现全球正在崛起的 AI 产品，从潜力股到黑马一网打尽"**

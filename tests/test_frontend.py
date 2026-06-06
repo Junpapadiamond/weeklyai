@@ -1,12 +1,24 @@
 """
-WeeklyAI Frontend Tests
-Tests tinder swipe cards, navigation, search, and responsive design
+WeeklyAI v2 Frontend E2E Checks
+
+These checks are intended for opt-in local runs against a running Next.js server:
+
+    RUN_FRONTEND_E2E=1 WEEKLYAI_FRONTEND_BASE_URL=http://localhost:4000 pytest tests/test_frontend.py
+
+The default pytest suite skips this module because it requires a browser and a
+local frontend server.
 """
 
-import json
-from playwright.sync_api import sync_playwright, expect
+import os
 
-BASE_URL = "http://localhost:3000"
+import pytest
+
+try:
+    from playwright.sync_api import sync_playwright
+except ModuleNotFoundError:  # pragma: no cover - depends on local E2E setup
+    sync_playwright = None
+
+BASE_URL = os.environ.get("WEEKLYAI_FRONTEND_BASE_URL", "http://localhost:4000")
 SCREENSHOT_DIR = "/tmp/weeklyai_tests"
 
 
@@ -18,12 +30,13 @@ def setup_screenshot_dir():
 def open_homepage(page):
     """Open homepage with stable readiness checks (avoid flaky networkidle waits)."""
     page.goto(BASE_URL, wait_until="domcontentloaded")
-    page.wait_for_selector(".hero", timeout=15000)
+    page.wait_for_selector(".v2-home-root", timeout=15000)
+    page.wait_for_selector(".v2-hero-card", timeout=15000)
     page.wait_for_timeout(400)
 
 
-def test_homepage_loads(page):
-    """Test that homepage loads correctly with all sections"""
+def check_homepage_loads(page):
+    """Test that the v2 homepage loads with the daily-pick structure."""
     print("\n[TEST] Homepage Load")
 
     open_homepage(page)
@@ -33,31 +46,17 @@ def test_homepage_loads(page):
     assert "WeeklyAI" in title, f"Expected 'WeeklyAI' in title, got: {title}"
     print(f"  ✓ Title: {title}")
 
-    # Check hero section
-    hero = page.locator('.hero')
+    hero = page.locator(".v2-hero-card")
     assert hero.is_visible(), "Hero section not visible"
     print("  ✓ Hero section visible")
 
-    # Check navigation
-    nav_links = page.locator('.nav-link')
-    nav_count = nav_links.count()
-    assert nav_count >= 4, f"Expected >=4 nav links, got {nav_count}"
+    picks_strip = page.locator(".v2-picks-strip")
+    assert picks_strip.is_visible(), "Recent picks strip not visible"
+    print("  ✓ Recent picks strip visible")
 
-    sections = set()
-    for i in range(nav_count):
-        section = nav_links.nth(i).get_attribute('data-section')
-        if section:
-            sections.add(section)
-
-    for required in ("trending", "weekly", "blogs", "search"):
-        assert required in sections, f"Missing nav section '{required}' (found: {sorted(sections)})"
-
-    print(f"  ✓ Navigation: {nav_count} links found ({', '.join(sorted(sections))})")
-
-    # Check swipe stack
-    swipe_stack = page.locator('#swipeStack')
-    assert swipe_stack.is_visible(), "Swipe stack not visible"
-    print("  ✓ Swipe stack visible")
+    news_list = page.locator(".v2-news-list")
+    assert news_list.is_visible(), "AI news stream not visible"
+    print("  ✓ AI news stream visible")
 
     page.screenshot(path=f"{SCREENSHOT_DIR}/01_homepage.png", full_page=True)
     print(f"  📸 Screenshot saved: {SCREENSHOT_DIR}/01_homepage.png")
@@ -65,138 +64,52 @@ def test_homepage_loads(page):
     return True
 
 
-def test_navigation(page):
-    """Test navigation between sections"""
-    print("\n[TEST] Navigation")
+def check_removed_v1_sections(page):
+    """Assert removed v1 surfaces do not leak back onto the homepage."""
+    print("\n[TEST] Removed v1 Sections")
 
     open_homepage(page)
 
-    # Test "本周榜单" navigation
-    weekly_link = page.locator('.nav-link[data-section="weekly"]')
-    weekly_link.click()
-    page.wait_for_timeout(500)
+    removed_selectors = [
+        "#swipeStack",
+        ".swipe-card",
+        "#weeklySection",
+        "#trendingSection",
+        "#weeklyProducts",
+        "#trendingProducts",
+    ]
+    for selector in removed_selectors:
+        assert page.locator(selector).count() == 0, f"Removed v1 selector still present: {selector}"
 
-    weekly_section = page.locator('#weeklySection')
-    assert weekly_section.is_visible(), "Weekly section not visible after click"
-    print("  ✓ Weekly section navigation works")
+    removed_text = ["本周黑马", "更多推荐", "Swipe left and right", "左右滑动"]
+    body_text = page.locator("body").inner_text()
+    for text in removed_text:
+        assert text not in body_text, f"Removed v1 copy still present: {text}"
 
-    page.screenshot(path=f"{SCREENSHOT_DIR}/02_weekly_section.png", full_page=True)
-
-    # Test "搜索" navigation
-    search_link = page.locator('.nav-link[data-section="search"]')
-    search_link.click()
-    page.wait_for_timeout(500)
-
-    search_section = page.locator('#searchSection')
-    assert search_section.is_visible(), "Search section not visible after click"
-    print("  ✓ Search section navigation works")
-
-    page.screenshot(path=f"{SCREENSHOT_DIR}/03_search_section.png", full_page=True)
-
-    # Test back to "热门推荐"
-    trending_link = page.locator('.nav-link[data-section="trending"]')
-    trending_link.click()
-    page.wait_for_timeout(500)
-
-    trending_section = page.locator('#trendingSection')
-    assert trending_section.is_visible(), "Trending section not visible after click"
-    print("  ✓ Trending section navigation works")
+    print("  ✓ Swipe deck, scoring tiers, and recommendation wall are absent")
 
     return True
 
 
-def test_tinder_cards(page):
-    """Test tinder swipe card functionality"""
-    print("\n[TEST] Tinder Swipe Cards")
+def check_recent_picks(page):
+    """Test that recent picks render as a short horizontal strip."""
+    print("\n[TEST] Recent Picks")
 
     open_homepage(page)
-    page.wait_for_timeout(1000)  # Wait for cards to load
+    cards = page.locator(".v2-mini-card")
+    count = cards.count()
+    assert count <= 7, f"Expected at most 7 recent picks, got {count}"
 
-    # Check if cards are loaded
-    swipe_cards = page.locator('.swipe-card').all()
-    if len(swipe_cards) == 0:
-        print("  ⚠ No swipe cards found (API might have no data)")
-        return True
+    if count:
+        assert cards.first().locator(".v2-mini-name").is_visible(), "Recent pick name not visible"
 
-    print(f"  ✓ Found {len(swipe_cards)} swipe cards")
-
-    # Check active card
-    active_card = page.locator('.swipe-card.is-active')
-    if active_card.count() > 0:
-        print("  ✓ Active card found")
-
-        # Get card content
-        card_title = active_card.locator('h3').text_content()
-        print(f"  ✓ Card title: {card_title}")
-
-        page.screenshot(path=f"{SCREENSHOT_DIR}/04_swipe_card.png")
-
-    # Test Like button
-    initial_status = page.locator('#swipeStatus').text_content()
-    like_btn = page.locator('#swipeLike')
-    like_btn.click()
-    page.wait_for_timeout(400)
-
-    new_status = page.locator('#swipeStatus').text_content()
-    print(f"  ✓ Like button clicked: {initial_status} → {new_status}")
-
-    page.screenshot(path=f"{SCREENSHOT_DIR}/05_after_like.png")
-
-    # Test Skip button
-    skip_btn = page.locator('#swipeNope')
-    skip_btn.click()
-    page.wait_for_timeout(400)
-
-    final_status = page.locator('#swipeStatus').text_content()
-    print(f"  ✓ Skip button clicked: {new_status} → {final_status}")
-
-    page.screenshot(path=f"{SCREENSHOT_DIR}/06_after_skip.png")
+    print(f"  ✓ Recent picks strip count: {count}")
+    page.screenshot(path=f"{SCREENSHOT_DIR}/02_recent_picks.png", full_page=True)
 
     return True
 
 
-def test_search_functionality(page):
-    """Test search functionality"""
-    print("\n[TEST] Search Functionality")
-
-    open_homepage(page)
-
-    # Enter search query
-    search_input = page.locator('#searchInput')
-    search_input.fill('AI')
-
-    search_btn = page.locator('#searchBtn')
-    search_btn.click()
-
-    page.wait_for_timeout(1000)
-
-    # Check search results
-    search_section = page.locator('#searchSection')
-    assert search_section.is_visible(), "Search section not visible"
-    print("  ✓ Search section visible after search")
-
-    result_info = page.locator('#searchResultInfo').text_content()
-    print(f"  ✓ Search results: {result_info}")
-
-    page.screenshot(path=f"{SCREENSHOT_DIR}/07_search_results.png", full_page=True)
-
-    # Test category filter
-    open_homepage(page)
-
-    coding_tag = page.locator(
-        '.discover-filter-btn[data-category="coding"], .tag-btn[data-category="coding"]'
-    )
-    assert coding_tag.count() > 0, "Coding category filter not found"
-    coding_tag.first.click()
-    page.wait_for_timeout(1000)
-
-    print("  ✓ Category filter clicked")
-    page.screenshot(path=f"{SCREENSHOT_DIR}/08_category_filter.png", full_page=True)
-
-    return True
-
-
-def test_responsive_design(page):
+def check_responsive_design(page):
     """Test responsive design at different viewport sizes"""
     print("\n[TEST] Responsive Design")
 
@@ -212,11 +125,13 @@ def test_responsive_design(page):
         page.wait_for_timeout(500)
 
         # Check key elements are visible
-        hero = page.locator('.hero')
-        nav = page.locator('.navbar')
+        root = page.locator(".v2-home-root")
+        hero = page.locator(".v2-hero-card")
+        news = page.locator(".v2-news-section")
 
+        assert root.is_visible(), f"Home root not visible at {vp['name']}"
         assert hero.is_visible(), f"Hero not visible at {vp['name']}"
-        assert nav.is_visible(), f"Navbar not visible at {vp['name']}"
+        assert news.is_visible(), f"News stream not visible at {vp['name']}"
 
         filename = f"{SCREENSHOT_DIR}/09_responsive_{vp['name'].lower()}.png"
         page.screenshot(path=filename, full_page=True)
@@ -225,42 +140,29 @@ def test_responsive_design(page):
     return True
 
 
-def test_product_cards_display(page):
-    """Test that product cards display correctly"""
-    print("\n[TEST] Product Cards Display")
+def check_news_stream(page):
+    """Test that the AI news stream displays stable rows or an empty state."""
+    print("\n[TEST] AI News Stream")
 
     page.set_viewport_size({"width": 1440, "height": 900})
     open_homepage(page)
-    page.wait_for_timeout(1500)  # Wait for products to load
-
-    # Check trending products
-    trending_cards = page.locator('#trendingProducts .product-card').all()
-    print(f"  ✓ Trending cards: {len(trending_cards)} found")
-
-    if len(trending_cards) > 0:
-        first_card = trending_cards[0]
-
-        # Check card elements
-        has_logo = first_card.locator('.product-logo').count() > 0
-        has_name = first_card.locator('.product-name').count() > 0
-        has_desc = first_card.locator('.product-description').count() > 0
-
-        print(f"  ✓ Card structure: logo={has_logo}, name={has_name}, desc={has_desc}")
-
-    # Navigate to weekly and check
-    page.locator('.nav-link[data-section="weekly"]').click()
     page.wait_for_timeout(1000)
 
-    weekly_items = page.locator('#weeklyProducts .product-list-item').all()
-    print(f"  ✓ Weekly list items: {len(weekly_items)} found")
+    news_items = page.locator(".v2-news-item")
+    empty_state = page.locator(".v2-strip-empty")
+    assert news_items.count() > 0 or empty_state.count() > 0, "News stream has neither rows nor empty state"
+    print(f"  ✓ News rows: {news_items.count()} found")
 
-    page.screenshot(path=f"{SCREENSHOT_DIR}/10_weekly_list.png", full_page=True)
+    page.screenshot(path=f"{SCREENSHOT_DIR}/10_news_stream.png", full_page=True)
 
     return True
 
 
 def run_all_tests():
     """Run all frontend tests"""
+    if sync_playwright is None:
+        raise RuntimeError("Python Playwright is not installed. Install it before running frontend E2E checks.")
+
     setup_screenshot_dir()
 
     print("=" * 60)
@@ -278,12 +180,11 @@ def run_all_tests():
         page.on("console", lambda msg: None)  # Suppress console output
 
         tests = [
-            ("Homepage Load", test_homepage_loads),
-            ("Navigation", test_navigation),
-            ("Tinder Cards", test_tinder_cards),
-            ("Search", test_search_functionality),
-            ("Responsive Design", test_responsive_design),
-            ("Product Cards", test_product_cards_display),
+            ("Homepage Load", check_homepage_loads),
+            ("Removed v1 Sections", check_removed_v1_sections),
+            ("Recent Picks", check_recent_picks),
+            ("Responsive Design", check_responsive_design),
+            ("AI News Stream", check_news_stream),
         ]
 
         for name, test_fn in tests:
@@ -314,6 +215,13 @@ def run_all_tests():
     print("=" * 60)
 
     return passed == total
+
+
+def test_frontend_e2e_opt_in():
+    if os.environ.get("RUN_FRONTEND_E2E") != "1":
+        pytest.skip("Frontend E2E requires RUN_FRONTEND_E2E=1 and a running local frontend server")
+
+    assert run_all_tests()
 
 
 if __name__ == "__main__":

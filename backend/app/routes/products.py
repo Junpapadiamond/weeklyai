@@ -42,6 +42,50 @@ def get_weekly_top_products():
             'message': str(e)
         }), 500
 
+@products_bp.route('/hero', methods=['GET'])
+def get_hero_product():
+    """获取 v2 首页 Hero pick - 最新 screenshot_worthy 产品"""
+    try:
+        product = ProductService.get_hero_product()
+        if product:
+            return jsonify({
+                'success': True,
+                'data': product,
+                'message': '获取 Hero pick 成功'
+            })
+        return jsonify({
+            'success': False,
+            'data': None,
+            'message': '暂无 Hero pick'
+        }), 404
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'data': None,
+            'message': str(e)
+        }), 500
+
+
+@products_bp.route('/picks', methods=['GET'])
+def get_recent_picks():
+    """获取 v2 最近 picks - screenshot_worthy 产品，时间倒序"""
+    try:
+        limit = request.args.get('limit', 7, type=int)
+        products = ProductService.get_picks(limit=limit)
+        return jsonify({
+            'success': True,
+            'data': products,
+            'count': len(products),
+            'message': '获取 recent picks 成功'
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'data': [],
+            'count': 0,
+            'message': str(e)
+        }), 500
+
 @products_bp.route('/<product_id>', methods=['GET'])
 def get_product_detail(product_id):
     """获取产品详情"""
@@ -115,7 +159,7 @@ def get_blogs_news():
 
 @products_bp.route('/dark-horses', methods=['GET'])
 def get_dark_horse_products():
-    """获取本周黑马产品 - 高潜力新兴产品"""
+    """Deprecated: 旧黑马端点，v2 兼容返回 screenshot_worthy picks"""
     try:
         limit = request.args.get('limit', 10, type=int)
         min_index = request.args.get('min_index', 4, type=int)
@@ -135,7 +179,7 @@ def get_dark_horse_products():
 
 @products_bp.route('/rising-stars', methods=['GET'])
 def get_rising_star_products():
-    """获取潜力股产品 - 2-3分的有潜力产品"""
+    """Deprecated: 旧潜力股端点，v2 兼容返回 screenshot_worthy picks"""
     try:
         limit = request.args.get('limit', 20, type=int)
         products = ProductService.get_rising_star_products(limit=limit)

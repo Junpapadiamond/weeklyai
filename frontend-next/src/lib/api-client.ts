@@ -147,6 +147,23 @@ export const getDarkHorses = cache(async (limit = 10, minIndex = 4): Promise<Pro
   return parsed.data.filter(hasUsableWebsite);
 });
 
+export const getHeroProduct = cache(async (): Promise<Product | null> => {
+  const json = await fetchJson(`/products/hero`, {
+    next: { revalidate: 60, tags: ["products", "hero"] },
+  });
+  const parsed = safeParse(productItemSchema, json, { data: null });
+  if (!parsed.data) return null;
+  return hasUsableWebsite(parsed.data) ? parsed.data : parsed.data;
+});
+
+export const getPicks = cache(async (limit = 7): Promise<Product[]> => {
+  const json = await fetchJson(`/products/picks?limit=${limit}`, {
+    next: { revalidate: 60, tags: ["products", "picks"] },
+  });
+  const parsed = safeParse(productListSchema, json, { data: [] });
+  return parsed.data.filter(hasUsableWebsite);
+});
+
 export const getWeeklyTop = cache(async (limit = 0, sortBy: WeeklyTopSort = "composite"): Promise<Product[]> => {
   const params = new URLSearchParams();
   params.set("limit", String(limit));

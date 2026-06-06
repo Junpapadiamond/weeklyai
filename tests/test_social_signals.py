@@ -10,6 +10,7 @@ from __future__ import annotations
 from datetime import datetime, timedelta, timezone
 import os
 import sys
+import tempfile
 import unittest
 from unittest.mock import patch
 
@@ -19,6 +20,25 @@ def _ensure_import_paths() -> None:
     crawler_root = os.path.join(repo_root, "crawler")
     if crawler_root not in sys.path:
         sys.path.insert(0, crawler_root)
+
+
+def _fresh_iso(days_ago: int = 1, *, millis: bool = False) -> str:
+    """Return an ISO timestamp that remains fresh relative to the test run."""
+    dt = datetime.now(timezone.utc) - timedelta(days=days_ago)
+    dt = dt.replace(microsecond=0)
+    suffix = ".000Z" if millis else "Z"
+    return dt.strftime("%Y-%m-%dT%H:%M:%S") + suffix
+
+
+def _x_no_write_env() -> dict[str, str]:
+    state_fd, state_path = tempfile.mkstemp(prefix="weeklyai-x-state-", suffix=".json")
+    os.close(state_fd)
+    health_fd, health_path = tempfile.mkstemp(prefix="weeklyai-social-health-", suffix=".json")
+    os.close(health_fd)
+    return {
+        "X_SPIDER_STATE_FILE": state_path,
+        "SOCIAL_HEALTH_FILE": health_path,
+    }
 
 
 class TestXUrlParsing(unittest.TestCase):
@@ -203,9 +223,10 @@ class TestXFallbackPath(unittest.TestCase):
     def test_fallback_path_builds_x_item(self) -> None:
         from spiders.x_spider import XSpider
 
+        published_at = _fresh_iso(millis=True)
         payload = {
             "text": "We launched an AI agent that reached 100k users in one week.",
-            "created_at": "2026-02-08T10:00:00.000Z",
+            "created_at": published_at,
             "user": {"screen_name": "OpenAI"},
         }
 
@@ -215,7 +236,8 @@ class TestXFallbackPath(unittest.TestCase):
                 {
                     "X_SOURCE_MODE": "fallback_only",
                     "SOCIAL_HOURS": "1000",
-                    "CONTENT_YEAR": "2026",
+                    "CONTENT_YEAR": str(datetime.now(timezone.utc).year),
+                    **_x_no_write_env(),
                 },
                 clear=False,
             ),
@@ -242,7 +264,7 @@ class TestXFallbackPath(unittest.TestCase):
         item = items[0]
         self.assertEqual(item.get("source"), "x")
         self.assertEqual(item.get("website"), "https://x.com/OpenAI/status/2019513755621843450")
-        self.assertEqual(item.get("published_at"), "2026-02-08T10:00:00Z")
+        self.assertEqual(item.get("published_at"), published_at.replace(".000Z", "Z"))
         extra = item.get("extra") or {}
         self.assertEqual(extra.get("query"), "account_fallback:OpenAI:r_jina")
         self.assertEqual(extra.get("author_handle"), "OpenAI")
@@ -251,11 +273,12 @@ class TestXFallbackPath(unittest.TestCase):
     def test_nitter_provider_path_builds_item(self) -> None:
         from spiders.x_spider import XSpider
 
+        published_at = _fresh_iso()
         nitter_candidate = {
             "url": "https://x.com/OpenAI/status/2019513755621843451",
             "title": "Introducing a new AI agent release",
             "snippet": "We launched an AI agent update for developers.",
-            "published_at": "2026-02-08T10:00:00Z",
+            "published_at": published_at,
             "author_handle": "OpenAI",
         }
 
@@ -265,8 +288,8 @@ class TestXFallbackPath(unittest.TestCase):
                 {
                     "X_SOURCE_MODE": "fallback_only",
                     "SOCIAL_HOURS": "1000",
-                    "CONTENT_YEAR": "2026",
-                    "SOCIAL_HEALTH_DISABLE_WRITE": "true",
+                    "CONTENT_YEAR": str(datetime.now(timezone.utc).year),
+                    **_x_no_write_env(),
                 },
                 clear=False,
             ),
