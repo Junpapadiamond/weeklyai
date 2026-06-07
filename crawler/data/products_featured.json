@@ -19812,7 +19812,7 @@
     "description": "巴黎初创公司开发高级行动模型，提升员工生产力和决策，支持复杂任务自动化。",
     "description_en": "Paris-based startup creating advanced action models to boost worker productivity and decision-making.",
     "website": "https://h.company/",
-    "logo_url": "",
+    "logo_url": "https://h.company/img/apple-touch-icon.png",
     "categories": [
       "agent"
     ],
@@ -19882,7 +19882,9 @@
     "first_seen": "2026-04-22T20:11:29.584877Z",
     "final_score": 100,
     "trending_score": 90,
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "status:403",
+    "logo_source": "html"
   },
   {
     "name": "MODE",
@@ -31023,7 +31025,8 @@
     "first_seen": "2026-04-03T19:43:40.446056Z",
     "final_score": 80,
     "trending_score": 72,
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "status:415"
   },
   {
     "name": "Sonarly",
@@ -56962,7 +56965,8 @@
     "logo_source": "",
     "description_en": "The future intelligent viaim brand multi-language AI conference headset supports efficient transcription and office collaboration.",
     "why_matters_en": "Won the Microsoft AI Innovation Award, focusing on overseas office multi-language scenarios, and has completed multiple rounds of financing.",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ReadTimeout"
   },
   {
     "name": "Friend",
@@ -70203,7 +70207,7 @@
     "name": "Sett",
     "description": "以色列AI初创公司，提供基于AI agent的游戏行业营销自动化平台，针对用户获取数十亿支出。",
     "description_en": "Israeli startup offering AI agent-based platform to automate game marketing, targeting billions in user acquisition spend.",
-    "website": "unknown",
+    "website": "https://sett.ai",
     "logo_url": "",
     "categories": [
       "agent"
@@ -70223,7 +70227,7 @@
     "source": "Calcalistech",
     "source_url": "https://www.calcalistech.com/ctechnews/article/rjxbyqisze",
     "source_title": "",
-    "website_source": "",
+    "website_source": "weekly_match",
     "latest_news_en": "2026-03-29: Secures $30M Series B",
     "community_verdict": {
       "source": "hackernews",
@@ -70292,7 +70296,7 @@
     "final_score": 80,
     "trending_score": 72,
     "needs_verification": true,
-    "website_check_reason": "status:200"
+    "website_check_reason": "status:415"
   },
   {
     "name": "MetaOptics AI Smart Glasses",
