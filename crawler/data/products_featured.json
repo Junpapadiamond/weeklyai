@@ -17357,7 +17357,7 @@
     "final_score": 80,
     "trending_score": 72,
     "needs_verification": true,
-    "website_check_reason": "error:ConnectTimeout"
+    "website_check_reason": "error:SSLError"
   },
   {
     "name": "yasp",
@@ -21777,8 +21777,7 @@
     "first_seen": "2026-04-18T19:47:18.511954Z",
     "final_score": 40,
     "trending_score": 36,
-    "needs_verification": true,
-    "website_check_reason": "status:403",
+    "needs_verification": false,
     "logo_source": "favicon"
   },
   {
@@ -23475,7 +23474,8 @@
     "first_seen": "2026-04-15T20:06:43.140366Z",
     "final_score": 60,
     "trending_score": 54,
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "Elorian",
@@ -26235,8 +26235,9 @@
     "first_seen": "2026-04-11T19:42:20.336108Z",
     "final_score": 60,
     "trending_score": 54,
-    "needs_verification": false,
-    "logo_source": "html"
+    "needs_verification": true,
+    "logo_source": "html",
+    "website_check_reason": "status:403"
   },
   {
     "name": "Wehead AI穿戴产品",
@@ -28627,7 +28628,8 @@
     "first_seen": "2026-04-08T20:01:08.703497Z",
     "final_score": 100,
     "trending_score": 90,
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "OnSite",
@@ -31025,7 +31027,8 @@
     "first_seen": "2026-04-03T19:43:40.446056Z",
     "final_score": 80,
     "trending_score": 72,
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "status:415"
   },
   {
     "name": "Sonarly",
@@ -42556,7 +42559,8 @@
     "first_seen": "2026-03-15T19:30:58.209656Z",
     "final_score": 40,
     "trending_score": 36,
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "status:403"
   },
   {
     "name": "Kata.ai",
@@ -44666,8 +44670,8 @@
   {
     "name": "AgentMail",
     "description": "专为 AI agents 设计的电子邮件基础设施平台，获得了由 General Catalyst 领投的 $6M 种子轮融资。",
-    "website": "https://agentmail.ai",
-    "logo_url": "https://img.sedoparking.com/templates/logos/sedo_logo.png",
+    "website": "https://agentmail.com/",
+    "logo_url": "",
     "categories": [
       "agent"
     ],
@@ -44684,7 +44688,7 @@
     "source": "TechBuzz",
     "source_url": "https://www.techbuzz.ai/articles/agentmail-raises-6m-to-build-email-for-ai-agents",
     "source_title": "",
-    "website_source": "",
+    "website_source": "source_url",
     "community_verdict": {
       "source": "hackernews",
       "window_days": 7,
@@ -44751,9 +44755,8 @@
     "first_seen": "2026-03-11T19:46:17.009257Z",
     "final_score": 60,
     "trending_score": 54,
-    "needs_verification": true,
-    "website_check_reason": "error:ConnectTimeout",
-    "logo_source": "html",
+    "needs_verification": false,
+    "logo_source": "",
     "description_en": "Email infrastructure platform specifically designed for AI agents, secured $6M seed funding led by General Catalyst.",
     "why_matters_en": "First email infrastructure built natively for AI agents. $6M seed led by General Catalyst signals emerging category of AI agent infrastructure tools with investor confidence."
   },
@@ -54195,7 +54198,8 @@
     "logo_source": "",
     "description_en": "Develop plug-and-play system-level power solutions to reduce AI data center energy loss by 10%.",
     "why_matters_en": "peak",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "Kana",
@@ -55263,7 +55267,8 @@
     "logo_source": "html",
     "description_en": "The Japanese enterprise AI platform automates expense management, invoice processing and compliance workflows, serving more than 15,000 companies.",
     "why_matters_en": "Received US$100 million in Series B financing, totaling US$192.2 million, led by TCV, one of the largest Series B rounds among Japanese 7-year-old startups; customers increased from 10,000 in February 2024 to 15,000 in April 2025, and employees doubled to 430, targeting the paper-based office pain points in Japan.",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "status:403"
   },
   {
     "name": "etalytics",
@@ -65428,8 +65433,7 @@
     "why_matters_en": "Completed a €14 million Series A round of financing led by Dr. Hans Riegel Holding to expand the AI ​​platform and Product Market Fit Compass products. Targeting technology providers in the packaging value chain, it plans to launch a dedicated platform for brand owners in 2026.",
     "latest_news_en": "2026-01: Completed 14 million euros in Series A financing",
     "website_source": "source_url",
-    "needs_verification": true,
-    "website_check_reason": "error:ConnectionError"
+    "needs_verification": false
   },
   {
     "name": "Finster AI",
@@ -69693,7 +69697,7 @@
       }
     },
     "needs_verification": true,
-    "website_check_reason": "error:SSLError"
+    "website_check_reason": "error:ReadTimeout"
   },
   {
     "name": "Lightblue Technology",
@@ -70206,7 +70210,7 @@
     "name": "Sett",
     "description": "以色列AI初创公司，提供基于AI agent的游戏行业营销自动化平台，针对用户获取数十亿支出。",
     "description_en": "Israeli startup offering AI agent-based platform to automate game marketing, targeting billions in user acquisition spend.",
-    "website": "unknown",
+    "website": "https://sett.ai",
     "logo_url": "",
     "categories": [
       "agent"
@@ -70226,7 +70230,7 @@
     "source": "Calcalistech",
     "source_url": "https://www.calcalistech.com/ctechnews/article/rjxbyqisze",
     "source_title": "",
-    "website_source": "",
+    "website_source": "weekly_match",
     "latest_news_en": "2026-03-29: Secures $30M Series B",
     "community_verdict": {
       "source": "hackernews",
@@ -70295,7 +70299,7 @@
     "final_score": 80,
     "trending_score": 72,
     "needs_verification": true,
-    "website_check_reason": "status:200"
+    "website_check_reason": "status:415"
   },
   {
     "name": "MetaOptics AI Smart Glasses",
