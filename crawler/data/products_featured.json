@@ -10323,8 +10323,8 @@
     "name": "Helix Digital Infrastructure",
     "description": "KKR投资100亿美元成立的AI基础设施专营公司，由前AWS CEO Adam Selipsky领导。",
     "description_en": "KKR-backed $10B AI infrastructure company led by ex-AWS CEO Adam Selipsky.",
-    "website": "https://helixdi.com",
-    "logo_url": "",
+    "website": "https://www.helixdi.com/",
+    "logo_url": "https://www.helixdi.com/wp-content/themes/helix/dist/images/helix-favicon-192x192.png",
     "categories": [
       "hardware"
     ],
@@ -10343,7 +10343,7 @@
     "source": "awak.co.jp",
     "source_url": "https://awak.co.jp/articles/ai-news-may-1-2-2026",
     "source_title": "",
-    "website_source": "",
+    "website_source": "redirect",
     "latest_news_en": "2026-05: KKR $10B investment launch",
     "community_verdict": null,
     "extra": {
@@ -10394,8 +10394,8 @@
     "first_seen": "2026-05-07T20:18:59.007050Z",
     "final_score": 100,
     "trending_score": 90,
-    "needs_verification": true,
-    "website_check_reason": "error:ConnectionError"
+    "needs_verification": false,
+    "logo_source": "html"
   },
   {
     "name": "TUSK ROBOT (Pallet Handling Robot)",
@@ -17356,8 +17356,7 @@
     "first_seen": "2026-04-26T19:53:45.569111Z",
     "final_score": 80,
     "trending_score": 72,
-    "needs_verification": true,
-    "website_check_reason": "error:SSLError"
+    "needs_verification": false
   },
   {
     "name": "yasp",
@@ -23474,8 +23473,7 @@
     "first_seen": "2026-04-15T20:06:43.140366Z",
     "final_score": 60,
     "trending_score": 54,
-    "needs_verification": true,
-    "website_check_reason": "error:ConnectionError"
+    "needs_verification": false
   },
   {
     "name": "Elorian",
@@ -44751,10 +44749,11 @@
     "first_seen": "2026-03-11T19:46:17.009257Z",
     "final_score": 60,
     "trending_score": 54,
-    "needs_verification": false,
+    "needs_verification": true,
     "logo_source": "",
     "description_en": "Email infrastructure platform specifically designed for AI agents, secured $6M seed funding led by General Catalyst.",
-    "why_matters_en": "First email infrastructure built natively for AI agents. $6M seed led by General Catalyst signals emerging category of AI agent infrastructure tools with investor confidence."
+    "why_matters_en": "First email infrastructure built natively for AI agents. $6M seed led by General Catalyst signals emerging category of AI agent infrastructure tools with investor confidence.",
+    "website_check_reason": "error:ReadTimeout"
   },
   {
     "name": "Mega",
@@ -54194,8 +54193,7 @@
     "logo_source": "",
     "description_en": "Develop plug-and-play system-level power solutions to reduce AI data center energy loss by 10%.",
     "why_matters_en": "peak",
-    "needs_verification": true,
-    "website_check_reason": "error:ConnectTimeout"
+    "needs_verification": false
   },
   {
     "name": "Kana",
