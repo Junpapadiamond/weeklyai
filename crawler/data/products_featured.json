@@ -9247,7 +9247,7 @@
     "source": "BeBeez International",
     "source_url": "https://bebeez.eu/category/country/france/",
     "source_title": "",
-    "website_source": "redirect",
+    "website_source": "validated_variant",
     "latest_news_en": "2026-05-08: Raised €4.6M and unveiled Gaudi-1 architectural generation model",
     "community_verdict": null,
     "extra": {
@@ -23472,7 +23472,8 @@
     "first_seen": "2026-04-15T20:06:43.140366Z",
     "final_score": 60,
     "trending_score": 54,
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "Elorian",
@@ -54192,7 +54193,8 @@
     "logo_source": "",
     "description_en": "Develop plug-and-play system-level power solutions to reduce AI data center energy loss by 10%.",
     "why_matters_en": "peak",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "Kana",
@@ -61854,7 +61856,7 @@
     "latest_news_en": "2025-12: Journey 6 released",
     "needs_verification": true,
     "website_source": "manual_verified_2026-03-11",
-    "website_check_reason": "error:ConnectTimeout"
+    "website_check_reason": "status:410"
   },
   {
     "name": "Nuro",
