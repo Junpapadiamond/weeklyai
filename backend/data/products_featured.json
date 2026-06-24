@@ -791,7 +791,7 @@
     "description": "这是一家英国 AI 平台公司，提供企业级 AI/ML 部署与管理能力，帮助客户把模型更快落地到生产环境。",
     "description_en": "This is a UK AI platform company providing enterprise AI/ML deployment and management tools to help customers productionize models faster.",
     "website": "https://seldon.io/",
-    "logo_url": "",
+    "logo_url": "https://seldon.io/favicon.ico",
     "categories": [
       "other"
     ],
@@ -861,7 +861,8 @@
     "first_seen": "2026-05-29T21:12:58.356638Z",
     "final_score": 80,
     "trending_score": 72,
-    "needs_verification": false
+    "needs_verification": false,
+    "logo_source": "html"
   },
   {
     "name": "allO",
@@ -12533,84 +12534,6 @@
     "final_score": 80,
     "trending_score": 72,
     "needs_verification": false
-  },
-  {
-    "name": "ModelBest",
-    "description": "中国LLM初创企业，推出无需云端的边缘AI大模型，支持终端设备运行。",
-    "description_en": "Chinese LLM startup offering cloud-free edge AI models that run on terminal devices.",
-    "website": "https://modelbest.ai",
-    "logo_url": "",
-    "categories": [
-      "agent"
-    ],
-    "dark_horse_index": 5,
-    "why_matters": "3个月内两次融资累计超10亿元人民币（约230亿日元），估值达独角兽水平，由深创投和汇川产投领投。",
-    "why_matters_en": "Raised over ¥23B (10B RMB) in 3 months with 2 rounds, unicorn valuation, led by Shenzhen Capital and Inovance Investment.",
-    "funding_total": "约230亿日元（10亿元人民币）",
-    "latest_news": "2026-05-04: 完成数亿元新一轮融资",
-    "region": "🇨🇳",
-    "country_code": "CN",
-    "country_name": "China",
-    "country_flag": "🇨🇳",
-    "country_display": "🇨🇳 China",
-    "country_source": "explicit:company_country",
-    "source_region": "🇯🇵🇰🇷",
-    "source": "36Kr",
-    "source_url": "https://36kr.jp/492998/",
-    "source_title": "",
-    "website_source": "",
-    "latest_news_en": "2026-05-04: Completed new multi-hundred million RMB round",
-    "community_verdict": null,
-    "extra": {
-      "demand": {
-        "version": "v1",
-        "computed_at": "2026-05-04T20:18:26.367800Z",
-        "window_days": 7,
-        "hn": {
-          "story_count": 0,
-          "top_story_id": "",
-          "points": 0,
-          "comments": 0,
-          "engagement_depth_ratio": 0.0,
-          "is_controversial": false,
-          "top_comments_sample": [],
-          "llm_summary_used": false,
-          "llm_summary_skipped_reason": "",
-          "status": "ok",
-          "window_days": 7
-        },
-        "x": {
-          "official_handle": "",
-          "non_official_mentions_7d": 0,
-          "unique_authors_7d": 0,
-          "status_urls_sample": [],
-          "query": "",
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "official_handle_missing"
-        },
-        "github": {
-          "repo": "",
-          "stars_total": 0,
-          "stars_7d_delta": 0,
-          "stars_velocity_per_day": 0.0,
-          "is_open_source": false,
-          "status": "skipped",
-          "window_days": 7,
-          "skipped_reason": "repo_not_found"
-        },
-        "demand_score_raw": 0.0,
-        "demand_tier": "low",
-        "guardrail_applied": "none",
-        "guardrail_reason": "insufficient_demand_data"
-      }
-    },
-    "discovered_at": "2026-05-04",
-    "first_seen": "2026-05-04T20:18:26.576614Z",
-    "final_score": 100,
-    "trending_score": 90,
-    "needs_verification": true,
-    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "Fireworks AI",
@@ -31021,7 +30944,8 @@
     "first_seen": "2026-04-03T19:43:40.446056Z",
     "final_score": 80,
     "trending_score": 72,
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "status:415"
   },
   {
     "name": "Sonarly",
@@ -61853,7 +61777,7 @@
     "latest_news_en": "2025-12: Journey 6 released",
     "needs_verification": true,
     "website_source": "manual_verified_2026-03-11",
-    "website_check_reason": "status:410"
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "Nuro",
@@ -64419,7 +64343,7 @@
   {
     "name": "Depthfirst",
     "slug": "depthfirst",
-    "website": "https://depthfirst.ai",
+    "website": "https://depthfirst.ai/",
     "logo": "https://depthfirst.ai/logo.png",
     "description": "保护企业免受AI特定威胁的AI security platform",
     "category": "AI 安全",
@@ -64439,9 +64363,8 @@
     "description_en": "AI security platform protecting enterprises from AI-specific threats",
     "why_matters_en": "Accel led the investment and completed Series A only 3 months after its establishment. The AI ​​security track is heating up.",
     "latest_news_en": "2026-01-14: $40M Series A announced",
-    "needs_verification": true,
-    "website_source": "manual_verified_2026-03-11",
-    "website_check_reason": "status:403"
+    "needs_verification": false,
+    "website_source": "redirect"
   },
   {
     "name": "Flip",
@@ -70201,7 +70124,7 @@
     "name": "Sett",
     "description": "以色列AI初创公司，提供基于AI agent的游戏行业营销自动化平台，针对用户获取数十亿支出。",
     "description_en": "Israeli startup offering AI agent-based platform to automate game marketing, targeting billions in user acquisition spend.",
-    "website": "unknown",
+    "website": "https://sett.ai",
     "logo_url": "",
     "categories": [
       "agent"
@@ -70221,7 +70144,7 @@
     "source": "Calcalistech",
     "source_url": "https://www.calcalistech.com/ctechnews/article/rjxbyqisze",
     "source_title": "",
-    "website_source": "",
+    "website_source": "weekly_match",
     "latest_news_en": "2026-03-29: Secures $30M Series B",
     "community_verdict": {
       "source": "hackernews",
@@ -70289,6 +70212,84 @@
     "first_seen": "2026-03-29T19:37:45.013495Z",
     "final_score": 80,
     "trending_score": 72,
+    "needs_verification": true,
+    "website_check_reason": "status:415"
+  },
+  {
+    "name": "ModelBest",
+    "description": "中国LLM初创企业，推出无需云端的边缘AI大模型，支持终端设备运行。",
+    "description_en": "Chinese LLM startup offering cloud-free edge AI models that run on terminal devices.",
+    "website": "unknown",
+    "logo_url": "",
+    "categories": [
+      "agent"
+    ],
+    "dark_horse_index": 5,
+    "why_matters": "3个月内两次融资累计超10亿元人民币（约230亿日元），估值达独角兽水平，由深创投和汇川产投领投。",
+    "why_matters_en": "Raised over ¥23B (10B RMB) in 3 months with 2 rounds, unicorn valuation, led by Shenzhen Capital and Inovance Investment.",
+    "funding_total": "约230亿日元（10亿元人民币）",
+    "latest_news": "2026-05-04: 完成数亿元新一轮融资",
+    "region": "🇨🇳",
+    "country_code": "CN",
+    "country_name": "China",
+    "country_flag": "🇨🇳",
+    "country_display": "🇨🇳 China",
+    "country_source": "explicit:company_country",
+    "source_region": "🇯🇵🇰🇷",
+    "source": "36Kr",
+    "source_url": "https://36kr.jp/492998/",
+    "source_title": "",
+    "website_source": "",
+    "latest_news_en": "2026-05-04: Completed new multi-hundred million RMB round",
+    "community_verdict": null,
+    "extra": {
+      "demand": {
+        "version": "v1",
+        "computed_at": "2026-05-04T20:18:26.367800Z",
+        "window_days": 7,
+        "hn": {
+          "story_count": 0,
+          "top_story_id": "",
+          "points": 0,
+          "comments": 0,
+          "engagement_depth_ratio": 0.0,
+          "is_controversial": false,
+          "top_comments_sample": [],
+          "llm_summary_used": false,
+          "llm_summary_skipped_reason": "",
+          "status": "ok",
+          "window_days": 7
+        },
+        "x": {
+          "official_handle": "",
+          "non_official_mentions_7d": 0,
+          "unique_authors_7d": 0,
+          "status_urls_sample": [],
+          "query": "",
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "official_handle_missing"
+        },
+        "github": {
+          "repo": "",
+          "stars_total": 0,
+          "stars_7d_delta": 0,
+          "stars_velocity_per_day": 0.0,
+          "is_open_source": false,
+          "status": "skipped",
+          "window_days": 7,
+          "skipped_reason": "repo_not_found"
+        },
+        "demand_score_raw": 0.0,
+        "demand_tier": "low",
+        "guardrail_applied": "none",
+        "guardrail_reason": "insufficient_demand_data"
+      }
+    },
+    "discovered_at": "2026-05-04",
+    "first_seen": "2026-05-04T20:18:26.576614Z",
+    "final_score": 100,
+    "trending_score": 90,
     "needs_verification": true,
     "website_check_reason": "status:200"
   },
