@@ -202,6 +202,7 @@ export function WebsiteScreenshot({
           ) : (
             <div className="website-shot__fallback" aria-label={t("官网截图加载失败，已显示 Logo", "Website screenshot failed to load, showing logo")}>
               <SmartLogo
+                key={`${name}-${logoUrl}-${secondaryLogoUrl}-${website || ""}`}
                 className="website-shot__logo"
                 name={name}
                 logoUrl={logoUrl}
