@@ -30944,8 +30944,7 @@
     "first_seen": "2026-04-03T19:43:40.446056Z",
     "final_score": 80,
     "trending_score": 72,
-    "needs_verification": true,
-    "website_check_reason": "status:415"
+    "needs_verification": false
   },
   {
     "name": "Sonarly",
@@ -32443,7 +32442,7 @@
     "name": "Air Street Capital Fund III",
     "description": "专注AI优先创业公司的欧洲最大独立GP风投基金，已募集$232M用于北美和欧洲投资",
     "description_en": "Europe's largest solo GP venture firm backing AI-first startups across North America and Europe, raised $232M for Fund III",
-    "website": "https://www.airstreetcapital.com/",
+    "website": "https://airstreetcapital.com/",
     "logo_url": "",
     "categories": [
       "agent"
@@ -39400,7 +39399,8 @@
     "first_seen": "2026-03-20T19:39:26.217842Z",
     "final_score": 100,
     "trending_score": 90,
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "OQ Technology",
@@ -61700,7 +61700,7 @@
     "latest_news_en": "2025-12: Journey 6 released",
     "needs_verification": true,
     "website_source": "manual_verified_2026-03-11",
-    "website_check_reason": "status:410"
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "Nuro",
@@ -63936,8 +63936,7 @@
     "description_en": "A startup that unifies the Omni Processing Unit (OPU) of CPU/GPU/memory/connectivity.",
     "why_matters_en": "Omni Processing Unit unifies multiple types of computing and will release the Helix AI device next year. It has already received over $100 million in pre-orders, including Fortune 500 and sovereign cloud providers.",
     "website_source": "validated_variant",
-    "needs_verification": true,
-    "website_check_reason": "error:SSLError"
+    "needs_verification": false
   },
   {
     "name": "NextSilicon",
@@ -69535,7 +69534,7 @@
       }
     },
     "needs_verification": true,
-    "website_check_reason": "error:ReadTimeout"
+    "website_check_reason": "error:SSLError"
   },
   {
     "name": "Lightblue Technology",
@@ -70048,7 +70047,7 @@
     "name": "Sett",
     "description": "以色列AI初创公司，提供基于AI agent的游戏行业营销自动化平台，针对用户获取数十亿支出。",
     "description_en": "Israeli startup offering AI agent-based platform to automate game marketing, targeting billions in user acquisition spend.",
-    "website": "https://sett.ai",
+    "website": "unknown",
     "logo_url": "",
     "categories": [
       "agent"
@@ -70068,7 +70067,7 @@
     "source": "Calcalistech",
     "source_url": "https://www.calcalistech.com/ctechnews/article/rjxbyqisze",
     "source_title": "",
-    "website_source": "weekly_match",
+    "website_source": "",
     "latest_news_en": "2026-03-29: Secures $30M Series B",
     "community_verdict": {
       "source": "hackernews",
@@ -70137,7 +70136,7 @@
     "final_score": 80,
     "trending_score": 72,
     "needs_verification": true,
-    "website_check_reason": "status:415"
+    "website_check_reason": "status:200"
   },
   {
     "name": "Searchable",
