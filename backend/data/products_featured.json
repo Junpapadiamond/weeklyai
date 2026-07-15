@@ -13886,7 +13886,8 @@
     "first_seen": "2026-05-01T20:10:28.274406Z",
     "final_score": 40,
     "trending_score": 36,
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:SSLError"
   },
   {
     "name": "Penemue",
@@ -44593,11 +44594,10 @@
     "first_seen": "2026-03-11T19:46:17.009257Z",
     "final_score": 60,
     "trending_score": 54,
-    "needs_verification": true,
+    "needs_verification": false,
     "logo_source": "",
     "description_en": "Email infrastructure platform specifically designed for AI agents, secured $6M seed funding led by General Catalyst.",
-    "why_matters_en": "First email infrastructure built natively for AI agents. $6M seed led by General Catalyst signals emerging category of AI agent infrastructure tools with investor confidence.",
-    "website_check_reason": "error:ReadTimeout"
+    "why_matters_en": "First email infrastructure built natively for AI agents. $6M seed led by General Catalyst signals emerging category of AI agent infrastructure tools with investor confidence."
   },
   {
     "name": "Mega",
@@ -61700,7 +61700,7 @@
     "latest_news_en": "2025-12: Journey 6 released",
     "needs_verification": true,
     "website_source": "manual_verified_2026-03-11",
-    "website_check_reason": "status:410"
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "Nuro",
