@@ -13886,8 +13886,7 @@
     "first_seen": "2026-05-01T20:10:28.274406Z",
     "final_score": 40,
     "trending_score": 36,
-    "needs_verification": true,
-    "website_check_reason": "error:SSLError"
+    "needs_verification": false
   },
   {
     "name": "Penemue",
@@ -30946,7 +30945,8 @@
     "first_seen": "2026-04-03T19:43:40.446056Z",
     "final_score": 80,
     "trending_score": 72,
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "status:415"
   },
   {
     "name": "Sonarly",
@@ -44594,10 +44594,11 @@
     "first_seen": "2026-03-11T19:46:17.009257Z",
     "final_score": 60,
     "trending_score": 54,
-    "needs_verification": false,
+    "needs_verification": true,
     "logo_source": "",
     "description_en": "Email infrastructure platform specifically designed for AI agents, secured $6M seed funding led by General Catalyst.",
-    "why_matters_en": "First email infrastructure built natively for AI agents. $6M seed led by General Catalyst signals emerging category of AI agent infrastructure tools with investor confidence."
+    "why_matters_en": "First email infrastructure built natively for AI agents. $6M seed led by General Catalyst signals emerging category of AI agent infrastructure tools with investor confidence.",
+    "website_check_reason": "error:ReadTimeout"
   },
   {
     "name": "Mega",
@@ -59390,7 +59391,7 @@
   {
     "name": "Orbital",
     "description": "AI平台自动化房地产法律流程，解决房地产交易法律基础设施现代化问题。",
-    "website": "https://orbital.ai/",
+    "website": "https://www.orbital.ai/",
     "logo_url": "",
     "categories": [
       "other"
@@ -59408,7 +59409,7 @@
     "source_url": "https://tech.eu",
     "description_en": "The AI ​​platform automates the real estate legal process and solves the problem of modernizing the legal infrastructure for real estate transactions.",
     "why_matters_en": "Completed US$60 million in Series B financing, customized AI for the complexity of real estate laws, huge market opportunities, and modernized transaction legal infrastructure.",
-    "website_source": "redirect",
+    "website_source": "validated_variant",
     "needs_verification": false
   },
   {
@@ -61700,7 +61701,7 @@
     "latest_news_en": "2025-12: Journey 6 released",
     "needs_verification": true,
     "website_source": "manual_verified_2026-03-11",
-    "website_check_reason": "error:ConnectTimeout"
+    "website_check_reason": "status:410"
   },
   {
     "name": "Nuro",
@@ -69534,7 +69535,7 @@
       }
     },
     "needs_verification": true,
-    "website_check_reason": "error:ReadTimeout"
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "Lightblue Technology",
@@ -70047,7 +70048,7 @@
     "name": "Sett",
     "description": "以色列AI初创公司，提供基于AI agent的游戏行业营销自动化平台，针对用户获取数十亿支出。",
     "description_en": "Israeli startup offering AI agent-based platform to automate game marketing, targeting billions in user acquisition spend.",
-    "website": "unknown",
+    "website": "https://sett.ai",
     "logo_url": "",
     "categories": [
       "agent"
@@ -70067,7 +70068,7 @@
     "source": "Calcalistech",
     "source_url": "https://www.calcalistech.com/ctechnews/article/rjxbyqisze",
     "source_title": "",
-    "website_source": "",
+    "website_source": "weekly_match",
     "latest_news_en": "2026-03-29: Secures $30M Series B",
     "community_verdict": {
       "source": "hackernews",
@@ -70136,7 +70137,7 @@
     "final_score": 80,
     "trending_score": 72,
     "needs_verification": true,
-    "website_check_reason": "status:200"
+    "website_check_reason": "status:415"
   },
   {
     "name": "Searchable",
