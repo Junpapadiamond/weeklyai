@@ -1,21 +1,22 @@
 import { HomeClient } from "@/components/home/home-client";
-import { getDarkHorses, getLastUpdated, getWeeklyTop } from "@/lib/api-client";
+import { getBlogs, getHeroProduct, getLastUpdated, getPicks } from "@/lib/api-client";
 
-const HOME_INITIAL_PRODUCTS_LIMIT = 0;
-const DARK_HORSE_FETCH_LIMIT = 30;
-const HOME_DEFAULT_SORT = "composite";
+const RECENT_PICKS_LIMIT = 7;
+const HOME_NEWS_LIMIT = 12;
 
 export async function HomeDataSection() {
-  const [darkHorses, allProducts, lastUpdated] = await Promise.all([
-    getDarkHorses(DARK_HORSE_FETCH_LIMIT, 4),
-    getWeeklyTop(HOME_INITIAL_PRODUCTS_LIMIT, HOME_DEFAULT_SORT),
+  const [hero, picks, blogs, lastUpdated] = await Promise.all([
+    getHeroProduct(),
+    getPicks(RECENT_PICKS_LIMIT),
+    getBlogs("", HOME_NEWS_LIMIT, "hybrid"),
     getLastUpdated(),
   ]);
 
   return (
     <HomeClient
-      darkHorses={darkHorses}
-      allProducts={allProducts}
+      hero={hero}
+      picks={picks}
+      blogs={blogs}
       freshnessHoursAgo={lastUpdated.hours_ago}
     />
   );
