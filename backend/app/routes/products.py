@@ -42,6 +42,50 @@ def get_weekly_top_products():
             'message': str(e)
         }), 500
 
+@products_bp.route('/hero', methods=['GET'])
+def get_hero_product():
+    """获取 v2 首页 Hero pick - 最新 screenshot_worthy 产品"""
+    try:
+        product = ProductService.get_hero_product()
+        if product:
+            return jsonify({
+                'success': True,
+                'data': product,
+                'message': '获取 Hero pick 成功'
+            })
+        return jsonify({
+            'success': False,
+            'data': None,
+            'message': '暂无 Hero pick'
+        }), 404
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'data': None,
+            'message': str(e)
+        }), 500
+
+
+@products_bp.route('/picks', methods=['GET'])
+def get_recent_picks():
+    """获取 v2 最近 picks - screenshot_worthy 产品，时间倒序"""
+    try:
+        limit = request.args.get('limit', 7, type=int)
+        products = ProductService.get_picks(limit=limit)
+        return jsonify({
+            'success': True,
+            'data': products,
+            'count': len(products),
+            'message': '获取 recent picks 成功'
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'data': [],
+            'count': 0,
+            'message': str(e)
+        }), 500
+
 @products_bp.route('/<product_id>', methods=['GET'])
 def get_product_detail(product_id):
     """获取产品详情"""
@@ -115,7 +159,7 @@ def get_blogs_news():
 
 @products_bp.route('/dark-horses', methods=['GET'])
 def get_dark_horse_products():
-    """获取本周黑马产品 - 高潜力新兴产品"""
+    """Deprecated: 旧黑马端点，v2 兼容返回 screenshot_worthy picks"""
     try:
         limit = request.args.get('limit', 10, type=int)
         min_index = request.args.get('min_index', 4, type=int)
@@ -135,7 +179,7 @@ def get_dark_horse_products():
 
 @products_bp.route('/rising-stars', methods=['GET'])
 def get_rising_star_products():
-    """获取潜力股产品 - 2-3分的有潜力产品"""
+    """Deprecated: 旧潜力股端点，v2 兼容返回 screenshot_worthy picks"""
     try:
         limit = request.args.get('limit', 20, type=int)
         products = ProductService.get_rising_star_products(limit=limit)
@@ -254,6 +298,64 @@ def get_rss_feed():
             'success': False,
             'message': str(e)
         }), 500
+
+
+@products_bp.route('/daily-featured', methods=['GET'])
+def get_daily_featured():
+    """获取「今日精选」单品 - 每天固定展示当周最高分黑马产品"""
+    try:
+        product = ProductService.get_daily_featured()
+        if product:
+            return jsonify({
+                'success': True,
+                'data': product,
+                'message': '获取今日精选成功'
+            })
+        return jsonify({
+            'success': False,
+            'data': None,
+            'message': '暂无今日精选产品'
+        }), 404
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'data': None,
+            'message': str(e)
+        }), 500
+
+
+@products_bp.route('/<product_id>/try', methods=['POST'])
+def try_product(product_id):
+    """「Try it now」体验端点 - 用 LLM 模拟产品核心功能，SSE 流式输出
+
+    Body: { "input": "用户输入文字", "locale": "zh" }
+    """
+    from flask import Response, stream_with_context
+    from app.services import try_service
+
+    try:
+        body = request.get_json(silent=True) or {}
+        user_input = str(body.get('input', '')).strip()
+        locale = str(body.get('locale', 'zh')).strip() or 'zh'
+
+        if not user_input:
+            return jsonify({'success': False, 'message': '请输入内容'}), 400
+
+        product = ProductService.get_product_by_id(product_id)
+        if not product:
+            return jsonify({'success': False, 'message': '产品不存在'}), 404
+
+        generator = try_service.stream_try_response(product, user_input, locale)
+        return Response(
+            stream_with_context(generator),
+            mimetype='text/event-stream',
+            headers={
+                'Cache-Control': 'no-cache',
+                'X-Accel-Buffering': 'no',
+            }
+        )
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
 
 
 @products_bp.route('/industry-leaders', methods=['GET'])

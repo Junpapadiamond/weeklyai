@@ -5,8 +5,8 @@
 功能：
 1. 使用 Perplexity Search API 实时搜索全球 AI 产品
 2. 按地区分配搜索任务 (美国40%/中国25%/欧洲15%/日韩10%/东南亚10%)
-3. 使用专业 Prompt 提取产品信息并评分
-4. 自动分类到黑马(4-5分)/潜力股(2-3分)
+3. 使用专业 Prompt 提取 screenshot-worthy 产品候选
+4. 写入 candidates/pending_review.json，等待人工策展
 
 用法：
     python tools/auto_discover.py                    # 运行所有地区
@@ -415,46 +415,44 @@ AUTO_DISCOVER_RESULT_SNIPPET_MAX_CHARS = max(120, int(os.environ.get('AUTO_DISCO
 # 软件 AI 关键词
 KEYWORDS_SOFTWARE = {
     "us": [
-        "AI startup funding 2026",
-        "YC AI companies winter 2026",
-        "AI Series A 2026",
-        "artificial intelligence company raised funding",
-        "AI unicorn startup valuation 2026",
-        "AI agent startup funding",
-        "generative AI startup Series A",
+        "site:producthunt.com AI agent 2026",
+        "site:news.ycombinator.com Show HN AI 2026",
+        "site:simonwillison.net AI agent launch 2026",
+        "AI product new behavior 2026",
+        "AI quietly shipped new capability 2026",
+        "AI unusual product launch 2026",
+        "AI workflow solved real problem 2026",
     ],
     "cn": [
-        "AI融资 2026",
-        "人工智能创业公司",
-        "AIGC融资",
-        "大模型创业",
-        "AI创业公司 A轮 B轮",
-        "人工智能 独角兽 估值",
-        "AI Agent 创业公司",
+        "site:36kr.com AI硬件 创新形态 2026",
+        "site:youpin.mi.com 智能 AI 2026",
+        "site:mi.com AI 新能力 2026",
+        "AI Agent 新能力 产品 2026",
+        "AI 创新产品 新交互 2026",
+        "AI 大厂 新能力 不是版本更新 2026",
     ],
     "eu": [
-        "European AI startup funding 2026",
-        "KI Startup Finanzierung",
-        "AI Series A Europe",
-        "UK France Germany AI startup",
+        "European AI product launch unusual 2026",
+        "site:producthunt.com AI Europe 2026",
+        "AI agent new behavior Europe 2026",
+        "European AI hardware gadget 2026",
     ],
     "jp": [
-        "AI スタートアップ 資金調達 2026",
-        "日本 AI企業 シリーズA",
-        "人工知能 スタートアップ",
-        "Japan AI startup funding",
+        "site:makuake.com AI 2026",
+        "site:campfire.jp AI 2026",
+        "AI ウェアラブル デバイス Makuake 2026",
+        "Japan AI product launch unusual 2026",
     ],
     "kr": [
-        "AI 스타트업 투자 2026",
-        "한국 인공지능 기업",
-        "AI 시리즈A",
-        "Korean AI startup investment",
+        "Korean AI wearable device 2026",
+        "Korean AI product launch unusual 2026",
+        "site:producthunt.com AI Korea 2026",
     ],
     "sea": [
-        "Singapore AI startup funding 2026",
-        "Southeast Asia AI company",
-        "AI startup Indonesia Vietnam",
-        "Tech in Asia artificial intelligence",
+        "Singapore AI hardware product 2026",
+        "Southeast Asia AI device 2026",
+        "Southeast Asia AI product launch unusual 2026",
+        "site:producthunt.com AI Singapore 2026",
     ],
 }
 
@@ -462,60 +460,42 @@ KEYWORDS_SOFTWARE = {
 # 分为两类：传统硬件（芯片/机器人）+ 创新形态（可穿戴/新形态）
 KEYWORDS_HARDWARE = {
     "us": [
-        # 传统硬件：芯片/机器人
-        "AI chip startup funding 2026",
-        "humanoid robot company funding",
-        "AI semiconductor startup investment",
-        "robotics AI company raised funding",
-        # 创新形态硬件：可穿戴/新形态 (Friend Pendant 类)
-        "AI pendant necklace wearable 2026",
-        "AI companion device startup",
-        "AI pin badge wearable assistant",
-        "AI ring wearable startup",
-        "AI glasses startup 2026",
-        "AI wearable gadget viral",
-        "AI hardware kickstarter indiegogo 2026",
-        "AI assistant device form factor innovative",
-        "screenless AI device wearable",
+        "site:kickstarter.com AI pendant 2026",
+        "site:kickstarter.com AI frame 2026",
+        "site:kickstarter.com AI plant 2026",
+        "site:kickstarter.com AI mirror 2026",
+        "site:kickstarter.com AI lamp 2026",
+        "site:kickstarter.com AI plush 2026",
+        "site:kickstarter.com AI collar 2026",
+        "site:kickstarter.com AI badge 2026",
+        "site:indiegogo.com AI device 2026",
+        "site:producthunt.com AI hardware 2026",
     ],
     "cn": [
-        # 传统硬件
-        "AI芯片 创业公司 融资",
-        "人形机器人 创业公司",
-        "具身智能 创业公司",
-        # 创新形态硬件
-        "AI智能眼镜 创业公司",
-        "AI可穿戴设备 创业公司 2026",
-        "AI项链 吊坠 智能设备",
-        "AI戒指 智能穿戴",
-        "AI硬件 众筹 创新",
-        "AI随身设备 助手",
+        "site:makuake.com AI 2026",
+        "site:zhongchou.modian.com AI 2026",
+        "site:youpin.mi.com 智能 AI 2026",
+        "site:36kr.com AI硬件 创新形态 2026",
+        "AI盆栽 AI相框 AI镜子 AI台灯 2026",
+        "AI宠物项圈 AI戒指 AI徽章 智能硬件 2026",
     ],
     "eu": [
-        "European AI chip startup funding",
-        "robotics startup Europe funding",
-        # 创新形态
-        "AI wearable startup Europe 2026",
-        "AI glasses pendant Europe startup",
+        "site:kickstarter.com AI wearable Europe 2026",
+        "European AI pendant frame mirror device 2026",
+        "AI glasses pendant Europe product 2026",
     ],
     "jp": [
-        "AI半導体 スタートアップ 資金調達",
-        "ロボット AI企業 日本",
-        # 创新形态
-        "AIウェアラブル スタートアップ 日本",
-        "AIメガネ デバイス 日本",
+        "site:makuake.com AI 2026",
+        "site:campfire.jp AI 2026",
+        "AIウェアラブル デバイス 日本 2026",
     ],
     "kr": [
-        "AI 반도체 스타트업 투자",
-        "로봇 AI 기업 한국",
-        # 创新形态
-        "AI 웨어러블 스타트업 한국",
+        "AI 웨어러블 디바이스 한국 2026",
+        "AI 하드웨어 제품 한국 2026",
     ],
     "sea": [
-        "AI hardware startup Singapore",
-        "robotics company Southeast Asia",
-        # 创新形态
-        "AI wearable device startup Asia 2026",
+        "AI wearable device Southeast Asia 2026",
+        "AI hardware product Singapore 2026",
     ],
 }
 
@@ -527,48 +507,44 @@ KEYWORDS_BY_REGION = KEYWORDS_SOFTWARE
 # ============================================
 SITE_SEARCHES = {
     "us": [
-        # 科技媒体
-        "site:techcrunch.com AI startup funding",
-        "site:venturebeat.com AI funding",
-        "site:wired.com AI hardware device",
-        "site:theverge.com AI wearable gadget",
-        # 产品发现平台 (创新形态硬件重点)
-        "site:producthunt.com AI hardware wearable pendant 2026",
-        "site:producthunt.com AI device companion assistant 2026",
-        # 众筹平台 (早期创新硬件)
         "site:kickstarter.com AI wearable pendant necklace 2026",
         "site:kickstarter.com AI glasses ring device 2026",
         "site:indiegogo.com AI wearable assistant 2026",
+        "site:producthunt.com AI hardware wearable pendant 2026",
+        "site:news.ycombinator.com Show HN AI 2026",
+        "site:openai.com/blog AI product launch 2026",
+        "site:anthropic.com/news Claude new capability 2026",
+        "site:deepmind.google/discover AI product 2026",
+        "site:simonwillison.net AI agent launch 2026",
     ],
     "cn": [
-        "site:36kr.com AI融资",
-        "site:tmtpost.com 人工智能",
-        "site:jiqizhixin.com 融资",
-        # 硬件创新
+        "site:makuake.com AI 2026",
+        "site:zhongchou.modian.com AI 2026",
+        "site:youpin.mi.com 智能 AI 2026",
         "site:36kr.com AI硬件 可穿戴 智能设备 2026",
-        "site:36kr.com 具身智能 人形机器人 2026",
         "site:36kr.com AI眼镜 智能穿戴 2026",
+        "site:mi.com AI 新能力 2026",
+        "site:tencent.com AI 新能力 2026",
+        "site:alibabacloud.com news AI 2026",
+        "site:bytedance.com news AI 2026",
     ],
     "eu": [
-        "site:sifted.eu AI funding",
-        "site:tech.eu AI startup",
-        "site:eu-startups.com AI",
-        # 创新硬件
         "site:kickstarter.com AI wearable Europe 2026",
+        "site:producthunt.com AI Europe 2026",
+        "site:openai.com/blog AI product launch 2026",
+        "site:anthropic.com/news Claude new capability 2026",
     ],
     "jp": [
-        "site:thebridge.jp AI startup",
-        "site:jp.techcrunch.com AI",
-        # 创新硬件
+        "site:makuake.com AI 2026",
+        "site:campfire.jp AI 2026",
         "site:kickstarter.com AI wearable Japan 2026",
     ],
     "kr": [
-        "site:platum.kr AI 스타트업",
-        "site:besuccess.com AI",
+        "site:producthunt.com AI Korea 2026",
+        "Korean AI wearable device 2026",
     ],
     "sea": [
-        "site:e27.co AI startup",
-        "site:techinasia.com AI funding",
+        "site:producthunt.com AI Singapore 2026",
         "site:kickstarter.com AI wearable Asia 2026",
     ],
 }
@@ -582,9 +558,24 @@ def get_keywords_for_today(region: str, product_type: str = "mixed") -> list:
         product_type: 产品类型 ("software"/"hardware"/"mixed")
 
     策略：
-    - mixed 模式下硬件:软件 = 40%:60%
-    - 每天轮换不同的关键词组合
+    - v2 主池：众筹 / Product Hunt / Show HN / weird form queries
+    - v2 副池：大厂 release radar
+    - v2 侧池：融资查询只作为少量背景信号
     """
+    try:
+        query_limit = 18 if product_type == "mixed" else 14
+        generated = generate_search_queries(
+            region,
+            query_type="hardware" if product_type == "hardware" else "mixed",
+            limit=query_limit,
+            include_sites=True,
+            product_type=product_type,
+        )
+        if generated:
+            return generated
+    except Exception:
+        pass
+
     day = datetime.now().weekday()
 
     if product_type == "hardware":
@@ -714,13 +705,12 @@ REGION_CONFIG = {
 }
 
 CN_PRIORITY_KEYWORDS = [
-    "site:36kr.com AI融资",
-    "site:jiqizhixin.com 融资 AI",
-    "site:tmtpost.com 人工智能 融资",
-    "AI融资 2026",
-    "人工智能创业公司",
-    "AI创业公司 A轮 B轮",
-    "AIGC融资",
+    "site:makuake.com AI 2026",
+    "site:zhongchou.modian.com AI 2026",
+    "site:youpin.mi.com 智能 AI 2026",
+    "site:36kr.com AI硬件 创新形态 2026",
+    "site:mi.com AI 新能力 2026",
+    "AI盆栽 AI相框 AI镜子 AI台灯 2026",
 ]
 
 # ============================================
@@ -940,6 +930,7 @@ try:
         get_scoring_prompt,
         get_hardware_analysis_prompt,
         validate_hardware_product,
+        validate_product as validate_prompt_product,
         WELL_KNOWN_PRODUCTS as PROMPT_WELL_KNOWN,
         GENERIC_WHY_MATTERS as PROMPT_GENERIC,
     )
@@ -1593,6 +1584,9 @@ def validate_product(product: dict) -> tuple[bool, str]:
     6. 黑马(4-5分)必须满足至少2条标准 (criteria_met)
     7. 置信度检查 (confidence >= 0.6)
     """
+    if USE_MODULAR_PROMPTS and callable(globals().get("validate_prompt_product")):
+        return validate_prompt_product(product)
+
     name = product.get("name", "").strip()
     website = product.get("website", "").strip()
     description = product.get("description", "").strip()
@@ -2289,12 +2283,11 @@ def analyze_and_score(product: dict) -> dict:
     """
     使用 AI 分析产品并评分
 
-    评分标准：
-    - 5分: 融资 >$100M 或 顶级创始人 或 品类开创者
-    - 4分: 融资 >$30M 或 YC/顶级VC
-    - 3分: 融资 >$5M 或 ProductHunt Top 5
-    - 2分: 有潜力但数据不足
-    - 1分: 边缘
+    Compatibility fallback for legacy callers.
+
+    v2 uses screenshot_worthy + hook as the editorial decision. This function
+    only supplies old score fields for downstream sorting code that still reads
+    dark_horse_index.
     """
     funding = product.get('funding_total', '')
     source = product.get('source', '')
@@ -2450,45 +2443,85 @@ def _apply_demand_signals_and_guardrail(
 
 
 def save_product(product: dict, dry_run: bool = False):
-    """保存产品到相应目录"""
-    score = product.get('dark_horse_index', 2)
-    week = get_current_week()
+    """Save product to the review queue, not directly to featured.
 
-    if score >= 4:
-        # 黑马
-        target_dir = DARK_HORSES_DIR
-        target_file = os.path.join(target_dir, f'week_{week}.json')
-    else:
-        # 潜力股
-        target_dir = RISING_STARS_DIR
-        target_file = os.path.join(target_dir, f'global_{week}.json')
+    v2 makes the editor gate explicit: discovery creates candidates, curate.py
+    promotes the one daily pick.
+    """
+    target_dir = CANDIDATES_DIR
+    target_file = os.path.join(target_dir, 'pending_review.json')
+    product = prepare_candidate_product(product)
 
     if dry_run:
         print(f"  [DRY RUN] Would save to: {target_file}")
         print(f"  {json.dumps(product, ensure_ascii=False, indent=2)}")
         return
 
-    # 确保目录存在
     os.makedirs(target_dir, exist_ok=True)
 
-    # 加载现有数据
     if os.path.exists(target_file):
         with open(target_file, 'r', encoding='utf-8') as f:
-            products = json.load(f)
+            try:
+                products = json.load(f)
+            except Exception:
+                products = []
     else:
         products = []
+    if not isinstance(products, list):
+        products = []
 
-    # 添加新产品
-    products.append(product)
+    existing_domains = {normalize_url(p.get('website', '')) for p in products if isinstance(p, dict)}
+    existing_names = {
+        normalize_name(p.get('name', '')) if callable(globals().get("normalize_name")) else str(p.get('name', '')).lower()
+        for p in products
+        if isinstance(p, dict)
+    }
+    product_domain = normalize_url(product.get('website', ''))
+    product_name = normalize_name(product.get('name', '')) if callable(globals().get("normalize_name")) else str(product.get('name', '')).lower()
+    if (product_domain and product_domain in existing_domains) or (product_name and product_name in existing_names):
+        print(f"  📋 Already in candidates: {product.get('name')}")
+        return
 
-    # 保存到分类文件
+    products.insert(0, product)
     with open(target_file, 'w', encoding='utf-8') as f:
         json.dump(products, f, ensure_ascii=False, indent=2)
 
-    print(f"  Saved to: {target_file}")
-    
-    # 同时同步到 products_featured.json（前端数据源）
-    sync_to_featured(product)
+    print(f"  Saved to candidate queue: {target_file}")
+
+
+def prepare_candidate_product(product: dict) -> dict:
+    """Normalize v2 candidate fields while keeping legacy fields additive."""
+    now_iso = datetime.utcnow().replace(microsecond=0).isoformat() + 'Z'
+    hook = str(product.get('hook') or '').strip()
+    screenshot_worthy = product.get('screenshot_worthy')
+    if isinstance(screenshot_worthy, str):
+        screenshot_worthy = screenshot_worthy.strip().lower() in {'true', '1', 'yes', 'y'}
+    elif screenshot_worthy is None:
+        screenshot_worthy = bool(hook)
+
+    product['screenshot_worthy'] = bool(screenshot_worthy)
+    if hook:
+        product['hook'] = hook
+    product.setdefault('dark_horse_index', 4 if product['screenshot_worthy'] else 2)
+    if hook:
+        criteria = product.get('criteria_met')
+        if not isinstance(criteria, list) or not criteria:
+            product['criteria_met'] = [hook]
+    product.setdefault('discovered_at', datetime.utcnow().strftime('%Y-%m-%d'))
+    product.setdefault('first_seen', now_iso)
+    product.setdefault('source', 'auto_discover')
+    product.setdefault('final_score', product.get('dark_horse_index', 2) * 20)
+    product.setdefault('trending_score', product.get('dark_horse_index', 2) * 18)
+    product['_candidate_status'] = 'pending'
+    product['_candidate_added_at'] = now_iso
+
+    category = product.get('category') or 'other'
+    categories = product.get('categories')
+    if isinstance(categories, str):
+        product['categories'] = [categories]
+    elif not categories:
+        product['categories'] = [category]
+    return product
 
 
 def sync_to_featured(product: dict):

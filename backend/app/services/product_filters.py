@@ -455,11 +455,14 @@ def is_blocked(product: Dict[str, Any]) -> bool:
 
 
 def is_well_known(product: Dict[str, Any]) -> bool:
-    """检查是否为著名产品（除非有新功能才显示）
+    """检查是否为著名产品（除非达到 v2 更高门槛才过滤掉）
 
     返回 True 表示应该被过滤掉（是著名产品且没有新功能）
     返回 False 表示可以显示（不是著名产品，或是著名产品但有新功能）
     """
+    if product.get('screenshot_worthy') is True:
+        return False
+
     name = (product.get('name') or '').lower().strip()
     # 检查是否匹配任何著名产品
     is_famous = any(known in name for known in WELL_KNOWN_PRODUCTS)
@@ -468,12 +471,23 @@ def is_well_known(product: Dict[str, Any]) -> bool:
 
     # 是著名产品，检查是否有新功能关键词
     desc = (product.get('description') or '').lower()
+    why = (product.get('why_matters') or '').lower()
+    latest = (product.get('latest_news') or '').lower()
+    hook = (product.get('hook') or '').lower()
     title = (product.get('title') or '').lower()
-    text = f"{name} {desc} {title}"
+    text = f"{name} {desc} {why} {latest} {hook} {title}"
     has_new_feature = any(kw in text for kw in NEW_FEATURE_KEYWORDS)
+    has_v2_hook = hook in {
+        'weird_form',
+        'new_behavior',
+        'unexpected_combo',
+        'quiet_real_problem',
+        'new_interaction',
+        'niche_depth',
+    }
 
     # 如果有新功能，返回 False（可以显示）；否则返回 True（过滤掉）
-    return not has_new_feature
+    return not (has_new_feature or has_v2_hook)
 
 
 def is_hardware(product: Dict[str, Any]) -> bool:
@@ -740,14 +754,19 @@ def filter_by_type(products: List[Dict], product_type: str) -> List[Dict]:
 
 
 def filter_by_dark_horse_index(products: List[Dict], min_index: int = 2, max_index: int = None) -> List[Dict]:
-    """按黑马指数筛选"""
+    """按黑马指数筛选；v2 screenshot_worthy 产品始终兼容进入旧端点。"""
+    picks = [p for p in products if p.get('screenshot_worthy') is True]
+    legacy = [
+        p for p in products
+        if p.get('screenshot_worthy') is not True
+    ]
     if max_index is not None:
-        return [
-            p for p in products
+        return picks + [
+            p for p in legacy
             if min_index <= p.get('dark_horse_index', 0) <= max_index
         ]
-    return [
-        p for p in products
+    return picks + [
+        p for p in legacy
         if p.get('dark_horse_index', 0) >= min_index
     ]
 

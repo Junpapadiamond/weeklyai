@@ -328,9 +328,11 @@ class ProductRepository:
 
     _cached_products = None
     _cache_time = None
+    _products_cache_key = None
     _cache_duration = 300  # 5分钟缓存
     _cached_blogs = None
     _blogs_cache_time = None
+    _blogs_cache_key = None
     _blogs_cache_duration = BLOG_CACHE_SECONDS
 
     @classmethod
@@ -338,8 +340,29 @@ class ProductRepository:
         """强制刷新缓存"""
         cls._cached_products = None
         cls._cache_time = None
+        cls._products_cache_key = None
         cls._cached_blogs = None
         cls._blogs_cache_time = None
+        cls._blogs_cache_key = None
+
+    @staticmethod
+    def _data_source_cache_key(*, kind: str) -> str:
+        """Cache key for the active storage source.
+
+        Tests and local tools regularly toggle MONGO_URI to force JSON fallback.
+        Include that switch in the key so a fake Mongo/JSON cache never leaks
+        into the next call.
+        """
+        mongo_uri = sanitize_env_value(os.getenv('MONGO_URI', '')) or ''
+        if kind == 'blogs':
+            path = BLOGS_NEWS_FILE
+        else:
+            path = PRODUCTS_FEATURED_FILE
+        try:
+            mtime = os.path.getmtime(path)
+        except OSError:
+            mtime = 0
+        return f"{kind}|mongo={mongo_uri}|path={path}|mtime={mtime}"
 
     @classmethod
     def load_products(cls, filters_module=None) -> List[Dict]:
@@ -350,9 +373,10 @@ class ProductRepository:
         2) 若 MongoDB 不可用或为空，则回退到本地 JSON 逻辑。
         """
         now = datetime.now()
+        cache_key = cls._data_source_cache_key(kind='products')
 
         # 检查缓存
-        if cls._cached_products and cls._cache_time:
+        if cls._cached_products and cls._cache_time and cls._products_cache_key == cache_key:
             age = (now - cls._cache_time).total_seconds()
             if age < cls._cache_duration:
                 return cls._cached_products
@@ -381,6 +405,7 @@ class ProductRepository:
         # 更新缓存
         cls._cached_products = products
         cls._cache_time = now
+        cls._products_cache_key = cache_key
 
         return products
 
@@ -768,9 +793,10 @@ class ProductRepository:
     def load_blogs(cls) -> List[Dict]:
         """加载博客/新闻/讨论数据（优先 MongoDB，回退 JSON）。"""
         now = datetime.now()
+        cache_key = cls._data_source_cache_key(kind='blogs')
 
         # 检查缓存
-        if cls._cached_blogs is not None and cls._blogs_cache_time:
+        if cls._cached_blogs is not None and cls._blogs_cache_time and cls._blogs_cache_key == cache_key:
             age = (now - cls._blogs_cache_time).total_seconds()
             if age < cls._blogs_cache_duration:
                 return cls._cached_blogs
@@ -784,6 +810,7 @@ class ProductRepository:
             if not os.path.exists(BLOGS_NEWS_FILE):
                 cls._cached_blogs = []
                 cls._blogs_cache_time = now
+                cls._blogs_cache_key = cache_key
                 return []
 
             try:
@@ -800,6 +827,7 @@ class ProductRepository:
 
         cls._cached_blogs = blogs
         cls._blogs_cache_time = now
+        cls._blogs_cache_key = cache_key
         return blogs
 
     @classmethod
