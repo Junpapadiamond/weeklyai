@@ -36986,8 +36986,7 @@
     "first_seen": "2026-03-23T19:51:10.257135Z",
     "final_score": 60,
     "trending_score": 54,
-    "needs_verification": true,
-    "website_check_reason": "error:ConnectionError"
+    "needs_verification": false
   },
   {
     "name": "Sarvam",
@@ -44596,7 +44595,7 @@
     "logo_source": "",
     "description_en": "Email infrastructure platform specifically designed for AI agents, secured $6M seed funding led by General Catalyst.",
     "why_matters_en": "First email infrastructure built natively for AI agents. $6M seed led by General Catalyst signals emerging category of AI agent infrastructure tools with investor confidence.",
-    "website_check_reason": "error:ConnectTimeout"
+    "website_check_reason": "error:ReadTimeout"
   },
   {
     "name": "Mega",
@@ -60018,8 +60017,9 @@
     "logo_source": "",
     "description_en": "Singapore's decentralized robot AI platform has sold 800+ mini robots, emphasizing community participation to drive robot innovation.",
     "why_matters_en": "800+ mini robots sold show strong community traction, promoting a user- and builder-driven robot innovation model.",
-    "needs_verification": false,
-    "website_source": "redirect"
+    "needs_verification": true,
+    "website_source": "redirect",
+    "website_check_reason": "status:530"
   },
   {
     "name": "i10X",
@@ -69531,7 +69531,7 @@
       }
     },
     "needs_verification": true,
-    "website_check_reason": "error:ConnectTimeout"
+    "website_check_reason": "error:ReadTimeout"
   },
   {
     "name": "Lightblue Technology",
