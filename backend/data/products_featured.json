@@ -19544,7 +19544,7 @@
     "final_score": 60,
     "trending_score": 54,
     "needs_verification": true,
-    "website_check_reason": "error:SSLError"
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "Era",
@@ -23393,7 +23393,8 @@
     "first_seen": "2026-04-15T20:06:43.140366Z",
     "final_score": 60,
     "trending_score": 54,
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectionError"
   },
   {
     "name": "Elorian",
@@ -29522,7 +29523,7 @@
     "name": "Moonbounce",
     "description": "Moonbounce将内容审核政策转化为可执行代码，为AI时代提供审核解决方案。",
     "description_en": "Moonbounce turns content moderation policies into executable code for the AI era.",
-    "website": "https://moonbounce.io/",
+    "website": "https://www.moonbounce.ai/",
     "logo_url": "https://framerusercontent.com/images/0YgVxoHV5zaukAeSCXFQnsrHw.png",
     "categories": [
       "other"
@@ -29542,7 +29543,7 @@
     "source": "TechCrunch",
     "source_url": "https://techcrunch.com/2026/04/03/moonbounce-fundraise-content-moderation-for-the-ai-era/",
     "source_title": "",
-    "website_source": "source_url",
+    "website_source": "redirect",
     "latest_news_en": "2026-04-03: Raised $12M",
     "community_verdict": null,
     "extra": {
@@ -44591,11 +44592,10 @@
     "first_seen": "2026-03-11T19:46:17.009257Z",
     "final_score": 60,
     "trending_score": 54,
-    "needs_verification": true,
+    "needs_verification": false,
     "logo_source": "",
     "description_en": "Email infrastructure platform specifically designed for AI agents, secured $6M seed funding led by General Catalyst.",
-    "why_matters_en": "First email infrastructure built natively for AI agents. $6M seed led by General Catalyst signals emerging category of AI agent infrastructure tools with investor confidence.",
-    "website_check_reason": "error:ConnectTimeout"
+    "why_matters_en": "First email infrastructure built natively for AI agents. $6M seed led by General Catalyst signals emerging category of AI agent infrastructure tools with investor confidence."
   },
   {
     "name": "Mega",
@@ -54035,7 +54035,8 @@
     "logo_source": "",
     "description_en": "Develop plug-and-play system-level power solutions to reduce AI data center energy loss by 10%.",
     "why_matters_en": "peak",
-    "needs_verification": false
+    "needs_verification": true,
+    "website_check_reason": "error:ConnectTimeout"
   },
   {
     "name": "Kana",
@@ -61697,7 +61698,7 @@
     "latest_news_en": "2025-12: Journey 6 released",
     "needs_verification": true,
     "website_source": "manual_verified_2026-03-11",
-    "website_check_reason": "error:ConnectTimeout"
+    "website_check_reason": "status:410"
   },
   {
     "name": "Nuro",
