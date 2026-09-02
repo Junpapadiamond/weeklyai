@@ -6,6 +6,15 @@ const stringOrNumberToNumber = z.union([z.number(), z.string()]).transform((valu
   return Number.isFinite(parsed) ? parsed : 0;
 });
 
+export const HookTypeSchema = z.enum([
+  "weird_form",
+  "new_behavior",
+  "unexpected_combo",
+  "quiet_real_problem",
+  "new_interaction",
+  "niche_depth",
+]);
+
 export const ProductSchema = z
   .object({
     _id: z.union([z.string(), z.number()]).optional(),
@@ -18,7 +27,21 @@ export const ProductSchema = z
     why_matters_en: z.string().optional(),
     logo_url: z.string().optional(),
     logo: z.string().optional(),
+    screenshot_worthy: z.boolean().optional(),
+    hook: HookTypeSchema.optional(),
+    has_strong_image: z.boolean().optional(),
+    is_bootstrap_pick: z.boolean().optional(),
+    pick_reason: z.string().optional(),
+    pick_reason_en: z.string().optional(),
+    v2_score: stringOrNumberToNumber.optional(),
+    v2_signals: z.array(z.string()).optional(),
+    is_yesterday: z.boolean().optional(),
+    image_url: z.string().optional(),
+    cover_image: z.string().optional(),
+    hero_image: z.string().optional(),
+    og_image: z.string().optional(),
     dark_horse_index: stringOrNumberToNumber.optional(),
+    criteria_met: z.array(z.string()).optional(),
     category: z.string().optional(),
     categories: z.array(z.string()).optional(),
     hardware_category: z.string().optional(),
@@ -47,6 +70,7 @@ export const ProductSchema = z
     first_seen: z.string().optional(),
     published_at: z.string().optional(),
     discovered_at: z.string().optional(),
+    curated_at: z.string().optional(),
     is_hardware: z.boolean().optional(),
     needs_verification: z.boolean().optional(),
     extra: z.record(z.string(), z.unknown()).optional(),

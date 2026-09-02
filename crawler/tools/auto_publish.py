@@ -173,6 +173,10 @@ def merge_featured(featured: list, new_items: list) -> int:
 
 
 def main() -> int:
+    print(
+        "DEPRECATED: auto_publish.py is no longer part of WeeklyAI v2. "
+        "Discovery now writes candidates; run python3 crawler/tools/curate.py to promote picks."
+    )
     parser = argparse.ArgumentParser(description='Auto publish weekly products to products_featured.json')
     parser.add_argument('--week', default=get_current_week(), help='Week key: YYYY_WW')
     args = parser.parse_args()
