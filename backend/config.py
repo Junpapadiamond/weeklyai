@@ -17,9 +17,12 @@ class Config:
     # 3) 若不存在则回退到 backend/data（适配 Vercel backend 独立部署）
     _default_crawler_data = PROJECT_ROOT / 'crawler' / 'data'
     _default_backend_data = Path(__file__).parent / 'data'
-    DATA_PATH = os.getenv(
+    _requested_data_path = os.getenv(
         'DATA_PATH',
         str(_default_crawler_data if _default_crawler_data.exists() else _default_backend_data)
+    )
+    DATA_PATH = _requested_data_path if Path(_requested_data_path).is_dir() else str(
+        _default_crawler_data if _default_crawler_data.is_dir() else _default_backend_data
     )
     
     # MongoDB 配置

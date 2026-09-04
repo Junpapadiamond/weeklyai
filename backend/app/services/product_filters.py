@@ -11,19 +11,12 @@ BLOCKED_SOURCES = {'github', 'huggingface', 'huggingface_spaces'}
 BLOCKED_DOMAINS = ('github.com', 'huggingface.co')
 UNKNOWN_WEBSITE_VALUES = {'', 'unknown', 'n/a', 'na', 'none', 'null', 'undefined', 'tbd'}
 
-# 著名产品黑名单 - 除非有新功能否则不显示
+# Established products belong in News / reference, not emerging discovery.
 WELL_KNOWN_PRODUCTS = {
     'chatgpt', 'claude', 'gemini', 'bard', 'copilot', 'perplexity',
     'midjourney', 'dall-e', 'stable diffusion', 'cursor', 'github copilot',
     'whisper', 'elevenlabs', 'runway', 'pika', 'sora', 'openai', 'anthropic',
     'notion ai', 'jasper', 'copy.ai', 'grammarly', 'nvidia h100', 'duolingo'
-}
-
-# 新功能关键词 - 允许著名产品显示
-NEW_FEATURE_KEYWORDS = {
-    '发布', '推出', '更新', '新版', '新功能',
-    'launch', 'release', 'new feature', 'update',
-    'v2', 'v3', 'v4', 'announces', '宣布'
 }
 
 BLOG_CN_SOURCES = {'cn_news', 'cn_news_glm'}
@@ -455,25 +448,41 @@ def is_blocked(product: Dict[str, Any]) -> bool:
 
 
 def is_well_known(product: Dict[str, Any]) -> bool:
-    """检查是否为著名产品（除非有新功能才显示）
+    """Exclude established products even when a new release is announced."""
+    from .product_repository import ProductRepository
+    def key(value):
+        return re.sub(r'[^\w]', '', str(value).casefold())
+    known = {key(name) for name in WELL_KNOWN_PRODUCTS}
+    # Existing reference data is the single exclusion source; an announcement
+    # belongs in News and does not make an incumbent an overlooked product.
+    domains = set()
+    for category in ProductRepository.load_industry_leaders().get('categories', {}).values():
+        for leader in category.get('products', []):
+            known.add(key(leader.get('name')))
+            domain = urlparse(leader.get('website', '')).hostname
+            if domain:
+                domains.add(domain.removeprefix('www.'))
+    known.update(key(name) for name in (
+        'Databricks', 'Devin', 'Devin AI', 'Scale AI', 'Anduril', 'Nebius',
+        'Horizon Robotics', 'Cerebras', 'Cohere', 'Neuralink', 'Oura',
+        'Figure AI', 'Luma AI', 'Deepgram', 'Motion', '1X Technologies',
+        'Skild AI', 'Thinking Machines Lab', 'Apptronik', 'Oura Ring 3',
+        'Fitbit Air',
+    ))
+    name = key(product.get('name', ''))
+    host = (urlparse(str(product.get('website') or '')).hostname or '').removeprefix('www.')
+    return name in known or (bool(host) and host in domains)
 
-    返回 True 表示应该被过滤掉（是著名产品且没有新功能）
-    返回 False 表示可以显示（不是著名产品，或是著名产品但有新功能）
-    """
-    name = (product.get('name') or '').lower().strip()
-    # 检查是否匹配任何著名产品
-    is_famous = any(known in name for known in WELL_KNOWN_PRODUCTS)
-    if not is_famous:
-        return False  # 不是著名产品，可以显示
 
-    # 是著名产品，检查是否有新功能关键词
-    desc = (product.get('description') or '').lower()
-    title = (product.get('title') or '').lower()
-    text = f"{name} {desc} {title}"
-    has_new_feature = any(kw in text for kw in NEW_FEATURE_KEYWORDS)
-
-    # 如果有新功能，返回 False（可以显示）；否则返回 True（过滤掉）
-    return not has_new_feature
+def is_non_product(product: Dict[str, Any]) -> bool:
+    """A financing vehicle or VC firm is not an AI product users can evaluate."""
+    name = str(product.get('name') or '').strip().lower()
+    if re.search(r'\b(?:capital|ventures|fund(?:\s+[ivx0-9]+)?)$', name):
+        return True
+    description = str(product.get('description_en') or product.get('description') or '').lower()
+    investor = re.search(r'\b(?:venture capital|investment|venture)\s+(?:firm|fund)\b', description)
+    product_terms = re.search(r'\b(?:platform|software|tool|api|robot|assistant)\b', description)
+    return bool(investor and not product_terms)
 
 
 def is_hardware(product: Dict[str, Any]) -> bool:
@@ -493,14 +502,14 @@ def is_hardware(product: Dict[str, Any]) -> bool:
 
 
 def normalize_products(products: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """Normalize products and drop blocked sources/domains + well-known products."""
+    """Normalize the searchable archive; recommendation eligibility is separate."""
     normalized = []
     for idx, product in enumerate(products):
         if not product:
             continue
         if not _has_usable_website(product):
             continue
-        if is_blocked(product) or is_well_known(product):
+        if is_blocked(product):
             continue
         _sanitize_logo_url(product)
         _normalize_country_fields(product)

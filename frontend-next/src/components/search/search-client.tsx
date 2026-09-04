@@ -107,7 +107,7 @@ export function SearchClient({ initialQuery = "" }: SearchClientProps) {
     <section className="section search-page">
       <div className="section-header">
         <h1 className="section-title">{t("搜索产品", "Search Products")}</h1>
-        <p className="section-desc">{t("仅保留关键词和类型筛选，减少操作负担。", "Keep only keyword and type filters to reduce friction.")}</p>
+        <p className="section-desc">{t("按产品名称或你想解决的问题搜索档案。", "Search the archive by product name or the problem you want to solve.")}</p>
         <p className="section-micro-note">{t("输入关键词自动搜索，按需切换软件/硬件。", "Type keywords for instant search and switch software/hardware when needed.")}</p>
       </div>
 

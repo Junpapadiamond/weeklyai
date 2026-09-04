@@ -47,6 +47,8 @@ export const ProductSchema = z
     first_seen: z.string().optional(),
     published_at: z.string().optional(),
     discovered_at: z.string().optional(),
+    news_updated_at: z.string().optional(),
+    is_archived: z.boolean().optional(),
     is_hardware: z.boolean().optional(),
     needs_verification: z.boolean().optional(),
     extra: z.record(z.string(), z.unknown()).optional(),

@@ -44,6 +44,8 @@ export type Product = {
   first_seen?: string;
   published_at?: string;
   discovered_at?: string;
+  news_updated_at?: string;
+  is_archived?: boolean;
   is_hardware?: boolean;
   needs_verification?: boolean;
   extra?: Record<string, unknown>;

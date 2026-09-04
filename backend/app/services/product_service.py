@@ -36,6 +36,25 @@ class ProductService:
         return ProductRepository.load_products(filters_module=filters)
 
     @classmethod
+    def get_discovery_products(cls) -> List[Dict]:
+        """Recommendation surfaces require a usable product and traceable evidence."""
+        from urllib.parse import urlparse
+        def usable(value):
+            try:
+                url = urlparse(str(value or ''))
+                return url.scheme in {'http', 'https'} and bool(url.hostname)
+            except ValueError:
+                return False
+        def explained(product):
+            description = max(len(str(product.get(field) or '').strip()) for field in ('description', 'description_en'))
+            reason = max(len(str(product.get(field) or '').strip()) for field in ('why_matters', 'why_matters_en'))
+            return description >= 20 and reason >= 20
+        return [p for p in cls._load_products()
+                if not p.get('needs_verification') and usable(p.get('website'))
+                and usable(p.get('source_url')) and not filters.is_well_known(p)
+                and not filters.is_non_product(p) and explained(p)]
+
+    @classmethod
     def _load_blogs(cls) -> List[Dict]:
         """加载博客/新闻/讨论数据"""
         return ProductRepository.load_blogs()
@@ -178,7 +197,7 @@ class ProductService:
     @staticmethod
     def get_trending_products(limit: int = 5) -> List[Dict]:
         """获取热门推荐产品 (多样化)"""
-        products = ProductService._load_products()
+        products = ProductService.get_discovery_products()
         products = filters.filter_by_dark_horse_index(products, min_index=2)
 
         # 按 hot_score 或 final_score 排序
@@ -204,7 +223,7 @@ class ProductService:
 
         多样化规则: 硬件 ≤40%, 每个硬件子类别 ≤3, 每个软件类别 ≤4
         """
-        products = ProductService._load_products()
+        products = ProductService.get_discovery_products()
         products = filters.filter_by_dark_horse_index(products, min_index=2)
 
         # 统一排序入口（含历史参数兼容）
@@ -396,96 +415,16 @@ class ProductService:
         排序规则: 评分 > 融资金额 > 用户数/估值
         多样化规则: 硬件 ≤40%, 每个硬件子类别 ≤3
         """
-        products = ProductService._load_products()
-        now = datetime.now()
-        fresh_cutoff = now - timedelta(days=Config.DARK_HORSE_FRESH_DAYS)  # 5 days
-        sticky_cutoff = now - timedelta(days=Config.DARK_HORSE_STICKY_DAYS)  # 10 days
-
-        # 筛选有 dark_horse_index 且 >= min_index 的产品
-        all_candidates = filters.filter_by_dark_horse_index(products, min_index=min_index)
-
-        # 黑马区优先展示“可展示质量”产品，避免 unknown 网站 + 占位 Logo 的低质体验。
-        def _is_presentable(product: Dict[str, Any]) -> bool:
-            website = str(product.get('website') or '').strip().lower()
-            has_usable_website = website not in {'', 'unknown', 'n/a', 'na', 'none', 'null'}
-            if has_usable_website:
-                return True
-            logo_url = str(product.get('logo_url') or '').strip()
-            needs_verification = bool(product.get('needs_verification'))
-            return bool(logo_url) and not needs_verification
-
-        presentable_candidates = [p for p in all_candidates if _is_presentable(p)]
-        if presentable_candidates:
-            # 如果有足够可展示产品，优先使用它们；否则回退到全量候选避免空列表。
-            min_presentable = min(limit, 5)
-            if len(presentable_candidates) >= min_presentable:
-                all_candidates = presentable_candidates
-
-        if not all_candidates:
-            return []
-
-        # 找到 TOP 1 产品 (最高评分+融资, 可保留 10 天)
-        top_product = max(all_candidates, key=sorting.product_score_key)
-        top_product_date = sorting.get_effective_date(top_product)
-        top_product_eligible = (
-            top_product_date and top_product_date >= sticky_cutoff
-        )
-
-        # 筛选新鲜产品 (5 天内)
-        fresh_candidates = []
-        for p in all_candidates:
-            effective_date = sorting.get_effective_date(p)
-            if effective_date and effective_date >= fresh_cutoff:
-                fresh_candidates.append(p)
-
-        # 如果 TOP 1 产品不在新鲜列表但仍在 10 天内, 添加到候选
-        if top_product_eligible and top_product not in fresh_candidates:
-            fresh_candidates.append(top_product)
-
-        # 仅在“完全空状态”时回退到历史候选，避免把过期产品补回本周黑马
-        if not fresh_candidates:
-            # 按评分+融资排序所有候选
-            all_candidates_sorted = sorted(
-                all_candidates,
-                key=lambda x: (
-                    -(x.get('dark_horse_index', 0) or 0),
-                    -sorting.parse_funding(x.get('funding_total', '')),
-                    -sorting.get_valuation_score(x)
-                )
-            )
-            # 补充不在新鲜列表中的产品
-            for p in all_candidates_sorted:
-                if p not in fresh_candidates:
-                    fresh_candidates.append(p)
-                if len(fresh_candidates) >= limit:
-                    break
-
-        def sort_key(product: Dict[str, Any]):
-            """排序: 新鲜度优先, 然后评分 > 融资"""
-            effective_date = sorting.get_effective_date(product) or datetime(1970, 1, 1)
-            is_fresh = effective_date >= fresh_cutoff
-            is_top_sticky = (product == top_product and top_product_eligible)
-
-            return (
-                0 if (is_fresh or is_top_sticky) else 1,  # 新鲜/置顶优先
-                -(product.get('dark_horse_index', 0) or 0),
-                -sorting.parse_funding(product.get('funding_total', '')),
-                -sorting.get_valuation_score(product)
-            )
-
-        fresh_candidates.sort(key=sort_key)
-
-        # 使用多样化算法选择产品 (硬件 ≤40%, 每个硬件子类别 ≤3)
-        selected = sorting.diversify_products(
-            fresh_candidates,
-            limit,
-            max_per_category=4,
-            max_per_source=5,
-            hardware_ratio=0.4,
-            max_per_hw_category=2
-        )
-
-        return selected
+        candidates = filters.filter_by_dark_horse_index(ProductService.get_discovery_products(), min_index=min_index)
+        now = datetime.utcnow()
+        cutoff = now - timedelta(days=Config.DARK_HORSE_FRESH_DAYS)
+        fresh = [p for p in candidates if (sorting.get_effective_date(p) or datetime.min) >= cutoff
+                 and (sorting.get_effective_date(p) or datetime.min) <= now]
+        # An archive can still be useful, but never masquerades as this week's discoveries.
+        archived = not bool(fresh)
+        selected = sorting.sort_weekly_top(fresh or candidates, sort_by='recency')
+        selected = sorting.diversify_products(selected, max(1, min(limit, 50)), max_per_category=4, max_per_source=5)
+        return [dict(p, is_archived=archived) for p in selected]
 
     @staticmethod
     def get_rising_star_products(limit: int = 20) -> List[Dict]:
@@ -496,7 +435,7 @@ class ProductService:
 
         排序规则: 评分 > 融资金额 > 用户数/估值
         """
-        products = ProductService._load_products()
+        products = ProductService.get_discovery_products()
 
         # 筛选 dark_horse_index 为 2-3 的产品
         rising_stars = filters.filter_by_dark_horse_index(products, min_index=2, max_index=3)
@@ -539,7 +478,7 @@ class ProductService:
 
                 # 检查是否在时间窗口内
                 age_hours = (now - product_date).total_seconds() / 3600
-                if age_hours <= hours:
+                if 0 <= age_hours <= hours:
                     p['_freshness_hours'] = age_hours  # 添加新鲜度标记
                     fresh_products.append(p)
             except (ValueError, TypeError):
@@ -581,7 +520,7 @@ class ProductService:
 
         # Score all other products by similarity
         scored = []
-        for p in products:
+        for p in ProductService.get_discovery_products():
             if p.get('name') == target_name:
                 continue
 

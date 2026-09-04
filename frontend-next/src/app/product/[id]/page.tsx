@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { WebsiteScreenshot } from "@/components/common/website-screenshot";
 import { ProductCard } from "@/components/product/product-card";
 import { SmartLogo } from "@/components/common/smart-logo";
+import { FavoriteButton } from "@/components/favorites/favorite-button";
 import { getProductById, getRelatedProducts } from "@/lib/api-client";
 import { pickLocaleText, type SiteLocale } from "@/lib/locale";
 import { getRequestLocale } from "@/lib/locale-server";
@@ -18,6 +19,8 @@ import {
   isValidWebsite,
   normalizeWebsite,
   resolveProductLogoSources,
+  resolveProductCountry,
+  getLocalizedCountryName,
 } from "@/lib/product-utils";
 
 export const dynamic = "force-dynamic";
@@ -44,9 +47,9 @@ function formatDate(value?: string): string {
   if (!value) return "-";
   const date = new Date(value);
   if (!Number.isFinite(date.getTime())) return "-";
-  const yyyy = date.getFullYear();
-  const mm = String(date.getMonth() + 1).padStart(2, "0");
-  const dd = String(date.getDate()).padStart(2, "0");
+  const yyyy = date.getUTCFullYear();
+  const mm = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const dd = String(date.getUTCDate()).padStart(2, "0");
   return `${yyyy}-${mm}-${dd}`;
 }
 
@@ -54,7 +57,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const locale = await getRequestLocale();
   const t = (zh: string, en: string) => pickLocaleText(locale, { zh, en });
   const { id } = await params;
-  const decodedId = decodeURIComponent(id);
+  const decodedId = id;
 
   const [product, related] = await Promise.all([getProductById(decodedId), getRelatedProducts(decodedId, 10)]);
 
@@ -66,12 +69,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const score = getProductScore(product);
   const scoreLabel = formatScore(score, locale);
   const categoryLine = formatCategories(product, locale);
-  const regionLine = product.region?.trim();
+  const regionLine = getLocalizedCountryName(resolveProductCountry(product), locale);
   const description = cleanDescription(getLocalizedProductDescription(product, locale), locale);
   const funding = !isPlaceholderValue(product.funding_total) ? product.funding_total?.trim() : "-";
   const valuation = !isPlaceholderValue(product.valuation) ? product.valuation?.trim() : "-";
   const discoveredDate = formatDate(product.discovered_at || product.first_seen || product.published_at);
-  const whyMatters = getLocalizedProductWhyMatters(product, locale) || t("why_matters 待补充", "Why this matters is pending");
+  const whyMatters = getLocalizedProductWhyMatters(product, locale) || t("研究摘要待补充", "Research note pending");
   const latestNews = getLocalizedProductLatestNews(product, locale) || t("暂无最新动态", "No recent updates yet");
   const websiteSearchUrl = getProductWebsiteSearchUrl(product.name, locale);
   const resolvedLogo = resolveProductLogoSources(product);
@@ -108,37 +111,38 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <p className="detail-hero__description">{description}</p>
           </div>
         </header>
+        {product.needs_verification ? <p className="section-desc">{t("这条记录尚待核实。请通过原始来源确认产品身份与数据后再使用。", "This record needs verification. Check the original source before relying on its identity or figures.")}</p> : null}
 
         <section className="detail-block">
-          <h2 className="detail-block__title">📊 {t("关键指标", "Key Metrics")}</h2>
+          <h2 className="detail-block__title">{t("档案信息", "On record")}</h2>
           <div className="detail-metrics-grid">
             <div className="detail-metric">
-              <span className="detail-metric__label">💰 {t("融资", "Funding")}</span>
+              <span className="detail-metric__label">{t("融资记录", "Reported funding")}</span>
               <strong className="detail-metric__value">{funding || "-"}</strong>
             </div>
             <div className="detail-metric">
-              <span className="detail-metric__label">🏷️ {t("估值", "Valuation")}</span>
+              <span className="detail-metric__label">{t("估值记录", "Reported valuation")}</span>
               <strong className="detail-metric__value">{valuation || "-"}</strong>
             </div>
             <div className="detail-metric">
-              <span className="detail-metric__label">📅 {t("发现日期", "Discovery Date")}</span>
+              <span className="detail-metric__label">{t("收录日期", "Discovered")}</span>
               <strong className="detail-metric__value">{discoveredDate}</strong>
             </div>
           </div>
         </section>
 
         <section className="detail-block">
-          <h2 className="detail-block__title">💡 {t("为什么重要", "Why It Matters")}</h2>
+          <h2 className="detail-block__title">{t("值得研究的原因", "Why look closer")}</h2>
           <p className="detail-block__content">{whyMatters}</p>
         </section>
 
         <section className="detail-block">
-          <h2 className="detail-block__title">📰 {t("最新动态", "Latest Update")}</h2>
+          <h2 className="detail-block__title">{t("记录中的动态", "Recorded update")}</h2>
           <p className="detail-block__content">{latestNews}</p>
         </section>
 
         <section className="detail-block">
-          <h2 className="detail-block__title">🖼️ {t("产品截图", "Product Screenshot")}</h2>
+          <h2 className="detail-block__title">{t("网站预览", "Website preview")}</h2>
           <WebsiteScreenshot
             className="detail-site-shot"
             website={product.website}
@@ -156,6 +160,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </section>
 
         <footer className="detail-actions">
+          <FavoriteButton product={product} />
+          {product.source_url && isValidWebsite(product.source_url) ? <a className="link-btn" href={product.source_url} target="_blank" rel="noopener noreferrer">{t("阅读原始来源", "Read original source")}</a> : null}
           {isValidWebsite(website) && !product.needs_verification ? (
             <a className="link-btn link-btn--primary" href={website} target="_blank" rel="noopener noreferrer">
               {t("访问官网", "Visit website")}
@@ -179,7 +185,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
       <section className="detail-related">
         <div className="section-header">
-          <h2 className="section-title">🔗 {t("相关产品", "Related Products")}</h2>
+          <h2 className="section-title">{t("继续研究", "Continue exploring")}</h2>
         </div>
 
         {related.length ? (

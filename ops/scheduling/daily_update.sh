@@ -2,29 +2,33 @@
 # WeeklyAI Daily Update Script
 # Runs AI global search and news updates daily
 
-REPO_DIR="/Users/jun/Desktop/Projects/WeeklyAI"
-PYTHON_BIN="/usr/bin/python3"
+REPO_DIR="${WEEKLYAI_REPO_DIR:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)}"
+PYTHON_BIN="${PYTHON_BIN:-python3}"
 LOG_DIR="$REPO_DIR/crawler/logs"
 
-cd "$REPO_DIR"
+cd "$REPO_DIR" || exit 1
 
 # Create logs directory if not exists
 mkdir -p "$LOG_DIR"
 
 # Load environment variables from .env if exists
 if [ -f "$REPO_DIR/.env" ]; then
-    export $(grep -v '^#' "$REPO_DIR/.env" | xargs)
+    set -a
+    source "$REPO_DIR/.env"
+    set +a
 fi
 
 TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
 echo "=== WeeklyAI Daily Update Started at $TIMESTAMP ===" >> "$LOG_DIR/daily_update.log"
+"$PYTHON_BIN" crawler/tools/check_providers.py --live >> "$LOG_DIR/daily_update.log" 2>&1 || exit 1
 
 # 1. AI Global Search (main task)
 echo "[$(date +%H:%M:%S)] Running auto_discover.py --region all..." >> "$LOG_DIR/daily_update.log"
-if $PYTHON_BIN crawler/tools/auto_discover.py --region all >> "$LOG_DIR/daily_update.log" 2>&1; then
+if "$PYTHON_BIN" crawler/tools/auto_discover.py --region all --require-results >> "$LOG_DIR/daily_update.log" 2>&1; then
     echo "[$(date +%H:%M:%S)] auto_discover.py completed successfully" >> "$LOG_DIR/daily_update.log"
 else
     echo "[$(date +%H:%M:%S)] auto_discover.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
+    exit 1
 fi
 
 # 1.5 Auto publish to products_featured.json
@@ -33,6 +37,7 @@ if $PYTHON_BIN crawler/tools/auto_publish.py >> "$LOG_DIR/daily_update.log" 2>&1
     echo "[$(date +%H:%M:%S)] auto_publish.py completed successfully" >> "$LOG_DIR/daily_update.log"
 else
     echo "[$(date +%H:%M:%S)] auto_publish.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
+    exit 1
 fi
 
 # 1.6 Backfill source_url into featured (from weekly files)
@@ -130,6 +135,7 @@ if [ -n "$MONGO_URI" ]; then
         echo "[$(date +%H:%M:%S)] sync_to_mongodb.py completed successfully" >> "$LOG_DIR/daily_update.log"
     else
         echo "[$(date +%H:%M:%S)] sync_to_mongodb.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
+        exit 1
     fi
 else
     echo "[$(date +%H:%M:%S)] MONGO_URI not set, skipping MongoDB sync" >> "$LOG_DIR/daily_update.log"

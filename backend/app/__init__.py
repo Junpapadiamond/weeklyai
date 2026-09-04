@@ -59,20 +59,14 @@ def create_app():
     else:
         CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-    # The product repository owns Mongo access and falls back to JSON snapshots.
-    # Keep app startup resilient when Vercel has a missing or malformed MONGO_URI.
-    mongo_uri = _configured_mongo_uri()
-    if mongo_uri:
-        app.config["MONGO_URI"] = mongo_uri
-        try:
-            mongo.init_app(app)
-        except Exception as exc:
-            app.logger.warning("Skipping Flask-PyMongo init: %s", exc)
+    # The repository owns the single lazy Mongo client. Eager PyMongo setup
+    # repeated DNS lookups during every Vercel cold start, even for /chat/status.
+    app.config['MAX_CONTENT_LENGTH'] = 24000
 
     # Rate limiting middleware
     @app.before_request
     def check_rate_limit():
-        if request.path.startswith('/api/'):
+        if request.path.startswith('/api/') and request.method != 'OPTIONS':
             client_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
             if client_ip:
                 client_ip = client_ip.split(',')[0].strip()
@@ -102,6 +96,22 @@ def create_app():
     app.register_blueprint(products_bp, url_prefix='/api/v1/products')
     app.register_blueprint(search_bp, url_prefix='/api/v1/search')
     app.register_blueprint(chat_bp, url_prefix='/api/v1/chat')
+
+    @app.get('/api/v1/health')
+    def health():
+        from app.services.product_repository import ProductRepository, _mongo_uri_configured
+        products = ProductRepository.load_products()
+        updated = ProductRepository.get_last_updated()
+        return jsonify({
+            'success': bool(products),
+            'status': 'ready' if products else 'unavailable',
+            'product_count': len(products),
+            'storage': updated['storage'],
+            'mongo_configured': _mongo_uri_configured(),
+            'chat_configured': bool(sanitize_env_value(os.getenv('PERPLEXITY_API_KEY', ''))),
+            'product_last_updated': updated['product_last_updated'],
+            'product_hours_ago': updated['product_hours_ago'],
+        }), 200 if products else 503
 
     return app
 

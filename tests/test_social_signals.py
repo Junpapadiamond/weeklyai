@@ -205,7 +205,7 @@ class TestXFallbackPath(unittest.TestCase):
 
         payload = {
             "text": "We launched an AI agent that reached 100k users in one week.",
-            "created_at": "2026-02-08T10:00:00.000Z",
+            "created_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
             "user": {"screen_name": "OpenAI"},
         }
 
@@ -242,7 +242,7 @@ class TestXFallbackPath(unittest.TestCase):
         item = items[0]
         self.assertEqual(item.get("source"), "x")
         self.assertEqual(item.get("website"), "https://x.com/OpenAI/status/2019513755621843450")
-        self.assertEqual(item.get("published_at"), "2026-02-08T10:00:00Z")
+        self.assertEqual(item.get("published_at"), payload["created_at"])
         extra = item.get("extra") or {}
         self.assertEqual(extra.get("query"), "account_fallback:OpenAI:r_jina")
         self.assertEqual(extra.get("author_handle"), "OpenAI")
@@ -255,7 +255,7 @@ class TestXFallbackPath(unittest.TestCase):
             "url": "https://x.com/OpenAI/status/2019513755621843451",
             "title": "Introducing a new AI agent release",
             "snippet": "We launched an AI agent update for developers.",
-            "published_at": "2026-02-08T10:00:00Z",
+            "published_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
             "author_handle": "OpenAI",
         }
 

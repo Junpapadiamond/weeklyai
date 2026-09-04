@@ -31,6 +31,7 @@ def _make_product(name: str, days_ago: int, score: int = 4, funding: str = "$0M"
         "discovered_at": dt.strftime("%Y-%m-%d"),
         "is_hardware": False,
         "source": "test",
+        "source_url": "https://evidence.example/story",
         "why_matters": "test",
     }
 
@@ -47,7 +48,7 @@ class TestDarkHorseFreshness:
         fresh = _make_product("FreshOne", days_ago=1, score=5, funding="$100M")
         old = _make_product("OldOne", days_ago=30, score=5, funding="$500M")
 
-        with mock.patch.object(ProductService, "_load_products", return_value=[fresh, old]):
+        with mock.patch.object(ProductService, "get_discovery_products", return_value=[fresh, old]):
             # Freeze config to a known value for this test
             with mock.patch("app.services.product_service.Config.DARK_HORSE_FRESH_DAYS", 5), \
                  mock.patch("app.services.product_service.Config.DARK_HORSE_STICKY_DAYS", 10):
@@ -67,7 +68,7 @@ class TestDarkHorseFreshness:
         old_a = _make_product("OldA", days_ago=30, score=5, funding="$500M")
         old_b = _make_product("OldB", days_ago=40, score=4, funding="$10M")
 
-        with mock.patch.object(ProductService, "_load_products", return_value=[old_a, old_b]):
+        with mock.patch.object(ProductService, "get_discovery_products", return_value=[old_a, old_b]):
             with mock.patch("app.services.product_service.Config.DARK_HORSE_FRESH_DAYS", 5), \
                  mock.patch("app.services.product_service.Config.DARK_HORSE_STICKY_DAYS", 10):
                 res = ProductService.get_dark_horse_products(limit=2, min_index=4)
@@ -75,3 +76,4 @@ class TestDarkHorseFreshness:
         names = [p["name"] for p in res]
         assert "OldA" in names
         assert "OldB" in names
+        assert all(p["is_archived"] for p in res)

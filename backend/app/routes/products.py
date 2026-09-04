@@ -188,6 +188,9 @@ def get_last_updated():
             'success': True,
             'last_updated': info.get('last_updated'),
             'hours_ago': info.get('hours_ago'),
+            'product_last_updated': info.get('product_last_updated'),
+            'product_hours_ago': info.get('product_hours_ago'),
+            'storage': info.get('storage'),
             'message': '获取数据更新时间成功'
         })
     except Exception as e:

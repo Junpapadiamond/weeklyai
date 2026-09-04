@@ -48,10 +48,11 @@ jobs:
           set -euo pipefail
           export CONTENT_YEAR="$(date -u +%Y)"
 
-          python tools/auto_discover.py --region all || true
+          python tools/check_providers.py --live
+          python tools/auto_discover.py --region all --require-results
           # Sanity prune weekly dark horses (avoid headline-like items).
-          python tools/prune_dark_horses.py || true
-          python tools/auto_publish.py || true
+          python tools/prune_dark_horses.py
+          python tools/auto_publish.py
 
           # Quality / enrichment pipeline (best-effort, don't fail the whole run)
           python tools/backfill_source_urls.py || true
@@ -128,6 +129,7 @@ jobs:
           mkdir -p backend/data/dark_horses
 
           cp -f crawler/data/products_featured.json backend/data/products_featured.json
+          cp -f crawler/data/product_legacy_ids.json backend/data/product_legacy_ids.json
           cp -f crawler/data/blogs_news.json backend/data/blogs_news.json
           cp -f crawler/data/industry_leaders.json backend/data/industry_leaders.json
           cp -f crawler/data/last_updated.json backend/data/last_updated.json
@@ -148,6 +150,7 @@ jobs:
             crawler/data/dark_horses \
             crawler/data/rising_stars \
             backend/data/products_featured.json \
+            backend/data/product_legacy_ids.json \
             backend/data/blogs_news.json \
             backend/data/industry_leaders.json \
             backend/data/last_updated.json \
@@ -181,4 +184,16 @@ jobs:
           if [ "$pushed" != "true" ]; then
             echo "❌ Push failed after retries (non-fast-forward or rebase conflict)." | tee -a "$GITHUB_STEP_SUMMARY"
             exit 1
+          fi
+
+      - name: Sync published snapshot to MongoDB (when configured)
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+          MONGO_DB_NAME: ${{ vars.MONGO_DB_NAME || 'weeklyai' }}
+        run: |
+          set -euo pipefail
+          if [ -z "$MONGO_URI" ]; then
+            echo "MongoDB sync skipped: MONGO_URI is not configured; Vercel uses the committed snapshot." >> "$GITHUB_STEP_SUMMARY"
+          else
+            python crawler/tools/sync_to_mongodb.py --blogs
           fi

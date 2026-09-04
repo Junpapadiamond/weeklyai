@@ -10,6 +10,7 @@ import "../styles/tokens.css";
 import "../styles/base.css";
 import "../styles/home.css";
 import "../styles/chat.css";
+import "../styles/briefing.css";
 
 const displayFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -52,7 +53,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const appShell = isAppShellUserAgent(requestHeaders.get("user-agent"));
 
   return (
-    <html lang={locale} suppressHydrationWarning data-app-shell={appShell ? "ios" : undefined}>
+    <html lang={locale} suppressHydrationWarning data-scroll-behavior="smooth" data-app-shell={appShell ? "ios" : undefined}>
       <head>
         <script
           dangerouslySetInnerHTML={{

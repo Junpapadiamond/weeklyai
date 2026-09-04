@@ -1,8 +1,7 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Link from "next/link";
-import { Cpu, Flame, Search, Sparkles } from "lucide-react";
+import { ArrowUpRight, Bookmark, Cpu, Search, Sparkles } from "lucide-react";
 import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import type { Product } from "@/types/api";
 import type { SiteLocale } from "@/lib/locale";
@@ -26,7 +25,6 @@ import {
   getProductDirections,
   getProductScore,
   isHardware,
-  isPlaceholderValue,
   isValidWebsite,
   normalizeWebsite,
   productKey,
@@ -35,15 +33,10 @@ import {
   sortProducts,
 } from "@/lib/product-utils";
 
-const HeroCanvas = dynamic(() => import("@/components/home/hero-canvas"), {
-  ssr: false,
-  loading: () => <div className="hero-canvas hero-canvas--loading" aria-hidden="true" />,
-});
-
 const PRODUCTS_PER_PAGE = 12;
-const DARK_HORSE_COLLAPSE_LIMIT = 10;
+const DARK_HORSE_COLLAPSE_LIMIT = 5;
 const POPULAR_DIRECTION_LIMIT = 10;
-const DEFAULT_WEEKLY_TOP_SORT: WeeklyTopSort = "composite";
+const DEFAULT_WEEKLY_TOP_SORT: WeeklyTopSort = "recency";
 
 type HomeClientProps = {
   darkHorses: Product[];
@@ -77,18 +70,18 @@ function HomeProductCard({ product, highlighted = false, rank, favoritable = fal
   const hasWebsite = isValidWebsite(website) && !product.needs_verification;
   const country = resolveProductCountry(product);
   const regionLabel = getLocalizedCountryName(country, locale);
-  const fundingLabel = !isPlaceholderValue(product.funding_total) ? product.funding_total?.trim() : "";
+  const recordedDate = (product.discovered_at || product.first_seen || "").slice(0, 10);
   const summary =
-    getLocalizedProductWhyMatters(product, locale)
+    cleanDescription(getLocalizedProductWhyMatters(product, locale), locale)
     || cleanDescription(getLocalizedProductDescription(product, locale), locale)
     || t("产品摘要待补充", "Product summary pending");
   const websiteSearchUrl = getProductWebsiteSearchUrl(product.name, locale);
   const resolvedLogo = resolveProductLogoSources(product);
 
   const metadata = [
-    country.flag ? `${country.flag} ${regionLabel}` : regionLabel,
-    fundingLabel || t("融资待补充", "Funding pending"),
-    scoreLabel,
+    regionLabel,
+    `${t("发现评分", "Discovery score")} ${scoreLabel}`,
+    recordedDate || t("日期未记录", "Date not recorded"),
   ].join(" · ");
 
   return (
@@ -116,7 +109,7 @@ function HomeProductCard({ product, highlighted = false, rank, favoritable = fal
         <div className="darkhorse-spotlight__content">
           <header className="darkhorse-spotlight__header">
             <div className="darkhorse-spotlight__header-main">
-              <h3 className="darkhorse-spotlight__title">{product.name}</h3>
+              <h3 className="darkhorse-spotlight__title"><Link href={`/product/${detailId}`}>{product.name}</Link></h3>
               <p className="darkhorse-spotlight__categories">{formatCategories(product, locale)}</p>
             </div>
             {favoritable ? <FavoriteButton product={product} className="darkhorse-spotlight__favorite" /> : null}
@@ -126,9 +119,11 @@ function HomeProductCard({ product, highlighted = false, rank, favoritable = fal
             {metadata}
           </p>
 
-          <p className="darkhorse-spotlight__why">{summary}</p>
+          <p className="briefing-description">{cleanDescription(getLocalizedProductDescription(product, locale), locale)}</p>
+          <p className="darkhorse-spotlight__why"><span className="briefing-why-label">{t("值得注意", "WHY LOOK")} / </span>{summary}</p>
 
           <footer className="darkhorse-spotlight__footer">
+            {product.source_url && isValidWebsite(product.source_url) ? <a className="briefing-source" href={product.source_url} target="_blank" rel="noopener noreferrer">{t("阅读来源", "Read source")} <ArrowUpRight size={13} /></a> : null}
             <Link href={`/product/${detailId}`} className="link-btn link-btn--card link-btn--card-primary">
               {t("详情", "Details")}
             </Link>
@@ -172,9 +167,6 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
   const [showAllDarkHorses, setShowAllDarkHorses] = useState(false);
   const [isDirectionSheetOpen, setIsDirectionSheetOpen] = useState(false);
   const [directionQuery, setDirectionQuery] = useState("");
-  const [isMobileHero, setIsMobileHero] = useState(false);
-  const [showHeroCanvas, setShowHeroCanvas] = useState(false);
-  const heroArtRef = useRef<HTMLDivElement | null>(null);
   const listSentinelRef = useRef<HTMLDivElement | null>(null);
   const deferredDirectionQuery = useDeferredValue(directionQuery);
 
@@ -183,40 +175,6 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
     syncCount();
     return subscribeFavorites(syncCount);
   }, []);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const media = window.matchMedia("(max-width: 760px)");
-    const update = () => setIsMobileHero(media.matches);
-    update();
-    media.addEventListener("change", update);
-    return () => media.removeEventListener("change", update);
-  }, []);
-
-  useEffect(() => {
-    if (isMobileHero) return;
-
-    const node = heroArtRef.current;
-    if (!node) return;
-    if (typeof IntersectionObserver === "undefined") {
-      const rafId = window.requestAnimationFrame(() => setShowHeroCanvas(true));
-      return () => window.cancelAnimationFrame(rafId);
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          setShowHeroCanvas(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "120px" }
-    );
-
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, [isMobileHero]);
 
   useEffect(() => {
     if (!isDirectionSheetOpen) return;
@@ -317,15 +275,9 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
     () => parseLastUpdatedLabel(freshnessHoursAgo, locale),
     [freshnessHoursAgo, locale]
   );
-  const isEnglish = locale === "en-US";
-  const heroSubtitle = isEnglish
-    ? "Spend 5 minutes each week on the most promising breakouts, then widen out to the broader AI product board."
-    : "每周 5 分钟，看完最值得关注的黑马，再延伸到更大的 AI 产品盘面。";
-
-  const activeDirectionLabel =
-    activeDirectionFilter === "all" ? t("全部方向", "All directions") : getDirectionLabel(activeDirectionFilter, locale);
-
-  const shouldRenderHeroCanvas = !isMobileHero && showHeroCanvas;
+  const isArchive = darkHorses.length > 0 && darkHorses.every(product => product.is_archived);
+  const activeDirectionLabel = activeDirectionFilter === "all" ? t("选择方向", "Choose a direction") : getDirectionLabel(activeDirectionFilter, locale);
+  const heroSubtitle = t("为产品经理追踪值得研究的 AI 产品。先看它解决什么问题，再看证据，最后决定要不要试。", "AI products worth studying, for people who build products. Start with the use case. Follow the evidence. Decide what to try.");
 
   const selectDirection = (value: string) => {
     setDirectionFilter(value);
@@ -334,48 +286,35 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
   };
 
   return (
-    <div className="home-root" data-vibe="experimental">
-      <section className="hero">
-        <div className="hero-art" ref={heroArtRef}>
-          {shouldRenderHeroCanvas ? (
-            <HeroCanvas />
-          ) : !isMobileHero ? (
-            <div className="hero-canvas hero-canvas--loading" aria-hidden="true" />
-          ) : null}
-        </div>
+    <div className="home-root" data-vibe="briefing">
+      <section className="hero briefing-hero">
         <div className="hero-layout">
-          <div className={`hero-content ${isEnglish ? "hero-content--en" : ""}`}>
-            <h1 className={`hero-title ${isEnglish ? "hero-title--en" : ""}`}>
-              {isEnglish ? (
-                <>
-                  <span className="hero-title__line">Discover the latest</span>
-                  <span className="hero-title__line">
-                    global <span className="gradient-text">AI products</span>
-                  </span>
-                </>
-              ) : (
-                <>
-                  发现全球最新 <span className="gradient-text">AI 产品</span>
-                </>
-              )}
-            </h1>
-            <p className={`hero-subtitle ${isEnglish ? "hero-subtitle--en" : ""}`}>
-              {heroSubtitle}
-            </p>
+          <div className="hero-content">
+            <p className="briefing-kicker">WEEKLY AI / {t("全球产品观察", "GLOBAL PRODUCT NOTES")}</p>
+            <h1 className="hero-title">{t("下一款值得研究的", "Find your next")}<br /><span>{t("AI 产品。", "product insight.")}</span></h1>
+            <p className="hero-subtitle">{heroSubtitle}</p>
+            <div className="briefing-actions">
+              <a className="link-btn link-btn--primary" href="#darkhorseSection">{t("开始阅读", "Read the brief")} <ArrowUpRight size={16} /></a>
+              <Link className="briefing-text-link" href="/discover">{t("随机发现一款", "Surprise me")}</Link>
+            </div>
           </div>
+          <aside className="briefing-note" aria-label={t("阅读指南", "About this brief")}>
+            <span className="briefing-kicker">{t("阅读这份观察", "A NOTE BEFORE YOU READ")}</span>
+            <p>{t("好产品的线索，藏在具体问题里。", "Interesting products start with specific problems.")}</p>
+            <span>{t("每条推荐附来源。评分代表发现价值，不是产品质量测评。", "Every pick links to its source. Scores reflect discovery potential, not a hands-on product review.")}</span>
+            <Link href="/content-sources" className="briefing-text-link">{t("了解筛选方法", "How we select products")} <ArrowUpRight size={14} /></Link>
+          </aside>
         </div>
       </section>
 
       <section className="section darkhorse-section" id="darkhorseSection">
         <div className="section-header section-header--tight">
           <h2 className="section-title">
-            <span className="title-icon">
-              <Flame size={18} />
-            </span>
-            {t("本周黑马", "Dark Horses This Week")}
+            <span className="briefing-section-number">01</span>
+            {isArchive ? t("从档案中发现", "From the research archive") : t("近期值得关注", "Recent discoveries")}
           </h2>
           <p className="section-desc">
-            {t("先看最值得盯住的 4-5 分产品，减少首页噪声。", "Start with the 4-5 score breakouts worth tracking first.")}
+            {isArchive ? t("近期暂无新发现，以下保留历史研究供参考。请查看每条记录的日期与来源。", "No recent discoveries yet. Explore earlier research below, with dates and sources on every record.") : t("有明确用途、有来源可查的早期产品。", "Emerging products with a concrete use case and a source you can check.")}
           </p>
         </div>
 
@@ -427,7 +366,8 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
               <HomeProductCard
                 key={product._id || product.name}
                 product={product}
-                highlighted={index < 3}
+                highlighted={index === 0}
+                favoritable
                 rank={index + 1}
               />
             ))}
@@ -453,9 +393,9 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
 
       <section className="section trending-section" id="trendingSection">
         <div className="section-header section-header--tight">
-          <h2 className="section-title">{t("更多推荐", "More Picks")}</h2>
+          <h2 className="section-title"><span className="briefing-section-number">02</span> {t("继续研究", "Keep exploring")}</h2>
           <p className="section-desc">
-            {t("黑马之外，继续看潜力股和剩余高信号产品。", "Move beyond the hero picks into the remaining high-signal products and rising stars.")}
+            {t("按方向找到与你正在做的事有关的产品。", "Find a product that connects to what you are working on.")}
           </p>
         </div>
 
@@ -503,9 +443,9 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
                   setCurrentPage(1);
                 }}
               >
-                <option value="composite">🧠 {t("综合", "Composite")}</option>
-                <option value="trending">🔥 {t("热度", "Trending")}</option>
-                <option value="recency">🕐 {t("时间", "Recency")}</option>
+                <option value="composite">{t("发现价值", "Discovery score")}</option>
+                <option value="trending">{t("热度", "Trending")}</option>
+                <option value="recency">{t("最新收录", "Recently discovered")}</option>
               </select>
             </label>
 
@@ -523,7 +463,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
               aria-label={t("打开收藏夹", "Open favorites")}
               onClick={() => openFavoritesPanel("product")}
             >
-              ❤️ {favoritesCount}
+              <Bookmark size={16} /> {favoritesCount}
             </button>
           </div>
         </div>
@@ -546,6 +486,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
         )}
 
         {hasMore ? <div ref={listSentinelRef} className="picks-list__sentinel" aria-hidden="true" /> : null}
+        <Link className="briefing-text-link" href="/search">{t("搜索完整产品档案", "Search the complete product archive")} <ArrowUpRight size={14} /></Link>
       </section>
 
       <footer className="section home-footer">

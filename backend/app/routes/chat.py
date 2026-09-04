@@ -76,9 +76,21 @@ def chat():
             429,
         )
 
-    body = request.get_json(silent=True) or {}
-    message = str(body.get("message", "")).strip()
-    locale = str(body.get("locale", "zh")).strip()
+    body = request.get_json(silent=True)
+    if not isinstance(body, dict) or not isinstance(body.get("message"), str):
+        return jsonify(success=False, content="A JSON object with a text message is required.", error="BAD_REQUEST"), 400
+    history = body.get("history", [])
+    if not isinstance(history, list) or len(history) > 6 or any(
+        not isinstance(item, dict) or item.get("role") not in {"user", "assistant"}
+        or not isinstance(item.get("content"), str) or len(item["content"]) > 2000
+        for item in history
+    ):
+        return jsonify(success=False, content="Invalid conversation history.", error="BAD_REQUEST"), 400
+    history = [{"role": item["role"], "content": item["content"]} for item in history]
+    message = body["message"].strip()
+    locale = body.get("locale", "zh")
+    if not isinstance(locale, str):
+        return jsonify(success=False, content="Invalid language.", error="BAD_REQUEST"), 400
 
     if not message:
         return (
@@ -110,7 +122,7 @@ def chat():
         from app.services.chat_service import stream_chat_response
 
         return Response(
-            stream_chat_response(message=message, locale=locale),
+            stream_chat_response(message=message, locale=locale, history=history),
             mimetype="text/event-stream",
             headers={
                 "Cache-Control": "no-cache",
@@ -121,4 +133,8 @@ def chat():
 
     from app.services.chat_service import get_chat_response
 
-    return jsonify(get_chat_response(message=message, locale=locale))
+    result = get_chat_response(message=message, locale=locale, history=history)
+    status = 200 if result.get("success") else {
+        "NOT_CONFIGURED": 503, "PROVIDER_UNAVAILABLE": 503, "TIMEOUT": 504,
+    }.get(result.get("error"), 502)
+    return jsonify(result), status

@@ -8,6 +8,16 @@ type ChatMessageProps = {
   message: ChatMessage;
 };
 
+// Render source links without accepting HTML or unsafe URL schemes from the model.
+function linkedText(text: string) {
+  return text.split(/(\[[^\]\n]+\]\(https?:\/\/[^\s)]+\)|https?:\/\/[^\s<>]+)/g).map((part, index) => {
+    const markdown = part.match(/^\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)$/);
+    const href = markdown?.[2] || (/^https?:\/\//.test(part) ? part.replace(/[.,;!?。，；！？]+$/, "") : "");
+    if (!href) return part;
+    return <a key={index} href={href} target="_blank" rel="noopener noreferrer">{markdown?.[1] || href}</a>;
+  });
+}
+
 function cleanDisplayText(text: string): string {
   const value = text || "";
   return value
@@ -22,7 +32,7 @@ export function ChatMessageBubble({ message }: ChatMessageProps) {
   const isUser = message.role === "user";
   const errorPrefixes = ["HTTP ", "Upstream API error", "Request timed out", "请求超时", "Request failed", "No streamed content"];
   const isError =
-    message.content === "__ERROR__" || errorPrefixes.some((prefix) => message.content.startsWith(prefix));
+    message.isError || message.content === "__ERROR__" || errorPrefixes.some((prefix) => message.content.startsWith(prefix));
   const displayContent = cleanDisplayText(message.content);
 
   return (
@@ -38,7 +48,7 @@ export function ChatMessageBubble({ message }: ChatMessageProps) {
         ) : (
           <>
             <div className="chat-message__text">
-              {displayContent}
+              {linkedText(displayContent)}
               {message.isStreaming ? <span className="chat-cursor" /> : null}
             </div>
             {message.products?.length ? (

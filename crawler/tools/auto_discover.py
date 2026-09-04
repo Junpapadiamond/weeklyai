@@ -3438,7 +3438,7 @@ def test_perplexity():
         print("  Set it with: export PERPLEXITY_API_KEY=pplx_xxx")
         return
 
-    print(f"  API Key: {PERPLEXITY_API_KEY[:12]}...")
+    print("  API key configured")
     print(f"  Model: {PERPLEXITY_MODEL}")
     # 尝试导入新模块
     try:
@@ -3602,6 +3602,7 @@ def main():
     parser.add_argument('--source', '-s', help='指定渠道 (e.g., 36kr, producthunt)')
     parser.add_argument('--tier', '-t', type=int, choices=[1, 2, 3], help='只运行指定级别的渠道')
     parser.add_argument('--dry-run', action='store_true', help='预览模式，不保存')
+    parser.add_argument('--require-results', action='store_true', help='Exit nonzero when an all-region run produces no accepted products')
     parser.add_argument('--schedule', action='store_true', help='设置定时任务')
     parser.add_argument('--list-sources', action='store_true', help='列出所有渠道')
     parser.add_argument('--list-regions', action='store_true', help='列出所有地区')
@@ -3678,7 +3679,10 @@ def main():
         # 新方式：按地区搜索
         product_type = getattr(args, 'type', 'mixed')
         if args.region == 'all':
-            discover_all_regions(args.dry_run, product_type)
+            report = discover_all_regions(args.dry_run, product_type)
+            if args.require_results and not sum((report or {}).get('found', {}).values()):
+                print('ERROR: No accepted discoveries. Check provider access, source quality and discovery logs.')
+                raise SystemExit(1)
         else:
             discover_by_region(args.region, args.dry_run, product_type)
     elif args.source:

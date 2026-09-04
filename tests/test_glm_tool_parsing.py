@@ -180,7 +180,7 @@ class TestHardwareValidation(unittest.TestCase):
         self.assertFalse(ok)
         self.assertEqual(reason, "name looks like news headline")
 
-    def test_downgrade_high_score_unknown_website(self) -> None:
+    def test_reject_high_score_unknown_website(self) -> None:
         from prompts.analysis_prompts import validate_hardware_product
 
         product = {
@@ -194,11 +194,10 @@ class TestHardwareValidation(unittest.TestCase):
             "criteria_met": ["form_innovation", "use_case_clear"],
         }
         ok, reason = validate_hardware_product(product)
-        self.assertTrue(ok)
-        self.assertEqual(reason, "passed")
-        # Unknown website should be allowed (with manual verification), without mutating score.
+        self.assertFalse(ok)
+        self.assertIn("website", reason)
+        # A high score cannot bypass the product identity / website requirement.
         self.assertEqual(product.get("dark_horse_index"), 4)
-        self.assertTrue(product.get("needs_verification"))
 
 
 if __name__ == "__main__":

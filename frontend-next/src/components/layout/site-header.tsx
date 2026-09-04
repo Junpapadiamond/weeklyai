@@ -30,7 +30,7 @@ export function SiteHeader({ isAppShell = false }: SiteHeaderProps) {
   }, []);
 
   const navItems = [
-    { href: "/", label: t("黑马推荐", "Dark Horses"), icon: Flame },
+    { href: "/", label: t("产品观察", "The brief"), icon: Flame },
     { href: "/discover", label: t("随机发现", "Discover"), icon: Dice5 },
     { href: "/blog", label: t("博客动态", "News"), icon: Newspaper },
     { href: "/search", label: t("搜索", "Search"), icon: Search },
@@ -39,6 +39,8 @@ export function SiteHeader({ isAppShell = false }: SiteHeaderProps) {
   const mobileNavItems = [
     { href: "/", label: t("首页", "Home"), icon: Flame },
     { href: "/discover", label: t("发现", "Discover"), icon: Dice5 },
+    { href: "/blog", label: t("动态", "News"), icon: Newspaper },
+    { href: "/search", label: t("搜索", "Search"), icon: Search },
   ];
 
   function applyLocale(nextLocale: SiteLocale) {

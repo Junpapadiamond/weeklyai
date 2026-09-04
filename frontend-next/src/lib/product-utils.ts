@@ -901,22 +901,12 @@ function pickLocalizedText(product: Product, field: keyof Product, locale: SiteL
 }
 
 export function parseFundingAmount(value: string | undefined): number {
-  if (!value) return 0;
-  const normalized = value.replace(/,/g, "").trim().toLowerCase();
-  const match = normalized.match(/([\d.]+)\s*(b|m|k|亿|万)?/);
+  const text = (value || "").trim();
+  if (/in talks|planned|target|grant|市值|估值|valuation|market cap/i.test(text.split("(")[0])) return 0;
+  const match = text.match(/^(?:US\$|USD\s*|\$)([\d,]+(?:\.\d+)?)\s*([MBK])?\b/i);
   if (!match) return 0;
-
-  const amount = Number(match[1]);
-  if (!Number.isFinite(amount)) return 0;
-
-  const unit = match[2];
-  if (unit === "b") return amount * 1000;
-  if (unit === "m") return amount;
-  if (unit === "k") return amount / 1000;
-  if (unit === "亿") return amount * 100;
-  if (unit === "万") return amount / 100;
-
-  return amount;
+  const amount = Number(match[1].replace(/,/g, ""));
+  return amount * ({ B: 1000, M: 1, K: .001, "": .000001 }[match[2]?.toUpperCase() || ""] ?? 0);
 }
 
 export function getProductScore(product: Product): number {
@@ -1154,11 +1144,19 @@ export function cleanDescription(desc: string | undefined, locale: SiteLocale = 
     return pickLocaleText(locale, { zh: "暂无描述", en: "Description coming soon" });
   }
   return desc
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&(?:amp|lt|gt|quot|apos|nbsp);/g, (entity) => ({ "&amp;": "&", "&lt;": "<", "&gt;": ">", "&quot;": '"', "&apos;": "'", "&nbsp;": " " })[entity] || entity)
+    .replace(/&#(x[\da-f]+|\d+);/gi, (entity, code: string) => {
+      const point = code.toLowerCase().startsWith("x") ? parseInt(code.slice(1), 16) : Number(code);
+      return point > 0 && point <= 0x10ffff ? String.fromCodePoint(point) : entity;
+    })
+    .replace(/\[\d+(?:\s*[,，-]\s*\d+)*\]/g, "")
     .replace(/Hugging Face (模型|model|space): [^|]+[|]/gi, "")
     .replace(/[|] ⭐ [\d.]+K?\+? Stars/g, "")
     .replace(/[|] (技术|tech): .+$/gi, "")
     .replace(/[|] (下载量|downloads?): .+$/gi, "")
     .replace(/^\s*[|·]\s*/g, "")
+    .replace(/[ \t]{2,}/g, " ")
     .trim();
 }
 
@@ -1203,7 +1201,8 @@ export function getLocalizedBlogDescription(
   blog: { description?: string; description_en?: string },
   locale: SiteLocale = DEFAULT_LOCALE
 ): string {
-  return pickLocalizedBlogText(blog.description, blog.description_en, locale);
+  const text = pickLocalizedBlogText(blog.description, blog.description_en, locale);
+  return text ? cleanDescription(text, locale) : "";
 }
 
 export function getMonogram(name: string | undefined): string {

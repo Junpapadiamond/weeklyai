@@ -236,7 +236,7 @@ export function FavoritesPanel() {
         aria-hidden={!isOpen}
         onClick={() => setIsOpen(false)}
       />
-      <aside className={`favorites-panel ${isOpen ? "is-open" : ""}`} aria-hidden={!isOpen}>
+      <aside className={`favorites-panel ${isOpen ? "is-open" : ""}`} aria-hidden={!isOpen} inert={!isOpen}>
         <header className="favorites-panel__header">
           <div>
             <h2>{t("收藏夹", "Favorites")}</h2>

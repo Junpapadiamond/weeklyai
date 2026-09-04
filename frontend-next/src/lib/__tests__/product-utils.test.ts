@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   collectDirectionOptions,
+  cleanDescription,
   filterProducts,
   filterDirectionOptions,
   formatAbsoluteDate,
@@ -33,6 +34,9 @@ import {
 import type { Product } from "@/types/api";
 
 describe("product-utils", () => {
+  it("renders RSS markup as readable text without HTML", () => {
+    expect(cleanDescription('Visit <a href="https://example.com">https:&#x2F;&#x2F;example.com</a> &amp; learn. [2]', 'en-US')).toBe('Visit https://example.com & learn.');
+  });
   it("normalizes website and rejects placeholder values", () => {
     expect(normalizeWebsite("example.com")).toBe("https://example.com");
     expect(normalizeWebsite("unknown")).toBe("");
@@ -124,7 +128,6 @@ describe("product-utils", () => {
     expect(
       resolveProductLogoSources({
         name: "Science Corp.",
-        description: "",
         website: "https://science.xyz/",
         logo_url: "",
       })
@@ -136,7 +139,6 @@ describe("product-utils", () => {
     expect(
       resolveProductLogoSources({
         name: "ZyG",
-        description: "",
         website: "https://www.zyg.com/",
         logo_url: "",
       })
@@ -150,7 +152,6 @@ describe("product-utils", () => {
     expect(
       resolveProductLogoSources({
         name: "Placeholder Co",
-        description: "",
         website: "https://placeholder.example/",
         logo_url: "/logos/custom/default-ai.svg",
         logo: "https://cdn.placeholder.example/logo.png",
@@ -163,7 +164,6 @@ describe("product-utils", () => {
     expect(
       resolveProductLogoSources({
         name: "Clearbit Co",
-        description: "",
         website: "https://clearbit.example/",
         logo_url: "https://logo.clearbit.com/clearbit.example",
         logo: "https://assets.clearbit.example/logo.svg",
@@ -178,7 +178,6 @@ describe("product-utils", () => {
     expect(
       resolveProductLogoSources({
         name: "ZyG",
-        description: "",
         website: "https://zyg.ai/",
         logo_url: "https://zyg.ai/apple-touch-icon.png",
       })
@@ -191,7 +190,10 @@ describe("product-utils", () => {
   it("parses funding amounts with units", () => {
     expect(parseFundingAmount("$35M")).toBe(35);
     expect(parseFundingAmount("$1.2B")).toBe(1200);
-    expect(parseFundingAmount("¥3亿")).toBe(300);
+    expect(parseFundingAmount("¥3亿")).toBe(0);
+    expect(parseFundingAmount("$23B market cap")).toBe(0);
+    expect(parseFundingAmount("$1,700M")).toBe(1700);
+    expect(parseFundingAmount("$500M (valuation $4B)")).toBe(500);
   });
 
   it("computes tier correctly", () => {

@@ -43,7 +43,7 @@ export function DiscoverClient({ products }: DiscoverClientProps) {
           {t("随机发现", "Discover")}
         </h1>
         <p className="section-desc">
-          {t("向右收藏，向左跳过，5 分钟筛出今天值得关注的新产品。", "Swipe right to save, left to skip. Find today's most relevant products in 5 minutes.")}
+          {t("向右收藏，向左跳过。从产品档案里找一个值得继续研究的想法。", "Swipe right to save, left to skip. Find an idea worth following in the product archive.")}
         </p>
         <p className="section-micro-note">
           {t("首次访问会显示手势引导；滑动记录会在 7 天后自动重置。", "Gesture tips appear on first visit; swipe history resets after 7 days.")}

@@ -4,7 +4,9 @@
 
 import os
 import json
+import hashlib
 from datetime import datetime, timedelta
+from functools import lru_cache
 from typing import List, Dict, Any, Optional
 
 # Sorting helpers for merge decisions
@@ -74,11 +76,12 @@ def get_mongo_db():
         mongo_uri = sanitize_env_value(os.environ.get('MONGO_URI', ''))
         if not mongo_uri:
             return None
-        _mongo_client = MongoClient(mongo_uri, serverSelectionTimeoutMS=MONGO_SERVER_SELECTION_TIMEOUT_MS)
+        _mongo_client = MongoClient(mongo_uri, serverSelectionTimeoutMS=MONGO_SERVER_SELECTION_TIMEOUT_MS,
+                                    connectTimeoutMS=2000, socketTimeoutMS=5000, maxPoolSize=10)
         _mongo_client.admin.command('ping')
-        _mongo_db = _mongo_client.get_database()
+        _mongo_db = _mongo_client.get_default_database(os.getenv('MONGO_DB_NAME', 'weeklyai'))
         _mongo_fail_until = None
-        print("  ✓ Backend connected to MongoDB")
+        print("  Backend connected to MongoDB")
         return _mongo_db
     except Exception as e:
         if _mongo_client is not None:
@@ -89,238 +92,8 @@ def get_mongo_db():
             _mongo_client = None
         _mongo_db = None
         _mongo_fail_until = datetime.now() + timedelta(seconds=MONGO_FAILURE_COOLDOWN_SECONDS)
-        print(f"  ⚠ MongoDB connection failed: {e}, using JSON files")
+        print(f"  MongoDB connection failed: {e}; using JSON files")
         return None
-
-
-# 示例数据（当没有爬虫数据时使用）- 只包含黑马产品，不包含著名产品
-SAMPLE_PRODUCTS = [
-    {
-        '_id': '1',
-        'name': 'Lovable',
-        'description': '欧洲最快增长的 AI 产品，8 个月从 0 到独角兽。非开发者也能快速构建全栈应用。',
-        'logo_url': 'https://lovable.dev/favicon.ico',
-        'website': 'https://lovable.dev',
-        'categories': ['coding'],
-        'rating': 4.8,
-        'weekly_users': 120000,
-        'trending_score': 92,
-        'final_score': 92,
-        'is_hardware': False,
-        'why_matters': '证明了 AI 原生产品可以极速获客，对想做 AI 创业的 PM 有重要参考价值。',
-        'source': 'sample'
-    },
-    {
-        '_id': '2',
-        'name': 'Devin',
-        'description': '全自主 AI 软件工程师，能够端到端处理需求拆解、代码实现与交付。Cognition Labs 出品。',
-        'logo_url': 'https://cognition.ai/favicon.ico',
-        'website': 'https://cognition.ai',
-        'categories': ['coding'],
-        'rating': 4.7,
-        'weekly_users': 160000,
-        'trending_score': 93,
-        'final_score': 93,
-        'is_hardware': False,
-        'why_matters': '重新定义了「AI 工程师」边界，PM 需要思考如何与 AI 协作而非仅仅使用 AI。',
-        'source': 'sample'
-    },
-    {
-        '_id': '3',
-        'name': 'Kiro',
-        'description': 'AWS 背景团队打造的规范驱动 AI 开发平台，强调稳定的工程化交付而非炫技。',
-        'logo_url': 'https://kiro.dev/favicon.ico',
-        'website': 'https://kiro.dev',
-        'categories': ['coding'],
-        'rating': 4.7,
-        'weekly_users': 85000,
-        'trending_score': 90,
-        'final_score': 90,
-        'is_hardware': False,
-        'why_matters': '大厂背景创业，专注企业级可靠性，是 AI 编程工具的差异化方向。',
-        'source': 'sample'
-    },
-    {
-        '_id': '4',
-        'name': 'Emergent',
-        'description': '非开发者也能用 AI 代理构建全栈应用的建站产品，降低技术门槛。',
-        'logo_url': 'https://emergent.sh/favicon.ico',
-        'website': 'https://emergent.sh',
-        'categories': ['coding'],
-        'rating': 4.6,
-        'weekly_users': 45000,
-        'trending_score': 88,
-        'final_score': 88,
-        'is_hardware': False,
-        'why_matters': '面向非技术用户的 AI 开发工具，扩展了「谁能做产品」的边界。',
-        'source': 'sample'
-    },
-    {
-        '_id': '5',
-        'name': 'Bolt.new',
-        'description': 'StackBlitz 推出的浏览器内全栈 AI 开发环境，无需配置即可开始编码。',
-        'logo_url': 'https://bolt.new/favicon.ico',
-        'website': 'https://bolt.new',
-        'categories': ['coding'],
-        'rating': 4.8,
-        'weekly_users': 200000,
-        'trending_score': 91,
-        'final_score': 91,
-        'is_hardware': False,
-        'why_matters': '零配置 + 浏览器内运行，大幅降低 AI 开发入门门槛。',
-        'source': 'sample'
-    },
-    {
-        '_id': '6',
-        'name': 'Windsurf',
-        'description': 'Codeium 推出的 Agentic IDE，强调 AI 代理主动参与开发流程。',
-        'logo_url': 'https://codeium.com/favicon.ico',
-        'website': 'https://codeium.com/windsurf',
-        'categories': ['coding'],
-        'rating': 4.6,
-        'weekly_users': 95000,
-        'trending_score': 87,
-        'final_score': 87,
-        'is_hardware': False,
-        'why_matters': 'Agentic IDE 概念的先行者，代表了 AI 编程工具的演进方向。',
-        'source': 'sample'
-    },
-    {
-        '_id': '7',
-        'name': 'NEO (1X Technologies)',
-        'description': '挪威初创公司研发的人形机器人，定位家庭助手和轻工业场景。',
-        'logo_url': 'https://1x.tech/favicon.ico',
-        'website': 'https://1x.tech',
-        'categories': ['hardware'],
-        'rating': 4.5,
-        'weekly_users': 15000,
-        'trending_score': 85,
-        'final_score': 85,
-        'is_hardware': True,
-        'why_matters': '人形机器人赛道的黑马，融资后估值飙升，值得关注具身智能趋势。',
-        'source': 'sample'
-    },
-    {
-        '_id': '8',
-        'name': 'Rokid AR Studio',
-        'description': '中国 AR 眼镜厂商推出的 AI 开发平台，支持空间计算应用开发。',
-        'logo_url': 'https://www.rokid.com/favicon.ico',
-        'website': 'https://www.rokid.com',
-        'categories': ['hardware'],
-        'rating': 4.4,
-        'weekly_users': 25000,
-        'trending_score': 82,
-        'final_score': 82,
-        'is_hardware': True,
-        'why_matters': '国产 AR 眼镜 + AI 平台，空间计算赛道的本土玩家。',
-        'source': 'sample'
-    },
-    {
-        '_id': '9',
-        'name': 'DeepSeek',
-        'description': '中国 AI 研究公司，以高效开源模型著称，性价比极高。',
-        'logo_url': 'https://www.deepseek.com/favicon.ico',
-        'website': 'https://www.deepseek.com',
-        'categories': ['coding', 'writing'],
-        'rating': 4.6,
-        'weekly_users': 180000,
-        'trending_score': 89,
-        'final_score': 89,
-        'is_hardware': False,
-        'why_matters': '开源大模型的性价比之王，训练成本仅为竞品的 1/10。',
-        'source': 'sample'
-    },
-    {
-        '_id': '10',
-        'name': 'Replit Agent',
-        'description': 'Replit 推出的 AI 代理，能自主完成从需求到部署的完整开发流程。',
-        'logo_url': 'https://replit.com/favicon.ico',
-        'website': 'https://replit.com',
-        'categories': ['coding'],
-        'rating': 4.5,
-        'weekly_users': 150000,
-        'trending_score': 86,
-        'final_score': 86,
-        'is_hardware': False,
-        'why_matters': '全流程 AI 开发代理，从 idea 到上线一站式完成。',
-        'source': 'sample'
-    },
-    {
-        '_id': '11',
-        'name': 'Thinking Machines Lab',
-        'description': '菲律宾 AI 研究初创，专注东南亚本地化大语言模型研发。',
-        'logo_url': 'https://thinkingmachines.ph/favicon.ico',
-        'website': 'https://thinkingmachines.ph',
-        'categories': ['other'],
-        'rating': 4.3,
-        'weekly_users': 12000,
-        'trending_score': 78,
-        'final_score': 78,
-        'is_hardware': False,
-        'why_matters': '东南亚本土 AI 研究力量，区域化 AI 的代表案例。',
-        'source': 'sample'
-    },
-    {
-        '_id': '12',
-        'name': 'Poe',
-        'description': 'Quora 推出的多模型 AI 聊天平台，一站式访问多种 AI 模型。',
-        'logo_url': 'https://poe.com/favicon.ico',
-        'website': 'https://poe.com',
-        'categories': ['other'],
-        'rating': 4.5,
-        'weekly_users': 280000,
-        'trending_score': 84,
-        'final_score': 84,
-        'is_hardware': False,
-        'why_matters': 'AI 模型聚合平台，让用户无需切换即可对比不同模型能力。',
-        'source': 'sample'
-    },
-    {
-        '_id': '13',
-        'name': 'v0.dev',
-        'description': 'Vercel 推出的 AI UI 生成器，通过对话生成 React 组件代码。',
-        'logo_url': 'https://v0.dev/favicon.ico',
-        'website': 'https://v0.dev',
-        'categories': ['coding', 'image'],
-        'rating': 4.7,
-        'weekly_users': 175000,
-        'trending_score': 90,
-        'final_score': 90,
-        'is_hardware': False,
-        'why_matters': '前端 AI 生成的标杆产品，设计师和开发者都能用。',
-        'source': 'sample'
-    },
-    {
-        '_id': '14',
-        'name': 'Kling AI',
-        'description': '快手推出的 AI 视频生成工具，支持文本/图片转视频。',
-        'logo_url': 'https://klingai.com/favicon.ico',
-        'website': 'https://klingai.com',
-        'categories': ['video'],
-        'rating': 4.4,
-        'weekly_users': 320000,
-        'trending_score': 85,
-        'final_score': 85,
-        'is_hardware': False,
-        'why_matters': '国产视频生成 AI 的代表，在特定场景下效果不输海外竞品。',
-        'source': 'sample'
-    },
-    {
-        '_id': '15',
-        'name': 'Glif',
-        'description': '可视化 AI 工作流构建平台，无需代码即可串联多个 AI 模型。',
-        'logo_url': 'https://glif.app/favicon.ico',
-        'website': 'https://glif.app',
-        'categories': ['image', 'other'],
-        'rating': 4.5,
-        'weekly_users': 45000,
-        'trending_score': 83,
-        'final_score': 83,
-        'is_hardware': False,
-        'why_matters': 'AI 工作流的乐高积木，让创意人士无需写代码也能玩转 AI。',
-        'source': 'sample'
-    },
-]
 
 
 class ProductRepository:
@@ -328,10 +101,12 @@ class ProductRepository:
 
     _cached_products = None
     _cache_time = None
+    _cache_filter_module = None
     _cache_duration = 300  # 5分钟缓存
     _cached_blogs = None
     _blogs_cache_time = None
     _blogs_cache_duration = BLOG_CACHE_SECONDS
+    _storage_source = 'snapshot'
 
     @classmethod
     def refresh_cache(cls):
@@ -352,7 +127,7 @@ class ProductRepository:
         now = datetime.now()
 
         # 检查缓存
-        if cls._cached_products and cls._cache_time:
+        if cls._cached_products is not None and cls._cache_time and cls._cache_filter_module is filters_module:
             age = (now - cls._cache_time).total_seconds()
             if age < cls._cache_duration:
                 return cls._cached_products
@@ -362,12 +137,11 @@ class ProductRepository:
         # 1) MongoDB path when configured
         if _mongo_uri_configured():
             products = cls.load_from_mongodb()
+        cls._storage_source = 'mongodb' if products else 'snapshot'
 
         # 2) JSON fallback path
         if not products:
             products = cls._load_from_crawler_file()
-            if not products:
-                products = SAMPLE_PRODUCTS.copy()
             curated = cls._load_curated_dark_horses()
             products = cls._merge_curated_products(products, curated, filters_module)
 
@@ -381,6 +155,7 @@ class ProductRepository:
         # 更新缓存
         cls._cached_products = products
         cls._cache_time = now
+        cls._cache_filter_module = filters_module
 
         return products
 
@@ -393,7 +168,7 @@ class ProductRepository:
         """
         # 只加载策展产品文件
         if not os.path.exists(PRODUCTS_FEATURED_FILE):
-            print("  ⚠ products_featured.json 不存在，将使用示例数据")
+            print("  products_featured.json unavailable; no products will be invented")
             return []
 
         try:
@@ -403,7 +178,7 @@ class ProductRepository:
             # 添加 _id 字段
             for i, p in enumerate(products):
                 if '_id' not in p:
-                    p['_id'] = str(i + 1)
+                    p['_id'] = str(p.get('id') or p.get('_sync_key') or i + 1)
                 if 'extra' in p and isinstance(p['extra'], str):
                     try:
                         p['extra'] = json.loads(p['extra'])
@@ -415,10 +190,10 @@ class ProductRepository:
                     except Exception:
                         pass
 
-            print(f"  ✓ 加载 {len(products)} 个策展产品")
+            print(f"  Loaded {len(products)} curated products")
             return products
         except Exception as e:
-            print(f"  ⚠ 加载策展产品失败: {e}")
+            print(f"  Curated product load failed: {e}")
             return []
 
     @classmethod
@@ -688,11 +463,24 @@ class ProductRepository:
                 by_name_loose[name_key_loose] = product
             ordered.append(product)
 
-        # Re-assign _id to keep uniqueness after dedupe
-        for i, p in enumerate(ordered):
-            p['_id'] = str(i + 1)
+        # Preserve existing links; new products use their stable domain/path key.
+        legacy_ids = cls._legacy_ids()
+        for p in ordered:
+            key = cls._build_product_key(p)
+            stable_id = 'p_' + hashlib.sha256(key.encode('utf-8')).hexdigest()[:16]
+            p['_id'] = str(legacy_ids.get(key) or p.get('id') or stable_id)
 
         return ordered
+
+    @staticmethod
+    @lru_cache(maxsize=1)
+    def _legacy_ids():
+        try:
+            with open(os.path.join(CRAWLER_DATA_DIR, 'product_legacy_ids.json'), encoding='utf-8') as source:
+                result = json.load(source)
+                return result if isinstance(result, dict) else {}
+        except (OSError, ValueError):
+            return {}
 
     @staticmethod
     def _normalize_curated_product(product: Dict[str, Any]) -> Optional[Dict[str, Any]]:
@@ -741,12 +529,12 @@ class ProductRepository:
                 ).sort('final_score', -1))
 
             if products:
-                print(f"  ✓ Loaded {len(products)} products from MongoDB")
+                print(f"  Loaded {len(products)} products from MongoDB")
 
             # 添加 _id 字段
             for i, p in enumerate(products):
                 if '_id' not in p:
-                    p['_id'] = str(i + 1)
+                    p['_id'] = str(p.get('id') or p.get('_sync_key') or i + 1)
                 # Parse extra field if it's a string
                 if 'extra' in p and isinstance(p['extra'], str):
                     try:
@@ -761,7 +549,7 @@ class ProductRepository:
 
             return products
         except Exception as e:
-            print(f"  ⚠ MongoDB load failed: {e}")
+            print(f"  MongoDB load failed: {e}")
             return []
 
     @classmethod
@@ -820,24 +608,19 @@ class ProductRepository:
                     b['_id'] = f"blog_{i + 1}"
             return blogs
         except Exception as e:
-            print(f"  ⚠ MongoDB blog load failed: {e}")
+            print(f"  MongoDB blog load failed: {e}")
             return []
 
     @staticmethod
     def get_last_updated() -> Dict[str, Any]:
         """获取最近一次数据更新时间."""
-        if not os.path.exists(LAST_UPDATED_FILE):
-            return {'last_updated': None, 'hours_ago': None}
-
         try:
             with open(LAST_UPDATED_FILE, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-        except Exception:
-            return {'last_updated': None, 'hours_ago': None}
+        except (OSError, ValueError):
+            data = {}
 
         last_updated = data.get('last_updated')
-        if not last_updated:
-            return {'last_updated': None, 'hours_ago': None}
 
         try:
             parsed = datetime.fromisoformat(str(last_updated).replace('Z', '+00:00'))
@@ -845,9 +628,16 @@ class ProductRepository:
         except Exception:
             hours_ago = None
 
-        return {'last_updated': last_updated, 'hours_ago': hours_ago}
+        products = ProductRepository.load_products()
+        dates = [sorting.get_effective_date(p) for p in products]
+        newest = max((date for date in dates if date and date <= datetime.utcnow()), default=None)
+        return {'last_updated': last_updated, 'hours_ago': hours_ago,
+                'product_last_updated': newest.isoformat() if newest else None,
+                'product_hours_ago': round((datetime.utcnow() - newest).total_seconds() / 3600, 1) if newest else None,
+                'storage': ProductRepository._storage_source}
 
     @staticmethod
+    @lru_cache(maxsize=1)
     def load_industry_leaders() -> Dict:
         """获取行业领军产品 - 已知名的成熟 AI 产品参考列表"""
         industry_leaders_file = os.path.join(CRAWLER_DATA_DIR, 'industry_leaders.json')

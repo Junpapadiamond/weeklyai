@@ -33,18 +33,15 @@ FRESHNESS_HALF_LIFE_DAYS = 21.0
 
 def parse_funding(funding: str) -> float:
     """解析融资金额字符串为数值（单位：百万美元）"""
-    if not funding or funding == 'unknown':
-        return 0
-    match = re.match(r'\$?([\d.]+)\s*(M|B|K)?', str(funding), re.IGNORECASE)
+    text = str(funding or '').strip()
+    # Do not convert currencies, valuations, grants, or proposed rounds into funding.
+    if re.search(r'in talks|planned|target|grant|市值|估值|valuation|market cap', text.split('(')[0], re.I):
+        return 0.0
+    match = re.match(r'^(?:US\$|USD\s*|\$)([\d,]+(?:\.\d+)?)\s*([MBK])?\b', text, re.I)
     if not match:
-        return 0
-    value = float(match.group(1))
-    unit = (match.group(2) or '').upper()
-    if unit == 'B':
-        value *= 1000
-    elif unit == 'K':
-        value /= 1000
-    return value
+        return 0.0
+    value = float(match.group(1).replace(',', ''))
+    return value * {'B': 1000, 'M': 1, 'K': .001, '': .000001}[ (match.group(2) or '').upper() ]
 
 
 def get_valuation_score(product: Dict) -> float:

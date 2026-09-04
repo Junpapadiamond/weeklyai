@@ -18,6 +18,7 @@ export function ChatPanel({ messages, isLoading, onSend, onMinimize }: ChatPanel
   const { t } = useSiteLocale();
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const node = scrollRef.current;
@@ -26,7 +27,9 @@ export function ChatPanel({ messages, isLoading, onSend, onMinimize }: ChatPanel
   }, [messages]);
 
   useEffect(() => {
+    const previous = document.activeElement as HTMLElement | null;
     inputRef.current?.focus();
+    return () => previous?.focus();
   }, []);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -42,11 +45,20 @@ export function ChatPanel({ messages, isLoading, onSend, onMinimize }: ChatPanel
   const hasMessages = messages.length > 0;
 
   return (
-    <div className="chat-panel">
+    <div ref={panelRef} className="chat-panel" role="dialog" aria-modal="true" aria-label={t("产品研究助手", "Product research assistant")} onKeyDown={(event) => {
+      if (event.key === "Escape") { event.preventDefault(); onMinimize(); }
+      if (event.key !== "Tab") return;
+      const controls = panelRef.current?.querySelectorAll<HTMLElement>('button:not(:disabled), input:not(:disabled), a[href]');
+      if (!controls?.length) return;
+      const first = controls[0];
+      const last = controls[controls.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    }}>
       <header className="chat-panel__header">
         <div className="chat-panel__title">
           <Sparkles size={16} />
-          <span>{t("WeeklyAI 助手", "WeeklyAI Assistant")}</span>
+          <span>{t("产品研究助手", "Product research")}</span>
         </div>
         <button type="button" className="chat-panel__minimize" onClick={onMinimize} aria-label={t("收起", "Minimize")}>
           <ChevronDown size={18} />
@@ -62,11 +74,11 @@ export function ChatPanel({ messages, isLoading, onSend, onMinimize }: ChatPanel
             <ChatSuggestions onSelect={onSend} />
           </div>
         ) : (
-          <div className="chat-messages">
+          <div className="chat-messages" role="log" aria-live="polite" aria-busy={isLoading}>
             {messages.map((message) => (
               <ChatMessageBubble key={message.id} message={message} />
             ))}
-            {isLoading && messages[messages.length - 1]?.content === "" ? (
+            {isLoading ? (
               <div className="chat-thinking" aria-label={t("思考中", "Thinking")}>
                 <span className="chat-thinking__dot" />
                 <span className="chat-thinking__dot" />
@@ -83,8 +95,11 @@ export function ChatPanel({ messages, isLoading, onSend, onMinimize }: ChatPanel
         </div>
       ) : null}
 
+      <label className="chat-panel__question-label" htmlFor="research-question">{t("你在研究什么？", "What are you researching?")}</label>
       <form className="chat-panel__input-row" onSubmit={handleSubmit}>
         <input
+          id="research-question"
+          maxLength={2000}
           ref={inputRef}
           type="text"
           className="chat-panel__input"
@@ -98,7 +113,7 @@ export function ChatPanel({ messages, isLoading, onSend, onMinimize }: ChatPanel
       </form>
 
       <div className="chat-panel__footer">
-        <span className="chat-panel__powered">{t("Powered by Perplexity", "Powered by Perplexity")}</span>
+        <span className="chat-panel__powered">{t("基于产品档案回答 · Perplexity", "Answers grounded in the product archive · Perplexity")}</span>
       </div>
     </div>
   );

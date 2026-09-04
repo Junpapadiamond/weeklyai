@@ -43,11 +43,14 @@ def get_mongo_db():
         print("  x pymongo not installed. Run: pip install pymongo")
         return None
 
-    mongo_uri = os.getenv("MONGO_URI", "mongodb://localhost:27017/weeklyai")
+    mongo_uri = os.getenv("MONGO_URI", "").strip().strip('"').strip("'")
+    if not mongo_uri:
+        print("  x MONGO_URI is required for database synchronization")
+        return None
     try:
         client = MongoClient(mongo_uri, serverSelectionTimeoutMS=5000)
         client.admin.command("ping")
-        db = client.get_database()
+        db = client.get_default_database(os.getenv("MONGO_DB_NAME", "weeklyai"))
         print(f"  OK Connected to MongoDB: {db.name}")
         return db
     except Exception as e:
@@ -229,6 +232,9 @@ def sync_products(db, products: list, dry_run: bool = False) -> dict:
     collection = db["products"]
     stats = {"inserted": 0, "updated": 0, "skipped": 0}
     now_iso = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+    legacy_ids = load_json(os.path.join(os.path.dirname(PRODUCTS_FILE), 'product_legacy_ids.json'))
+    if not isinstance(legacy_ids, dict):
+        legacy_ids = {}
 
     for product in products:
         key = build_sync_key(product)
@@ -238,6 +244,10 @@ def sync_products(db, products: list, dry_run: bool = False) -> dict:
 
         doc = product.copy()
         doc["_sync_key"] = key
+        # Keep product links stable when reads switch between JSON and MongoDB.
+        import hashlib
+        stable_id = 'p_' + hashlib.sha256(key.encode('utf-8')).hexdigest()[:16]
+        doc["id"] = str(legacy_ids.get(key) or doc.get("id") or stable_id)
         doc["synced_at"] = now_iso
         doc.setdefault("source", "curated")
         doc.setdefault("content_type", "product")

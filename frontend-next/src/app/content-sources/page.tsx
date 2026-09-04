@@ -16,6 +16,20 @@ export default async function ContentSourcesPage() {
 
       <article className="detail-card">
         <div className="detail-block">
+          <h2 className="detail-block__title">{t("如何筛选", "How we select products")}</h2>
+          <p className="detail-block__content">{t(
+            "推荐聚焦用途明确、具有差异化的 AI 产品。推荐列表需要官网及来源链接，并排除待核实记录与已成名的行业领军产品。4–5 分为黑马，2–3 分为潜力股；这是发现价值评分，不是实测质量评分。",
+            "We look for AI products with a concrete use case and a distinct approach. Recommendations require website and source links; pending verification and established industry leaders are excluded. Scores of 4–5 indicate dark horses; 2–3 indicate rising stars. These measure discovery potential, not tested product quality."
+          )}</p>
+        </div>
+        <div className="detail-block">
+          <h2 className="detail-block__title">{t("如何阅读日期", "Reading the dates")}</h2>
+          <p className="detail-block__content">{t(
+            "收录日期表示我们发现该记录的时间，不代表产品发布日期。近期发现窗口为 5 天；没有近期记录时会明确显示历史档案。新闻同步时间与产品收录时间分开计算。请沿来源链接核对事件日期与原始信息。",
+            "Discovery dates show when a record entered our catalog, not when the product launched. The recent-discovery window is five days; older selections are labeled as archive material. News synchronization and product discovery have separate timestamps. Follow the source to check the event date and original claims."
+          )}</p>
+        </div>
+        <div className="detail-block">
           <h2 className="detail-block__title">{t("主要来源", "Primary sources")}</h2>
           <p className="detail-block__content">
             {t(
@@ -38,7 +52,7 @@ export default async function ContentSourcesPage() {
         <div className="detail-block">
           <h2 className="detail-block__title">{t("反馈与更正", "Corrections")}</h2>
           <p className="detail-block__content">
-            {t("如发现来源归因或内容存在问题，请联系 support@weeklyai.com。", "For attribution or content corrections, contact support@weeklyai.com.")}
+            <a href="https://github.com/Junpapadiamond/weeklyai/issues/new" target="_blank" rel="noopener noreferrer">{t("提交内容更正，请附产品名称、来源链接及更正原因。", "Submit a correction with the product name, source link, and reason.")}</a>
           </p>
         </div>
       </article>

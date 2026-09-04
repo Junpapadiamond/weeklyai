@@ -255,6 +255,11 @@ class TestBlogLoadingPreference:
         import app.services.product_repository as repo_mod
         repo_mod._mongo_client = None
         repo_mod._mongo_db = None
+        repo_mod.ProductRepository.refresh_cache()
+
+    def teardown_method(self):
+        from app.services.product_repository import ProductRepository
+        ProductRepository.refresh_cache()
 
     def test_json_fallback_when_no_mongo_uri(self):
         from app.services.product_repository import ProductRepository
