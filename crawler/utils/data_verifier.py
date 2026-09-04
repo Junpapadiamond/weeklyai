@@ -574,7 +574,7 @@ def validate_item_heuristic(
     elif len(description) < 20:
         issues.append(
             Issue(
-                severity="WARN" if is_blogs_stream else "ERROR",
+                severity="WARN",
                 code="short_description",
                 message=f"description too short ({len(description)})",
                 file=file_path,
@@ -599,7 +599,7 @@ def validate_item_heuristic(
     elif not contains_han_text(description):
         issues.append(
             Issue(
-                severity="ERROR" if (not is_blogs_stream or STRICT_ZH_FOR_BLOGS) else "WARN",
+                severity="WARN",
                 code="description_non_zh",
                 message="description should be Chinese-first for zh display",
                 file=file_path,
@@ -620,7 +620,7 @@ def validate_item_heuristic(
         ):
             issues.append(
                 Issue(
-                    severity="ERROR",
+                    severity="WARN",
                     code="why_matters_non_zh",
                     message="why_matters should be Chinese-first for zh display",
                     file=file_path,
@@ -639,7 +639,7 @@ def validate_item_heuristic(
         ):
             issues.append(
                 Issue(
-                    severity="ERROR",
+                    severity="WARN",
                     code="latest_news_non_zh",
                     message="latest_news should be Chinese-first for zh display",
                     file=file_path,

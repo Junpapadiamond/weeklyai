@@ -1,5 +1,6 @@
 """Regression coverage for the production audit, without external services."""
 import os
+import subprocess
 import sys
 from unittest.mock import Mock, patch
 
@@ -117,3 +118,25 @@ def test_provider_preflight_fails_without_global_key(monkeypatch):
     from tools.check_providers import check_providers
     monkeypatch.delenv('PERPLEXITY_API_KEY', raising=False)
     assert check_providers() is False
+
+
+def test_vercel_entrypoint_can_load_as_app_module():
+    """Vercel names backend/app.py ``app``; it must not shadow app/."""
+    backend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'backend'))
+    code = """
+import importlib.util, pathlib, sys
+path = pathlib.Path('app.py').resolve()
+spec = importlib.util.spec_from_file_location('app', path)
+module = importlib.util.module_from_spec(spec)
+sys.modules['app'] = module
+spec.loader.exec_module(module)
+assert module.app is not None
+"""
+    result = subprocess.run(
+        [sys.executable, '-c', code],
+        cwd=backend_dir,
+        capture_output=True,
+        text=True,
+        timeout=15,
+    )
+    assert result.returncode == 0, result.stderr

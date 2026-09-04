@@ -3,13 +3,9 @@
 import { RefreshCw, WifiOff } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSiteLocale } from "@/components/layout/locale-provider";
+import { BROWSER_API_BASE } from "@/lib/api-base";
 
-const API_BASE =
-  typeof window !== "undefined"
-    ? (process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000/api/v1").trim()
-    : "http://localhost:5000/api/v1";
-
-const HEALTH_PATH = "/products/last-updated";
+const HEALTH_PATH = "/health";
 const HEALTH_TIMEOUT_MS = 7000;
 
 type NetworkStatus = "checking" | "healthy" | "offline" | "timeout" | "error";
@@ -71,7 +67,7 @@ export function AppNetworkGuard({ enabled = false }: AppNetworkGuardProps) {
     const scoped = withTimeout(requestController.signal, HEALTH_TIMEOUT_MS);
 
     try {
-      const response = await fetch(`${API_BASE.replace(/\/$/, "")}${HEALTH_PATH}`, {
+      const response = await fetch(`${BROWSER_API_BASE}${HEALTH_PATH}`, {
         method: "GET",
         cache: "no-store",
         headers: { Accept: "application/json" },
@@ -103,7 +99,7 @@ export function AppNetworkGuard({ enabled = false }: AppNetworkGuardProps) {
   useEffect(() => {
     if (!enabled || typeof window === "undefined") return;
 
-    void checkHealth();
+    const initialCheckId = window.setTimeout(() => void checkHealth(), 0);
 
     const onOffline = () => {
       setStatus("offline");
@@ -117,6 +113,7 @@ export function AppNetworkGuard({ enabled = false }: AppNetworkGuardProps) {
     window.addEventListener("offline", onOffline);
     window.addEventListener("online", onOnline);
     return () => {
+      window.clearTimeout(initialCheckId);
       window.removeEventListener("offline", onOffline);
       window.removeEventListener("online", onOnline);
     };

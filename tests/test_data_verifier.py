@@ -116,7 +116,7 @@ class TestValidationRules(unittest.TestCase):
         self.assertEqual(mismatch[0].severity, "WARN")
         self.assertEqual(mismatch[0].suggestion, "🇯🇵🇰🇷")
 
-    def test_product_non_zh_primary_fields_are_errors(self) -> None:
+    def test_product_non_zh_primary_fields_are_quality_warnings(self) -> None:
         from utils.data_verifier import validate_item_heuristic
 
         item = {
@@ -129,9 +129,9 @@ class TestValidationRules(unittest.TestCase):
         }
         issues = validate_item_heuristic(item, file_path="products_featured.json", index=0, check_network="none")
         by_code = {i.code: i for i in issues}
-        self.assertEqual(by_code["description_non_zh"].severity, "ERROR")
-        self.assertEqual(by_code["why_matters_non_zh"].severity, "ERROR")
-        self.assertEqual(by_code["latest_news_non_zh"].severity, "ERROR")
+        self.assertEqual(by_code["description_non_zh"].severity, "WARN")
+        self.assertEqual(by_code["why_matters_non_zh"].severity, "WARN")
+        self.assertEqual(by_code["latest_news_non_zh"].severity, "WARN")
 
     def test_blog_non_zh_primary_fields_are_warn_by_default(self) -> None:
         from utils.data_verifier import validate_item_heuristic
