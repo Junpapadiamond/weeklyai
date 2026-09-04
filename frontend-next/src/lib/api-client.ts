@@ -65,7 +65,7 @@ function hasUsableWebsite(product: Product): boolean {
 
 export const getDarkHorses = cache(async (limit = 10, minIndex = 4): Promise<Product[]> => {
   const json = await fetchJson(`/products/dark-horses?limit=${limit}&min_index=${minIndex}`, {
-    next: { revalidate: 120, tags: ["products", "dark-horses"] },
+    cache: "no-store",
   });
   const parsed = safeParse(productListSchema, json, { data: [] });
   return parsed.data.filter(hasUsableWebsite);
@@ -76,9 +76,7 @@ export const getWeeklyTop = cache(async (limit = 0, sortBy: WeeklyTopSort = "com
   params.set("limit", String(limit));
   params.set("sort_by", sortBy);
 
-  const json = await fetchJson(`/products/weekly-top?${params.toString()}`, limit === 0
-    ? { cache: "no-store" }
-    : { next: { revalidate: 120, tags: ["products", "weekly-top"] } });
+  const json = await fetchJson(`/products/weekly-top?${params.toString()}`, { cache: "no-store" });
   const parsed = safeParse(productListSchema, json, { data: [] });
   return parsed.data.filter(hasUsableWebsite);
 });
@@ -93,7 +91,7 @@ export const getIndustryLeaders = cache(async (): Promise<IndustryLeadersPayload
 
 export const getLastUpdated = cache(async (): Promise<LastUpdatedPayload> => {
   const json = await fetchJson(`/products/last-updated`, {
-    next: { revalidate: 60, tags: ["products", "last-updated"] },
+    cache: "no-store",
   });
   const parsed = safeParse(lastUpdatedEnvelopeSchema, json, {});
   return {
