@@ -10,6 +10,11 @@ from urllib.parse import urlparse
 BLOCKED_SOURCES = {'github', 'huggingface', 'huggingface_spaces'}
 BLOCKED_DOMAINS = ('github.com', 'huggingface.co')
 UNKNOWN_WEBSITE_VALUES = {'', 'unknown', 'n/a', 'na', 'none', 'null', 'undefined', 'tbd'}
+PLACEHOLDER_COPY_VALUES = {
+    '', 'unknown', 'n/a', 'na', 'none', 'null', 'undefined', 'tbd',
+    '暂无', '未公开', '待定', '暂无描述', '待补充', '产品摘要待补充',
+    'description coming soon', 'product summary pending',
+}
 
 # Established products belong in News / reference, not emerging discovery.
 WELL_KNOWN_PRODUCTS = {
@@ -475,14 +480,40 @@ def is_well_known(product: Dict[str, Any]) -> bool:
 
 
 def is_non_product(product: Dict[str, Any]) -> bool:
-    """A financing vehicle or VC firm is not an AI product users can evaluate."""
+    """Exclude organizations and programs that users cannot evaluate as products."""
     name = str(product.get('name') or '').strip().lower()
     if re.search(r'\b(?:capital|ventures|fund(?:\s+[ivx0-9]+)?)$', name):
         return True
     description = str(product.get('description_en') or product.get('description') or '').lower()
+    accelerator_program = (
+        re.search(r'\b(?:accelerator|incubator)\b', f'{name} {description}')
+        and re.search(r'\b(?:cohort|equity-free|mentorship|startups?|cloud credits?|program)\b', description)
+        and not re.search(r'\b(?:chip|processor|silicon|inference|compute|hardware)\b', description)
+    )
+    if accelerator_program:
+        return True
+    funding_program = (
+        re.search(r'\b(?:government\s+)?(?:funding|grant)\s+program\b', description)
+        and not re.search(r'\b(?:platform|software|tool|api|robot|assistant)\b', description)
+    )
+    investment_platform = (
+        re.search(r'\binvestment\s+platform\b', f'{name} {description}')
+        and re.search(r'\b(?:backing|backs|invests?|portfolio)\b', description)
+    )
+    if funding_program or investment_platform:
+        return True
     investor = re.search(r'\b(?:venture capital|investment|venture)\s+(?:firm|fund)\b', description)
     product_terms = re.search(r'\b(?:platform|software|tool|api|robot|assistant)\b', description)
     return bool(investor and not product_terms)
+
+
+def has_complete_briefing(product: Dict[str, Any]) -> bool:
+    """Require substantive copy for every locale shown on recommendation surfaces."""
+    for field in ('description', 'description_en', 'why_matters', 'why_matters_en'):
+        value = re.sub(r'\s+', ' ', str(product.get(field) or '')).strip()
+        if len(value) < 20 or value.casefold().rstrip('.') in PLACEHOLDER_COPY_VALUES:
+            return False
+    return True
 
 
 def is_hardware(product: Dict[str, Any]) -> bool:

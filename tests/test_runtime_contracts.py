@@ -79,7 +79,36 @@ def test_established_products_cannot_reenter_discovery_on_update():
 def test_fundraising_vehicles_are_not_products():
     from app.services.product_filters import is_non_product
     assert is_non_product({'name': 'Air Street Capital Fund III', 'description_en': 'Venture firm backing AI startups'})
+    assert is_non_product({
+        'name': 'Google for Startups Accelerator: Southeast Asia',
+        'description_en': 'A three-month equity-free accelerator program for a cohort of AI startups.',
+    })
+    assert is_non_product({
+        'name': 'Startup SG Tech',
+        'description_en': 'A government funding program offering grants to innovative technology startups.',
+    })
+    assert is_non_product({
+        'name': 'DIC Physical AI Investment Platform',
+        'description_en': 'An investment platform focused on backing Physical AI startups.',
+    })
+    assert not is_non_product({
+        'name': 'Tensor Accelerator',
+        'description_en': 'An inference hardware accelerator chip for edge AI compute.',
+    })
     assert not is_non_product({'name': 'Deal research', 'description_en': 'A software platform for venture capital firms'})
+
+
+def test_recommendations_require_complete_bilingual_briefings():
+    from app.services.product_filters import has_complete_briefing
+    complete = {
+        'description': '一款帮助研发团队评估模型表现的人工智能工具。',
+        'description_en': 'An AI tool that helps engineering teams evaluate model performance.',
+        'why_matters': '它把测试结果与发布决策连接起来，减少团队的手动检查。',
+        'why_matters_en': 'It connects evaluation results to release decisions and reduces manual review.',
+    }
+    assert has_complete_briefing(complete)
+    assert not has_complete_briefing({**complete, 'description_en': ''})
+    assert not has_complete_briefing({**complete, 'description_en': 'Description coming soon'})
 
 
 def test_chat_success_preserves_history_and_retrieves_relevant_product(monkeypatch):

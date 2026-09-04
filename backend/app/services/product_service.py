@@ -45,14 +45,10 @@ class ProductService:
                 return url.scheme in {'http', 'https'} and bool(url.hostname)
             except ValueError:
                 return False
-        def explained(product):
-            description = max(len(str(product.get(field) or '').strip()) for field in ('description', 'description_en'))
-            reason = max(len(str(product.get(field) or '').strip()) for field in ('why_matters', 'why_matters_en'))
-            return description >= 20 and reason >= 20
         return [p for p in cls._load_products()
                 if not p.get('needs_verification') and usable(p.get('website'))
                 and usable(p.get('source_url')) and not filters.is_well_known(p)
-                and not filters.is_non_product(p) and explained(p)]
+                and not filters.is_non_product(p) and filters.has_complete_briefing(p)]
 
     @classmethod
     def _load_blogs(cls) -> List[Dict]:
