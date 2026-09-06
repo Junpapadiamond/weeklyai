@@ -1,0 +1,215 @@
+{
+  "version": 1,
+  "product_slug": "daloopa",
+  "product_name": "Daloopa",
+  "tier": "simulation",
+  "title": {
+    "zh": "财报数字进模型之前",
+    "en": "Before the numbers reach the model"
+  },
+  "premise": {
+    "zh": "Daloopa 把公司财报里的明细数据结构化，供金融分析师直接接入模型，减少手工抄录。",
+    "en": "Daloopa turns filing-level financial detail into structured data an analyst can pull straight into a model, instead of re-keying it."
+  },
+  "steps": [
+    {
+      "id": "who",
+      "label": {
+        "zh": "谁在用",
+        "en": "Who it is for"
+      },
+      "narration": {
+        "zh": "同一份数据，不同岗位关心的部分完全不同。选一个看看。",
+        "en": "The same dataset matters differently depending on the desk. Pick one."
+      },
+      "widget": {
+        "type": "scenario_branch",
+        "branches": [
+          {
+            "persona": {
+              "zh": "股票研究分析师",
+              "en": "Equity research analyst"
+            },
+            "situation": {
+              "zh": "要在财报发布当天更新模型里的分部数据。",
+              "en": "Needs segment-level detail updated in a model the day earnings drop."
+            },
+            "outcome": {
+              "zh": "拿到已结构化的历史序列，把时间花在判断上，而不是抄数字。",
+              "en": "Gets an already-structured history and spends the time on judgment rather than transcription."
+            }
+          },
+          {
+            "persona": {
+              "zh": "买方投资经理",
+              "en": "Buy-side portfolio manager"
+            },
+            "situation": {
+              "zh": "想知道一家公司某项指标的口径是否中途变过。",
+              "en": "Wants to know whether a company quietly changed how it defines a metric."
+            },
+            "outcome": {
+              "zh": "对齐后的历史序列会暴露口径变化，这类问题在 PDF 里很难发现。",
+              "en": "An aligned history exposes definition changes that are hard to spot reading PDFs."
+            }
+          },
+          {
+            "persona": {
+              "zh": "数据工程师",
+              "en": "Data engineer"
+            },
+            "situation": {
+              "zh": "要把财报数据接入内部系统，但不想维护解析器。",
+              "en": "Needs filing data in internal systems without maintaining parsers."
+            },
+            "outcome": {
+              "zh": "以数据源的形式接入，解析和口径对齐由上游负责。",
+              "en": "Consumes it as a feed; parsing and alignment stay upstream."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "flow",
+      "label": {
+        "zh": "这条链路",
+        "en": "The chain"
+      },
+      "narration": {
+        "zh": "要点在最后一步：数字能追回它在原始文件里的位置。",
+        "en": "The point is the last stage: a number can be traced back to where it appeared in the filing."
+      },
+      "widget": {
+        "type": "pipeline",
+        "stages": [
+          {
+            "name": {
+              "zh": "原始披露",
+              "en": "Filing"
+            },
+            "input": {
+              "zh": "季报和年报原文",
+              "en": "quarterly and annual disclosures"
+            },
+            "output": {
+              "zh": "上千个科目行，为人阅读排版，不是为机器",
+              "en": "thousands of line items, formatted for humans not machines"
+            }
+          },
+          {
+            "name": {
+              "zh": "结构化",
+              "en": "Structure"
+            },
+            "input": {
+              "zh": "这些文件",
+              "en": "those documents"
+            },
+            "output": {
+              "zh": "带类型的字段，跨期使用一致的标签",
+              "en": "line items as typed fields with consistent labels across periods"
+            }
+          },
+          {
+            "name": {
+              "zh": "对齐历史",
+              "en": "Align history"
+            },
+            "input": {
+              "zh": "同一家公司的多个报告期",
+              "en": "many periods of the same company"
+            },
+            "output": {
+              "zh": "即使公司自己改过列报方式，也能得到可比序列",
+              "en": "a comparable series even where the company changed its own presentation"
+            }
+          },
+          {
+            "name": {
+              "zh": "溯源",
+              "en": "Trace"
+            },
+            "input": {
+              "zh": "任意一个数字",
+              "en": "any single figure"
+            },
+            "output": {
+              "zh": "它来自哪份文件的哪个位置——这一步才让数据可审计",
+              "en": "the document and position it came from — the part that makes it auditable"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "moment",
+      "label": {
+        "zh": "省下的那步",
+        "en": "The step removed"
+      },
+      "narration": {
+        "zh": "下面是示意对话，用来说明这个产品替代掉的是哪一段工作，不代表真实界面。",
+        "en": "An illustrative exchange showing which piece of work this replaces. Not a real interface."
+      },
+      "widget": {
+        "type": "transcript",
+        "turns": [
+          {
+            "speaker": "user",
+            "text": {
+              "zh": "我要这家公司过去五年的分部收入，按季度。",
+              "en": "I need five years of segment revenue for this company, quarterly."
+            }
+          },
+          {
+            "speaker": "product",
+            "text": {
+              "zh": "已返回结构化序列，每个季度都关联到它来自的那份披露文件。",
+              "en": "Structured series returned, with each quarter linked to the filing it came from."
+            }
+          },
+          {
+            "speaker": "user",
+            "text": {
+              "zh": "这段时间中间他们改过分部的名字。",
+              "en": "The segment names changed in the middle of that period."
+            }
+          },
+          {
+            "speaker": "product",
+            "text": {
+              "zh": "序列已跨越这次变更对齐，口径发生变化的报告期会被标出来，而不是悄悄合并。",
+              "en": "The series is aligned across the change, and the periods where the definition moved are marked rather than silently merged."
+            }
+          },
+          {
+            "speaker": "user",
+            "text": {
+              "zh": "FY23 Q2 这个数字是哪来的？",
+              "en": "Where did the FY23 Q2 figure come from?"
+            }
+          },
+          {
+            "speaker": "product",
+            "text": {
+              "zh": "它对应到那个季度披露文件里的具体一行——这正是让数字可核对而不是只能选择相信的原因。",
+              "en": "It resolves to the specific line in that quarter's filing — which is what makes the number checkable rather than trusted."
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "claim": "Daloopa announced a $47M Series C for AI data infrastructure in finance.",
+      "source_url": "https://vcnewsdaily.com"
+    }
+  ],
+  "confidence": "illustrative",
+  "vendor_status": "none",
+  "generated_at": "",
+  "model": "",
+  "reviewed_by": null
+}
