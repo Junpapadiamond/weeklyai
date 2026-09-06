@@ -22,6 +22,14 @@ The version worth building is not *a demo of the product*. It is **a playable ex
 job the product does** — which covers the whole catalog, is honest, is cheaper, and is something
 the vendor structurally cannot publish about itself.
 
+### Decisions taken (2026-09-06)
+
+| Question | Decision | Consequence |
+|---|---|---|
+| Publish Tier 2 simulations? | **Yes, with strict labelling** | Full four-tier ladder. Labelling contract in §8a is mandatory, not advisory. |
+| Vendor outreach? | **Yes, from day one** | Outreach is part of the pipeline, not a later phase. Triggers the independence firewall in §9c. |
+| 5/day cadence? | **Quality-gated** | Nothing auto-publishes. Expect 2–3/day in month 1, 5/day from month 2. |
+
 Two findings drive everything below:
 
 1. **Supply.** Measured against `crawler/data/products_featured.json`, only 61 of 567 dark horses
@@ -290,6 +298,30 @@ Not legal advice. The exposure is real but manageable, and the mitigations are c
   whole design and the one most likely to be explicitly prohibited. Read each ToS. Prefer
   permission.
 
+### 8a. Tier 2 labelling contract (binding — Tier 2 was approved on this condition)
+
+Tier 2 ships only if all six hold. Enforce in code and in the review checklist, not in a style guide.
+
+1. **Persistent badge**, visible at every scroll position of the demo, never a footnote, never
+   dismissible. Copy, both locales, verbatim:
+   - `zh-CN` — 示意性演示，非真实产品界面。与 {name} 无关联、未获其背书。
+   - `en-US` — Illustrative reconstruction. Not the real product. Not affiliated with or endorsed by {name}.
+2. **Neutral chrome only.** The renderer must not accept a vendor logo, brand color, or font
+   inside a Tier 2 surface. `SmartLogo` is not importable by Tier 2 widgets — enforce with a lint
+   rule, not a convention.
+3. **No screenshots of the real UI inside a simulation.** A screenshot is Tier 4 and must be
+   labelled as a real screenshot. Mixing the two is what makes a reconstruction deceptive.
+4. **Every number cited or marked.** A numeric value in a Tier 2 widget either carries a
+   `source_url` from `evidence[]` or renders with an "example data" affordance. Validation fails
+   the spec otherwise — this is a parse-time check, not a review-time one.
+5. **`confidence: "illustrative"`** is forced for all Tier 2 specs. The generator may not set
+   `verified` on a Tier 2 demo.
+6. **Takedown honored in 48h**, and a Tier 2 demo comes down on request without argument.
+   Publish the address before the first Tier 2 demo goes live, not after.
+
+If any of these becomes inconvenient enough to want an exception, that is the signal to drop
+Tier 2 rather than the signal to weaken the contract.
+
 ### The coherence problem — raise this with yourself before building
 
 This codebase is unusually careful about epistemics. `chat_service.py` instructs the model to
@@ -336,6 +368,28 @@ call transcript.
 This also fixes your supply problem: 61 D3 products is only 12 days of *individual* demos, but the
 comparison sets are combinatorial and the shelf life is months, not days. If you build one thing
 from this document, build `split_compare` and `spec_matrix` first.
+
+### 9c. The independence firewall (required by the outreach decision)
+
+Outreach from day one means that within a month some vendors will have supplied API keys,
+corrections, and goodwill — and those same vendors carry a `dark_horse_index` you assign. WeeklyAI's
+entire value is that the score is honest. A promise is not enough here; make it structural.
+
+- **The demo pipeline reads scores and never writes them.** `dark_horse_index`, `final_score`,
+  `trending_score` and `criteria_met` are not in the demo generator's write set. Add a test that
+  runs generation over a fixture catalog and asserts those fields are byte-identical afterward.
+- **Selection is score-blind to partnership.** The daily 5 are chosen by score, recency and tier —
+  never by whether a vendor replied. A vendor who supplies a key gets an *upgraded tier*, never a
+  higher score or a slot they didn't earn.
+- **Disclose the relationship on the demo.** Where a vendor supplied a key or corrected content:
+  *"{name} supplied the sandbox key for this demo / reviewed it for accuracy. Scoring is
+  independent."* Silent partnerships are what turn into the credibility story later.
+- **Never offer coverage or score for access.** The email offers a correction, nothing else. If a
+  vendor asks for a better rating in exchange for a key, decline the key.
+- **Log it.** `vendor_status` on the demo record (`none` / `contacted` / `corrected` / `key_supplied`)
+  so the relationship is auditable rather than remembered.
+
+Decide now, while no vendor has replied yet and the decision costs nothing.
 
 ---
 
@@ -407,18 +461,202 @@ Stated so nobody treats these as established:
 
 ## 13. Open questions
 
+Questions 2, 4 and 5 were answered on 2026-09-06 and are struck through. The rest are still open.
+
 1. **Who is the demo for?** A PM harvesting inspiration needs 30 seconds and a mechanism. A PM
    evaluating for adoption needs depth and honest limits. These are different products; the
    current site reads like the former.
-2. **Is Tier 2 acceptable to you?** See §8. Publishing illustrative reconstructions on a site
-   whose voice is strictly evidence-cited is a genuine editorial decision, and dropping Tier 2
-   costs 35% coverage but zero credibility.
+2. ~~**Is Tier 2 acceptable to you?**~~ **Answered: yes, with strict labelling.** The binding
+   conditions are in §8a.
 3. **Monthly ceiling for live API spend?** Determines whether Tier 1 is cached-only or genuinely
    live.
-4. **Do you want the vendor-outreach motion (§9a)?** It is the highest-leverage item here, but it
-   changes WeeklyAI from a pure observer into something with relationships — and eventually a
-   bias question when a vendor supplying your API key is also being scored 4 or 5.
-5. **Is 5/day a fixed cadence or a quality-gated one?** If fixed, Tier 3/4 must auto-publish
-   unreviewed. If gated, expect 2–3/day for the first month.
+4. ~~**Do you want the vendor-outreach motion (§9a)?**~~ **Answered: yes, from day one.** The
+   bias exposure this creates is addressed structurally in §9c.
+5. ~~**Is 5/day fixed or quality-gated?**~~ **Answered: quality-gated.** Nothing auto-publishes;
+   2–3/day in month 1 is the expected and acceptable shape.
 6. **Both locales from day one?** Doubles generation cost per demo and the review burden. The
    `DemoSpec` above assumes yes, matching the existing `_en` field convention.
+
+---
+
+## 14. Appendix A — `DemoSpec`, concrete
+
+Place at `frontend-next/src/lib/demo-schema.ts`, mirrored as pydantic in
+`crawler/utils/demo_spec.py` so the generator validates before it writes.
+
+```ts
+import { z } from "zod";
+
+const Loc = z.object({ zh: z.string().min(1), en: z.string().min(1) });
+
+/** A value the reader sees. Either it is sourced, or it is visibly an example. */
+const Datum = z.object({
+  label: Loc,
+  value: z.string(),
+  evidence_ref: z.string().optional(),      // index into DemoSpec.evidence
+  is_example: z.boolean().default(false),
+}).refine(d => !!d.evidence_ref || d.is_example, {
+  message: "every datum must cite evidence or be flagged is_example",
+});
+
+const Widget = z.discriminatedUnion("type", [
+  z.object({ type: z.literal("query_response"),
+    mode: z.enum(["live", "cached"]),
+    endpoint_id: z.string().optional(),      // resolved server-side; never a URL
+    presets: z.array(z.object({ query: z.string(), response: z.string() })).min(1).max(5),
+    allow_free_input: z.boolean().default(false) }),
+  z.object({ type: z.literal("split_compare"),
+    input: z.string(),
+    left: z.object({ title: Loc, body: z.string() }),
+    right: z.object({ title: Loc, body: z.string() }),
+    takeaway: Loc }),
+  z.object({ type: z.literal("pipeline"),
+    stages: z.array(z.object({ name: Loc, input: z.string(), output: z.string() })).min(2).max(6) }),
+  z.object({ type: z.literal("spec_matrix"),
+    subject: z.string(),
+    competitors: z.array(z.string()).min(1).max(3),
+    rows: z.array(z.object({ spec: Loc, values: z.array(Datum) })).min(3) }),
+  z.object({ type: z.literal("scenario_branch"),
+    branches: z.array(z.object({ persona: Loc, situation: Loc, outcome: Loc })).min(2).max(4) }),
+  z.object({ type: z.literal("hotspot_shot"),
+    shot_url: z.string().url(),
+    hotspots: z.array(z.object({ x: z.number().min(0).max(100), y: z.number().min(0).max(100),
+                                 note: Loc })).min(2).max(6) }),
+  z.object({ type: z.literal("param_dial"),
+    param: Loc, min: z.number(), max: z.number(), step: z.number(), unit: z.string(),
+    formula_note: Loc, outputs: z.array(Datum).min(1) }),
+  z.object({ type: z.literal("transcript"),
+    turns: z.array(z.object({ speaker: z.enum(["user", "product"]), text: z.string() })).min(3).max(12) }),
+]);
+
+export const DemoSpecSchema = z.object({
+  version: z.literal(1),
+  product_slug: z.string(),
+  tier: z.enum(["sandbox", "simulation", "concept", "tour"]),
+  title: Loc,
+  premise: Loc,                                    // the job it does, 1-2 sentences
+  steps: z.array(z.object({
+    id: z.string(), label: Loc, narration: Loc, widget: Widget,
+  })).min(3).max(5),
+  evidence: z.array(z.object({ claim: z.string(), source_url: z.string().url() })),
+  confidence: z.enum(["verified", "inferred", "illustrative"]),
+  vendor_status: z.enum(["none", "contacted", "corrected", "key_supplied"]).default("none"),
+  generated_at: z.string(), model: z.string(), reviewed_by: z.string().nullable(),
+})
+// §8a.5 — a simulation can never claim verification.
+.refine(s => s.tier !== "simulation" || s.confidence === "illustrative",
+        { message: "tier=simulation forces confidence=illustrative" })
+// §6c — live mode requires a registry id, and the registry is server-side.
+.refine(s => s.steps.every(st =>
+          st.widget.type !== "query_response" ||
+          st.widget.mode !== "live" || !!st.widget.endpoint_id),
+        { message: "live query_response requires endpoint_id" });
+
+export type DemoSpec = z.infer<typeof DemoSpecSchema>;
+```
+
+Three invariants are carried by the schema rather than by review, which is the point of having a
+schema at all: **no unsourced numbers** (`Datum`), **no simulation claiming verification**
+(`refine` #1), **no model-supplied URLs reaching the server** (`refine` #2).
+
+### Worked example — Exa, `tier: "sandbox"`
+
+Illustrative; the Exa specifics need confirming per §12. Note that the demo never renders Exa's
+dashboard. It renders the *difference neural search makes*, which is the thing Exa's own homepage
+cannot show you honestly.
+
+```jsonc
+{
+  "version": 1, "product_slug": "exa", "tier": "sandbox",
+  "title": { "zh": "当搜索理解语义", "en": "When search understands meaning" },
+  "premise": {
+    "zh": "Exa 是为 AI 应用设计的搜索 API：用一句话描述你想找的东西，而不是猜关键词。",
+    "en": "Exa is a search API for AI apps: describe what you want in a sentence instead of guessing keywords."
+  },
+  "steps": [
+    { "id": "s1", "label": { "zh": "问题", "en": "The problem" },
+      "narration": {
+        "zh": "关键词搜索找不到「像这样的公司」——它只能匹配字符串。",
+        "en": "Keyword search cannot find 'companies like this one'. It matches strings, not meaning." },
+      "widget": { "type": "split_compare",
+        "input": "startups building developer tools for LLM evaluation",
+        "left":  { "title": { "zh": "关键词检索", "en": "Keyword search" },
+                   "body": "Blog posts titled 'LLM evaluation', a Wikipedia page, three SEO listicles." },
+        "right": { "title": { "zh": "语义检索", "en": "Neural search" },
+                   "body": "Braintrust, Langfuse, Judgment Labs — company homepages, not articles about them." },
+        "takeaway": { "zh": "同一个查询，返回的是公司而不是文章。",
+                      "en": "Same query. One returns articles about the topic; the other returns the companies." } } },
+    { "id": "s2", "label": { "zh": "试一下", "en": "Try it" },
+      "narration": { "zh": "选一个查询，看真实返回结果。", "en": "Pick a query and see live results." },
+      "widget": { "type": "query_response", "mode": "live", "endpoint_id": "exa_search_v1",
+        "allow_free_input": false,
+        "presets": [
+          { "query": "companies doing AI for industrial inspection", "response": "" },
+          { "query": "research papers on speculative decoding since 2025", "response": "" },
+          { "query": "personal blogs by people who left OpenAI", "response": "" } ] } },
+    { "id": "s3", "label": { "zh": "接进去", "en": "Wire it up" },
+      "narration": { "zh": "三个阶段：检索、取正文、交给模型。",
+                     "en": "Three stages: retrieve, fetch contents, hand to a model." },
+      "widget": { "type": "pipeline", "stages": [
+        { "name": { "zh": "检索", "en": "Search" }, "input": "a sentence describing what you want",
+          "output": "ranked URLs with scores" },
+        { "name": { "zh": "取正文", "en": "Contents" }, "input": "those URLs",
+          "output": "cleaned page text, no scraping stack of your own" },
+        { "name": { "zh": "生成", "en": "Answer" }, "input": "text + your prompt",
+          "output": "a grounded answer with citations" } ] } }
+  ],
+  "evidence": [ { "claim": "Exa exposes search and contents endpoints", "source_url": "https://docs.exa.ai" } ],
+  "confidence": "verified", "vendor_status": "none",
+  "generated_at": "2026-09-06T00:00:00Z", "model": "…", "reviewed_by": null
+}
+```
+
+---
+
+## 15. Appendix B — the outreach artifact
+
+Outreach ships with the pipeline (decision 2), so it needs to exist as an asset, not an intention.
+Send after publish, never before — "here is a thing that exists" outperforms "may we?".
+
+**Subject:** We built an interactive explainer for {name}
+
+> Hi {name} team,
+>
+> WeeklyAI is a discovery site for PMs tracking emerging AI products. We picked {name} as a dark
+> horse this week and built a short interactive explainer for it — no signup, runs in the browser:
+> {demo_url}
+>
+> Two things:
+>
+> 1. **Corrections are welcome and we'll make them fast.** If anything is wrong, reply and it's
+>    fixed within 48 hours. If you'd rather it came down, say so and it comes down.
+> 2. **If you'd like it to run against your real API**, send a rate-limited sandbox key and we'll
+>    replace the simulation with the real thing. Readers get to actually try {name} instead of
+>    reading about it.
+>
+> To be explicit: this doesn't buy coverage or affect scoring. We score independently and we'd
+> rather say that up front than have you wonder.
+>
+> — {sender}, WeeklyAI · {takedown_url}
+
+Track on the demo record: `vendor_status`, `vendor_contacted_at`, `vendor_reply_at`. The
+conversion worth watching is `contacted → key_supplied` — that rate is the honest read on whether
+the demos are good enough that a vendor wants their real product behind them.
+
+---
+
+## 16. What to build first
+
+Given the decisions, Phase 1 (weeks 1–2) is unblocked and needs no further input:
+
+1. `split_compare`, `query_response` (cached only), `hotspot_shot` — three React components.
+2. `DemoSpecSchema` from Appendix A, plus the Tier 2 badge component and its lint rule (§8a.2).
+3. The takedown page — must exist before the first Tier 2 demo.
+4. Five hand-authored specs. Suggested: **Exa** (sandbox, the worked example above), **Fireworks
+   AI** (sandbox), **Daloopa** (simulation), **Apptronik** (concept — proves Tier 3 carries the
+   45%), **Rogo** (simulation).
+5. Static JSON at `crawler/data/demos/published/` — no generator, no pipeline step, no MongoDB
+   yet. Prove the format converts before automating it.
+
+Exit criterion: outbound click-through on those five beats the non-demoed baseline. If it doesn't,
+the format is wrong and no amount of pipeline fixes it.
