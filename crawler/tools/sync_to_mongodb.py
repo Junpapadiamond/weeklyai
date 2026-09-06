@@ -335,8 +335,74 @@ def sync_candidates(db, candidates: list, dry_run: bool = False) -> dict:
     return stats
 
 
+def load_demos() -> list:
+    """Read the published demo specs from disk."""
+    demos_dir = os.path.join(DATA_DIR, "demos", "published")
+    if not os.path.isdir(demos_dir):
+        return []
+    specs = []
+    for name in sorted(os.listdir(demos_dir)):
+        if not name.endswith(".json"):
+            continue
+        try:
+            with open(os.path.join(demos_dir, name), encoding="utf-8") as handle:
+                specs.append(json.load(handle))
+        except (OSError, ValueError) as error:
+            print(f"  x Skipped demos/{name}: {error}")
+    return specs
+
+
+def sync_demos(db, demos: list, dry_run: bool = False) -> dict:
+    """Sync interactive demo specs to MongoDB.
+
+    Validated before writing with the same validator the API reads through, so
+    a spec that would be rejected at read time never reaches the cluster and
+    silently look like a missing demo.
+    """
+    collection = db["demos"]
+    stats = {"inserted": 0, "updated": 0, "skipped": 0}
+    now_iso = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+    try:
+        sys.path.insert(0, os.path.join(os.path.dirname(DATA_DIR), "backend"))
+        from app.services.demo_spec import SpecError, validate_spec
+    except ImportError:
+        validate_spec, SpecError = None, Exception
+
+    for demo in demos:
+        key = str(demo.get("product_slug") or "").strip()
+        if not key:
+            stats["skipped"] += 1
+            continue
+        if validate_spec is not None:
+            try:
+                demo = validate_spec(demo)
+            except SpecError as error:
+                print(f"  x Skipped demo '{key}': {error}")
+                stats["skipped"] += 1
+                continue
+
+        doc = demo.copy()
+        doc["_sync_key"] = key
+        doc["synced_at"] = now_iso
+        doc.pop("_id", None)
+
+        if dry_run:
+            stats["updated"] += 1
+            continue
+
+        result = collection.update_one({"_sync_key": key}, {"$set": doc}, upsert=True)
+        if result.upserted_id:
+            stats["inserted"] += 1
+        elif result.modified_count > 0:
+            stats["updated"] += 1
+        else:
+            stats["skipped"] += 1
+    return stats
+
+
 def ensure_indexes(db, dry_run: bool = False) -> None:
-    """Create recommended indexes for products/blogs collections."""
+    """Create recommended indexes for products/blogs/demos collections."""
     products = db["products"]
     blogs = db["blogs"]
     product_indexes = [
@@ -351,6 +417,14 @@ def ensure_indexes(db, dry_run: bool = False) -> None:
         ("_sync_key_unique", [("_sync_key", ASCENDING)], {"unique": True}),
         ("published_at_desc", [("published_at", DESCENDING)], {}),
         ("created_at_desc", [("created_at", DESCENDING)], {}),
+    ]
+    demos = db["demos"]
+    demo_indexes = [
+        # DemoRepository upserts on this key; without the unique index a race
+        # between two on-demand generations can leave two specs for one product.
+        ("_sync_key_unique", [("_sync_key", ASCENDING)], {"unique": True}),
+        ("tier_1", [("tier", ASCENDING)], {}),
+        ("generated_at_desc", [("generated_at", DESCENDING)], {}),
     ]
 
     print("\n  Ensuring indexes...")
@@ -377,6 +451,13 @@ def ensure_indexes(db, dry_run: bool = False) -> None:
             blogs.create_index(keys, name=name, **opts)
             print(f"  OK blogs.{name}")
 
+    for name, keys, opts in demo_indexes:
+        if dry_run:
+            print(f"  [DRY RUN] demos.{name}")
+        else:
+            demos.create_index(keys, name=name, **opts)
+            print(f"  OK demos.{name}")
+
 
 def print_stats(name: str, stats: dict, dry_run: bool = False):
     """Print sync statistics."""
@@ -400,6 +481,7 @@ Examples:
     )
     parser.add_argument("--blogs", action="store_true", help="Also sync blogs_news.json")
     parser.add_argument("--candidates", action="store_true", help="Also sync candidates")
+    parser.add_argument("--demos", action="store_true", help="Also sync interactive demo specs")
     parser.add_argument("--all", "-a", action="store_true", help="Sync everything")
     parser.add_argument("--clear-old", action="store_true", help="Clear non-curated items before sync")
     parser.add_argument("--dry-run", action="store_true", help="Show what would be done")
@@ -409,6 +491,7 @@ Examples:
     if args.all:
         args.blogs = True
         args.candidates = True
+        args.demos = True
 
     print("\n  MongoDB Sync Tool")
     print("  " + "=" * 40)
@@ -458,6 +541,15 @@ Examples:
         else:
             print("  x No candidates to sync")
 
+    if args.demos:
+        print("\n  Syncing demos...")
+        demos = load_demos()
+        if demos:
+            stats = sync_demos(db, demos, args.dry_run)
+            print_stats("Demos", stats, args.dry_run)
+        else:
+            print("  x No demos to sync")
+
     ensure_indexes(db, args.dry_run)
 
     print("\n  " + "-" * 40)
@@ -471,6 +563,8 @@ Examples:
             print(f"    blogs:      {db['blogs'].count_documents({})}")
         if args.candidates:
             print(f"    candidates: {db['candidates'].count_documents({})}")
+        if args.demos:
+            print(f"    demos:      {db['demos'].count_documents({})}")
     print()
 
 

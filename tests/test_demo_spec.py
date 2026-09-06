@@ -357,3 +357,70 @@ class TestSeeds:
         assert DemoRepository.slug_for({"name": "Fireworks AI"}) == "fireworks-ai"
         assert DemoRepository.slug_for({"slug": "apptronik", "name": "Apptronik"}) == "apptronik"
         assert DemoRepository.slug_for({"name": "  Exa!  "}) == "exa"
+
+
+class TestMongoSync:
+    """Demos must survive a cold start, which means reaching MongoDB."""
+
+    @staticmethod
+    def _sync_module():
+        import importlib.util
+        path = os.path.join(REPO_ROOT, "crawler", "tools", "sync_to_mongodb.py")
+        spec = importlib.util.spec_from_file_location("sync_to_mongodb_under_test", path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+
+    @staticmethod
+    def _db():
+        mongomock = pytest.importorskip("mongomock")
+        return mongomock.MongoClient().weeklyai
+
+    def test_seeds_are_discovered_by_the_sync_tool(self):
+        demos = self._sync_module().load_demos()
+        assert {d["product_slug"] for d in demos} >= {"exa", "apptronik", "daloopa"}
+
+    def test_demos_reach_mongo_under_sync_key(self):
+        module, db = self._sync_module(), self._db()
+        stats = module.sync_demos(db, module.load_demos())
+        assert stats["inserted"] == db.demos.count_documents({}) > 0
+        assert db.demos.find_one({"_sync_key": "exa"})["product_name"] == "Exa"
+
+    def test_resync_updates_rather_than_duplicates(self):
+        module, db = self._sync_module(), self._db()
+        demos = module.load_demos()
+        module.sync_demos(db, demos)
+        module.sync_demos(db, demos)
+        assert db.demos.count_documents({"_sync_key": "exa"}) == 1
+
+    def test_invalid_spec_never_reaches_the_cluster(self):
+        """A spec that would be refused on read must be refused on write, or it
+        looks like a missing demo rather than a rejected one."""
+        module, db = self._sync_module(), self._db()
+        bad = {**minimal_spec(), "product_slug": "bad", "tier": "simulation", "confidence": "verified"}
+        stats = module.sync_demos(db, [bad])
+        assert stats["skipped"] == 1
+        assert db.demos.count_documents({"_sync_key": "bad"}) == 0
+
+    def test_ensure_indexes_creates_the_demo_uniqueness_guard(self):
+        module, db = self._sync_module(), self._db()
+        module.ensure_indexes(db)
+        unique = [name for name, spec in db.demos.index_information().items() if spec.get("unique")]
+        assert unique, "demos needs a unique _sync_key index or a race can store two specs per product"
+
+    def test_repository_reads_what_the_sync_tool_writes(self):
+        """The round trip that actually matters: sync writes, backend reads."""
+        module, db = self._sync_module(), self._db()
+        module.sync_demos(db, module.load_demos())
+
+        from app.services import demo_repository
+        original = demo_repository.get_mongo_db
+        demo_repository.get_mongo_db = lambda: db
+        try:
+            DemoRepository.clear_memory_cache()
+            spec = DemoRepository.get("exa")
+            assert spec is not None and spec["product_name"] == "Exa"
+            assert "_sync_key" not in spec and "synced_at" not in spec
+        finally:
+            demo_repository.get_mongo_db = original
+            DemoRepository.clear_memory_cache()

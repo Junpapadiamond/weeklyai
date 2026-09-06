@@ -100,7 +100,8 @@ crawler/data/
 | `crawler/tools/auto_discover.py` | 自动发现 (Provider 路由: cn→GLM, 其他→Perplexity) |
 | `crawler/tools/auto_publish.py` | 自动发布候选 → featured |
 | `crawler/tools/rss_to_products.py` | 社交信号→产品 + enrich featured |
-| `crawler/tools/sync_to_mongodb.py` | JSON → MongoDB 同步 |
+| `crawler/tools/sync_to_mongodb.py` | JSON → MongoDB 同步 (`--demos` 同步演示) |
+| `crawler/tools/check_mongo.py` | MongoDB 连接自检（脱敏输出） |
 | `crawler/tools/dark_horse_detector.py` | 黑马评分计算 |
 | `crawler/tools/fix_logos.py` | Logo 自动修复 (favicon/HTML icon 解析) |
 | `crawler/tools/resolve_websites.py` | 自动解析缺失官网 URL |
@@ -957,6 +958,9 @@ Base URL: `http://localhost:5000/api/v1`
 python3 crawler/tools/seed_demos.py --dry-run
 python3 crawler/tools/seed_demos.py
 
+# 同步演示到 MongoDB（否则实时生成的演示只存在进程内存里，冷启动即丢失）
+python3 crawler/tools/sync_to_mongodb.py --demos
+
 # 测试
 PYTHONPATH=backend:crawler python -m pytest tests/test_demo_spec.py -v
 ```
@@ -1032,11 +1036,40 @@ After daily crawler runs, sync to MongoDB (step 10 in daily pipeline):
 python tools/sync_to_mongodb.py --all
 ```
 
+### 连接自检
+
+Atlas 控制台只能告诉你集群存在，不能告诉你**这台机器**连不连得上、实际落在哪个库、
+后端会不会回退 JSON。用这个：
+
+```bash
+export MONGO_URI='mongodb+srv://...'
+python3 crawler/tools/check_mongo.py     # 退出码 0 = 后端会走 Mongo
+```
+
+输出已做凭据脱敏，可以直接粘贴分享。它检查：URI 是否带库名、主机能否解析、能否 ping、
+实际使用的库、各集合文档数、唯一索引是否存在。
+
+**Atlas 常见故障，按出现频率排序：**
+
+| 症状 | 原因 |
+|---|---|
+| 控制台显示 "Monitoring is paused" | 最近没有任何连接——通常就是下面几条之一 |
+| 本机能连、线上连不上 | Network Access 没放行 `0.0.0.0/0`；Vercel 和 GitHub Actions 出口 IP 不固定 |
+| SRV 主机解析失败 | `mongodb+srv://` 需要 DNS SRV 查询；被拦截或集群已暂停 |
+| 连上了但库是空的 | 没跑过 `sync_to_mongodb.py`，或 URI 里的库名与同步时用的不一致 |
+| 认证失败 | 密码里的特殊字符没有 URL 编码 |
+
+> ⚠️ `crawler/database/db_handler.py` 调用的是无默认值的 `get_database()`，
+> URI 不带库名时会直接抛错；而 backend 与 sync 工具会回退到 `MONGO_DB_NAME` 或
+> `weeklyai`。**URI 末尾务必带上 `/weeklyai`。**
+
 ### Collections & Indexes
 
 **products**: `_sync_key` (unique), `website`, `dark_horse_index` desc, `final_score` desc, `discovered_at` desc, `categories`, text index on `name`/`description`/`why_matters`
 
 **blogs**: `_sync_key` (unique), `published_at` desc, `created_at` desc
+
+**demos**: `_sync_key` (unique, = product slug), `tier`, `generated_at` desc
 
 ---
 
