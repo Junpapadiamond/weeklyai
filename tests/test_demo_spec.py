@@ -436,6 +436,96 @@ class TestProviderConfiguration:
         assert sent["headers"]["Authorization"] == "Bearer secret"
 
 
+class TestAnthropicProtocol:
+    """The Anthropic Messages shape is a different wire protocol from
+    OpenAI's chat/completions - different path, auth header, body and response
+    shape. Getting any one of them wrong fails every request."""
+
+    @staticmethod
+    def _capture(monkeypatch, response_json):
+        sent = {}
+
+        class FakeResponse:
+            status_code = 200
+            def json(self): return response_json
+            def close(self): pass
+
+        def capture(url, headers=None, json=None, timeout=None):
+            sent.update(url=url, headers=headers, body=json)
+            return FakeResponse()
+
+        monkeypatch.setattr(demo_service.requests, "post", capture)
+        return sent
+
+    def test_a_claude_model_selects_the_anthropic_shape(self, monkeypatch):
+        """Inferred from the model id, because a Claude model is only ever
+        served over this protocol."""
+        monkeypatch.delenv("DEMO_API_STYLE", raising=False)
+        monkeypatch.setenv("DEMO_MODEL", "claude-sonnet-5")
+        monkeypatch.setenv("DEMO_API_BASE", "https://zjapi.com/v1")
+        assert demo_service._api_style() == "anthropic"
+        assert demo_service._completions_url() == "https://zjapi.com/v1/messages"
+
+    @pytest.mark.parametrize("base,expected", [
+        ("https://zjapi.com/v1", "https://zjapi.com/v1/messages"),
+        ("https://zjapi.com", "https://zjapi.com/v1/messages"),
+        ("https://zjapi.com/v1/messages", "https://zjapi.com/v1/messages"),
+    ])
+    def test_messages_url_survives_how_the_base_is_written(self, monkeypatch, base, expected):
+        monkeypatch.setenv("DEMO_API_STYLE", "anthropic")
+        monkeypatch.setenv("DEMO_API_BASE", base)
+        assert demo_service._completions_url() == expected
+
+    def test_uses_x_api_key_and_a_version_header(self, monkeypatch):
+        monkeypatch.setenv("DEMO_API_STYLE", "anthropic")
+        monkeypatch.setenv("DEMO_API_KEY", "secret")
+        sent = self._capture(monkeypatch, {"content": [{"type": "text", "text": "{}"}]})
+        demo_service._call_model("prompt", (5, 10))
+        assert sent["headers"]["x-api-key"] == "secret"
+        assert sent["headers"]["anthropic-version"] == demo_service.ANTHROPIC_VERSION
+        assert "Authorization" not in sent["headers"]
+
+    def test_never_sends_sampling_parameters(self, monkeypatch):
+        """temperature/top_p/top_k are rejected with a 400 on current Claude
+        models, so sending the OpenAI path's temperature would fail every call."""
+        monkeypatch.setenv("DEMO_API_STYLE", "anthropic")
+        sent = self._capture(monkeypatch, {"content": [{"type": "text", "text": "{}"}]})
+        demo_service._call_model("prompt", (5, 10))
+        for field in ("temperature", "top_p", "top_k", "stream", "disable_search"):
+            assert field not in sent["body"], f"{field} must not be sent to an Anthropic endpoint"
+        assert sent["body"]["max_tokens"] > 0
+
+    def test_reads_text_from_the_content_blocks(self, monkeypatch):
+        monkeypatch.setenv("DEMO_API_STYLE", "anthropic")
+        self._capture(monkeypatch, {
+            "content": [{"type": "thinking", "thinking": ""}, {"type": "text", "text": '{"hello":1}'}],
+            "stop_reason": "end_turn",
+        })
+        assert demo_service._call_model("prompt", (5, 10)) == '{"hello":1}'
+
+    def test_a_refusal_is_not_read_as_content(self, monkeypatch):
+        """A safety decline arrives as HTTP 200 with stop_reason refusal."""
+        monkeypatch.setenv("DEMO_API_STYLE", "anthropic")
+        self._capture(monkeypatch, {"content": [], "stop_reason": "refusal"})
+        assert demo_service._call_model("prompt", (5, 10)) is None
+
+    def test_explicit_style_overrides_the_model_inference(self, monkeypatch):
+        monkeypatch.setenv("DEMO_API_STYLE", "anthropic")
+        monkeypatch.setenv("DEMO_MODEL", "gpt-5.6-sol")
+        assert demo_service._api_style() == "anthropic"
+
+    def test_openai_path_is_unaffected(self, monkeypatch):
+        monkeypatch.delenv("DEMO_API_STYLE", raising=False)
+        monkeypatch.setenv("DEMO_MODEL", "gpt-5.6-sol")
+        monkeypatch.setenv("DEMO_API_BASE", "https://api.intenext.ai/v1")
+        monkeypatch.setenv("DEMO_API_KEY", "secret")
+        sent = self._capture(monkeypatch, {"choices": [{"message": {"content": "{}"}}]})
+        demo_service._call_model("prompt", (5, 10))
+        assert sent["url"].endswith("/chat/completions")
+        assert sent["headers"]["Authorization"] == "Bearer secret"
+        assert sent["body"]["temperature"] == 0.25
+
+
 class TestTierClassification:
     @pytest.mark.parametrize("product,expected", [
         ({"name": "Apptronik", "description": "humanoid robot", "categories": ["hardware"]}, "concept"),

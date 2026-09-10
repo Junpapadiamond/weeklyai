@@ -950,12 +950,25 @@ Base URL: `http://localhost:5000/api/v1`
 | `DEMO_GENERATION_ENABLED` | **实时生成总开关**，默认关闭 | `false` |
 | `DEMO_API_BASE` | OpenAI 兼容端点，留空用 Perplexity。带不带 `/v1` 都行 | (Perplexity) |
 | `DEMO_API_KEY` | 生成用 key，留空回退 `PERPLEXITY_API_KEY` | (回退) |
-| `DEMO_MODEL` | 生成模型（`sonar` / `gpt-5.6-sol` …） | `sonar` |
+| `DEMO_API_STYLE` | 接口协议 `anthropic`/`openai`/`perplexity`，留空自动判断 | (自动) |
+| `DEMO_MODEL` | 生成模型（`sonar` / `gpt-5.6-sol` / `claude-sonnet-5` …） | `sonar` |
 | `PERPLEXITY_API_KEY` | chat 助手用；未设 `DEMO_API_KEY` 时生成也用它 | (required) |
 
-**换服务商**：任何 OpenAI 兼容的 `/chat/completions` 都可以，不需要装 `openai` SDK ——
-请求体形状一致，多一个依赖只会让 Vercel 的函数包变大。`disable_search` 是 Perplexity
-专有字段，只有在用 Perplexity 时才会发送（其他服务商会拒绝未知字段）。
+**换服务商**：支持两种互不兼容的协议，自动按模型名判断（`claude*` → anthropic）：
+
+| 协议 | 路径 | 认证 | 响应 | 备注 |
+|---|---|---|---|---|
+| `openai` | `/v1/chat/completions` | `Authorization: Bearer` | `choices[0].message.content` | 带 `temperature` |
+| `anthropic` | `/v1/messages` | `x-api-key` + `anthropic-version` | `content[].text` | **不能带 `temperature`** |
+| `perplexity` | `/chat/completions` | `Authorization: Bearer` | 同 openai | 额外带 `disable_search` |
+
+⚠️ **当前 Claude 模型（Sonnet 5 / Opus 5 / 4.6+）会以 400 拒绝 `temperature`
+等采样参数**，所以 anthropic 分支完全不发送；`max_tokens` 也调高到 8000，因为这些模型
+的 adaptive thinking 与回答共用同一预算。安全拒答会以 HTTP 200 + `stop_reason: refusal`
+返回，代码按「无内容」处理而不是读空数组。
+
+不需要装 `openai` 或 `anthropic` SDK —— 这里只有一次 POST，多一个依赖只会让 Vercel
+的函数包变大。若将来要在别处做第一方 Anthropic 开发，那时应当用官方 SDK。
 
 **Vercel 配置**（backend 项目，Settings → Environment Variables）：
 
@@ -964,6 +977,15 @@ DEMO_GENERATION_ENABLED = true
 DEMO_API_BASE           = https://api.intenext.ai/v1
 DEMO_API_KEY            = sk-...        # 密钥只放这里，绝不进仓库
 DEMO_MODEL              = gpt-5.6-sol
+```
+
+或使用 Anthropic 协议的网关：
+
+```
+DEMO_GENERATION_ENABLED = true
+DEMO_API_BASE           = https://zjapi.com/v1
+DEMO_API_KEY            = sk-...
+DEMO_MODEL              = claude-sonnet-5   # 以 claude 开头 → 自动走 anthropic 协议
 ```
 
 改完必须 **redeploy**：Vercel 的环境变量是在构建/启动时注入的，改了不重新部署不会生效。

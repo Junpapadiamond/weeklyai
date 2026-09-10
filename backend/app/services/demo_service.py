@@ -29,6 +29,7 @@ from app.services.env_utils import sanitize_env_value
 # generation at a different provider without touching this module.
 DEFAULT_API_BASE = "https://api.perplexity.ai"
 PERPLEXITY_HOSTS = ("api.perplexity.ai",)
+ANTHROPIC_VERSION = "2023-06-01"
 
 # The Next.js API proxy aborts at 45s and Vercel caps the function at 60s, so
 # the whole of generate() - both attempts included - has to finish inside this.
@@ -67,6 +68,12 @@ def _api_base() -> str:
 
 def _completions_url() -> str:
     base = _api_base()
+    if _api_style() == "anthropic":
+        if base.endswith("/messages"):
+            return base
+        if base.endswith("/v1"):
+            return f"{base}/messages"
+        return f"{base}/v1/messages"
     if base.endswith("/chat/completions"):
         return base
     if base.endswith("/v1"):
@@ -92,8 +99,29 @@ def _model() -> str:
     return sanitize_env_value(os.getenv("DEMO_MODEL", "sonar"), "sonar") or "sonar"
 
 
+def _api_style() -> str:
+    """Which wire protocol the configured endpoint speaks.
+
+    Two incompatible shapes are in play. OpenAI-compatible servers take
+    POST /v1/chat/completions with a Bearer token and answer with
+    choices[0].message.content. Anthropic-compatible ones take POST /v1/messages
+    with x-api-key plus anthropic-version, and answer with content[].text.
+    Guessing wrong fails every request, so DEMO_API_STYLE can force it; the
+    default infers from the model id, which is reliable because a Claude model
+    is only ever served over the Anthropic shape.
+    """
+    forced = sanitize_env_value(os.getenv("DEMO_API_STYLE", "")).strip().lower()
+    if forced in {"anthropic", "openai", "perplexity"}:
+        return forced
+    if _model().lower().startswith("claude"):
+        return "anthropic"
+    if any(host in _api_base() for host in PERPLEXITY_HOSTS):
+        return "perplexity"
+    return "openai"
+
+
 def _is_perplexity() -> bool:
-    return any(host in _api_base() for host in PERPLEXITY_HOSTS)
+    return _api_style() == "perplexity"
 
 
 def generation_enabled() -> bool:
@@ -258,31 +286,58 @@ def _extract_json(text: str) -> Any:
     return None
 
 
+def _extract_text(style: str, payload: Any) -> str | None:
+    """Pull the assistant text out of whichever response shape came back."""
+    if style == "anthropic":
+        # A safety decline is HTTP 200 with stop_reason "refusal"; treat it as
+        # no content rather than reading an empty content list.
+        if payload.get("stop_reason") == "refusal":
+            return None
+        for block in payload.get("content") or []:
+            if isinstance(block, dict) and block.get("type") == "text":
+                return block.get("text")
+        return None
+    return payload["choices"][0]["message"]["content"]
+
+
 def _call_model(prompt: str, timeout: tuple[int, int]) -> str | None:
-    payload: dict[str, Any] = {
-        "model": _model(),
-        "messages": [{"role": "user", "content": prompt}],
-        "max_tokens": 3200,
-        # Low, because this is structured output and not prose.
-        "temperature": 0.25,
-        "stream": False,
-    }
-    if _is_perplexity():
-        # Perplexity-only. Other providers reject unknown fields outright, so
-        # sending this everywhere would break generation on them.
-        payload["disable_search"] = True
+    style = _api_style()
+
+    if style == "anthropic":
+        headers = {
+            "x-api-key": _key(),
+            "anthropic-version": ANTHROPIC_VERSION,
+            "Content-Type": "application/json",
+        }
+        # No temperature: sampling params return a 400 on current Claude models.
+        # max_tokens is larger than the OpenAI path because adaptive thinking is
+        # always on for those models and shares this budget with the answer.
+        payload: dict[str, Any] = {
+            "model": _model(),
+            "max_tokens": 8000,
+            "messages": [{"role": "user", "content": prompt}],
+        }
+    else:
+        headers = {"Authorization": f"Bearer {_key()}", "Content-Type": "application/json"}
+        payload = {
+            "model": _model(),
+            "messages": [{"role": "user", "content": prompt}],
+            "max_tokens": 3200,
+            # Low, because this is structured output and not prose.
+            "temperature": 0.25,
+            "stream": False,
+        }
+        if style == "perplexity":
+            # Perplexity-only. Other providers reject unknown fields outright,
+            # so sending this everywhere would break generation on them.
+            payload["disable_search"] = True
 
     response = None
     try:
-        response = requests.post(
-            _completions_url(),
-            headers={"Authorization": f"Bearer {_key()}", "Content-Type": "application/json"},
-            json=payload,
-            timeout=timeout,
-        )
+        response = requests.post(_completions_url(), headers=headers, json=payload, timeout=timeout)
         if response.status_code != 200:
             return None
-        return response.json()["choices"][0]["message"]["content"]
+        return _extract_text(style, response.json())
     except (requests.exceptions.RequestException, ValueError, KeyError, IndexError, TypeError):
         return None
     finally:
