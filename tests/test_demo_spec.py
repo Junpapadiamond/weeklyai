@@ -325,6 +325,18 @@ class TestGenerationGate:
             raise AssertionError("the provider must not be called while generation is off")
 
         monkeypatch.setattr(demo_service, "_call_model", explode)
+        assert demo_service.generate({"name": "Acme"}, "acme")["error"] == "GENERATION_DISABLED"
+
+    def test_switched_off_is_distinct_from_no_key(self, monkeypatch):
+        """These need different messages: one is a deliberate setting, the other
+        is a misconfiguration. Collapsing them tells the visitor the site is
+        broken when it is merely switched off."""
+        monkeypatch.delenv("DEMO_GENERATION_ENABLED", raising=False)
+        monkeypatch.setattr(demo_service, "_key", lambda: "a-real-key")
+        assert demo_service.generate({"name": "Acme"}, "acme")["error"] == "GENERATION_DISABLED"
+
+        monkeypatch.setenv("DEMO_GENERATION_ENABLED", "true")
+        monkeypatch.setattr(demo_service, "_key", lambda: "")
         assert demo_service.generate({"name": "Acme"}, "acme")["error"] == "NOT_CONFIGURED"
 
     @pytest.mark.parametrize("value", ["true", "TRUE", "1", "yes", "on"])
@@ -349,6 +361,79 @@ class TestGenerationGate:
         DemoRepository.clear_memory_cache()
         assert DemoRepository.get("exa") is not None
         assert len(DemoRepository.list_slugs()) >= 5
+
+
+class TestProviderConfiguration:
+    """Generation must work against any OpenAI-compatible endpoint, not just
+    the provider the site happened to start with."""
+
+    @pytest.mark.parametrize("base,expected", [
+        ("", "https://api.perplexity.ai/chat/completions"),
+        ("https://api.example.ai/v1", "https://api.example.ai/v1/chat/completions"),
+        ("https://api.example.ai", "https://api.example.ai/v1/chat/completions"),
+        ("https://api.example.ai/v1/", "https://api.example.ai/v1/chat/completions"),
+        ("https://api.example.ai/v1/chat/completions", "https://api.example.ai/v1/chat/completions"),
+        ("https://api.perplexity.ai", "https://api.perplexity.ai/chat/completions"),
+    ])
+    def test_completions_url_survives_how_the_base_is_written(self, monkeypatch, base, expected):
+        """A doubled or missing /v1 is the easiest way to misconfigure this."""
+        if base:
+            monkeypatch.setenv("DEMO_API_BASE", base)
+        else:
+            monkeypatch.delenv("DEMO_API_BASE", raising=False)
+        assert demo_service._completions_url() == expected
+
+    def test_demo_key_wins_over_the_chat_key(self, monkeypatch):
+        monkeypatch.setenv("PERPLEXITY_API_KEY", "chat-key")
+        monkeypatch.setenv("DEMO_API_KEY", "demo-key")
+        assert demo_service._key() == "demo-key"
+
+    def test_falls_back_to_the_chat_key(self, monkeypatch):
+        monkeypatch.delenv("DEMO_API_KEY", raising=False)
+        monkeypatch.setenv("PERPLEXITY_API_KEY", "chat-key")
+        assert demo_service._key() == "chat-key"
+
+    def test_perplexity_only_field_is_not_sent_to_other_providers(self, monkeypatch):
+        """disable_search is Perplexity-specific; strict OpenAI-compatible
+        servers reject unknown fields, which would break generation."""
+        sent = {}
+
+        class FakeResponse:
+            status_code = 200
+            def json(self): return {"choices": [{"message": {"content": "{}"}}]}
+            def close(self): pass
+
+        def capture(url, headers=None, json=None, timeout=None):
+            sent["url"], sent["json"] = url, json
+            return FakeResponse()
+
+        monkeypatch.setattr(demo_service.requests, "post", capture)
+        monkeypatch.setenv("DEMO_API_BASE", "https://api.example.ai/v1")
+        demo_service._call_model("prompt", (5, 10))
+        assert "disable_search" not in sent["json"]
+        assert sent["url"] == "https://api.example.ai/v1/chat/completions"
+
+        monkeypatch.delenv("DEMO_API_BASE", raising=False)
+        demo_service._call_model("prompt", (5, 10))
+        assert sent["json"]["disable_search"] is True
+
+    def test_payload_is_openai_shaped(self, monkeypatch):
+        sent = {}
+
+        class FakeResponse:
+            status_code = 200
+            def json(self): return {"choices": [{"message": {"content": "{}"}}]}
+            def close(self): pass
+
+        monkeypatch.setattr(demo_service.requests, "post",
+                            lambda url, headers=None, json=None, timeout=None: (sent.update(json=json, headers=headers), FakeResponse())[1])
+        monkeypatch.setenv("DEMO_API_BASE", "https://api.example.ai/v1")
+        monkeypatch.setenv("DEMO_MODEL", "gpt-5.6-sol")
+        monkeypatch.setenv("DEMO_API_KEY", "secret")
+        demo_service._call_model("prompt", (5, 10))
+        assert sent["json"]["model"] == "gpt-5.6-sol"
+        assert sent["json"]["messages"] == [{"role": "user", "content": "prompt"}]
+        assert sent["headers"]["Authorization"] == "Bearer secret"
 
 
 class TestTierClassification:

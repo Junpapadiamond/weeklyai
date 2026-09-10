@@ -98,7 +98,7 @@ export function ProductDemoSection({ productId, productName }: { productId: stri
               {state.message ||
                 t("没能生成这个演示，请稍后再试。", "That demo could not be built. Please try again shortly.")}
             </p>
-            {state.error !== "NOT_CONFIGURED" ? (
+            {state.error !== "NOT_CONFIGURED" && state.error !== "GENERATION_DISABLED" ? (
               <button type="button" className="demo-btn" onClick={() => void build()}>
                 {t("重试", "Try again")}
               </button>

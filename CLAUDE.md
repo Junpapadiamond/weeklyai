@@ -102,6 +102,7 @@ crawler/data/
 | `crawler/tools/rss_to_products.py` | 社交信号→产品 + enrich featured |
 | `crawler/tools/sync_to_mongodb.py` | JSON → MongoDB 同步 (`--demos` 同步演示) |
 | `crawler/tools/check_mongo.py` | MongoDB 连接自检（脱敏输出） |
+| `crawler/tools/measure_demo_generation.py` | 实测演示生成通过率（开总开关前必跑） |
 | `crawler/tools/dark_horse_detector.py` | 黑马评分计算 |
 | `crawler/tools/fix_logos.py` | Logo 自动修复 (favicon/HTML icon 解析) |
 | `crawler/tools/resolve_websites.py` | 自动解析缺失官网 URL |
@@ -947,8 +948,30 @@ Base URL: `http://localhost:5000/api/v1`
 | 变量 | 说明 | 默认值 |
 |---|---|---|
 | `DEMO_GENERATION_ENABLED` | **实时生成总开关**，默认关闭 | `false` |
-| `PERPLEXITY_API_KEY` | 生成所需的 key（生产环境 chat 已在用） | (required) |
-| `DEMO_MODEL` | 生成模型 | `sonar` |
+| `DEMO_API_BASE` | OpenAI 兼容端点，留空用 Perplexity。带不带 `/v1` 都行 | (Perplexity) |
+| `DEMO_API_KEY` | 生成用 key，留空回退 `PERPLEXITY_API_KEY` | (回退) |
+| `DEMO_MODEL` | 生成模型（`sonar` / `gpt-5.6-sol` …） | `sonar` |
+| `PERPLEXITY_API_KEY` | chat 助手用；未设 `DEMO_API_KEY` 时生成也用它 | (required) |
+
+**换服务商**：任何 OpenAI 兼容的 `/chat/completions` 都可以，不需要装 `openai` SDK ——
+请求体形状一致，多一个依赖只会让 Vercel 的函数包变大。`disable_search` 是 Perplexity
+专有字段，只有在用 Perplexity 时才会发送（其他服务商会拒绝未知字段）。
+
+**Vercel 配置**（backend 项目，Settings → Environment Variables）：
+
+```
+DEMO_GENERATION_ENABLED = true
+DEMO_API_BASE           = https://api.intenext.ai/v1
+DEMO_API_KEY            = sk-...        # 密钥只放这里，绝不进仓库
+DEMO_MODEL              = gpt-5.6-sol
+```
+
+改完必须 **redeploy**：Vercel 的环境变量是在构建/启动时注入的，改了不重新部署不会生效。
+部署后用 `GET /api/v1/demos/status` 确认 `provider_host` 和 `model` 是否是你设的值
+（该接口只回显主机名和模型名，不回显密钥）。
+
+`backend/vercel.json` 已设 `maxDuration: 60`，`GENERATION_BUDGET_SECONDS = 40` 就是
+为了卡在这个上限内。
 | `DEMO_ENDPOINT_<ID>` | 登记一个 live 端点：`<url>|<存密钥的环境变量名>` | (无) |
 
 > `GENERATION_BUDGET_SECONDS = 40`：两次尝试合计必须跑完，因为 Next 代理 45s 断开、
@@ -965,10 +988,20 @@ Base URL: `http://localhost:5000/api/v1`
 **为什么默认关闭**：`PERPLEXITY_API_KEY` 生产环境已为 chat 配置，若只以 key 为条件，
 这次部署当天就会把未验证的生成打开。
 
-**打开之前先测通过率**：本机设 `DEMO_GENERATION_ENABLED=true`，跨 tier 生成约 10 个，
-统计「一次通过 / 重试通过 / 失败」。schema 很严（处处双语对、每个值必须有出处或标示例、
-`spec_matrix` 每行值的数量固定），而 `sonar` 是小搜索模型而非强结构化输出模型。
-若通过率低，改 `DEMO_MODEL` 即可，不需要改代码。
+**打开之前先测通过率**：
+
+```bash
+export DEMO_GENERATION_ENABLED=true
+export DEMO_API_BASE=https://api.intenext.ai/v1
+export DEMO_API_KEY=sk-...
+export DEMO_MODEL=gpt-5.6-sol
+python3 crawler/tools/measure_demo_generation.py --count 9 --save /tmp/demos
+```
+
+会跨 tier 抽样生成，输出「一次通过 / 重试通过 / 失败」以及**每个失败具体违反了哪条
+schema 规则**。最后一列最有用：同一个字段反复失败 → 改 prompt 或 schema；失败分散
+→ 换更强的 `DEMO_MODEL`。schema 很严（处处双语对、每个值必须有出处或标示例、
+`spec_matrix` 每行值的数量固定），小模型容易不达标。
 
 ```bash
 # 重新生成种子演示

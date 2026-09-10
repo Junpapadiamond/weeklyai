@@ -57,6 +57,10 @@ def status():
         # Split so an operator can tell "switched off" from "no API key".
         "generation_enabled": demo_service.generation_enabled(),
         "provider_key_present": bool(demo_service._key()),
+        # Host and model only - never the key. Lets you confirm from the
+        # deployed site that Vercel actually picked up the env vars.
+        "provider_host": demo_service._api_base().split("://")[-1].split("/")[0],
+        "model": demo_service._model(),
         "live_endpoints": sorted(ENDPOINT_REGISTRY),
         "demo_count": len(slugs),
         "generate_limit_per_hour": GENERATE_LIMIT_PER_HOUR,
@@ -98,12 +102,15 @@ def generate_demo(product_id):
     result = demo_service.generate(product, slug)
     if not result.get("success"):
         code = result.get("error", "INVALID_SPEC")
-        status_code = {"NOT_CONFIGURED": 503, "PROVIDER_UNAVAILABLE": 503}.get(code, 502)
+        status_code = {"GENERATION_DISABLED": 503, "NOT_CONFIGURED": 503, "PROVIDER_UNAVAILABLE": 503}.get(code, 502)
         return jsonify({
             "success": False,
             "error": code,
             "message": {
-                "NOT_CONFIGURED": "Demo generation is not connected yet. Pre-built demos still work.",
+                "GENERATION_DISABLED": "On-demand demos are switched off on this site. "
+                                       "The demos already built are still available.",
+                "NOT_CONFIGURED": "Demo generation has no provider key configured. "
+                                  "Pre-built demos still work.",
                 "PROVIDER_UNAVAILABLE": "The generator is unavailable right now. Please try again.",
             }.get(code, "The generated demo did not pass validation. Please try again."),
             "detail": result.get("detail", ""),
