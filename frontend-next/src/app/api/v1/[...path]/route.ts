@@ -5,7 +5,7 @@ export const maxDuration = 60;
 
 async function proxy(request: Request, context: { params: Promise<{ path: string[] }> }) {
   const { path } = await context.params;
-  if (!['products', 'search', 'chat', 'health'].includes(path[0]) || path.some(part => part === '.' || part === '..' || /[\\/]/.test(part))) {
+  if (!['products', 'search', 'chat', 'health', 'demos'].includes(path[0]) || path.some(part => part === '.' || part === '..' || /[\\/]/.test(part))) {
     return Response.json({ success: false, message: 'Unknown API route.' }, { status: 404 });
   }
   try {

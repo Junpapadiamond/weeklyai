@@ -195,5 +195,5 @@ jobs:
           if [ -z "$MONGO_URI" ]; then
             echo "MongoDB sync skipped: MONGO_URI is not configured; Vercel uses the committed snapshot." >> "$GITHUB_STEP_SUMMARY"
           else
-            python crawler/tools/sync_to_mongodb.py --blogs
+            python crawler/tools/sync_to_mongodb.py --blogs --demos
           fi

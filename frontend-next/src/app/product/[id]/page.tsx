@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { WebsiteScreenshot } from "@/components/common/website-screenshot";
+import { ProductDemoSection } from "@/components/demo/product-demo-section";
 import { ProductCard } from "@/components/product/product-card";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { FavoriteButton } from "@/components/favorites/favorite-button";
@@ -140,6 +141,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <h2 className="detail-block__title">{t("记录中的动态", "Recorded update")}</h2>
           <p className="detail-block__content">{latestNews}</p>
         </section>
+
+        <ProductDemoSection productId={decodedId} productName={product.name} />
 
         <section className="detail-block">
           <h2 className="detail-block__title">{t("网站预览", "Website preview")}</h2>

@@ -100,7 +100,8 @@ crawler/data/
 | `crawler/tools/auto_discover.py` | 自动发现 (Provider 路由: cn→GLM, 其他→Perplexity) |
 | `crawler/tools/auto_publish.py` | 自动发布候选 → featured |
 | `crawler/tools/rss_to_products.py` | 社交信号→产品 + enrich featured |
-| `crawler/tools/sync_to_mongodb.py` | JSON → MongoDB 同步 |
+| `crawler/tools/sync_to_mongodb.py` | JSON → MongoDB 同步 (`--demos` 同步演示) |
+| `crawler/tools/check_mongo.py` | MongoDB 连接自检（脱敏输出） |
 | `crawler/tools/dark_horse_detector.py` | 黑马评分计算 |
 | `crawler/tools/fix_logos.py` | Logo 自动修复 (favicon/HTML icon 解析) |
 | `crawler/tools/resolve_websites.py` | 自动解析缺失官网 URL |
@@ -766,6 +767,7 @@ Next.js 16 + React 19 + TypeScript + Tailwind CSS + SWR + Zod
 | `/discover` | `src/app/discover/page.tsx` | Swipe 发现模式 |
 | `/blog` | `src/app/blog/page.tsx` | 新闻/博客 |
 | `/search` | `src/app/search/page.tsx` | 搜索结果 |
+| `/demo` | `src/app/demo/page.tsx` | 🆕 交互演示（选产品 → 实时生成/查看） |
 
 ### 核心组件
 
@@ -809,6 +811,11 @@ Base URL: `http://localhost:5000/api/v1`
 | `/products/feed/rss` | GET | RSS 订阅源 |
 | `/products/industry-leaders` | GET | 行业领军参考列表 |
 | `/search?q=xxx` | GET | 搜索 (`categories`, `type`, `sort`, `page`, `limit`) |
+| `/demos/status` | GET | 演示系统状态（是否可实时生成 / 已有数量） |
+| `/demos` | GET | 已建好的演示 slug 列表 |
+| `/demos/<product_id>` | GET | 取演示（仅读缓存，不生成） |
+| `/demos/<product_id>/generate` | POST | 实时生成（限流 8 次/小时/IP，`{"refresh":true}` 强制重建） |
+| `/demos/live` | POST | 代理一次已登记的 sandbox 调用 (`endpoint_id` + `query`) |
 
 ### 排序规则
 
@@ -876,6 +883,104 @@ Base URL: `http://localhost:5000/api/v1`
 **必填字段**: `name`, `website`, `description`, `why_matters`, `dark_horse_index`
 **创新硬件字段**: `hardware_type`, `form_factor`, `use_case`, `innovation_traits`, `price`
 **有效分类**: coding, image, video, voice, writing, hardware, finance, education, healthcare, agent, other
+
+---
+
+## 🎬 交互演示系统 (Interactive demos)
+
+> 让用户任选一个产品，直接看它做什么——不用注册、不用读文档。
+
+### 原则
+
+**模型只填 spec，永远不产出代码。** LLM 输出一份 JSON（`DemoSpec`），由手写的 React
+渲染器绘制。这样一次糟糕的生成结果是一个校验错误，而不是一个不安全或错乱的页面。
+
+### 三条不变量（写在校验器里，不写在评审清单里）
+
+| 不变量 | 位置 |
+|---|---|
+| 没有无出处的数字 —— 每个 `Datum` 要么引用 `evidence_ref`，要么标 `is_example` | `demo_spec.py::_datum` |
+| 模拟演示不能自称已核实 —— `tier=simulation` 强制 `confidence=illustrative` | `demo_spec.py::validate_spec` |
+| 模型不能指定出站 URL —— live 组件只能带 `endpoint_id`，服务端在注册表里解析 | `demo_spec.py::_widget` |
+
+所有面向读者的文案都是 `{zh, en}` 双语对；只有用户会照抄的字面量（搜索词、产品名、
+竞品名）保持纯字符串。
+
+### 独立性防火墙
+
+演示流水线**只读不写**产品记录：`dark_horse_index` / `final_score` / `trending_score` /
+`criteria_met` / `hot_score` 不在它的写入集合内，`tests/test_demo_spec.py` 会断言生成
+一次之后目录字节不变。厂商合作只能提升演示的 tier，永远不能改动评分。
+
+### 四个 tier
+
+| tier | 用于 | 判定 |
+|---|---|---|
+| `sandbox` | 有公开 API 的开发者工具 | 命中 `DEVTOOL` 关键词 |
+| `simulation` | B2B 工作流产品（标注最严格） | 兜底 |
+| `concept` | 实体硬件 / 深科技（占黑马 47%） | 命中 `PHYSICAL` / `BIO` 或 `is_hardware` |
+| `tour` | 截图导览兜底 | 手工 |
+
+### 8 个组件
+
+`query_response` / `split_compare` / `pipeline` / `spec_matrix` /
+`scenario_branch` / `hotspot_shot` / `param_dial` / `transcript`。
+新增第 9 个的门槛：至少 3 个产品需要它。
+
+### 关键文件
+
+| 文件 | 职责 |
+|---|---|
+| `backend/app/services/demo_spec.py` | DemoSpec 校验 + 端点注册表（权威） |
+| `backend/app/services/demo_service.py` | 实时生成、tier 分类、live 代理 |
+| `backend/app/services/demo_repository.py` | 存储（Mongo → JSON → 进程内缓存） |
+| `backend/app/routes/demos.py` | 演示 API |
+| `crawler/tools/seed_demos.py` | 写入 5 个手工种子演示（写前先校验） |
+| `crawler/data/demos/published/*.json` | 种子演示（无 API key 也能用） |
+| `frontend-next/src/lib/demo-schema.ts` | Zod 镜像（后端为准） |
+| `frontend-next/src/components/demo/demo-player.tsx` | 播放器 + 标注徽章 |
+| `frontend-next/src/components/demo/demo-widgets.tsx` | 8 个组件 |
+| `frontend-next/src/components/demo/demo-explorer.tsx` | 选产品 + 实时生成 |
+
+### 环境变量
+
+| 变量 | 说明 | 默认值 |
+|---|---|---|
+| `DEMO_GENERATION_ENABLED` | **实时生成总开关**，默认关闭 | `false` |
+| `PERPLEXITY_API_KEY` | 生成所需的 key（生产环境 chat 已在用） | (required) |
+| `DEMO_MODEL` | 生成模型 | `sonar` |
+| `DEMO_ENDPOINT_<ID>` | 登记一个 live 端点：`<url>|<存密钥的环境变量名>` | (无) |
+
+> `GENERATION_BUDGET_SECONDS = 40`：两次尝试合计必须跑完，因为 Next 代理 45s 断开、
+> Vercel 函数上限 60s。
+
+### ⚠️ 当前状态（首个上线版本）
+
+| 能力 | 状态 |
+|---|---|
+| 5 个种子演示（picker / 步骤 / 组件 / 标注 / 双语） | ✅ 已上线，浏览器端验证过，不需要任何 key |
+| 实时生成任意产品 | ⚠️ 代码已完成，但**从未对真实模型验证过** —— 所有测试都 mock 了 `_call_model`。默认关闭 |
+| 真·live（调用产品方真实 API） | ❌ 未接入。`ENDPOINT_REGISTRY` 为空，5 个种子全是 `mode: "cached"` |
+
+**为什么默认关闭**：`PERPLEXITY_API_KEY` 生产环境已为 chat 配置，若只以 key 为条件，
+这次部署当天就会把未验证的生成打开。
+
+**打开之前先测通过率**：本机设 `DEMO_GENERATION_ENABLED=true`，跨 tier 生成约 10 个，
+统计「一次通过 / 重试通过 / 失败」。schema 很严（处处双语对、每个值必须有出处或标示例、
+`spec_matrix` 每行值的数量固定），而 `sonar` 是小搜索模型而非强结构化输出模型。
+若通过率低，改 `DEMO_MODEL` 即可，不需要改代码。
+
+```bash
+# 重新生成种子演示
+python3 crawler/tools/seed_demos.py --dry-run
+python3 crawler/tools/seed_demos.py
+
+# 同步演示到 MongoDB（否则实时生成的演示只存在进程内存里，冷启动即丢失）
+python3 crawler/tools/sync_to_mongodb.py --demos
+
+# 测试
+PYTHONPATH=backend:crawler python -m pytest tests/test_demo_spec.py -v
+```
 
 ---
 
@@ -948,11 +1053,40 @@ After daily crawler runs, sync to MongoDB (step 10 in daily pipeline):
 python tools/sync_to_mongodb.py --all
 ```
 
+### 连接自检
+
+Atlas 控制台只能告诉你集群存在，不能告诉你**这台机器**连不连得上、实际落在哪个库、
+后端会不会回退 JSON。用这个：
+
+```bash
+export MONGO_URI='mongodb+srv://...'
+python3 crawler/tools/check_mongo.py     # 退出码 0 = 后端会走 Mongo
+```
+
+输出已做凭据脱敏，可以直接粘贴分享。它检查：URI 是否带库名、主机能否解析、能否 ping、
+实际使用的库、各集合文档数、唯一索引是否存在。
+
+**Atlas 常见故障，按出现频率排序：**
+
+| 症状 | 原因 |
+|---|---|
+| 控制台显示 "Monitoring is paused" | 最近没有任何连接——通常就是下面几条之一 |
+| 本机能连、线上连不上 | Network Access 没放行 `0.0.0.0/0`；Vercel 和 GitHub Actions 出口 IP 不固定 |
+| SRV 主机解析失败 | `mongodb+srv://` 需要 DNS SRV 查询；被拦截或集群已暂停 |
+| 连上了但库是空的 | 没跑过 `sync_to_mongodb.py`，或 URI 里的库名与同步时用的不一致 |
+| 认证失败 | 密码里的特殊字符没有 URL 编码 |
+
+> ⚠️ `crawler/database/db_handler.py` 调用的是无默认值的 `get_database()`，
+> URI 不带库名时会直接抛错；而 backend 与 sync 工具会回退到 `MONGO_DB_NAME` 或
+> `weeklyai`。**URI 末尾务必带上 `/weeklyai`。**
+
 ### Collections & Indexes
 
 **products**: `_sync_key` (unique), `website`, `dark_horse_index` desc, `final_score` desc, `discovered_at` desc, `categories`, text index on `name`/`description`/`why_matters`
 
 **blogs**: `_sync_key` (unique), `published_at` desc, `created_at` desc
+
+**demos**: `_sync_key` (unique, = product slug), `tier`, `generated_at` desc
 
 ---
 
@@ -993,6 +1127,7 @@ python crawler/tools/repair_data.py              # 执行 (自动创建 .bak 备
 | `tests/test_darkhorse_freshness.py` | 黑马新鲜度/轮换逻辑 |
 | `tests/test_data_verifier.py` | 产品 schema 验证 |
 | `tests/test_demand_signals.py` | 需求信号检测 (融资/增长/热度) |
+| `tests/test_demo_spec.py` | 🆕 演示 schema 不变量 / SSRF 防护 / 独立性防火墙 (44 tests) |
 | `tests/test_frontend.py` | E2E 前端测试 (Playwright) |
 | `tests/test_glm_tool_parsing.py` | GLM JSON 解析鲁棒性 |
 | `tests/test_mongo_migration.py` | MongoDB 同步/去重/回退 (30 tests) |
@@ -1001,6 +1136,7 @@ python crawler/tools/repair_data.py              # 执行 (自动创建 .bak 备
 | `tests/test_weekly_top_sorting.py` | Weekly Top 排序策略 |
 | `frontend-next/src/lib/__tests__/schemas.test.ts` | 前端 schema 验证 |
 | `frontend-next/src/lib/__tests__/product-utils.test.ts` | 前端工具函数测试 |
+| `frontend-next/src/lib/__tests__/demo-schema.test.ts` | 🆕 前端 DemoSpec 镜像校验 |
 
 ```bash
 # Python 测试
@@ -1042,4 +1178,4 @@ cd frontend-next && npm test
 
 ---
 
-*更新: 2026-02-25*
+*更新: 2026-09-06*

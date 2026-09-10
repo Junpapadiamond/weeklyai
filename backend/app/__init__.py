@@ -92,10 +92,12 @@ def create_app():
     from app.routes.products import products_bp
     from app.routes.search import search_bp
     from app.routes.chat import chat_bp
+    from app.routes.demos import demos_bp
 
     app.register_blueprint(products_bp, url_prefix='/api/v1/products')
     app.register_blueprint(search_bp, url_prefix='/api/v1/search')
     app.register_blueprint(chat_bp, url_prefix='/api/v1/chat')
+    app.register_blueprint(demos_bp, url_prefix='/api/v1/demos')
 
     @app.get('/api/v1/health')
     def health():
