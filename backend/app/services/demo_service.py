@@ -58,8 +58,22 @@ def _model() -> str:
     return sanitize_env_value(os.getenv("DEMO_MODEL", "sonar"), "sonar") or "sonar"
 
 
+def generation_enabled() -> bool:
+    """On-demand generation is opt-in, separately from having an API key.
+
+    PERPLEXITY_API_KEY is already set in production for the chat assistant, so
+    keying generation off the key alone would switch it on everywhere the
+    moment this deploys - before anyone has measured what the model actually
+    produces against this schema. Set DEMO_GENERATION_ENABLED=true once that
+    pass rate is known.
+    """
+    flag = sanitize_env_value(os.getenv("DEMO_GENERATION_ENABLED", "")).strip().lower()
+    return flag in {"1", "true", "yes", "on"}
+
+
 def is_configured() -> bool:
-    return bool(_key())
+    """Whether a visitor can actually build a demo right now."""
+    return generation_enabled() and bool(_key())
 
 
 def _blob(product: dict[str, Any]) -> str:
@@ -239,6 +253,7 @@ def generate(product: dict[str, Any], slug: str, tier: str | None = None) -> dic
     """
     if not is_configured():
         return {"success": False, "error": "NOT_CONFIGURED"}
+
 
     tier = tier or classify_tier(product)
     prompt = _build_prompt(product, tier, slug)

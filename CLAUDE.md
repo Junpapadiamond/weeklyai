@@ -946,12 +946,29 @@ Base URL: `http://localhost:5000/api/v1`
 
 | 变量 | 说明 | 默认值 |
 |---|---|---|
-| `PERPLEXITY_API_KEY` | 未设置则只能看种子演示，不能实时生成 | (required) |
+| `DEMO_GENERATION_ENABLED` | **实时生成总开关**，默认关闭 | `false` |
+| `PERPLEXITY_API_KEY` | 生成所需的 key（生产环境 chat 已在用） | (required) |
 | `DEMO_MODEL` | 生成模型 | `sonar` |
 | `DEMO_ENDPOINT_<ID>` | 登记一个 live 端点：`<url>|<存密钥的环境变量名>` | (无) |
 
 > `GENERATION_BUDGET_SECONDS = 40`：两次尝试合计必须跑完，因为 Next 代理 45s 断开、
 > Vercel 函数上限 60s。
+
+### ⚠️ 当前状态（首个上线版本）
+
+| 能力 | 状态 |
+|---|---|
+| 5 个种子演示（picker / 步骤 / 组件 / 标注 / 双语） | ✅ 已上线，浏览器端验证过，不需要任何 key |
+| 实时生成任意产品 | ⚠️ 代码已完成，但**从未对真实模型验证过** —— 所有测试都 mock 了 `_call_model`。默认关闭 |
+| 真·live（调用产品方真实 API） | ❌ 未接入。`ENDPOINT_REGISTRY` 为空，5 个种子全是 `mode: "cached"` |
+
+**为什么默认关闭**：`PERPLEXITY_API_KEY` 生产环境已为 chat 配置，若只以 key 为条件，
+这次部署当天就会把未验证的生成打开。
+
+**打开之前先测通过率**：本机设 `DEMO_GENERATION_ENABLED=true`，跨 tier 生成约 10 个，
+统计「一次通过 / 重试通过 / 失败」。schema 很严（处处双语对、每个值必须有出处或标示例、
+`spec_matrix` 每行值的数量固定），而 `sonar` 是小搜索模型而非强结构化输出模型。
+若通过率低，改 `DEMO_MODEL` 即可，不需要改代码。
 
 ```bash
 # 重新生成种子演示

@@ -150,7 +150,7 @@ export function DemoPlayer({ spec, onRegenerate }: { spec: DemoSpec; onRegenerat
                 `Generated ${spec.generated_at.slice(0, 10)}${spec.reviewed_by ? ", human-reviewed" : ", not yet human-reviewed"}.`
               )
             : t("由 WeeklyAI 手工编写。", "Hand-authored by WeeklyAI.")}{" "}
-          <a href="/support">{t("发现错误？告诉我们，48 小时内处理。", "Something wrong? Tell us — we fix or remove within 48 hours.")}</a>
+          <a href="/demo-feedback">{t("发现错误？告诉我们，48 小时内更正或下架。", "Something wrong? Tell us — corrected or removed within 48 hours.")}</a>
         </p>
         {onRegenerate ? (
           <button type="button" className="demo-btn" onClick={onRegenerate}>

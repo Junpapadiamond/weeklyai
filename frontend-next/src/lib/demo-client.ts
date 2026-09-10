@@ -20,6 +20,10 @@ export type DemoResult =
 
 export type DemoStatus = {
   generationAvailable: boolean;
+  /** Split from generationAvailable so an operator can tell an intentional
+   *  switch-off from a missing provider key. */
+  generationEnabled: boolean;
+  providerKeyPresent: boolean;
   liveEndpoints: string[];
   demoCount: number;
   generateLimitPerHour: number;
@@ -104,7 +108,14 @@ export async function generateDemo(
 }
 
 export async function fetchDemoStatus(signal?: AbortSignal): Promise<DemoStatus> {
-  const fallback: DemoStatus = { generationAvailable: false, liveEndpoints: [], demoCount: 0, generateLimitPerHour: 0 };
+  const fallback: DemoStatus = {
+    generationAvailable: false,
+    generationEnabled: false,
+    providerKeyPresent: false,
+    liveEndpoints: [],
+    demoCount: 0,
+    generateLimitPerHour: 0,
+  };
   try {
     const response = await fetch(`${base()}/demos/status`, {
       signal: signal || AbortSignal.timeout(8000),
@@ -115,6 +126,8 @@ export async function fetchDemoStatus(signal?: AbortSignal): Promise<DemoStatus>
     const body = (await response.json()) as Record<string, unknown>;
     return {
       generationAvailable: body.generation_available === true,
+      generationEnabled: body.generation_enabled === true,
+      providerKeyPresent: body.provider_key_present === true,
       liveEndpoints: Array.isArray(body.live_endpoints) ? body.live_endpoints.map(String) : [],
       demoCount: Number(body.demo_count) || 0,
       generateLimitPerHour: Number(body.generate_limit_per_hour) || 0,

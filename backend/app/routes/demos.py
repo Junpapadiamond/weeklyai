@@ -54,6 +54,9 @@ def status():
     return jsonify({
         "success": True,
         "generation_available": demo_service.is_configured(),
+        # Split so an operator can tell "switched off" from "no API key".
+        "generation_enabled": demo_service.generation_enabled(),
+        "provider_key_present": bool(demo_service._key()),
         "live_endpoints": sorted(ENDPOINT_REGISTRY),
         "demo_count": len(slugs),
         "generate_limit_per_hour": GENERATE_LIMIT_PER_HOUR,

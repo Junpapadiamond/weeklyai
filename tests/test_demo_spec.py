@@ -229,6 +229,7 @@ class TestIndependenceFirewall:
             "final_score": 88.5, "trending_score": 12, "criteria_met": ["funding"], "hot_score": 3,
         }
         before = copy.deepcopy(product)
+        monkeypatch.setenv("DEMO_GENERATION_ENABLED", "true")
         monkeypatch.setattr(demo_service, "_key", lambda: "test-key")
         monkeypatch.setattr(demo_service, "_call_model", lambda *a, **k: json.dumps(minimal_spec(tier="simulation", confidence="illustrative")))
 
@@ -239,6 +240,7 @@ class TestIndependenceFirewall:
 
     def test_scoring_fields_are_absent_from_generated_specs(self, monkeypatch):
         product = {"name": "Acme", "description": "thing", "dark_horse_index": 5, "final_score": 99}
+        monkeypatch.setenv("DEMO_GENERATION_ENABLED", "true")
         monkeypatch.setattr(demo_service, "_key", lambda: "test-key")
         monkeypatch.setattr(demo_service, "_call_model", lambda *a, **k: json.dumps(minimal_spec(tier="simulation", confidence="illustrative")))
         spec = demo_service.generate(product, "acme")["spec"]
@@ -253,6 +255,7 @@ class TestGeneration:
     def test_identity_comes_from_us_not_the_model(self, monkeypatch):
         """A model that names a different product must not be able to publish
         under that name."""
+        monkeypatch.setenv("DEMO_GENERATION_ENABLED", "true")
         monkeypatch.setattr(demo_service, "_key", lambda: "test-key")
         hostile = minimal_spec(tier="simulation", confidence="illustrative",
                                product_slug="someone-else", product_name="Someone Else")
@@ -262,6 +265,7 @@ class TestGeneration:
         assert spec["product_name"] == "Acme"
 
     def test_retry_is_told_what_failed(self, monkeypatch):
+        monkeypatch.setenv("DEMO_GENERATION_ENABLED", "true")
         monkeypatch.setattr(demo_service, "_key", lambda: "test-key")
         calls = []
 
@@ -278,6 +282,7 @@ class TestGeneration:
         assert "rejected" in calls[1] and "illustrative" in calls[1]
 
     def test_unparseable_response_does_not_leak_raw_text(self, monkeypatch):
+        monkeypatch.setenv("DEMO_GENERATION_ENABLED", "true")
         monkeypatch.setattr(demo_service, "_key", lambda: "test-key")
         monkeypatch.setattr(demo_service, "_call_model", lambda *a, **k: "Sorry, I cannot help with that.")
         result = demo_service.generate({"name": "Acme", "description": "thing"}, "acme")
@@ -297,8 +302,53 @@ class TestGeneration:
         assert demo_service._extract_json("no json here at all") is None
 
     def test_not_configured_without_api_key(self, monkeypatch):
+        monkeypatch.setenv("DEMO_GENERATION_ENABLED", "true")
         monkeypatch.setattr(demo_service, "_key", lambda: "")
         assert demo_service.generate({"name": "Acme"}, "acme")["error"] == "NOT_CONFIGURED"
+
+
+class TestGenerationGate:
+    """PERPLEXITY_API_KEY is already set in production for the chat assistant,
+    so a key alone must not switch on demo generation."""
+
+    def test_off_by_default_even_with_a_key(self, monkeypatch):
+        monkeypatch.delenv("DEMO_GENERATION_ENABLED", raising=False)
+        monkeypatch.setattr(demo_service, "_key", lambda: "a-real-key")
+        assert demo_service.generation_enabled() is False
+        assert demo_service.is_configured() is False
+
+    def test_generate_refuses_while_switched_off(self, monkeypatch):
+        monkeypatch.delenv("DEMO_GENERATION_ENABLED", raising=False)
+        monkeypatch.setattr(demo_service, "_key", lambda: "a-real-key")
+
+        def explode(*args, **kwargs):
+            raise AssertionError("the provider must not be called while generation is off")
+
+        monkeypatch.setattr(demo_service, "_call_model", explode)
+        assert demo_service.generate({"name": "Acme"}, "acme")["error"] == "NOT_CONFIGURED"
+
+    @pytest.mark.parametrize("value", ["true", "TRUE", "1", "yes", "on"])
+    def test_accepted_truthy_values(self, monkeypatch, value):
+        monkeypatch.setenv("DEMO_GENERATION_ENABLED", value)
+        assert demo_service.generation_enabled() is True
+
+    @pytest.mark.parametrize("value", ["", "false", "0", "no", "off", "maybe"])
+    def test_everything_else_is_off(self, monkeypatch, value):
+        monkeypatch.setenv("DEMO_GENERATION_ENABLED", value)
+        assert demo_service.generation_enabled() is False
+
+    def test_enabled_plus_key_is_configured(self, monkeypatch):
+        monkeypatch.setenv("DEMO_GENERATION_ENABLED", "true")
+        monkeypatch.setattr(demo_service, "_key", lambda: "a-real-key")
+        assert demo_service.is_configured() is True
+
+    def test_seeded_demos_still_serve_while_generation_is_off(self, monkeypatch):
+        """The whole point of the gate: shipping with it off still ships a
+        working feature."""
+        monkeypatch.delenv("DEMO_GENERATION_ENABLED", raising=False)
+        DemoRepository.clear_memory_cache()
+        assert DemoRepository.get("exa") is not None
+        assert len(DemoRepository.list_slugs()) >= 5
 
 
 class TestTierClassification:
