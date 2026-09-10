@@ -127,9 +127,13 @@ export function DemoExplorer({ products }: { products: Product[] }) {
   }
 
   const failureCopy: Record<DemoError, string> = {
+    GENERATION_DISABLED: t(
+      "本站暂未开启「现场生成」。已经建好的演示仍可查看——用上面的「可立即查看」筛选。",
+      "On-demand demos are switched off on this site. The ones already built still work — use the 'Ready now' filter above."
+    ),
     NOT_CONFIGURED: t(
-      "实时生成尚未接入。已经建好的演示仍可查看——用上面的「可立即查看」筛选。",
-      "Live generation is not connected yet. Pre-built demos still work — use the 'Ready now' filter above."
+      "现场生成缺少服务商密钥。已经建好的演示仍可查看——用上面的「可立即查看」筛选。",
+      "On-demand generation has no provider key configured. Pre-built demos still work — use the 'Ready now' filter above."
     ),
     PROVIDER_UNAVAILABLE: t("生成服务暂时不可用，请稍后再试。", "The generator is unavailable right now. Try again shortly."),
     INVALID_SPEC: t(
@@ -259,7 +263,7 @@ export function DemoExplorer({ products }: { products: Product[] }) {
           <div className="demo-failed" role="alert">
             <strong>{t("没能生成这个演示", "Could not build that demo")}</strong>
             <p>{phase.message || failureCopy[phase.error]}</p>
-            {selected && phase.error !== "NOT_CONFIGURED" ? (
+            {selected && phase.error !== "NOT_CONFIGURED" && phase.error !== "GENERATION_DISABLED" ? (
               <button type="button" className="demo-btn" onClick={() => void open(selected)}>
                 {t("重试", "Try again")}
               </button>

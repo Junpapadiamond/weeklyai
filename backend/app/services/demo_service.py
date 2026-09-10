@@ -24,7 +24,11 @@ import requests
 from app.services.demo_spec import SpecError, resolve_endpoint, validate_spec
 from app.services.env_utils import sanitize_env_value
 
-PERPLEXITY_URL = "https://api.perplexity.ai/chat/completions"
+# Any OpenAI-compatible /chat/completions endpoint. Perplexity is the default
+# only because it is what the site already had a key for; DEMO_API_BASE points
+# generation at a different provider without touching this module.
+DEFAULT_API_BASE = "https://api.perplexity.ai"
+PERPLEXITY_HOSTS = ("api.perplexity.ai",)
 
 # The Next.js API proxy aborts at 45s and Vercel caps the function at 60s, so
 # the whole of generate() - both attempts included - has to finish inside this.
@@ -50,12 +54,46 @@ DEVTOOL = re.compile(
     r"|search api|agent framework|observability|eval|fine-tun|开发者|接口", re.I)
 
 
+def _api_base() -> str:
+    """Base URL of an OpenAI-compatible API, without a trailing slash.
+
+    Accepts a base with or without the /v1 suffix, since providers document it
+    both ways and a doubled or missing /v1 is the easiest way to misconfigure
+    this.
+    """
+    base = sanitize_env_value(os.getenv("DEMO_API_BASE", "")).strip().rstrip("/")
+    return base or DEFAULT_API_BASE
+
+
+def _completions_url() -> str:
+    base = _api_base()
+    if base.endswith("/chat/completions"):
+        return base
+    if base.endswith("/v1"):
+        return f"{base}/chat/completions"
+    # Perplexity serves /chat/completions at the root; OpenAI-compatible
+    # providers almost always sit under /v1.
+    if any(host in base for host in PERPLEXITY_HOSTS):
+        return f"{base}/chat/completions"
+    return f"{base}/v1/chat/completions"
+
+
 def _key() -> str:
-    return sanitize_env_value(os.getenv("PERPLEXITY_API_KEY", ""))
+    """Generation key, falling back to the chat assistant's key.
+
+    DEMO_API_KEY exists so demo generation can use a different provider from
+    the chat assistant without either one stealing the other's credentials.
+    """
+    return (sanitize_env_value(os.getenv("DEMO_API_KEY", ""))
+            or sanitize_env_value(os.getenv("PERPLEXITY_API_KEY", "")))
 
 
 def _model() -> str:
     return sanitize_env_value(os.getenv("DEMO_MODEL", "sonar"), "sonar") or "sonar"
+
+
+def _is_perplexity() -> bool:
+    return any(host in _api_base() for host in PERPLEXITY_HOSTS)
 
 
 def generation_enabled() -> bool:
@@ -221,19 +259,25 @@ def _extract_json(text: str) -> Any:
 
 
 def _call_model(prompt: str, timeout: tuple[int, int]) -> str | None:
+    payload: dict[str, Any] = {
+        "model": _model(),
+        "messages": [{"role": "user", "content": prompt}],
+        "max_tokens": 3200,
+        # Low, because this is structured output and not prose.
+        "temperature": 0.25,
+        "stream": False,
+    }
+    if _is_perplexity():
+        # Perplexity-only. Other providers reject unknown fields outright, so
+        # sending this everywhere would break generation on them.
+        payload["disable_search"] = True
+
     response = None
     try:
         response = requests.post(
-            PERPLEXITY_URL,
+            _completions_url(),
             headers={"Authorization": f"Bearer {_key()}", "Content-Type": "application/json"},
-            json={
-                "model": _model(),
-                "messages": [{"role": "user", "content": prompt}],
-                "max_tokens": 3200,
-                "temperature": 0.25,
-                "stream": False,
-                "disable_search": True,
-            },
+            json=payload,
             timeout=timeout,
         )
         if response.status_code != 200:
@@ -251,7 +295,10 @@ def generate(product: dict[str, Any], slug: str, tier: str | None = None) -> dic
 
     Never mutates `product`.
     """
-    if not is_configured():
+    if not generation_enabled():
+        # Deliberately switched off, which is not the same as misconfigured.
+        return {"success": False, "error": "GENERATION_DISABLED"}
+    if not _key():
         return {"success": False, "error": "NOT_CONFIGURED"}
 
 

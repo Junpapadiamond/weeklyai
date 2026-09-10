@@ -7,6 +7,7 @@ import type { Product } from "@/types/api";
 /** Why a demo could not be produced. The UI says something different for each. */
 export type DemoError =
   | "NOT_GENERATED"
+  | "GENERATION_DISABLED"
   | "NOT_CONFIGURED"
   | "PROVIDER_UNAVAILABLE"
   | "INVALID_SPEC"
@@ -35,6 +36,7 @@ function base(): string {
 
 const KNOWN_ERRORS: DemoError[] = [
   "NOT_GENERATED",
+  "GENERATION_DISABLED",
   "NOT_CONFIGURED",
   "PROVIDER_UNAVAILABLE",
   "INVALID_SPEC",
