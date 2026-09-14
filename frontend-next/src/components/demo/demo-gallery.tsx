@@ -11,10 +11,10 @@ import type { DemoQuota } from "@/lib/demo-experience";
 import type { Product } from "@/types/api";
 
 type Catalog = { products: (Product & { demo_ready: boolean })[]; total: number; ready_count: number; dark_count: number; catalog_total: number; generation_available: boolean; quota: DemoQuota | null };
-export function DemoGallery() {
+export function DemoGallery({ initialFilter = "all" }: { initialFilter?: "all" | "ready" }) {
   const { t, locale } = useSiteLocale();
   const [query, setQuery] = useState("");
-  const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState<string>(initialFilter);
   const [page, setPage] = useState(1);
   const [catalog, setCatalog] = useState<Catalog | null>(null);
   const [selected, setSelected] = useState<Product | null>(null);

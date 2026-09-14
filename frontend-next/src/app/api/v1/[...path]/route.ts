@@ -1,7 +1,7 @@
 import { getServerApiBase } from '@/lib/api-base';
 
 export const runtime = 'nodejs';
-export const maxDuration = 60;
+export const maxDuration = 120;
 
 async function proxy(request: Request, context: { params: Promise<{ path: string[] }> }) {
   const { path } = await context.params;
@@ -27,7 +27,7 @@ async function proxy(request: Request, context: { params: Promise<{ path: string
       },
       body,
       cache: 'no-store',
-      signal: AbortSignal.any([request.signal, AbortSignal.timeout(path[0] === 'demos' ? 55000 : 45000)]),
+      signal: AbortSignal.any([request.signal, AbortSignal.timeout(path[0] === 'demos' ? 110000 : 45000)]),
       redirect: 'error',
     });
     return new Response(upstream.body, {

@@ -15,6 +15,7 @@ from pymongo import ReturnDocument
 from pymongo.errors import DuplicateKeyError
 from app.services.product_repository import get_mongo_db, _mongo_uri_configured
 
+LEASE_SECONDS = 150  # Outlives the 90-second generation + persistence window.
 
 def env_int(name, default):
     try:
@@ -101,7 +102,7 @@ class DemoStore:
             try:
                 previous = self.db.demo_leases.find_one_and_update(
                     {"_id": key, "expires": {"$lte": now}},
-                    {"$set": {"token": token, "day": day, "actor": actor, "expires": now + 90, "charged": False}},
+                    {"$set": {"token": token, "day": day, "actor": actor, "expires": now + LEASE_SECONDS, "charged": False}},
                     upsert=True, return_document=ReturnDocument.BEFORE)
             except DuplicateKeyError:
                 return {"state": "pending"}
@@ -142,7 +143,7 @@ class DemoStore:
             if used[actor] >= personal or used["site"] >= site:
                 return {"state": "limited"}
             conn.execute("UPDATE demo_usage SET used=used+1 WHERE day=? AND actor IN (?, 'site')", (day, actor))
-            conn.execute("INSERT INTO demo_leases VALUES (?,?,?,?,?)", (key, token, day, actor, now + 90))
+            conn.execute("INSERT INTO demo_leases VALUES (?,?,?,?,?)", (key, token, day, actor, now + LEASE_SECONDS))
             return {"state": "reserved", "token": token}
 
     def finish(self, key, token, payload=None):

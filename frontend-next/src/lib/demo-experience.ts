@@ -28,7 +28,32 @@ export type DemoResponse = { success: boolean; state?: string; error?: string; e
   quota: DemoQuota | null; generation_available: boolean };
 
 export async function readDemo(response: Response): Promise<DemoResponse> {
-  const body = await response.json();
-  if (body.experience) body.experience.spec = ExperienceSchema.parse(body.experience.spec);
+  let body;
+  try { body = await response.json(); }
+  catch { throw new Error("SERVICE_UNAVAILABLE"); }
+  if (!body || typeof body !== "object" || typeof body.success !== "boolean") throw new Error("SERVICE_UNAVAILABLE");
+  if (body.experience) {
+    const result = ExperienceSchema.safeParse(body.experience.spec);
+    if (!result.success) throw new Error("GENERATION_INVALID_RESPONSE");
+    body.experience.spec = result.data;
+  }
   return body;
+}
+
+const errorMessages: Record<string, [string, string]> = {
+  DAILY_LIMIT: ["今日新建演示额度已用完", "Today’s generation limit has been reached"],
+  NOT_CONFIGURED: ["这个产品的演示还在准备中", "This product’s demo is not ready yet"],
+  GENERATOR_NOT_CONFIGURED: ["这个产品的演示还在准备中", "This product’s demo is not ready yet"],
+  PENDING: ["演示仍在生成，请稍后重新检查", "Still generating. Check back shortly."],
+  GENERATION_TIMEOUT: ["AI 响应超时，请稍后重试", "The AI service timed out. Please try again shortly."],
+  GENERATOR_BUSY: ["AI 服务繁忙，请稍后重试", "The AI service is busy. Please try again shortly."],
+  GENERATOR_UNAVAILABLE: ["AI 服务暂时无法连接", "The AI service is temporarily unavailable"],
+  GENERATION_INCOMPLETE: ["AI 返回的内容不完整，请重新生成", "The AI response was incomplete. Please generate again."],
+  GENERATION_INVALID_RESPONSE: ["演示未通过内容校验，请重新生成", "The experience did not pass validation. Please generate again."],
+  SERVICE_UNAVAILABLE: ["连接暂时中断，请重新检查生成结果", "Connection interrupted. Check again for the result."],
+  STORAGE_UNAVAILABLE: ["演示暂时无法保存，请稍后重试", "The experience could not be saved. Please try again shortly."],
+};
+
+export function demoErrorMessage(error: string): [string, string] {
+  return errorMessages[error] ?? ["这次生成没有完成，请稍后重试", "This generation did not finish. Please try again shortly."];
 }
