@@ -266,3 +266,19 @@ def test_legacy_seeds_are_in_backend_deployment_snapshot():
         target = root / "backend/data/demos/published" / path.name
         assert target.read_bytes() == path.read_bytes()
         assert validate_spec(json.loads(target.read_text(encoding="utf-8")))
+
+
+@pytest.mark.parametrize("source,expected", [("html", True), ("unknown", False)])
+def test_official_html_cdn_logos_survive_backend_normalization(source, expected):
+    from app.services.product_filters import _sanitize_logo_url
+    url = "https://framerusercontent.com/images/company.png"
+    product = {**PRODUCT, "logo_url": url, "logo_source": source}
+    _sanitize_logo_url(product)
+    assert product["logo_url"] == (url if expected else "")
+
+
+def test_html_logo_provenance_does_not_allow_executable_urls():
+    from app.services.product_filters import _sanitize_logo_url
+    product = {**PRODUCT, "logo_url": "javascript:alert(1)", "logo_source": "html"}
+    _sanitize_logo_url(product)
+    assert product["logo_url"] == ""

@@ -255,7 +255,7 @@ def _same_or_subdomain(host: str, root: str) -> bool:
 
 
 def _sanitize_logo_url(product: Dict[str, Any]) -> None:
-    """Drop remote logos that do not belong to the product's official website domain."""
+    """Keep official-site logos, including CDN assets discovered in its HTML."""
     candidate = (
         product.get('logo_url')
         or product.get('logo')
@@ -287,7 +287,9 @@ def _sanitize_logo_url(product: Dict[str, Any]) -> None:
         product['logo_url'] = ''
         return
 
-    if _same_or_subdomain(logo_host, website_domain):
+    if _same_or_subdomain(logo_host, website_domain) or (
+        logo_host and str(product.get('logo_source') or '').strip().lower() == 'html'
+    ):
         product['logo_url'] = logo
         return
 
