@@ -247,6 +247,31 @@ class TestProductRepositoryLoadingPreference:
                         products = ProductRepository.load_products()
                         assert any(p['name'] == 'Fallback' for p in products)
 
+    @pytest.mark.parametrize('snapshot_available', [True, False])
+    def test_legacy_mongo_does_not_hide_published_bilingual_catalog(self, snapshot_available):
+        from app.services.product_repository import ProductRepository
+        from app.services import product_filters
+
+        legacy = {'name': 'Legacy', 'website': 'https://legacy.test',
+                  'description': 'Older catalog without translated briefings'}
+        published = {
+            'name': 'Published', 'website': 'https://published.test',
+            'logo_url': 'https://published.test/logo.png',
+            'description': '一款帮助研发团队评估模型表现的人工智能工具。',
+            'description_en': 'An AI tool that helps engineering teams evaluate model performance.',
+            'why_matters': '它把测试结果与发布决策连接起来，减少团队的手动检查。',
+            'why_matters_en': 'It connects evaluation results to release decisions and reduces manual review.',
+        }
+        with mock.patch.dict(os.environ, {'MONGO_URI': 'mongodb://fake/weeklyai'}), \
+                mock.patch.object(ProductRepository, 'load_from_mongodb', return_value=[legacy]), \
+                mock.patch.object(ProductRepository, '_load_from_crawler_file', return_value=[published] if snapshot_available else []), \
+                mock.patch.object(ProductRepository, '_load_curated_dark_horses', return_value=[]):
+            products = ProductRepository.load_products(filters_module=product_filters)
+        assert [p['name'] for p in products] == ['Published' if snapshot_available else 'Legacy']
+        assert ProductRepository._storage_source == ('snapshot' if snapshot_available else 'mongodb')
+        if snapshot_available:
+            assert products[0]['logo_url'] == published['logo_url']
+
 
 class TestBlogLoadingPreference:
     """Blog loading should prefer MongoDB when MONGO_URI is set."""

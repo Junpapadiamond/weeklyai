@@ -122,7 +122,7 @@ class ProductRepository:
 
         优先级:
         1) 若设置了 MONGO_URI，优先读取 MongoDB（适配 Vercel）。
-        2) 若 MongoDB 不可用或为空，则回退到本地 JSON 逻辑。
+        2) 若 MongoDB 不可用、为空或尚未同步双语简报，则回退到已发布的 JSON。
         """
         now = datetime.now()
 
@@ -139,11 +139,20 @@ class ProductRepository:
             products = cls.load_from_mongodb()
         cls._storage_source = 'mongodb' if products else 'snapshot'
 
+        # A reachable legacy database can still predate the bilingual catalog.
+        # Keep serving the published inventory until that database is migrated.
+        incomplete_catalog = bool(products and filters_module and not any(
+            filters_module.has_complete_briefing(p) for p in products
+        ))
+
         # 2) JSON fallback path
-        if not products:
-            products = cls._load_from_crawler_file()
+        if not products or incomplete_catalog:
+            snapshot = cls._load_from_crawler_file()
             curated = cls._load_curated_dark_horses()
-            products = cls._merge_curated_products(products, curated, filters_module)
+            snapshot = cls._merge_curated_products(snapshot, curated, filters_module)
+            if snapshot:
+                products = snapshot
+                cls._storage_source = 'snapshot'
 
         # 4. 统一字段 & 过滤
         if filters_module:
