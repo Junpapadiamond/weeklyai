@@ -62,7 +62,7 @@ def _api_base() -> str:
     both ways and a doubled or missing /v1 is the easiest way to misconfigure
     this.
     """
-    base = sanitize_env_value(os.getenv("DEMO_API_BASE", "")).strip().rstrip("/")
+    base = sanitize_env_value(os.getenv("DEMO_API_BASE") or os.getenv("DEMO_API_BASE_URL", "")).strip().rstrip("/")
     return base or DEFAULT_API_BASE
 
 
@@ -110,7 +110,7 @@ def _api_style() -> str:
     default infers from the model id, which is reliable because a Claude model
     is only ever served over the Anthropic shape.
     """
-    forced = sanitize_env_value(os.getenv("DEMO_API_STYLE", "")).strip().lower()
+    forced = sanitize_env_value(os.getenv("DEMO_API_STYLE") or os.getenv("DEMO_API_PROTOCOL", "")).strip().lower()
     if forced in {"anthropic", "openai", "perplexity"}:
         return forced
     if _model().lower().startswith("claude"):

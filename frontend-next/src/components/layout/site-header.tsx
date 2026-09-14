@@ -3,9 +3,7 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
-import { Dice5, Heart, Flame, Newspaper, Search, Sparkles,
-  PlayCircle,
-} from "lucide-react";
+import { Dice5, Heart, Flame, Newspaper, Search, Sparkles, CirclePlay } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { SiteLocale } from "@/lib/locale";
 import { ChatBar } from "@/components/chat/chat-bar";
@@ -34,7 +32,7 @@ export function SiteHeader({ isAppShell = false }: SiteHeaderProps) {
   const navItems = [
     { href: "/", label: t("产品观察", "The brief"), icon: Flame },
     { href: "/discover", label: t("随机发现", "Discover"), icon: Dice5 },
-    { href: "/demo", label: t("交互演示", "Demos"), icon: PlayCircle },
+    { href: "/demo", label: t("交互演示", "Demos"), icon: CirclePlay },
     { href: "/blog", label: t("博客动态", "News"), icon: Newspaper },
     { href: "/search", label: t("搜索", "Search"), icon: Search },
   ];
@@ -42,8 +40,7 @@ export function SiteHeader({ isAppShell = false }: SiteHeaderProps) {
   const mobileNavItems = [
     { href: "/", label: t("首页", "Home"), icon: Flame },
     { href: "/discover", label: t("发现", "Discover"), icon: Dice5 },
-    { href: "/demo", label: t("演示", "Demos"), icon: PlayCircle },
-    { href: "/blog", label: t("动态", "News"), icon: Newspaper },
+    { href: "/demo", label: t("演示", "Demos"), icon: CirclePlay },
     { href: "/search", label: t("搜索", "Search"), icon: Search },
   ];
 

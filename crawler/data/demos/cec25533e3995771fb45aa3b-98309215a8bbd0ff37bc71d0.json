@@ -1,0 +1,185 @@
+{
+  "cache_key": "cec25533e3995771fb45aa3b-98309215a8bbd0ff37bc71d0",
+  "product_key": "cec25533e3995771fb45aa3b",
+  "fingerprint": "98309215a8bbd0ff37bc71d0",
+  "product_id": "85",
+  "product_name": "Exaforce",
+  "origin": "curated",
+  "generated_at": "2026-09-14T07:43:42.883908+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "从一条告警，到一份可追踪的调查。",
+      "en": "From an alert to a traceable investigation."
+    },
+    "scenario": {
+      "zh": "你在安全运营台处理一条虚构的异常访问告警。补齐上下文、分诊、调查，再选择处置路线。不会操作真实系统。",
+      "en": "Triage a fictional unusual-access alert. Add context, investigate and choose a response path. No real systems are accessed."
+    },
+    "steps": [
+      {
+        "id": "step-1",
+        "widget": "choice",
+        "title": {
+          "zh": "打开告警",
+          "en": "Open an alert"
+        },
+        "instruction": {
+          "zh": "选择一条示例告警，建立调查案件。",
+          "en": "Choose a sample alert to open a case."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "新设备上的管理员登录",
+              "en": "Admin login from a new device"
+            },
+            "output": {
+              "zh": "CASE-104 · 待分诊\n信号：管理员账户使用了未见过的设备。\n已知：账户、时间、设备标识。\n缺失：是否为批准的设备更换。",
+              "en": "CASE-104 · Awaiting triage\nSignal: admin account on a new device.\nKnown: account, time, device ID.\nMissing: whether the device change was approved."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "服务账户访问模式变化",
+              "en": "Changed service-account access"
+            },
+            "output": {
+              "zh": "CASE-105 · 待分诊\n信号：服务账户访问了新的资源范围。\n已知：账户、资源、访问记录。\n缺失：是否有对应的发布变更。",
+              "en": "CASE-105 · Awaiting triage\nSignal: service account accessed a new resource scope.\nKnown: account, resource, access log.\nMissing: a matching deployment change."
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "step-2",
+        "widget": "choice",
+        "title": {
+          "zh": "补齐业务上下文",
+          "en": "Add operational context"
+        },
+        "instruction": {
+          "zh": "同一个信号，在不同上下文里可能有不同解释。",
+          "en": "The same signal can mean different things in different contexts."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "找到匹配的批准记录",
+              "en": "A matching approval exists"
+            },
+            "output": {
+              "zh": "新增证据：有对应的变更记录，时间窗口吻合。\n调查方向：核对实际访问是否超出批准范围。\n保留原始告警和证据链。",
+              "en": "Evidence: a matching change record within the time window.\nInvestigate whether actual access exceeded its scope.\nKeep the original alert and evidence trail."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "没有找到批准记录",
+              "en": "No matching approval found"
+            },
+            "output": {
+              "zh": "新增证据：目前缺少对应的变更记录。\n调查方向：联系负责人确认，并继续核查关联访问。\n不把缺失信息直接当作攻击结论。",
+              "en": "Evidence: no matching change record yet.\nConfirm with the owner and inspect related access.\nMissing information alone does not establish an attack."
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "step-3",
+        "widget": "review",
+        "title": {
+          "zh": "核查调查材料",
+          "en": "Review investigation evidence"
+        },
+        "instruction": {
+          "zh": "选择检查重点，然后确认已看过示例材料。",
+          "en": "Choose a review focus, then confirm the sample evidence was reviewed."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "核对身份与权限范围",
+              "en": "Check identity and permissions"
+            },
+            "output": {
+              "zh": "证据清单：账户身份、当前权限、批准范围、实际访问资源。\n待确认：是否存在超出授权范围的访问。",
+              "en": "Evidence: account identity, current permissions, approval scope, resources accessed.\nOpen question: did access exceed authorization?"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "核对时间线与关联活动",
+              "en": "Check timeline and related activity"
+            },
+            "output": {
+              "zh": "证据清单：告警时间、变更时间、前后访问记录。\n待确认：活动是否与业务变更一致。",
+              "en": "Evidence: alert time, change time, access events before and after.\nOpen question: does activity match the business change?"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "step-4",
+        "widget": "choice",
+        "title": {
+          "zh": "提交处置路线",
+          "en": "Choose a response path"
+        },
+        "instruction": {
+          "zh": "这里的处置只写入示例案件，不会执行真实操作。",
+          "en": "Responses update this sample case only; no real action is executed."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "交由分析师进一步调查",
+              "en": "Escalate for analyst investigation"
+            },
+            "output": {
+              "zh": "示例状态：已转交。\n交接包：原始告警、上下文、证据清单、未解决问题。\n最终判断与实际处置保留给负责团队。",
+              "en": "Sample status: escalated.\nHandoff: original alert, context, evidence, open questions.\nThe responsible team retains the final decision."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "记录解释并继续观察",
+              "en": "Document explanation and monitor"
+            },
+            "output": {
+              "zh": "示例状态：记录待观察。\n交接包：已找到的解释、仍需验证的条件、后续检查点。\n关闭真实案件仍需经过组织流程。",
+              "en": "Sample status: documented for monitoring.\nHandoff: explanation, remaining conditions, follow-up checks.\nReal case closure follows organizational procedures."
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Exaforce 将检测、分诊、调查和响应串成安全运营流程。体验的重点是上下文与证据如何帮助人作出判断。",
+      "en": "Exaforce connects detection, triage, investigation and response. This experience shows how context and evidence support human judgment."
+    },
+    "sources": [
+      {
+        "url": "https://www.exaforce.com/platform",
+        "label": {
+          "zh": "官方产品资料",
+          "en": "Official product documentation"
+        }
+      }
+    ]
+  }
+}

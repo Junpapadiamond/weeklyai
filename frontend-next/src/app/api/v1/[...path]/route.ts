@@ -23,10 +23,11 @@ async function proxy(request: Request, context: { params: Promise<{ path: string
         'Content-Type': 'application/json',
         'User-Agent': request.headers.get('user-agent') || 'WeeklyAI web',
         'X-Forwarded-For': request.headers.get('x-forwarded-for') || 'unknown',
+        ...(path[0] === 'demos' ? { Cookie: (request.headers.get('cookie') || '').split(';').map(s => s.trim()).filter(s => s.startsWith('weeklyai_demo_visitor=')).join('; ') } : {}),
       },
       body,
       cache: 'no-store',
-      signal: AbortSignal.any([request.signal, AbortSignal.timeout(45000)]),
+      signal: AbortSignal.any([request.signal, AbortSignal.timeout(path[0] === 'demos' ? 55000 : 45000)]),
       redirect: 'error',
     });
     return new Response(upstream.body, {
@@ -34,6 +35,7 @@ async function proxy(request: Request, context: { params: Promise<{ path: string
       headers: {
         'Content-Type': upstream.headers.get('content-type') || 'application/json',
         'Cache-Control': 'no-store',
+        ...(path[0] === 'demos' && upstream.headers.has('set-cookie') ? { 'Set-Cookie': upstream.headers.get('set-cookie')! } : {}),
         ...(upstream.headers.has('retry-after') ? { 'Retry-After': upstream.headers.get('retry-after')! } : {}),
       },
     });

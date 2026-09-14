@@ -74,7 +74,7 @@ fi
 
 # 1.10 Fix logos
 echo "[$(date +%H:%M:%S)] Running fix_logos.py..." >> "$LOG_DIR/daily_update.log"
-if $PYTHON_BIN crawler/tools/fix_logos.py --input data/products_featured.json >> "$LOG_DIR/daily_update.log" 2>&1; then
+if $PYTHON_BIN crawler/tools/fix_logos.py --input data/products_featured.json --only-missing >> "$LOG_DIR/daily_update.log" 2>&1; then
     echo "[$(date +%H:%M:%S)] fix_logos.py completed successfully" >> "$LOG_DIR/daily_update.log"
 else
     echo "[$(date +%H:%M:%S)] fix_logos.py failed with exit code $?" >> "$LOG_DIR/daily_update.log"
@@ -139,6 +139,11 @@ if [ -n "$MONGO_URI" ]; then
     fi
 else
     echo "[$(date +%H:%M:%S)] MONGO_URI not set, skipping MongoDB sync" >> "$LOG_DIR/daily_update.log"
+fi
+
+# Use the same MongoDB budget as live generation. Missing model config is a safe skip.
+if [ -n "$MONGO_URI" ]; then
+    $PYTHON_BIN crawler/tools/pregenerate_demos.py --limit 5 >> "$LOG_DIR/daily_update.log" 2>&1 || true
 fi
 
 echo "=== WeeklyAI Daily Update Completed at $(date +"%Y-%m-%d %H:%M:%S") ===" >> "$LOG_DIR/daily_update.log"

@@ -1,0 +1,192 @@
+{
+  "cache_key": "31ddb9364ec9ca781bc59188-c1e843b7bc628e00147ea409",
+  "product_key": "31ddb9364ec9ca781bc59188",
+  "fingerprint": "c1e843b7bc628e00147ea409",
+  "product_id": "p_136bb9316567279c",
+  "product_name": "Mitti Labs",
+  "origin": "curated",
+  "generated_at": "2026-09-14T08:48:30.831419+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "稻田减排项目监测",
+      "en": "Rice Field Emissions Project"
+    },
+    "scenario": {
+      "zh": "为一个虚构稻田项目准备监测简报，体验卫星雷达与地面数据如何共同支持淹水情况分析。",
+      "en": "Prepare a monitoring brief for a fictional rice-farming project and explore how satellite radar and field data support flooding analysis."
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择监测区域",
+          "en": "Select Monitoring Region"
+        },
+        "instruction": {
+          "zh": "选择虚构项目的地块分布，准备监测需求。",
+          "en": "Choose a fictional project layout and prepare monitoring requirements."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "连片大田区",
+              "en": "Consolidated Fields"
+            },
+            "output": {
+              "zh": "示例区域A：地块集中。简报优先记录边界、种植时间和可用卫星数据，等待实际项目确认覆盖情况。",
+              "en": "Sample area A: consolidated fields. Record boundaries, growing dates and available satellite data, with coverage to be confirmed by the actual project."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "分散小田区",
+              "en": "Scattered Smallholdings"
+            },
+            "output": {
+              "zh": "示例区域B：地块分散。简报优先记录每块田的边界和管理差异，避免把整片区域当作同一种种植实践。",
+              "en": "Sample area B: scattered plots. Record individual boundaries and management differences instead of treating the entire area as one farming practice."
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "整理地面数据",
+          "en": "Prepare field data"
+        },
+        "instruction": {
+          "zh": "决定如何结合地面测量提升卫星数据精度",
+          "en": "Decide how to combine field measurements with satellite data"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "地面测量记录",
+              "en": "Field measurements"
+            },
+            "output": {
+              "zh": "材料清单：代表性地块的地面测量、测量时间和对应卫星观测。需要实际数据核验，页面没有部署传感器。",
+              "en": "Checklist: representative field measurements, dates and matching satellite observations. Actual data must be verified; this page has deployed no sensors."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "农户管理记录",
+              "en": "Farmer records"
+            },
+            "output": {
+              "zh": "材料清单：农户记录、地块编号和管理日期。自报记录可提供背景，但不能单独代替地面测量与独立核查。",
+              "en": "Checklist: farmer records, plot IDs and management dates. Self-reports provide context but do not replace field measurements or independent verification."
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "检查示例观测",
+          "en": "Inspect sample observations"
+        },
+        "instruction": {
+          "zh": "查看两种管理模式的淹水监测差异",
+          "en": "Review flooding detection differences between two management modes"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "间歇灌溉区",
+              "en": "Intermittent Flooding"
+            },
+            "output": {
+              "zh": "示例记录A显示淹水与非淹水状态交替。下一步核对观测日期和地面数据，不能仅凭示例判定减排量。",
+              "en": "Sample record A alternates flooded and non-flooded states. Cross-check dates and field data; this example cannot establish emissions reductions."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "持续淹水区",
+              "en": "Continuous Flooding"
+            },
+            "output": {
+              "zh": "示例记录B较多时间显示淹水状态。需要结合种植周期和现场记录解释，不能直接判定是否符合认证要求。",
+              "en": "Sample record B shows flooding for more of the period. Interpret it using crop cycles and field records; it does not establish certification compliance."
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "生成项目报告",
+          "en": "Generate Project Report"
+        },
+        "instruction": {
+          "zh": "选择要带走的项目简报清单。",
+          "en": "Choose a project checklist to take away."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "标准核查包",
+              "en": "Standard Verification Pack"
+            },
+            "output": {
+              "zh": "简报清单：地块范围、观测时间、卫星数据来源、地面记录和待核验事项。可带走文字摘要，未提交任何认证申请。",
+              "en": "Brief: plot boundaries, observation dates, satellite sources, field records and open questions. Take a text summary; no certification application has been submitted."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "详细分析报告",
+              "en": "Detailed Analysis Report"
+            },
+            "output": {
+              "zh": "分析清单：逐地块管理差异、缺失观测与补充采样需求。真实碳信用签发需要适用方法学与独立第三方核验。",
+              "en": "Analysis: plot-level differences, missing observations and sampling needs. Actual credit issuance requires the applicable methodology and independent verification."
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "你已体验区域选择、地面材料、观测检查和简报整理。Mitti Labs结合卫星雷达与地面测量监测稻田项目；这里的示例不代表真实减排结果或认证。",
+      "en": "You explored area selection, field inputs, observations and a brief. Mitti Labs combines radar and field measurements for rice projects; these examples are not actual reductions or certification."
+    },
+    "sources": [
+      {
+        "url": "https://www.mittilabs.earth/",
+        "label": {
+          "zh": "Mitti Labs官网",
+          "en": "Mitti Labs Website"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/09/10/google-signs-its-biggest-rice-methane-carbon-credit-deal-with-indian-startup-mitti-labs/",
+        "label": {
+          "zh": "谷歌碳信用协议报道",
+          "en": "Google Carbon Credit Deal"
+        }
+      }
+    ]
+  }
+}

@@ -25,6 +25,7 @@ def test_chat_rejects_nonconforming_json(client, body):
 
 def test_chat_reports_missing_key_as_unavailable(client, monkeypatch):
     monkeypatch.delenv('PERPLEXITY_API_KEY', raising=False)
+    monkeypatch.delenv('CHAT_API_BASE_URL', raising=False)
     response = client.post('/api/v1/chat', json={'message': 'Recommend an agent', 'locale': 'en'})
     assert response.status_code == 503
     assert response.json['error'] == 'NOT_CONFIGURED'
@@ -33,6 +34,7 @@ def test_chat_reports_missing_key_as_unavailable(client, monkeypatch):
 def test_upstream_error_is_safe_and_actionable(monkeypatch):
     from app.services.chat_service import get_chat_response
     monkeypatch.setenv('PERPLEXITY_API_KEY', 'test-key')
+    monkeypatch.delenv('CHAT_API_BASE_URL', raising=False)
     response = Mock(status_code=401, text='private provider debug payload')
     with patch('app.services.chat_service.requests.post', return_value=response), patch('app.services.chat_service._build_product_context', return_value=''):
         result = get_chat_response('Recommend a product', 'en')
@@ -114,6 +116,7 @@ def test_recommendations_require_complete_bilingual_briefings():
 def test_chat_success_preserves_history_and_retrieves_relevant_product(monkeypatch):
     from app.services.chat_service import get_chat_response
     monkeypatch.setenv('PERPLEXITY_API_KEY', 'test-key')
+    monkeypatch.delenv('CHAT_API_BASE_URL', raising=False)
     products = [{'name': f'Unrelated {i}', 'website': f'https://other{i}.test'} for i in range(20)]
     products.append({'name': 'Needle', 'description_en': 'Audio transcription for interviews',
                      'source_url': 'https://needle.test/release', 'discovered_at': '2025-01-01'})
@@ -131,6 +134,65 @@ def test_chat_success_preserves_history_and_retrieves_relevant_product(monkeypat
     response.close.assert_called_once()
 
 
+def test_relay_base_url_replaces_provider_and_drops_perplexity_only_fields(monkeypatch):
+    from app.services.chat_service import get_chat_response
+    monkeypatch.setenv('CHAT_API_BASE_URL', 'https://relay.test/v1/')
+    monkeypatch.setenv('CHAT_API_KEY', 'relay-key')
+    monkeypatch.setenv('CHAT_MODEL', 'relay-model')
+    monkeypatch.delenv('PERPLEXITY_API_KEY', raising=False)
+    response = Mock(status_code=200)
+    response.json.return_value = {'choices': [{'message': {'content': 'Relay answer.'}}]}
+    with patch('app.services.chat_service.requests.post', return_value=response) as post, \
+            patch('app.services.chat_service._build_product_context', return_value='[]'):
+        result = get_chat_response('Recommend a product', 'en')
+    assert result['success'] is True
+    assert post.call_args.args[0] == 'https://relay.test/v1/chat/completions'
+    payload = post.call_args.kwargs['json']
+    assert payload['model'] == 'relay-model'
+    assert 'disable_search' not in payload
+
+
+def test_relay_failure_falls_back_to_perplexity(monkeypatch):
+    import requests as http
+    from app.services.chat_service import get_chat_response
+    monkeypatch.setenv('CHAT_API_BASE_URL', 'https://relay.test/v1')
+    monkeypatch.setenv('CHAT_API_KEY', 'relay-key')
+    monkeypatch.setenv('CHAT_MODEL', 'relay-model')
+    monkeypatch.setenv('PERPLEXITY_API_KEY', 'test-key')
+    ok = Mock(status_code=200)
+    ok.json.return_value = {'choices': [{'message': {'content': 'Perplexity answer.'}}]}
+
+    def post(url, **kwargs):
+        if 'relay.test' in url:
+            raise http.exceptions.ConnectionError('relay down')
+        return ok
+
+    with patch('app.services.chat_service.requests.post', side_effect=post) as spy, \
+            patch('app.services.chat_service._build_product_context', return_value='[]'):
+        result = get_chat_response('Recommend a product', 'en')
+    assert result['success'] is True
+    assert result['content'] == 'Perplexity answer.'
+    assert [call.args[0] for call in spy.call_args_list] == [
+        'https://relay.test/v1/chat/completions',
+        'https://api.perplexity.ai/chat/completions',
+    ]
+
+
+def test_relay_fallback_can_be_disabled(monkeypatch):
+    import requests as http
+    from app.services.chat_service import get_chat_response
+    monkeypatch.setenv('CHAT_API_BASE_URL', 'https://relay.test/v1')
+    monkeypatch.setenv('CHAT_API_KEY', 'relay-key')
+    monkeypatch.setenv('PERPLEXITY_API_KEY', 'test-key')
+    monkeypatch.setenv('CHAT_FALLBACK_TO_PERPLEXITY', 'false')
+    with patch('app.services.chat_service.requests.post',
+               side_effect=http.exceptions.ConnectionError('relay down')) as spy, \
+            patch('app.services.chat_service._build_product_context', return_value='[]'):
+        result = get_chat_response('Recommend a product', 'en')
+    assert result['error'] == 'PROVIDER_UNAVAILABLE'
+    assert spy.call_count == 1
+
+
 def test_public_ids_survive_reordering_and_storage_switch():
     from app.services.product_repository import ProductRepository as repo
     a = {'name': 'Cradle', 'website': 'https://cradle.bio'}
@@ -145,6 +207,7 @@ def test_public_ids_survive_reordering_and_storage_switch():
 
 def test_provider_preflight_fails_without_global_key(monkeypatch):
     from tools.check_providers import check_providers
+    monkeypatch.setenv('DISCOVERY_PROVIDER', 'auto')
     monkeypatch.delenv('PERPLEXITY_API_KEY', raising=False)
     assert check_providers() is False
 

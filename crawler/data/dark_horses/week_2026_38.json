@@ -1,0 +1,97 @@
+[
+  {
+    "name": "Mitti Labs",
+    "website": "https://www.mittilabs.earth/",
+    "description": "面向稻田减排项目的GeoAI平台，结合卫星雷达影像与地面测量，跟踪作物生长、土壤湿度和稻田淹水情况。",
+    "description_en": "A GeoAI platform combining satellite radar imagery and field measurements to monitor crop growth, soil moisture and flooding in rice-farming emissions projects.",
+    "category": "other",
+    "why_matters": "公司称与谷歌达成100万份碳信用购买协议，交付至2030年；目前已与超10万农民合作，利用GeoAI监测稻田减排项目。协议金额未披露。",
+    "why_matters_en": "Reports a Google purchase agreement for 1 million carbon credits through 2030 and work with over 100,000 farmers. GeoAI supports project monitoring; financial terms were not disclosed.",
+    "latest_news": "2026年9月10日报道：与谷歌达成四年碳信用购买协议，预计交付高峰覆盖约10万公顷印度稻田。",
+    "latest_news_en": "Reported September 10, 2026: a four-year Google carbon-credit purchase agreement targeting about 100,000 hectares of Indian rice farms at peak delivery.",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "growth_anomaly",
+      "category_innovation"
+    ],
+    "company_country": "unknown",
+    "confidence": 0.95,
+    "source_url": "https://techcrunch.com/2026/09/10/google-signs-its-biggest-rice-methane-carbon-credit-deal-with-indian-startup-mitti-labs/",
+    "reviewed_source_run_id": "20260914T083715Z-c2125866",
+    "categories": [
+      "other"
+    ],
+    "region": "Unknown",
+    "source": "claude_rss",
+    "source_title": "Google signs its biggest rice-methane carbon credit deal with Indian startup Mitti Labs",
+    "website_source": "https://techcrunch.com/2026/09/10/google-signs-its-biggest-rice-methane-carbon-credit-deal-with-indian-startup-mitti-labs/",
+    "discovered_at": "2026-09-14",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20260914T084238Z-8d8e2378",
+      "source_published_at": "2026-09-10T13:34:01+00:00",
+      "evidence": [
+        {
+          "criterion": "growth_anomaly",
+          "quote": "The startup's projects have saved more than 500 billion liters of water over the past two years."
+        },
+        {
+          "criterion": "category_innovation",
+          "quote": "Founded in 2023, the New York- and Bengaluru-based startup has built a GeoAI platform that combines satellite radar imagery with field measurements to remotely track crop growth, soil moisture, and flooding across smallholder farms."
+        }
+      ]
+    },
+    "logo_url": "https://framerusercontent.com/images/bAUuUIlKdc5BUpwicRysifadimI.png",
+    "logo_source": "html"
+  },
+  {
+    "name": "Lamb Labs",
+    "website": "http://lamb-labs.com",
+    "description": "开发定制推理芯片，将AI模型权重直接硬编码到硅片中，消除内存带宽瓶颈，打造超高能效的模型处理单元（MPU），解决传统AI芯片在推理过程中从内存获取模型权重时的巨大能耗问题",
+    "description_en": "Builds custom inference chips with AI model weights hardcoded directly into silicon, creating ultra-efficient Model Processing Units (MPUs) that eliminate memory-bandwidth bottlenecks and massive energy consumption during traditional AI chip inference",
+    "category": "hardware",
+    "why_matters": "入选YC近期批次；由伦敦帝国学院AI博士和牛津理论物理学家联合创立，通过将模型权重硬编码到芯片中的创新方法解决AI推理的能耗和内存带宽两大核心瓶颈问题",
+    "why_matters_en": "Co-founded by an Imperial College London AI Ph.D. and an Oxford theoretical physicist, tackles core AI inference challenges of energy consumption and memory bandwidth through the innovative approach of hardcoding model weights directly into custom silicon",
+    "latest_news": "2026年9月13日，TechCrunch将其列为本届YC Demo Day投资人关注的项目之一。",
+    "latest_news_en": "Included in TechCrunch’s September 13, 2026 roundup of startups attracting investor attention at the latest YC Demo Day.",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "founder_background",
+      "category_innovation",
+      "community_buzz"
+    ],
+    "company_country": "unknown",
+    "confidence": 0.9,
+    "source_url": "https://techcrunch.com/2026/09/13/the-9-buzziest-startups-from-y-combinators-latest-demo-day-according-to-vcs/",
+    "reviewed_source_run_id": "20260914T083715Z-c2125866",
+    "categories": [
+      "hardware"
+    ],
+    "region": "Unknown",
+    "source": "claude_rss",
+    "source_title": "The 9 buzziest startups from Y Combinator’s latest Demo Day, according to VCs",
+    "website_source": "https://www.ycombinator.com/launches/SIU-lamb-labs-custom-chips-for-ai-inference",
+    "discovered_at": "2026-09-14",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20260914T084238Z-8d8e2378",
+      "source_published_at": "2026-09-13T20:28:00+00:00",
+      "evidence": [
+        {
+          "criterion": "founder_background",
+          "quote": "Co-founded by an Imperial College London AI Ph.D. and an Oxford theoretical physicist, Lamb Labs wants to build ultra-efficient chips by hardcoding AI model weights directly into silicon."
+        },
+        {
+          "criterion": "category_innovation",
+          "quote": "Dubbed 'Model Processing Units' (MPUs), these custom chips eliminate memory-bandwidth bottlenecks."
+        },
+        {
+          "criterion": "community_buzz",
+          "quote": "TechCrunch asked early-stage VCs to name the hottest startups in this batch — both their top picks and the deals everyone was talking about. And as usual, we put together a list of startups flagged by at least two investors as the buzziest in the batch."
+        }
+      ]
+    },
+    "logo_url": "https://lamb-labs.com/favicon.png",
+    "logo_source": "html"
+  }
+]

@@ -119,7 +119,7 @@ export async function fetchDemoStatus(signal?: AbortSignal): Promise<DemoStatus>
     generateLimitPerHour: 0,
   };
   try {
-    const response = await fetch(`${base()}/demos/status`, {
+    const response = await fetch(`${base()}/demos/legacy/status`, {
       signal: signal || AbortSignal.timeout(8000),
       headers: { Accept: "application/json" },
       cache: "no-store",

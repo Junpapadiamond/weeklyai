@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import type { Product } from "@/types/api";
+import { supportsLiveDemo } from "@/lib/live-demo";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { FavoriteButton } from "@/components/favorites/favorite-button";
 import { useSiteLocale } from "@/components/layout/locale-provider";
@@ -111,6 +112,7 @@ export function ProductCard({ product, compact = false }: ProductCardProps) {
           <Link href={`/product/${detailId}`} className="link-btn link-btn--card link-btn--card-primary">
             {t("详情", "Details")}
           </Link>
+          {supportsLiveDemo(product) ? <Link href={`/product/${detailId}?demo=1#try-demo`} className="link-btn link-btn--card link-btn--demo">{t("交互试用", "Try demo")}</Link> : null}
           {hasWebsite ? (
             <a
               className="link-btn link-btn--card"

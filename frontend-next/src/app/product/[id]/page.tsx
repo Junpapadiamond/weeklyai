@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { WebsiteScreenshot } from "@/components/common/website-screenshot";
-import { ProductDemoSection } from "@/components/demo/product-demo-section";
 import { ProductCard } from "@/components/product/product-card";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { FavoriteButton } from "@/components/favorites/favorite-button";
+import { ProductLiveDemo } from "@/components/demo/product-live-demo";
+import { supportsLiveDemo } from "@/lib/live-demo";
 import { getProductById, getRelatedProducts } from "@/lib/api-client";
 import { pickLocaleText, type SiteLocale } from "@/lib/locale";
 import { getRequestLocale } from "@/lib/locale-server";
@@ -28,6 +29,7 @@ export const dynamic = "force-dynamic";
 
 type ProductPageProps = {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ demo?: string }>;
 };
 
 function formatScore(score: number, locale: SiteLocale): string {
@@ -54,10 +56,11 @@ function formatDate(value?: string): string {
   return `${yyyy}-${mm}-${dd}`;
 }
 
-export default async function ProductPage({ params }: ProductPageProps) {
+export default async function ProductPage({ params, searchParams }: ProductPageProps) {
   const locale = await getRequestLocale();
   const t = (zh: string, en: string) => pickLocaleText(locale, { zh, en });
   const { id } = await params;
+  const { demo } = await searchParams;
   const decodedId = id;
 
   const [product, related] = await Promise.all([getProductById(decodedId), getRelatedProducts(decodedId, 10)]);
@@ -114,6 +117,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </header>
         {product.needs_verification ? <p className="section-desc">{t("这条记录尚待核实。请通过原始来源确认产品身份与数据后再使用。", "This record needs verification. Check the original source before relying on its identity or figures.")}</p> : null}
 
+        {supportsLiveDemo(product) ? <ProductLiveDemo key={locale} product={product} autoOpen={demo === "1"} /> : null}
+
         <section className="detail-block">
           <h2 className="detail-block__title">{t("档案信息", "On record")}</h2>
           <div className="detail-metrics-grid">
@@ -142,7 +147,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <p className="detail-block__content">{latestNews}</p>
         </section>
 
-        <ProductDemoSection productId={decodedId} productName={product.name} />
 
         <section className="detail-block">
           <h2 className="detail-block__title">{t("网站预览", "Website preview")}</h2>

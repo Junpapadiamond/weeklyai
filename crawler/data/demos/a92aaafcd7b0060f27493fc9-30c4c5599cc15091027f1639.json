@@ -1,0 +1,185 @@
+{
+  "cache_key": "a92aaafcd7b0060f27493fc9-30c4c5599cc15091027f1639",
+  "product_key": "a92aaafcd7b0060f27493fc9",
+  "fingerprint": "30c4c5599cc15091027f1639",
+  "product_id": "1056",
+  "product_name": "Abridge",
+  "origin": "curated",
+  "generated_at": "2026-09-14T07:43:42.887499+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "把一次对话，整理成可核查的记录。",
+      "en": "Turn a conversation into a reviewable note."
+    },
+    "scenario": {
+      "zh": "使用虚构的行政沟通片段，体验从对话到记录、证据核对和交接的路径。不涉及诊断，也不采集录音或真实个人信息。",
+      "en": "Use fictional administrative dialogue to explore note creation, evidence review and handoff. No diagnosis, recording or personal data is involved."
+    },
+    "steps": [
+      {
+        "id": "step-1",
+        "widget": "choice",
+        "title": {
+          "zh": "准备示例对话",
+          "en": "Prepare a sample conversation"
+        },
+        "instruction": {
+          "zh": "选择一个已经获得示例参与者同意的虚构片段。",
+          "en": "Choose a fictional excerpt with assumed participant consent."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "确认下次会面时间",
+              "en": "Confirm a follow-up meeting"
+            },
+            "output": {
+              "zh": "示例原文\n工作人员：我们下周再见一次，方便吗？\n参与者：周二上午可以，具体时间请再通知我。",
+              "en": "Sample transcript\nStaff: Can we meet again next week?\nParticipant: Tuesday morning works. Please confirm the exact time."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "确认资料交接方式",
+              "en": "Confirm a document handoff"
+            },
+            "output": {
+              "zh": "示例原文\n工作人员：资料整理好后会交给你。\n参与者：请提供电子版，我还需要确认收件方式。",
+              "en": "Sample transcript\nStaff: We will provide the documents once organized.\nParticipant: Please provide a digital copy. I still need to confirm delivery."
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "step-2",
+        "widget": "choice",
+        "title": {
+          "zh": "选择记录格式",
+          "en": "Choose a note format"
+        },
+        "instruction": {
+          "zh": "生成记录前，先确定这次需要保留什么。",
+          "en": "Decide what the note should retain."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "对话摘要与待办",
+              "en": "Summary and follow-up items"
+            },
+            "output": {
+              "zh": "记录草稿\n摘要：双方讨论了下一步的安排。\n已确定：参与者表达了偏好。\n待办：由工作人员确认具体安排。\n未说明的信息保留为空。",
+              "en": "Draft note\nSummary: the participants discussed next steps.\nEstablished: the participant expressed a preference.\nFollow-up: staff to confirm the arrangement.\nUnstated details remain blank."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "只保留待确认事项",
+              "en": "Open items only"
+            },
+            "output": {
+              "zh": "待确认清单\n1. 具体执行安排。\n2. 参与者确认。\n3. 交接负责人。\n这份示例不会把未提到的内容补成事实。",
+              "en": "Open items\n1. Exact arrangement.\n2. Participant confirmation.\n3. Handoff owner.\nThe example does not turn unstated details into facts."
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "step-3",
+        "widget": "review",
+        "title": {
+          "zh": "回到原文核对",
+          "en": "Review against the transcript"
+        },
+        "instruction": {
+          "zh": "选择核查方式，确认记录没有超出原文信息。",
+          "en": "Check that the note stays within the transcript."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "查看支持片段",
+              "en": "Inspect supporting passages"
+            },
+            "output": {
+              "zh": "证据核查：回到第一步的示例原文，确认偏好和待定条件。\n记录原则：区分已确定与尚未确认。",
+              "en": "Evidence review: revisit the sample transcript from step one.\nCheck preferences and unresolved details.\nSeparate confirmed facts from open items."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "删除没有依据的推断",
+              "en": "Remove unsupported inferences"
+            },
+            "output": {
+              "zh": "修订示例：将「安排已确认」改为「具体安排待确认」。\n保留：参与者实际表达的内容。\n删除：未在对话中出现的细节。",
+              "en": "Sample revision: change “arrangement confirmed” to “exact arrangement pending.”\nKeep what was actually said.\nRemove details absent from the dialogue."
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "step-4",
+        "widget": "choice",
+        "title": {
+          "zh": "完成记录交接",
+          "en": "Complete the handoff"
+        },
+        "instruction": {
+          "zh": "体验记录已经过人工检查，选择交接形式。",
+          "en": "The sample note has been reviewed. Choose a handoff format."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "保存可核查摘要",
+              "en": "Save a reviewable summary"
+            },
+            "output": {
+              "zh": "示例状态：已检查，待交接。\n记录包含摘要、待办与核查说明。\n完成页可下载此次体验记录。",
+              "en": "Sample status: reviewed, ready for handoff.\nThe note includes a summary, follow-up items and review notes.\nDownload the experience on the final page."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "交给负责人复核",
+              "en": "Send for owner review"
+            },
+            "output": {
+              "zh": "示例状态：待负责人复核。\n附带材料：原文片段、记录草稿、待确认事项。\n这里不会写入任何真实医疗系统。",
+              "en": "Sample status: awaiting owner review.\nPackage: transcript excerpt, draft and open questions.\nNothing is written to a real clinical system."
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Abridge 的公开工作流包含对话记录、笔记生成、编辑和证据核对。这个行政片段仅用于说明流程，不代表临床记录质量。",
+      "en": "Abridge’s documented workflow includes recording, note generation, editing and evidence review. This administrative example does not represent clinical note quality."
+    },
+    "sources": [
+      {
+        "url": "https://support.abridge.com/hc/en-us/articles/30279907940371-Abridge-Web-Editor-Basics",
+        "label": {
+          "zh": "官方产品资料",
+          "en": "Official product documentation"
+        }
+      }
+    ]
+  }
+}

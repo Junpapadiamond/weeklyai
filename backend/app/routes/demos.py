@@ -1,153 +1,117 @@
-"""Interactive demo API.
-
-    GET  /api/v1/demos/status               provider + coverage
-    GET  /api/v1/demos                      products that already have a demo
-    GET  /api/v1/demos/<product_id>         fetch a demo (cached)
-    POST /api/v1/demos/<product_id>/generate  build one now
-    POST /api/v1/demos/live                 proxy one approved sandbox call
-
-Generation costs money and time, so it carries its own hourly per-IP budget on
-top of the global limiter.
-"""
-from __future__ import annotations
-
-from collections import defaultdict
-import time
-
+"""No-account product experiences with persistent daily budgets."""
+import hashlib
+import os
+import uuid
 from flask import Blueprint, jsonify, request
-
-from app.services.demo_repository import DemoRepository
-from app.services.demo_spec import ENDPOINT_REGISTRY
-from app.services import demo_service
+from itsdangerous import URLSafeTimedSerializer, BadSignature
+from app.services.demo_contract import cache_key
+from app.services.demo_experiences import published, ready_experience, prepare_experience, provider_available
+from app.services.demo_store import DemoStore, production
+from app.services.product_service import ProductService
 
 demos_bp = Blueprint("demos", __name__)
-
-GENERATE_LIMIT_PER_HOUR = 8
-LIVE_LIMIT_PER_MINUTE = 12
-
-_generate_tracker: dict[str, list[float]] = defaultdict(list)
-_live_tracker: dict[str, list[float]] = defaultdict(list)
+COOKIE = "weeklyai_demo_visitor"
 
 
-def _client_ip() -> str:
-    forwarded = request.headers.get("X-Forwarded-For", request.remote_addr) or "unknown"
-    return forwarded.split(",")[0].strip()
+def _context():
+    secret = os.getenv("DEMO_COOKIE_SECRET", "")
+    identity_ready = len(secret) >= 32 or not production()
+    serializer = URLSafeTimedSerializer(secret if len(secret) >= 32 else "weeklyai-local-development-only", salt="demo-visitor-v1")
+    cookie = request.cookies.get(COOKIE, "")
+    try:
+        identity = serializer.loads(cookie, max_age=30 * 86400)
+        if not isinstance(identity, str) or len(identity) != 32:
+            raise BadSignature("invalid identity")
+    except BadSignature:
+        identity = uuid.uuid4().hex
+        cookie = serializer.dumps(identity)
+    actor = hashlib.sha256(identity.encode()).hexdigest()[:32]
+    try:
+        store = DemoStore()
+        quota = store.quota(actor)
+    except Exception:
+        store, quota = None, None
+    return actor, cookie, identity_ready, store, quota
 
 
-def _allow(tracker: dict[str, list[float]], ip: str, limit: int, window: int) -> bool:
-    now = time.time()
-    tracker[ip] = [t for t in tracker[ip] if t > now - window]
-    if len(tracker[ip]) >= limit:
-        return False
-    tracker[ip].append(now)
-    return True
+def _response(body, status, context):
+    _, cookie, identity_ready, store, quota = context
+    body.update(quota=quota, ai_available=provider_available(), generation_available=bool(identity_ready and store and provider_available()))
+    response = jsonify(body)
+    response.status_code = status
+    response.headers["Cache-Control"] = "private, no-store"
+    response.set_cookie(COOKIE, cookie, max_age=30 * 86400, httponly=True, secure=production(), samesite="Lax", path="/api/v1/demos")
+    if status == 202:
+        response.headers["Retry-After"] = "3"
+    return response
 
 
-def _find_product(product_id: str):
-    from app.services.product_service import ProductService
-    return ProductService.get_product_by_id(product_id)
+@demos_bp.get("/status")
+def demo_status():
+    return _response({"success": True}, 200, _context())
 
 
-@demos_bp.route("/status", methods=["GET"])
-def status():
-    slugs = DemoRepository.list_slugs()
-    return jsonify({
-        "success": True,
-        "generation_available": demo_service.is_configured(),
-        # Split so an operator can tell "switched off" from "no API key".
-        "generation_enabled": demo_service.generation_enabled(),
-        "provider_key_present": bool(demo_service._key()),
-        # Host and model only - never the key. Lets you confirm from the
-        # deployed site that Vercel actually picked up the env vars.
-        "provider_host": demo_service._api_base().split("://")[-1].split("/")[0],
-        "model": demo_service._model(),
-        "live_endpoints": sorted(ENDPOINT_REGISTRY),
-        "demo_count": len(slugs),
-        "generate_limit_per_hour": GENERATE_LIMIT_PER_HOUR,
-    })
+@demos_bp.get("/catalog")
+def demo_catalog():
+    context = _context()
+    keys = set(published())
+    if context[3]:
+        try:
+            keys.update(context[3].keys())
+        except Exception:
+            context = (*context[:3], None, None)
+    products = ProductService.get_discovery_products()
+    ready = sum(cache_key(p) in keys for p in products)
+    dark = sum(float(p.get("dark_horse_index") or 0) >= 4 for p in products)
+    query, category = request.args.get("q", "").strip().lower()[:160], request.args.get("filter", "all")
+    filtered = []
+    for p in products:
+        is_ready = cache_key(p) in keys
+        if category == "ready" and not is_ready or category == "dark" and float(p.get("dark_horse_index") or 0) < 4:
+            continue
+        if query and query not in " ".join(str(p.get(k, "")) for k in ("name", "description", "description_en", "categories", "country_name")).lower():
+            continue
+        filtered.append(p)
+    filtered.sort(key=lambda p: (cache_key(p) not in keys, -float(p.get("dark_horse_index") or 0), p["name"].lower()))
+    try:
+        page, limit = max(1, int(request.args.get("page", 1))), min(60, max(1, int(request.args.get("limit", 24))))
+    except ValueError:
+        return _response({"success": False, "error": "BAD_REQUEST"}, 400, context)
+    fields = ("_id", "name", "website", "logo_url", "logo", "source_url", "description", "description_en", "categories", "country_name", "dark_horse_index", "is_hardware")
+    items = [{**{k: p.get(k) for k in fields}, "_id": str(p.get("_id") or p["name"]), "demo_ready": cache_key(p) in keys}
+             for p in filtered[(page - 1) * limit:page * limit]]
+    return _response({"success": True, "products": items, "total": len(filtered), "catalog_total": len(products),
+                      "ready_count": ready, "dark_count": dark, "page": page, "limit": limit}, 200, context)
 
 
-@demos_bp.route("", methods=["GET"])
-def list_demos():
-    """Slugs we can serve immediately. The picker uses this to mark products
-    as instant rather than generate-on-demand."""
-    return jsonify({"success": True, "data": DemoRepository.list_slugs()})
-
-
-@demos_bp.route("/<path:product_id>/generate", methods=["POST"])
-def generate_demo(product_id):
-    ip = _client_ip()
-    if not _allow(_generate_tracker, ip, GENERATE_LIMIT_PER_HOUR, 3600):
-        return jsonify({
-            "success": False,
-            "error": "TOO_MANY_REQUESTS",
-            "message": f"Demo generation is limited to {GENERATE_LIMIT_PER_HOUR} per hour. "
-                       "Already-built demos are still available.",
-        }), 429
-
-    product = _find_product(product_id)
+@demos_bp.get("/product/<product_id>")
+def demo_product(product_id):
+    context = _context()
+    product = ProductService.get_product_by_id(product_id)
     if not product:
-        return jsonify({"success": False, "error": "NOT_FOUND", "message": "Product not found."}), 404
-
-    slug = DemoRepository.slug_for(product)
-    if not slug:
-        return jsonify({"success": False, "error": "NOT_FOUND", "message": "Product has no usable name."}), 404
-
-    body = request.get_json(silent=True) or {}
-    if body.get("refresh") is not True:
-        existing = DemoRepository.get(slug)
-        if existing:
-            return jsonify({"success": True, "data": existing, "cached": True})
-
-    result = demo_service.generate(product, slug)
-    if not result.get("success"):
-        code = result.get("error", "INVALID_SPEC")
-        status_code = {"GENERATION_DISABLED": 503, "NOT_CONFIGURED": 503, "PROVIDER_UNAVAILABLE": 503}.get(code, 502)
-        return jsonify({
-            "success": False,
-            "error": code,
-            "message": {
-                "GENERATION_DISABLED": "On-demand demos are switched off on this site. "
-                                       "The demos already built are still available.",
-                "NOT_CONFIGURED": "Demo generation has no provider key configured. "
-                                  "Pre-built demos still work.",
-                "PROVIDER_UNAVAILABLE": "The generator is unavailable right now. Please try again.",
-            }.get(code, "The generated demo did not pass validation. Please try again."),
-            "detail": result.get("detail", ""),
-        }), status_code
-
-    DemoRepository.save(result["spec"])
-    return jsonify({"success": True, "data": result["spec"], "cached": False})
+        return _response({"success": False, "error": "NOT_FOUND"}, 404, context)
+    entry = ready_experience(product, context[3])
+    return _response({"success": True, "state": "ready" if entry else "not_generated", "experience": entry}, 200, context)
 
 
-@demos_bp.route("/live", methods=["POST"])
-def live_query():
-    ip = _client_ip()
-    if not _allow(_live_tracker, ip, LIVE_LIMIT_PER_MINUTE, 60):
-        return jsonify({"success": False, "error": "TOO_MANY_REQUESTS"}), 429
+@demos_bp.post("/generate")
+def demo_generate():
+    context = _context()
     body = request.get_json(silent=True)
-    if not isinstance(body, dict):
-        return jsonify({"success": False, "error": "BAD_REQUEST"}), 400
-    endpoint_id = body.get("endpoint_id")
-    if not isinstance(endpoint_id, str) or not endpoint_id:
-        return jsonify({"success": False, "error": "BAD_REQUEST"}), 400
-    result = demo_service.run_live_query(endpoint_id, body.get("query", ""))
-    return jsonify(result), 200 if result.get("success") else 502
-
-
-# Registered last: a bare "/<product_id>" would otherwise shadow "/status".
-@demos_bp.route("/<path:product_id>", methods=["GET"])
-def get_demo(product_id):
-    spec = DemoRepository.get(product_id)
-    if not spec:
-        product = _find_product(product_id)
-        if product:
-            spec = DemoRepository.get(DemoRepository.slug_for(product))
-    if not spec:
-        return jsonify({
-            "success": False,
-            "data": None,
-            "error": "NOT_GENERATED",
-            "generation_available": demo_service.is_configured(),
-        }), 404
-    return jsonify({"success": True, "data": spec})
+    if not isinstance(body, dict) or not isinstance(body.get("product_id"), str) or not 1 <= len(body["product_id"].strip()) <= 160:
+        return _response({"success": False, "error": "BAD_REQUEST"}, 400, context)
+    product = ProductService.get_product_by_id(body["product_id"].strip())
+    if not product:
+        return _response({"success": False, "error": "NOT_FOUND"}, 404, context)
+    actor, _, identity_ready, store, _ = context
+    entry = ready_experience(product, store)
+    if entry:
+        return _response({"success": True, "state": "ready", "cached": True, "experience": entry}, 200, context)
+    if not identity_ready:
+        return _response({"success": False, "error": "IDENTITY_NOT_CONFIGURED"}, 503, context)
+    try:
+        result, status = prepare_experience(product, actor, store)
+        context = (*context[:4], store.quota(actor) if store else None)
+    except Exception:
+        result, status = {"success": False, "error": "STORAGE_UNAVAILABLE"}, 503
+    return _response(result, status, context)

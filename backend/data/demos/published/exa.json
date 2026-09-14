@@ -1,0 +1,164 @@
+{
+  "version": 1,
+  "product_slug": "exa",
+  "product_name": "Exa",
+  "tier": "sandbox",
+  "title": {
+    "zh": "当搜索理解语义",
+    "en": "When search understands meaning"
+  },
+  "premise": {
+    "zh": "Exa 是为 AI 应用设计的搜索 API：用一句话描述你要找的东西，而不是猜关键词。",
+    "en": "Exa is a search API for AI apps: describe what you want in a sentence instead of guessing keywords."
+  },
+  "steps": [
+    {
+      "id": "problem",
+      "label": {
+        "zh": "问题",
+        "en": "The problem"
+      },
+      "narration": {
+        "zh": "关键词搜索找不到「像这样的公司」——它匹配的是字符串，不是含义。",
+        "en": "Keyword search cannot find 'companies like this one'. It matches strings, not meaning."
+      },
+      "widget": {
+        "type": "split_compare",
+        "input": "startups building developer tools for LLM evaluation",
+        "left": {
+          "title": {
+            "zh": "关键词检索",
+            "en": "Keyword search"
+          },
+          "body": {
+            "zh": "标题里带「LLM evaluation」的博客文章、一个维基页面，以及三篇为这个词做过 SEO 的清单文。每条结果都是在「谈论」这个话题的文章。",
+            "en": "Blog posts titled 'LLM evaluation', a Wikipedia page, and three SEO listicles that rank for the phrase. Every result is an article about the topic."
+          }
+        },
+        "right": {
+          "title": {
+            "zh": "语义检索",
+            "en": "Neural search"
+          },
+          "body": {
+            "zh": "这个类别里工具的公司主页。查询描述的是一类公司，所以返回的就是公司本身。",
+            "en": "Company homepages for tools in that category. The query described a kind of company, so the results are companies."
+          }
+        },
+        "takeaway": {
+          "zh": "同一个查询：一边返回讨论这个话题的文章，一边返回真正做这件事的公司。",
+          "en": "Same query. One side returns articles about the topic; the other returns the companies doing it."
+        }
+      }
+    },
+    {
+      "id": "try",
+      "label": {
+        "zh": "试一下",
+        "en": "Try it"
+      },
+      "narration": {
+        "zh": "选一个查询，看这类描述性问题会得到什么形状的结果。",
+        "en": "Pick a query and see the shape of result a descriptive question returns."
+      },
+      "widget": {
+        "type": "query_response",
+        "mode": "cached",
+        "endpoint_id": null,
+        "allow_free_input": false,
+        "presets": [
+          {
+            "query": "companies doing AI for industrial inspection",
+            "response": {
+              "zh": "返回的是公司主页，而不是行业媒体的报道——查询描述的是一类组织，所以回来的是实体而不是文章。",
+              "en": "Returns company homepages rather than trade-press coverage — the query names a kind of organisation, so entities come back instead of articles."
+            }
+          },
+          {
+            "query": "research papers on speculative decoding since 2025",
+            "response": {
+              "zh": "返回论文页面。时间限定是语义的一部分，不需要你自己拼过滤条件。",
+              "en": "Returns paper landing pages. The date phrase is part of the meaning, not a filter you had to construct."
+            }
+          },
+          {
+            "query": "personal blogs by people who left large AI labs",
+            "response": {
+              "zh": "返回个人博客。这正是关键词搜索最吃力的一类查询：这些页面之间没有共同关键词，只有共同的描述。",
+              "en": "Returns individual blogs. This is the query type keyword search handles worst: no shared keyword links these pages, only a shared description."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "wire",
+      "label": {
+        "zh": "接进去",
+        "en": "Wire it up"
+      },
+      "narration": {
+        "zh": "三个阶段：检索、取正文、交给模型。省掉的是自建抓取和清洗那一层。",
+        "en": "Three stages: retrieve, fetch contents, hand to a model. What it removes is your own crawling and cleaning layer."
+      },
+      "widget": {
+        "type": "pipeline",
+        "stages": [
+          {
+            "name": {
+              "zh": "检索",
+              "en": "Search"
+            },
+            "input": {
+              "zh": "一句描述你想找什么的话",
+              "en": "a sentence describing what you want"
+            },
+            "output": {
+              "zh": "带相关度分数的 URL 排序列表",
+              "en": "ranked URLs with relevance scores"
+            }
+          },
+          {
+            "name": {
+              "zh": "取正文",
+              "en": "Contents"
+            },
+            "input": {
+              "zh": "上一步返回的那些 URL",
+              "en": "those URLs"
+            },
+            "output": {
+              "zh": "清洗过的页面正文——不必自己维护一套抓取栈",
+              "en": "cleaned page text — no scraping stack of your own to maintain"
+            }
+          },
+          {
+            "name": {
+              "zh": "生成",
+              "en": "Answer"
+            },
+            "input": {
+              "zh": "正文加上你的 prompt",
+              "en": "that text plus your prompt"
+            },
+            "output": {
+              "zh": "有依据的回答，每条结论都能指回出处",
+              "en": "a grounded answer that can cite where each claim came from"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "claim": "Exa raised a $250M Series C at a $2.2B valuation to build the search layer for AI agents.",
+      "source_url": "https://www.menlotimes.com/ai-robotics"
+    }
+  ],
+  "confidence": "verified",
+  "vendor_status": "none",
+  "generated_at": "",
+  "model": "",
+  "reviewed_by": null
+}

@@ -1,0 +1,186 @@
+{
+  "cache_key": "cf7a3a4c926a0271077b675f-a02b11c202e182d820fcd796",
+  "product_key": "cf7a3a4c926a0271077b675f",
+  "fingerprint": "a02b11c202e182d820fcd796",
+  "product_id": "948",
+  "product_name": "Lovable",
+  "origin": "curated",
+  "generated_at": "2026-09-14T07:43:42.889501+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "从一个想法，到能点的任务应用。",
+      "en": "From an idea to a working task app."
+    },
+    "scenario": {
+      "zh": "需求已准备好：给一个小团队做任务清单。选择页面结构、操作预览、检查效果，再形成交付计划。",
+      "en": "The brief is ready: a task list for a small team. Choose the structure, use the preview, review it and plan the handoff."
+    },
+    "steps": [
+      {
+        "id": "step-1",
+        "widget": "choice",
+        "title": {
+          "zh": "选择应用方向",
+          "en": "Choose the app direction"
+        },
+        "instruction": {
+          "zh": "不用写提示词，直接选择一份已准备好的产品简报。",
+          "en": "No prompt needed. Choose a prepared product brief."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "轻量个人任务清单",
+              "en": "A lightweight personal task list"
+            },
+            "output": {
+              "zh": "简报：一个页面里添加、完成和删除任务。\n第一版范围：任务列表、输入框、完成状态。\n优先验证任务操作是否清楚。",
+              "en": "Brief: add, complete and remove tasks on one page.\nScope: list, input and completion state.\nValidate whether the interactions are clear."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "小团队项目检查表",
+              "en": "A small-team project checklist"
+            },
+            "output": {
+              "zh": "简报：用一个检查表跟进项目准备。\n第一版范围：创建任务、勾选检查项、统计完成数。\n演示数据只保存在当前页面。",
+              "en": "Brief: track project preparation in a checklist.\nScope: create tasks, check items, count completions.\nDemo data stays in this page."
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "step-2",
+        "widget": "app",
+        "title": {
+          "zh": "打开可操作预览",
+          "en": "Open the working preview"
+        },
+        "instruction": {
+          "zh": "选择预览，然后试着添加一条任务、勾选完成或删除。",
+          "en": "Open the preview, then add a task, complete it or remove it."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "打开任务应用",
+              "en": "Open the task app"
+            },
+            "output": {
+              "zh": "预览已准备好。下面的输入框和按钮可以直接操作。\n试一试：添加「和朋友测试第一版」，再勾选完成。",
+              "en": "The preview is ready. Its inputs and buttons work.\nTry adding “Test the first version with a friend,” then complete it."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "从检查表开始",
+              "en": "Start with the checklist"
+            },
+            "output": {
+              "zh": "先操作已有检查项，再补充自己的任务。\n你正在体验「想法 → 页面 → 操作反馈」这条链路。",
+              "en": "Check existing items, then add your own.\nExplore the path from idea to interface to interaction feedback."
+            }
+          }
+        ],
+        "example_data": true,
+        "app_kind": "tasks"
+      },
+      {
+        "id": "step-3",
+        "widget": "review",
+        "title": {
+          "zh": "检查第一版体验",
+          "en": "Review the first version"
+        },
+        "instruction": {
+          "zh": "决定下一轮迭代最值得改进的地方。",
+          "en": "Choose the most useful next improvement."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "优化任务完成反馈",
+              "en": "Improve completion feedback"
+            },
+            "output": {
+              "zh": "迭代清单：完成态更清楚、任务统计更明显、空列表提示更友好。\n这些是示例产品决策，不会提交给 Lovable。",
+              "en": "Iteration list: clearer completion state, visible progress and a helpful empty state.\nThese sample decisions are not sent to Lovable."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "完善保存与协作",
+              "en": "Plan persistence and collaboration"
+            },
+            "output": {
+              "zh": "迭代清单：接入数据库、设计成员权限、处理并发更新。\n当前体验中的任务会随页面重置，不是已发布的团队产品。",
+              "en": "Iteration list: database storage, member permissions and concurrent updates.\nTasks reset with this demo; this is not a deployed team app."
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "step-4",
+        "widget": "choice",
+        "title": {
+          "zh": "准备产品交付",
+          "en": "Prepare a handoff"
+        },
+        "instruction": {
+          "zh": "把体验中的选择整理成下一步行动。",
+          "en": "Turn your choices into next steps."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "生成第一版测试计划",
+              "en": "Create a first-version test plan"
+            },
+            "output": {
+              "zh": "测试计划：添加任务 → 修改状态 → 检查空列表 → 复核手机布局。\n到真实产品中继续连接数据、邀请用户和发布。",
+              "en": "Test plan: add a task → change its state → inspect the empty list → check mobile layout.\nContinue with real data, users and publishing in the actual product."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "整理后续迭代清单",
+              "en": "Create an iteration checklist"
+            },
+            "output": {
+              "zh": "下一步：确认使用场景、决定保存方式、检查访问权限、邀请试用者。\n完成页可下载本次体验选择。",
+              "en": "Next: confirm use cases, choose persistence, review permissions and invite testers.\nDownload your choices on the final page."
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "应用生成类产品把需求变成界面，并通过预览和迭代继续完善。这里的任务应用是 WeeklyAI 准备的示例，不是 Lovable 的真实生成结果。",
+      "en": "App builders turn a brief into an interface and refine it through previews. This task app is an authored WeeklyAI example, not a real Lovable generation."
+    },
+    "sources": [
+      {
+        "url": "https://docs.lovable.dev/",
+        "label": {
+          "zh": "官方产品资料",
+          "en": "Official product documentation"
+        }
+      }
+    ]
+  }
+}

@@ -309,6 +309,8 @@ def process_product(product: dict, only_missing: bool = False, allow_clearbit: b
     """处理单个产品，尝试获取 logo"""
     name = product.get("name", "Unknown")
     website = product.get("website", "")
+    if only_missing and (product.get("logo_url") or product.get("logo")):
+        return product
     _sanitize_logo_fields(product)
 
     if not _should_fix_product(product, only_missing=only_missing):

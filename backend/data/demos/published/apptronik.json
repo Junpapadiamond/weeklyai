@@ -1,0 +1,267 @@
+{
+  "version": 1,
+  "product_slug": "apptronik",
+  "product_name": "Apptronik",
+  "tier": "concept",
+  "title": {
+    "zh": "人形机器人凭什么进工厂",
+    "en": "What gets a humanoid onto a factory floor"
+  },
+  "premise": {
+    "zh": "Apptronik 做人形机器人 Apollo，与 NASA 及梅赛德斯-奔驰有合作。硬件无法在浏览器里演示，所以这里解释的是它所处的位置和判断它的方式。",
+    "en": "Apptronik builds the Apollo humanoid and works with NASA and Mercedes-Benz. Hardware cannot be demoed in a browser, so this explains where it sits and how to judge it."
+  },
+  "steps": [
+    {
+      "id": "signal",
+      "label": {
+        "zh": "该看什么",
+        "en": "What to read"
+      },
+      "narration": {
+        "zh": "人形机器人公司很少公布可比参数，所以「有没有具名的产业伙伴」比参数表更能说明进展。下表中只有见于来源的才标注出处，其余标为示例。",
+        "en": "Humanoid companies rarely publish comparable specs, so a named industrial partner says more about progress than a spec sheet. Only cells backed by the source are cited; the rest are marked as examples."
+      },
+      "widget": {
+        "type": "spec_matrix",
+        "subject": "Apptronik (Apollo)",
+        "competitors": [
+          "Other humanoid programs"
+        ],
+        "rows": [
+          {
+            "spec": {
+              "zh": "具名产业伙伴",
+              "en": "Named industrial partner"
+            },
+            "values": [
+              {
+                "label": {
+                  "zh": "Apptronik",
+                  "en": "Apptronik"
+                },
+                "value": {
+                  "zh": "与梅赛德斯-奔驰合作",
+                  "en": "Mercedes-Benz cooperation"
+                },
+                "evidence_ref": 0,
+                "is_example": false
+              },
+              {
+                "label": {
+                  "zh": "同类项目",
+                  "en": "Peer programs"
+                },
+                "value": {
+                  "zh": "情况不一——往往未公开",
+                  "en": "varies — often unannounced"
+                },
+                "evidence_ref": null,
+                "is_example": true
+              }
+            ]
+          },
+          {
+            "spec": {
+              "zh": "具名机构伙伴",
+              "en": "Named institutional partner"
+            },
+            "values": [
+              {
+                "label": {
+                  "zh": "Apptronik",
+                  "en": "Apptronik"
+                },
+                "value": {
+                  "zh": "NASA 合作方",
+                  "en": "NASA partner"
+                },
+                "evidence_ref": 0,
+                "is_example": false
+              },
+              {
+                "label": {
+                  "zh": "同类项目",
+                  "en": "Peer programs"
+                },
+                "value": {
+                  "zh": "情况不一",
+                  "en": "varies"
+                },
+                "evidence_ref": null,
+                "is_example": true
+              }
+            ]
+          },
+          {
+            "spec": {
+              "zh": "公开可比参数",
+              "en": "Public comparable specs"
+            },
+            "values": [
+              {
+                "label": {
+                  "zh": "Apptronik",
+                  "en": "Apptronik"
+                },
+                "value": {
+                  "zh": "本条记录中未公布",
+                  "en": "not published in this record"
+                },
+                "evidence_ref": null,
+                "is_example": true
+              },
+              {
+                "label": {
+                  "zh": "同类项目",
+                  "en": "Peer programs"
+                },
+                "value": {
+                  "zh": "很少公布",
+                  "en": "rarely published"
+                },
+                "evidence_ref": null,
+                "is_example": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "chain",
+      "label": {
+        "zh": "它在链条哪一段",
+        "en": "Where it sits"
+      },
+      "narration": {
+        "zh": "人形机器人的难点很少在于「能不能动」，而在于后面几段。",
+        "en": "The hard part of humanoids is rarely whether the robot moves. It is the stages after that."
+      },
+      "widget": {
+        "type": "pipeline",
+        "stages": [
+          {
+            "name": {
+              "zh": "本体",
+              "en": "The machine"
+            },
+            "input": {
+              "zh": "执行器、结构、动力",
+              "en": "actuators, structure, power"
+            },
+            "output": {
+              "zh": "能站、能走、能举的机器人——多数项目都能走到这一步",
+              "en": "a robot that can stand, walk and lift — the part most programs reach"
+            }
+          },
+          {
+            "name": {
+              "zh": "任务能力",
+              "en": "Task capability"
+            },
+            "input": {
+              "zh": "真实产线上的一个具体工序",
+              "en": "a specific job on a real line"
+            },
+            "output": {
+              "zh": "稳定完成一个窄任务，多数项目卡在这里",
+              "en": "reliable completion of one narrow task, which is where most programs stall"
+            }
+          },
+          {
+            "name": {
+              "zh": "产线集成",
+              "en": "Line integration"
+            },
+            "input": {
+              "zh": "既有的工厂流程",
+              "en": "an existing factory process"
+            },
+            "output": {
+              "zh": "适配为人设计的工作流，并通过安全审批",
+              "en": "fitting a workflow built for humans, including safety sign-off"
+            }
+          },
+          {
+            "name": {
+              "zh": "单位经济",
+              "en": "Unit economics"
+            },
+            "input": {
+              "zh": "单台成本对比它替代的人力成本",
+              "en": "cost per unit against the labour it offsets"
+            },
+            "output": {
+              "zh": "决定能不能部署的那个数字——而且几乎没人公布",
+              "en": "the number that decides deployment — and the one almost nobody publishes"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "econ",
+      "label": {
+        "zh": "判断依据",
+        "en": "The judgment"
+      },
+      "narration": {
+        "zh": "对 PM 来说有用的不是参数，而是这个关系：单位成本要落到什么区间才谈得上规模化。数字为示例，用于说明关系。",
+        "en": "The useful thing for a PM is not a spec but a relationship: where unit cost has to land before scale is even a conversation. Figures are examples that illustrate the relationship."
+      },
+      "widget": {
+        "type": "param_dial",
+        "param": {
+          "zh": "单台成本（万美元）",
+          "en": "Cost per unit (US$10k)"
+        },
+        "min": 5.0,
+        "max": 50.0,
+        "step": 1.0,
+        "unit": "×$10k",
+        "formula_note": {
+          "zh": "回本周期约等于单台成本除以它每年替代的人力成本；成本下降时，可部署的岗位范围会非线性扩大。",
+          "en": "Payback is roughly unit cost divided by the annual labour it offsets; as cost falls, the range of viable jobs widens faster than the cost drops."
+        },
+        "outputs": [
+          {
+            "label": {
+              "zh": "高成本区间",
+              "en": "At high unit cost"
+            },
+            "value": {
+              "zh": "只有连续运转的岗位才算得过账",
+              "en": "only jobs that run continuously can justify it"
+            },
+            "evidence_ref": null,
+            "is_example": true
+          },
+          {
+            "label": {
+              "zh": "低成本区间",
+              "en": "At low unit cost"
+            },
+            "value": {
+              "zh": "单班和季节性工作开始成立",
+              "en": "single-shift and seasonal work start to qualify"
+            },
+            "evidence_ref": null,
+            "is_example": true
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "claim": "Apptronik builds the Apollo humanoid robot, partners with NASA, and signed a cooperation with Mercedes-Benz.",
+      "source_url": "https://wellows.com/blog/tech-startups/"
+    }
+  ],
+  "confidence": "inferred",
+  "vendor_status": "none",
+  "generated_at": "",
+  "model": "",
+  "reviewed_by": null
+}

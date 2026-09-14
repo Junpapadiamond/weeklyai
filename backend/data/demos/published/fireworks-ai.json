@@ -1,0 +1,176 @@
+{
+  "version": 1,
+  "product_slug": "fireworks-ai",
+  "product_name": "Fireworks AI",
+  "tier": "sandbox",
+  "title": {
+    "zh": "把开源模型当成一个端点",
+    "en": "Open models as one endpoint"
+  },
+  "premise": {
+    "zh": "Fireworks 托管开源模型并按 token 计费，让你在不自建 GPU 集群的情况下切换模型。",
+    "en": "Fireworks hosts open models behind a per-token endpoint, so you can switch models without running GPUs."
+  },
+  "steps": [
+    {
+      "id": "choice",
+      "label": {
+        "zh": "取舍",
+        "en": "The tradeoff"
+      },
+      "narration": {
+        "zh": "自建推理还是托管端点，差别不在模型本身，而在你要维护什么。",
+        "en": "Self-hosting versus a managed endpoint. The model is the same; what differs is what you maintain."
+      },
+      "widget": {
+        "type": "split_compare",
+        "input": "serve an open-weights model to production traffic",
+        "left": {
+          "title": {
+            "zh": "自建",
+            "en": "Run it yourself"
+          },
+          "body": {
+            "zh": "自己开 GPU、按峰值容量规划、持续跟进推理框架版本，并在流量低谷时照付闲置成本。",
+            "en": "Provision GPUs, size them for peak, keep a serving stack current, and carry idle cost between traffic spikes."
+          }
+        },
+        "right": {
+          "title": {
+            "zh": "托管端点",
+            "en": "Managed endpoint"
+          },
+          "body": {
+            "zh": "一次 HTTP 调用，按 token 计费。闲置不花钱，换模型只是改一个字符串。",
+            "en": "One HTTP call, priced per token. Idle costs nothing; a model swap is a string change."
+          }
+        },
+        "takeaway": {
+          "zh": "对流量不稳定的产品，差别主要体现在闲置成本和切换成本上，而不是原始速度。",
+          "en": "For bursty products the difference shows up as idle cost and switching cost, not raw speed."
+        }
+      }
+    },
+    {
+      "id": "shape",
+      "label": {
+        "zh": "成本形状",
+        "en": "Cost shape"
+      },
+      "narration": {
+        "zh": "按 token 计费意味着成本随用量线性变化。拖动看这条线的形状——数字是示例，用来说明关系。",
+        "en": "Per-token pricing makes cost move linearly with usage. Drag to see the shape — the figures are examples that illustrate the relationship."
+      },
+      "widget": {
+        "type": "param_dial",
+        "param": {
+          "zh": "每月请求量（万次）",
+          "en": "Monthly requests (tens of thousands)"
+        },
+        "min": 1.0,
+        "max": 100.0,
+        "step": 1.0,
+        "unit": "×10k",
+        "formula_note": {
+          "zh": "按 token 计费时成本随请求量线性增长；自建的成本由预置容量决定，和实际用量关系不大。",
+          "en": "Per-token cost rises linearly with volume; self-hosted cost is set by provisioned capacity and barely moves with usage."
+        },
+        "outputs": [
+          {
+            "label": {
+              "zh": "托管成本走势",
+              "en": "Managed cost trend"
+            },
+            "value": {
+              "zh": "随请求量线性增长——闲置时接近零",
+              "en": "linear in requests — near zero when idle"
+            },
+            "evidence_ref": null,
+            "is_example": true
+          },
+          {
+            "label": {
+              "zh": "自建成本走势",
+              "en": "Self-hosted cost trend"
+            },
+            "value": {
+              "zh": "固定且需预先承诺——用不用都要付",
+              "en": "flat and pre-committed — paid whether used or not"
+            },
+            "evidence_ref": null,
+            "is_example": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "swap",
+      "label": {
+        "zh": "换模型",
+        "en": "Swapping models"
+      },
+      "narration": {
+        "zh": "统一端点的实际价值：评估新模型的成本从一次迁移变成一次改字符串。",
+        "en": "The real value of a uniform endpoint: evaluating a new model costs a string change instead of a migration."
+      },
+      "widget": {
+        "type": "pipeline",
+        "stages": [
+          {
+            "name": {
+              "zh": "选模型",
+              "en": "Pick a model"
+            },
+            "input": {
+              "zh": "一个模型标识符",
+              "en": "a model identifier"
+            },
+            "output": {
+              "zh": "不论指定哪个开源模型，请求结构都一样",
+              "en": "same request shape regardless of which open model you name"
+            }
+          },
+          {
+            "name": {
+              "zh": "调用",
+              "en": "Call"
+            },
+            "input": {
+              "zh": "prompt 和参数",
+              "en": "prompt plus parameters"
+            },
+            "output": {
+              "zh": "按 token 计费的补全结果",
+              "en": "completion, billed per token"
+            }
+          },
+          {
+            "name": {
+              "zh": "对比",
+              "en": "Compare"
+            },
+            "input": {
+              "zh": "同一个 prompt，换成第二个模型 id",
+              "en": "the same prompt against a second model id"
+            },
+            "output": {
+              "zh": "同口径对比，不需要重新部署任何东西",
+              "en": "a like-for-like comparison without redeploying anything"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "claim": "Fireworks AI raised a $250M Series C in Oct 2025 at a $4B valuation, as a platform for open-source model apps.",
+      "source_url": "https://techcrunch.com/2026/01/19/here-are-the-49-us-ai-startups-that-"
+    }
+  ],
+  "confidence": "verified",
+  "vendor_status": "none",
+  "generated_at": "",
+  "model": "",
+  "reviewed_by": null
+}

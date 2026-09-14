@@ -1,0 +1,192 @@
+{
+  "cache_key": "dd9ea9aa60e365b65f499984-f72de0e88c3f60d2db0cc3cd",
+  "product_key": "dd9ea9aa60e365b65f499984",
+  "fingerprint": "f72de0e88c3f60d2db0cc3cd",
+  "product_id": "p_98b5f813dc2c0fff",
+  "product_name": "Lamb Labs",
+  "origin": "curated",
+  "generated_at": "2026-09-14T08:44:26.153400+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "concept",
+    "headline": {
+      "zh": "体验模型与芯片的设计取舍",
+      "en": "Explore model–chip tradeoffs"
+    },
+    "scenario": {
+      "zh": "你要为一个示例AI项目准备芯片评估简报。体验Lamb Labs将模型权重硬编码进硅片的设计思路。",
+      "en": "Prepare a chip-evaluation brief for a sample AI project and explore Lamb Labs’ idea of hardcoding model weights into silicon."
+    },
+    "steps": [
+      {
+        "id": "scope",
+        "widget": "choice",
+        "title": {
+          "zh": "确定模型更新节奏",
+          "en": "Model update cadence"
+        },
+        "instruction": {
+          "zh": "先选一个示例项目，观察它对芯片方案的要求。",
+          "en": "Choose a sample project and consider its hardware requirements."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "模型长期保持稳定",
+              "en": "Stable model"
+            },
+            "output": {
+              "zh": "简报记录：模型更新较少。值得讨论固定权重设计，但仍需与厂商核验支持范围。",
+              "en": "Brief: infrequent model updates. Discuss a fixed-weight design, while confirming the supported scope with the vendor."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "模型每周持续迭代",
+              "en": "Frequent model updates"
+            },
+            "output": {
+              "zh": "简报记录：迭代灵活性很重要。下一步先询问模型变更时的硬件更新路径。",
+              "en": "Brief: flexibility matters. First ask how hardware would accommodate changes to the model."
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inputs",
+        "widget": "choice",
+        "title": {
+          "zh": "准备评估材料",
+          "en": "Prepare evaluation inputs"
+        },
+        "instruction": {
+          "zh": "选择优先整理的材料，形成厂商沟通清单。",
+          "en": "Choose what to prepare for a discussion with the vendor."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "模型结构与权重版本",
+              "en": "Model and weight version"
+            },
+            "output": {
+              "zh": "材料清单：模型结构、权重版本、更新计划。这里仅整理需求，不会上传模型或制作芯片。",
+              "en": "Checklist: architecture, weight version and update plan. This only prepares requirements; no model is uploaded and no chip is fabricated."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "任务与运行约束",
+              "en": "Task and operating needs"
+            },
+            "output": {
+              "zh": "材料清单：输入输出格式、运行环境、能耗与响应目标。目标值由实际项目提供。",
+              "en": "Checklist: input/output format, environment, power and response targets. The real project must supply target values."
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "compare",
+        "widget": "compare",
+        "title": {
+          "zh": "比较设计思路",
+          "en": "Compare design approaches"
+        },
+        "instruction": {
+          "zh": "观察两种方案需要进一步验证的问题。",
+          "en": "Explore questions that each approach would need to answer."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "权重硬编码进硅片",
+              "en": "Hardcoded weights"
+            },
+            "output": {
+              "zh": "Lamb Labs提出减少反复读取模型权重的设计思路。需核验：模型支持、精度、更新方式和实际测试结果。",
+              "en": "Lamb Labs proposes reducing repeated weight retrieval. Verify model support, accuracy, updates and actual test results."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "采用可更新权重的方案",
+              "en": "Updatable weights"
+            },
+            "output": {
+              "zh": "比较清单：权重更新能力、数据搬运开销与部署要求。没有同条件测试，无法给出胜负或性能数字。",
+              "en": "Compare weight updates, data movement and deployment requirements. No winner or performance figures can be inferred without comparable tests."
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "brief",
+        "widget": "review",
+        "title": {
+          "zh": "形成评估简报",
+          "en": "Create the evaluation brief"
+        },
+        "instruction": {
+          "zh": "选择下一步，带走一份可用于继续调研的文字摘要。",
+          "en": "Choose a next step and take away a text summary for further research."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "继续向厂商核验",
+              "en": "Ask the vendor"
+            },
+            "output": {
+              "zh": "下一步：整理模型与业务约束，向厂商询问可用性、验证方式及支持范围。此体验没有提交咨询或运行测试。",
+              "en": "Next: compile requirements and ask about availability, validation and support. This experience has not submitted an inquiry or run a test."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "先补齐比较条件",
+              "en": "Define the comparison"
+            },
+            "output": {
+              "zh": "下一步：确定基准模型、输入数据和验收条件，再比较不同硬件方案。当前输出是一份评估清单。",
+              "en": "Next: define a reference model, input data and acceptance criteria before comparing hardware. The current output is an evaluation checklist."
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "你已走过需求、材料、方案比较与评估简报四步。Lamb Labs的核心方向是模型与专用芯片的共同设计；本体验不代表已验证的性能或可用性。",
+      "en": "You explored requirements, inputs, alternatives and a brief. Lamb Labs focuses on model–chip co-design; this experience does not establish measured performance or availability."
+    },
+    "sources": [
+      {
+        "url": "http://lamb-labs.com",
+        "label": {
+          "zh": "Lamb Labs官网",
+          "en": "Lamb Labs Website"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/09/13/the-9-buzziest-startups-from-y-combinators-latest-demo-day-according-to-vcs/",
+        "label": {
+          "zh": "TechCrunch YC报道",
+          "en": "TechCrunch YC Coverage"
+        }
+      }
+    ]
+  }
+}

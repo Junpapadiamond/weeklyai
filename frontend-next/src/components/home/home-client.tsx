@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowUpRight, Bookmark, Cpu, Search, Sparkles } from "lucide-react";
 import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import type { Product } from "@/types/api";
+import { supportsLiveDemo } from "@/lib/live-demo";
 import type { SiteLocale } from "@/lib/locale";
 import { parseLastUpdatedLabel, type WeeklyTopSort } from "@/lib/api-client";
 import { SmartLogo } from "@/components/common/smart-logo";
@@ -127,6 +128,7 @@ function HomeProductCard({ product, highlighted = false, rank, favoritable = fal
             <Link href={`/product/${detailId}`} className="link-btn link-btn--card link-btn--card-primary">
               {t("详情", "Details")}
             </Link>
+            {supportsLiveDemo(product) ? <Link href={`/product/${detailId}?demo=1#try-demo`} className="link-btn link-btn--card link-btn--demo">{t("交互试用", "Try demo")}</Link> : null}
             {hasWebsite ? (
               <a
                 className="link-btn link-btn--card"

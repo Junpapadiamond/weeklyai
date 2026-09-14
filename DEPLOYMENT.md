@@ -7,12 +7,27 @@ The production app is `frontend-next/` (Next.js). `backend/` is a separate nativ
 | `API_BASE_URL_SERVER` | Vercel **weeklyai**, Production and Preview | `https://backend-seven-ecru-62.vercel.app/api/v1` |
 | `PERPLEXITY_API_KEY` | Vercel **backend**, Production and Preview | Research chat; the key needs usable Sonar credits |
 | `PERPLEXITY_CHAT_MODEL` | Vercel **backend** | `sonar` by default |
+| `CHAT_API_BASE_URL` | Vercel **backend**, optional | OpenAI-compatible relay base, e.g. `https://zjapi.com/v1`. Unset means direct Perplexity |
+| `CHAT_API_KEY` | Vercel **backend**, optional | Key for that relay; falls back to `PERPLEXITY_API_KEY` |
+| `CHAT_MODEL` | Vercel **backend**, optional | Model name as the relay spells it; falls back to `PERPLEXITY_CHAT_MODEL` |
+| `CHAT_FALLBACK_TO_PERPLEXITY` | Vercel **backend**, optional | `false` disables the automatic fallback to direct Perplexity |
+| `CHAT_TIMEOUT_TOTAL` | Vercel **backend**, optional | Total seconds for all provider attempts in one request; default 50 |
 | `MONGO_URI` | Vercel **backend** and GitHub Actions secrets | Atlas connection string from the current cluster, with credentials URL-encoded |
 | `MONGO_DB_NAME` | Backend environment / Actions repository variable | Defaults to `weeklyai` if the URI has no database |
 | `PERPLEXITY_API_KEY` | GitHub Actions secrets | Search and Sonar access for daily global discovery |
 | `PERPLEXITY_MODEL` | GitHub Actions secrets, optional | Defaults to `sonar` |
 | `ZHIPU_API_KEY` | GitHub Actions secrets, optional | China discovery through GLM; Perplexity is the fallback if absent |
 | `GLM_MODEL` | GitHub Actions secrets, optional | Defaults to `glm-4.7` |
+
+## Research chat provider
+
+`/api/v1/chat` talks to one OpenAI-compatible `POST {base}/chat/completions` endpoint. With no `CHAT_API_BASE_URL` set it calls Perplexity directly, exactly as before. Setting `CHAT_API_BASE_URL` puts a relay in front and keeps direct Perplexity as an automatic fallback, so a relay outage degrades latency rather than taking research chat down.
+
+The call sends `disable_search` only to Perplexity, because it is a Perplexity extension that some relays reject. This costs nothing: the endpoint already grounds every answer in the local catalog and never used provider search. Any competent OpenAI-compatible chat model can serve it.
+
+`CHAT_TIMEOUT_TOTAL` is split evenly across the configured providers, so two providers get half the budget each. Keep it below the `maxDuration` in `backend/vercel.json` or the fallback attempt gets cut off. Verify with `GET /api/v1/chat/status`, which reports the active provider, model and fallback without exposing key material.
+
+Discovery is separate. The default Perplexity route needs a direct `PERPLEXITY_API_KEY`. Set `DISCOVERY_PROVIDER=claude` with `CLAUDE_API_KEY`, `CLAUDE_API_BASE_URL`, and `CLAUDE_MODEL` to use dated public RSS articles with the Claude relay instead. See `crawler/CLAUDE_DISCOVERY.md` for limits and source validation.
 
 Browsers call `/api/v1` on their own origin. API keys belong on the backend or in Actions secrets, never in `NEXT_PUBLIC_*`. The old `NEXT_PUBLIC_API_BASE_URL` remains a server-side compatibility fallback; new setups should use `API_BASE_URL_SERVER`. Redeploy the affected Vercel project after changing its environment.
 

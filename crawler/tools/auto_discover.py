@@ -22,7 +22,7 @@ import argparse
 import re
 import requests
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 from urllib.parse import urlparse
 from typing import Any, Dict, Optional, Tuple, List
 
@@ -1080,21 +1080,26 @@ CANDIDATES_DIR = os.path.join(PROJECT_ROOT, 'data', 'candidates')
 
 def acquire_process_lock(lock_path: str):
     """单实例锁，避免并发运行导致 API 并发超限"""
-    try:
-        import fcntl
-    except ImportError:
-        print("⚠️ fcntl not available; skipping process lock")
-        return None, True
-
     os.makedirs(os.path.dirname(lock_path), exist_ok=True)
-    lock_file = open(lock_path, 'w')
+    lock_file = open(lock_path, 'a+')
     try:
-        fcntl.flock(lock_file, fcntl.LOCK_EX | fcntl.LOCK_NB)
-    except BlockingIOError:
+        if os.name == 'nt':
+            import msvcrt
+            if lock_file.tell() == 0:
+                lock_file.write(' ')
+                lock_file.flush()
+            lock_file.seek(0)
+            msvcrt.locking(lock_file.fileno(), msvcrt.LK_NBLCK, 1)
+        else:
+            import fcntl
+            fcntl.flock(lock_file, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError:
         lock_file.close()
         return None, False
 
-    lock_file.write(f"{os.getpid()}\n{datetime.utcnow().isoformat()}Z\n")
+    lock_file.seek(0)
+    lock_file.truncate()
+    lock_file.write(f"{os.getpid()}\n{datetime.now(timezone.utc).isoformat()}\n")
     lock_file.flush()
     return lock_file, True
 
@@ -1645,7 +1650,7 @@ def validate_product(product: dict) -> tuple[bool, str]:
             return False, f"generic why_matters: contains '{generic}' or too short ({len(why_matters)} chars)"
 
     # 5. 检查 why_matters 是否包含具体数字（融资/ARR/用户数）
-    has_number = bool(re.search(r'[\$¥€]\d+|ARR|\d+[MBK万亿]|\d+%', why_matters))
+    has_number = bool(re.search(r'[\$¥€]\d+|ARR|\d+[MBK万亿]|\d+%|\d+\s*(?:个|种|家|名|分钟|小时)', why_matters))
     has_specific = any(kw in why_matters for kw in [
         '领投', '融资', '估值', '用户', '增长', 'ARR', '首创', '首个',
         '前OpenAI', '前Google', '前Meta', 'YC', 'a16z', 'Sequoia',
@@ -3602,6 +3607,9 @@ def main():
     parser.add_argument('--source', '-s', help='指定渠道 (e.g., 36kr, producthunt)')
     parser.add_argument('--tier', '-t', type=int, choices=[1, 2, 3], help='只运行指定级别的渠道')
     parser.add_argument('--dry-run', action='store_true', help='预览模式，不保存')
+    parser.add_argument('--provider', choices=['auto', 'perplexity', 'claude'],
+                        default=os.getenv('DISCOVERY_PROVIDER', 'auto'),
+                        help='claude uses dated public RSS sources and the Anthropic Messages API')
     parser.add_argument('--require-results', action='store_true', help='Exit nonzero when an all-region run produces no accepted products')
     parser.add_argument('--schedule', action='store_true', help='设置定时任务')
     parser.add_argument('--list-sources', action='store_true', help='列出所有渠道')
@@ -3613,6 +3621,11 @@ def main():
     parser.add_argument('--no-lock', action='store_true', help='禁用单实例锁（不建议）')
 
     args = parser.parse_args()
+    if args.provider not in ('auto', 'perplexity', 'claude'):
+        parser.error('DISCOVERY_PROVIDER must be auto, perplexity or claude')
+    if args.provider == 'perplexity':
+        global USE_GLM_FOR_CN
+        USE_GLM_FOR_CN = False
 
     # 测试功能
     if args.test_perplexity:
@@ -3675,6 +3688,21 @@ def main():
             return
 
     # 发现功能
+    if args.provider == 'claude':
+        if args.source or args.tier:
+            parser.error('Claude RSS discovery supports --region and --type, not --source/--tier')
+        from tools.claude_discover import run_discovery
+        from utils.claude_client import ClaudeError
+        try:
+            report = run_discovery(sys.modules[__name__], region=args.region or 'all',
+                                   product_type=args.type, dry_run=args.dry_run)
+        except ClaudeError as exc:
+            print(f'ERROR: {exc}')
+            sys.exit(1)
+        print(f"Claude discovery complete: {len(report['accepted'])} accepted, {len(report['saved'])} saved.")
+        # A successful scan can legitimately contain only already-known products.
+        # --require-results still fails for no readable source articles or API failures.
+        return
     if args.region:
         # 新方式：按地区搜索
         product_type = getattr(args, 'type', 'mixed')

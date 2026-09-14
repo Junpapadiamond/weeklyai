@@ -1,0 +1,185 @@
+{
+  "cache_key": "cc76cd5cb3935b1394d80d88-af4b2d833c4ea18f5f34e0bb",
+  "product_key": "cc76cd5cb3935b1394d80d88",
+  "fingerprint": "af4b2d833c4ea18f5f34e0bb",
+  "product_id": "36",
+  "product_name": "Exa",
+  "origin": "curated",
+  "generated_at": "2026-09-14T07:43:42.880521+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "把一个问题，变成有依据的研究简报。",
+      "en": "Turn a question into an evidence-led brief."
+    },
+    "scenario": {
+      "zh": "你正在寻找一家适合小团队的知识库工具。走一遍搜索、提取内容、筛选证据和交付简报的流程。公司与结果均为虚构示例。",
+      "en": "Find a knowledge tool for a small team. Search, extract content, review evidence and deliver a brief. Companies and results are fictional."
+    },
+    "steps": [
+      {
+        "id": "step-1",
+        "widget": "choice",
+        "title": {
+          "zh": "选择搜索范围",
+          "en": "Choose a search scope"
+        },
+        "instruction": {
+          "zh": "搜索意图已经准备好了。你想先查哪一类资料？",
+          "en": "The search intent is ready. Which type of evidence matters first?"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "找产品：小团队的 AI 知识库",
+              "en": "Products: knowledge tools for small teams"
+            },
+            "output": {
+              "zh": "搜索条件已建立\n查询：小团队 AI 知识库\n资料类型：公司\n下一步：检查三条示例候选资料。",
+              "en": "Query prepared: AI knowledge tools for small teams.\nCategory: companies.\nNext: inspect three sample candidates."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "找文章：知识库选型经验",
+              "en": "Articles: choosing a knowledge tool"
+            },
+            "output": {
+              "zh": "搜索条件已建立\n查询：知识库选型与接入经验\n资料类型：网页文章\n下一步：优先查看包含实施细节的内容。",
+              "en": "Query prepared: knowledge-tool selection and integration.\nCategory: web articles.\nNext: prioritize implementation details."
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "step-2",
+        "widget": "choice",
+        "title": {
+          "zh": "查看搜索结果",
+          "en": "Inspect search results"
+        },
+        "instruction": {
+          "zh": "在示例结果中选择一个候选，查看正文提取会给你什么。",
+          "en": "Choose a sample candidate to see what content extraction provides."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "示例 A · Atlas Notes",
+              "en": "Example A · Atlas Notes"
+            },
+            "output": {
+              "zh": "标题：Atlas Notes 团队知识库\n正文摘要：支持将文档整理为可检索的团队资料。\n高亮片段：「可以连接内部文档并保留原文出处。」\n待核实：接入权限与更新频率。",
+              "en": "Atlas Notes team knowledge base\nExtract: organizes documents into searchable team resources.\nHighlight: “Connect internal documents and retain original references.”\nVerify: permissions and refresh frequency."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "示例 B · Cedar Docs",
+              "en": "Example B · Cedar Docs"
+            },
+            "output": {
+              "zh": "标题：Cedar Docs 使用体验\n正文摘要：作者描述了导入文件、问答和人工核查的步骤。\n高亮片段：「回答旁边可以查看引用段落。」\n待核实：是否支持你的文件格式。",
+              "en": "Cedar Docs experience report\nExtract: import files, ask questions, review answers.\nHighlight: “Inspect a cited passage next to the answer.”\nVerify: support for your file formats."
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "step-3",
+        "widget": "review",
+        "title": {
+          "zh": "筛选并核对证据",
+          "en": "Review the evidence"
+        },
+        "instruction": {
+          "zh": "搜索结果只是起点。决定哪些资料值得进入简报。",
+          "en": "A search result is a starting point. Decide what belongs in the brief."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "保留有正文依据的资料",
+              "en": "Keep evidence with source content"
+            },
+            "output": {
+              "zh": "保留：包含产品说明和引用段落的资料。\n标记：接入条件仍需核实。\n排除：只有推广标题、没有正文证据的条目。",
+              "en": "Keep entries with product descriptions and cited passages.\nFlag integration requirements for verification.\nExclude promotion-only titles without supporting content."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "要求补充实施细节",
+              "en": "Request implementation details"
+            },
+            "output": {
+              "zh": "新增研究问题：支持哪些连接器？权限如何继承？\n暂缓判断：没有足够信息的候选。\n下一轮搜索将围绕实施文档展开。",
+              "en": "Add questions: which connectors are supported, and how are permissions inherited?\nDefer judgment on incomplete candidates.\nFocus the next search on implementation documents."
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "step-4",
+        "widget": "choice",
+        "title": {
+          "zh": "整理研究交付物",
+          "en": "Package the research"
+        },
+        "instruction": {
+          "zh": "选一种交付形式，完成这次体验。",
+          "en": "Choose an output format to finish the workflow."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "一页简报",
+              "en": "One-page brief"
+            },
+            "output": {
+              "zh": "研究目标 → 候选概览 → 引用证据 → 待核实事项。\n你可以在完成页下载本次选择与示例结果，作为研究框架。",
+              "en": "Research goal → candidates → cited evidence → open questions.\nDownload your choices and example outcomes on the final page."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "结构化候选清单",
+              "en": "Structured candidate list"
+            },
+            "output": {
+              "zh": "清单字段：候选名称、资料类型、正文摘要、引用片段、待核实事项。\n适合继续筛选与比较，不自动替你作出购买决定。",
+              "en": "Fields: candidate, source type, extract, highlight, open question.\nUse the list for further review and comparison."
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Exa 的核心体验是找到相关网页，再提取能用于后续研究的内容。这里演示的是工作流程，没有执行真实搜索。",
+      "en": "Exa helps find relevant pages and extract content for research. This illustrates the workflow without running a live search."
+    },
+    "sources": [
+      {
+        "url": "https://exa.ai/docs/reference/search",
+        "label": {
+          "zh": "官方产品资料",
+          "en": "Official product documentation"
+        }
+      }
+    ]
+  }
+}

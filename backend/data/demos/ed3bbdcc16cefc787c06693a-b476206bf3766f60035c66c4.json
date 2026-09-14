@@ -1,0 +1,199 @@
+{
+  "cache_key": "ed3bbdcc16cefc787c06693a-b476206bf3766f60035c66c4",
+  "product_key": "ed3bbdcc16cefc787c06693a",
+  "fingerprint": "b476206bf3766f60035c66c4",
+  "product_id": "131",
+  "product_name": "Helix Digital Infrastructure",
+  "origin": "curated",
+  "generated_at": "2026-09-14T07:43:42.882927+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "concept",
+    "headline": {
+      "zh": "一座 AI 数据中心，需要的不只是服务器。",
+      "en": "An AI data center needs more than servers."
+    },
+    "scenario": {
+      "zh": "作为项目规划者，为一个虚构的 AI 园区协调算力、电力和连接资源。所有规模数字只用于说明关系。",
+      "en": "Plan a fictional AI campus by coordinating compute, power and connectivity. All numbers are illustrative."
+    },
+    "steps": [
+      {
+        "id": "step-1",
+        "widget": "choice",
+        "title": {
+          "zh": "选择园区任务",
+          "en": "Choose the campus purpose"
+        },
+        "instruction": {
+          "zh": "先确定负载，资源规划才有方向。",
+          "en": "Start with the workload to frame the resource plan."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "模型训练园区",
+              "en": "Model training campus"
+            },
+            "output": {
+              "zh": "规划重点：集中算力、电力接入、散热和网络连接。\n工作包：计算设施、电力供应、连接网络。",
+              "en": "Focus: concentrated compute, power access, cooling and connectivity.\nWork packages: compute facilities, power supply, network."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "推理服务园区",
+              "en": "Inference service campus"
+            },
+            "output": {
+              "zh": "规划重点：服务连接、容量扩展和供电协调。\n工作包：服务节点、连接路径、分期资源准备。",
+              "en": "Focus: service connectivity, capacity expansion and power coordination.\nWork packages: service nodes, connectivity, staged resources."
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "step-2",
+        "widget": "dial",
+        "title": {
+          "zh": "调整示例规模",
+          "en": "Adjust the example scale"
+        },
+        "instruction": {
+          "zh": "拖动规划单元，看看配套资源如何一起变化。这里没有真实功耗测算。",
+          "en": "Move the planning units to see linked resources change. This is not a real power estimate."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "先做一期",
+              "en": "Plan a first phase"
+            },
+            "output": {
+              "zh": "优先核对一期资源是否齐备，再决定后续扩展。示例中每个规划单元对应两项配套检查。",
+              "en": "Check whether first-phase resources are available before expanding. Each sample planning unit adds two coordination checks."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "分两期准备",
+              "en": "Prepare two phases"
+            },
+            "output": {
+              "zh": "把后续资源需求提前列入协调清单。示例计算展示的是资源依赖，不代表建设报价。",
+              "en": "Include future requirements in the coordination list. The calculation illustrates dependencies, not a construction quote."
+            }
+          }
+        ],
+        "example_data": true,
+        "dial": {
+          "min": 1,
+          "max": 12,
+          "initial": 4,
+          "factor": 2,
+          "unit": {
+            "zh": "规划单元",
+            "en": "Planning units"
+          },
+          "result_label": {
+            "zh": "示例配套检查项",
+            "en": "Sample coordination checks"
+          }
+        }
+      },
+      {
+        "id": "step-3",
+        "widget": "compare",
+        "title": {
+          "zh": "比较资源准备状态",
+          "en": "Compare resource readiness"
+        },
+        "instruction": {
+          "zh": "如果只能先解决一个问题，你会优先推进哪一项？",
+          "en": "Which dependency would you resolve first?"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "电力接入待确认",
+              "en": "Power access unconfirmed"
+            },
+            "output": {
+              "zh": "依赖路径：电力条件 → 容量规划 → 设施建设安排。\n下一步：确认供电和接入条件，再推进容量承诺。",
+              "en": "Dependency: power access → capacity plan → construction schedule.\nNext: confirm supply and access before committing capacity."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "网络连接待确认",
+              "en": "Connectivity unconfirmed"
+            },
+            "output": {
+              "zh": "依赖路径：连接条件 → 园区互联 → 业务承载安排。\n下一步：补齐连接规划，再安排业务接入。",
+              "en": "Dependency: connectivity → campus interconnection → service placement.\nNext: complete the network plan before scheduling service access."
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "step-4",
+        "widget": "choice",
+        "title": {
+          "zh": "形成协同计划",
+          "en": "Create a coordination plan"
+        },
+        "instruction": {
+          "zh": "把选择转化为一个可交接的规划清单。",
+          "en": "Turn your choices into a handoff checklist."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "导出资源依赖清单",
+              "en": "Export resource dependencies"
+            },
+            "output": {
+              "zh": "交付：计算设施、电力、连接三个工作包，各自的前置条件和待确认项。\n完成页可下载你本次的决策路径。",
+              "en": "Deliver three work packages: compute, power and connectivity, with prerequisites and open items.\nDownload your decision path on the final page."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "导出阶段推进清单",
+              "en": "Export a phased checklist"
+            },
+            "output": {
+              "zh": "阶段一：核对场地与关键资源。\n阶段二：协调建设与接入。\n阶段三：复核承载条件。\n这是一份概念示例，实际项目需要专业工程规划。",
+              "en": "Phase 1: check site and critical resources.\nPhase 2: coordinate construction and access.\nPhase 3: review readiness.\nReal projects require professional engineering plans."
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Helix 协调数字基础设施中的计算设施、电力和连接。概念体验帮助理解这种整合的价值，并非可以直接操作的 Helix 软件。",
+      "en": "Helix coordinates compute infrastructure, power and connectivity. This concept explorer explains that coordination; it is not Helix software."
+    },
+    "sources": [
+      {
+        "url": "https://www.helixdi.com/about/",
+        "label": {
+          "zh": "官方产品资料",
+          "en": "Official product documentation"
+        }
+      }
+    ]
+  }
+}

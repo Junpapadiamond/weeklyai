@@ -1,0 +1,185 @@
+{
+  "cache_key": "5882ebc2c50b876ccf06671a-46f1d0a87099b95588ff296d",
+  "product_key": "5882ebc2c50b876ccf06671a",
+  "fingerprint": "46f1d0a87099b95588ff296d",
+  "product_id": "845",
+  "product_name": "Black Forest Labs",
+  "origin": "pregenerated",
+  "generated_at": "2026-09-14T07:47:08.869110+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "Flux图像生成工作流",
+      "en": "Flux Image Generation Workflow"
+    },
+    "scenario": {
+      "zh": "用一个营销配图场景，体验风格选择、主题设定、方案检查与交接。这里只整理创作简报，不生成或评价真实图片。",
+      "en": "Explore style, subject, review and handoff for a marketing visual. This prepares a creative brief; it does not generate or rate real images."
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择图像风格",
+          "en": "Choose Image Style"
+        },
+        "instruction": {
+          "zh": "选择生成图像的视觉风格方向",
+          "en": "Select visual style direction for generation"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "真实摄影风格",
+              "en": "Photorealistic Style"
+            },
+            "output": {
+              "zh": "已配置：真实摄影风格，适合产品展示和人物肖像，细节丰富",
+              "en": "Configured: Photorealistic style, ideal for product displays and portraits with rich detail"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "艺术插画风格",
+              "en": "Artistic Illustration"
+            },
+            "output": {
+              "zh": "已配置：艺术插画风格，适合创意海报和品牌视觉，风格化表现",
+              "en": "Configured: Artistic illustration, ideal for creative posters and brand visuals with stylized expression"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "定义主题内容",
+          "en": "Define Theme Content"
+        },
+        "instruction": {
+          "zh": "选择要生成的图像主题类型",
+          "en": "Select the image theme type to generate"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "科技产品场景",
+              "en": "Tech Product Scene"
+            },
+            "output": {
+              "zh": "主题设定：未来感工作空间中的智能设备，金属质感，蓝色光效",
+              "en": "Theme set: Smart devices in futuristic workspace with metallic textures and blue lighting"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "自然风光场景",
+              "en": "Nature Landscape Scene"
+            },
+            "output": {
+              "zh": "主题设定：黄昏时分的山谷，暖色调天空，前景有野花，宁静氛围",
+              "en": "Theme set: Valley at dusk with warm-toned sky, wildflowers in foreground, serene atmosphere"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspect",
+        "widget": "compare",
+        "title": {
+          "zh": "比较交付方案",
+          "en": "Compare delivery plans"
+        },
+        "instruction": {
+          "zh": "根据使用场景选择画面要求。最终导出的是本次体验的文字简报。",
+          "en": "Choose visual requirements for the intended use. The final download is a text brief."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "社交媒体配图",
+              "en": "Social media visual"
+            },
+            "output": {
+              "zh": "示例方案：主体明确、缩小后仍可辨识、为文案留出空间。下一步在真实图像工具里生成并检查效果。",
+              "en": "Sample plan: a clear subject, legible at small sizes, with room for copy. Generate and inspect the actual visual in a real image tool."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "宽幅展示配图",
+              "en": "Wide presentation visual"
+            },
+            "output": {
+              "zh": "示例方案：横向构图、画面边缘留白、检查裁切对主体的影响。实际尺寸和可用格式需要到官方工具确认。",
+              "en": "Sample plan: a wide composition, edge space and a crop check. Confirm actual sizes and formats in the official tool."
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "确认输出用途",
+          "en": "Confirm Output Usage"
+        },
+        "instruction": {
+          "zh": "选择下一步创作路线，完成页可下载文字简报。",
+          "en": "Choose the next creative step. Download the text brief on the final page."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "导出用于营销素材",
+              "en": "Export for Marketing Assets"
+            },
+            "output": {
+              "zh": "示例交接包：视觉风格、主题内容、交付用途、待检查事项。完成页的下载按钮会保存这份文字体验记录。",
+              "en": "Sample handoff: visual style, subject, intended use and review checklist. The final-page download saves this text experience record."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "迭代优化再生成",
+              "en": "Iterate and Regenerate"
+            },
+            "output": {
+              "zh": "示例迭代计划：进一步明确主体、光线和背景要求；在真实产品里重新生成，再检查是否满足简报。",
+              "en": "Sample iteration plan: refine subject, lighting and background; regenerate in the real product and check against the brief."
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "图像生成的工作流程包括明确创作意图、准备要求、检查结果和继续迭代。当前体验展示这条决策路径，不代表 FLUX 的真实输出质量。",
+      "en": "Image workflows involve creative intent, requirements, review and iteration. This experience illustrates that decision path, not actual FLUX output quality."
+    },
+    "sources": [
+      {
+        "url": "https://bfl.ai/",
+        "label": {
+          "zh": "Black Forest Labs官网",
+          "en": "Black Forest Labs Official Site"
+        }
+      }
+    ]
+  }
+}

@@ -100,6 +100,14 @@ class TestFixLogosHelpers(unittest.TestCase):
             )
         )
 
+    @patch("tools.fix_logos.get_logo_url")
+    def test_only_missing_preserves_existing_fields_without_network(self, resolve) -> None:
+        from tools.fix_logos import process_product
+        item = {"name": "Company", "website": "https://company.test", "logo_url": "/logos/company.svg", "logo_source": "curated"}
+        original = item.copy()
+        self.assertEqual(process_product(item, only_missing=True), original)
+        resolve.assert_not_called()
+
     def test_should_fix_product_default_still_flags_low_confidence_logo(self) -> None:
         from tools.fix_logos import _should_fix_product
 

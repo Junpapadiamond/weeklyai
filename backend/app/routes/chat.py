@@ -9,12 +9,9 @@ Routes:
 from __future__ import annotations
 
 from collections import defaultdict
-import os
 import time
 
 from flask import Blueprint, Response, jsonify, request
-
-from app.services.env_utils import sanitize_env_value
 
 chat_bp = Blueprint("chat", __name__)
 
@@ -48,14 +45,16 @@ def _wants_sse(body: dict) -> bool:
 
 @chat_bp.route("/status", methods=["GET"])
 def chat_status():
-    key = sanitize_env_value(os.environ.get("PERPLEXITY_API_KEY", ""))
-    model = sanitize_env_value(os.environ.get("PERPLEXITY_CHAT_MODEL", "sonar"), "sonar") or "sonar"
+    from app.services.chat_service import active_provider
+
+    config = active_provider()
     return jsonify(
         {
             "success": True,
-            "has_api_key": bool(key and len(key) > 5),
-            "provider": "perplexity",
-            "model": model,
+            "has_api_key": bool(config["provider"]),
+            "provider": config["provider"] or "none",
+            "model": config["model"],
+            "fallback_provider": config["fallback"],
             "rate_limit_per_minute": CHAT_RATE_LIMIT,
         }
     )

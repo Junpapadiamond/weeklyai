@@ -1,0 +1,201 @@
+{
+  "version": 1,
+  "product_slug": "rogo",
+  "product_name": "Rogo",
+  "tier": "simulation",
+  "title": {
+    "zh": "投行分析师的那份初稿",
+    "en": "The analyst's first draft"
+  },
+  "premise": {
+    "zh": "Rogo 面向金融机构做分析 agent：处理研究流程里重复的取数与初稿环节。",
+    "en": "Rogo builds analysis agents for financial institutions, aimed at the repetitive retrieval and first-draft parts of research work."
+  },
+  "steps": [
+    {
+      "id": "job",
+      "label": {
+        "zh": "要做的事",
+        "en": "The job"
+      },
+      "narration": {
+        "zh": "这里的工作不是「回答问题」，而是把一份初稿做到可以被人接手修改。",
+        "en": "The job is not answering a question. It is getting a draft to the point where a person can take it over."
+      },
+      "widget": {
+        "type": "pipeline",
+        "stages": [
+          {
+            "name": {
+              "zh": "取数",
+              "en": "Gather"
+            },
+            "input": {
+              "zh": "一个研究问题，加上该用户有权限的文档范围",
+              "en": "a research question and a permitted document set"
+            },
+            "output": {
+              "zh": "相关的财报、材料和电话会记录，范围限定在该用户可见的部分",
+              "en": "the relevant filings, decks and transcripts, scoped to what the user may see"
+            }
+          },
+          {
+            "name": {
+              "zh": "抽取",
+              "en": "Extract"
+            },
+            "input": {
+              "zh": "这些文档",
+              "en": "those documents"
+            },
+            "output": {
+              "zh": "与问题相关的具体数字和表述",
+              "en": "the specific figures and statements that bear on the question"
+            }
+          },
+          {
+            "name": {
+              "zh": "成稿",
+              "en": "Draft"
+            },
+            "input": {
+              "zh": "抽取出来的材料",
+              "en": "extracted material"
+            },
+            "output": {
+              "zh": "结构化初稿，每条结论都挂着它的出处",
+              "en": "a structured draft with each claim attached to its source"
+            }
+          },
+          {
+            "name": {
+              "zh": "人工接手",
+              "en": "Handoff"
+            },
+            "input": {
+              "zh": "这份初稿",
+              "en": "the draft"
+            },
+            "output": {
+              "zh": "由分析师修改并署名——agent 不负责发布",
+              "en": "an analyst edits and signs off — the agent does not publish"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "who",
+      "label": {
+        "zh": "场景",
+        "en": "Where it lands"
+      },
+      "narration": {
+        "zh": "选一个场景，看这套流程替代掉的具体是哪一段。",
+        "en": "Pick a situation to see which stretch of work this actually replaces."
+      },
+      "widget": {
+        "type": "scenario_branch",
+        "branches": [
+          {
+            "persona": {
+              "zh": "初级分析师",
+              "en": "Junior analyst"
+            },
+            "situation": {
+              "zh": "周一早上要交一份行业对比的初稿。",
+              "en": "Owes a first-pass sector comparison on Monday morning."
+            },
+            "outcome": {
+              "zh": "初稿变成审阅对象，而不是从零开始的写作任务。",
+              "en": "The draft becomes something to review rather than something to start from nothing."
+            }
+          },
+          {
+            "persona": {
+              "zh": "合规负责人",
+              "en": "Compliance lead"
+            },
+            "situation": {
+              "zh": "需要确认模型只接触了该用户有权限的材料。",
+              "en": "Needs assurance the model only touched material this user is cleared for."
+            },
+            "outcome": {
+              "zh": "权限在取数阶段生效，而不是在输出阶段过滤——这决定了这类产品能不能进机构。",
+              "en": "Permissions apply at retrieval, not as an output filter — which is what decides whether this can enter an institution at all."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "shape",
+      "label": {
+        "zh": "对话形状",
+        "en": "Shape of the exchange"
+      },
+      "narration": {
+        "zh": "示意对话，说明产品的工作方式，不代表真实界面。",
+        "en": "An illustrative exchange showing how the work flows. Not a real interface."
+      },
+      "widget": {
+        "type": "transcript",
+        "turns": [
+          {
+            "speaker": "user",
+            "text": {
+              "zh": "对比这四家公司在最近两次业绩电话会里怎么描述价格压力。",
+              "en": "Compare how these four companies described pricing pressure in their last two earnings calls."
+            }
+          },
+          {
+            "speaker": "product",
+            "text": {
+              "zh": "已根据八份记录整理出初稿，每处描述都链接到它来自的原文段落。",
+              "en": "Draft assembled from the eight transcripts, with each characterisation linked to the passage it came from."
+            }
+          },
+          {
+            "speaker": "user",
+            "text": {
+              "zh": "其中一家不在我的权限范围内。",
+              "en": "One of those wasn't in my entitlements."
+            }
+          },
+          {
+            "speaker": "product",
+            "text": {
+              "zh": "那家公司在取数阶段就被排除了，初稿会写明这一点，而不是默默只讲三家。",
+              "en": "That company was excluded at retrieval, and the draft says so rather than quietly covering three."
+            }
+          },
+          {
+            "speaker": "user",
+            "text": {
+              "zh": "关于折扣的那个说法出自哪里？",
+              "en": "Where does the claim about discounting come from?"
+            }
+          },
+          {
+            "speaker": "product",
+            "text": {
+              "zh": "它对应到具体某一段原文。如果那段原文支撑不了这个说法，该删的就是这个说法——所以初稿给的是链接，不是断言。",
+              "en": "It resolves to a specific passage. If the passage does not support it, the claim is the thing to cut — which is why the draft carries links rather than assertions."
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "claim": "Rogo raised a $160M Series D; adoption reported among large financial institutions.",
+      "source_url": "https://www.thisweekinfintech.com/p/rogo-s-160m-bet-on-agentic-ai-twif"
+    }
+  ],
+  "confidence": "illustrative",
+  "vendor_status": "none",
+  "generated_at": "",
+  "model": "",
+  "reviewed_by": null
+}
