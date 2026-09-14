@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Download, Search, Trash2, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { FavoriteButton } from "@/components/favorites/favorite-button";
+import { SmartLogo } from "@/components/common/smart-logo";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import { handleExternalAnchorClick } from "@/lib/external-navigation";
 import {
@@ -25,6 +26,7 @@ import {
   isValidWebsite,
   normalizeDirectionToken,
   normalizeWebsite,
+  resolveProductLogoSources,
 } from "@/lib/product-utils";
 
 const BLOG_SOURCE_LABELS: Record<string, string> = {
@@ -335,6 +337,7 @@ export function FavoritesPanel() {
                 return (
                   <article className="favorites-panel__item favorites-panel__item--compact" key={`product-${entry.key}`}>
                     <div className="favorites-panel__item-head">
+                      <SmartLogo className="favorites-panel__logo" name={product.name} {...resolveProductLogoSources(product)} website={product.website} sourceUrl={product.source_url} trustPrimaryLogo size={36} />
                       <div>
                         <h3>{product.name}</h3>
                         <p className="favorites-panel__item-meta">

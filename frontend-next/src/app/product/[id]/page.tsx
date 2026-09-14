@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { WebsiteScreenshot } from "@/components/common/website-screenshot";
+import { WebsitePreview } from "@/components/common/website-preview";
 import { ProductCard } from "@/components/product/product-card";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { FavoriteButton } from "@/components/favorites/favorite-button";
@@ -38,12 +38,6 @@ function formatScore(score: number, locale: SiteLocale): string {
     return Number.isInteger(score) ? `${score}/5` : `${score.toFixed(1)}/5`;
   }
   return Number.isInteger(score) ? `${score}分` : `${score.toFixed(1)}分`;
-}
-
-function scoreBadgeClass(score: number): string {
-  if (score >= 5) return "score-badge--5";
-  if (score >= 4) return "score-badge--4";
-  return "score-badge--3";
 }
 
 function formatDate(value?: string): string {
@@ -85,6 +79,9 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
 
   return (
     <section className="section product-detail-page">
+      <nav className="research-breadcrumb" aria-label={t("页面位置", "Breadcrumb")}>
+        <Link href="/">{t("产品观察", "Product research")}</Link><span aria-hidden="true">/</span><span>{product.name}</span>
+      </nav>
       <article className="detail-card detail-card--rich">
         <header className="detail-hero">
           <SmartLogo
@@ -96,17 +93,13 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
             website={product.website}
             sourceUrl={product.source_url}
             trustPrimaryLogo
-            size={128}
+            size={80}
           />
 
           <div className="detail-hero__content">
             <div className="detail-hero__head">
               <h1 className="detail-hero__title">{product.name}</h1>
-              {score >= 3 ? (
-                <span className={`score-badge ${scoreBadgeClass(score)}`}>{scoreLabel}</span>
-              ) : (
-                <span className="product-badge">{scoreLabel}</span>
-              )}
+              <span className="detail-hero__score">{t("发现评分", "Discovery score")} {scoreLabel}</span>
             </div>
             <p className="detail-hero__meta">
               {categoryLine}
@@ -149,21 +142,8 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
 
 
         <section className="detail-block">
-          <h2 className="detail-block__title">{t("网站预览", "Website preview")}</h2>
-          <WebsiteScreenshot
-            className="detail-site-shot"
-            website={product.website}
-            name={product.name}
-            logoUrl={resolvedLogo.logoUrl}
-            secondaryLogoUrl={resolvedLogo.secondaryLogoUrl}
-            sourceUrl={product.source_url}
-            trustPrimaryLogo
-            category={product.category}
-            categories={product.categories}
-            isHardware={product.is_hardware}
-            alt={`${product.name} ${t("官网截图", "website screenshot")}`}
-            logoSize={84}
-          />
+          <h2 className="detail-block__title">{t("产品官网", "Product website")}</h2>
+          <WebsitePreview product={product} />
         </section>
 
         <footer className="detail-actions">
@@ -193,10 +173,11 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
       <section className="detail-related">
         <div className="section-header">
           <h2 className="section-title">{t("继续研究", "Continue exploring")}</h2>
+          <p className="section-desc">{t("看看相关产品的用途与值得关注的地方。", "Explore what related products do and why they are worth a closer look.")}</p>
         </div>
 
         {related.length ? (
-          <div className="detail-related__scroll">
+          <div className="detail-related__grid">
             {related.map((item) => (
               <ProductCard key={item._id || item.name} product={item} compact />
             ))}

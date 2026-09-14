@@ -1,36 +1,21 @@
 "use client";
 
 import Link from "next/link";
+import { ProductCard } from "@/components/product/product-card";
 import { ArrowUpRight, Bookmark, Cpu, Search, Sparkles } from "lucide-react";
 import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import type { Product } from "@/types/api";
-import { supportsLiveDemo } from "@/lib/live-demo";
-import type { SiteLocale } from "@/lib/locale";
 import { parseLastUpdatedLabel, type WeeklyTopSort } from "@/lib/api-client";
-import { SmartLogo } from "@/components/common/smart-logo";
-import { FavoriteButton } from "@/components/favorites/favorite-button";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import { countFavorites, openFavoritesPanel, subscribeFavorites } from "@/lib/favorites";
-import { handleExternalAnchorClick } from "@/lib/external-navigation";
 import {
-  cleanDescription,
   collectDirectionOptions,
   filterDirectionOptions,
   filterProducts,
-  formatCategories,
   getDirectionLabel,
-  getLocalizedCountryName,
-  getLocalizedProductDescription,
-  getLocalizedProductWhyMatters,
-  getProductWebsiteSearchUrl,
   getProductDirections,
-  getProductScore,
   isHardware,
-  isValidWebsite,
-  normalizeWebsite,
   productKey,
-  resolveProductLogoSources,
-  resolveProductCountry,
   sortProducts,
 } from "@/lib/product-utils";
 
@@ -46,117 +31,6 @@ type HomeClientProps = {
 };
 
 type ContentTypeFilter = "all" | "hardware" | "software";
-
-function formatScore(score: number, locale: SiteLocale): string {
-  if (score <= 0) return locale === "en-US" ? "Unrated" : "待评";
-  if (locale === "en-US") {
-    return Number.isInteger(score) ? `${score}/5` : `${score.toFixed(1)}/5`;
-  }
-  return Number.isInteger(score) ? `${score}分` : `${score.toFixed(1)}分`;
-}
-
-type HomeProductCardProps = {
-  product: Product;
-  highlighted?: boolean;
-  rank: number;
-  favoritable?: boolean;
-};
-
-function HomeProductCard({ product, highlighted = false, rank, favoritable = false }: HomeProductCardProps) {
-  const { locale, t } = useSiteLocale();
-  const detailId = encodeURIComponent(product._id || product.name);
-  const score = getProductScore(product);
-  const scoreLabel = formatScore(score, locale);
-  const website = normalizeWebsite(product.website);
-  const hasWebsite = isValidWebsite(website) && !product.needs_verification;
-  const country = resolveProductCountry(product);
-  const regionLabel = getLocalizedCountryName(country, locale);
-  const recordedDate = (product.discovered_at || product.first_seen || "").slice(0, 10);
-  const summary =
-    cleanDescription(getLocalizedProductWhyMatters(product, locale), locale)
-    || cleanDescription(getLocalizedProductDescription(product, locale), locale)
-    || t("产品摘要待补充", "Product summary pending");
-  const websiteSearchUrl = getProductWebsiteSearchUrl(product.name, locale);
-  const resolvedLogo = resolveProductLogoSources(product);
-
-  const metadata = [
-    regionLabel,
-    `${t("发现评分", "Discovery score")} ${scoreLabel}`,
-    recordedDate || t("日期未记录", "Date not recorded"),
-  ].join(" · ");
-
-  return (
-    <article
-      className={`darkhorse-spotlight-card ${highlighted ? "darkhorse-spotlight-card--leading" : ""} ${favoritable ? "darkhorse-spotlight-card--pick" : ""}`}
-    >
-      <div className="darkhorse-spotlight__body">
-        <div className="darkhorse-spotlight__rank-wrap" aria-label={t("排名", "Rank")}>
-          <span className="darkhorse-spotlight__rank">{String(rank).padStart(2, "0")}</span>
-        </div>
-
-        <SmartLogo
-          key={`${product._id || product.name}-${resolvedLogo.logoUrl}-${resolvedLogo.secondaryLogoUrl}-${product.website || ""}-${product.source_url || ""}`}
-          className="darkhorse-spotlight__logo"
-          name={product.name}
-          logoUrl={resolvedLogo.logoUrl}
-          secondaryLogoUrl={resolvedLogo.secondaryLogoUrl}
-          website={product.website}
-          sourceUrl={product.source_url}
-          trustPrimaryLogo
-          size={64}
-          loading={rank <= 3 ? "eager" : "lazy"}
-        />
-
-        <div className="darkhorse-spotlight__content">
-          <header className="darkhorse-spotlight__header">
-            <div className="darkhorse-spotlight__header-main">
-              <h3 className="darkhorse-spotlight__title"><Link href={`/product/${detailId}`}>{product.name}</Link></h3>
-              <p className="darkhorse-spotlight__categories">{formatCategories(product, locale)}</p>
-            </div>
-            {favoritable ? <FavoriteButton product={product} className="darkhorse-spotlight__favorite" /> : null}
-          </header>
-
-          <p className="darkhorse-spotlight__meta-line" title={regionLabel}>
-            {metadata}
-          </p>
-
-          <p className="briefing-description">{cleanDescription(getLocalizedProductDescription(product, locale), locale)}</p>
-          <p className="darkhorse-spotlight__why"><span className="briefing-why-label">{t("值得注意", "WHY LOOK")} / </span>{summary}</p>
-
-          <footer className="darkhorse-spotlight__footer">
-            {product.source_url && isValidWebsite(product.source_url) ? <a className="briefing-source" href={product.source_url} target="_blank" rel="noopener noreferrer">{t("阅读来源", "Read source")} <ArrowUpRight size={13} /></a> : null}
-            <Link href={`/product/${detailId}`} className="link-btn link-btn--card link-btn--card-primary">
-              {t("详情", "Details")}
-            </Link>
-            {supportsLiveDemo(product) ? <Link href={`/product/${detailId}?demo=1#try-demo`} className="link-btn link-btn--card link-btn--demo">{t("交互试用", "Try demo")}</Link> : null}
-            {hasWebsite ? (
-              <a
-                className="link-btn link-btn--card"
-                href={website}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(event) => handleExternalAnchorClick(event, website)}
-              >
-                {t("官网", "Website")}
-              </a>
-            ) : (
-              <a
-                className="pending-tag pending-tag--action"
-                href={websiteSearchUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(event) => handleExternalAnchorClick(event, websiteSearchUrl)}
-                title={t("点击跳转 Google 搜索官网", "Open Google search for the official website")}
-              >
-                {t("官网待验证", "Website pending verification")}
-              </a>
-            )}
-          </footer>
-        </div>
-      </div>
-    </article>
-  );
-}
 
 export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeClientProps) {
   const { locale, t } = useSiteLocale();
@@ -365,7 +239,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
         {visibleDarkHorses.length ? (
           <div className="darkhorse-spotlight-grid">
             {visibleDarkHorses.map((product, index) => (
-              <HomeProductCard
+              <ProductCard
                 key={product._id || product.name}
                 product={product}
                 highlighted={index === 0}
@@ -473,7 +347,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
         {visibleProducts.length ? (
           <div className="darkhorse-spotlight-grid picks-grid">
             {visibleProducts.map((product, index) => (
-              <HomeProductCard
+              <ProductCard
                 key={product._id || product.name}
                 product={product}
                 rank={index + 1}

@@ -112,7 +112,9 @@ export function SearchClient({ initialQuery = "" }: SearchClientProps) {
       </div>
 
       <form className="search-panel" onSubmit={onSubmit}>
+        <label className="search-panel__label" htmlFor="product-search-query">{t("搜索关键词", "Search keywords")}</label>
         <input
+          id="product-search-query"
           type="search"
           value={q}
           onChange={(event) => setQ(event.target.value)}

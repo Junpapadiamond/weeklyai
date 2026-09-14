@@ -146,15 +146,15 @@ function BlogCard({ item }: { item: BlogPost }) {
     : t("时间待补充", "Timestamp unavailable");
 
   return (
-    <article className="product-card product-card--signal product-card--watch product-card--compact">
-      <div className="product-card__content blog-card__content">
-        <p className="product-card__microline">{`${marketLabel} · ${sourceLabel} · ${freshness}`}</p>
+    <article className="research-news">
+      <div className="research-news__content">
+        <p className="research-news__meta">{`${marketLabel} · ${sourceLabel} · ${freshness}`}</p>
 
-        <header className="product-card__headline blog-card__headline">
-          <div className="product-card__identity">
+        <header className="research-news__header">
+          <div className="research-news__identity">
             <SmartLogo
               key={`${item.name}-${resolvedLogo.logoUrl}-${resolvedLogo.secondaryLogoUrl}-${item.website || ""}`}
-              className="product-card__logo"
+              className="research-product__logo"
               name={item.name}
               logoUrl={resolvedLogo.logoUrl}
               secondaryLogoUrl={resolvedLogo.secondaryLogoUrl}
@@ -162,16 +162,16 @@ function BlogCard({ item }: { item: BlogPost }) {
               trustPrimaryLogo
               size={44}
             />
-            <div className="product-card__identity-copy">
-              <h3 className="product-card__title">{localizedName}</h3>
-              <p className="product-card__meta">{publishedLabel}</p>
+            <div className="research-news__identity-copy">
+              <h3 className="research-product__title">{localizedName}</h3>
+              <p className="research-product__date">{publishedLabel}</p>
             </div>
           </div>
         </header>
 
-        <p className="product-card__desc">{cleanDescription(localizedDescription, locale)}</p>
+        <p className="research-product__description">{cleanDescription(localizedDescription, locale)}</p>
 
-        <div className="product-card__actions blog-card__actions">
+        <div className="research-news__actions">
           <FavoriteButton blog={item} />
           {hasWebsite ? (
             <a
@@ -227,7 +227,7 @@ export function BlogClient({ initialBlogs }: BlogClientProps) {
       : t("暂无匹配数据，请切换来源或稍后再试。", "No matching data. Switch source or retry later.");
 
   return (
-    <section className="section">
+    <section className="section blog-page">
       <div className="section-header">
         <h1 className="section-title">{t("博客 & 动态", "News & Signals")}</h1>
         <p className="section-desc">{t("中国本土源与海外动态共存，可按区域快速切换", "China-local and global sources in one feed, with quick market switching.")}</p>
@@ -271,7 +271,7 @@ export function BlogClient({ initialBlogs }: BlogClientProps) {
         })}
       </div>
 
-      <div className="products-grid">
+      <div className="research-news-grid">
         {posts.map((item) => (
           <BlogCard item={item} key={`${item.source || "source"}-${item.website || item.name}`} />
         ))}

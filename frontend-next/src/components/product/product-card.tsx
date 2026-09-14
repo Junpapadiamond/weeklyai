@@ -8,135 +8,74 @@ import { FavoriteButton } from "@/components/favorites/favorite-button";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import { handleExternalAnchorClick } from "@/lib/external-navigation";
 import {
-  cleanDescription,
-  formatCategories,
-  getFreshnessLabel,
-  getLocalizedCountryName,
-  getLocalizedProductDescription,
-  getLocalizedProductWhyMatters,
-  getProductWebsiteSearchUrl,
-  getProductScore,
-  getScoreBadgeClass,
-  isHardware,
-  isValidWebsite,
-  normalizeWebsite,
-  resolveProductLogoSources,
-  resolveProductCountry,
+  cleanDescription, formatCategories, getLocalizedCountryName,
+  getLocalizedProductDescription, getLocalizedProductWhyMatters,
+  getProductWebsiteSearchUrl, getProductScore, isValidWebsite,
+  normalizeWebsite, resolveProductLogoSources, resolveProductCountry,
 } from "@/lib/product-utils";
 
 type ProductCardProps = {
   product: Product;
   compact?: boolean;
+  rank?: number;
+  highlighted?: boolean;
+  favoritable?: boolean;
 };
 
-function formatScore(score: number, locale: "zh-CN" | "en-US"): string {
-  if (score <= 0) return locale === "en-US" ? "Unrated" : "待评";
-  if (locale === "en-US") {
-    return Number.isInteger(score) ? `${score}/5` : `${score.toFixed(1)}/5`;
-  }
-  return Number.isInteger(score) ? `${score}分` : `${score.toFixed(1)}分`;
-}
-
-export function ProductCard({ product, compact = false }: ProductCardProps) {
+/** One product briefing for the home, search and related-product surfaces. */
+export function ProductCard({ product, compact = false, rank, highlighted = false, favoritable = true }: ProductCardProps) {
   const { locale, t } = useSiteLocale();
+  const detailUrl = `/product/${encodeURIComponent(product._id || product.name)}`;
   const website = normalizeWebsite(product.website);
   const hasWebsite = isValidWebsite(website) && !product.needs_verification;
-  const detailId = encodeURIComponent(product._id || product.name);
   const score = getProductScore(product);
-  const scoreLabel = formatScore(score, locale);
-  const freshness = getFreshnessLabel(product, new Date(), locale);
-  const country = resolveProductCountry(product);
-  const regionLabel = getLocalizedCountryName(country, locale);
-  const regionMark = country.flag;
-  const hasRegionText = true;
-  const microlineParts = [freshness, product.source || t("来源待补充", "Source pending")];
+  const scoreLabel = score > 0 ? `${Number.isInteger(score) ? score : score.toFixed(1)} / 5` : t("待评", "Unrated");
+  const region = getLocalizedCountryName(resolveProductCountry(product), locale);
+  const recordedDate = (product.discovered_at || product.first_seen || "").slice(0, 10);
   const description = cleanDescription(getLocalizedProductDescription(product, locale), locale);
-  const whyMatters = getLocalizedProductWhyMatters(product, locale);
-  const summary = whyMatters || description || t("产品摘要待补充", "Product summary pending");
-  const tierClass = score >= 4 ? "product-card--darkhorse" : score >= 2 ? "product-card--rising" : "product-card--watch";
-  const secondaryBadge = product.funding_total || (isHardware(product) ? t("硬件", "Hardware") : t("软件", "Software"));
-  const websiteSearchUrl = getProductWebsiteSearchUrl(product.name, locale);
+  const whyMatters = cleanDescription(getLocalizedProductWhyMatters(product, locale), locale);
   const resolvedLogo = resolveProductLogoSources(product);
+  const websiteSearchUrl = getProductWebsiteSearchUrl(product.name, locale);
 
   return (
-    <article className={`product-card product-card--signal ${tierClass} ${compact ? "product-card--compact" : ""}`}>
-      <div className="product-card__content">
-        <div className="product-card__topline">
-          <span className="product-card__region-pill" aria-label={`${t("地区", "Region")}: ${regionLabel}`} title={`${t("地区", "Region")}: ${regionLabel}`}>
-            {regionMark ? (
-              <span className="product-card__region-flag" aria-hidden="true">
-                {regionMark}
-              </span>
-            ) : null}
-            {hasRegionText ? <span className="product-card__region-text">{regionLabel}</span> : null}
-          </span>
-          <p className="product-card__microline">{microlineParts.join(" · ")}</p>
+    <article className={`research-product${compact ? " research-product--compact" : ""}${highlighted ? " research-product--leading" : ""}`}>
+      <header className={`research-product__identity${rank !== undefined ? " research-product__identity--ranked" : ""}`}>
+        {rank !== undefined ? <span className="research-product__rank" aria-label={`${t("排名", "Rank")} ${rank}`}>{String(rank).padStart(2, "0")}</span> : null}
+        <SmartLogo
+          key={`${product._id || product.name}-${resolvedLogo.logoUrl}-${resolvedLogo.secondaryLogoUrl}`}
+          className="research-product__logo"
+          name={product.name}
+          {...resolvedLogo}
+          website={product.website}
+          sourceUrl={product.source_url}
+          trustPrimaryLogo
+          size={compact ? 44 : 56}
+          loading={rank !== undefined && rank <= 3 ? "eager" : "lazy"}
+        />
+        <div className="research-product__identity-copy">
+          <h3 className="research-product__title"><Link href={detailUrl}>{product.name}</Link></h3>
+          <p className="research-product__category">{formatCategories(product, locale)}</p>
+          <p className="research-product__meta">{region}<span aria-hidden="true"> · </span>{t("发现评分", "Discovery score")} {scoreLabel}</p>
+          {recordedDate ? <p className="research-product__date"><time dateTime={recordedDate}>{recordedDate}</time></p> : null}
         </div>
-
-        <header className="product-card__header">
-          <div className="product-card__identity">
-            <SmartLogo
-              key={`${product._id || product.name}-${resolvedLogo.logoUrl}-${resolvedLogo.secondaryLogoUrl}-${product.website || ""}-${product.source_url || ""}`}
-              className="product-card__logo"
-              name={product.name}
-              logoUrl={resolvedLogo.logoUrl}
-              secondaryLogoUrl={resolvedLogo.secondaryLogoUrl}
-              website={product.website}
-              sourceUrl={product.source_url}
-              trustPrimaryLogo
-              size={compact ? 44 : 48}
-            />
-            <div className="product-card__identity-copy">
-              <h3 className="product-card__title">{product.name}</h3>
-              <p className="product-card__meta">{formatCategories(product, locale)}</p>
-            </div>
-          </div>
-
-          <div className="product-card__badges">
-            <span className={`product-badge ${getScoreBadgeClass(score, "product")}`}>
-              {score >= 4 ? `${t("黑马", "Dark Horse")} ${scoreLabel}` : score >= 2 ? `${t("潜力", "Rising")} ${scoreLabel}` : scoreLabel}
-            </span>
-            <span className="product-badge">{secondaryBadge}</span>
-          </div>
-        </header>
-
-        <div className="product-card__summary">
-          <p className={`product-card__summary-text ${whyMatters ? "product-card__summary-text--why" : ""}`}>
-            {whyMatters ? <span className="product-card__summary-why-label">WHY</span> : null}
-            {summary}
-          </p>
-        </div>
-
-        <footer className="product-card__footer">
-          <FavoriteButton product={product} />
-          <Link href={`/product/${detailId}`} className="link-btn link-btn--card link-btn--card-primary">
-            {t("详情", "Details")}
-          </Link>
-          {supportsLiveDemo(product) ? <Link href={`/product/${detailId}?demo=1#try-demo`} className="link-btn link-btn--card link-btn--demo">{t("交互试用", "Try demo")}</Link> : null}
-          {hasWebsite ? (
-            <a
-              className="link-btn link-btn--card"
-              href={website}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(event) => handleExternalAnchorClick(event, website)}
-            >
-              {t("官网", "Website")}
-            </a>
-          ) : (
-            <a
-              className="pending-tag pending-tag--action"
-              href={websiteSearchUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(event) => handleExternalAnchorClick(event, websiteSearchUrl)}
-              title={t("点击跳转 Google 搜索官网", "Open Google search for the official website")}
-            >
-              {t("官网待验证", "Website pending verification")}
-            </a>
-          )}
-        </footer>
+      </header>
+      <div className="research-product__briefing">
+        <p className="research-product__description">{description || t("产品摘要待补充", "Product summary pending")}</p>
+        {whyMatters && whyMatters !== description ? <p className="research-product__why"><span>{t("值得注意", "WHY LOOK")} / </span>{whyMatters}</p> : null}
       </div>
+      <footer className="research-product__footer">
+        <div className="research-product__reference">
+          {product.source_url && isValidWebsite(product.source_url) ? <a href={product.source_url} target="_blank" rel="noopener noreferrer">{t("阅读来源", "Read source")} <span aria-hidden="true">↗</span></a> : null}
+          {favoritable ? <FavoriteButton product={product} /> : null}
+        </div>
+        <div className="research-product__actions">
+          <Link href={detailUrl}>{t("详情", "Details")}</Link>
+          {supportsLiveDemo(product) ? <Link href={`${detailUrl}?demo=1#try-demo`} className="research-product__try">{t("交互试用", "Try demo")}</Link> : null}
+          <a href={hasWebsite ? website : websiteSearchUrl} target="_blank" rel="noopener noreferrer" onClick={(event) => handleExternalAnchorClick(event, hasWebsite ? website : websiteSearchUrl)}>
+            {hasWebsite ? t("官网", "Website") : t("查找官网", "Find website")} <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </footer>
     </article>
   );
 }
