@@ -15,13 +15,21 @@ export function ProductLiveDemo({ product, autoOpen = false, compact = false, on
   const [data, setData] = useState<DemoResponse | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [phase, setPhase] = useState<"checking" | "generating">("checking");
+  const [elapsed, setElapsed] = useState(0);
   const panelId = useId();
   const id = product._id || product.name;
+  useEffect(() => {
+    if (!busy) return;
+    const started = Date.now();
+    const timer = setInterval(() => setElapsed(Math.floor((Date.now() - started) / 1000)), 1000);
+    return () => clearInterval(timer);
+  }, [busy]);
   useEffect(() => {
     if (!open) return;
     const controller = new AbortController();
     async function run() {
-      setBusy(true); setError(""); setData(null);
+      setBusy(true); setError(""); setData(null); setPhase("checking"); setElapsed(0);
       try {
         const url = "/api/v1/demos/product/" + encodeURIComponent(id);
         const signal = AbortSignal.any([controller.signal, AbortSignal.timeout(130000)]);
@@ -29,6 +37,7 @@ export function ProductLiveDemo({ product, autoOpen = false, compact = false, on
         if (!controller.signal.aborted) setData(next);
         if (!next.success) throw new Error(next.error || "UNAVAILABLE");
         if (!next.experience && next.generation_available) {
+          setPhase("generating");
           next = await readDemo(await fetch("/api/v1/demos/generate", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ product_id: id }), signal }));
           if (next.state === "generating") {
             for (let i = 0; i < 35 && !next.experience; i++) {
@@ -58,7 +67,7 @@ export function ProductLiveDemo({ product, autoOpen = false, compact = false, on
   return <section id="try-demo" className="product-demo">
     {!compact ? <div className="demo-invitation"><div><span className="demo-eyebrow">TRY BEFORE YOU SIGN UP</span><h2>{t("点开，走一遍它的工作流程。", "Open it. Experience the workflow.")}</h2><p>{t("不用注册，不用写需求。已有演示直接打开，其余由 AI 按产品资料生成。", "No account. No prompt. Open a prepared experience or let AI build one from the product brief.")}</p></div><button type="button" className="demo-launch" aria-expanded={open} aria-controls={panelId} onClick={() => setOpen(v => !v)}>{open ? t("收起试用", "Close demo") : t("交互试用", "Try interactive demo")}<span aria-hidden="true">▷</span></button></div> : null}
     {open ? <div id={panelId} aria-busy={busy}>
-      {busy ? <div className="experience-loading" role="status"><span className="demo-status-dot" /><h3>{t("正在准备这个产品的交互体验", "Preparing this product’s experience")}</h3><p>{t("读取产品资料 → 设计完整流程 → 校验可交互结果", "Read the brief → Design the workflow → Validate the experience")}</p><small>{t("首次生成约需 30–90 秒，包含自动校验与修正。生成后可反复打开。", "Allow 30–90 seconds for generation, validation and repair. Replays are free.")}</small><div className="experience-loading-track" /></div> : null}
+      {busy ? <div className="experience-loading" role="status"><span className="demo-status-dot" /><h3>{phase === "checking" ? t("正在打开产品体验", "Opening the product experience") : t("正在设计可交互的工作区", "Designing the interactive workspace")}</h3><p>{phase === "checking" ? t("检查已准备好的体验", "Checking for a prepared experience") : t("按产品资料设计流程，并校验界面与操作结果", "Designing the workflow and validating its interface and outcomes")}</p><small>{t(`已等待 ${elapsed} 秒。已有体验直接打开；首次生成最多等待约一分钟，完成后可反复体验。`, `${elapsed}s elapsed. Prepared experiences open directly; new generation can take about a minute. Replays are free.`)}</small><div className="experience-loading-track" /></div> : null}
       {!busy && data?.experience ? <ExperiencePlayer key={data.experience.cache_key} entry={data.experience} productName={product.name} website={product.website} {...resolveProductLogoSources(product)} /> : null}
       {!busy && error ? <div className="experience-loading" role="status"><h3>{t(...errorCopy)}</h3><p>{t("已准备好的演示仍可免费、无限次体验。失败的生成会返还个人额度。", "Prepared experiences remain free to replay. Failed generations refund your personal credit.")}</p><div className="experience-actions"><Link href="/demo?filter=ready">{t("浏览可立即体验的产品", "Browse ready experiences")} ↗</Link>{!limit && error !== "NOT_CONFIGURED" ? <button type="button" onClick={() => setAttempt(v => v + 1)}>{error === "PENDING" || error === "SERVICE_UNAVAILABLE" ? t("重新检查", "Check again") : t("重新生成", "Generate again")}</button> : null}</div></div> : null}
       {data?.quota ? <p className="experience-quota-note">{t("今日还可新建 ", "New generations remaining today: ")}<strong>{data.quota.remaining} / {data.quota.limit}</strong> · {t("已有演示不扣额度", "Cached experiences are free")}</p> : null}

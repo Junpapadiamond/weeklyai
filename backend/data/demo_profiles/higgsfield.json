@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "confidence": "illustrative",
+  "tier": "workflow",
+  "headline": {"zh": "把一款商品，变成一支广告的创意", "en": "Turn a product into an ad concept"},
+  "scenario": {"zh": "你经营一家小型电商品牌。新品已有照片，但还没有预算请团队拍广告。试着为一款随行杯设计社交短片。", "en": "Your small shop has product photos but no budget for a film crew. Plan a social ad for a travel tumbler."},
+  "workspace": {"kind": "video", "label": {"zh": "商品与卖点", "en": "Product and selling point"}, "initial": {"zh": "轻量随行杯：通勤路上，单手也能轻松喝水", "en": "A lightweight travel tumbler for easy, one-handed sipping on the commute"}},
+  "steps": [
+    {"id": "product", "widget": "choice", "title": {"zh": "添加商品素材", "en": "Add product material"}, "instruction": {"zh": "先选一个素材起点，再编辑右侧的商品卖点。这里使用示例素材。", "en": "Choose a starting asset, then edit the product brief in the workspace. Assets here are examples."}, "options": [
+      {"label": {"zh": "商品照片", "en": "Product photo"}, "output": {"zh": "以随行杯轮廓为视觉主角，先让观众看清商品。", "en": "Make the tumbler the visual focus so viewers recognize the product."}},
+      {"label": {"zh": "商品链接资料", "en": "Product page brief"}, "output": {"zh": "从示例商品资料提炼通勤场景与单手使用卖点。此处不抓取真实链接。", "en": "Use the sample product brief to highlight commuting and one-handed use. No live URL is fetched."}}
+    ]},
+    {"id": "direction", "widget": "compare", "title": {"zh": "选择创意风格", "en": "Choose a creative direction"}, "instruction": {"zh": "同一款商品，可以拍出两种不同的购买理由。", "en": "The same product can tell two different stories."}, "options": [
+      {"label": {"zh": "UGC 日常分享", "en": "UGC everyday story"}, "output": {"zh": "从赶地铁时腾不开手的困扰切入，再展示随行杯如何融入通勤。", "en": "Open with the hassle of a busy commute, then show where the tumbler fits into daily life."}},
+      {"label": {"zh": "电影感商品特写", "en": "Cinematic product close-up"}, "output": {"zh": "以杯身细节与干净的构图突出设计，让观众先记住商品外观。", "en": "Use clean framing and product details to make the design memorable."}}
+    ]},
+    {"id": "story", "widget": "choice", "title": {"zh": "调整分镜节奏", "en": "Shape the storyboard"}, "instruction": {"zh": "切换节奏，再点击预览中的分镜或播放按钮，检查信息顺序。", "en": "Choose a sequence, then click the storyboard shots or play the preview to review the order."}, "options": [
+      {"label": {"zh": "痛点 → 解决 → 行动", "en": "Problem → solution → action"}, "output": {"zh": "开头提出通勤困扰，中段说明卖点，结尾邀请了解商品。", "en": "Start with the commuting problem, explain the benefit, then invite viewers to learn more."}},
+      {"label": {"zh": "细节 → 场景 → 行动", "en": "Detail → context → action"}, "output": {"zh": "开头给出商品细节，中段进入日常场景，结尾留下品牌印象。", "en": "Lead with a product detail, place it in daily life, and end with a brand impression."}}
+    ]},
+    {"id": "handoff", "widget": "review", "title": {"zh": "检查并交付方案", "en": "Review and hand off"}, "instruction": {"zh": "确认目标渠道与商品卖点，再保存创意简报。真实视频需到 Higgsfield 生成。", "en": "Review the channel and product brief, then save the creative plan. Generate the actual video in Higgsfield."}, "options": [
+      {"label": {"zh": "社交短视频广告", "en": "Social video ad"}, "output": {"zh": "方案强调开头的吸引力与清晰卖点，适合交给短视频广告制作流程。", "en": "The plan emphasizes a strong opening and clear benefit for a social ad production workflow."}},
+      {"label": {"zh": "商品详情页展示", "en": "Product page showcase"}, "output": {"zh": "方案强调商品细节与使用场景，适合交给电商详情页内容制作流程。", "en": "The plan emphasizes details and usage context for product page content production."}}
+    ]}
+  ],
+  "takeaway": {"zh": "Higgsfield 的价值是把商品素材、创意方向与视频制作放进同一个流程，降低小团队反复制作广告素材的门槛。你刚完成的是可带走的创意方案。", "en": "Higgsfield brings product assets, creative direction and video production into one workflow. You have built a creative brief to take into production."},
+  "sources": [{"url": "https://higgsfield.ai/marketing-studio", "label": {"zh": "Marketing Studio · 2026-09-26 核验", "en": "Marketing Studio · reviewed Sep 26, 2026"}}]
+}

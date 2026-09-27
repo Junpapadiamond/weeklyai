@@ -6,6 +6,7 @@ from urllib.parse import urlparse
 
 VERSION = 2
 WIDGETS = {"choice", "review", "dial", "compare", "app"}
+WORKSPACES = {"video", "image", "search", "document", "board"}
 
 
 def product_key(product):
@@ -67,7 +68,7 @@ def validate_experience(value, allowed_sources=None):
             if not isinstance(option, dict):
                 raise ValueError("Invalid option")
             output = _copy(option.get("output"), 700)
-            if any(re.search(r"\d+(?:\.\d+)?\s*[%％]|已导出|Exported:", text, re.I) for text in output.values()):
+            if any(re.search(r"\d+(?:\.\d+)?\s*[%％]|已导出|已保存本地|文件已保存|视频已生成|Exported:|saved (?:locally|to (?:your |the )?(?:device|computer))", text, re.I) for text in output.values()):
                 raise ValueError("Unsupported measured or executed outcome")
             choices.append({"id": str(index), "label": _copy(option.get("label"), 80), "output": output})
         item = {"id": step_id, "widget": step["widget"], "title": _copy(step.get("title"), 80),
@@ -98,6 +99,13 @@ def validate_experience(value, allowed_sources=None):
         if allowed_sources is not None and url not in allowed_sources:
             raise ValueError("The model cannot invent sources")
         links.append({"url": url, "label": _copy(source.get("label"), 100)})
-    return {"version": VERSION, "confidence": "illustrative", "tier": value["tier"],
+    result = {"version": VERSION, "confidence": "illustrative", "tier": value["tier"],
             "headline": _copy(value.get("headline"), 120), "scenario": _copy(value.get("scenario"), 400),
             "steps": validated, "takeaway": _copy(value.get("takeaway"), 500), "sources": links}
+    workspace = value.get("workspace")
+    if workspace is not None:
+        if not isinstance(workspace, dict) or workspace.get("kind") not in WORKSPACES:
+            raise ValueError("Unsupported workspace")
+        result["workspace"] = {"kind": workspace["kind"], "label": _copy(workspace.get("label"), 80),
+                               "initial": _copy(workspace.get("initial"), 200)}
+    return result

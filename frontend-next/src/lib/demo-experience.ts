@@ -16,6 +16,7 @@ const step = z.object({
 export const ExperienceSchema = z.object({
   version: z.literal(2), confidence: z.literal("illustrative"), tier: z.enum(["workflow", "concept"]),
   headline: copy(120), scenario: copy(400), steps: z.array(step).min(3).max(6), takeaway: copy(500),
+  workspace: z.object({ kind: z.enum(["video", "image", "search", "document", "board"]), label: copy(80), initial: copy(200) }).optional(),
   sources: z.array(z.object({ label: copy(100), url: z.string().url().refine(url => {
     const parsed = new URL(url);
     return ["https:", "http:"].includes(parsed.protocol) && !parsed.username && !parsed.password;

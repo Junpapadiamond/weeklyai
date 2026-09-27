@@ -9,6 +9,14 @@ describe("data-only workflow renderer", () => {
     expect(specs.length).toBeGreaterThanOrEqual(5);
     specs.forEach(spec => expect(ExperienceSchema.safeParse(spec).success).toBe(true));
   });
+  it("accepts the reviewed Higgsfield profile and rejects executable workspace kinds", () => {
+    const profile = JSON.parse(readFileSync("../backend/data/demo_profiles/higgsfield.json", "utf8"));
+    // Python supplies deterministic option IDs and example_data before serving.
+    const spec = { ...profile, steps: profile.steps.map((s: { options: object[] }) => ({ ...s, example_data: true, options: s.options.map((o, i) => ({ ...o, id: String(i) })) })) };
+    expect(ExperienceSchema.parse(spec).workspace?.kind).toBe("video");
+    expect(ExperienceSchema.safeParse({ ...spec, workspace: { ...spec.workspace, kind: "iframe" } }).success).toBe(false);
+    expect(ExperienceSchema.parse({ ...spec, workspace: { ...spec.workspace, script: "alert(1)" } }).workspace).not.toHaveProperty("script");
+  });
   it("rejects executable widgets and forged evidence links", () => {
     const spec = specs[0];
     expect(ExperienceSchema.safeParse({ ...spec, steps: [{ ...spec.steps[0], widget: "iframe" }, ...spec.steps.slice(1)] }).success).toBe(false);

@@ -10,11 +10,12 @@ import requests
 from app.services.chat_service import _providers, _is_perplexity
 from app.services.demo_contract import cache_key, product_key, fingerprint, safe_url, validate_experience
 from app.services.demo_store import StoreUnavailable
+from app.services.demo_profiles import product_profile
 
 _published_signature = None
 _published_entries = {}
-GENERATION_SECONDS = 90
-MAX_OUTPUT_TOKENS = 3600
+GENERATION_SECONDS = 55
+MAX_OUTPUT_TOKENS = 3000
 logger = logging.getLogger(__name__)
 
 
@@ -32,7 +33,7 @@ def _completion(base, endpoint, headers, payload, deadline):
         raise GenerationFailure("GENERATION_TIMEOUT")
     try:
         with requests.post(base + endpoint, json=payload, headers=headers,
-                           timeout=(3, min(45, remaining - 3)), stream=True) as response:
+                           timeout=(3, min(35, remaining - 3)), stream=True, allow_redirects=False) as response:
             response.raise_for_status()
             raw = bytearray()
             for chunk in response.iter_content(1024):
@@ -110,6 +111,11 @@ def provider_available():
 
 
 def ready_experience(product, store=None):
+    profile = product_profile(product)
+    if profile:
+        entry = envelope(product, profile, "curated")
+        entry["generated_at"] = "2026-09-27T00:00:00+00:00"
+        return entry
     key = cache_key(product)
     entry = published().get(key) or (store.get(key) if store else None)
     if entry:
@@ -143,18 +149,23 @@ def generate_spec(product):
         "Exactly 4 steps from setup, input, inspection to useful final output. Each step has 2 concrete choices "
         "and DIFFERENT outcomes that teach this product's actual job. All inputs and outcomes are fictional examples; "
         "do not claim to call the real product, copy its UI, run real searches, or invent measured performance. "
-        "The player ONLY shows text, choices and a downloadable text summary. It cannot show generated images, "
-        "play audio/video, export PNG or operate devices. Design decisions and sample text artifacts accordingly. "
+        "The player renders a real interactive workspace from fixed React components: editable brief, "
+        "visual storyboard with selectable shots for video, composition for image, result cards for search, "
+        "document preview or task board. Choices update the workspace. It can play a local storyboard animation "
+        "and download a text brief. It cannot generate actual AI media, export MP4, connect vendor accounts or operate devices. "
+        "For software include workspace:{kind:video|image|search|document|board,label:{zh,en},initial:{zh,en}}. "
+        "Choose the kind matching the product. initial is a concrete, editable example brief (<=100 chars per language). "
+        "Use a customer problem and tangible deliverable, never making content ABOUT WeeklyAI. "
         "Never say an image/file was generated/exported. Do not use ANY numeric percentages, percent signs, "
         "已导出 or Exported: in outcomes, including fictional examples. Use qualitative comparisons instead. For image products "
-        "walk through preparing a visual brief, adjusting requirements, reviewing a checklist and handing off the brief. "
+        "walk through importing sample material, choosing direction, comparing a storyboard/composition and handing off the brief. "
         "No medical, legal or investment advice. For physical hardware/infrastructure use tier concept and "
         "scenario decisions, never imply real device operation. Never use generic tasks/timers unless it is an app builder. "
         "Allowed widgets: choice, review, compare (all use options); dial additionally requires "
         "dial:{min:1,max:20,initial:5,factor:2,unit:{zh,en},result_label:{zh,en}} for explicitly fictional arithmetic; "
         "app additionally requires app_kind:tasks|timer|expenses ONLY for an app builder. "
         "Every copy field is {zh:string,en:string}. Keep text concise: titles and labels <=30 chars; instructions <=100; "
-        "outputs <=160 chars per language; scenario <=160; takeaway <=160. Unique step IDs. confidence illustrative. "
+        "outputs <=90 chars per language; scenario <=100; takeaway <=100. Unique step IDs. confidence illustrative. "
         "Sources must be copied exactly from allowed URLs. Four steps are required even though this shape shows one. "
         "Shape: " + json.dumps(shape, ensure_ascii=False) + "\nAllowed URLs: " + json.dumps(sources) +
         "\nCatalog: " + json.dumps(context, ensure_ascii=False))

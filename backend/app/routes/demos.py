@@ -7,6 +7,7 @@ from itsdangerous import URLSafeTimedSerializer, BadSignature
 from app.services.demo_contract import cache_key
 from app.services.demo_experiences import published, ready_experience, prepare_experience, provider_available
 from app.services.demo_store import DemoStore, production
+from app.services.demo_profiles import profile_name
 from app.services.product_service import ProductService
 
 demos_bp = Blueprint("demos", __name__)
@@ -61,6 +62,7 @@ def demo_catalog():
         except Exception:
             context = (*context[:3], None, None)
     products = ProductService.get_discovery_products()
+    keys.update(cache_key(p) for p in products if profile_name(p))
     ready = sum(cache_key(p) in keys for p in products)
     dark = sum(float(p.get("dark_horse_index") or 0) >= 4 for p in products)
     query, category = request.args.get("q", "").strip().lower()[:160], request.args.get("filter", "all")

@@ -7,6 +7,7 @@ import type { ExperienceEntry } from "@/lib/demo-experience";
 import { exampleSpec } from "@/lib/live-demo";
 import { DemoAppPreview } from "./demo-app-preview";
 import { SmartLogo } from "@/components/common/smart-logo";
+import { ExperienceWorkspace } from "./experience-workspace";
 
 export function ExperiencePlayer({ entry, productName, website, logoUrl, secondaryLogoUrl }: { entry: ExperienceEntry; productName: string; website?: string; logoUrl?: string; secondaryLogoUrl?: string }) {
   const { locale, t } = useSiteLocale();
@@ -17,6 +18,9 @@ export function ExperiencePlayer({ entry, productName, website, logoUrl, seconda
   const [dials, setDials] = useState<Record<string, number>>({});
   const [reviews, setReviews] = useState<Record<string, boolean>>({});
   const [revision, setRevision] = useState(0);
+  const [customBrief, setCustomBrief] = useState<string | null>(null);
+  const [ratio, setRatio] = useState<"9:16" | "16:9">("9:16");
+  const brief = customBrief ?? spec.workspace?.initial[lang] ?? spec.scenario[lang];
   const heading = useRef<HTMLHeadingElement>(null);
   const complete = index === spec.steps.length;
   const step = spec.steps[Math.min(index, spec.steps.length - 1)];
@@ -26,7 +30,7 @@ export function ExperiencePlayer({ entry, productName, website, logoUrl, seconda
   function move(next: number) { setIndex(next); requestAnimationFrame(() => { heading.current?.focus({ preventScroll: true }); heading.current?.scrollIntoView({ block: "start", behavior: "instant" }); }); }
   function download() {
     const lines = [productName + " / WeeklyAI", t("流程模拟 · 示例数据 · 非官方产品", "Workflow simulation · Example data · Unofficial"), spec.headline[lang],
-      ...spec.steps.flatMap(s => {
+      brief, ...(spec.workspace?.kind === "video" || spec.workspace?.kind === "image" ? [ratio] : []), ...spec.steps.flatMap(s => {
         const choice = s.options.find(o => o.id === choices[s.id]);
         return [s.title[lang], choice?.label[lang] || "", choice?.output[lang] || "",
           s.dial ? (dials[s.id] ?? s.dial.initial) + " " + s.dial.unit[lang] : ""];
@@ -44,7 +48,8 @@ export function ExperiencePlayer({ entry, productName, website, logoUrl, seconda
         <span className="experience-free">{t("体验内的操作不消耗生成额度", "Interactions use no generation credits")}</span>
       </aside>
       <div className="experience-stage">
-        <div className="experience-stage-meta"><span>{complete ? "EXPERIENCE COMPLETE" : "STEP " + String(index + 1).padStart(2, "0") + " / " + String(spec.steps.length).padStart(2, "0")}</span><button type="button" onClick={() => { setChoices({}); setDials({}); setReviews({}); setRevision(v => v + 1); move(0); }}><RotateCcw size={13} />{t("重新体验", "Start over")}</button></div>
+        <div className="experience-stage-meta"><span>{complete ? "EXPERIENCE COMPLETE" : "STEP " + String(index + 1).padStart(2, "0") + " / " + String(spec.steps.length).padStart(2, "0")}</span><button type="button" onClick={() => { setChoices({}); setDials({}); setReviews({}); setCustomBrief(null); setRatio("9:16"); setRevision(v => v + 1); move(0); }}><RotateCcw size={13} />{t("重新体验", "Start over")}</button></div>
+        <div className={spec.tier === "workflow" ? "experience-workbench" : undefined}>
         {complete ? <div className="experience-finish">
           <span className="experience-done"><Check size={26} /></span><h2 ref={heading} tabIndex={-1}>{t("这就是它的工作方式。", "Now you know the workflow.")}</h2><p>{spec.takeaway[lang]}</p>
           <div className="experience-summary">{spec.steps.map(s => <div key={s.id}><span>{s.title[lang]}</span><strong>{s.options.find(o => o.id === choices[s.id])?.label[lang]}</strong></div>)}</div>
@@ -64,6 +69,8 @@ export function ExperiencePlayer({ entry, productName, website, logoUrl, seconda
           {step.widget === "review" && selected ? <label className="experience-review"><input type="checkbox" checked={!!reviews[step.id]} onChange={e => setReviews(old => ({ ...old, [step.id]: e.target.checked }))} />{t("已检查示例内容，继续下一步", "I reviewed the example. Continue.")}</label> : null}
           <nav className="experience-controls" aria-label={t("体验步骤", "Experience steps")}><button type="button" disabled={index === 0} onClick={() => move(index - 1)}><ArrowLeft size={16} />{t("上一步", "Back")}</button><button type="button" className="demo-launch" disabled={!canContinue} onClick={() => move(index + 1)}>{index === spec.steps.length - 1 ? t("查看体验结果", "See your result") : t("继续", "Continue")}<ArrowRight size={16} /></button></nav>
         </div>}
+        {spec.tier === "workflow" ? <ExperienceWorkspace key={revision} spec={spec} lang={lang} choices={choices} brief={brief} onBriefChange={setCustomBrief} ratio={ratio} onRatioChange={setRatio} /> : null}
+        </div>
       </div>
     </div>
     <footer className="experience-sources"><span>{t("产品资料", "Product sources")}</span>{spec.sources.map((source, i) => <a href={source.url} target="_blank" rel="noopener noreferrer" key={source.url + i}>{source.label[lang]} ↗</a>)}<span>{t("依据公开资料设计，无法代表真实模型质量。", "Based on public information; not a measure of model quality.")}</span></footer>

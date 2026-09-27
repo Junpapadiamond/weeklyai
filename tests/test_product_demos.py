@@ -59,6 +59,33 @@ def test_cached_workflow_needs_no_model_and_costs_nothing(client, store, spec):
     assert not response.json["generation_available"]
 
 
+def test_reviewed_profile_opens_without_model_quota_or_stale_cache(client, store, monkeypatch):
+    product = {**PRODUCT, "name": "Higgsfield", "website": "https://higgsfield.ai/"}
+    monkeypatch.setattr(demos.ProductService, "get_product_by_id", lambda value: product)
+    monkeypatch.setattr(demos.ProductService, "get_discovery_products", lambda: [product])
+    monkeypatch.setenv("DEMO_DAILY_USER_LIMIT", "0")
+    monkeypatch.setattr(service, "generate_spec", lambda value: pytest.fail("No model call for reviewed profile"))
+    response = client.post("/api/v1/demos/generate", json={"product_id": "demo-product"})
+    assert response.status_code == 200 and response.json["cached"]
+    assert response.json["experience"]["spec"]["workspace"]["kind"] == "video"
+    assert response.json["quota"]["site_remaining"] == 20
+    assert client.get("/api/v1/demos/catalog?filter=ready").json["ready_count"] == 1
+    assert service.ready_experience({**product, "website": "https://higgsfield.ai.evil.example"}, store) is None
+
+
+@pytest.mark.parametrize("kind", ["video", "image", "search", "document", "board"])
+def test_workspace_contract_is_bounded_data_only(spec, kind):
+    spec["workspace"] = {"kind": kind, "label": {"zh": "任务", "en": "Brief"}, "initial": {"zh": "示例", "en": "Example"}, "html": "<script />"}
+    assert "html" not in validate_experience(spec)["workspace"]
+    spec["workspace"]["kind"] = "iframe"
+    with pytest.raises(ValueError, match="workspace"):
+        validate_experience(spec)
+    spec["workspace"]["kind"] = kind
+    spec["workspace"]["initial"]["en"] = "x" * 201
+    with pytest.raises(ValueError, match="text"):
+        validate_experience(spec)
+
+
 def test_generate_then_replay_and_other_visitors_use_same_cache(client, store, spec, monkeypatch):
     monkeypatch.setattr(service, "providers", lambda: [("relay", "https://relay.example", "secret", "model")])
     generate = MagicMock(return_value=spec)
@@ -247,7 +274,7 @@ def test_failed_repair_refunds_personal_credit_and_never_publishes_invalid_spec(
 
 def test_repair_does_not_start_when_time_budget_is_exhausted(monkeypatch, spec):
     post = _mock_completions(monkeypatch, [{**spec, "steps": []}])
-    clock = iter([0, 0, 85, 85, 85])
+    clock = iter([0, 0, 50, 50, 50])
     monkeypatch.setattr(service.time, "monotonic", lambda: next(clock))
     with pytest.raises(service.GenerationFailure, match="GENERATION_INVALID_RESPONSE"):
         service.generate_spec(PRODUCT)
@@ -296,7 +323,7 @@ def test_exhausted_quota_returns_429_without_calling_provider(client, store, mon
 
 
 def test_rejects_unsubstantiated_metric_or_file_claims(spec):
-    for text in ("Improved by 20%", "已导出 PNG", "Exported: image.png"):
+    for text in ("Improved by 20%", "已导出 PNG", "Exported: image.png", "文件已保存本地", "saved to your device"):
         bad = copy.deepcopy(spec)
         bad["steps"][0]["options"][0]["output"]["en"] = text
         with pytest.raises(ValueError):
