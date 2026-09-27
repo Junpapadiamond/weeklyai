@@ -62,7 +62,9 @@ Configure these **only on the Flask backend**, never as `NEXT_PUBLIC_*`:
 | DEMO_DAILY_USER_LIMIT | 3 |
 | DEMO_DAILY_GLOBAL_LIMIT | 20 |
 
-`openai` protocol uses `/chat/completions` and Bearer auth; `anthropic` uses `/messages`, `x-api-key` and version `2023-06-01`. Without a dedicated demo provider, existing research-chat providers remain a compatibility fallback. No automatic second paid attempt occurs on failure.
+`openai` protocol uses `/chat/completions` and Bearer auth; `anthropic` uses `/messages`, `x-api-key` and version `2023-06-01`. Without a dedicated demo provider, existing research-chat providers remain a compatibility fallback. One bounded repair or transient retry may occur within the same reservation and total time budget.
+
+Daily preparation uses `--snapshot crawler/data/products_featured.json` so this run's new products are considered before older entries. MongoDB remains enabled for the shared generation budget and cache even though product metadata comes from the new snapshot.
 
 Local private configuration is in ignored `backend/.env.demo.local`. For standard startup, load that file into the process environment first or put the active values in an ignored backend `.env`. No secret values are committed or returned by the API.
 

@@ -161,7 +161,7 @@ jobs:
           DEMO_MODEL: ${{ vars.DEMO_MODEL || 'claude-sonnet-5' }}
           DEMO_API_PROTOCOL: ${{ vars.DEMO_API_PROTOCOL || 'anthropic' }}
           DEMO_DAILY_GLOBAL_LIMIT: ${{ vars.DEMO_DAILY_GLOBAL_LIMIT || '20' }}
-        run: python crawler/tools/pregenerate_demos.py --limit 5
+        run: python crawler/tools/pregenerate_demos.py --limit 5 --snapshot crawler/data/products_featured.json
 
       - name: Commit and push (if changed)
         run: |

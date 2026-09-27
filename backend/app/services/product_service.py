@@ -38,6 +38,11 @@ class ProductService:
     @classmethod
     def get_discovery_products(cls) -> List[Dict]:
         """Recommendation surfaces require a usable product and traceable evidence."""
+        return cls.filter_discovery_products(cls._load_products())
+
+    @staticmethod
+    def filter_discovery_products(products: List[Dict]) -> List[Dict]:
+        """Use the same publication rules for live reads and prepared snapshots."""
         from urllib.parse import urlparse
         def usable(value):
             try:
@@ -45,7 +50,7 @@ class ProductService:
                 return url.scheme in {'http', 'https'} and bool(url.hostname)
             except ValueError:
                 return False
-        return [p for p in cls._load_products()
+        return [p for p in products
                 if not p.get('needs_verification') and usable(p.get('website'))
                 and usable(p.get('source_url')) and not filters.is_well_known(p)
                 and not filters.is_non_product(p) and filters.has_complete_briefing(p)]

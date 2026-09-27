@@ -80,6 +80,21 @@ def test_daily_preparation_prioritizes_fresh_discoveries():
     assert candidates([old, fresh])[0] == fresh
 
 
+def test_daily_preparation_reads_new_snapshot_without_disabling_shared_mongo(tmp_path, monkeypatch):
+    from tools.pregenerate_demos import load_candidates, ProductService
+    import os
+    monkeypatch.setenv("MONGO_URI", "mongodb://shared-budget.invalid")
+    monkeypatch.setattr(ProductService, "get_discovery_products", lambda: pytest.fail("Live catalog is stale before sync"))
+    product = {**PRODUCT, "source_url": "https://publisher.example/news", "description_en": "Find and review web evidence",
+               "why_matters": "独立来源验证检索结果，帮助团队减少人工核对时间。", "why_matters_en": "Checks independent sources for teams reviewing web evidence.",
+               "discovered_at": "2026-09-27"}
+    snapshot = tmp_path / "products.json"
+    snapshot.write_text(json.dumps([product, {**product, "name": "Unverified", "website": "https://unverified.example", "needs_verification": True}]), encoding="utf-8")
+    loaded = load_candidates(snapshot)
+    assert [p["name"] for p in loaded] == [product["name"]]
+    assert os.environ["MONGO_URI"] == "mongodb://shared-budget.invalid"
+
+
 @pytest.mark.parametrize("kind", ["video", "image", "search", "document", "board"])
 def test_workspace_contract_is_bounded_data_only(spec, kind):
     spec["workspace"] = {"kind": kind, "label": {"zh": "任务", "en": "Brief"}, "initial": {"zh": "示例", "en": "Example"}, "html": "<script />"}
