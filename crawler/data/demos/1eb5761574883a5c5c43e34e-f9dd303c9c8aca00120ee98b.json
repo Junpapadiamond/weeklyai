@@ -1,0 +1,185 @@
+{
+  "cache_key": "1eb5761574883a5c5c43e34e-f9dd303c9c8aca00120ee98b",
+  "product_key": "1eb5761574883a5c5c43e34e",
+  "fingerprint": "f9dd303c9c8aca00120ee98b",
+  "product_id": "2",
+  "product_name": "Latent Labs",
+  "origin": "pregenerated",
+  "generated_at": "2026-09-27T00:21:21.302379+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "蛋白质设计平台工作流",
+      "en": "Protein Design Platform Workflow"
+    },
+    "scenario": {
+      "zh": "为靶向肿瘤受体设计新型治疗性抗体",
+      "en": "Design a novel therapeutic antibody targeting a tumor receptor"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择设计策略",
+          "en": "Choose Design Strategy"
+        },
+        "instruction": {
+          "zh": "确定蛋白质设计的起点",
+          "en": "Define the starting point for protein design"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "从已知抗体结构优化",
+              "en": "Optimize from known antibody"
+            },
+            "output": {
+              "zh": "已加载参考抗体骨架，系统将在保留结合域的前提下优化稳定性",
+              "en": "Reference antibody scaffold loaded; system will optimize stability while preserving binding domain"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "从靶点全新生成",
+              "en": "Generate de novo from target"
+            },
+            "output": {
+              "zh": "已设定靶点受体序列，系统将探索全新的结合模式和拓扑结构",
+              "en": "Target receptor sequence set; system will explore novel binding modes and topologies"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "constraints",
+        "widget": "choice",
+        "title": {
+          "zh": "设定约束条件",
+          "en": "Set Constraints"
+        },
+        "instruction": {
+          "zh": "选择关键生物物理参数优先级",
+          "en": "Select key biophysical parameter priority"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "优先结合亲和力",
+              "en": "Prioritize binding affinity"
+            },
+            "output": {
+              "zh": "模型将生成高亲和力候选，可能需要后续表达优化",
+              "en": "Model will generate high-affinity candidates; may require downstream expression optimization"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "平衡表达与稳定性",
+              "en": "Balance expression and stability"
+            },
+            "output": {
+              "zh": "模型将综合考虑可生产性，生成更易验证的序列",
+              "en": "Model will consider manufacturability; generates sequences easier to validate"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "比较候选方案",
+          "en": "Compare Candidates"
+        },
+        "instruction": {
+          "zh": "审查生成的蛋白质设计方案",
+          "en": "Review generated protein designs"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "方案 A：保守设计",
+              "en": "Candidate A: Conservative"
+            },
+            "output": {
+              "zh": "与天然抗体相似度较高，预测折叠置信度强，结合位点保持已知模式",
+              "en": "Higher similarity to natural antibodies; strong folding confidence; binding site retains known motifs"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "方案 B：创新设计",
+              "en": "Candidate B: Innovative"
+            },
+            "output": {
+              "zh": "引入非天然氨基酸组合，预测亲和力提升，但需要更多验证实验",
+              "en": "Introduces non-natural residue combinations; predicted affinity gain but requires more validation"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "准备实验验证",
+          "en": "Prepare Experimental Validation"
+        },
+        "instruction": {
+          "zh": "确认交付给湿实验团队的设计包",
+          "en": "Confirm design package for wet lab team"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "导出序列与结构预测",
+              "en": "Export sequences and structures"
+            },
+            "output": {
+              "zh": "已准备 3 个候选序列、折叠预测及建议的表达系统清单",
+              "en": "Prepared 3 candidate sequences, folding predictions, and suggested expression systems"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "生成验证实验方案",
+              "en": "Generate validation protocol"
+            },
+            "output": {
+              "zh": "已列出结合测定、稳定性分析及表达优化的实验步骤建议",
+              "en": "Listed suggested steps for binding assays, stability analysis, and expression tuning"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "AI 蛋白质设计将计算预测与实验验证连接，加速治疗性分子开发周期",
+      "en": "AI protein design bridges computational prediction and experimental validation to accelerate therapeutic development"
+    },
+    "sources": [
+      {
+        "url": "https://latentlabs.com",
+        "label": {
+          "zh": "Latent Labs 官网",
+          "en": "Latent Labs Official Site"
+        }
+      }
+    ]
+  }
+}

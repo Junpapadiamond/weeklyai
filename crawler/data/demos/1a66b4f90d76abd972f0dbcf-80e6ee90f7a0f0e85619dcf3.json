@@ -1,0 +1,203 @@
+{
+  "cache_key": "1a66b4f90d76abd972f0dbcf-80e6ee90f7a0f0e85619dcf3",
+  "product_key": "1a66b4f90d76abd972f0dbcf",
+  "fingerprint": "80e6ee90f7a0f0e85619dcf3",
+  "product_id": "p_351670ea439517fa",
+  "product_name": "Duqu",
+  "origin": "pregenerated",
+  "generated_at": "2026-09-27T00:20:02.018769+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "加速应收账款周转",
+      "en": "Accelerate receivables turnover"
+    },
+    "scenario": {
+      "zh": "一家荷兰制造商有15万欧元应收账款未到期,需要立即支付供应商货款",
+      "en": "A Dutch manufacturer has €150k in outstanding invoices and needs immediate funds to pay suppliers"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择发票类型",
+          "en": "Select invoice type"
+        },
+        "instruction": {
+          "zh": "上传需要垫付的B2B发票",
+          "en": "Upload B2B invoices needing advance"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "单张大额发票",
+              "en": "Single large invoice"
+            },
+            "output": {
+              "zh": "文档已更新:一张€150,000发票,买家为信誉良好的零售连锁店,风险评估开始",
+              "en": "Document updated: One €150k invoice, buyer is creditworthy retail chain, risk assessment initiated"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "多张小额发票",
+              "en": "Multiple small invoices"
+            },
+            "output": {
+              "zh": "文档已更新:八张发票共€148,000,来自五个不同买家,需要分散风险评估",
+              "en": "Document updated: Eight invoices totaling €148k from five buyers, diversified risk assessment needed"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "补充业务数据",
+          "en": "Add business data"
+        },
+        "instruction": {
+          "zh": "AI承保引擎需要分析企业信用",
+          "en": "AI underwriting engine analyzes creditworthiness"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "连接会计系统",
+              "en": "Connect accounting system"
+            },
+            "output": {
+              "zh": "自动提取:过去12个月交易记录、客户付款历史、现金流模式,AI评估加速",
+              "en": "Auto-extracted: 12-month transaction history, client payment patterns, cash flow trends, AI assessment accelerated"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "手动上传文件",
+              "en": "Upload documents manually"
+            },
+            "output": {
+              "zh": "已接收:银行对账单和财务报表,需要额外人工审核步骤,处理时间延长",
+              "en": "Received: Bank statements and financials, additional manual review required, processing time extended"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "review",
+        "title": {
+          "zh": "审核垫付方案",
+          "en": "Review advance terms"
+        },
+        "instruction": {
+          "zh": "AI引擎已完成信用评估并生成报价",
+          "en": "AI engine completed credit assessment and generated offer"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "标准垫付:85%",
+              "en": "Standard advance: 85%"
+            },
+            "output": {
+              "zh": "可获得€127,500资金,费用较低,买家信用强,AI风险评分优秀",
+              "en": "€127,500 available, lower fees, strong buyer credit, excellent AI risk score"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "最大垫付:95%",
+              "en": "Maximum advance: 95%"
+            },
+            "output": {
+              "zh": "可获得€142,500资金,费用较高,需额外担保,AI识别出流动性紧急需求",
+              "en": "€142,500 available, higher fees, additional security needed, AI detected liquidity urgency"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "compare",
+        "title": {
+          "zh": "确认资金到账",
+          "en": "Confirm fund transfer"
+        },
+        "instruction": {
+          "zh": "选择垫付方案并完成文件签署",
+          "en": "Select advance option and complete documentation"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "接受标准方案",
+              "en": "Accept standard terms"
+            },
+            "output": {
+              "zh": "文档已准备:电子签名完成,€127,500将在18小时内转入账户,可支付供应商",
+              "en": "Documentation ready: E-signature complete, €127,500 transfers within 18 hours, supplier payment enabled"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "接受最大方案",
+              "en": "Accept maximum terms"
+            },
+            "output": {
+              "zh": "文档已准备:担保协议已签,€142,500将在20小时内到账,现金流压力立即缓解",
+              "en": "Documentation ready: Security agreement signed, €142,500 transfers within 20 hours, cash flow pressure relieved"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Duqu的AI承保技术自动化信用评估,企业可在24小时内将未付发票转化为流动资金",
+      "en": "Duqu's AI underwriting automates credit assessment, turning unpaid invoices into working capital within 24 hours"
+    },
+    "sources": [
+      {
+        "url": "https://www.duqu.ai/",
+        "label": {
+          "zh": "Duqu官网",
+          "en": "Duqu website"
+        }
+      },
+      {
+        "url": "https://tech.eu/2026/09/24/duqu-raises-eur15m-to-give-businesses-faster-access-to-working-capital/",
+        "label": {
+          "zh": "融资新闻",
+          "en": "Funding news"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "document",
+      "label": {
+        "zh": "融资申请",
+        "en": "Funding application"
+      },
+      "initial": {
+        "zh": "客户:零售连锁店 发票金额:€150,000 账期:30天 已过天数:5天",
+        "en": "Client: Retail chain Invoice: €150,000 Terms: 30 days Outstanding: 5 days"
+      }
+    }
+  }
+}

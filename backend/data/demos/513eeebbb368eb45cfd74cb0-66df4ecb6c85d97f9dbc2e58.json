@@ -1,0 +1,185 @@
+{
+  "cache_key": "513eeebbb368eb45cfd74cb0-66df4ecb6c85d97f9dbc2e58",
+  "product_key": "513eeebbb368eb45cfd74cb0",
+  "fingerprint": "66df4ecb6c85d97f9dbc2e58",
+  "product_id": "p_19b739473d2823ba",
+  "product_name": "Kontext",
+  "origin": "pregenerated",
+  "generated_at": "2026-09-27T00:20:27.118897+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为AI智能体部署运行时安全防护",
+      "en": "Deploy runtime security for AI agents"
+    },
+    "scenario": {
+      "zh": "企业部署客服智能体,需要在允许自主操作的同时防止越权访问客户数据",
+      "en": "Company deploys customer service agents, needs autonomous operation while preventing unauthorized data access"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择智能体类型",
+          "en": "Choose agent type"
+        },
+        "instruction": {
+          "zh": "确定需要监控的AI智能体应用场景",
+          "en": "Define the AI agent use case to monitor"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "客服智能体访问CRM系统",
+              "en": "Support agent accessing CRM"
+            },
+            "output": {
+              "zh": "已配置客服场景:智能体可查询工单,读取客户资料,需限制修改权限",
+              "en": "Support scenario configured: agent queries tickets, reads profiles, edit access restricted"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "数据分析智能体访问数据库",
+              "en": "Analytics agent accessing database"
+            },
+            "output": {
+              "zh": "已配置分析场景:智能体可执行查询,生成报表,需阻止删除操作",
+              "en": "Analytics scenario configured: agent runs queries, generates reports, delete blocked"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "policy",
+        "widget": "choice",
+        "title": {
+          "zh": "设定安全策略",
+          "en": "Set security policy"
+        },
+        "instruction": {
+          "zh": "定义智能体操作的权限边界和审批流程",
+          "en": "Define permission boundaries and approval workflows for agent actions"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "严格模式:敏感操作需人工审批",
+              "en": "Strict mode: sensitive actions need approval"
+            },
+            "output": {
+              "zh": "策略已应用:智能体读取操作自动放行,修改客户数据时暂停并通知管理员",
+              "en": "Policy applied: read operations auto-approved, data modifications paused for admin review"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "平衡模式:高风险操作自动阻断",
+              "en": "Balanced mode: high-risk actions auto-blocked"
+            },
+            "output": {
+              "zh": "策略已应用:智能体常规操作继续,批量删除和导出操作被自动拦截",
+              "en": "Policy applied: routine operations continue, bulk delete and export automatically blocked"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "review",
+        "title": {
+          "zh": "审查智能体行为",
+          "en": "Review agent behavior"
+        },
+        "instruction": {
+          "zh": "查看实时监控面板,检查智能体的操作记录",
+          "en": "View real-time dashboard to inspect agent operation logs"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "查看被拦截操作",
+              "en": "View blocked actions"
+            },
+            "output": {
+              "zh": "发现3次越权尝试:智能体试图访问VIP客户完整信用卡信息,已全部拦截",
+              "en": "Found 3 unauthorized attempts: agent tried accessing VIP full card details, all blocked"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "查看审批队列",
+              "en": "View approval queue"
+            },
+            "output": {
+              "zh": "2个待审批请求:智能体请求更新客户等级和修改联系方式,等待人工确认",
+              "en": "2 pending approvals: agent requests tier update and contact change, awaiting confirmation"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "outcome",
+        "widget": "compare",
+        "title": {
+          "zh": "对比安全效果",
+          "en": "Compare security outcomes"
+        },
+        "instruction": {
+          "zh": "评估不同策略配置下的安全防护结果",
+          "en": "Evaluate security protection results under different policy configurations"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "启用Kontext前",
+              "en": "Before Kontext"
+            },
+            "output": {
+              "zh": "智能体自主操作无限制,潜在数据泄露风险高,缺乏可见性和追溯能力",
+              "en": "Agent operates unrestricted, high data leak risk, no visibility or audit trail"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "启用Kontext后",
+              "en": "After Kontext"
+            },
+            "output": {
+              "zh": "所有敏感操作可控,越权行为实时拦截,完整审计日志支持合规要求",
+              "en": "Sensitive actions controlled, unauthorized access blocked in real-time, full audit for compliance"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Kontext在智能体执行操作前实时评估和控制,帮助企业安全使用AI自主能力",
+      "en": "Kontext evaluates and controls agent actions before execution, enabling safe AI autonomy"
+    },
+    "sources": [
+      {
+        "url": "https://kontext.security/",
+        "label": {
+          "zh": "Kontext官网",
+          "en": "Kontext Official"
+        }
+      }
+    ]
+  }
+}

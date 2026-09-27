@@ -1,0 +1,196 @@
+{
+  "cache_key": "656d9aae77ffa500762f03b0-7da497a9c6946108dd9d3e0a",
+  "product_key": "656d9aae77ffa500762f03b0",
+  "fingerprint": "7da497a9c6946108dd9d3e0a",
+  "product_id": "p_5112981b460c193a",
+  "product_name": "Axya",
+  "origin": "pregenerated",
+  "generated_at": "2026-09-27T00:20:57.080298+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "航空零件紧急采购决策",
+      "en": "Urgent aerospace component procurement"
+    },
+    "scenario": {
+      "zh": "某航空制造商需要紧急采购500件钛合金连接件,在Axya平台上比较供应商并处理报价流程",
+      "en": "An aerospace manufacturer needs 500 titanium connectors urgently, comparing suppliers and processing quotes in Axya"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择供应商筛选策略",
+          "en": "Choose supplier filtering strategy"
+        },
+        "instruction": {
+          "zh": "平台从8万家供应商中匹配符合条件的候选,选择筛选优先级",
+          "en": "Platform matches qualified candidates from 80K suppliers, select filtering priority"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "优先交期最快的供应商",
+              "en": "Prioritize fastest lead time"
+            },
+            "output": {
+              "zh": "采购单已更新:候选供应商6家,最快交期18天,但单价较高,需要权衡成本与时间",
+              "en": "Requisition updated: 6 candidates found, fastest is 18 days but higher unit cost, trade-off needed"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "优先历史合作良好的供应商",
+              "en": "Prioritize proven suppliers"
+            },
+            "output": {
+              "zh": "采购单已更新:候选供应商4家,均有3年以上合作记录,交期28天,价格稳定且质量可控",
+              "en": "Requisition updated: 4 candidates with 3+ year history, 28-day lead time, stable pricing and quality"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "处理供应商自动报价",
+          "en": "Process automated supplier quotes"
+        },
+        "instruction": {
+          "zh": "AI已向候选供应商发送询价请求并收到回复,选择如何处理报价差异",
+          "en": "AI sent RFQs to candidates and received responses, choose how to handle quote discrepancies"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "接受最低报价",
+              "en": "Accept lowest quote"
+            },
+            "output": {
+              "zh": "采购单已更新:选定供应商单价降低但交期延长至35天,AI标记风险提示需确认替代方案",
+              "en": "Requisition updated: Selected supplier offers lower price but 35-day lead, AI flags risk for backup plan"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "要求AI协商平衡方案",
+              "en": "Ask AI to negotiate balanced option"
+            },
+            "output": {
+              "zh": "采购单已更新:AI向两家供应商提议联合供货,缩短交期至25天并保持预算内价格",
+              "en": "Requisition updated: AI proposed split order to two suppliers, 25-day lead time within budget"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比风险评估结果",
+          "en": "Compare risk assessment results"
+        },
+        "instruction": {
+          "zh": "AI分析了两种采购方案的供应链风险,对比决策依据",
+          "en": "AI analyzed supply chain risks for both procurement approaches, compare decision factors"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "单一供应商方案",
+              "en": "Single supplier approach"
+            },
+            "output": {
+              "zh": "风险评估:供应商财务稳定但产能紧张,AI检测到该供应商近期订单量激增可能影响交期",
+              "en": "Risk assessment: Supplier financially stable but capacity tight, AI detects recent order surge may delay"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "双供应商分单方案",
+              "en": "Dual supplier split approach"
+            },
+            "output": {
+              "zh": "风险评估:分散风险但协调成本增加,AI建议300件主供应商配200件备用以优化物流",
+              "en": "Risk assessment: Diversified risk but higher coordination, AI suggests 300/200 split for logistics"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "确认采购订单",
+          "en": "Confirm purchase order"
+        },
+        "instruction": {
+          "zh": "审核最终采购方案,AI已准备好订单文档并同步至ERP系统",
+          "en": "Review final procurement plan, AI prepared order documents and synced to ERP system"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "批准并发送订单",
+              "en": "Approve and send order"
+            },
+            "output": {
+              "zh": "采购单已更新:订单已发送至双供应商,AI设置了里程碑提醒并持续监控交付进度和质量",
+              "en": "Requisition updated: Order sent to both suppliers, AI set milestone alerts and monitors delivery progress"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "标记为草稿待复核",
+              "en": "Mark as draft for review"
+            },
+            "output": {
+              "zh": "采购单已更新:方案已保存为草稿,AI总结了关键决策点和备选方案供团队评审",
+              "en": "Requisition updated: Plan saved as draft, AI summarized key decisions and alternatives for team review"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Axya用AI处理供应商匹配、报价谈判和风险评估,将制造业采购从邮件往来转变为智能决策流程",
+      "en": "Axya uses AI for supplier matching, quote negotiation and risk assessment, transforming manufacturing procurement from email threads into intelligent decisions"
+    },
+    "sources": [
+      {
+        "url": "https://axya.co",
+        "label": {
+          "zh": "Axya官网",
+          "en": "Axya website"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "document",
+      "label": {
+        "zh": "采购需求单",
+        "en": "Purchase requisition"
+      },
+      "initial": {
+        "zh": "零件:钛合金连接件TC-4 | 数量:500 | 交期:30天 | 质量:AS9100认证 | 预算:15万元",
+        "en": "Part: Titanium connector TC-4 | Qty: 500 | Lead time: 30 days | Quality: AS9100 cert | Budget: $22K"
+      }
+    }
+  }
+}

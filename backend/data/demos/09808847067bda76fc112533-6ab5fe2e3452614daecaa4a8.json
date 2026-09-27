@@ -1,0 +1,192 @@
+{
+  "cache_key": "09808847067bda76fc112533-6ab5fe2e3452614daecaa4a8",
+  "product_key": "09808847067bda76fc112533",
+  "fingerprint": "6ab5fe2e3452614daecaa4a8",
+  "product_id": "3",
+  "product_name": "Cradle",
+  "origin": "pregenerated",
+  "generated_at": "2026-09-27T00:21:46.537688+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "用生成式 AI 优化酶稳定性",
+      "en": "Optimize enzyme stability with generative AI"
+    },
+    "scenario": {
+      "zh": "为洗涤剂配方设计耐热蛋白酶变体，目标是在 60°C 环境下保持活性",
+      "en": "Design heat-resistant protease variants for detergent formulas that maintain activity at 60°C"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择起始蛋白",
+          "en": "Select starting protein"
+        },
+        "instruction": {
+          "zh": "确定要优化的基础酶结构",
+          "en": "Define the base enzyme structure to optimize"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "野生型枯草杆菌蛋白酶",
+              "en": "Wild-type subtilisin protease"
+            },
+            "output": {
+              "zh": "已加载 275 个氨基酸序列，热稳定性基线建立",
+              "en": "Loaded 275 amino acid sequence, thermal stability baseline established"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "已优化工业菌株变体",
+              "en": "Pre-optimized industrial strain variant"
+            },
+            "output": {
+              "zh": "已加载改良序列，包含 12 个已知稳定性突变位点",
+              "en": "Loaded improved sequence with 12 known stability mutation sites"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "设定优化目标",
+          "en": "Set optimization target"
+        },
+        "instruction": {
+          "zh": "选择 AI 模型应优先改进的性能指标",
+          "en": "Choose the performance metric for AI model to prioritize"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "最大化热稳定性",
+              "en": "Maximize thermal stability"
+            },
+            "output": {
+              "zh": "简报已更新：重点关注二硫键形成区域和疏水核心突变",
+              "en": "Brief updated: Focus on disulfide bond regions and hydrophobic core mutations"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "平衡稳定性与催化效率",
+              "en": "Balance stability with catalytic efficiency"
+            },
+            "output": {
+              "zh": "简报已更新：保护活性位点周围区域，限制突变范围",
+              "en": "Brief updated: Protect active site surroundings, restrict mutation scope"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "比较候选变体",
+          "en": "Compare candidate variants"
+        },
+        "instruction": {
+          "zh": "AI 生成了多个序列方案，检查预测性能差异",
+          "en": "AI generated multiple sequence designs, review predicted performance differences"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "变体 A：8 处突变",
+              "en": "Variant A: 8 mutations"
+            },
+            "output": {
+              "zh": "预测熔解温度更高，但催化效率略有下降",
+              "en": "Predicted higher melting temperature but slightly reduced catalytic efficiency"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "变体 B：5 处突变",
+              "en": "Variant B: 5 mutations"
+            },
+            "output": {
+              "zh": "预测热稳定性与活性均衡提升，突变位点更保守",
+              "en": "Predicted balanced improvement in stability and activity with conservative sites"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "准备实验验证",
+          "en": "Prepare experimental validation"
+        },
+        "instruction": {
+          "zh": "确认最终设计方案并生成合成规格",
+          "en": "Confirm final design and generate synthesis specifications"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "生成变体 B 的 DNA 序列",
+              "en": "Generate DNA sequence for Variant B"
+            },
+            "output": {
+              "zh": "简报包含密码子优化序列，可下载用于合成订单",
+              "en": "Brief contains codon-optimized sequence, downloadable for synthesis order"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "同时准备两个变体",
+              "en": "Prepare both variants"
+            },
+            "output": {
+              "zh": "简报包含 A 和 B 的对比表及表达载体建议",
+              "en": "Brief contains comparison table for A and B with expression vector recommendations"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Cradle 用生成式 AI 预测蛋白质突变方案，加速从序列设计到实验验证的研发周期",
+      "en": "Cradle uses generative AI to predict protein mutation strategies, accelerating R&D from sequence design to experimental validation"
+    },
+    "sources": [
+      {
+        "url": "https://cradle.bio",
+        "label": {
+          "zh": "Cradle 官网",
+          "en": "Cradle official site"
+        }
+      },
+      {
+        "url": "https://www.labiotech.eu/best-biotech/ai-drug-discovery-companies/",
+        "label": {
+          "zh": "AI 药物发现公司榜单",
+          "en": "AI drug discovery companies list"
+        }
+      }
+    ]
+  }
+}
