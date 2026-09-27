@@ -2,11 +2,13 @@
 
 2026-09-26 排查：每日任务的 Perplexity 返回 401、GLM 返回 429，预检失败导致后续发布、同步与 demo 预生成均跳过。现在每日任务默认使用 Claude，密钥需配置到 GitHub Actions secrets；Vercel 只负责提供 API、读取 MongoDB/部署快照，不运行长时间爬虫。
 
-### 来源与可选 Exa
+### RSS、Tavily 与可选 Exa
 
-`DISCOVERY_SEARCH_PROVIDER=rss` 是当前部署默认。`auto` 在配置 `EXA_API_KEY` 时合并 Exa 与 RSS，Exa 故障会降级到 RSS 并在报告记录；`exa` 要求 Exa 成功（仍保留 RSS 补充），失败会明确退出。Exa 密钥只放 GitHub Actions secret / 本地忽略的环境文件。Exa 仅提供有发布日期的候选文章，最终仍读取原文、核验引用和官网链接，再交给 Claude 分析，不能凭搜索摘要直接入库。每轮最多一次 Exa 搜索、10 个结果。
+当前部署使用 `DISCOVERY_SEARCH_PROVIDER=auto`：配置 `TAVILY_API_KEY` 时优先 Tavily，否则使用已配置的 Exa，均与 RSS 合并。所选搜索服务失败会回退 RSS 并记录原因。`rss` 禁用付费搜索；`tavily` / `exa` 要求指定服务成功，失败会明确退出。密钥只放 GitHub Actions secret / 本地忽略的环境文件，不放前端或 Git。搜索发生在 Actions 爬虫，Vercel 读取同步后的 MongoDB/部署快照，不需要持有搜索密钥。
 
-量子位地址更新为 `/feed`，增加 Tech.eu、Sifted、BetaKit；保留原来源的健康记录。2026-09-26 实测 36kr 无 RSS 条目、VentureBeat 不可读、TechCrunch Funding 超出 14 天窗口，不能把 HTTP 200 当作来源可用。
+每轮最多一次搜索、10 条结果；Tavily 固定 `basic`，关闭自动升级与生成答案。搜索只提供候选，最终仍读取原文、核验引用和官网链接，再交给 Claude 分析，不能凭摘要直接入库。Tavily 的 `published_date` 可能是最近修改时间，因此额外要求原网页 `datePublished` / `article:published_time` 等发布日期处于窗口内；缺失日期或旧文不进入模型输入。可读搜索结果获得最多三分之一的优先输入名额，其余保留给 RSS；不足时互相补位。报告记录候选数、原文可读数和最终进入模型的数量。
+
+量子位的发现与中文新闻爬虫统一使用 `/feed`；TechCrunch 停更的 `/tag/funding/feed/` 替换为有近期文章的 `/category/venture/feed/`，发现源增加钛媒体，保留 Tech.eu、Sifted、BetaKit。2026-09-27 实测：36kr 的 HTTP 200 实际是安全检查页，VentureBeat 返回 HTTP 429；两者记为 `blocked`，不伪装成有效 RSS。机器之心旧 `/rss` 跳转数据服务页，记为 `not_feed`。健康状态区分 `blocked`、`not_feed`、`empty`、`undated`、`stale`、`future_dated`、`no_matches`、`ok`，不能只看 HTTP 200。
 
 `python crawler/tools/audit_discovery_sources.py --output artifacts/source-health.json` 不调用模型；检查 RSS 条目、最新发布日期、窗口内可用数和原文可读性。正常发现任务也记录这些指标，GitHub 的报告 artifact 在任务失败时仍上传。`auto_discover.py --provider claude --dry-run` 再验证模型提取与证据规则，但不发布数据。最终要检查任务发布步骤、MongoDB 同步结果，以及 Vercel 的 `/api/v1/products/last-updated` 和实际新产品，而非只看模型请求成功。
 
@@ -19,6 +21,8 @@ DISCOVERY_PROVIDER=claude
 CLAUDE_API_BASE_URL=https://api.intenext.ai/v1
 CLAUDE_MODEL=claude-sonnet-5
 CLAUDE_API_KEY=<your-secret>
+DISCOVERY_SEARCH_PROVIDER=auto
+TAVILY_API_KEY=<your-secret>
 CLAUDE_DISCOVERY_DAYS=14
 CLAUDE_DISCOVERY_MAX_CALLS=6
 CLAUDE_DISCOVERY_MAX_ARTICLES=12

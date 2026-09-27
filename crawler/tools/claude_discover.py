@@ -22,14 +22,17 @@ import feedparser
 import requests
 
 from utils.claude_client import ClaudeClient, ClaudeError
+from utils.rss_health import inspect_feed
+from utils.tavily_client import parse_date
 
 FEEDS = [
     ("TechCrunch Startups", "https://techcrunch.com/category/startups/feed/"),
     ("TechCrunch AI", "https://techcrunch.com/category/artificial-intelligence/feed/"),
-    ("TechCrunch Funding", "https://techcrunch.com/tag/funding/feed/"),
+    ("TechCrunch Venture", "https://techcrunch.com/category/venture/feed/"),
     ("VentureBeat", "https://venturebeat.com/category/ai/feed/"),
     ("36kr", "https://36kr.com/feed"),
     ("QbitAI", "https://www.qbitai.com/feed"),
+    ("TMTPost", "https://www.tmtpost.com/rss"),
     ("Leiphone", "https://www.leiphone.com/feed"),
     ("iFanr", "https://www.ifanr.com/feed"),
     ("Tech.eu", "https://tech.eu/feed/"),
@@ -144,42 +147,57 @@ def collect_articles(days, limit, now=None):
         name, url = feed
         started = time.monotonic()
         try:
-            data, _ = fetch_public(url)
-            parsed = feedparser.parse(data)
-            dates = [calendar.timegm(e.get("published_parsed") or e.get("updated_parsed"))
-                     for e in parsed.entries if e.get("published_parsed") or e.get("updated_parsed")]
-            entries = parse_feed(data, name, url, now, days)
-            latest = datetime.fromtimestamp(max(dates), timezone.utc) if dates else None
-            status = "ok" if entries else "stale" if latest and latest < now - timedelta(days=days) else "empty"
-            return entries, {"source": name, "url": url, "eligible_articles": len(entries), "status": status,
-                             "entries": len(parsed.entries), "latest_published_at": latest.isoformat() if latest else None,
+            data, final_url = fetch_public(url)
+            _, health = inspect_feed(data, now, days)
+            entries = parse_feed(data, name, url, now, days) if health["status"] == "ok" else []
+            if health["status"] == "ok" and not entries:
+                health["status"] = "no_matches"
+            return entries, {**health, "source": name, "url": url, "final_url": final_url, "eligible_articles": len(entries),
                              "elapsed_ms": round((time.monotonic() - started) * 1000)}
+        except requests.HTTPError as error:
+            status_code = error.response.status_code if error.response is not None else None
+            return [], {"source": name, "url": url, "status": "blocked" if status_code in (403, 429) else "unavailable", "http_status": status_code}
         except (requests.RequestException, ValueError):
             return [], {"source": name, "url": url, "status": "unavailable"}
     feed_results = list(ThreadPoolExecutor(max_workers=5).map(collect, FEEDS))
     unique = {article["url"]: article for entries, _ in feed_results for article in entries}
     source_mode = os.getenv("DISCOVERY_SEARCH_PROVIDER", "auto").lower()
-    if source_mode not in {"auto", "rss", "exa"}:
-        raise ClaudeError("DISCOVERY_SEARCH_PROVIDER must be auto, rss or exa")
-    if source_mode == "exa" or source_mode == "auto" and os.getenv("EXA_API_KEY"):
+    if source_mode not in {"auto", "rss", "exa", "tavily"}:
+        raise ClaudeError("DISCOVERY_SEARCH_PROVIDER must be auto, rss, exa or tavily")
+    selected_provider = source_mode
+    if source_mode == "auto":
+        selected_provider = "tavily" if os.getenv("TAVILY_API_KEY", "").strip() else "exa" if os.getenv("EXA_API_KEY", "").strip() else "rss"
+    if selected_provider in {"exa", "tavily"}:
         from utils.exa_client import search_articles, ExaError
+        from utils.tavily_client import search_articles as tavily_search, TavilyError
+        search = tavily_search if selected_provider == "tavily" else search_articles
+        provider_name = selected_provider.title()
         try:
-            found = search_articles("emerging AI startups product launches funding US Europe Asia", days, min(limit, 10), now)
+            found = search("emerging AI startups product launches seed funding US Europe Asia", days, min(limit, 10), now)
             # Retrieve original articles with the same public-URL checks and link/quote
             # validation as RSS. Search snippets alone can never publish a product.
-            unique.update({a["url"]: a for a in found})
-            feed_results.append(([], {"source": "Exa", "status": "ok" if found else "empty", "eligible_articles": len(found)}))
-        except ExaError as error:
-            feed_results.append(([], {"source": "Exa", "status": "unavailable", "error": str(error)}))
-            if source_mode == "exa":
+            for article in found:
+                unique.setdefault(article["url"], article)
+            feed_results.append(([], {"source": provider_name, "status": "ok" if found else "empty", "eligible_articles": len(found)}))
+        except (ExaError, TavilyError) as error:
+            feed_results.append(([], {"source": provider_name, "status": "unavailable", "error": str(error)}))
+            if source_mode != "auto":
                 raise ClaudeError(str(error)) from None
     articles = sorted(unique.values(), key=lambda a: (bool(PRIORITY.search(a["title"])), a["published_at"]), reverse=True)
     # Fetch before judging AI relevance: roundup titles may omit the word AI.
-    articles = articles[:limit * 3]
+    search_candidates = [a for a in articles if a["source"] in {"Tavily", "Exa"}][:min(limit, 10)]
+    articles = (search_candidates + [a for a in articles if a not in search_candidates])[:limit * 3]
     def enrich(article):
         try:
             data, final_url = fetch_public(article["url"])
             soup = BeautifulSoup(data, "html.parser")
+            if article["source"] == "Tavily":
+                # Tavily's date may be a last-modified estimate. Require the
+                # original page's publication metadata before treating it as new.
+                published = article_publication_date(soup)
+                if not published or not now - timedelta(days=days) <= published <= now:
+                    return None
+                article["published_at"] = published.isoformat()
             root = soup.select_one(".entry-content, .article-content, .article__content, article") or soup
             for node in root.select("script, style, nav, footer, header, aside, form"):
                 node.decompose()
@@ -195,8 +213,45 @@ def collect_articles(days, limit, now=None):
             return article if len(article["content"]) >= 200 and links and AI.search(article["content"]) else None
         except (requests.RequestException, ValueError):
             return None
-    enriched = list(ThreadPoolExecutor(max_workers=5).map(enrich, articles))
-    return [a for a in enriched if a][:limit], [status for _, status in feed_results]
+    enriched = [a for a in ThreadPoolExecutor(max_workers=5).map(enrich, articles) if a]
+    # Reserve part of the bounded model input for usable search discoveries.
+    # RSS volume must not silently crowd the configured search provider out.
+    searched = [a for a in enriched if a["source"] in {"Tavily", "Exa"}]
+    rss = [a for a in enriched if a["source"] not in {"Tavily", "Exa"}]
+    quota = max(1, limit // 3)
+    selected = (searched[:quota] + rss + searched[quota:])[:limit]
+    statuses = [status for _, status in feed_results]
+    for status in statuses:
+        status["readable_articles"] = sum(a["source"] == status["source"] for a in enriched)
+        status["selected_articles"] = sum(a["source"] == status["source"] for a in selected)
+    return selected, statuses
+
+
+def article_publication_date(soup):
+    for selector in ('meta[property="article:published_time"]', 'meta[name="pubdate"]',
+                     'meta[itemprop="datePublished"]', 'meta[name="datePublished"]', 'meta[name="date"]'):
+        tag = soup.select_one(selector)
+        if tag and (date := parse_date(tag.get("content"))):
+            return date
+    def walk(value):
+        if isinstance(value, dict):
+            if date := parse_date(value.get("datePublished")):
+                return date
+            for nested in value.values():
+                if isinstance(nested, (dict, list)) and (date := walk(nested)):
+                    return date
+        elif isinstance(value, list):
+            for nested in value:
+                if date := walk(nested):
+                    return date
+        return None
+    for script in soup.select('script[type="application/ld+json"]'):
+        try:
+            if date := walk(json.loads(script.string or script.get_text())):
+                return date
+        except (ValueError, TypeError):
+            continue
+    return None
 
 
 def normalized(text):
@@ -354,7 +409,7 @@ def run_discovery(engine, region="all", product_type="mixed", dry_run=False):
                     continue
                 source = next(a for a in batch if a["url"] == product["source_url"])
                 website_link = next(link for link in source['links'] if domain(link['url']) == host)
-                product.update({"source": "claude_exa" if source.get("source") == "Exa" else "claude_rss", "source_title": source["title"],
+                product.update({"source": {"Exa": "claude_exa", "Tavily": "claude_tavily"}.get(source.get("source"), "claude_rss"), "source_title": source["title"],
                                 "website_source": website_link.get('via') or source["url"], "discovered_at": datetime.now(timezone.utc).date().isoformat(),
                                 "extra": {"discovery_provider": "claude", "discovery_run_id": run_id,
                                           "source_published_at": source["published_at"], "evidence": product.pop("evidence")}})

@@ -19,7 +19,7 @@ class TechCrunchSpider(BaseSpider):
     RSS_FEEDS = [
         "https://techcrunch.com/category/startups/feed/",
         "https://techcrunch.com/category/artificial-intelligence/feed/",
-        "https://techcrunch.com/tag/funding/feed/",
+        "https://techcrunch.com/category/venture/feed/",
     ]
 
     # AI 关键词

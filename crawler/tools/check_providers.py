@@ -19,10 +19,17 @@ def check_providers(live=False):
     if provider == 'claude':
         from utils.claude_client import ClaudeClient, ClaudeError
         try:
+            source_mode = os.getenv('DISCOVERY_SEARCH_PROVIDER', 'auto').lower()
+            if source_mode not in ('auto', 'rss', 'tavily', 'exa'):
+                raise ClaudeError('DISCOVERY_SEARCH_PROVIDER must be auto, rss, tavily or exa.')
+            required_key = {'tavily': 'TAVILY_API_KEY', 'exa': 'EXA_API_KEY'}.get(source_mode)
+            if required_key and not os.getenv(required_key, '').strip():
+                raise ClaudeError(f'{required_key} is required for explicit {source_mode} discovery.')
             client = ClaudeClient()
             if live:
                 client.complete('Reply OK.', max_tokens=16)
-            print('OK: Claude discovery ' + ('API verified; sources are public RSS.' if live else 'configuration present.'))
+            print('OK: Claude discovery ' + ('API verified.' if live else 'configuration present.'))
+            print(f'Search mode: {source_mode}; RSS remains enabled. Search access is verified during collection.')
             return True
         except ClaudeError as exc:
             print(f'ERROR: {exc}')

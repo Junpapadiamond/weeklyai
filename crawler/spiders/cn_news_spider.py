@@ -18,13 +18,14 @@ except ImportError:
     HAS_FEEDPARSER = False
 
 from .base_spider import BaseSpider
+from utils.rss_health import inspect_feed
 
 
 CN_RSS_FEEDS = [
     {"name": "36kr", "url": "https://36kr.com/feed"},
     {"name": "jiqizhixin", "url": "https://www.jiqizhixin.com/rss"},
     {"name": "tmtpost", "url": "https://www.tmtpost.com/rss"},
-    {"name": "qbitai", "url": "https://www.qbitai.com/rss"},
+    {"name": "qbitai", "url": "https://www.qbitai.com/feed"},
     {"name": "leiphone", "url": "https://www.leiphone.com/feed"},
     {"name": "huxiu", "url": "https://www.huxiu.com/rss/0.xml"},
     {"name": "ifanr", "url": "https://www.ifanr.com/feed"},
@@ -147,7 +148,10 @@ class CNNewsSpider(BaseSpider):
             print(f"    ⚠ {name} feed failed: {exc}")
             return []
 
-        feed = feedparser.parse(resp.content)
+        feed, health = inspect_feed(resp.content, datetime.now(timezone.utc), (datetime.now(timezone.utc) - cutoff).total_seconds() / 86400)
+        if health["status"] != "ok":
+            print(f"    {name}: {health['status']} ({len(feed.entries)} RSS entries)")
+            return []
         items: List[Dict[str, Any]] = []
 
         for entry in feed.entries[:40]:
