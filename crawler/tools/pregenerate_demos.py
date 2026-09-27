@@ -14,7 +14,7 @@ from app.services.product_service import ProductService
 
 def candidates(products):
     return sorted((p for p in products if float(p.get("dark_horse_index") or 0) >= 4),
-                  key=lambda p: (float(p.get("dark_horse_index") or 0), str(p.get("discovered_at") or "")), reverse=True)
+                  key=lambda p: (str(p.get("discovered_at") or ""), float(p.get("dark_horse_index") or 0)), reverse=True)
 
 
 def export(entry):

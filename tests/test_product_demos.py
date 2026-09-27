@@ -73,6 +73,13 @@ def test_reviewed_profile_opens_without_model_quota_or_stale_cache(client, store
     assert service.ready_experience({**product, "website": "https://higgsfield.ai.evil.example"}, store) is None
 
 
+def test_daily_preparation_prioritizes_fresh_discoveries():
+    from tools.pregenerate_demos import candidates
+    fresh = {"name": "Fresh", "dark_horse_index": 4, "discovered_at": "2026-09-27"}
+    old = {"name": "Old", "dark_horse_index": 5, "discovered_at": "2026-02-01"}
+    assert candidates([old, fresh])[0] == fresh
+
+
 @pytest.mark.parametrize("kind", ["video", "image", "search", "document", "board"])
 def test_workspace_contract_is_bounded_data_only(spec, kind):
     spec["workspace"] = {"kind": kind, "label": {"zh": "任务", "en": "Brief"}, "initial": {"zh": "示例", "en": "Example"}, "html": "<script />"}

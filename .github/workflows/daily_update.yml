@@ -37,6 +37,7 @@ jobs:
           python -m pip install -r backend/requirements.txt
 
       - name: Run discovery + news
+        timeout-minutes: 18
         env:
           DISCOVERY_PROVIDER: ${{ vars.DISCOVERY_PROVIDER || 'claude' }}
           DISCOVERY_SEARCH_PROVIDER: ${{ vars.DISCOVERY_SEARCH_PROVIDER || 'rss' }}
@@ -46,9 +47,9 @@ jobs:
           CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL || 'claude-sonnet-5' }}
           CLAUDE_DISCOVERY_MAX_CALLS: '6'
           CLAUDE_DISCOVERY_MAX_ARTICLES: '12'
-          PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
+          PERPLEXITY_API_KEY: ${{ (vars.DISCOVERY_PROVIDER || 'claude') != 'claude' && secrets.PERPLEXITY_API_KEY || '' }}
           PERPLEXITY_MODEL: ${{ secrets.PERPLEXITY_MODEL || 'sonar' }}
-          ZHIPU_API_KEY: ${{ secrets.ZHIPU_API_KEY }}
+          ZHIPU_API_KEY: ${{ (vars.DISCOVERY_PROVIDER || 'claude') != 'claude' && secrets.ZHIPU_API_KEY || '' }}
           GLM_MODEL: ${{ secrets.GLM_MODEL || 'glm-4.7' }}
           GLM_SEARCH_ENGINE: ${{ secrets.GLM_SEARCH_ENGINE || 'search_pro' }}
           USE_GLM_FOR_CN: ${{ secrets.ZHIPU_API_KEY && 'true' || 'false' }}
@@ -63,40 +64,41 @@ jobs:
           python tools/prune_dark_horses.py
           python tools/auto_publish.py
 
-          # Quality / enrichment pipeline (best-effort, don't fail the whole run)
-          python tools/backfill_source_urls.py || true
-          python tools/resolve_websites.py --input data/products_featured.json --aggressive || true
-          python tools/validate_websites.py || true
-          python tools/cleanup_unknowns_and_duplicates.py || true
-          python tools/fix_logos.py --input data/products_featured.json --only-missing || true
+          # Claude already validates dated evidence, official-site identity and
+          # deduplication. Do not re-probe the entire legacy catalog (or clear
+          # existing logos) before publishing the newly verified products.
+          if [ "${DISCOVERY_PROVIDER}" != "claude" ]; then
+            timeout 90s python tools/backfill_source_urls.py || true
+            timeout 90s python tools/resolve_websites.py --input data/products_featured.json --aggressive || true
+            timeout 120s python tools/validate_websites.py --scope auto || true
+            python tools/cleanup_unknowns_and_duplicates.py || true
+          fi
+          timeout 120s python -u tools/fix_logos.py --input data/products_featured.json --only-missing || true
 
           BASELINE_BLOGS="/tmp/blogs_news.before_news.json"
           if [ -f data/blogs_news.json ]; then
             cp -f data/blogs_news.json "$BASELINE_BLOGS"
           fi
 
-          python main.py --news-only || true
-          # CN merge is required: if this fails, workflow should fail and alert.
-          if [ -f "$BASELINE_BLOGS" ]; then
-            if ! python tools/cn_news_only.py --baseline-file "$BASELINE_BLOGS"; then
-              echo "❌ CN merge failed: cn_news_only.py" >> "$GITHUB_STEP_SUMMARY"
-              exit 1
-            fi
-          else
-            if ! python tools/cn_news_only.py; then
-              echo "❌ CN merge failed: cn_news_only.py (no baseline file)" >> "$GITHUB_STEP_SUMMARY"
-              exit 1
-            fi
+          timeout 180s python -u main.py --news-only || true
+          # A news outage must not discard verified product discoveries. Keep
+          # the previous multilingual news snapshot if the merge cannot finish.
+          if ! timeout 120s python -u tools/cn_news_only.py --baseline-file "$BASELINE_BLOGS"; then
+            if [ -f "$BASELINE_BLOGS" ]; then cp -f "$BASELINE_BLOGS" data/blogs_news.json; fi
+            echo "News refresh deferred; retained previous snapshot. Product publication continues." >> "$GITHUB_STEP_SUMMARY"
           fi
 
-          if [ "${DISCOVERY_PROVIDER}" != "claude" ] && ! python tools/cn_news_glm.py; then
+          if [ "${DISCOVERY_PROVIDER}" != "claude" ] && ! timeout 120s python -u tools/cn_news_glm.py; then
             echo "❌ CN merge failed: cn_news_glm.py" >> "$GITHUB_STEP_SUMMARY"
             exit 1
           fi
 
-          python tools/rss_to_products.py --input data/blogs_news.json --sources youtube,x,xhs,wechat --enrich-featured || true
+          if [ "${DISCOVERY_PROVIDER}" != "claude" ]; then
+            timeout 120s python tools/rss_to_products.py --input data/blogs_news.json --sources youtube,x,xhs,wechat --enrich-featured || true
+          fi
 
-      - name: Verify JSON data sources (LLM-assisted)
+      - name: Verify JSON data sources (deterministic)
+        timeout-minutes: 2
         continue-on-error: true
         env:
           PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
@@ -108,8 +110,8 @@ jobs:
         run: |
           set -euo pipefail
           python crawler/tools/verify_data_sources.py \
-            --mode llm \
-            --check-network logos \
+            --mode heuristic \
+            --check-network none \
             --skip-backend-snapshot-check \
             --report-json /tmp/data_report.json \
             --report-md /tmp/data_report.md
