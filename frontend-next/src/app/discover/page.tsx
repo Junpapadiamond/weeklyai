@@ -8,7 +8,7 @@ function DiscoverSkeleton({ locale }: { locale: SiteLocale }) {
   return (
     <section className="section">
       <div className="loading-block">
-        {pickLocaleText(locale, { zh: "加载随机发现中...", en: "Loading discovery deck..." })}
+        {pickLocaleText(locale, { zh: "加载随便看看中...", en: "Loading discovery deck..." })}
       </div>
     </section>
   );

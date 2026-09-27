@@ -63,7 +63,7 @@ export function ProductDemoSection({ productId, productName }: { productId: stri
   if (state.kind === "ready") {
     return (
       <section className="detail-block">
-        <h2 className="detail-block__title">{t("交互演示", "Interactive demo")}</h2>
+        <h2 className="detail-block__title">{t("产品演示", "Interactive demo")}</h2>
         <DemoPlayer spec={state.spec} onRegenerate={() => void build(true)} />
       </section>
     );
@@ -71,7 +71,7 @@ export function ProductDemoSection({ productId, productName }: { productId: stri
 
   return (
     <section className="detail-block">
-      <h2 className="detail-block__title">{t("交互演示", "Interactive demo")}</h2>
+      <h2 className="detail-block__title">{t("产品演示", "Interactive demo")}</h2>
       <div className="demo-entry">
         {state.kind === "building" ? (
           <>

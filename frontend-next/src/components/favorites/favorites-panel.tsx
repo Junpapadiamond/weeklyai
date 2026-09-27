@@ -36,7 +36,18 @@ const BLOG_SOURCE_LABELS: Record<string, string> = {
   x: "X",
   reddit: "Reddit",
   tech_news: "Tech News",
+  cn_news: "China news",
+  cn_news_glm: "China news summaries",
 };
+
+function getBlogSourceLabel(source: string, locale: "zh-CN" | "en-US") {
+  if (locale === "zh-CN") {
+    if (source === "cn_news") return "国内资讯";
+    if (source === "cn_news_glm") return "国内资讯摘要";
+    if (source === "tech_news") return "科技媒体";
+  }
+  return BLOG_SOURCE_LABELS[source] || source || (locale === "zh-CN" ? "资讯" : "News");
+}
 
 function formatSavedTime(value: string | undefined, locale: "zh-CN" | "en-US") {
   if (!value) return locale === "en-US" ? "Just now" : "刚刚";
@@ -53,14 +64,14 @@ function formatSavedTime(value: string | undefined, locale: "zh-CN" | "en-US") {
 function scoreLabel(score: number | undefined, locale: "zh-CN" | "en-US"): string {
   const safe = score || 0;
   if (safe >= 4) return locale === "en-US" ? `Dark Horse ${safe}/5` : `黑马 ${safe}分`;
-  if (safe >= 2) return locale === "en-US" ? `Rising ${safe}/5` : `潜力 ${safe}分`;
+  if (safe >= 2) return locale === "en-US" ? `Rising ${safe}/5` : `潜力股 ${safe} 分`;
   if (safe > 0) return locale === "en-US" ? `${safe}/5` : `${safe}分`;
   return locale === "en-US" ? "Unrated" : "待评";
 }
 
 function toneLabel(tone: "darkhorse" | "rising" | "watch", locale: "zh-CN" | "en-US"): string {
   if (tone === "darkhorse") return locale === "en-US" ? "Dark Horse" : "黑马";
-  if (tone === "rising") return locale === "en-US" ? "Rising" : "潜力";
+  if (tone === "rising") return locale === "en-US" ? "Rising" : "潜力股";
   return locale === "en-US" ? "Watch" : "观察";
 }
 
@@ -135,7 +146,7 @@ export function FavoritesPanel() {
         .toLowerCase();
       if (source) {
         const key = `source:${source}`;
-        const label = `${t("来源", "Source")} · ${BLOG_SOURCE_LABELS[source] || source}`;
+        const label = `${t("来源", "Source")} · ${getBlogSourceLabel(source, locale)}`;
         const current = counts.get(key);
         counts.set(key, { label, count: (current?.count || 0) + 1 });
       }
@@ -144,7 +155,7 @@ export function FavoritesPanel() {
         const normalized = normalizeDirectionToken(category);
         if (!normalized) continue;
         const key = `direction:${normalized}`;
-        const label = `${t("方向", "Direction")} · ${getDirectionLabel(normalized, locale) || normalized}`;
+        const label = `${t("分类", "Direction")} · ${getDirectionLabel(normalized, locale) || normalized}`;
         const current = counts.get(key);
         counts.set(key, { label, count: (current?.count || 0) + 1 });
       }
@@ -273,7 +284,7 @@ export function FavoritesPanel() {
             type="button"
             onClick={() => setActiveKind("blog")}
           >
-            {t("博客动态", "News")} ({store.blogs.length})
+            {t("AI 资讯", "News")} ({store.blogs.length})
           </button>
         </div>
 
@@ -285,7 +296,7 @@ export function FavoritesPanel() {
                 type="search"
                 value={productSearch}
                 onChange={(event) => setProductSearch(event.target.value)}
-                placeholder={t("搜索收藏或方向", "Search favorites or directions")}
+                placeholder={t("搜索收藏或分类", "Search favorites or directions")}
                 autoComplete="off"
               />
             </label>
@@ -296,7 +307,7 @@ export function FavoritesPanel() {
                 className={`tag-btn ${activeProductDirectionFilter === "all" ? "active" : ""}`}
                 onClick={() => setProductDirectionFilter("all")}
               >
-                {t("全部方向", "All directions")}
+                {t("全部分类", "All directions")}
               </button>
               {productTopDirections.map((option) => (
                 <button
@@ -350,7 +361,7 @@ export function FavoritesPanel() {
 
                     <div className="favorites-panel__item-actions">
                       <Link href={`/product/${detailId}`} className="link-btn link-btn--card link-btn--card-primary">
-                        {t("详情", "Details")}
+                        {t("查看详情", "Details")}
                       </Link>
                       {hasWebsite ? (
                         <a
@@ -360,7 +371,7 @@ export function FavoritesPanel() {
                           rel="noopener noreferrer"
                           onClick={(event) => handleExternalAnchorClick(event, website)}
                         >
-                          {t("官网", "Website")}
+                          {t("访问官网", "Website")}
                         </a>
                       ) : (
                         <a
@@ -371,7 +382,7 @@ export function FavoritesPanel() {
                           onClick={(event) => handleExternalAnchorClick(event, websiteSearchUrl)}
                           title={t("点击跳转 Google 搜索官网", "Open Google search for the official website")}
                         >
-                          {t("官网待验证", "Website pending verification")}
+                          {t("查找官网", "Website pending verification")}
                         </a>
                       )}
                     </div>
@@ -388,7 +399,7 @@ export function FavoritesPanel() {
                 type="search"
                 value={blogSearch}
                 onChange={(event) => setBlogSearch(event.target.value)}
-                placeholder={t("搜索来源或方向", "Search sources or directions")}
+                placeholder={t("搜索来源或分类", "Search sources or directions")}
                 autoComplete="off"
               />
             </label>
@@ -434,7 +445,7 @@ export function FavoritesPanel() {
                 const website = normalizeWebsite(blog.website);
                 const hasWebsite = isValidWebsite(website);
                 const source = String(blog.source || "").toLowerCase();
-                const sourceLabel = BLOG_SOURCE_LABELS[source] || blog.source || "Blog";
+                const sourceLabel = getBlogSourceLabel(source, locale);
 
                 return (
                   <article className="favorites-panel__item favorites-panel__item--compact" key={`blog-${entry.key}`}>
@@ -457,7 +468,7 @@ export function FavoritesPanel() {
                           rel="noopener noreferrer"
                           onClick={(event) => handleExternalAnchorClick(event, website)}
                         >
-                          {t("原文", "Source")}
+                          {t("阅读原文", "Source")}
                         </a>
                       ) : null}
                     </div>
@@ -476,7 +487,7 @@ export function FavoritesPanel() {
 
         {activeKind === "blog" && filteredBlogs.length === 0 ? (
           <div className="empty-state">
-            <p className="empty-state-text">{t("当前筛选下暂无收藏博客动态。", "No saved news posts in the current filter.")}</p>
+            <p className="empty-state-text">{t("还没有符合条件的资讯收藏。", "No saved news posts in the current filter.")}</p>
           </div>
         ) : null}
 

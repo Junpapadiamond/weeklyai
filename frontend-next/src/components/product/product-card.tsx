@@ -55,24 +55,24 @@ export function ProductCard({ product, compact = false, rank, highlighted = fals
         <div className="research-product__identity-copy">
           <h3 className="research-product__title"><Link href={detailUrl}>{product.name}</Link></h3>
           <p className="research-product__category">{formatCategories(product, locale)}</p>
-          <p className="research-product__meta">{region}<span aria-hidden="true"> · </span>{t("发现评分", "Discovery score")} {scoreLabel}</p>
-          {recordedDate ? <p className="research-product__date"><time dateTime={recordedDate}>{recordedDate}</time></p> : null}
+          <p className="research-product__meta">{region}<span aria-hidden="true"> · </span>{t("黑马指数", "Discovery score")} {scoreLabel}</p>
+          {recordedDate ? <p className="research-product__date">{t("收录于 ", "")}<time dateTime={recordedDate}>{recordedDate}</time></p> : null}
         </div>
       </header>
       <div className="research-product__briefing">
-        <p className="research-product__description">{description || t("产品摘要待补充", "Product summary pending")}</p>
-        {whyMatters && whyMatters !== description ? <p className="research-product__why"><span>{t("值得注意", "WHY LOOK")} / </span>{whyMatters}</p> : null}
+        <p className="research-product__description">{description || t("暂无产品介绍", "Product summary pending")}</p>
+        {whyMatters && whyMatters !== description ? <p className="research-product__why"><span>{t("产品亮点", "WHY LOOK")} / </span>{whyMatters}</p> : null}
       </div>
       <footer className="research-product__footer">
         <div className="research-product__reference">
-          {product.source_url && isValidWebsite(product.source_url) ? <a href={product.source_url} target="_blank" rel="noopener noreferrer">{t("阅读来源", "Read source")} <span aria-hidden="true">↗</span></a> : null}
+          {product.source_url && isValidWebsite(product.source_url) ? <a href={product.source_url} target="_blank" rel="noopener noreferrer">{t("查看来源", "Read source")} <span aria-hidden="true">↗</span></a> : null}
           {favoritable ? <FavoriteButton product={product} /> : null}
         </div>
         <div className="research-product__actions">
-          <Link href={detailUrl}>{t("详情", "Details")}</Link>
-          {supportsLiveDemo(product) ? <Link href={`${detailUrl}?demo=1#try-demo`} className="research-product__try">{t("交互试用", "Try demo")}</Link> : null}
+          <Link href={detailUrl}>{t("查看详情", "Details")}</Link>
+          {supportsLiveDemo(product) ? <Link href={`${detailUrl}?demo=1#try-demo`} className="research-product__try">{t("查看演示", "Try demo")}</Link> : null}
           <a href={hasWebsite ? website : websiteSearchUrl} target="_blank" rel="noopener noreferrer" onClick={(event) => handleExternalAnchorClick(event, hasWebsite ? website : websiteSearchUrl)}>
-            {hasWebsite ? t("官网", "Website") : t("查找官网", "Find website")} <span aria-hidden="true">↗</span>
+            {hasWebsite ? t("访问官网", "Website") : t("查找官网", "Find website")} <span aria-hidden="true">↗</span>
           </a>
         </div>
       </footer>

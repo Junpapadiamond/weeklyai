@@ -18,14 +18,14 @@ import type { BlogPost } from "@/types/api";
 
 const SOURCE_LABELS_ZH: Record<string, string> = {
   "": "全部",
-  cn_news: "中国本土源",
-  cn_news_glm: "中国本土源（GLM）",
+  cn_news: "国内资讯",
+  cn_news_glm: "国内资讯摘要",
   hackernews: "Hacker News",
   producthunt: "Product Hunt",
   youtube: "YouTube",
   x: "X",
   reddit: "Reddit",
-  tech_news: "Tech News",
+  tech_news: "科技媒体",
 };
 
 const SOURCE_LABELS_EN: Record<string, string> = {
@@ -43,7 +43,7 @@ const SOURCE_LABELS_EN: Record<string, string> = {
 const SOURCE_ORDER = ["cn_news", "cn_news_glm", "hackernews", "reddit", "tech_news", "producthunt", "youtube", "x"] as const;
 
 const MARKET_LABELS_ZH: Record<string, string> = {
-  hybrid: "全球 Hybrid",
+  hybrid: "全部地区",
   cn: "中国",
   us: "美国",
   global: "全球",
@@ -181,7 +181,7 @@ function BlogCard({ item }: { item: BlogPost }) {
               rel="noopener noreferrer"
               onClick={(event) => handleExternalAnchorClick(event, website)}
             >
-              {t("原文", "Source")}
+              {t("阅读原文", "Source")}
             </a>
           ) : (
             <span className="pending-tag">{t("链接待补充", "Link pending")}</span>
@@ -223,15 +223,15 @@ export function BlogClient({ initialBlogs }: BlogClientProps) {
   const marketSummary = `${t("区域", "Region")}: ${marketLabels[market] || market}`;
   const emptyStateText =
     market === "cn"
-      ? t("暂无中国区动态，请稍后重试或切换全球。", "No China updates yet. Please retry later or switch to global.")
-      : t("暂无匹配数据，请切换来源或稍后再试。", "No matching data. Switch source or retry later.");
+      ? t("暂时没有国内资讯，可以切换到全部地区。", "No China updates yet. Please retry later or switch to global.")
+      : t("暂时没有相关资讯，试试其他来源。", "No matching data. Switch source or retry later.");
 
   return (
     <section className="section blog-page">
       <div className="section-header">
-        <p className="briefing-kicker">THE SIGNAL REPORT / {t("行业动态", "NEWS & SIGNALS")}</p>
-        <h1 className="section-title">{t("博客 & 动态", "News & Signals")}</h1>
-        <p className="section-desc">{t("中国本土源与海外动态共存，可按区域快速切换", "China-local and global sources in one feed, with quick market switching.")}</p>
+        <p className="briefing-kicker">{t("行业动态", "THE SIGNAL REPORT / NEWS & SIGNALS")}</p>
+        <h1 className="section-title">{t("AI 资讯", "News & Signals")}</h1>
+        <p className="section-desc">{t("看看国内外 AI 圈最近在聊什么。", "China-local and global sources in one feed, with quick market switching.")}</p>
         <p className="section-micro-note">
           {marketSummary} · {sourceSummary} · {locale === "en-US" ? `${posts.length} items` : `共 ${posts.length} 条`}
         </p>
@@ -256,7 +256,7 @@ export function BlogClient({ initialBlogs }: BlogClientProps) {
         </label>
       </div>
 
-      <div className="source-pills" role="tablist" aria-label={t("博客来源筛选", "News source filters")}>
+      <div className="source-pills" role="group" aria-label={t("资讯来源筛选", "News source filters")}>
         {sourceOptions.map((option) => {
           const isActive = option === activeSource;
           return (
@@ -264,6 +264,7 @@ export function BlogClient({ initialBlogs }: BlogClientProps) {
               key={option || "all-pill"}
               type="button"
               className={`source-pill ${isActive ? "active" : ""}`}
+              aria-pressed={isActive}
               onClick={() => setSource(option)}
             >
               {sourceLabels[option] || option}

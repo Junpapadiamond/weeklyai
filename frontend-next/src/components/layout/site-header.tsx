@@ -31,10 +31,10 @@ export function SiteHeader({ isAppShell = false }: SiteHeaderProps) {
   }, []);
 
   const navItems = [
-    { href: "/", label: t("产品观察", "The brief") },
-    { href: "/discover", label: t("随机发现", "Discover") },
-    { href: "/demo", label: t("交互演示", "Demos") },
-    { href: "/blog", label: t("博客动态", "News") },
+    { href: "/", label: t("产品库", "The brief") },
+    { href: "/discover", label: t("随便看看", "Discover") },
+    { href: "/demo", label: t("产品演示", "Demos") },
+    { href: "/blog", label: t("AI 资讯", "News") },
     { href: "/search", label: t("搜索", "Search") },
   ];
 
@@ -61,7 +61,7 @@ export function SiteHeader({ isAppShell = false }: SiteHeaderProps) {
           <HorseMark className="brand-mark" />
           <span className="brand-wordmark">
             <span className="logo-text">{t("黑马雷达", "Darkhorse Radar")}</span>
-            <span className="brand-wordmark__caption">{t("DARKHORSE RADAR", "INDEPENDENT PRODUCT DISCOVERY")}</span>
+            <span className="brand-wordmark__caption">{t("AI 新产品发现", "INDEPENDENT PRODUCT DISCOVERY")}</span>
           </span>
         </Link>
 

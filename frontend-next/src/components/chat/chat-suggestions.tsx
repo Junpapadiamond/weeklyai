@@ -13,12 +13,12 @@ export function ChatSuggestions({ onSelect, compact = false }: ChatSuggestionsPr
 
   const suggestions = useMemo(
     () => [
-      t("推荐 3 个有明确用途的产品，附来源", "Find 3 products with clear use cases and sources"),
+      t("最近有哪些值得试试的新产品？", "Find 3 products with clear use cases and sources"),
       t("哪些产品能帮我分析用户访谈？", "What can help me analyze customer interviews?"),
-      t("硬件产品有哪些值得验证的假设？", "What should I validate about these hardware products?"),
-      t("比较两个 Agent 产品解决的问题", "Compare the problems two agent products solve"),
-      t("给我 2-3 分潜力股", "Show me rising stars scored 2-3"),
-      t("欧洲有哪些产品值得研究？请标注收录日期", "Find European products and include their discovery dates"),
+      t("有哪些有意思的 AI 硬件？", "What should I validate about these hardware products?"),
+      t("帮我比较几款 AI 编程工具", "Compare the problems two agent products solve"),
+      t("找几款还没火起来的 AI 产品", "Show me rising stars scored 2-3"),
+      t("欧洲最近有哪些 AI 新产品？", "Find European products and include their discovery dates"),
     ],
     [t]
   );

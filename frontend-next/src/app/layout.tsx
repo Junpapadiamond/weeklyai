@@ -15,6 +15,7 @@ import "../styles/briefing.css";
 import "../styles/demo.css";
 import "../styles/research.css";
 import "../styles/brand.css";
+import "../styles/chinese.css";
 
 const displayFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -46,11 +47,11 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = await getRequestLocale();
   const siteName = pickLocaleText(locale, { zh: "黑马雷达", en: "Darkhorse Radar" });
   const title = pickLocaleText(locale, {
-    zh: "黑马雷达 · 早期 AI 产品，点开就能试",
+    zh: "黑马雷达 · 发现 AI 新产品",
     en: "Darkhorse Radar — Early AI products, hands on",
   });
   const description = pickLocaleText(locale, {
-    zh: "为产品经理扫描全球早期 AI 产品：每条附用途与来源，多数还能直接点开交互演示，无需注册。",
+    zh: "发现海内外 AI 新产品，按分类找工具、看产品亮点、浏览交互演示。收录智能体、编程、视频、AI 硬件等领域的黑马与潜力股。",
     en: "A radar for early AI products, built for product managers. Every pick links to its source, and most come with a hands-on demo you can try without signing up.",
   });
 

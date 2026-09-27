@@ -18,7 +18,7 @@ function DemoBadge({ spec }: { spec: DemoSpec }) {
   if (isReconstruction(spec)) {
     return (
       <p className="demo-badge demo-badge--reconstruction" role="note">
-        <strong>{t("示意性演示", "Illustrative reconstruction")}</strong>
+        <strong>{t("流程演示", "Illustrative reconstruction")}</strong>
         {t(
           `非真实产品界面。与 ${spec.product_name} 无关联、未获其背书。`,
           `Not the real product interface. Not affiliated with or endorsed by ${spec.product_name}.`
@@ -41,7 +41,7 @@ function DemoBadge({ spec }: { spec: DemoSpec }) {
     <p className="demo-badge demo-badge--sandbox" role="note">
       <strong>{t("独立制作", "Independently built")}</strong>
       {t(
-        `由 WeeklyAI 制作，未获 ${spec.product_name} 背书。`,
+        `由黑马雷达制作，未获 ${spec.product_name} 背书。`,
         `Built by WeeklyAI. Not endorsed by ${spec.product_name}.`
       )}
     </p>
@@ -149,8 +149,8 @@ export function DemoPlayer({ spec, onRegenerate }: { spec: DemoSpec; onRegenerat
                 `生成于 ${spec.generated_at.slice(0, 10)}${spec.reviewed_by ? "，已人工审阅" : "，尚未人工审阅"}。`,
                 `Generated ${spec.generated_at.slice(0, 10)}${spec.reviewed_by ? ", human-reviewed" : ", not yet human-reviewed"}.`
               )
-            : t("由 WeeklyAI 手工编写。", "Hand-authored by WeeklyAI.")}{" "}
-          <a href="/demo-feedback">{t("发现错误？告诉我们，48 小时内更正或下架。", "Something wrong? Tell us — corrected or removed within 48 hours.")}</a>
+            : t("由黑马雷达手工制作。", "Hand-authored by WeeklyAI.")}{" "}
+          <a href="/demo-feedback">{t("反馈演示中的错误", "Something wrong? Tell us — corrected or removed within 48 hours.")}</a>
         </p>
         {onRegenerate ? (
           <button type="button" className="demo-btn" onClick={onRegenerate}>

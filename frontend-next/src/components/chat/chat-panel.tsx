@@ -45,7 +45,7 @@ export function ChatPanel({ messages, isLoading, onSend, onMinimize }: ChatPanel
   const hasMessages = messages.length > 0;
 
   return (
-    <div ref={panelRef} className="chat-panel" role="dialog" aria-modal="true" aria-label={t("产品研究助手", "Product research assistant")} onKeyDown={(event) => {
+    <div ref={panelRef} className="chat-panel" role="dialog" aria-modal="true" aria-label={t("AI 产品助手", "Product research assistant")} onKeyDown={(event) => {
       if (event.key === "Escape") { event.preventDefault(); onMinimize(); }
       if (event.key !== "Tab") return;
       const controls = panelRef.current?.querySelectorAll<HTMLElement>('button:not(:disabled), input:not(:disabled), a[href]');
@@ -58,7 +58,7 @@ export function ChatPanel({ messages, isLoading, onSend, onMinimize }: ChatPanel
       <header className="chat-panel__header">
         <div className="chat-panel__title">
           <ChatCircleDots size={16} />
-          <span>{t("产品研究助手", "Product research")}</span>
+          <span>{t("AI 产品助手", "Product research")}</span>
         </div>
         <button type="button" className="chat-panel__minimize" onClick={onMinimize} aria-label={t("收起", "Minimize")}>
           <CaretDown size={18} />
@@ -69,7 +69,7 @@ export function ChatPanel({ messages, isLoading, onSend, onMinimize }: ChatPanel
         {!hasMessages ? (
           <div className="chat-welcome">
             <p className="chat-welcome__text">
-              {t("问我：黑马推荐、融资动态、硬件趋势、区域新产品。", "Ask me about dark horses, funding trends, hardware, and regional product signals.")}
+              {t("不知道怎么选？说说你的用途，我来帮你找产品、做比较。", "Ask me about dark horses, funding trends, hardware, and regional product signals.")}
             </p>
             <ChatSuggestions onSelect={onSend} />
           </div>
@@ -95,7 +95,7 @@ export function ChatPanel({ messages, isLoading, onSend, onMinimize }: ChatPanel
         </div>
       ) : null}
 
-      <label className="chat-panel__question-label" htmlFor="research-question">{t("你在研究什么？", "What are you researching?")}</label>
+      <label className="chat-panel__question-label" htmlFor="research-question">{t("你想找什么产品？", "What are you researching?")}</label>
       <form className="chat-panel__input-row" onSubmit={handleSubmit}>
         <input
           id="research-question"
@@ -113,7 +113,7 @@ export function ChatPanel({ messages, isLoading, onSend, onMinimize }: ChatPanel
       </form>
 
       <div className="chat-panel__footer">
-        <span className="chat-panel__powered">{t("基于产品档案回答 · Perplexity", "Answers grounded in the product archive · Perplexity")}</span>
+        <span className="chat-panel__powered">{t("基于本站收录的产品资料回答", "Answers grounded in the product archive · Perplexity")}</span>
       </div>
     </div>
   );

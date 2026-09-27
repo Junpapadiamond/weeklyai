@@ -36,15 +36,15 @@ export function DiscoverClient({ products }: DiscoverClientProps) {
   return (
     <section className="section discover-page">
       <div className="section-header">
-        <p className="briefing-kicker">THE SERENDIPITY FILE / {t("随机发现", "DISCOVER")}</p>
+        <p className="briefing-kicker">{t("换个方式找产品", "THE SERENDIPITY FILE / DISCOVER")}</p>
         <h1 className="section-title">
-          {t("随机发现", "Discover")}
+          {t("随便看看", "Discover")}
         </h1>
         <p className="section-desc">
-          {t("向右收藏，向左跳过。从产品档案里找一个值得继续研究的想法。", "Swipe right to save, left to skip. Find an idea worth following in the product archive.")}
+          {t("每次认识一款新产品。感兴趣就右滑收藏，不感兴趣就左滑跳过。", "Swipe right to save, left to skip. Find an idea worth following in the product archive.")}
         </p>
         <p className="section-micro-note">
-          {t("首次访问会显示手势引导；滑动记录会在 7 天后自动重置。", "Gesture tips appear on first visit; swipe history resets after 7 days.")}
+          {t("也可以点击下方按钮操作，收藏的产品随时可在收藏夹查看。", "Gesture tips appear on first visit; swipe history resets after 7 days.")}
         </p>
       </div>
 
@@ -61,7 +61,7 @@ export function DiscoverClient({ products }: DiscoverClientProps) {
         <DiscoveryDeck key={`discover-${products.length}`} products={products} onLike={addFavorite} />
       ) : (
         <div className="empty-state">
-          <p className="empty-state-text">{t("暂无可探索产品，请稍后再试。", "No products available to explore right now. Please try again later.")}</p>
+          <p className="empty-state-text">{t("暂时没有更多产品，过会儿再来看看。", "No products available to explore right now. Please try again later.")}</p>
         </div>
       )}
     </section>

@@ -128,16 +128,16 @@ export function DemoExplorer({ products }: { products: Product[] }) {
 
   const failureCopy: Record<DemoError, string> = {
     GENERATION_DISABLED: t(
-      "本站暂未开启「现场生成」。已经建好的演示仍可查看——用上面的「可立即查看」筛选。",
+      "暂时无法生成新演示，请选择「已有演示」查看。",
       "On-demand demos are switched off on this site. The ones already built still work — use the 'Ready now' filter above."
     ),
     NOT_CONFIGURED: t(
-      "现场生成缺少服务商密钥。已经建好的演示仍可查看——用上面的「可立即查看」筛选。",
+      "暂时无法生成新演示，请选择「已有演示」查看。",
       "On-demand generation has no provider key configured. Pre-built demos still work — use the 'Ready now' filter above."
     ),
     PROVIDER_UNAVAILABLE: t("生成服务暂时不可用，请稍后再试。", "The generator is unavailable right now. Try again shortly."),
     INVALID_SPEC: t(
-      "生成的演示未通过校验，因此没有展示。宁可不展示，也不展示可能失真的内容。",
+      "这次生成的演示无法使用，请重试。",
       "The generated demo failed validation, so it was not shown. We would rather show nothing than something possibly wrong."
     ),
     TOO_MANY_REQUESTS: t(
@@ -152,10 +152,10 @@ export function DemoExplorer({ products }: { products: Product[] }) {
   return (
     <section className="section demo-explorer">
       <header className="section-header">
-        <h1 className="section-title">{t("交互演示", "Interactive demos")}</h1>
+        <h1 className="section-title">{t("产品演示", "Interactive demos")}</h1>
         <p className="section-desc">
           {t(
-            "挑一个产品，直接看它做什么——不用注册，不用读文档。已建好的立即打开，其余的现场生成。",
+            "选择产品，查看根据公开资料制作的交互示例。演示使用示例数据，实际功能以官网为准。",
             "Pick a product and see what it does — no signup, no docs. Built ones open instantly; the rest are generated on the spot."
           )}
         </p>
@@ -173,11 +173,11 @@ export function DemoExplorer({ products }: { products: Product[] }) {
         </label>
         <label className="demo-toggle">
           <input type="checkbox" checked={readyOnly} onChange={(event) => setReadyOnly(event.currentTarget.checked)} />
-          {t(`可立即查看（${ready.size}）`, `Ready now (${ready.size})`)}
+          {t(`已有演示（${ready.size}）`, `Ready now (${ready.size})`)}
         </label>
         {status && !status.generationAvailable ? (
           <span className="demo-note-inline">
-            {t("实时生成未接入，可查看已建好的演示。", "Live generation is off; pre-built demos are available.")}
+            {t("暂时无法生成新演示，已有演示可以正常查看。", "Live generation is off; pre-built demos are available.")}
           </span>
         ) : null}
       </div>
@@ -204,7 +204,7 @@ export function DemoExplorer({ products }: { products: Product[] }) {
                   />
                   <span className="demo-card__name">{product.name}</span>
                   <span className={`demo-card__state${isReady ? " is-ready" : ""}`}>
-                    {isReady ? t("可查看", "Ready") : t("现场生成", "Build")}
+                    {isReady ? t("已有演示", "Ready") : t("生成演示", "Build")}
                   </span>
                 </span>
                 <span className="demo-card__desc">

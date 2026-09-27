@@ -29,7 +29,7 @@ export function ExperienceWorkspace({ spec, lang, choices, brief, onBriefChange,
   return <section className="workflow-workspace" aria-label={en ? "Interactive workspace" : "可交互工作区"}>
     <div className="workspace-topbar"><span><i /><i /><i /></span><strong>{en ? "CREATIVE WORKSPACE" : "创作工作区"}</strong><small>{en ? "Sample" : "示例"}</small></div>
     <div className="workspace-content">
-      <label className="workspace-brief">{spec.workspace?.label[lang] ?? (en ? "Your brief" : "你的任务简报")}
+      <label className="workspace-brief">{spec.workspace?.label[lang] ?? (en ? "Your brief" : "描述你的需求")}
         <textarea maxLength={200} value={brief} onChange={event => onBriefChange(event.target.value)} rows={3} />
       </label>
       {visual ? <>
@@ -50,7 +50,7 @@ export function ExperienceWorkspace({ spec, lang, choices, brief, onBriefChange,
         <div className="workspace-artifact-header">{kind === "search" ? <MagnifyingGlass size={17} /> : kind === "board" ? <Stack size={17} /> : <FileText size={17} />}<strong>{brief || spec.headline[lang]}</strong></div>
         {spec.steps.map((step, i) => <article key={step.id} data-ready={!!chosen[i]}><span>{String(i + 1).padStart(2, "0")} · {step.title[lang]}</span><h4>{chosen[i]?.label[lang] ?? (en ? "Awaiting your choice" : "等待你的选择")}</h4><p>{chosen[i]?.output[lang] ?? step.instruction[lang]}</p></article>)}
       </div>}
-      <div className="workspace-bottom"><ImageIcon size={13} />{en ? "Your brief and choices carry across every step." : "简报与选择会贯穿整个流程。"}</div>
+      <div className="workspace-bottom"><ImageIcon size={13} />{en ? "Your brief and choices carry across every step." : "你填写的内容和选择会保留到后续步骤。"}</div>
     </div>
   </section>;
 }

@@ -72,7 +72,7 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
   const funding = !isPlaceholderValue(product.funding_total) ? product.funding_total?.trim() : "-";
   const valuation = !isPlaceholderValue(product.valuation) ? product.valuation?.trim() : "-";
   const discoveredDate = formatDate(product.discovered_at || product.first_seen || product.published_at);
-  const whyMatters = getLocalizedProductWhyMatters(product, locale) || t("研究摘要待补充", "Research note pending");
+  const whyMatters = getLocalizedProductWhyMatters(product, locale) || t("暂无产品介绍", "Research note pending");
   const latestNews = getLocalizedProductLatestNews(product, locale) || t("暂无最新动态", "No recent updates yet");
   const websiteSearchUrl = getProductWebsiteSearchUrl(product.name, locale);
   const resolvedLogo = resolveProductLogoSources(product);
@@ -80,7 +80,7 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
   return (
     <section className="section product-detail-page">
       <nav className="research-breadcrumb" aria-label={t("页面位置", "Breadcrumb")}>
-        <Link href="/">{t("产品观察", "Product research")}</Link><span aria-hidden="true">/</span><span>{product.name}</span>
+        <Link href="/">{t("产品库", "Product research")}</Link><span aria-hidden="true">/</span><span>{product.name}</span>
       </nav>
       <article className="detail-card detail-card--rich">
         <header className="detail-hero">
@@ -99,7 +99,7 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
           <div className="detail-hero__content">
             <div className="detail-hero__head">
               <h1 className="detail-hero__title">{product.name}</h1>
-              <span className="detail-hero__score">{t("发现评分", "Discovery score")} {scoreLabel}</span>
+              <span className="detail-hero__score">{t("黑马指数", "Discovery score")} {scoreLabel}</span>
             </div>
             <p className="detail-hero__meta">
               {categoryLine}
@@ -113,7 +113,7 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
         {supportsLiveDemo(product) ? <ProductLiveDemo key={locale} product={product} autoOpen={demo === "1"} /> : null}
 
         <section className="detail-block">
-          <h2 className="detail-block__title">{t("档案信息", "On record")}</h2>
+          <h2 className="detail-block__title">{t("基本信息", "On record")}</h2>
           <div className="detail-metrics-grid">
             <div className="detail-metric">
               <span className="detail-metric__label">{t("融资记录", "Reported funding")}</span>
@@ -131,12 +131,12 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
         </section>
 
         <section className="detail-block">
-          <h2 className="detail-block__title">{t("值得研究的原因", "Why look closer")}</h2>
+          <h2 className="detail-block__title">{t("产品亮点", "Why look closer")}</h2>
           <p className="detail-block__content">{whyMatters}</p>
         </section>
 
         <section className="detail-block">
-          <h2 className="detail-block__title">{t("记录中的动态", "Recorded update")}</h2>
+          <h2 className="detail-block__title">{t("最新动态", "Recorded update")}</h2>
           <p className="detail-block__content">{latestNews}</p>
         </section>
 
@@ -148,7 +148,7 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
 
         <footer className="detail-actions">
           <FavoriteButton product={product} />
-          {product.source_url && isValidWebsite(product.source_url) ? <a className="link-btn" href={product.source_url} target="_blank" rel="noopener noreferrer">{t("阅读原始来源", "Read original source")}</a> : null}
+          {product.source_url && isValidWebsite(product.source_url) ? <a className="link-btn" href={product.source_url} target="_blank" rel="noopener noreferrer">{t("查看原始来源", "Read original source")}</a> : null}
           {isValidWebsite(website) && !product.needs_verification ? (
             <a className="link-btn link-btn--primary" href={website} target="_blank" rel="noopener noreferrer">
               {t("访问官网", "Visit website")}
@@ -161,7 +161,7 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
               rel="noopener noreferrer"
               title={t("点击跳转 Google 搜索官网", "Open Google search for the official website")}
             >
-              {t("官网待验证", "Website pending verification")}
+              {t("查找官网", "Website pending verification")}
             </a>
           )}
           <Link href="/" className="link-btn">
@@ -172,8 +172,8 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
 
       <section className="detail-related">
         <div className="section-header">
-          <h2 className="section-title">{t("继续研究", "Continue exploring")}</h2>
-          <p className="section-desc">{t("看看相关产品的用途与值得关注的地方。", "Explore what related products do and why they are worth a closer look.")}</p>
+          <h2 className="section-title">{t("相关产品", "Continue exploring")}</h2>
+          <p className="section-desc">{t("也看看这些同类产品。", "Explore what related products do and why they are worth a closer look.")}</p>
         </div>
 
         {related.length ? (

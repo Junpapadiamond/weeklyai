@@ -1,0 +1,75 @@
+/* Chinese uses a compact directory layout and full-size, readable labels. */
+html[lang="zh-CN"] body { font-family: var(--font-cjk), "PingFang SC", "Microsoft YaHei", sans-serif; }
+html[lang="zh-CN"] :is(h1, h2, h3, .section-title, .logo-text) { letter-spacing: 0; }
+html[lang="zh-CN"] :is(.briefing-kicker, .demo-eyebrow, .brand-wordmark__caption, .detail-hero__score, .research-product__meta, .research-news__meta, .research-product__why > span, .experience-stage-meta) {
+  font-family: inherit;
+  letter-spacing: 0;
+  text-transform: none;
+}
+html[lang="zh-CN"] .brand-wordmark__caption { font-size: 10px; line-height: 1.6; }
+html[lang="zh-CN"] .nav-link { font-size: .88rem; }
+html[lang="zh-CN"] .nav-container { flex-wrap: wrap; }
+html[lang="zh-CN"] .briefing-kicker { font-size: .78rem; }
+html[lang="zh-CN"] .briefing-section-number { display: none; }
+html[lang="zh-CN"] .home-root[data-vibe="briefing"] .section-title { letter-spacing: 0; font-size: 1.3rem; }
+html[lang="zh-CN"] .home-root[data-vibe="briefing"] .section-desc { font-size: .875rem; }
+html[lang="zh-CN"] :is(.section-utility__freshness, .section-micro-note, .demo-card-meta, .experience-disclosure, .experience-quota-note) { font-size: .75rem; }
+html[lang="zh-CN"] .research-product__description { line-height: 1.9; }
+html[lang="zh-CN"] .research-product__why { line-height: 1.85; }
+html[lang="zh-CN"] .research-product__why > span { font-size: .78rem; }
+html[lang="zh-CN"] .research-product__footer { font-size: .8rem; }
+html[lang="zh-CN"] .research-product__date { letter-spacing: 0; }
+html[lang="zh-CN"] .demo-eyebrow { font-size: .75rem; }
+html[lang="zh-CN"] .demo-ready-badge { font-size: .7rem; }
+html[lang="zh-CN"] .demo-gallery-header h1 { letter-spacing: 0; }
+html[lang="zh-CN"] :is(.demo-gallery-header, .search-page > .section-header, .blog-page > .section-header, .discover-page > .section-header) { border-top-width: 1px; }
+html[lang="zh-CN"] .section-micro-note { color: var(--text-muted); }
+
+.cn-home-intro { display: grid; grid-template-columns: minmax(0, 1fr) 265px; align-items: center; gap: clamp(2rem, 5vw, 5rem); width: min(var(--page-max-width), calc(100% - 2 * var(--page-padding))); margin-inline: auto; padding: 2.75rem 0 2.5rem; border-bottom: 1px solid var(--border); }
+.cn-home-intro__label { display: flex; align-items: center; gap: .55rem; margin: 0 0 .9rem; font-size: .78rem; color: var(--text-muted); }
+.cn-home-intro h1 { margin: 0; font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 600; line-height: 1.45; }
+.cn-home-intro__description { margin: .85rem 0 1.5rem; color: var(--text-soft); font-size: .9rem; line-height: 1.9; }
+.cn-home-search { display: flex; align-items: center; gap: .8rem; width: 100%; padding: .4rem .4rem .4rem 1rem; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); }
+.cn-home-search:focus-within { outline: 2px solid var(--primary); outline-offset: 3px; }
+.cn-home-search > svg { color: var(--text-muted); flex: none; }
+.cn-home-search input { flex: 1; min-width: 0; width: 0; padding: .65rem 0; border: 0; outline: 0; background: transparent; color: var(--text); font: inherit; font-size: .86rem; }
+.cn-home-search input::placeholder { color: var(--text-muted); }
+.cn-home-search button { min-height: 42px; padding: .6rem 1.2rem; border: 0; border-radius: 5px; background: var(--primary); color: #fff; font: inherit; font-size: .86rem; cursor: pointer; }
+.cn-home-search button:hover { background: var(--primary-highlight); }
+.cn-home-categories { display: flex; flex-wrap: wrap; align-items: center; gap: .15rem 1rem; margin-top: .65rem; font-size: .76rem; line-height: 1.7; }
+.cn-home-categories > span { color: var(--text-muted); }
+.cn-home-categories a { display: inline-flex; align-items: center; min-height: 36px; color: var(--text-soft); }
+.cn-home-categories a:hover { color: var(--primary); text-decoration: underline; text-underline-offset: 4px; }
+.cn-home-shortcuts { border-left: 1px solid var(--border); padding-left: 1.75rem; }
+.cn-home-shortcuts > a { display: flex; align-items: center; gap: .8rem; min-height: 78px; color: var(--text); }
+.cn-home-shortcuts > a + a { border-top: 1px solid var(--border); }
+.cn-home-shortcuts > a > svg { flex: none; color: var(--text-muted); }
+.cn-home-shortcuts > a > span { flex: 1; }
+.cn-home-shortcuts strong { display: block; font-size: .9rem; font-weight: 500; }
+.cn-home-shortcuts small { display: block; margin-top: .45rem; color: var(--text-muted); font-size: .75rem; line-height: 1.6; }
+.cn-home-shortcuts > a:hover strong, .cn-home-shortcuts > a:hover > svg { color: var(--primary); }
+.cn-home-shortcuts > .cn-home-shortcuts__about { min-height: 42px; margin-top: .3rem; color: var(--text-muted); font-size: .75rem; }
+.cn-home-intro :is(a, button):focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; border-radius: 3px; }
+
+@media (max-width: 960px) {
+  .cn-home-intro { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; padding-top: 2rem; }
+  .cn-home-shortcuts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1.5rem; border-left: 0; border-top: 1px solid var(--border); padding: .5rem 0 0; }
+  .cn-home-shortcuts > a + a { border-top: 0; }
+  .cn-home-shortcuts > .cn-home-shortcuts__about { grid-column: 1 / -1; min-height: 36px; }
+}
+@media (max-width: 640px) {
+  html[lang="zh-CN"] .brand-wordmark__caption { font-size: 8px; }
+  .cn-home-intro { padding: 1.5rem 0; gap: 1rem; }
+  .cn-home-intro__label { display: none; }
+  .cn-home-intro__description { font-size: .84rem; margin-bottom: 1.15rem; }
+  .cn-home-search { gap: .5rem; padding-left: .65rem; }
+  .cn-home-search input { font-size: 16px; }
+  .cn-home-search button { padding-inline: .85rem; }
+  .cn-home-categories { gap: .1rem .9rem; }
+  .cn-home-categories a { min-height: 40px; }
+  .cn-home-shortcuts { gap: 0 1rem; }
+  .cn-home-shortcuts > a { gap: .5rem; min-height: 48px; }
+  .cn-home-shortcuts > a > svg:first-child { display: none; }
+  .cn-home-shortcuts strong { font-size: .84rem; }
+  .cn-home-shortcuts small { display: none; }
+}

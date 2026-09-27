@@ -42,7 +42,7 @@ export async function readDemo(response: Response): Promise<DemoResponse> {
 }
 
 const errorMessages: Record<string, [string, string]> = {
-  DAILY_LIMIT: ["今日新建演示额度已用完", "Today’s generation limit has been reached"],
+  DAILY_LIMIT: ["今天的生成次数已用完", "Today’s generation limit has been reached"],
   NOT_CONFIGURED: ["这个产品的演示还在准备中", "This product’s demo is not ready yet"],
   GENERATOR_NOT_CONFIGURED: ["这个产品的演示还在准备中", "This product’s demo is not ready yet"],
   PENDING: ["演示仍在生成，请稍后重新检查", "Still generating. Check back shortly."],
@@ -50,7 +50,7 @@ const errorMessages: Record<string, [string, string]> = {
   GENERATOR_BUSY: ["AI 服务繁忙，请稍后重试", "The AI service is busy. Please try again shortly."],
   GENERATOR_UNAVAILABLE: ["AI 服务暂时无法连接", "The AI service is temporarily unavailable"],
   GENERATION_INCOMPLETE: ["AI 返回的内容不完整，请重新生成", "The AI response was incomplete. Please generate again."],
-  GENERATION_INVALID_RESPONSE: ["演示未通过内容校验，请重新生成", "The experience did not pass validation. Please generate again."],
+  GENERATION_INVALID_RESPONSE: ["这次生成的演示无法使用，请重新生成", "The experience did not pass validation. Please generate again."],
   SERVICE_UNAVAILABLE: ["连接暂时中断，请重新检查生成结果", "Connection interrupted. Check again for the result."],
   STORAGE_UNAVAILABLE: ["演示暂时无法保存，请稍后重试", "The experience could not be saved. Please try again shortly."],
 };

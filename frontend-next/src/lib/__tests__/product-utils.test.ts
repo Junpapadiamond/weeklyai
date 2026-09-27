@@ -261,7 +261,7 @@ describe("product-utils", () => {
   it("normalizes product directions for second-level filtering", () => {
     expect(normalizeDirectionToken("AI voice assistant")).toBe("voice");
     expect(normalizeDirectionToken("智能驾驶")).toBe("driving");
-    expect(getDirectionLabel("ai_chip")).toBe("AI芯片");
+    expect(getDirectionLabel("ai_chip")).toBe("AI 芯片");
 
     const directions = getProductDirections({
       name: "Test",
@@ -371,8 +371,9 @@ describe("product-utils", () => {
       why_matters: "Transformer論文の著者Llion Jones...",
     };
 
-    expect(getLocalizedProductDescription(product, "zh-CN")).toContain("foundation model");
-    expect(getLocalizedProductWhyMatters(product, "zh-CN")).toContain("Sovereign AI");
+    expect(getLocalizedProductDescription(product, "zh-CN")).toContain("基础模型");
+    expect(getLocalizedProductWhyMatters(product, "zh-CN")).toContain("Llion Jones");
+    expect(getLocalizedProductWhyMatters(product, "zh-CN")).toContain("4.79 亿美元");
   });
 
   it("localizes country metadata labels for zh-CN cards", () => {
@@ -411,7 +412,7 @@ describe("product-utils", () => {
       why_matters: "Raised $1M seed backed by Steven Bartlett.",
     };
 
-    expect(getLocalizedProductDescription(product, "zh-CN")).toContain("AI upskilling");
+    expect(getLocalizedProductDescription(product, "zh-CN")).toContain("AI 技能培训");
     expect(getLocalizedProductWhyMatters(product, "zh-CN")).toContain("英国政府");
   });
 
@@ -422,8 +423,21 @@ describe("product-utils", () => {
       categories: ["hardware", "ai_chip", "other"],
     };
 
-    expect(formatCategories(product, "zh-CN")).toBe("硬件 · AI芯片");
+    expect(formatCategories(product, "zh-CN")).toBe("硬件 · AI 芯片");
     expect(formatCategories(product, "en-US")).toBe("Hardware · AI Chips");
+  });
+
+  it("groups Chinese and English category names under the same filter", () => {
+    const products: Product[] = [
+      { name: "Local agent", description: "本地产品", categories: ["智能体"] },
+      { name: "Global agent", description: "Global product", categories: ["agent"] },
+      { name: "Image editor", description: "Image product", categories: ["图像"] },
+    ];
+    const options = collectDirectionOptions(products, "zh-CN");
+    expect(filterDirectionOptions(options, "智能体")).toEqual([{ value: "agent", label: "智能体", count: 2 }]);
+    expect(filterDirectionOptions(options, "agent")).toEqual(filterDirectionOptions(options, "智能体"));
+    expect(getProductDirections(products[2])).toEqual(["image"]);
+    expect(getDirectionLabel("智能体", "en-US")).toBe("Agent");
   });
 
   it("generates freshness labels from available dates", () => {

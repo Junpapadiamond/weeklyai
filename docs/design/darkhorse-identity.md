@@ -4,6 +4,8 @@
 
 An independent product publication: a distinctive horse silhouette, radar construction lines, generous reading space, and restrained controls. Product information and sources carry the page. Avoid decorative emoji, sparkle icons, glowing borders, and gradients on navigation or calls to action.
 
+For the Chinese interface, follow [the Chinese UI writing and layout guide](chinese-ui-writing.md). It uses a search-led product directory, native Chinese labels, and compact navigation while retaining this palette and identity. The publication-style introduction remains on the English homepage.
+
 ## Existing colors
 
 Keep the colors in `frontend-next/src/styles/tokens.css`:

@@ -57,7 +57,7 @@ export function ChatBar({ variant = "full" }: ChatBarProps) {
           <span className="chat-trigger__icon">
             <ChatCircleDots size={14} />
           </span>
-          <span>{t("问问雷达", "Ask Radar")}</span>
+          <span>{t("AI 助手", "Ask Radar")}</span>
         </button>
       </div>
     );
@@ -69,10 +69,10 @@ export function ChatBar({ variant = "full" }: ChatBarProps) {
         <div className="chat-bar__eyebrow">
           <span className="chat-bar__eyebrow-chip">
             <ChatCircleDots size={12} />
-            {t("问问雷达", "Ask Radar")}
+            {t("AI 助手", "Ask Radar")}
           </span>
           <span className="chat-bar__eyebrow-copy">
-            {t("向助手直接问产品、融资、赛道和地区信号。", "Ask the assistant about products, funding, categories, and regional signals.")}
+            {t("说说你的需求，让助手帮你找产品。", "Ask the assistant about products, funding, categories, and regional signals.")}
           </span>
         </div>
 
@@ -84,7 +84,7 @@ export function ChatBar({ variant = "full" }: ChatBarProps) {
             name="chatInput"
             type="text"
             className="chat-bar__input"
-            placeholder={t("Ask AI：本周黑马、融资、Agent、硬件趋势...", "Ask AI about dark horses, funding, agents, hardware trends...")}
+            placeholder={t("想找什么工具？比如：帮我推荐几款 AI 编程工具", "Ask AI about dark horses, funding, agents, hardware trends...")}
             autoComplete="off"
             onFocus={() => openPanel()}
           />
@@ -97,7 +97,7 @@ export function ChatBar({ variant = "full" }: ChatBarProps) {
 
       <button type="button" className="chat-bar__fab" onClick={() => openPanel()}>
         <ChatCircleDots size={16} />
-        {t("问问雷达", "Ask Radar")}
+        {t("AI 助手", "Ask Radar")}
       </button>
     </div>
   );

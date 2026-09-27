@@ -577,7 +577,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
   const currentDescription =
     cleanDescription(getLocalizedProductDescription(current, locale), locale)
     || currentWhyMatters
-    || t("产品摘要待补充", "Product summary pending");
+    || t("暂无产品介绍", "Product summary pending");
   const currentHighlight = currentWhyMatters || current.funding_total || "";
   const nextDescription = nextCard ? cleanDescription(getLocalizedProductDescription(nextCard, locale), locale) : "";
   const backDescription = backCard ? cleanDescription(getLocalizedProductDescription(backCard, locale), locale) : "";
@@ -613,28 +613,28 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
   } as const;
   const hintText =
     feedbackDirection === "right"
-      ? t("继续右滑，松手即可收藏", "Keep swiping right and release to save")
+      ? t("松手即可收藏", "Keep swiping right and release to save")
       : feedbackDirection === "left"
-        ? t("继续左滑，松手跳过", "Keep swiping left and release to skip")
+        ? t("松手即可跳过", "Keep swiping left and release to skip")
         : likeStreak >= 2
           ? locale === "en-US"
             ? `Streak x${likeStreak}, keep swiping right for dark horses`
-            : `连击 x${likeStreak}，继续右滑挖黑马`
-          : t("左右拖动卡片即可滑动，右滑收藏，左滑跳过", "Drag left or right. Swipe right to save, left to skip");
+            : `已连续收藏 ${likeStreak} 款`
+          : t("右滑收藏，左滑跳过", "Drag left or right. Swipe right to save, left to skip");
   const swipeEchoText =
     lastSwipeAction === "right"
       ? lastSwipeHadInertia
-        ? t("惯性右甩已收藏，继续滑更快", "Inertia right-swipe saved, keep swiping fast")
-        : t("已收藏，继续右滑快速筛选", "Saved. Keep swiping right to filter faster")
+        ? t("已加入收藏夹", "Inertia right-swipe saved, keep swiping fast")
+        : t("已加入收藏夹", "Saved. Keep swiping right to filter faster")
       : lastSwipeHadInertia
-        ? t("惯性左甩已跳过，继续左滑看下一个", "Inertia left-swipe skipped, continue left for next")
-        : t("已跳过，继续左滑看下一个", "Skipped. Continue swiping left for next");
+        ? t("已跳过，看看下一款", "Inertia left-swipe skipped, continue left for next")
+        : t("已跳过，看看下一款", "Skipped. Continue swiping left for next");
 
   return (
     <div className="discover-shell">
       {showSwipeGuide ? (
         <div className="swipe-onboarding" role="dialog" aria-label={t("快速发现手势引导", "Quick discovery gesture guide")}>
-          <p className="swipe-onboarding__title">{t("左右滑动，30 秒筛出黑马", "Swipe left and right to shortlist dark horses in 30 seconds")}</p>
+          <p className="swipe-onboarding__title">{t("看到感兴趣的产品，右滑收藏", "Swipe left and right to shortlist dark horses in 30 seconds")}</p>
           <div className="swipe-onboarding__gestures" aria-hidden="true">
             <span className="swipe-onboarding__gesture swipe-onboarding__gesture--left">← {t("左滑跳过", "Swipe left to skip")}</span>
             <span className="swipe-onboarding__gesture swipe-onboarding__gesture--right">{t("右滑收藏", "Swipe right to save")} →</span>
@@ -659,7 +659,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
             </header>
             <p className="swipe-card-desc swipe-card-desc--ghost">{backDescription}</p>
             <div className="swipe-card-meta swipe-card-meta--ghost">
-              <span className="swipe-link swipe-link--pending">{t("稍后候选", "Queued next")}</span>
+              <span className="swipe-link swipe-link--pending">{t("稍后推荐", "Queued next")}</span>
             </div>
           </article>
         ) : null}
@@ -678,7 +678,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
             </header>
             <p className="swipe-card-desc swipe-card-desc--ghost">{nextDescription}</p>
             <div className="swipe-card-meta swipe-card-meta--ghost">
-              <span className="swipe-link swipe-link--pending">{t("下一张候选", "Next candidate")}</span>
+              <span className="swipe-link swipe-link--pending">{t("下一款", "Next candidate")}</span>
             </div>
           </article>
         ) : null}
@@ -716,7 +716,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
           <p className="swipe-card-desc">{currentDescription}</p>
 
           {currentHighlight ? (
-            <p className="swipe-card-highlight">{currentWhyMatters ? `WHY · ${currentHighlight}` : `FUNDING · ${currentHighlight}`}</p>
+            <p className="swipe-card-highlight">{currentWhyMatters ? `${t("产品亮点", "WHY")} · ${currentHighlight}` : `${t("融资情况", "FUNDING")} · ${currentHighlight}`}</p>
           ) : null}
 
           <div className="swipe-card-meta">
@@ -728,7 +728,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
                 rel="noopener noreferrer"
                 onClick={(event) => handleExternalAnchorClick(event, website)}
               >
-                {t("了解更多", "Learn more")} →
+                {t("访问官网", "Learn more")} →
               </a>
             ) : (
               <a
@@ -739,7 +739,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
                 onClick={(event) => handleExternalAnchorClick(event, websiteSearchUrl)}
                 title={t("点击跳转 Google 搜索官网", "Open Google search for the official website")}
               >
-                {t("官网待验证", "Website pending verification")}
+                {t("查找官网", "Website pending verification")}
               </a>
             )}
           </div>

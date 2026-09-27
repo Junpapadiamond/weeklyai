@@ -31,7 +31,7 @@ describe("data-only workflow renderer", () => {
     const body = { success: false, error: "GENERATION_TIMEOUT", quota: { remaining: 3, limit: 3 }, generation_available: true };
     await expect(readDemo(Response.json(body, { status: 503 }))).resolves.toEqual(body);
     expect(demoErrorMessage(body.error)[0]).toContain("超时");
-    expect(demoErrorMessage("GENERATION_INVALID_RESPONSE")[0]).toContain("校验");
+    expect(demoErrorMessage("GENERATION_INVALID_RESPONSE")[0]).toContain("重新生成");
     expect(demoErrorMessage("GENERATOR_BUSY")[0]).toContain("繁忙");
   });
   it("rejects invalid cached experiences with a readable error code", async () => {

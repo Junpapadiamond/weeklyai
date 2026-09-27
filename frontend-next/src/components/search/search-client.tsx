@@ -101,15 +101,14 @@ export function SearchClient({ initialQuery = "" }: SearchClientProps) {
       : isDebouncing
         ? t("输入中...", "Typing...")
         : "";
-  const errorMessage = error instanceof Error ? error.message : String(error || t("请求失败", "Request failed"));
 
   return (
     <section className="section search-page">
       <div className="section-header">
-        <p className="briefing-kicker">THE PRODUCT INDEX / {t("产品档案", "SEARCH THE ARCHIVE")}</p>
+        <p className="briefing-kicker">{t("产品库", "THE PRODUCT INDEX / SEARCH THE ARCHIVE")}</p>
         <h1 className="section-title">{t("搜索产品", "Search Products")}</h1>
-        <p className="section-desc">{t("按产品名称或你想解决的问题搜索档案。", "Search the archive by product name or the problem you want to solve.")}</p>
-        <p className="section-micro-note">{t("输入关键词自动搜索，按需切换软件/硬件。", "Type keywords for instant search and switch software/hardware when needed.")}</p>
+        <p className="section-desc">{t("输入产品名称或用途，找你需要的 AI 工具。", "Search the archive by product name or the problem you want to solve.")}</p>
+        <p className="section-micro-note">{t("输入后自动搜索，也可以按软件、硬件筛选。", "Type keywords for instant search and switch software/hardware when needed.")}</p>
       </div>
 
       <form className="search-panel" onSubmit={onSubmit}>
@@ -119,7 +118,7 @@ export function SearchClient({ initialQuery = "" }: SearchClientProps) {
           type="search"
           value={q}
           onChange={(event) => setQ(event.target.value)}
-          placeholder={t("输入关键词，例如 agent、硬件、融资...", "Enter keywords, e.g. agent, hardware, funding...")}
+          placeholder={t("搜产品名或用途，如编程、视频、智能眼镜", "Enter keywords, e.g. agent, hardware, funding...")}
           aria-label={t("搜索关键词", "Search keywords")}
           autoComplete="off"
         />
@@ -153,7 +152,7 @@ export function SearchClient({ initialQuery = "" }: SearchClientProps) {
       {isLoading && !hasResults ? <div className="loading-block">{t("搜索中...", "Searching...")}</div> : null}
       {error ? (
         <div className="error-block">
-          {t("搜索失败", "Search failed")}: {errorMessage}
+          {t("暂时无法搜索，请稍后重试。", "Search is unavailable. Please try again shortly.")}
           <button type="button" className="link-btn" onClick={() => mutate()}>
             {t("重试", "Retry")}
           </button>
@@ -208,10 +207,10 @@ export function SearchClient({ initialQuery = "" }: SearchClientProps) {
       {shouldSearch && !isLoading && !isValidating && !error && !hasResults ? (
         <div className="empty-state">
           <p className="empty-state-text">
-            {t("没有匹配结果，建议尝试更宽泛关键词或重置筛选。", "No results matched. Try broader keywords or reset filters.")}
+            {t("没找到相关产品。试试更短的关键词，或清除筛选条件。", "No results matched. Try broader keywords or reset filters.")}
           </p>
           <button type="button" className="link-btn" onClick={resetAll}>
-            {t("清空并重试", "Clear and retry")}
+            {t("清空搜索", "Clear and retry")}
           </button>
         </div>
       ) : null}

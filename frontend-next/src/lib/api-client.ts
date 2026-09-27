@@ -156,13 +156,13 @@ export const getRelatedProducts = cache(async (id: string, limit = 6): Promise<P
 
 export function parseLastUpdatedLabel(hoursAgo: number | null | undefined, locale: SiteLocale = DEFAULT_LOCALE) {
   if (hoursAgo === null || hoursAgo === undefined || Number.isNaN(hoursAgo)) {
-    return pickLocaleText(locale, { zh: "数据更新时间未知", en: "Last update time unavailable" });
+    return pickLocaleText(locale, { zh: "暂无最近收录时间", en: "Last update time unavailable" });
   }
   if (hoursAgo < 1) {
-    return pickLocaleText(locale, { zh: "最新产品记录距今 1 小时内", en: "Newest product record within the last hour" });
+    return pickLocaleText(locale, { zh: "最近收录：1 小时内", en: "Newest product record within the last hour" });
   }
   const age = hoursAgo >= 24 ? `${Math.floor(hoursAgo / 24)}${locale === "en-US" ? " days" : " 天"}` : `${Math.floor(hoursAgo)}${locale === "en-US" ? " hours" : " 小时"}`;
-  return locale === "en-US" ? `Newest product record: ${age} ago` : `最新产品记录：${age}前`;
+  return locale === "en-US" ? `Newest product record: ${age} ago` : `最近收录：${age}前`;
 }
 
 // Client-side helpers (SWR)

@@ -21,7 +21,7 @@ export default async function DemoFeedbackPage() {
         <h1 className="section-title">{t("演示纠错与下架", "Demo corrections and removal")}</h1>
         <p className="section-desc">
           {t(
-            "交互演示由黑马雷达独立制作，未获相关产品方背书。如果内容有误，或你希望它下架，我们会处理。",
+            "产品演示由黑马雷达独立制作，未获相关产品方背书。如果内容有误，或你希望它下架，我们会处理。",
             "Interactive demos are built independently by Darkhorse Radar and are not endorsed by the products they describe. If something is wrong, or you want a demo taken down, we will act on it."
           )}
         </p>
