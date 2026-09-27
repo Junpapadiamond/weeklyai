@@ -1,4 +1,4 @@
-# WeeklyAI
+# Darkhorse Radar · 黑马雷达
 
 > Global AI Product Discovery Platform for Product Managers
 
@@ -7,7 +7,7 @@
 [![Node](https://img.shields.io/badge/Node-18+-green.svg)](https://nodejs.org/)
 [![GitHub](https://img.shields.io/badge/GitHub-Repo-black.svg)](https://github.com/your-username/WeeklyAI)
 
-WeeklyAI is a product intelligence platform that continuously discovers, evaluates, and ranks high-potential AI startups and tools from multiple regions.
+Darkhorse Radar (黑马雷达) is a product intelligence platform that continuously discovers, evaluates, and ranks high-potential AI startups and tools from multiple regions, and turns each one into a hands-on interactive demo.
 
 It helps PMs, operators, and investors quickly spot:
 - **Dark Horses (4-5分)**: high potential + low exposure, priority recommendations

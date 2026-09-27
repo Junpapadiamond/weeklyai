@@ -37,7 +37,7 @@ export default async function PrivacyPage() {
 
         <div className="detail-block">
           <h2 className="detail-block__title">{t("联系我们", "Contact")}</h2>
-          <p className="detail-block__content">support@weeklyai.com</p>
+          <p className="detail-block__content">support@darkhorseradar.com</p>
         </div>
       </article>
     </section>

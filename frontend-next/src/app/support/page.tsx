@@ -17,7 +17,7 @@ export default async function SupportPage() {
       <article className="detail-card">
         <div className="detail-block">
           <h2 className="detail-block__title">{t("联系邮箱", "Contact email")}</h2>
-          <p className="detail-block__content">support@weeklyai.com</p>
+          <p className="detail-block__content">support@darkhorseradar.com</p>
         </div>
         <div className="detail-block">
           <h2 className="detail-block__title">{t("工作时间", "Support window")}</h2>

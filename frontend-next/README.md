@@ -1,6 +1,6 @@
-# WeeklyAI Frontend Next
+# Darkhorse Radar Frontend (Next.js)
 
-React + Next.js (App Router) frontend for WeeklyAI.
+React + Next.js (App Router) frontend for Darkhorse Radar (黑马雷达).
 
 ## Stack
 - Next.js App Router

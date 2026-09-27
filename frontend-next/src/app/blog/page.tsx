@@ -7,7 +7,7 @@ import { getRequestLocale } from "@/lib/locale-server";
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getRequestLocale();
   return {
-    title: pickLocaleText(locale, { zh: "WeeklyAI - 博客动态", en: "WeeklyAI - News" }),
+    title: pickLocaleText(locale, { zh: "博客动态", en: "News" }),
   };
 }
 

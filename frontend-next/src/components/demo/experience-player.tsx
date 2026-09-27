@@ -29,14 +29,14 @@ export function ExperiencePlayer({ entry, productName, website, logoUrl, seconda
   const canContinue = !!selected && (step.widget !== "review" || reviews[step.id]);
   function move(next: number) { setIndex(next); requestAnimationFrame(() => { heading.current?.focus({ preventScroll: true }); heading.current?.scrollIntoView({ block: "start", behavior: "instant" }); }); }
   function download() {
-    const lines = [productName + " / WeeklyAI", t("流程模拟 · 示例数据 · 非官方产品", "Workflow simulation · Example data · Unofficial"), spec.headline[lang],
+    const lines = [productName + " / Darkhorse Radar", t("流程模拟 · 示例数据 · 非官方产品", "Workflow simulation · Example data · Unofficial"), spec.headline[lang],
       brief, ...(spec.workspace?.kind === "video" || spec.workspace?.kind === "image" ? [ratio] : []), ...spec.steps.flatMap(s => {
         const choice = s.options.find(o => o.id === choices[s.id]);
         return [s.title[lang], choice?.label[lang] || "", choice?.output[lang] || "",
           s.dial ? (dials[s.id] ?? s.dial.initial) + " " + s.dial.unit[lang] : ""];
       }), spec.takeaway[lang], ...spec.sources.map(s => s.url)];
     const url = URL.createObjectURL(new Blob([lines.join("\n\n")], { type: "text/plain;charset=utf-8" }));
-    const a = document.createElement("a"); a.href = url; a.download = "weeklyai-demo.txt"; a.click();
+    const a = document.createElement("a"); a.href = url; a.download = "darkhorseradar-demo.txt"; a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
   return <div className="experience-shell">

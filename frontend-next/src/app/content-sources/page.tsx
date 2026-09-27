@@ -10,7 +10,7 @@ export default async function ContentSourcesPage() {
       <div className="section-header">
         <h1 className="section-title">{t("内容来源说明", "Content Sources")}</h1>
         <p className="section-desc">
-          {t("WeeklyAI 聚合公开可访问的 AI 行业动态，并进行结构化摘要。", "WeeklyAI aggregates publicly accessible AI industry updates and organizes them into structured summaries.")}
+          {t("黑马雷达聚合公开可访问的 AI 行业动态，并进行结构化摘要。", "Darkhorse Radar aggregates publicly accessible AI industry updates and organizes them into structured summaries.")}
         </p>
       </div>
 

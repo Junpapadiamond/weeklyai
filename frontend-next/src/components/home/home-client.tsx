@@ -166,7 +166,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
       <section className="hero briefing-hero">
         <div className="hero-layout">
           <div className="hero-content">
-            <p className="briefing-kicker">WEEKLY AI / {t("全球产品观察", "GLOBAL PRODUCT NOTES")}</p>
+            <p className="briefing-kicker">DARKHORSE RADAR / {t("全球产品观察", "GLOBAL PRODUCT NOTES")}</p>
             <h1 className="hero-title">{t("下一款值得研究的", "Find your next")}<br /><span>{t("AI 产品。", "product insight.")}</span></h1>
             <p className="hero-subtitle">{heroSubtitle}</p>
             <div className="briefing-actions">
@@ -367,7 +367,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
 
       <footer className="section home-footer">
         <div className="home-footer__intro">
-          <p className="home-footer__eyebrow">WeeklyAI</p>
+          <p className="home-footer__eyebrow">{t("黑马雷达", "Darkhorse Radar")}</p>
           <p className="home-footer__summary">
             {t(
               "给 PM 和产品团队一个更快的全球 AI 发现入口，先看值得注意的，再决定要不要深挖。",

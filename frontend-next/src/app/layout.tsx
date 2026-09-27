@@ -4,6 +4,7 @@ import { JetBrains_Mono, Noto_Sans_SC, Plus_Jakarta_Sans } from "next/font/googl
 import { LocaleProvider } from "@/components/layout/locale-provider";
 import { PageShell } from "@/components/layout/page-shell";
 import { isAppShellUserAgent } from "@/lib/app-shell";
+import { pickLocaleText } from "@/lib/locale";
 import { getRequestLocale } from "@/lib/locale-server";
 import "./globals.css";
 import "../styles/tokens.css";
@@ -38,10 +39,44 @@ const monoFont = JetBrains_Mono({
   weight: ["400", "500", "600"],
 });
 
-export const metadata: Metadata = {
-  title: "WeeklyAI - Discover Rising AI Products",
-  description: "Global AI product discovery and inspiration platform",
-};
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://darkhorseradar.com";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getRequestLocale();
+  const siteName = pickLocaleText(locale, { zh: "黑马雷达", en: "Darkhorse Radar" });
+  const title = pickLocaleText(locale, {
+    zh: "黑马雷达 · 早期 AI 产品，点开就能试",
+    en: "Darkhorse Radar — Early AI products, hands on",
+  });
+  const description = pickLocaleText(locale, {
+    zh: "为产品经理扫描全球早期 AI 产品：每条附用途与来源，多数还能直接点开交互演示，无需注册。",
+    en: "A radar for early AI products, built for product managers. Every pick links to its source, and most come with a hands-on demo you can try without signing up.",
+  });
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    applicationName: siteName,
+    title: {
+      default: title,
+      template: pickLocaleText(locale, { zh: "%s · 黑马雷达", en: "%s · Darkhorse Radar" }),
+    },
+    description,
+    alternates: { canonical: "/" },
+    openGraph: {
+      type: "website",
+      url: SITE_URL,
+      siteName,
+      locale: locale === "zh-CN" ? "zh_CN" : "en_US",
+      title,
+      description,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+  };
+}
 
 export const viewport: Viewport = {
   width: "device-width",

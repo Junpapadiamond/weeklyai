@@ -220,7 +220,7 @@ export function FavoritesPanel() {
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
-    anchor.download = `weeklyai-favorites-${kind}-${new Date().toISOString().slice(0, 10)}.json`;
+    anchor.download = `darkhorseradar-favorites-${kind}-${new Date().toISOString().slice(0, 10)}.json`;
     document.body.appendChild(anchor);
     anchor.click();
     anchor.remove();

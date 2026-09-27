@@ -56,11 +56,11 @@ export function SiteHeader({ isAppShell = false }: SiteHeaderProps) {
   return (
     <header className="navbar">
       <div className="nav-container">
-        <Link href="/" className="logo" aria-label={t("WeeklyAI 首页", "WeeklyAI home")}>
+        <Link href="/" className="logo" aria-label={t("黑马雷达首页", "Darkhorse Radar home")}>
           <span className="logo-icon">
             <Sparkles size={18} />
           </span>
-          <span className="logo-text">WeeklyAI</span>
+          <span className="logo-text">{t("黑马雷达", "Darkhorse Radar")}</span>
         </Link>
 
         <nav className="nav-links" aria-label={t("主导航", "Main navigation")}>
