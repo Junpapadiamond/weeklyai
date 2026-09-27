@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { ProductCard } from "@/components/product/product-card";
-import { ArrowUpRight, Bookmark, Cpu, Search, Sparkles } from "lucide-react";
+import { HorseMark } from "@/components/brand/horse-mark";
+import { RadarEmblem } from "@/components/brand/radar-emblem";
+import { ArrowUpRight, BookmarkSimple, Cpu, MagnifyingGlass, Browser } from "@phosphor-icons/react";
 import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import type { Product } from "@/types/api";
 import { parseLastUpdatedLabel, type WeeklyTopSort } from "@/lib/api-client";
@@ -153,7 +155,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
   );
   const isArchive = darkHorses.length > 0 && darkHorses.every(product => product.is_archived);
   const activeDirectionLabel = activeDirectionFilter === "all" ? t("选择方向", "Choose a direction") : getDirectionLabel(activeDirectionFilter, locale);
-  const heroSubtitle = t("为产品经理追踪值得研究的 AI 产品。先看它解决什么问题，再看证据，最后决定要不要试。", "AI products worth studying, for people who build products. Start with the use case. Follow the evidence. Decide what to try.");
+  const heroSubtitle = t("从全球早期 AI 产品里，找到值得你多看一眼的那一个。看用途，追来源，亲手试。", "Find the early AI products worth a closer look. Understand the use case, follow the source, and try it for yourself.");
 
   const selectDirection = (value: string) => {
     setDirectionFilter(value);
@@ -164,22 +166,28 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
   return (
     <div className="home-root" data-vibe="briefing">
       <section className="hero briefing-hero">
+        <div className="briefing-masthead">
+          <span>THE INDEPENDENT AI PRODUCT BRIEF</span>
+          <span>{t("全球视野 / 独立发现", "GLOBAL PERSPECTIVE / EARLY DISCOVERY")}</span>
+        </div>
         <div className="hero-layout">
           <div className="hero-content">
-            <p className="briefing-kicker">DARKHORSE RADAR / {t("全球产品观察", "GLOBAL PRODUCT NOTES")}</p>
-            <h1 className="hero-title">{t("下一款值得研究的", "Find your next")}<br /><span>{t("AI 产品。", "product insight.")}</span></h1>
+            <p className="briefing-kicker"><span className="signal-dot" /> {t("给好奇的产品人", "FOR CURIOUS PRODUCT PEOPLE")}</p>
+            <h1 className="hero-title">{t("在热闹之前，", "Before the hype.")}<br /><span>{t("看见下一匹黑马。", "Find the dark horse.")}</span></h1>
             <p className="hero-subtitle">{heroSubtitle}</p>
             <div className="briefing-actions">
-              <a className="link-btn link-btn--primary" href="#darkhorseSection">{t("开始阅读", "Read the brief")} <ArrowUpRight size={16} /></a>
-              <Link className="briefing-text-link" href="/discover">{t("随机发现一款", "Surprise me")}</Link>
+              <a className="link-btn link-btn--primary" href="#darkhorseSection">{t("翻开本期观察", "Explore the brief")} <ArrowUpRight size={16} /></a>
+              <Link className="briefing-text-link" href="/discover">{t("随机发现一款", "Surprise me")} <ArrowUpRight size={15} /></Link>
             </div>
           </div>
-          <aside className="briefing-note" aria-label={t("阅读指南", "About this brief")}>
-            <span className="briefing-kicker">{t("阅读这份观察", "A NOTE BEFORE YOU READ")}</span>
-            <p>{t("好产品的线索，藏在具体问题里。", "Interesting products start with specific problems.")}</p>
-            <span>{t("每条推荐附来源。评分代表发现价值，不是产品质量测评。", "Every pick links to its source. Scores reflect discovery potential, not a hands-on product review.")}</span>
-            <Link href="/content-sources" className="briefing-text-link">{t("了解筛选方法", "How we select products")} <ArrowUpRight size={14} /></Link>
+          <aside className="briefing-art" aria-label={t("黑马雷达品牌标识", "Darkhorse Radar brand mark")}>
+            <RadarEmblem />
+            <p>{t("潜力，往往先于共识。", "Potential precedes consensus.")}</p>
           </aside>
+        </div>
+        <div className="briefing-colophon">
+          <span>{t("关注早期 · 每条附来源 · 可交互试用", "EARLY PRODUCTS · LINKED SOURCES · HANDS-ON DEMOS")}</span>
+          <Link href="/content-sources">{t("我们如何发现黑马", "Our selection method")} <ArrowUpRight size={14} /></Link>
         </div>
       </section>
 
@@ -187,7 +195,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
         <div className="section-header section-header--tight">
           <h2 className="section-title">
             <span className="briefing-section-number">01</span>
-            {isArchive ? t("从档案中发现", "From the research archive") : t("近期值得关注", "Recent discoveries")}
+            {isArchive ? t("黑马档案", "The dark horse archive") : t("本期黑马观察", "On our radar")}
           </h2>
           <p className="section-desc">
             {isArchive ? t("近期暂无新发现，以下保留历史研究供参考。请查看每条记录的日期与来源。", "No recent discoveries yet. Explore earlier research below, with dates and sources on every record.") : t("有明确用途、有来源可查的早期产品。", "Emerging products with a concrete use case and a source you can check.")}
@@ -202,6 +210,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
           <div className="section-utility__controls">
             <button
               className={`filter-btn ${contentTypeFilter === "all" ? "active" : ""}`}
+              aria-pressed={contentTypeFilter === "all"}
               type="button"
               onClick={() => {
                 setContentTypeFilter("all");
@@ -213,6 +222,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
             </button>
             <button
               className={`filter-btn ${contentTypeFilter === "hardware" ? "active" : ""}`}
+              aria-pressed={contentTypeFilter === "hardware"}
               type="button"
               onClick={() => {
                 setContentTypeFilter("hardware");
@@ -224,6 +234,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
             </button>
             <button
               className={`filter-btn ${contentTypeFilter === "software" ? "active" : ""}`}
+              aria-pressed={contentTypeFilter === "software"}
               type="button"
               onClick={() => {
                 setContentTypeFilter("software");
@@ -231,7 +242,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
                 setShowAllDarkHorses(false);
               }}
             >
-              <Sparkles size={14} /> {t("软件", "Software")}
+              <Browser size={14} /> {t("软件", "Software")}
             </button>
           </div>
         </div>
@@ -279,6 +290,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
           <div className="tier-tabs">
             <button
               className={`tier-tab ${tierFilter === "all" ? "active" : ""}`}
+              aria-pressed={tierFilter === "all"}
               type="button"
               onClick={() => {
                 setTierFilter("all");
@@ -289,6 +301,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
             </button>
             <button
               className={`tier-tab ${tierFilter === "darkhorse" ? "active" : ""}`}
+              aria-pressed={tierFilter === "darkhorse"}
               type="button"
               onClick={() => {
                 setTierFilter("darkhorse");
@@ -299,6 +312,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
             </button>
             <button
               className={`tier-tab ${tierFilter === "rising" ? "active" : ""}`}
+              aria-pressed={tierFilter === "rising"}
               type="button"
               onClick={() => {
                 setTierFilter("rising");
@@ -330,7 +344,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
               className={`tag-btn direction-trigger ${activeDirectionFilter === "all" ? "" : "active"}`}
               onClick={() => setIsDirectionSheetOpen(true)}
             >
-              <Search size={14} /> {activeDirectionLabel}
+              <MagnifyingGlass size={14} /> {activeDirectionLabel}
             </button>
 
             <button
@@ -339,7 +353,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
               aria-label={t("打开收藏夹", "Open favorites")}
               onClick={() => openFavoritesPanel("product")}
             >
-              <Bookmark size={16} /> {favoritesCount}
+              <BookmarkSimple size={16} /> {favoritesCount}
             </button>
           </div>
         </div>
@@ -367,7 +381,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
 
       <footer className="section home-footer">
         <div className="home-footer__intro">
-          <p className="home-footer__eyebrow">{t("黑马雷达", "Darkhorse Radar")}</p>
+          <p className="home-footer__eyebrow"><HorseMark className="footer-brand-mark" />{t("黑马雷达", "Darkhorse Radar")}</p>
           <p className="home-footer__summary">
             {t(
               "给 PM 和产品团队一个更快的全球 AI 发现入口，先看值得注意的，再决定要不要深挖。",

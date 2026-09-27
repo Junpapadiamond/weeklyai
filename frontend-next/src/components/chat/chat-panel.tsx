@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { ChevronDown, Sparkles } from "lucide-react";
+import { CaretDown, ChatCircleDots } from "@phosphor-icons/react";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import { ChatMessageBubble } from "./chat-message";
 import { ChatSuggestions } from "./chat-suggestions";
@@ -57,11 +57,11 @@ export function ChatPanel({ messages, isLoading, onSend, onMinimize }: ChatPanel
     }}>
       <header className="chat-panel__header">
         <div className="chat-panel__title">
-          <Sparkles size={16} />
+          <ChatCircleDots size={16} />
           <span>{t("产品研究助手", "Product research")}</span>
         </div>
         <button type="button" className="chat-panel__minimize" onClick={onMinimize} aria-label={t("收起", "Minimize")}>
-          <ChevronDown size={18} />
+          <CaretDown size={18} />
         </button>
       </header>
 

@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { Dice5, Home } from "lucide-react";
+import { BookmarkSimple, House } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import type { Product } from "@/types/api";
 import { useSiteLocale } from "@/components/layout/locale-provider";
@@ -10,7 +10,7 @@ import { addProductFavorite, countFavorites, openFavoritesPanel, subscribeFavori
 
 const DiscoveryDeck = dynamic(() => import("@/components/home/discovery-deck"), {
   ssr: false,
-  loading: () => <div className="swipe-card is-active">Loading cards...</div>,
+  loading: () => <div className="discover-skeleton" aria-busy="true"><div className="discover-skeleton__card"><div className="discover-skeleton__topline" /><div className="discover-skeleton__line discover-skeleton__line--lg" /><div className="discover-skeleton__line" /></div></div>,
 });
 
 type DiscoverClientProps = {
@@ -36,10 +36,8 @@ export function DiscoverClient({ products }: DiscoverClientProps) {
   return (
     <section className="section discover-page">
       <div className="section-header">
+        <p className="briefing-kicker">THE SERENDIPITY FILE / {t("随机发现", "DISCOVER")}</p>
         <h1 className="section-title">
-          <span className="title-icon">
-            <Dice5 size={18} />
-          </span>
           {t("随机发现", "Discover")}
         </h1>
         <p className="section-desc">
@@ -52,10 +50,10 @@ export function DiscoverClient({ products }: DiscoverClientProps) {
 
       <div className="list-controls discover-page__controls">
         <button className="favorites-toggle" type="button" aria-label={t("打开收藏夹", "Open favorites")} onClick={() => openFavoritesPanel("product")}>
-          ❤️ {favoritesCount}
+          <BookmarkSimple size={17} aria-hidden="true" /> {favoritesCount}
         </button>
         <Link className="link-btn" href="/">
-          <Home size={14} /> {t("返回首页", "Back to home")}
+          <House size={14} /> {t("返回首页", "Back to home")}
         </Link>
       </div>
 

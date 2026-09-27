@@ -1,6 +1,6 @@
 "use client";
 
-import { Sparkles, User } from "lucide-react";
+import { ChatCircleDots, UserCircle } from "@phosphor-icons/react";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import type { ChatMessage } from "./use-chat";
 
@@ -37,7 +37,7 @@ export function ChatMessageBubble({ message }: ChatMessageProps) {
 
   return (
     <div className={`chat-message ${isUser ? "chat-message--user" : "chat-message--assistant"}`}>
-      <div className="chat-message__avatar">{isUser ? <User size={14} /> : <Sparkles size={14} />}</div>
+      <div className="chat-message__avatar">{isUser ? <UserCircle size={14} /> : <ChatCircleDots size={14} />}</div>
       <div className="chat-message__content">
         {isError ? (
           <p className="chat-message__error">

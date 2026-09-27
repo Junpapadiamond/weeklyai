@@ -3,8 +3,9 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
-import { Dice5, Heart, Flame, Newspaper, Search, Sparkles, CirclePlay } from "lucide-react";
+import { Shuffle, BookmarkSimple, Binoculars, MagnifyingGlass, PlayCircle } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
+import { HorseMark } from "@/components/brand/horse-mark";
 import type { SiteLocale } from "@/lib/locale";
 import { ChatBar } from "@/components/chat/chat-bar";
 import { countFavorites, openFavoritesPanel, subscribeFavorites } from "@/lib/favorites";
@@ -30,18 +31,18 @@ export function SiteHeader({ isAppShell = false }: SiteHeaderProps) {
   }, []);
 
   const navItems = [
-    { href: "/", label: t("产品观察", "The brief"), icon: Flame },
-    { href: "/discover", label: t("随机发现", "Discover"), icon: Dice5 },
-    { href: "/demo", label: t("交互演示", "Demos"), icon: CirclePlay },
-    { href: "/blog", label: t("博客动态", "News"), icon: Newspaper },
-    { href: "/search", label: t("搜索", "Search"), icon: Search },
+    { href: "/", label: t("产品观察", "The brief") },
+    { href: "/discover", label: t("随机发现", "Discover") },
+    { href: "/demo", label: t("交互演示", "Demos") },
+    { href: "/blog", label: t("博客动态", "News") },
+    { href: "/search", label: t("搜索", "Search") },
   ];
 
   const mobileNavItems = [
-    { href: "/", label: t("首页", "Home"), icon: Flame },
-    { href: "/discover", label: t("发现", "Discover"), icon: Dice5 },
-    { href: "/demo", label: t("演示", "Demos"), icon: CirclePlay },
-    { href: "/search", label: t("搜索", "Search"), icon: Search },
+    { href: "/", label: t("首页", "Home"), icon: Binoculars },
+    { href: "/discover", label: t("发现", "Discover"), icon: Shuffle },
+    { href: "/demo", label: t("演示", "Demos"), icon: PlayCircle },
+    { href: "/search", label: t("搜索", "Search"), icon: MagnifyingGlass },
   ];
 
   function applyLocale(nextLocale: SiteLocale) {
@@ -57,15 +58,15 @@ export function SiteHeader({ isAppShell = false }: SiteHeaderProps) {
     <header className="navbar">
       <div className="nav-container">
         <Link href="/" className="logo" aria-label={t("黑马雷达首页", "Darkhorse Radar home")}>
-          <span className="logo-icon">
-            <Sparkles size={18} />
+          <HorseMark className="brand-mark" />
+          <span className="brand-wordmark">
+            <span className="logo-text">{t("黑马雷达", "Darkhorse Radar")}</span>
+            <span className="brand-wordmark__caption">{t("DARKHORSE RADAR", "INDEPENDENT PRODUCT DISCOVERY")}</span>
           </span>
-          <span className="logo-text">{t("黑马雷达", "Darkhorse Radar")}</span>
         </Link>
 
         <nav className="nav-links" aria-label={t("主导航", "Main navigation")}>
           {navItems.map((item) => {
-            const Icon = item.icon;
             const isActive = isNavActive(item.href);
             return (
               <Link
@@ -74,9 +75,6 @@ export function SiteHeader({ isAppShell = false }: SiteHeaderProps) {
                 className={`nav-link ${isActive ? "active" : ""}`}
                 aria-current={isActive ? "page" : undefined}
               >
-                <span className="nav-icon">
-                  <Icon size={16} />
-                </span>
                 {item.label}
               </Link>
             );
@@ -113,7 +111,7 @@ export function SiteHeader({ isAppShell = false }: SiteHeaderProps) {
             onClick={() => openFavoritesPanel("product")}
             aria-label={t("打开收藏夹", "Open favorites")}
           >
-            <Heart size={16} />
+            <BookmarkSimple size={16} />
             <span>{t("收藏", "Favorites")} {favoritesCount}</span>
           </button>
           <ThemeToggle ariaLabel={t("切换主题", "Toggle theme")} />
@@ -145,7 +143,7 @@ export function SiteHeader({ isAppShell = false }: SiteHeaderProps) {
           onClick={() => openFavoritesPanel("product")}
         >
           <span className="mobile-tabbar__icon">
-            <Heart size={16} />
+            <BookmarkSimple size={16} />
           </span>
           <span>{t("收藏", "Favorites")}</span>
           <strong className="mobile-tabbar__badge">{favoritesCount}</strong>

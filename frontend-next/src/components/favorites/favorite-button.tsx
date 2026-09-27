@@ -1,6 +1,6 @@
 "use client";
 
-import { Heart } from "lucide-react";
+import { BookmarkSimple } from "@phosphor-icons/react";
 import { useEffect, useMemo, useState } from "react";
 import type { BlogPost, Product } from "@/types/api";
 import { useSiteLocale } from "@/components/layout/locale-provider";
@@ -74,7 +74,7 @@ export function FavoriteButton({ product, blog, className = "", size = "sm", sho
       aria-label={favorited ? removeLabel : offLabel}
       title={favorited ? removeLabel : offLabel}
     >
-      <Heart size={size === "sm" ? 14 : 16} />
+      <BookmarkSimple size={size === "sm" ? 14 : 16} />
       {showLabel ? <span>{favorited ? onLabel : offLabel}</span> : null}
     </button>
   );

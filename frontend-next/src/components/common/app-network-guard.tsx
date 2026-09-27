@@ -1,6 +1,6 @@
 "use client";
 
-import { RefreshCw, WifiOff } from "lucide-react";
+import { ArrowClockwise, WifiSlash } from "@phosphor-icons/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import { BROWSER_API_BASE } from "@/lib/api-base";
@@ -125,12 +125,12 @@ export function AppNetworkGuard({ enabled = false }: AppNetworkGuardProps) {
     <div className="app-network-overlay" role="dialog" aria-live="polite" aria-modal="false">
       <div className="app-network-overlay__card">
         <div className="app-network-overlay__icon" aria-hidden="true">
-          <WifiOff size={22} />
+          <WifiSlash size={22} />
         </div>
         <h2>{t("网络连接异常", "Network connection issue")}</h2>
         <p>{statusText}</p>
         <button type="button" className="link-btn link-btn--primary" onClick={() => void checkHealth()} disabled={checking}>
-          <RefreshCw size={14} className={checking ? "app-network-overlay__spin" : ""} />
+          <ArrowClockwise size={14} className={checking ? "app-network-overlay__spin" : ""} />
           {checking ? t("重试中…", "Retrying…") : t("重试", "Retry")}
         </button>
       </div>

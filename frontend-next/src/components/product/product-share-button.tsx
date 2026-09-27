@@ -1,6 +1,6 @@
 "use client";
 
-import { Share2 } from "lucide-react";
+import { ShareNetwork } from "@phosphor-icons/react";
 import { useState } from "react";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 
@@ -39,7 +39,7 @@ export function ProductShareButton({ productName }: ProductShareButtonProps) {
 
   return (
     <button type="button" className={`link-btn ${copied ? "is-success" : ""}`} onClick={handleShare}>
-      <Share2 size={14} /> {copied ? t("已复制链接", "Link copied") : t("分享", "Share")}
+      <ShareNetwork size={14} /> {copied ? t("已复制链接", "Link copied") : t("分享", "Share")}
     </button>
   );
 }

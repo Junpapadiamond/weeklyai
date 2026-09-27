@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowUp, Sparkles } from "lucide-react";
+import { ArrowUp, ChatCircleDots } from "@phosphor-icons/react";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import { ChatPanel } from "./chat-panel";
 import { ChatSuggestions } from "./chat-suggestions";
@@ -55,9 +55,9 @@ export function ChatBar({ variant = "full" }: ChatBarProps) {
           onClick={() => openPanel()}
         >
           <span className="chat-trigger__icon">
-            <Sparkles size={14} />
+            <ChatCircleDots size={14} />
           </span>
-          <span>{t("Ask AI", "Ask AI")}</span>
+          <span>{t("问问雷达", "Ask Radar")}</span>
         </button>
       </div>
     );
@@ -68,8 +68,8 @@ export function ChatBar({ variant = "full" }: ChatBarProps) {
       <div className="chat-bar chat-bar--desktop">
         <div className="chat-bar__eyebrow">
           <span className="chat-bar__eyebrow-chip">
-            <Sparkles size={12} />
-            {t("Ask AI", "Ask AI")}
+            <ChatCircleDots size={12} />
+            {t("问问雷达", "Ask Radar")}
           </span>
           <span className="chat-bar__eyebrow-copy">
             {t("向助手直接问产品、融资、赛道和地区信号。", "Ask the assistant about products, funding, categories, and regional signals.")}
@@ -77,9 +77,8 @@ export function ChatBar({ variant = "full" }: ChatBarProps) {
         </div>
 
         <form className="chat-bar__form" onSubmit={handleBarSubmit}>
-          <div className="chat-bar__glow-blur" aria-hidden="true" />
           <span className="chat-bar__icon">
-            <Sparkles size={16} />
+            <ChatCircleDots size={16} />
           </span>
           <input
             name="chatInput"
@@ -97,8 +96,8 @@ export function ChatBar({ variant = "full" }: ChatBarProps) {
       </div>
 
       <button type="button" className="chat-bar__fab" onClick={() => openPanel()}>
-        <Sparkles size={16} />
-        {t("Ask AI", "Ask AI")}
+        <ChatCircleDots size={16} />
+        {t("问问雷达", "Ask Radar")}
       </button>
     </div>
   );

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
-import { RefreshCw, TriangleAlert } from "lucide-react";
+import { ArrowClockwise, Warning } from "@phosphor-icons/react";
 import { isAppShell } from "@/lib/app-shell";
 
 type ErrorPageProps = {
@@ -25,7 +25,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
     <main className="section">
       <div className="error-block">
         <div className="error-code">
-          <TriangleAlert size={16} />
+          <Warning size={16} />
           {appShell ? "APP NETWORK ERROR" : "RUNTIME ERROR"}
         </div>
         <h1 className="section-title">{appShell ? "网络异常，请稍后重试" : "Something went wrong"}</h1>
@@ -36,7 +36,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
         </p>
         <div className="list-controls">
           <button type="button" className="link-btn link-btn--primary" onClick={reset}>
-            <RefreshCw size={14} /> {appShell ? "重试" : "Retry"}
+            <ArrowClockwise size={14} /> {appShell ? "重试" : "Retry"}
           </button>
           <Link href="/" className="link-btn">
             {appShell ? "返回首页" : "Back to home"}

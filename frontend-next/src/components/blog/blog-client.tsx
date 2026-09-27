@@ -229,6 +229,7 @@ export function BlogClient({ initialBlogs }: BlogClientProps) {
   return (
     <section className="section blog-page">
       <div className="section-header">
+        <p className="briefing-kicker">THE SIGNAL REPORT / {t("行业动态", "NEWS & SIGNALS")}</p>
         <h1 className="section-title">{t("博客 & 动态", "News & Signals")}</h1>
         <p className="section-desc">{t("中国本土源与海外动态共存，可按区域快速切换", "China-local and global sources in one feed, with quick market switching.")}</p>
         <p className="section-micro-note">

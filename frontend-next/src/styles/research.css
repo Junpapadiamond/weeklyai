@@ -160,3 +160,73 @@ a.website-preview:hover { border-color: var(--primary-border); }
   .search-page .search-toolbar__item select { min-width: 0; width: auto; flex: 1; }
   .search-page .search-toolbar__reset { width: auto; }
 }
+/* Secondary pages use the same reading rhythm as the front-page brief. */
+.search-page > .section-header, .blog-page > .section-header, .discover-page > .section-header { gap: .85rem; padding: 2rem 0; }
+.section-micro-note { font-size: .7rem; line-height: 1.8; }
+.research-product { transition: background-color var(--motion-fast); }
+.research-product__title { font-size: 1.15rem; }
+.research-product__date { letter-spacing: .03em; }
+.research-product--leading .research-product__rank { border-top: 2px solid var(--primary); padding-top: .5rem; }
+.research-product__actions > .research-product__try { border: 1px solid var(--border); border-radius: 4px; padding-inline: .65rem; color: var(--text); }
+.research-product__actions > .research-product__try:hover { border-color: var(--primary); color: var(--primary); text-decoration: none; }
+.research-product__reference .favorite-btn { width: 36px; height: 36px; }
+.research-news__meta { display: flex; gap: .7rem; align-items: center; }
+.research-news__meta::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--primary); flex: none; }
+.source-pill { border-radius: 5px; font-size: .76rem; }
+.discover-page .section-header, .discover-page .discover-page__controls { width: 100%; }
+.discover-page .discover-shell { width: min(100%, 780px); margin-top: 1rem; }
+.discover-page .swipe-stack { min-height: 390px; }
+.discover-page .swipe-card { padding: clamp(1.5rem, 3vw, 2.5rem); background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
+.discover-page .swipe-card.is-active { box-shadow: 0 12px 28px color-mix(in oklab, var(--line) 6%, transparent); }
+.discover-page .swipe-card-desc { font-size: 1rem; line-height: 1.9; }
+.discover-page .swipe-card-highlight { border-radius: 0; border-left: 2px solid var(--primary); background: transparent; padding-left: 1rem; }
+.discover-page .swipe-badge { border-radius: 4px; background: var(--bg-elevated); color: var(--text-soft); }
+.discover-page .swipe-onboarding { position: relative; inset: auto; background: var(--bg-elevated); border-color: var(--border); border-radius: 6px; padding: 1rem; backdrop-filter: none; text-align: left; justify-content: flex-start; }
+.discover-page .swipe-onboarding__title { line-height: 1.7; }
+.discover-page .swipe-onboarding__gesture { border: 0; background: transparent; padding-left: 0; font-size: .68rem; animation: none; }
+.discover-page .swipe-onboarding__start { border-radius: 4px; color: var(--text); background: var(--surface); }
+.discover-page .swipe-actions { display: flex; justify-content: center; gap: 1rem; margin-top: 1rem; }
+.discover-page .swipe-btn { display: inline-flex; align-items: center; justify-content: center; gap: 1rem; border-radius: 5px; min-width: 120px; min-height: 46px; }
+.discover-page .swipe-btn--nope { color: var(--text-muted); border-color: var(--border); }
+.discover-page .swipe-echo, .discover-page .swipe-gesture-hint, .discover-page .swipe-status { font-size: .72rem; line-height: 1.8; }
+.demo-gallery { width: min(var(--page-max-width), calc(100% - 2 * var(--page-padding))); max-width: none; padding: 0 0 60px; margin-top: .75rem; }
+.demo-gallery > .demo-back-gallery { display: inline-flex; border: 0; padding: 0; background: transparent; float: right; margin: 1.1rem 0; font-size: .7rem; }
+.demo-gallery-header { clear: both; border-top: 2px solid var(--text); padding: 2rem 0; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; }
+.demo-gallery-header h1 { font-size: clamp(1.75rem, 3vw, 2.35rem); font-weight: 600; }
+.demo-gallery-header p { font-size: .84rem; }
+.demo-catalog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 2.5rem; border-top: 1px solid var(--border); }
+.demo-product-card { background: transparent; border: 0; border-bottom: 1px solid var(--border); border-radius: 0; padding: 1.5rem 0 0; gap: 1rem; }
+.demo-product-card:hover { background: var(--bg-elevated); border-color: var(--primary); }
+.demo-card-top { gap: .8rem; }
+.demo-card-top > strong { font-size: 1rem; font-weight: 600; }
+.demo-product-logo { width: 40px; height: 40px; border-radius: 7px; background: var(--surface); }
+.demo-product-logo img { padding: 3px; }
+.demo-product-card > p { font-size: .82rem; line-height: 1.85; height: auto; min-height: 3.7em; -webkit-line-clamp: 2; }
+.demo-card-meta { font-size: .65rem; }
+.demo-card-action { padding-block: .85rem; border-top: 0; font-size: .72rem; }
+.demo-ready-badge { font-size: .6rem; border: 0; padding: .3rem .45rem; background: var(--bg-elevated); }
+.demo-ready-badge.is-ready { color: var(--primary); background: var(--primary-soft); }
+.demo-card-placeholder { border-radius: 6px; margin-block: 1rem; }
+@media (min-width: 961px) {
+  .discover-page { grid-template-columns: minmax(230px, .75fr) minmax(0, 1.4fr); grid-template-rows: auto auto 1fr; align-items: start; gap: 2rem 4rem; border-top: 2px solid var(--text); padding-top: 2.5rem; }
+  .discover-page > .section-header { grid-column: 1; border: 0; padding: 0; margin: 0; }
+  .discover-page > .discover-page__controls { grid-column: 1; grid-row: 2; margin: 0; }
+  .discover-page > .discover-shell { grid-column: 2; grid-row: 1 / 4; margin: 0; }
+}
+@media (max-width: 760px) {
+  .demo-gallery-header { align-items: start; gap: 1.5rem; }
+  .demo-catalog-grid { gap: 0 1.5rem; }
+  .demo-card-top { flex-wrap: wrap; }
+  .demo-card-top > strong { flex: 1; font-size: .9rem; }
+  .demo-ready-badge { margin-left: 0; }
+  .discover-page .swipe-stack { min-height: 370px; }
+  .discover-page .swipe-card-desc { font-size: .88rem; }
+  .discover-page .swipe-onboarding__gestures { flex-wrap: wrap; justify-content: flex-start; }
+}
+@media (max-width: 540px) {
+  .demo-catalog-grid { grid-template-columns: 1fr; }
+  .demo-card-top { flex-wrap: nowrap; }
+  .demo-ready-badge { margin-left: auto; }
+  .demo-budget { padding-left: 1rem; }
+  .research-product__reference .favorite-btn { width: 44px; height: 44px; }
+}

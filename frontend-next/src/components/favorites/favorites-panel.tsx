@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Download, Search, Trash2, X } from "lucide-react";
+import { Download, MagnifyingGlass, Trash, X } from "@phosphor-icons/react";
 import { useEffect, useMemo, useState } from "react";
 import { FavoriteButton } from "@/components/favorites/favorite-button";
 import { SmartLogo } from "@/components/common/smart-logo";
@@ -252,7 +252,7 @@ export function FavoritesPanel() {
               <Download size={14} /> {t("导出", "Export")}
             </button>
             <button type="button" className="favorites-panel__ghost-btn" onClick={clearActiveFavorites}>
-              <Trash2 size={14} /> {t("清空全部", "Clear all")}
+              <Trash size={14} /> {t("清空全部", "Clear all")}
             </button>
             <button className="favorites-panel__close" type="button" aria-label={t("关闭收藏夹", "Close favorites")} onClick={() => setIsOpen(false)}>
               <X size={16} />
@@ -280,7 +280,7 @@ export function FavoritesPanel() {
         {activeKind === "product" ? (
           <>
             <label className="favorites-panel__search">
-              <Search size={14} />
+              <MagnifyingGlass size={14} />
               <input
                 type="search"
                 value={productSearch}
@@ -383,7 +383,7 @@ export function FavoritesPanel() {
         ) : (
           <>
             <label className="favorites-panel__search">
-              <Search size={14} />
+              <MagnifyingGlass size={14} />
               <input
                 type="search"
                 value={blogSearch}

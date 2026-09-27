@@ -106,6 +106,7 @@ export function SearchClient({ initialQuery = "" }: SearchClientProps) {
   return (
     <section className="section search-page">
       <div className="section-header">
+        <p className="briefing-kicker">THE PRODUCT INDEX / {t("产品档案", "SEARCH THE ARCHIVE")}</p>
         <h1 className="section-title">{t("搜索产品", "Search Products")}</h1>
         <p className="section-desc">{t("按产品名称或你想解决的问题搜索档案。", "Search the archive by product name or the problem you want to solve.")}</p>
         <p className="section-micro-note">{t("输入关键词自动搜索，按需切换软件/硬件。", "Type keywords for instant search and switch software/hardware when needed.")}</p>

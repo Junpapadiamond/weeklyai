@@ -2,17 +2,17 @@
 
 import { CSSProperties, useMemo, useState } from "react";
 import {
-  Bot,
-  Code2,
+  Robot,
+  Code,
   Cpu,
   GraduationCap,
-  HeartPulse,
-  Image as ImageIcon,
-  PenSquare,
-  Sparkles,
-  Video,
+  Heartbeat,
+  Image,
+  NotePencil,
+  SquaresFour,
+  VideoCamera,
   Wallet,
-} from "lucide-react";
+} from "@phosphor-icons/react";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import { isValidWebsite, normalizeWebsite } from "@/lib/product-utils";
@@ -72,16 +72,16 @@ function resolveCategoryToken(input: { category?: string; categories?: string[];
 
 function categoryVisual(token: string, locale: "zh-CN" | "en-US") {
   if (token === "hardware") return { label: locale === "en-US" ? "Hardware" : "硬件方向", icon: Cpu, colors: ["#3b82f6", "#0891b2"] };
-  if (token === "coding") return { label: locale === "en-US" ? "Coding" : "编程开发", icon: Code2, colors: ["#2563eb", "#6d28d9"] };
-  if (token === "image") return { label: locale === "en-US" ? "Image Generation" : "图像生成", icon: ImageIcon, colors: ["#db2777", "#f97316"] };
-  if (token === "video") return { label: locale === "en-US" ? "Video Creation" : "视频创作", icon: Video, colors: ["#f59e0b", "#dc2626"] };
-  if (token === "voice") return { label: locale === "en-US" ? "Voice Interaction" : "语音交互", icon: Bot, colors: ["#0ea5e9", "#6366f1"] };
-  if (token === "writing") return { label: locale === "en-US" ? "Writing Assistant" : "写作助手", icon: PenSquare, colors: ["#0f766e", "#0ea5a3"] };
+  if (token === "coding") return { label: locale === "en-US" ? "Coding" : "编程开发", icon: Code, colors: ["#2563eb", "#6d28d9"] };
+  if (token === "image") return { label: locale === "en-US" ? "Image Generation" : "图像生成", icon: Image, colors: ["#db2777", "#f97316"] };
+  if (token === "video") return { label: locale === "en-US" ? "Video Creation" : "视频创作", icon: VideoCamera, colors: ["#f59e0b", "#dc2626"] };
+  if (token === "voice") return { label: locale === "en-US" ? "Voice Interaction" : "语音交互", icon: Robot, colors: ["#0ea5e9", "#6366f1"] };
+  if (token === "writing") return { label: locale === "en-US" ? "Writing Assistant" : "写作助手", icon: NotePencil, colors: ["#0f766e", "#0ea5a3"] };
   if (token === "education") return { label: locale === "en-US" ? "Education" : "教育学习", icon: GraduationCap, colors: ["#16a34a", "#15803d"] };
-  if (token === "healthcare") return { label: locale === "en-US" ? "Healthcare" : "医疗健康", icon: HeartPulse, colors: ["#dc2626", "#f43f5e"] };
+  if (token === "healthcare") return { label: locale === "en-US" ? "Healthcare" : "医疗健康", icon: Heartbeat, colors: ["#dc2626", "#f43f5e"] };
   if (token === "finance") return { label: locale === "en-US" ? "Finance Tools" : "金融工具", icon: Wallet, colors: ["#7c3aed", "#4f46e5"] };
-  if (token === "agent") return { label: locale === "en-US" ? "Agent App" : "Agent 应用", icon: Bot, colors: ["#2563eb", "#7c3aed"] };
-  return { label: locale === "en-US" ? "AI Product" : "AI 产品", icon: Sparkles, colors: ["#475569", "#334155"] };
+  if (token === "agent") return { label: locale === "en-US" ? "Agent App" : "Agent 应用", icon: Robot, colors: ["#2563eb", "#7c3aed"] };
+  return { label: locale === "en-US" ? "AI Product" : "AI 产品", icon: SquaresFour, colors: ["#475569", "#334155"] };
 }
 
 function analyzeScreenshotQuality(image: HTMLImageElement): boolean {

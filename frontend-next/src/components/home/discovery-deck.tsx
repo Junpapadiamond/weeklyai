@@ -1,6 +1,7 @@
 "use client";
 
 import { PointerEvent, TouchEvent, useEffect, useRef, useState } from "react";
+import { ArrowLeft, BookmarkSimple, Check } from "@phosphor-icons/react";
 import type { Product } from "@/types/api";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { useSiteLocale } from "@/components/layout/locale-provider";
@@ -559,7 +560,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
   if (!stack.length) {
     return (
       <div className="empty-state">
-        <div className="empty-state-icon">✨</div>
+        <div className="empty-state-icon"><Check size={28} aria-hidden="true" /></div>
         <p className="empty-state-text">
           {t("已经看完这一轮，稍后再来看看新产品吧。", "You've reached the end of this round. Check back later for new products.")}
         </p>
@@ -747,10 +748,10 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
 
       <div className="swipe-actions">
         <button className="swipe-btn swipe-btn--nope" type="button" onClick={() => animateSwipe("left")} disabled={!!swipeOutDirection}>
-          {t("跳过", "Skip")}
+          <ArrowLeft size={18} aria-hidden="true" /> {t("跳过", "Skip")}
         </button>
         <button className="swipe-btn swipe-btn--like" type="button" onClick={() => animateSwipe("right")} disabled={!!swipeOutDirection}>
-          {t("收藏", "Save")}
+          <BookmarkSimple size={18} aria-hidden="true" /> {t("收藏", "Save")}
         </button>
       </div>
       <div className={`swipe-echo ${showSwipeEcho ? "is-visible" : ""} ${lastSwipeAction ? `is-${lastSwipeAction}` : ""}`}>
@@ -765,7 +766,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
       </div>
       {likeStreak >= 2 ? (
         <div className={`swipe-streak ${showStreakBurst ? "is-visible" : ""}`}>
-          {locale === "en-US" ? `🔥 Dark horse streak x${likeStreak}` : `🔥 黑马连击 x${likeStreak}`}
+          {locale === "en-US" ? `Saved in a row x${likeStreak}` : `连续收藏 x${likeStreak}`}
         </div>
       ) : null}
       <div className={`swipe-gesture-hint ${feedbackDirection ? `is-${feedbackDirection}` : ""}`}>{hintText}</div>

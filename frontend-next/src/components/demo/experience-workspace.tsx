@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FileText, ImageIcon, Layers, Monitor, Pause, Play, Search, Smartphone } from "lucide-react";
+import { FileText, Image as ImageIcon, Stack, Monitor, Pause, Play, MagnifyingGlass, DeviceMobile } from "@phosphor-icons/react";
 import type { Experience } from "@/lib/demo-experience";
 
 type Props = {
@@ -34,7 +34,7 @@ export function ExperienceWorkspace({ spec, lang, choices, brief, onBriefChange,
       </label>
       {visual ? <>
         <div className="workspace-toolbar"><span>{kind === "video" ? (en ? "Storyboard" : "分镜预览") : (en ? "Composition" : "构图预览")}</span><div role="group" aria-label={en ? "Aspect ratio" : "画幅"}>
-          <button type="button" aria-pressed={ratio === "9:16"} onClick={() => onRatioChange("9:16")}><Smartphone size={13} />9:16</button>
+          <button type="button" aria-pressed={ratio === "9:16"} onClick={() => onRatioChange("9:16")}><DeviceMobile size={13} />9:16</button>
           <button type="button" aria-pressed={ratio === "16:9"} onClick={() => onRatioChange("16:9")}><Monitor size={13} />16:9</button>
         </div></div>
         <div className={"workspace-canvas " + (ratio === "9:16" ? "is-portrait" : "is-landscape")} data-direction={direction} data-shot={shot}>
@@ -47,7 +47,7 @@ export function ExperienceWorkspace({ spec, lang, choices, brief, onBriefChange,
         <div className="workspace-timeline" role="group" aria-label={en ? "Storyboard shots" : "分镜"}>{frames.map((frame, i) => <button key={frame} type="button" aria-pressed={shot === i} onClick={() => { setShot(i); setPlaying(false); }}><span>0{i + 1}</span>{frame}</button>)}</div>
         <p className="workspace-note" aria-live="polite">{active?.output[lang] ?? (en ? "Your choices shape the creative plan here." : "选择左侧的方案，在这里查看创意变化。")}</p>
       </> : <div className={"workspace-artifact workspace-artifact--" + kind}>
-        <div className="workspace-artifact-header">{kind === "search" ? <Search size={17} /> : kind === "board" ? <Layers size={17} /> : <FileText size={17} />}<strong>{brief || spec.headline[lang]}</strong></div>
+        <div className="workspace-artifact-header">{kind === "search" ? <MagnifyingGlass size={17} /> : kind === "board" ? <Stack size={17} /> : <FileText size={17} />}<strong>{brief || spec.headline[lang]}</strong></div>
         {spec.steps.map((step, i) => <article key={step.id} data-ready={!!chosen[i]}><span>{String(i + 1).padStart(2, "0")} · {step.title[lang]}</span><h4>{chosen[i]?.label[lang] ?? (en ? "Awaiting your choice" : "等待你的选择")}</h4><p>{chosen[i]?.output[lang] ?? step.instruction[lang]}</p></article>)}
       </div>}
       <div className="workspace-bottom"><ImageIcon size={13} />{en ? "Your brief and choices carry across every step." : "简报与选择会贯穿整个流程。"}</div>

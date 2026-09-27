@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Check, Download, RotateCcw } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Download, ArrowCounterClockwise } from "@phosphor-icons/react";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import type { ExperienceEntry } from "@/lib/demo-experience";
 import { exampleSpec } from "@/lib/live-demo";
@@ -48,7 +48,7 @@ export function ExperiencePlayer({ entry, productName, website, logoUrl, seconda
         <span className="experience-free">{t("体验内的操作不消耗生成额度", "Interactions use no generation credits")}</span>
       </aside>
       <div className="experience-stage">
-        <div className="experience-stage-meta"><span>{complete ? "EXPERIENCE COMPLETE" : "STEP " + String(index + 1).padStart(2, "0") + " / " + String(spec.steps.length).padStart(2, "0")}</span><button type="button" onClick={() => { setChoices({}); setDials({}); setReviews({}); setCustomBrief(null); setRatio("9:16"); setRevision(v => v + 1); move(0); }}><RotateCcw size={13} />{t("重新体验", "Start over")}</button></div>
+        <div className="experience-stage-meta"><span>{complete ? "EXPERIENCE COMPLETE" : "STEP " + String(index + 1).padStart(2, "0") + " / " + String(spec.steps.length).padStart(2, "0")}</span><button type="button" onClick={() => { setChoices({}); setDials({}); setReviews({}); setCustomBrief(null); setRatio("9:16"); setRevision(v => v + 1); move(0); }}><ArrowCounterClockwise size={13} />{t("重新体验", "Start over")}</button></div>
         <div className={spec.tier === "workflow" ? "experience-workbench" : undefined}>
         {complete ? <div className="experience-finish">
           <span className="experience-done"><Check size={26} /></span><h2 ref={heading} tabIndex={-1}>{t("这就是它的工作方式。", "Now you know the workflow.")}</h2><p>{spec.takeaway[lang]}</p>
