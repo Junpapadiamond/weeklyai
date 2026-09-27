@@ -126,5 +126,53 @@
         }
       ]
     }
+  },
+  {
+    "name": "Feather Robotics",
+    "website": "https://feather.dev/",
+    "description": "开发模块化人形机器人硬件平台,允许开发者根据不同用例定制硬件(如调整手臂长度),可运行Nvidia、Skild或Physical Intelligence等主流机器人AI模型,售价3万美元",
+    "description_en": "Develops a modular humanoid robot hardware platform that allows developers to customize hardware for different use cases (such as adjusting arm lengths), capable of running leading robotics AI models from Nvidia, Skild, or Physical Intelligence, priced at $30,000",
+    "category": "hardware",
+    "why_matters": "以3万美元价格提供可定制的模块化人形机器人平台,成本约为中国竞品Unitree H2 Edu的一半,已实现超100万美元收入,机器人在餐厅和实验室实际部署,定位为机器人领域的'Android'生态系统",
+    "why_matters_en": "Offers a customizable modular humanoid robot platform at $30,000, about half the price of Chinese competitor Unitree H2 Edu, has surpassed $1 million in revenue with robots deployed in restaurants and labs, positioning as the 'Android of robotics' ecosystem",
+    "latest_news": "2025年成立后获得Gradient Ventures领投的760万美元pre-seed轮融资,已开始销售并实现超100万美元收入,机器人在餐厅担任厨师和实验室清洁工作",
+    "latest_news_en": "Founded in 2025, raised $7.6 million pre-seed round led by Gradient Ventures, began selling to customers and surpassed $1 million in revenue, with robots working as cooks in restaurants and cleaning science labs",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "founder_background",
+      "growth_anomaly"
+    ],
+    "company_country": "US",
+    "confidence": 0.95,
+    "source_url": "https://techcrunch.com/2026/09/24/meet-feather-the-startup-building-the-android-of-robotics-for-developers/",
+    "funding_total": "$7.6M",
+    "categories": [
+      "hardware"
+    ],
+    "region": "Unknown",
+    "source": "claude_rss",
+    "source_title": "Meet Feather, the startup building the ‘Android of robotics’ for developers",
+    "website_source": "https://techcrunch.com/2026/09/24/meet-feather-the-startup-building-the-android-of-robotics-for-developers/",
+    "discovered_at": "2026-09-27",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20260927T003420Z-6ad5817b",
+      "source_published_at": "2026-09-24T18:52:38+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "Gradient Ventures, which backed Feather at its inception, leading the startup's previously announced $7.6 million pre-seed round"
+        },
+        {
+          "criterion": "founder_background",
+          "quote": "Parsa Bakhtiari (pictured above, right), a former Tesla Model 3 engineer who at one point reported directly to Elon Musk"
+        },
+        {
+          "criterion": "growth_anomaly",
+          "quote": "The startup has already begun selling to customers, surpassing $1 million in revenue"
+        }
+      ]
+    }
   }
 ]
