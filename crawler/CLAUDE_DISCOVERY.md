@@ -1,5 +1,15 @@
 # 使用 Claude 中转发现黑马
 
+2026-09-26 排查：每日任务的 Perplexity 返回 401、GLM 返回 429，预检失败导致后续发布、同步与 demo 预生成均跳过。现在每日任务默认使用 Claude，密钥需配置到 GitHub Actions secrets；Vercel 只负责提供 API、读取 MongoDB/部署快照，不运行长时间爬虫。
+
+### 来源与可选 Exa
+
+`DISCOVERY_SEARCH_PROVIDER=rss` 是当前部署默认。`auto` 在配置 `EXA_API_KEY` 时合并 Exa 与 RSS，Exa 故障会降级到 RSS 并在报告记录；`exa` 要求 Exa 成功（仍保留 RSS 补充），失败会明确退出。Exa 密钥只放 GitHub Actions secret / 本地忽略的环境文件。Exa 仅提供有发布日期的候选文章，最终仍读取原文、核验引用和官网链接，再交给 Claude 分析，不能凭搜索摘要直接入库。每轮最多一次 Exa 搜索、10 个结果。
+
+量子位地址更新为 `/feed`，增加 Tech.eu、Sifted、BetaKit；保留原来源的健康记录。2026-09-26 实测 36kr 无 RSS 条目、VentureBeat 不可读、TechCrunch Funding 超出 14 天窗口，不能把 HTTP 200 当作来源可用。
+
+`python crawler/tools/audit_discovery_sources.py --output artifacts/source-health.json` 不调用模型；检查 RSS 条目、最新发布日期、窗口内可用数和原文可读性。正常发现任务也记录这些指标，GitHub 的报告 artifact 在任务失败时仍上传。`auto_discover.py --provider claude --dry-run` 再验证模型提取与证据规则，但不发布数据。最终要检查任务发布步骤、MongoDB 同步结果，以及 Vercel 的 `/api/v1/products/last-updated` 和实际新产品，而非只看模型请求成功。
+
 现有 `auto_discover.py` 支持 `DISCOVERY_PROVIDER=claude`：读取有发布日期的公开 RSS 和文章正文，再调用 Anthropic Messages 兼容接口提取产品。无需 Perplexity 密钥。`auto` 保留原有 Perplexity / GLM 路由。
 
 在未提交的 `crawler/.env` 中配置（不要把密钥放进代码或前端变量）：

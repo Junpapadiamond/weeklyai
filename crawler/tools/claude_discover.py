@@ -13,6 +13,7 @@ from pathlib import Path
 import re
 import shutil
 import socket
+import time
 from urllib.parse import urljoin, urlsplit
 from uuid import uuid4
 
@@ -28,9 +29,12 @@ FEEDS = [
     ("TechCrunch Funding", "https://techcrunch.com/tag/funding/feed/"),
     ("VentureBeat", "https://venturebeat.com/category/ai/feed/"),
     ("36kr", "https://36kr.com/feed"),
-    ("QbitAI", "https://www.qbitai.com/rss"),
+    ("QbitAI", "https://www.qbitai.com/feed"),
     ("Leiphone", "https://www.leiphone.com/feed"),
     ("iFanr", "https://www.ifanr.com/feed"),
+    ("Tech.eu", "https://tech.eu/feed/"),
+    ("Sifted", "https://sifted.eu/feed"),
+    ("BetaKit", "https://betakit.com/feed/"),
 ]
 SIGNALS = re.compile(r"\b(raises?|raised|funding|launch\w*|startup\w*|robot\w*|seed|series [abc]|YC)\b|融资|发布|推出|机器人|创投", re.I)
 AI = re.compile(r"\b(AI|artificial intelligence|machine learning|LLM|robot\w*|agents?)\b|人工智能|大模型|智能体|机器人", re.I)
@@ -138,14 +142,37 @@ def collect_articles(days, limit, now=None):
     now = now or datetime.now(timezone.utc)
     def collect(feed):
         name, url = feed
+        started = time.monotonic()
         try:
             data, _ = fetch_public(url)
+            parsed = feedparser.parse(data)
+            dates = [calendar.timegm(e.get("published_parsed") or e.get("updated_parsed"))
+                     for e in parsed.entries if e.get("published_parsed") or e.get("updated_parsed")]
             entries = parse_feed(data, name, url, now, days)
-            return entries, {"source": name, "url": url, "eligible_articles": len(entries), "status": "ok" if entries else "empty"}
+            latest = datetime.fromtimestamp(max(dates), timezone.utc) if dates else None
+            status = "ok" if entries else "stale" if latest and latest < now - timedelta(days=days) else "empty"
+            return entries, {"source": name, "url": url, "eligible_articles": len(entries), "status": status,
+                             "entries": len(parsed.entries), "latest_published_at": latest.isoformat() if latest else None,
+                             "elapsed_ms": round((time.monotonic() - started) * 1000)}
         except (requests.RequestException, ValueError):
             return [], {"source": name, "url": url, "status": "unavailable"}
     feed_results = list(ThreadPoolExecutor(max_workers=5).map(collect, FEEDS))
     unique = {article["url"]: article for entries, _ in feed_results for article in entries}
+    source_mode = os.getenv("DISCOVERY_SEARCH_PROVIDER", "auto").lower()
+    if source_mode not in {"auto", "rss", "exa"}:
+        raise ClaudeError("DISCOVERY_SEARCH_PROVIDER must be auto, rss or exa")
+    if source_mode == "exa" or source_mode == "auto" and os.getenv("EXA_API_KEY"):
+        from utils.exa_client import search_articles, ExaError
+        try:
+            found = search_articles("emerging AI startups product launches funding US Europe Asia", days, min(limit, 10), now)
+            # Retrieve original articles with the same public-URL checks and link/quote
+            # validation as RSS. Search snippets alone can never publish a product.
+            unique.update({a["url"]: a for a in found})
+            feed_results.append(([], {"source": "Exa", "status": "ok" if found else "empty", "eligible_articles": len(found)}))
+        except ExaError as error:
+            feed_results.append(([], {"source": "Exa", "status": "unavailable", "error": str(error)}))
+            if source_mode == "exa":
+                raise ClaudeError(str(error)) from None
     articles = sorted(unique.values(), key=lambda a: (bool(PRIORITY.search(a["title"])), a["published_at"]), reverse=True)
     # Fetch before judging AI relevance: roundup titles may omit the word AI.
     articles = articles[:limit * 3]
@@ -327,7 +354,7 @@ def run_discovery(engine, region="all", product_type="mixed", dry_run=False):
                     continue
                 source = next(a for a in batch if a["url"] == product["source_url"])
                 website_link = next(link for link in source['links'] if domain(link['url']) == host)
-                product.update({"source": "claude_rss", "source_title": source["title"],
+                product.update({"source": "claude_exa" if source.get("source") == "Exa" else "claude_rss", "source_title": source["title"],
                                 "website_source": website_link.get('via') or source["url"], "discovered_at": datetime.now(timezone.utc).date().isoformat(),
                                 "extra": {"discovery_provider": "claude", "discovery_run_id": run_id,
                                           "source_published_at": source["published_at"], "evidence": product.pop("evidence")}})

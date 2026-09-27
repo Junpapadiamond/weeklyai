@@ -38,7 +38,9 @@ jobs:
 
       - name: Run discovery + news
         env:
-          DISCOVERY_PROVIDER: ${{ vars.DISCOVERY_PROVIDER || 'auto' }}
+          DISCOVERY_PROVIDER: ${{ vars.DISCOVERY_PROVIDER || 'claude' }}
+          DISCOVERY_SEARCH_PROVIDER: ${{ vars.DISCOVERY_SEARCH_PROVIDER || 'rss' }}
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
           CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
           CLAUDE_API_BASE_URL: ${{ vars.CLAUDE_API_BASE_URL || 'https://api.intenext.ai/v1' }}
           CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL || 'claude-sonnet-5' }}
@@ -87,7 +89,7 @@ jobs:
             fi
           fi
 
-          if ! python tools/cn_news_glm.py; then
+          if [ "${DISCOVERY_PROVIDER}" != "claude" ] && ! python tools/cn_news_glm.py; then
             echo "❌ CN merge failed: cn_news_glm.py" >> "$GITHUB_STEP_SUMMARY"
             exit 1
           fi
@@ -129,6 +131,7 @@ jobs:
           path: |
             /tmp/data_report.json
             /tmp/data_report.md
+            crawler/logs/discovery/*.json
 
       - name: Sync snapshot for backend deployment
         run: |
