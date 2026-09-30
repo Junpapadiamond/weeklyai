@@ -1,0 +1,203 @@
+{
+  "cache_key": "12a8088542eb992f2fe014eb-6100927ad785b7f7809a2683",
+  "product_key": "12a8088542eb992f2fe014eb",
+  "fingerprint": "6100927ad785b7f7809a2683",
+  "product_id": "p_afbcdbb77cfb30ac",
+  "product_name": "Flow Engineering",
+  "origin": "pregenerated",
+  "generated_at": "2026-09-30T22:56:53.509325+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "硬件设计对齐工作流",
+      "en": "Hardware Design Alignment Workflow"
+    },
+    "scenario": {
+      "zh": "为电动滑板车控制器设计散热方案，协调CAD变更与热仿真及安全标准",
+      "en": "Design cooling for e-scooter controller, coordinating CAD changes with thermal simulation and safety standards"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择对齐优先级",
+          "en": "Choose Alignment Priority"
+        },
+        "instruction": {
+          "zh": "确定本次迭代的主要对齐维度",
+          "en": "Identify primary alignment dimension for this iteration"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "热性能与安全认证",
+              "en": "Thermal Performance & Safety Cert"
+            },
+            "output": {
+              "zh": "简报重点：散热设计需同时满足温度限值和防护等级要求",
+              "en": "Brief focus: cooling design must meet temperature limits and protection rating requirements"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "成本与制造可行性",
+              "en": "Cost & Manufacturing Feasibility"
+            },
+            "output": {
+              "zh": "简报重点：材料变更需考虑采购成本和供应商交付能力",
+              "en": "Brief focus: material change considers procurement cost and supplier delivery capability"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "关联验证数据",
+          "en": "Link Validation Data"
+        },
+        "instruction": {
+          "zh": "选择用于验证设计变更的数据源",
+          "en": "Select data source to validate design changes"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "热仿真分析报告",
+              "en": "Thermal Simulation Report"
+            },
+            "output": {
+              "zh": "简报显示：铜散热片峰值温度更低，热阻表现优于铝材方案",
+              "en": "Brief shows: copper heatsink peak temperature lower, thermal resistance better than aluminum"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "机械测试数据",
+              "en": "Mechanical Test Data"
+            },
+            "output": {
+              "zh": "简报显示：新结构通过振动测试，焊点可靠性符合车规标准",
+              "en": "Brief shows: new structure passed vibration test, solder joint reliability meets automotive standards"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比对齐方案",
+          "en": "Compare Alignment Options"
+        },
+        "instruction": {
+          "zh": "检查两种设计对齐策略的差异",
+          "en": "Review differences between two alignment strategies"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "保守改动策略",
+              "en": "Conservative Change Strategy"
+            },
+            "output": {
+              "zh": "简报方案：保持外形仅换材料，CAD改动较少，工装复用",
+              "en": "Brief approach: keep geometry swap material only, fewer CAD changes, reuse tooling"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "深度优化策略",
+              "en": "Deep Optimization Strategy"
+            },
+            "output": {
+              "zh": "简报方案：采用铜材并增加翅片密度，热性能更优但需重做工装",
+              "en": "Brief approach: copper with higher fin density, better thermal performance but tooling redo needed"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "确认对齐文档",
+          "en": "Confirm Alignment Document"
+        },
+        "instruction": {
+          "zh": "查看最终简报并选择后续操作",
+          "en": "Review final brief and choose follow-up action"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "下载简报分发团队",
+              "en": "Download Brief for Team"
+            },
+            "output": {
+              "zh": "简报包含：CAD变更清单、仿真验证、合规检查和工程变更建议",
+              "en": "Brief contains: CAD change list, simulation validation, compliance check, ECO recommendations"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "标记冲突请求评审",
+              "en": "Flag Conflicts Request Review"
+            },
+            "output": {
+              "zh": "简报标注：铜材性能优异但成本较高，建议热设计和采购联合评审",
+              "en": "Brief notes: copper performance excellent but cost higher, recommend joint thermal and procurement review"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Flow Engineering通过AI代理自动对齐CAD、仿真和需求，让硬件迭代更快",
+      "en": "Flow Engineering auto-aligns CAD, simulation and requirements via AI agents for faster hardware iteration"
+    },
+    "sources": [
+      {
+        "url": "https://www.flowengineering.com/",
+        "label": {
+          "zh": "Flow Engineering 官网",
+          "en": "Flow Engineering Official"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/09/30/valor-atreides-and-sequoia-back-ai-startup-flow-engineering-at-750m-valuation/",
+        "label": {
+          "zh": "TechCrunch 报道",
+          "en": "TechCrunch Coverage"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "document",
+      "label": {
+        "zh": "设计对齐简报",
+        "en": "Design Alignment Brief"
+      },
+      "initial": {
+        "zh": "控制器散热片材料从铝改为铜，增加翅片表面积，确保符合UL2272温度标准",
+        "en": "Controller heatsink material from aluminum to copper, increased fin area, ensure UL2272 temp compliance"
+      }
+    }
+  }
+}

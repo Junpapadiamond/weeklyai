@@ -1,0 +1,192 @@
+{
+  "cache_key": "8714a1948ccb7079b9d29c5f-97111829e180166b834b8a4e",
+  "product_key": "8714a1948ccb7079b9d29c5f",
+  "fingerprint": "97111829e180166b834b8a4e",
+  "product_id": "p_e5735f993bbbf47c",
+  "product_name": "Numeral",
+  "origin": "pregenerated",
+  "generated_at": "2026-09-30T22:57:19.514897+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "跨境销售税合规策略",
+      "en": "Cross-Border Tax Compliance Strategy"
+    },
+    "scenario": {
+      "zh": "为拓展欧洲市场的SaaS公司设计增值税合规方案",
+      "en": "Design VAT compliance approach for SaaS company expanding to Europe"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择市场策略",
+          "en": "Select Market Strategy"
+        },
+        "instruction": {
+          "zh": "确定首批进入的目标市场范围",
+          "en": "Define initial target market scope"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "5个核心欧盟国家",
+              "en": "5 Core EU Countries"
+            },
+            "output": {
+              "zh": "德国、法国、荷兰、爱尔兰、西班牙已配置，每个市场的增值税规则已加载",
+              "en": "Germany, France, Netherlands, Ireland, Spain configured with VAT rules loaded"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "全欧盟27国覆盖",
+              "en": "Full EU-27 Coverage"
+            },
+            "output": {
+              "zh": "所有欧盟成员国税率表已同步，包括特殊地区如加那利群岛的例外规则",
+              "en": "All EU member tax tables synced including special zones like Canary Islands"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "集成计费系统",
+          "en": "Integrate Billing System"
+        },
+        "instruction": {
+          "zh": "连接现有的收入管理工具",
+          "en": "Connect existing revenue management tool"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "Stripe计费数据",
+              "en": "Stripe Billing Data"
+            },
+            "output": {
+              "zh": "订阅交易已同步，客户地址信息与税务登记号已关联完成",
+              "en": "Subscription transactions synced, customer addresses linked with tax IDs"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "自建ERP系统",
+              "en": "Custom ERP System"
+            },
+            "output": {
+              "zh": "API端点已验证，发票数据流已建立，历史记录正在回填",
+              "en": "API endpoints validated, invoice data stream established, historical backfill started"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "审查合规规则",
+          "en": "Review Compliance Rules"
+        },
+        "instruction": {
+          "zh": "对比不同场景的税务处理逻辑",
+          "en": "Compare tax treatment logic across scenarios"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "B2B企业客户",
+              "en": "B2B Business Clients"
+            },
+            "output": {
+              "zh": "反向征税机制已应用，需验证客户增值税号，发票格式符合各国要求",
+              "en": "Reverse charge applied, VAT number validation required, invoice formats compliant"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "B2C个人用户",
+              "en": "B2C Individual Users"
+            },
+            "output": {
+              "zh": "本地税率已按客户位置自动计算，小额交易阈值规则已配置",
+              "en": "Local rates calculated by customer location, small transaction thresholds configured"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "生成申报文件",
+          "en": "Generate Filing Documents"
+        },
+        "instruction": {
+          "zh": "准备季度税务申报材料",
+          "en": "Prepare quarterly tax filing materials"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "标准EC销售清单",
+              "en": "Standard EC Sales List"
+            },
+            "output": {
+              "zh": "各国格式的申报表已准备，跨境交易汇总表已核对，符合本季度提交截止日期",
+              "en": "Country-specific returns prepared, cross-border summary reconciled, deadline ready"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "详细审计报告",
+              "en": "Detailed Audit Report"
+            },
+            "output": {
+              "zh": "完整的交易记录追踪已生成，包含税率应用依据和客户分类逻辑说明",
+              "en": "Complete transaction trail generated with rate application basis and customer classification"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Numeral自动处理多国税务规则差异，降低跨境扩张的合规风险",
+      "en": "Numeral automates multi-country tax rule variations, reducing compliance risk in expansion"
+    },
+    "sources": [
+      {
+        "url": "https://www.numeral.com/",
+        "label": {
+          "zh": "Numeral官网",
+          "en": "Numeral Website"
+        }
+      },
+      {
+        "url": "https://fintech.global/2026/09/25/400m-rounds-drive-this-weeks-fintech-funding",
+        "label": {
+          "zh": "融资新闻",
+          "en": "Funding News"
+        }
+      }
+    ]
+  }
+}

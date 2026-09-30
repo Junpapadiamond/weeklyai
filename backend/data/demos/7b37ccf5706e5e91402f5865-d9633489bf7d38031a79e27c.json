@@ -1,0 +1,192 @@
+{
+  "cache_key": "7b37ccf5706e5e91402f5865-d9633489bf7d38031a79e27c",
+  "product_key": "7b37ccf5706e5e91402f5865",
+  "fingerprint": "d9633489bf7d38031a79e27c",
+  "product_id": "p_50ad83c1a36ba17a",
+  "product_name": "Restate",
+  "origin": "pregenerated",
+  "generated_at": "2026-09-30T22:56:00.481643+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为AI代理构建持久化工作流",
+      "en": "Build durable workflows for AI agents"
+    },
+    "scenario": {
+      "zh": "电商平台需要AI代理处理订单异常,即使遇到故障也能自动恢复执行",
+      "en": "E-commerce platform needs AI agents handling order exceptions with automatic recovery from failures"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择执行模式",
+          "en": "Choose execution mode"
+        },
+        "instruction": {
+          "zh": "决定代理如何处理长时间运行的订单审核任务",
+          "en": "Decide how agents handle long-running order review tasks"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "传统异步队列",
+              "en": "Traditional async queue"
+            },
+            "output": {
+              "zh": "需要手动编写重试逻辑、状态存储和错误恢复代码",
+              "en": "Requires manual retry logic, state storage and error recovery code"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "Restate持久执行",
+              "en": "Restate durable execution"
+            },
+            "output": {
+              "zh": "自动处理状态持久化和故障恢复,代码更简洁",
+              "en": "Automatic state persistence and failure recovery, cleaner code"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "配置代理调用",
+          "en": "Configure agent calls"
+        },
+        "instruction": {
+          "zh": "设定AI代理如何调用外部支付和库存系统",
+          "en": "Set how AI agents call external payment and inventory systems"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "直接HTTP调用",
+              "en": "Direct HTTP calls"
+            },
+            "output": {
+              "zh": "网络超时导致订单状态不一致,需要人工介入修复",
+              "en": "Network timeouts cause order state inconsistency, requires manual fixes"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "持久化RPC调用",
+              "en": "Durable RPC calls"
+            },
+            "output": {
+              "zh": "调用结果自动缓存,超时后从断点继续,无需重复执行",
+              "en": "Call results auto-cached, resumes from checkpoint after timeout, no re-execution"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比恢复行为",
+          "en": "Compare recovery behavior"
+        },
+        "instruction": {
+          "zh": "观察代理在数据库故障后的恢复表现",
+          "en": "Observe agent recovery performance after database failure"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "无持久化层",
+              "en": "No durability layer"
+            },
+            "output": {
+              "zh": "工作流从头重新开始,已完成的支付验证步骤被重复执行",
+              "en": "Workflow restarts from beginning, completed payment verification step re-runs"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "Restate持久化",
+              "en": "Restate durability"
+            },
+            "output": {
+              "zh": "工作流从故障点精确恢复,只执行未完成的库存检查步骤",
+              "en": "Workflow resumes exactly from failure point, only runs pending inventory check"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "查看代理执行日志",
+          "en": "Review agent execution log"
+        },
+        "instruction": {
+          "zh": "检查代理处理的订单异常记录和状态追踪",
+          "en": "Check order exception records and state tracking handled by agent"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "订单#7842异常处理",
+              "en": "Order #7842 exception handling"
+            },
+            "output": {
+              "zh": "代理在两次重启后完成审核,所有中间状态已保留,无数据丢失",
+              "en": "Agent completed review after two restarts, all intermediate state preserved, no data loss"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "订单#9103异常处理",
+              "en": "Order #9103 exception handling"
+            },
+            "output": {
+              "zh": "代理暂停等待人工批准后自动恢复,工作流状态完整保持",
+              "en": "Agent paused for manual approval then auto-resumed, workflow state fully maintained"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Restate为AI代理提供内置的持久执行能力,简化故障恢复和状态管理的复杂性",
+      "en": "Restate provides built-in durable execution for AI agents, simplifying failure recovery and state management complexity"
+    },
+    "sources": [
+      {
+        "url": "https://restate.dev",
+        "label": {
+          "zh": "Restate官网",
+          "en": "Restate Official"
+        }
+      },
+      {
+        "url": "https://tech.eu/2026/09/30/berlin-based-restate-raises-20m/",
+        "label": {
+          "zh": "融资报道",
+          "en": "Funding News"
+        }
+      }
+    ]
+  }
+}

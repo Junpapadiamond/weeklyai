@@ -1,0 +1,192 @@
+{
+  "cache_key": "a1185b17e94cb06852657b7d-89c4e8c2a2624267d979ba12",
+  "product_key": "a1185b17e94cb06852657b7d",
+  "fingerprint": "89c4e8c2a2624267d979ba12",
+  "product_id": "p_4cf4af5293850191",
+  "product_name": "Hang Ten Systems",
+  "origin": "pregenerated",
+  "generated_at": "2026-09-30T22:57:46.883292+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "企业级库存系统现代化",
+      "en": "Enterprise Inventory System Modernization"
+    },
+    "scenario": {
+      "zh": "一家制造企业需要将老旧的库存管理系统升级为现代化云架构,支持实时追踪和AI预测",
+      "en": "A manufacturing company needs to modernize its legacy inventory system to cloud architecture with real-time tracking and AI forecasting"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择现代化策略",
+          "en": "Choose Modernization Strategy"
+        },
+        "instruction": {
+          "zh": "确定如何处理现有的单体应用架构",
+          "en": "Determine how to handle the existing monolithic architecture"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "完全重构为微服务",
+              "en": "Full Microservices Rebuild"
+            },
+            "output": {
+              "zh": "团队规模:4人,架构方案包含12个独立服务,使用容器化部署和事件驱动通信",
+              "en": "Team size: 4 people, architecture with 12 independent services using containerized deployment and event-driven messaging"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "渐进式分层迁移",
+              "en": "Incremental Layer Migration"
+            },
+            "output": {
+              "zh": "团队规模:3人,保留核心逻辑,优先迁移API层和数据访问层到云原生架构",
+              "en": "Team size: 3 people, preserve core logic, prioritize migrating API and data access layers to cloud-native architecture"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "AI能力集成点",
+          "en": "AI Capability Integration"
+        },
+        "instruction": {
+          "zh": "选择AI增强的核心功能模块",
+          "en": "Select core module for AI enhancement"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "需求预测引擎",
+              "en": "Demand Forecasting Engine"
+            },
+            "output": {
+              "zh": "集成时序分析模型,基于历史数据和季节模式自动生成补货建议,减少人工规划工作",
+              "en": "Integrate time-series model analyzing historical data and seasonal patterns to auto-generate reorder suggestions, reducing manual planning"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "异常检测系统",
+              "en": "Anomaly Detection System"
+            },
+            "output": {
+              "zh": "部署实时监控模块,识别库存差异、延迟交付和异常消耗模式,触发即时告警",
+              "en": "Deploy real-time monitoring to identify inventory discrepancies, delayed deliveries, and unusual consumption patterns with instant alerts"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "架构方案对比",
+          "en": "Architecture Comparison"
+        },
+        "instruction": {
+          "zh": "评估两种数据库迁移路径的技术权衡",
+          "en": "Evaluate technical tradeoffs of two database migration paths"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "单一云数据库",
+              "en": "Single Cloud Database"
+            },
+            "output": {
+              "zh": "迁移速度更快,数据一致性简单,但扩展性受限于单点架构和区域可用性",
+              "en": "Faster migration, simpler consistency, but scalability constrained by single-point architecture and regional availability"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "分布式数据网格",
+              "en": "Distributed Data Mesh"
+            },
+            "output": {
+              "zh": "支持全球多区域部署和独立扩展,初期配置复杂度较高,需要跨域同步策略",
+              "en": "Supports global multi-region deployment and independent scaling, higher initial complexity, requires cross-domain sync strategy"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "交付成果审查",
+          "en": "Delivery Review"
+        },
+        "instruction": {
+          "zh": "确认现代化项目的最终交付物",
+          "en": "Confirm final deliverables of the modernization project"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "技术架构文档",
+              "en": "Technical Architecture"
+            },
+            "output": {
+              "zh": "包含系统组件图、API规范、数据流设计和部署拓扑,支持后续开发和运维",
+              "en": "Includes component diagrams, API specs, data flow design, and deployment topology for ongoing development and operations"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "可运行原型系统",
+              "en": "Working Prototype System"
+            },
+            "output": {
+              "zh": "核心功能已实现并通过测试,演示实时库存追踪和AI预测能力,可投入试点运行",
+              "en": "Core features implemented and tested, demonstrating real-time tracking and AI forecasting, ready for pilot deployment"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "AI驱动的企业软件现代化让小团队能够快速重构复杂系统,实现更高的开发效率和业务价值",
+      "en": "AI-powered enterprise modernization enables small teams to rapidly rebuild complex systems with higher efficiency and business value"
+    },
+    "sources": [
+      {
+        "url": "https://hangten.ai/",
+        "label": {
+          "zh": "Hang Ten Systems官网",
+          "en": "Hang Ten Systems"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/09/16/former-infosys-chiefs-ai-startup-adds-50m-to-seed-weeks-after-initial-raise",
+        "label": {
+          "zh": "TechCrunch融资报道",
+          "en": "TechCrunch Funding Coverage"
+        }
+      }
+    ]
+  }
+}
