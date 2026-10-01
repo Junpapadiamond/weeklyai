@@ -137,5 +137,100 @@
         }
       ]
     }
+  },
+  {
+    "name": "Satlyt",
+    "website": "https://satlyt.ai/",
+    "description": "为卫星构建AI运行软件的平台,让多颗卫星共享大型计算任务,通过在轨AI决策降低数据传输成本并提高运营效率",
+    "description_en": "Software platform enabling AI models to run on satellites, allowing multiple satellites to share computing workloads and reducing downlink costs through on-orbit decision-making",
+    "category": "other",
+    "why_matters": "由前Google云计算和SpaceX工程师创立,已在两次演示任务中部署软件,通过在Momentus卫星上运行Google DeepMind的Gemma模型将传输数据量削减超过60%,每颗卫星每年可节省数十万美元",
+    "why_matters_en": "Founded by former Google Cloud and SpaceX engineer, has already flown software on two demonstration missions, achieved 60%+ transmission size reduction using Google DeepMind's Gemma model on Momentus spacecraft, saving hundreds of thousands of dollars per satellite annually",
+    "latest_news": "获得800万美元种子轮融资,软件将于本周四搭载SpaceX火箭发射,与Google的Project Suncatcher原型一同进入轨道",
+    "latest_news_en": "Raised $8M seed round, software launching Thursday on SpaceX rocket alongside Google's Project Suncatcher prototype",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "founder_background",
+      "category_innovation"
+    ],
+    "company_country": "US",
+    "funding_total": "$8M",
+    "confidence": 0.95,
+    "source_url": "https://techcrunch.com/2026/10/01/satlyt-founded-by-a-former-google-and-spacex-product-manager-raises-8m-to-run-ai-on-satellites/",
+    "categories": [
+      "other"
+    ],
+    "region": "Unknown",
+    "source": "claude_rss",
+    "source_title": "Satlyt, founded by a former Google and SpaceX product manager, raises $8M to run AI on satellites",
+    "website_source": "https://techcrunch.com/2026/10/01/satlyt-founded-by-a-former-google-and-spacex-product-manager-raises-8m-to-run-ai-on-satellites/",
+    "discovered_at": "2026-10-01",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261001T230117Z-8f4f8e4e",
+      "source_published_at": "2026-10-01T12:00:00+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "The company has raised an $8 million seed round, Afullo exclusively told TechCrunch."
+        },
+        {
+          "criterion": "founder_background",
+          "quote": "The Kenyan American engineer previously worked in Google's cloud computing business before a brief stint at SpaceX's Starlink communications network in 2024."
+        },
+        {
+          "criterion": "category_innovation",
+          "quote": "Earlier this year, Satlyt deployed Google DeepMind's Gemma AI model onboard a spacecraft operated by Momentus. The model cut the size of a transmission about onboard software errors by more than 60%, the kind of efficiency that Afullo says can save hundreds of thousands of dollars per satellite each year."
+        }
+      ]
+    }
+  },
+  {
+    "name": "FRANK",
+    "website": "https://frankinsurance.ai/us/en",
+    "description": "为保险经纪人提供AI驱动的虚拟助手平台,自动处理行政工作流程,包括报价请求、理赔跟进和客户信息更新",
+    "description_en": "AI-powered virtual assistant platform for insurance brokers that automates back-office workflows including quote requests, claims follow-up and client information updates",
+    "category": "finance",
+    "why_matters": "FRANK通过AI操作员技术解决了保险经纪人80%的时间浪费在行政工作上的行业痛点,已在不到12个月内获得350多家保险机构使用,每月处理70000项后台任务,每位经纪人每周平均节省约10小时的行政工作时间",
+    "why_matters_en": "FRANK addresses the industry pain point where brokers spend 80% of their time on back-office tasks through its AI Operator technology, achieving adoption by over 350 insurance agencies in under 12 months, processing 70,000 monthly tasks and saving brokers approximately 10 hours per week",
+    "latest_news": "完成290万欧元融资,由Armilar和Start Ventures领投,用于技术研发和2027年国际扩张准备",
+    "latest_news_en": "Raised €2.9M led by Armilar and Start Ventures to develop technology and prepare for international expansion in 2027",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "growth_anomaly",
+      "category_innovation"
+    ],
+    "company_country": "PT",
+    "confidence": 0.92,
+    "source_url": "https://tech.eu/2026/10/01/frank-raises-eur29m-to-cut-paperwork-for-insurance-brokers/",
+    "categories": [
+      "finance"
+    ],
+    "region": "Unknown",
+    "source": "claude_rss",
+    "source_title": "FRANK raises €2.9M to cut paperwork for insurance brokers",
+    "website_source": "https://tech.eu/2026/10/01/frank-raises-eur29m-to-cut-paperwork-for-insurance-brokers/",
+    "discovered_at": "2026-10-01",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261001T230117Z-8f4f8e4e",
+      "source_published_at": "2026-10-01T06:00:00+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "Portuguese insurtech FRANK has raised €2.9 million in a funding round led by Armilar and Start Ventures"
+        },
+        {
+          "criterion": "growth_anomaly",
+          "quote": "FRANK began commercialising its platform less than 12 months ago and is now used by more than 350 insurance agencies and brokerages, representing over 1,500 users across Portugal"
+        },
+        {
+          "criterion": "category_innovation",
+          "quote": "FRANK has developed what it calls an AI Operator, a virtual assistant designed to replicate human actions across insurance brokerage systems and portals"
+        }
+      ]
+    }
   }
 ]

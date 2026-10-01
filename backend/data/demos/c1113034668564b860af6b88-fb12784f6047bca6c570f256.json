@@ -1,0 +1,185 @@
+{
+  "cache_key": "c1113034668564b860af6b88-fb12784f6047bca6c570f256",
+  "product_key": "c1113034668564b860af6b88",
+  "fingerprint": "fb12784f6047bca6c570f256",
+  "product_id": "p_d8e903f15095c832",
+  "product_name": "Baselayer",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-01T23:08:59.515027+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为AI代理交易设计验证策略",
+      "en": "Design verification for AI agent transactions"
+    },
+    "scenario": {
+      "zh": "某支付平台准备支持AI代理自动付款,需要配置身份与授权验证流程",
+      "en": "A payment platform enabling AI agent autopay needs identity and authorization verification"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择验证层级",
+          "en": "Choose verification tier"
+        },
+        "instruction": {
+          "zh": "根据交易场景选择验证深度",
+          "en": "Select verification depth for transaction context"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "标准验证:身份+授权",
+              "en": "Standard: identity + authorization"
+            },
+            "output": {
+              "zh": "配置双因素检查,适用于常规代理支付场景",
+              "en": "Two-factor checks configured for routine agent payments"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "增强验证:身份+授权+可信度",
+              "en": "Enhanced: identity + authorization + trust"
+            },
+            "output": {
+              "zh": "启用三层验证,适用于高价值或敏感交易",
+              "en": "Three-layer verification enabled for high-value or sensitive transactions"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "设置代理授权范围",
+          "en": "Set agent authorization scope"
+        },
+        "instruction": {
+          "zh": "定义AI代理可执行的操作边界",
+          "en": "Define operational boundaries for AI agents"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "限额授权:单笔≤500元",
+              "en": "Capped: ≤$500 per transaction"
+            },
+            "output": {
+              "zh": "代理可在额度内自主完成小额支付",
+              "en": "Agents autonomously complete small payments within limit"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "条件授权:需人工批准>1000元",
+              "en": "Conditional: human approval for >$1000"
+            },
+            "output": {
+              "zh": "大额交易触发人工审核流程",
+              "en": "High-value transactions trigger human review workflow"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比验证响应速度",
+          "en": "Compare verification response times"
+        },
+        "instruction": {
+          "zh": "查看不同验证配置的处理表现",
+          "en": "Review processing performance of verification configs"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "标准验证",
+              "en": "Standard verification"
+            },
+            "output": {
+              "zh": "验证响应快速,适合高频小额场景",
+              "en": "Fast verification response for high-frequency small transactions"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "增强验证",
+              "en": "Enhanced verification"
+            },
+            "output": {
+              "zh": "可信度评估增加延迟,但风险控制更严格",
+              "en": "Trust scoring adds latency but provides stricter risk control"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "确认验证策略",
+          "en": "Confirm verification strategy"
+        },
+        "instruction": {
+          "zh": "审阅最终的代理验证配置方案",
+          "en": "Review final agent verification configuration"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "应用到生产环境",
+              "en": "Apply to production"
+            },
+            "output": {
+              "zh": "验证策略已就绪,可接入AI代理支付流程",
+              "en": "Verification strategy ready for AI agent payment integration"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "保存为草稿",
+              "en": "Save as draft"
+            },
+            "output": {
+              "zh": "配置已保存,可稍后继续调整参数",
+              "en": "Configuration saved for later parameter adjustments"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Baselayer为AI代理交易提供身份、授权和可信度验证,帮助金融机构在代理商务化前建立信任基础设施",
+      "en": "Baselayer verifies identity, authorization and trust for AI agent transactions, helping financial institutions build trust infrastructure before agent commerce scales"
+    },
+    "sources": [
+      {
+        "url": "https://baselayer.com/",
+        "label": {
+          "zh": "Baselayer官网",
+          "en": "Baselayer Official"
+        }
+      }
+    ]
+  }
+}

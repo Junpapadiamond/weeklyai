@@ -1,0 +1,192 @@
+{
+  "cache_key": "590e56378cf7e886e2defbca-d11093f137c5335084f47355",
+  "product_key": "590e56378cf7e886e2defbca",
+  "fingerprint": "d11093f137c5335084f47355",
+  "product_id": "p_d22b01f389ff1fa2",
+  "product_name": "Go.AI",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-01T23:09:28.749948+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "本地部署AI基础设施配置演练",
+      "en": "On-Premises AI Infrastructure Configuration"
+    },
+    "scenario": {
+      "zh": "某区域银行需要在本地环境部署AI模型处理贷款审批文档,确保客户数据不离开内网",
+      "en": "A regional bank needs to deploy AI models on-premises to process loan documents while keeping customer data within their network"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择部署架构",
+          "en": "Choose Deployment Architecture"
+        },
+        "instruction": {
+          "zh": "根据银行现有基础设施选择合适的部署方案",
+          "en": "Select the appropriate deployment based on the bank's existing infrastructure"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "单节点专用服务器",
+              "en": "Single-Node Dedicated Server"
+            },
+            "output": {
+              "zh": "配置完成:8核CPU、64GB内存、2TB存储,适合日均处理500份文档的分支机构",
+              "en": "Configured: 8-core CPU, 64GB RAM, 2TB storage, suitable for branch offices processing around 500 documents daily"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "分布式集群架构",
+              "en": "Distributed Cluster Architecture"
+            },
+            "output": {
+              "zh": "配置完成:3节点集群、192GB总内存、6TB存储,支持总行级别高并发文档处理需求",
+              "en": "Configured: 3-node cluster, 192GB total RAM, 6TB storage, supports headquarters-level high-concurrency document processing"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "model_selection",
+        "widget": "choice",
+        "title": {
+          "zh": "配置AI模型组合",
+          "en": "Configure AI Model Suite"
+        },
+        "instruction": {
+          "zh": "选择适合贷款审批场景的模型配置方案",
+          "en": "Select the model configuration suited for loan approval workflows"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "文档理解专项模型",
+              "en": "Document Understanding Specialized Model"
+            },
+            "output": {
+              "zh": "已加载OCR+实体抽取模型,可识别身份证、收入证明等结构化字段,推理延迟较低",
+              "en": "Loaded OCR + entity extraction model, recognizes ID cards and income statements with structured fields, lower inference latency"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "通用大语言模型",
+              "en": "General Large Language Model"
+            },
+            "output": {
+              "zh": "已加载70亿参数通用模型,可处理复杂业务逻辑和非结构化文本,推理延迟较高但理解能力更强",
+              "en": "Loaded 7B-parameter general model, handles complex business logic and unstructured text with higher latency but stronger comprehension"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "security_review",
+        "widget": "compare",
+        "title": {
+          "zh": "审查数据流向",
+          "en": "Review Data Flow"
+        },
+        "instruction": {
+          "zh": "对比两种配置的数据安全特性,确认符合监管要求",
+          "en": "Compare data security characteristics of both configurations to ensure regulatory compliance"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "完全隔离模式",
+              "en": "Fully Isolated Mode"
+            },
+            "output": {
+              "zh": "所有推理在内网完成,无外部调用,无遥测数据上传,满足最严格金融监管要求",
+              "en": "All inference runs within the private network, no external calls, no telemetry upload, meets strictest financial regulations"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "混合更新模式",
+              "en": "Hybrid Update Mode"
+            },
+            "output": {
+              "zh": "核心推理在内网,仅模型版本检查通过加密通道连接外部,便于快速获取安全补丁",
+              "en": "Core inference within private network, only version checks via encrypted channel for rapid security patch delivery"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "validation",
+        "widget": "review",
+        "title": {
+          "zh": "验证部署结果",
+          "en": "Validate Deployment"
+        },
+        "instruction": {
+          "zh": "使用测试文档验证系统功能和合规性",
+          "en": "Validate system functionality and compliance using test documents"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "运行合规测试套件",
+              "en": "Run Compliance Test Suite"
+            },
+            "output": {
+              "zh": "测试通过:数据未离开指定网段,审计日志完整,模型响应时间符合业务要求",
+              "en": "Tests passed: data remained within designated network segment, audit logs complete, model response time meets business needs"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "执行性能基准测试",
+              "en": "Execute Performance Benchmark"
+            },
+            "output": {
+              "zh": "基准测试完成:单文档处理约3秒,批量处理吞吐量适合当前业务负载",
+              "en": "Benchmark complete: ~3 seconds per document, batch throughput suitable for current business load"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "本地部署AI基础设施让受监管机构在不外传敏感数据的前提下使用先进AI能力",
+      "en": "On-premises AI infrastructure enables regulated institutions to use advanced AI without external data transmission"
+    },
+    "sources": [
+      {
+        "url": "https://go.ai/",
+        "label": {
+          "zh": "Go.AI官网",
+          "en": "Go.AI Official Site"
+        }
+      },
+      {
+        "url": "https://fintech.global/2026/09/25/400m-rounds-drive-this-weeks-fintech-funding",
+        "label": {
+          "zh": "融资报道",
+          "en": "Funding Coverage"
+        }
+      }
+    ]
+  }
+}

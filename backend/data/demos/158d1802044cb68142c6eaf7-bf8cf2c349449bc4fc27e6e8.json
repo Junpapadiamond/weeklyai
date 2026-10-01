@@ -1,0 +1,192 @@
+{
+  "cache_key": "158d1802044cb68142c6eaf7-bf8cf2c349449bc4fc27e6e8",
+  "product_key": "158d1802044cb68142c6eaf7",
+  "fingerprint": "bf8cf2c349449bc4fc27e6e8",
+  "product_id": "p_ca2f35d3c66d098d",
+  "product_name": "Satlyt",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-01T23:07:47.857575+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "卫星在轨AI决策演练",
+      "en": "On-Orbit AI Decision Workflow"
+    },
+    "scenario": {
+      "zh": "为海洋监测星座配置在轨AI,筛选出高价值图像后再下传,降低带宽成本",
+      "en": "Configure on-orbit AI for ocean monitoring constellation to filter high-value images before downlink"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择计算分配模式",
+          "en": "Choose Compute Distribution"
+        },
+        "instruction": {
+          "zh": "决定AI模型在星座中的部署策略",
+          "en": "Decide how AI models are deployed across the constellation"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "单星独立推理",
+              "en": "Independent per satellite"
+            },
+            "output": {
+              "zh": "每颗卫星运行完整模型副本,延迟低但内存占用较高",
+              "en": "Each satellite runs full model copy, lower latency but higher memory footprint"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "多星协同计算",
+              "en": "Distributed across fleet"
+            },
+            "output": {
+              "zh": "模型层跨多星分布,单星内存需求减少,适合大型模型",
+              "en": "Model layers distributed across satellites, reduces per-unit memory, suits larger models"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "定义筛选目标",
+          "en": "Define Filter Criteria"
+        },
+        "instruction": {
+          "zh": "设定AI在轨判断的优先级条件",
+          "en": "Set priority conditions for on-orbit AI filtering"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "检测船舶和异常活动",
+              "en": "Detect vessels and anomalies"
+            },
+            "output": {
+              "zh": "AI标记含船只、溢油或非法捕捞特征的图像,其余场景丢弃",
+              "en": "AI flags images with vessels, spills, or illegal fishing signatures, discards empty scenes"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "识别云量和光照质量",
+              "en": "Assess cloud cover and lighting"
+            },
+            "output": {
+              "zh": "AI评估图像清晰度,仅下传晴空或低云覆盖的高质量数据",
+              "en": "AI evaluates image clarity, downlinks only clear-sky or low-cloud high-quality data"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比下传策略",
+          "en": "Compare Downlink Strategies"
+        },
+        "instruction": {
+          "zh": "查看在轨筛选与全量下传的资源差异",
+          "en": "Review resource differences between on-orbit filtering and bulk downlink"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "传统全量下传",
+              "en": "Traditional bulk downlink"
+            },
+            "output": {
+              "zh": "所有原始图像下传,地面筛选,每日带宽和存储成本高",
+              "en": "All raw images downlinked, ground filtering, high daily bandwidth and storage cost"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "在轨AI预筛",
+              "en": "On-orbit AI pre-filter"
+            },
+            "output": {
+              "zh": "仅下传AI标记的目标图像,带宽需求大幅降低,地面处理负担减轻",
+              "en": "Only downlinks AI-flagged target images, bandwidth demand sharply reduced, ground load lighter"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "确认部署计划",
+          "en": "Confirm Deployment Plan"
+        },
+        "instruction": {
+          "zh": "审核最终配置并准备上传至星座",
+          "en": "Review final configuration and prepare upload to constellation"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "部署到测试星",
+              "en": "Deploy to test satellite"
+            },
+            "output": {
+              "zh": "配置已打包,单星验证后可扩展至全星座",
+              "en": "Configuration packaged, single-satellite validation before fleet-wide rollout"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "批量推送星座",
+              "en": "Push to full constellation"
+            },
+            "output": {
+              "zh": "所有卫星同步接收AI模型和筛选规则,立即生效",
+              "en": "All satellites receive AI model and filter rules synchronously, takes effect immediately"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "在轨AI让卫星自主筛选数据,显著降低下传成本,提高任务响应速度",
+      "en": "On-orbit AI enables satellites to autonomously filter data, sharply cutting downlink costs and boosting mission responsiveness"
+    },
+    "sources": [
+      {
+        "url": "https://satlyt.ai/",
+        "label": {
+          "zh": "Satlyt官网",
+          "en": "Satlyt Official Site"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/10/01/satlyt-founded-by-a-former-google-and-spacex-product-manager-raises-8m-to-run-ai-on-satellites/",
+        "label": {
+          "zh": "TechCrunch报道",
+          "en": "TechCrunch Coverage"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,192 @@
+{
+  "cache_key": "186e308c9057188478648aca-5ac10e6b5ecaa33de1669eb0",
+  "product_key": "186e308c9057188478648aca",
+  "fingerprint": "5ac10e6b5ecaa33de1669eb0",
+  "product_id": "p_39ad18810d7dfdbc",
+  "product_name": "FRANK",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-01T23:07:21.936750+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为中小企业客户准备财产险续保方案",
+      "en": "Prepare property insurance renewal for SME client"
+    },
+    "scenario": {
+      "zh": "客户的仓库保单即将到期,需要比较多家承保商报价并更新投保信息",
+      "en": "Client's warehouse policy expires soon, need to compare carrier quotes and update coverage details"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择客户档案",
+          "en": "Select client profile"
+        },
+        "instruction": {
+          "zh": "FRANK从CRM同步客户基本信息和历史保单",
+          "en": "FRANK syncs client basics and policy history from CRM"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "现有客户续保",
+              "en": "Existing client renewal"
+            },
+            "output": {
+              "zh": "已关联3年保单记录,上次理赔信息和风险评估已加载",
+              "en": "Linked 3-year policy records, last claim and risk assessment loaded"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "新客户首次投保",
+              "en": "New client first policy"
+            },
+            "output": {
+              "zh": "创建新档案,基础企业信息和资产清单待补充",
+              "en": "New profile created, business basics and asset inventory pending"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "更新投保信息",
+          "en": "Update coverage details"
+        },
+        "instruction": {
+          "zh": "客户仓库扩建,需调整保额和附加条款",
+          "en": "Client expanded warehouse, need to adjust coverage amount and riders"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "上传新资产评估报告",
+              "en": "Upload new asset valuation"
+            },
+            "output": {
+              "zh": "FRANK提取建筑面积、库存价值和消防设施信息",
+              "en": "FRANK extracted building area, inventory value and fire safety details"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "沿用去年保额",
+              "en": "Keep last year's coverage"
+            },
+            "output": {
+              "zh": "保留原有保额,标记为可能承保不足需人工复核",
+              "en": "Original coverage kept, flagged as potential underinsurance for review"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比承保商方案",
+          "en": "Compare carrier proposals"
+        },
+        "instruction": {
+          "zh": "FRANK向4家承保商发送报价请求并整理回复",
+          "en": "FRANK sent quote requests to 4 carriers and organized responses"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "承保商A",
+              "en": "Carrier A"
+            },
+            "output": {
+              "zh": "保费较低但免赔额较高,洪水险需单独附加",
+              "en": "Lower premium but higher deductible, flood coverage as separate rider"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "承保商B",
+              "en": "Carrier B"
+            },
+            "output": {
+              "zh": "综合保障含自然灾害,保费适中且续保折扣优厚",
+              "en": "Comprehensive with natural disasters, moderate premium and loyalty discount"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "生成续保建议书",
+          "en": "Generate renewal recommendation"
+        },
+        "instruction": {
+          "zh": "选择推荐方案,FRANK准备客户沟通文件",
+          "en": "Select recommended option, FRANK prepares client communication"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "推荐承保商B方案",
+              "en": "Recommend Carrier B"
+            },
+            "output": {
+              "zh": "建议书草稿已备好,包含保障对比和费率说明,待经纪人审核发送",
+              "en": "Proposal draft ready with coverage comparison and rate explanation for broker review"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "要求承保商A补充条款",
+              "en": "Request Carrier A addendum"
+            },
+            "output": {
+              "zh": "跟进邮件已起草,询问洪水险捆绑折扣,等待承保商回复",
+              "en": "Follow-up email drafted asking for flood bundle discount, awaiting carrier response"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "FRANK处理报价收集、信息提取和文档准备,经纪人专注客户关系和专业建议",
+      "en": "FRANK handles quote collection, data extraction and document prep while broker focuses on client relationships and expert advice"
+    },
+    "sources": [
+      {
+        "url": "https://frankinsurance.ai/us/en",
+        "label": {
+          "zh": "FRANK官网",
+          "en": "FRANK Website"
+        }
+      },
+      {
+        "url": "https://tech.eu/2026/10/01/frank-raises-eur29m-to-cut-paperwork-for-insurance-brokers/",
+        "label": {
+          "zh": "FRANK融资报道",
+          "en": "FRANK Funding News"
+        }
+      }
+    ]
+  }
+}

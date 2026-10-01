@@ -1,0 +1,203 @@
+{
+  "cache_key": "18100eb68da10a752c259bf4-3f8e7900f31da082c0193184",
+  "product_key": "18100eb68da10a752c259bf4",
+  "fingerprint": "3f8e7900f31da082c0193184",
+  "product_id": "p_7215e78c493d200d",
+  "product_name": "Kastle",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-01T23:08:36.561005+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为消费贷款构建AI代理工作流",
+      "en": "Build AI Agent Workflow for Consumer Lending"
+    },
+    "scenario": {
+      "zh": "某地区银行希望在不更换核心系统的前提下,用AI代理自动化贷款审批流程",
+      "en": "Regional bank wants to automate loan approval with AI agents without replacing core systems"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择集成起点",
+          "en": "Choose Integration Starting Point"
+        },
+        "instruction": {
+          "zh": "Kastle在现有系统之上运行,选择首个连接的数据源",
+          "en": "Kastle runs on top of existing systems; select first data source to connect"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "核心银行系统API",
+              "en": "Core Banking System API"
+            },
+            "output": {
+              "zh": "工作流配置更新为读取账户余额和交易历史,代理可访问申请人财务快照",
+              "en": "Workflow config updated to read account balances and transaction history; agent accesses applicant financial snapshot"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "第三方信用局接口",
+              "en": "Third-Party Credit Bureau Interface"
+            },
+            "output": {
+              "zh": "工作流配置更新为拉取信用报告,代理可获取FICO评分和负债数据",
+              "en": "Workflow config updated to pull credit reports; agent retrieves FICO scores and debt data"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "定义代理触发条件",
+          "en": "Define Agent Trigger Condition"
+        },
+        "instruction": {
+          "zh": "设定代理何时介入贷款流程",
+          "en": "Set when the agent enters the lending process"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "新申请提交时",
+              "en": "When New Application Submitted"
+            },
+            "output": {
+              "zh": "触发器配置为监听申请表提交事件,代理立即启动文档收集和初审任务",
+              "en": "Trigger configured to listen for application submit event; agent immediately starts doc collection and initial review tasks"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "文档上传完成后",
+              "en": "After Document Upload Complete"
+            },
+            "output": {
+              "zh": "触发器配置为等待所有材料上传,代理随后执行批量验证和风险评估",
+              "en": "Trigger configured to wait for all materials uploaded; agent then performs batch validation and risk assessment"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比决策路径",
+          "en": "Compare Decision Paths"
+        },
+        "instruction": {
+          "zh": "检查代理如何根据风险评分路由申请",
+          "en": "Review how agent routes applications by risk score"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "低风险自动批准",
+              "en": "Low-Risk Auto-Approve"
+            },
+            "output": {
+              "zh": "路由规则显示高信用评分且低债务收入比的申请直接进入批准队列",
+              "en": "Routing rule shows high credit score and low debt-to-income applications go directly to approval queue"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "中高风险人工介入",
+              "en": "Medium-High Risk Manual Review"
+            },
+            "output": {
+              "zh": "路由规则显示其他申请标记风险点并分配给贷款专员,附带审核建议",
+              "en": "Routing rule shows other applications flagged with risk points and assigned to loan officer with review suggestions"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "查看自动化效果",
+          "en": "Review Automation Outcome"
+        },
+        "instruction": {
+          "zh": "确认代理工作流如何改善运营效率",
+          "en": "Confirm how agent workflow improves operational efficiency"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "处理量提升",
+              "en": "Throughput Increase"
+            },
+            "output": {
+              "zh": "工作流摘要显示低风险案件审批时间明显缩短,处理容量大幅提升",
+              "en": "Workflow summary shows low-risk case approval time significantly reduced, processing capacity greatly increased"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "人工聚焦复杂案例",
+              "en": "Staff Focus on Complex Cases"
+            },
+            "output": {
+              "zh": "工作流摘要显示简单核验任务已自动化,贷款专员可专注边界案例",
+              "en": "Workflow summary shows simple verification tasks automated, loan officers can focus on edge cases"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Kastle让银行在遗留系统之上叠加AI代理,渐进式自动化贷款流程而无需替换核心架构",
+      "en": "Kastle layers AI agents on legacy systems, enabling incremental lending automation without core infrastructure replacement"
+    },
+    "sources": [
+      {
+        "url": "https://www.kastle.ai/",
+        "label": {
+          "zh": "Kastle官网",
+          "en": "Kastle Official Site"
+        }
+      },
+      {
+        "url": "https://fintech.global/2026/09/25/400m-rounds-drive-this-weeks-fintech-funding",
+        "label": {
+          "zh": "融资报道",
+          "en": "Funding Coverage"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "document",
+      "label": {
+        "zh": "代理工作流配置",
+        "en": "Agent Workflow Config"
+      },
+      "initial": {
+        "zh": "自动收集客户收入证明、信用报告,触发风险评分,符合条件的申请直接进入批准队列",
+        "en": "Auto-collect income docs, credit reports, trigger risk scoring, route qualified apps to approval queue"
+      }
+    }
+  }
+}
