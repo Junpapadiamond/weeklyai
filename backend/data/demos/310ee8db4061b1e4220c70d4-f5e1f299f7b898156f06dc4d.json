@@ -1,0 +1,192 @@
+{
+  "cache_key": "310ee8db4061b1e4220c70d4-f5e1f299f7b898156f06dc4d",
+  "product_key": "310ee8db4061b1e4220c70d4",
+  "fingerprint": "f5e1f299f7b898156f06dc4d",
+  "product_id": "p_26d7ea8ef443ce8a",
+  "product_name": "Feather Robotics",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-02T22:55:31.510675+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为餐厅配置模块化人形机器人",
+      "en": "Configure modular humanoid robot for restaurant"
+    },
+    "scenario": {
+      "zh": "餐厅经理需要评估机器人配置方案,对比不同手臂长度和AI模型在送餐场景中的适用性",
+      "en": "Restaurant manager evaluates robot configurations, comparing arm lengths and AI models for food delivery tasks"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择机器人手臂配置",
+          "en": "Select robot arm configuration"
+        },
+        "instruction": {
+          "zh": "根据餐厅吧台和餐桌高度差异,选择合适的手臂长度模块",
+          "en": "Choose arm length module based on counter and table height differences"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "标准手臂 (适合吧台取餐)",
+              "en": "Standard arms (counter pickup)"
+            },
+            "output": {
+              "zh": "手臂配置已设定为标准长度,适合从固定高度吧台取餐盘",
+              "en": "Arms configured to standard length, suitable for picking trays from fixed-height counters"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "加长手臂 (适合高低桌混合)",
+              "en": "Extended arms (mixed table heights)"
+            },
+            "output": {
+              "zh": "手臂配置已设定为加长模块,可覆盖儿童座椅到标准餐桌的高度范围",
+              "en": "Arms configured with extended modules, covering range from kids' chairs to standard tables"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "model",
+        "widget": "choice",
+        "title": {
+          "zh": "选择AI运动模型",
+          "en": "Select AI motion model"
+        },
+        "instruction": {
+          "zh": "根据餐厅环境复杂度,选择适合的机器人运动控制模型",
+          "en": "Choose motion control model based on restaurant environment complexity"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "Nvidia Isaac (快速路径规划)",
+              "en": "Nvidia Isaac (fast path planning)"
+            },
+            "output": {
+              "zh": "模型加载完成,机器人在开放走廊场景中响应更快,直线路径优先",
+              "en": "Model loaded, robot responds faster in open corridors, prioritizes straight paths"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "Physical Intelligence (密集避障)",
+              "en": "Physical Intelligence (dense obstacles)"
+            },
+            "output": {
+              "zh": "模型加载完成,机器人在拥挤区域更谨慎,可绕过移动的椅子和顾客",
+              "en": "Model loaded, robot more cautious in crowded areas, navigates around moving chairs and guests"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比两种托盘放置方式",
+          "en": "Compare two tray placement approaches"
+        },
+        "instruction": {
+          "zh": "观察机器人在不同餐桌高度下的托盘放置稳定性差异",
+          "en": "Observe tray placement stability differences across varying table heights"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "垂直下降放置",
+              "en": "Vertical descent placement"
+            },
+            "output": {
+              "zh": "托盘从正上方垂直下降,在标准餐桌上更稳定,但儿童座椅高度识别较慢",
+              "en": "Tray descends vertically from above, more stable on standard tables, slower at recognizing kids' chair heights"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "侧向滑入放置",
+              "en": "Lateral slide placement"
+            },
+            "output": {
+              "zh": "托盘从侧面滑入桌面,适应不同高度更快,但需要更大的桌面空隙",
+              "en": "Tray slides laterally onto table, adapts to height variations faster, requires larger table clearance"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "review",
+        "widget": "review",
+        "title": {
+          "zh": "审核配置部署建议",
+          "en": "Review configuration deployment advice"
+        },
+        "instruction": {
+          "zh": "确认最终的硬件配置和AI模型组合是否符合餐厅实际需求",
+          "en": "Confirm final hardware configuration and AI model combination meets restaurant needs"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "接受当前配置",
+              "en": "Accept current setup"
+            },
+            "output": {
+              "zh": "配置方案已确认,可提交给Feather团队进行硬件组装和模型部署准备",
+              "en": "Configuration confirmed, ready to submit to Feather team for hardware assembly and model deployment prep"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "重新调整参数",
+              "en": "Adjust parameters again"
+            },
+            "output": {
+              "zh": "返回配置流程,可重新选择手臂长度或切换AI模型以优化送餐效率",
+              "en": "Return to configuration flow, can reselect arm length or switch AI model to optimize delivery efficiency"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Feather的模块化设计允许根据场景定制硬件,结合多种AI模型适配不同复杂度的实际部署需求",
+      "en": "Feather's modular design enables hardware customization per scenario, paired with multiple AI models for varying deployment complexity"
+    },
+    "sources": [
+      {
+        "url": "https://feather.dev/",
+        "label": {
+          "zh": "Feather官网",
+          "en": "Feather official site"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/09/24/meet-feather-the-startup-building-the-android-of-robotics-for-developers/",
+        "label": {
+          "zh": "TechCrunch报道",
+          "en": "TechCrunch coverage"
+        }
+      }
+    ]
+  }
+}

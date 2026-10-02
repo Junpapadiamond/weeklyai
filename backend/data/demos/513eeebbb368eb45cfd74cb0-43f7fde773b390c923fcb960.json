@@ -1,0 +1,192 @@
+{
+  "cache_key": "513eeebbb368eb45cfd74cb0-43f7fde773b390c923fcb960",
+  "product_key": "513eeebbb368eb45cfd74cb0",
+  "fingerprint": "43f7fde773b390c923fcb960",
+  "product_id": "p_19b739473d2823ba",
+  "product_name": "Kontext",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-02T22:56:42.526955+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为AI智能体配置运行时安全策略",
+      "en": "Configure runtime security for AI agents"
+    },
+    "scenario": {
+      "zh": "您的财务智能体需要访问支付系统,如何在授权操作的同时防止未经批准的转账?",
+      "en": "Your finance agent needs payment access. How do you authorize operations while preventing unapproved transfers?"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "定义智能体权限范围",
+          "en": "Define agent permission scope"
+        },
+        "instruction": {
+          "zh": "选择您的财务智能体可以访问的系统范围",
+          "en": "Choose which systems your finance agent can access"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "仅读取权限:查看账户和发票",
+              "en": "Read-only: view accounts and invoices"
+            },
+            "output": {
+              "zh": "智能体可以检索财务数据和生成报告,但无法执行任何交易操作",
+              "en": "Agent can retrieve financial data and generate reports but cannot execute transactions"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "有限写入:批准500元以下付款",
+              "en": "Limited write: approve payments under 500"
+            },
+            "output": {
+              "zh": "智能体可以处理小额付款,所有较大金额需要人工审批",
+              "en": "Agent can process small payments while larger amounts require human approval"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "设置操作审批规则",
+          "en": "Set operation approval rules"
+        },
+        "instruction": {
+          "zh": "决定何时需要人工介入智能体的操作",
+          "en": "Decide when human intervention is required for agent actions"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "自动执行常规操作",
+              "en": "Auto-execute routine operations"
+            },
+            "output": {
+              "zh": "重复性任务如定期账单支付自动处理,异常操作触发审批流程",
+              "en": "Recurring tasks like regular bill payments auto-process while anomalies trigger review"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "所有操作需要确认",
+              "en": "Require confirmation for all actions"
+            },
+            "output": {
+              "zh": "每笔交易在执行前暂停,向指定审批人发送通知等待授权",
+              "en": "Every transaction pauses before execution and notifies designated approvers for authorization"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "review",
+        "title": {
+          "zh": "检查拦截的可疑操作",
+          "en": "Review blocked suspicious operations"
+        },
+        "instruction": {
+          "zh": "查看安全平台标记的智能体操作并做出决策",
+          "en": "Examine agent operations flagged by the security platform and make decisions"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "向新供应商转账8000元",
+              "en": "Transfer 8000 to new vendor"
+            },
+            "output": {
+              "zh": "操作被拦截:供应商未在授权列表且金额超出阈值,需要财务主管审核",
+              "en": "Operation blocked: vendor not on approved list and amount exceeds threshold, requires CFO review"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "批量修改400个客户折扣率",
+              "en": "Bulk modify discount rates for 400 customers"
+            },
+            "output": {
+              "zh": "操作被拦截:批量更改超出范围,影响范围广泛,建议分批处理并验证",
+              "en": "Operation blocked: bulk changes exceed scope with wide impact, suggest batch processing with verification"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "compare",
+        "title": {
+          "zh": "对比安全策略效果",
+          "en": "Compare security policy outcomes"
+        },
+        "instruction": {
+          "zh": "评估不同配置下的智能体行为和风险控制",
+          "en": "Evaluate agent behavior and risk control under different configurations"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "宽松策略:更高自主性",
+              "en": "Permissive policy: higher autonomy"
+            },
+            "output": {
+              "zh": "智能体处理更多常规任务,审批请求减少,但需要密切监控异常模式",
+              "en": "Agent handles more routine tasks with fewer approval requests but requires close anomaly monitoring"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "严格策略:最小风险暴露",
+              "en": "Strict policy: minimal risk exposure"
+            },
+            "output": {
+              "zh": "所有关键操作经过人工验证,响应时间较长,但未经授权操作完全受控",
+              "en": "All critical operations verified by humans with longer response time but unauthorized actions fully controlled"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Kontext让您在释放AI智能体生产力的同时,通过实时策略控制确保关键操作的安全性和可审计性",
+      "en": "Kontext enables AI agent productivity while ensuring critical operation security and auditability through real-time policy control"
+    },
+    "sources": [
+      {
+        "url": "https://kontext.security/",
+        "label": {
+          "zh": "Kontext官网",
+          "en": "Kontext Official"
+        }
+      },
+      {
+        "url": "https://tech.eu/2026/09/24/kontext-raises-4m-for-runtime-security-platform-for-ai-agents/",
+        "label": {
+          "zh": "融资报道",
+          "en": "Funding News"
+        }
+      }
+    ]
+  }
+}

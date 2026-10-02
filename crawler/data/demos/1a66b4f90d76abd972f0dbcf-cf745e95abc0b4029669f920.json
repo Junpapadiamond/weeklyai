@@ -1,0 +1,192 @@
+{
+  "cache_key": "1a66b4f90d76abd972f0dbcf-cf745e95abc0b4029669f920",
+  "product_key": "1a66b4f90d76abd972f0dbcf",
+  "fingerprint": "cf745e95abc0b4029669f920",
+  "product_id": "p_351670ea439517fa",
+  "product_name": "Duqu",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-02T22:56:12.462585+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "企业发票垫付决策流程",
+      "en": "Invoice Advance Decision Flow"
+    },
+    "scenario": {
+      "zh": "一家荷兰制造商有待收账款,需快速改善现金流以支付供应商",
+      "en": "Dutch manufacturer with receivables needs fast cash flow to pay suppliers"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择发票类型",
+          "en": "Choose Invoice Type"
+        },
+        "instruction": {
+          "zh": "选择需要垫付的发票类型",
+          "en": "Select the invoice type for advance"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "单张大额发票(€50,000)",
+              "en": "Single Large Invoice (€50,000)"
+            },
+            "output": {
+              "zh": "AI评估显示客户信用良好,付款历史稳定,建议垫付比例较高",
+              "en": "AI assessment shows strong client credit, stable payment history, higher advance suggested"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "多张中小额发票组合(€75,000)",
+              "en": "Multiple Mid-Size Invoices (€75,000)"
+            },
+            "output": {
+              "zh": "AI评估显示客户分散,风险较低,建议垫付比例适中",
+              "en": "AI assessment shows diversified clients, lower risk, moderate advance suggested"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "设置垫付参数",
+          "en": "Set Advance Parameters"
+        },
+        "instruction": {
+          "zh": "选择垫付金额和期限",
+          "en": "Choose advance amount and term"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "保守方案:较低垫付,30天期",
+              "en": "Conservative: Lower advance, 30-day term"
+            },
+            "output": {
+              "zh": "获得较少流动资金,费用较低,安全边际较大",
+              "en": "Less working capital received, lower fees, higher safety margin"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "激进方案:较高垫付,60天期",
+              "en": "Aggressive: Higher advance, 60-day term"
+            },
+            "output": {
+              "zh": "获得较多流动资金,费用较高,需更强回款能力",
+              "en": "More working capital received, higher fees, requires stronger collection"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "审查AI承保结果",
+          "en": "Review AI Underwriting"
+        },
+        "instruction": {
+          "zh": "对比两种自动化评估路径",
+          "en": "Compare two automated assessment paths"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "标准路径:基于历史数据",
+              "en": "Standard: Historical Data"
+            },
+            "output": {
+              "zh": "分析过往付款记录,延期情况较少,信用评分良好",
+              "en": "Past payment records analyzed, few delays, credit score favorable"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "增强路径:含实时财务信号",
+              "en": "Enhanced: Real-Time Signals"
+            },
+            "output": {
+              "zh": "整合银行账户活动和行业趋势,信用评分更优",
+              "en": "Bank activity and industry trends integrated, credit score improved"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "确认转账方案",
+          "en": "Confirm Transfer Plan"
+        },
+        "instruction": {
+          "zh": "选择最终资金到账方式",
+          "en": "Select final fund delivery method"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "标准转账:24小时内到账",
+              "en": "Standard: Within 24 Hours"
+            },
+            "output": {
+              "zh": "资金计划转入企业账户,承保流程自动完成,无需人工审批",
+              "en": "Funds planned for business account, underwriting auto-completed, no manual review needed"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "加急转账:4小时内到账",
+              "en": "Express: Within 4 Hours"
+            },
+            "output": {
+              "zh": "快速通道方案,额外费用适用,资金更快到账用于紧急支付",
+              "en": "Fast-track option, premium applies, funds arrive sooner for urgent payments"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "AI承保引擎自动化评估信用风险,企业可在24小时内获得发票垫付资金",
+      "en": "AI underwriting automates credit risk assessment, businesses receive invoice advances within 24 hours"
+    },
+    "sources": [
+      {
+        "url": "https://www.duqu.ai/",
+        "label": {
+          "zh": "Duqu官网",
+          "en": "Duqu Website"
+        }
+      },
+      {
+        "url": "https://tech.eu/2026/09/24/duqu-raises-eur15m-to-give-businesses-faster-access-to-working-capital/",
+        "label": {
+          "zh": "融资公告",
+          "en": "Funding Announcement"
+        }
+      }
+    ]
+  }
+}

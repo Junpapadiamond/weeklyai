@@ -1,0 +1,192 @@
+{
+  "cache_key": "10f3489413fc061756bb2245-c4eefee2c10896888dcc5cc9",
+  "product_key": "10f3489413fc061756bb2245",
+  "fingerprint": "c4eefee2c10896888dcc5cc9",
+  "product_id": "p_6ad50cb4bf699fc0",
+  "product_name": "Legato",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-02T22:55:04.287851+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "Legato听力眼镜场景适配",
+      "en": "Legato Hearing Glasses Scenario Fitting"
+    },
+    "scenario": {
+      "zh": "为轻度听力损失用户选择合适的Legato配置，体验不同环境下的语音增强效果",
+      "en": "Select appropriate Legato configuration for mild hearing loss and experience voice enhancement across environments"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择主要使用场景",
+          "en": "Choose Primary Use Case"
+        },
+        "instruction": {
+          "zh": "确定您最常需要听力辅助的环境",
+          "en": "Identify where you need hearing assistance most"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "室内对话（餐厅、会议）",
+              "en": "Indoor Conversations (Restaurants, Meetings)"
+            },
+            "output": {
+              "zh": "已配置室内模式：优先抑制持续背景噪音，增强近距离人声",
+              "en": "Indoor mode configured: prioritizes suppressing steady ambient noise, enhancing close-range voices"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "户外活动（街道、公园）",
+              "en": "Outdoor Activities (Streets, Parks)"
+            },
+            "output": {
+              "zh": "已配置户外模式：平衡风噪过滤与方向性语音捕捉",
+              "en": "Outdoor mode configured: balances wind noise filtering with directional speech capture"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "设置语音增强强度",
+          "en": "Set Voice Amplification Level"
+        },
+        "instruction": {
+          "zh": "根据听力损失程度调整增强水平",
+          "en": "Adjust enhancement level based on hearing loss degree"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "轻度增强（偶尔听不清）",
+              "en": "Mild Enhancement (Occasional Difficulty)"
+            },
+            "output": {
+              "zh": "语音提升至清晰度优先级别，保留环境音自然感",
+              "en": "Voice boosted to clarity-priority level while preserving natural ambient sound"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "中度增强（经常需要重复）",
+              "en": "Moderate Enhancement (Frequent Repetition Needed)"
+            },
+            "output": {
+              "zh": "语音大幅放大，背景声显著降低，对话层次更分明",
+              "en": "Voice significantly amplified, background sounds notably reduced, conversation layers clearer"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比场景表现",
+          "en": "Compare Scenario Performance"
+        },
+        "instruction": {
+          "zh": "查看两种典型环境下的处理效果差异",
+          "en": "Review processing differences across two typical environments"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "嘈杂咖啡厅对话",
+              "en": "Busy Café Conversation"
+            },
+            "output": {
+              "zh": "前方说话者声音突出，咖啡机和背景交谈声减弱，言语辨识度提升明显",
+              "en": "Front speaker voice pronounced, coffee machine and background chatter subdued, speech intelligibility notably improved"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "开放式办公室会议",
+              "en": "Open Office Meeting"
+            },
+            "output": {
+              "zh": "会议发言人音量提升，键盘敲击和远处电话声过滤，讨论内容更易跟随",
+              "en": "Meeting speaker volume elevated, keyboard typing and distant phone calls filtered, discussion easier to follow"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "配置方案总结",
+          "en": "Configuration Summary"
+        },
+        "instruction": {
+          "zh": "确认适合您的Legato设置组合",
+          "en": "Confirm the Legato setup combination that fits you"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "应用此配置",
+              "en": "Apply This Configuration"
+            },
+            "output": {
+              "zh": "配置已就绪：可通过镜腿触控调节，首次佩戴建议从低增强开始适应",
+              "en": "Configuration ready: adjustable via temple touch controls, first-time wear recommended starting with lower enhancement"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "重新选择场景",
+              "en": "Reselect Scenario"
+            },
+            "output": {
+              "zh": "返回场景选择，可尝试不同环境与增强组合以找到最佳平衡",
+              "en": "Return to scenario selection to try different environment and enhancement combinations for optimal balance"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Legato通过AI分离人声与噪音，让听力辅助融入日常眼镜，不同场景和增强级别可个性化调整",
+      "en": "Legato uses AI to separate voices from noise, integrating hearing assistance into everyday glasses with customizable scenarios and enhancement levels"
+    },
+    "sources": [
+      {
+        "url": "https://www.legatohearing.com/",
+        "label": {
+          "zh": "Legato官网",
+          "en": "Legato Official Site"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/10/01/hearing-tech-startup-legato-launches-its-ai-hearing-glasses/",
+        "label": {
+          "zh": "TechCrunch产品报道",
+          "en": "TechCrunch Product Coverage"
+        }
+      }
+    ]
+  }
+}

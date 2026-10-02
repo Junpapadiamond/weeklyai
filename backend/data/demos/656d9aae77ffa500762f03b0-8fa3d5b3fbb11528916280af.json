@@ -1,0 +1,192 @@
+{
+  "cache_key": "656d9aae77ffa500762f03b0-8fa3d5b3fbb11528916280af",
+  "product_key": "656d9aae77ffa500762f03b0",
+  "fingerprint": "8fa3d5b3fbb11528916280af",
+  "product_id": "p_5112981b460c193a",
+  "product_name": "Axya",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-02T22:57:09.043387+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "采购请求自动化流程",
+      "en": "Procurement Request Automation"
+    },
+    "scenario": {
+      "zh": "某航空零部件制造商需要采购一批钛合金紧固件,通过AI处理报价和供应商沟通",
+      "en": "An aerospace parts manufacturer needs to procure titanium fasteners using AI for quotes and supplier communication"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "配置采购需求",
+          "en": "Configure Procurement Need"
+        },
+        "instruction": {
+          "zh": "选择采购请求的复杂程度",
+          "en": "Choose procurement request complexity"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "标准零件采购",
+              "en": "Standard Parts Purchase"
+            },
+            "output": {
+              "zh": "已设定:钛合金紧固件,现有供应商库中匹配12家认证供应商",
+              "en": "Set: titanium fasteners, matched 12 certified suppliers from existing network"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "定制零件采购",
+              "en": "Custom Parts Purchase"
+            },
+            "output": {
+              "zh": "已设定:定制航空级传感器支架,需要额外资质验证和技术规格审查",
+              "en": "Set: custom aerospace sensor bracket, requires additional qualification and spec review"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "提交采购信息",
+          "en": "Submit Purchase Information"
+        },
+        "instruction": {
+          "zh": "选择如何提供采购规格",
+          "en": "Choose how to provide specifications"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "从ERP系统导入",
+              "en": "Import from ERP System"
+            },
+            "output": {
+              "zh": "已提取物料编号、数量和交付要求,AI识别出3个关键技术参数需供应商确认",
+              "en": "Extracted part number, quantity and delivery terms, AI identified 3 key technical parameters for supplier confirmation"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "上传技术图纸",
+              "en": "Upload Technical Drawing"
+            },
+            "output": {
+              "zh": "AI解析图纸后生成规格摘要,标记了4处需与工程团队澄清的尺寸公差",
+              "en": "AI parsed drawing and generated spec summary, flagged 4 dimensional tolerances for engineering clarification"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比供应商报价",
+          "en": "Compare Supplier Quotes"
+        },
+        "instruction": {
+          "zh": "AI已向供应商发送询价并收到回复,选择优先考虑的因素",
+          "en": "AI sent RFQs and received responses, choose priority factor"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "优先价格",
+              "en": "Prioritize Price"
+            },
+            "output": {
+              "zh": "供应商A单价较低但交期较长,供应商B价格稍高但符合紧急交付需求",
+              "en": "Supplier A offers lower unit price but longer lead time, Supplier B costs slightly more but meets urgent delivery"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "优先质量认证",
+              "en": "Prioritize Quality Certification"
+            },
+            "output": {
+              "zh": "供应商C持有AS9100D认证且过往准时交付率高,供应商D认证较少但报价更优",
+              "en": "Supplier C has AS9100D certification and strong on-time delivery history, Supplier D has fewer certs but better pricing"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "完成采购订单",
+          "en": "Finalize Purchase Order"
+        },
+        "instruction": {
+          "zh": "选择如何处理最终订单",
+          "en": "Choose how to handle final order"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "自动生成订单",
+              "en": "Auto-Generate Order"
+            },
+            "output": {
+              "zh": "已创建采购订单草稿并同步至ERP,等待采购经理审批后自动发送给供应商",
+              "en": "Created PO draft and synced to ERP, awaiting procurement manager approval before auto-send to supplier"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "人工最终审查",
+              "en": "Manual Final Review"
+            },
+            "output": {
+              "zh": "订单详情已整理为审查文档,AI标注了与历史采购价格的差异和风险提示",
+              "en": "Order details compiled into review document, AI highlighted price variance from historical purchases and risk alerts"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Axya通过AI处理采购流程中的报价对比和供应商沟通,减少人工操作并提升决策质量",
+      "en": "Axya uses AI to handle quote comparison and supplier communication in procurement, reducing manual work and improving decision quality"
+    },
+    "sources": [
+      {
+        "url": "https://axya.co",
+        "label": {
+          "zh": "Axya官网",
+          "en": "Axya Website"
+        }
+      },
+      {
+        "url": "https://betakit.com/axya-closes-17-million-series-a-to-modernize-manufacturing-procurement/",
+        "label": {
+          "zh": "Axya融资报道",
+          "en": "Axya Funding News"
+        }
+      }
+    ]
+  }
+}
