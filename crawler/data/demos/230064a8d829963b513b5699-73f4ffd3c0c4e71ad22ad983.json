@@ -1,0 +1,203 @@
+{
+  "cache_key": "230064a8d829963b513b5699-73f4ffd3c0c4e71ad22ad983",
+  "product_key": "230064a8d829963b513b5699",
+  "fingerprint": "73f4ffd3c0c4e71ad22ad983",
+  "product_id": "p_80f4c5ac1f3f7f2b",
+  "product_name": "StudyStash",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-03T22:13:52.050508+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "将课程材料转化为自适应学习工具",
+      "en": "Turn course material into adaptive study tools"
+    },
+    "scenario": {
+      "zh": "你需要帮助学生为期末考试复习遗传学单元",
+      "en": "You need to help students review genetics unit for final exam"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择内容来源",
+          "en": "Choose content source"
+        },
+        "instruction": {
+          "zh": "选择要转换为学习材料的课程内容类型",
+          "en": "Select the type of course content to convert into study materials"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "上传讲义PDF（8章，42页）",
+              "en": "Upload lecture slides PDF (8 chapters, 42 pages)"
+            },
+            "output": {
+              "zh": "已识别82个关键概念，包括等位基因分离、染色体交叉和基因调控",
+              "en": "Identified 82 key concepts including allele segregation, chromosome crossover and gene regulation"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "粘贴教材章节文本",
+              "en": "Paste textbook chapter text"
+            },
+            "output": {
+              "zh": "已提取54个核心术语和12个遗传学定律及原理",
+              "en": "Extracted 54 core terms and 12 genetic laws and principles"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "设定学习重点",
+          "en": "Set learning focus"
+        },
+        "instruction": {
+          "zh": "根据学生当前掌握情况选择优先领域",
+          "en": "Choose priority area based on current student mastery"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "强化薄弱环节（孟德尔遗传）",
+              "en": "Reinforce weak areas (Mendelian inheritance)"
+            },
+            "output": {
+              "zh": "生成28张针对性闪卡和6道庞氏图解题，专注于显隐性与分离定律",
+              "en": "Generated 28 targeted flashcards and 6 Punnett square problems focusing on dominance and segregation"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "全面复习所有单元",
+              "en": "Comprehensive review all units"
+            },
+            "output": {
+              "zh": "创建65张闪卡覆盖全部章节，附带18分钟音频播客总结",
+              "en": "Created 65 flashcards covering all chapters with 18-minute audio podcast summary"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比练习模式",
+          "en": "Compare practice modes"
+        },
+        "instruction": {
+          "zh": "查看不同学习工具如何适应学生需求",
+          "en": "See how different study tools adapt to student needs"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "自适应测验（跟踪掌握度）",
+              "en": "Adaptive quiz (tracks mastery)"
+            },
+            "output": {
+              "zh": "根据答题表现调整难度，重复出现错误概念直到掌握",
+              "en": "Adjusts difficulty based on performance, repeats missed concepts until mastered"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "间隔重复闪卡系统",
+              "en": "Spaced repetition flashcard system"
+            },
+            "output": {
+              "zh": "安排复习时间表，困难卡片出现频率更高，熟练内容间隔延长",
+              "en": "Schedules review sessions with difficult cards appearing more often, mastered content spaced further"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "准备学习包",
+          "en": "Prepare study package"
+        },
+        "instruction": {
+          "zh": "选择最终分发给学生的学习材料组合",
+          "en": "Select final study material bundle to distribute to students"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "基础包：闪卡 + 练习题",
+              "en": "Basic package: flashcards + practice questions"
+            },
+            "output": {
+              "zh": "包含65张闪卡和22道自测题，可在手机或网页访问",
+              "en": "Includes 65 flashcards and 22 self-test questions, accessible on mobile or web"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "完整包：闪卡 + 测验 + 播客",
+              "en": "Complete package: flashcards + quiz + podcast"
+            },
+            "output": {
+              "zh": "多模态学习套件含音频讲解、交互式测验和随时随地复习工具",
+              "en": "Multimodal learning suite with audio explanations, interactive quiz and on-the-go review tools"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "自适应技术根据学生表现自动调整学习路径，专注于需要加强的知识点",
+      "en": "Adaptive technology automatically adjusts learning path based on student performance, focusing on areas needing reinforcement"
+    },
+    "sources": [
+      {
+        "url": "https://studystash.com/en-gb",
+        "label": {
+          "zh": "StudyStash官网",
+          "en": "StudyStash official site"
+        }
+      },
+      {
+        "url": "https://tech.eu/2026/10/02/ai-study-platform-studystash-acquired-by-kortext-after-rapid-global-expansion/",
+        "label": {
+          "zh": "收购新闻报道",
+          "en": "Acquisition news coverage"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "document",
+      "label": {
+        "zh": "课程内容",
+        "en": "Course Content"
+      },
+      "initial": {
+        "zh": "遗传学基础：孟德尔定律、DNA结构、基因表达与遗传变异",
+        "en": "Genetics fundamentals: Mendel's laws, DNA structure, gene expression & variation"
+      }
+    }
+  }
+}

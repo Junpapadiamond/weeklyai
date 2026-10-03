@@ -379,5 +379,109 @@
         }
       ]
     }
+  },
+  {
+    "name": "CodeRabbit",
+    "website": "https://www.coderabbit.ai/",
+    "description": "AI 驱动的代码审查平台，帮助工程团队自动化日常代码审查流程，2026年8月以15亿美元估值完成1.43亿美元融资",
+    "description_en": "AI-powered code review platform that automates code review workflows for engineering teams, raised $143 million at $1.5 billion valuation in August 2026",
+    "category": "coding",
+    "why_matters": "代码审查是每个工程团队的日常关键环节，CodeRabbit 占据这一核心工作流位置，使其产品难以被简化为功能模块。工程师从底层自发采用该工具，随着使用范围扩大公司付费，这种自下而上的收入模式已被验证有效",
+    "why_matters_en": "Code review sits in the daily path of every engineering team, a workflow position that keeps the product from shrinking into a feature. Bottom-up engineering adoption converts to real revenue as usage spreads",
+    "latest_news": "2026年8月完成B轮和C轮融资共1.43亿美元，估值达15亿美元，CRV参与投资",
+    "latest_news_en": "Raised $143 million across Series B and C rounds at $1.5 billion valuation in August 2026, with CRV participation",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "category_innovation",
+      "founder_background"
+    ],
+    "company_country": "unknown",
+    "confidence": 0.85,
+    "source_url": "https://www.crv.com/content/ai-startups-to-invest-in",
+    "categories": [
+      "coding"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "CRV | AI Startups to Invest In: 2026 Investor Guide",
+    "website_source": "https://www.coderabbit.ai/security",
+    "discovered_at": "2026-10-03",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261003T220047Z-8d636cc6",
+      "search_region": "eu",
+      "search_lane": "launch",
+      "website_verification": {
+        "url": "https://www.coderabbit.ai/",
+        "title": "AI Code Reviews | CodeRabbit | Try for Free. CodeRabbit",
+        "search_result_url": "https://www.coderabbit.ai/security"
+      },
+      "source_published_at": "2026-09-30T00:00:00+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "The AI code review company raised $143 million at a $1.5 billion valuation in August 2026."
+        },
+        {
+          "criterion": "category_innovation",
+          "quote": "Code review sits in the daily path of every engineering team, a workflow position that keeps the product from shrinking into a feature."
+        },
+        {
+          "criterion": "founder_background",
+          "quote": "CRV led CodeRabbit's Series A and participated in its Series B and C."
+        }
+      ]
+    }
+  },
+  {
+    "name": "StudyStash",
+    "website": "https://studystash.com/en-gb",
+    "description": "自适应学习平台，将课程内容转化为个性化闪卡、练习测试和播客，技术会随着学生学习进行调整，帮助他们专注于薄弱环节",
+    "description_en": "Adaptive learning platform that turns course content into personalized flashcards, practice tests and podcasts, with technology that adapts as students learn to help them focus on weaker areas",
+    "category": "education",
+    "why_matters": "在创始人毕业一年内即被Kortext收购，已扩展至三大洲160多所教育机构，包括加州州立大学、明尼苏达州立大学等，获得UCL、帝国理工学院和牛津大学高层组成的顾问委员会支持，与美国2800多所高等教育机构合作的EAB建立合作关系",
+    "why_matters_en": "Acquired by Kortext just one year after founders graduated, expanded to 160+ institutions across three continents including California State University and Minnesota State, backed by advisory board with senior figures from UCL, Imperial College London and Oxford, partnered with EAB which works with 2,800+ US higher education institutions",
+    "latest_news": "被教育科技公司Kortext收购，创始人Ben Ward和Jonathan Graham将继续担任CEO和CTO，公司将作为独立品牌运营，两位创始人正迁往硅谷继续美国市场扩张",
+    "latest_news_en": "Acquired by edtech company Kortext, founders Ben Ward and Jonathan Graham will remain as CEO and CTO with StudyStash operating as distinct brand, founders relocating to Silicon Valley to continue US expansion",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "founder_background",
+      "growth_anomaly",
+      "category_innovation"
+    ],
+    "company_country": "GB",
+    "confidence": 0.95,
+    "source_url": "https://tech.eu/2026/10/02/ai-study-platform-studystash-acquired-by-kortext-after-rapid-global-expansion/",
+    "categories": [
+      "education"
+    ],
+    "region": "Unknown",
+    "source": "claude_rss",
+    "source_title": "AI study platform StudyStash acquired by Kortext after rapid global expansion",
+    "website_source": "https://tech.eu/2026/10/02/ai-study-platform-studystash-acquired-by-kortext-after-rapid-global-expansion/",
+    "discovered_at": "2026-10-03",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261003T220047Z-8d636cc6",
+      "search_region": "eu",
+      "search_lane": "rss",
+      "website_verification": null,
+      "source_published_at": "2026-10-02T08:00:00+00:00",
+      "evidence": [
+        {
+          "criterion": "founder_background",
+          "quote": "Ben Ward and Jonathan Graham, who met while studying computer science at the University of Birmingham and working together on PwC's technology degree apprenticeship"
+        },
+        {
+          "criterion": "growth_anomaly",
+          "quote": "The platform is now used by tens of thousands of students across more than 160 institutions in the UK, Europe, the US and Africa, including California State University, Minnesota State, Colorado State, the University of Oulu and RCSI University of Medicine and Health Sciences"
+        },
+        {
+          "criterion": "category_innovation",
+          "quote": "StudyStash is an adaptive learning platform that turns course content into personalised flashcards, practice tests and podcasts. Its technology adapts as students learn, helping them focus on weaker areas while giving lecturers and student success teams insight into where support is needed"
+        }
+      ]
+    }
   }
 ]

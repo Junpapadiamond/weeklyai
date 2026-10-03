@@ -72,5 +72,229 @@
         }
       ]
     }
+  },
+  {
+    "name": "スマートエイト",
+    "website": "https://smart-eight.jp/",
+    "description": "法人向けAI活用支援を提供する企業。ChatGPTやClaudeなどのツール導入だけでなく、業務課題の整理から研修、コンサルティング、開発まで一気通貫で支援。経営者向けマンツーマン伴走支援やClaude Code環境構築、Web広告代理店向けSaaS「Smart Ad Report」も提供。",
+    "description_en": "Corporate AI adoption consulting firm providing end-to-end support from identifying business challenges to training, consulting, and development. Services include one-on-one executive coaching, Claude Code environment setup, and Smart Ad Report SaaS for web advertising agencies.",
+    "category": "agent",
+    "why_matters": "既存SaaSでは対応できない業務特有のニッチな課題をAIで仕組み化できる点が差別化要因。生成AIによって自社専用の小規模アプリや業務ツールを短期間で開発可能にし、定型業務削減を実現。代表は大手教育・人材企業で事業開発を経験し、自社でもAIを使い倒して成果を出す実践力を持つ。",
+    "why_matters_en": "Differentiates by automating niche business-specific tasks that existing SaaS cannot handle. Uses generative AI to build custom small-scale apps and tools quickly, reducing routine work. CEO has business development experience at major education and HR firms and demonstrates strong practical AI implementation capabilities within the company.",
+    "latest_news": "2025年3月に株式会社スマートエイトを設立。現在、広告代理店・商社・製造業・医療法人など幅広い業界に向けてAI活用・業務自動化支援を展開中。",
+    "latest_news_en": "Founded SmartEight Inc. in March 2025. Currently providing AI adoption and business automation support to diverse industries including advertising agencies, trading companies, manufacturing, and medical corporations.",
+    "dark_horse_index": 2,
+    "criteria_met": [
+      "founder_background"
+    ],
+    "company_country": "JP",
+    "confidence": 0.85,
+    "source_url": "https://venture.jp/news/2026/10/02/28439",
+    "categories": [
+      "agent"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "【#765】AIで定型業務を減らし、人間が「価値創造」に集中できる社会へ - ベンチャー.jp",
+    "website_source": "https://venture.jp/news/2026/10/02/28439",
+    "discovered_at": "2026-10-03",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261003T220047Z-8d636cc6",
+      "search_region": "jp",
+      "search_lane": "niche",
+      "website_verification": null,
+      "source_published_at": "2026-10-02T01:00:25+00:00",
+      "evidence": [
+        {
+          "criterion": "founder_background",
+          "quote": "早稲田大学卒業後、ベネッセコーポレーションで教育事業の企画に6年間従事。リクルートでは事業開発組織のゼネラルマネージャーを担当。2025年3月に株式会社スマートエイトを設立"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Alma",
+    "website": "https://alma.inc/",
+    "description": "专注于让计算机使用更快速和更经济的个人计算平台，由曾在Microsoft Research工作并担任Sarvam AI创始工程师的团队打造",
+    "description_en": "A personal computing platform focused on making computer use faster and more affordable, built by founders who previously worked at Microsoft Research and were founding engineers at Sarvam AI",
+    "category": "other",
+    "why_matters": "由微软研究院和印度语言AI模型公司Sarvam AI的资深工程师创立，获得Peak XV的Surge 12投资，致力于重新定义个人计算体验的底层平台",
+    "why_matters_en": "Founded by veterans from Microsoft Research and Sarvam AI, backed by Peak XV's Surge 12 program, aiming to redefine the underlying platform for personal computing experience",
+    "latest_news": "2026年9月入选Peak XV的Surge 12加速计划，该计划将单个公司投资上限提高至500万美元",
+    "latest_news_en": "Selected for Peak XV's Surge 12 cohort in September 2026, which raised the investment ceiling to $5 million per company",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal",
+      "founder_background"
+    ],
+    "company_country": "IN",
+    "confidence": 0.85,
+    "source_url": "https://techcrunch.com/2026/09/28/peak-xv-goes-bigger-at-seed-with-new-surge-cohort-as-series-a-bar-rises",
+    "funding_total": "",
+    "categories": [
+      "other"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "Peak XV ups Surge seed investment ceiling to $5M, unveils 18-startup cohort | TechCrunch",
+    "website_source": "https://techcrunch.com/2026/09/28/peak-xv-goes-bigger-at-seed-with-new-surge-cohort-as-series-a-bar-rises",
+    "discovered_at": "2026-10-03",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261003T220047Z-8d636cc6",
+      "search_region": "sea",
+      "search_lane": "launch",
+      "website_verification": null,
+      "source_published_at": "2026-09-29T00:30:00+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "Peak XV Partners, one of the largest venture capital firms investing in markets, including India and Southeast Asia with more than $10 billion in assets under management, has increased how much it invests per startup through Surge, its seed-stage investing platform, as it unveils a new cohort of 18 companies."
+        },
+        {
+          "criterion": "founder_background",
+          "quote": "Its founders previously worked at Microsoft Research and were founding engineers at Sarvam AI, a Bengaluru-based startup building AI models for Indian languages."
+        }
+      ]
+    }
+  },
+  {
+    "name": "Hiloop",
+    "website": "https://hiloop.ai/",
+    "description": "帮助AI公司使用其后训练平台将通用开放权重模型适配到特定应用场景的技术平台",
+    "description_en": "Helps AI companies adapt general-purpose open-weight models for specific applications using its post-training platform",
+    "category": "coding",
+    "why_matters": "创始团队包括前Reducto工程师和24岁完成剑桥计算机科学博士的技术专家，专注于解决开源大模型定制化适配的关键技术问题",
+    "why_matters_en": "Founding team includes former Reducto engineers and a Cambridge computer science PhD who completed his doctorate at 24, focusing on solving the key technical problem of customizing open-source large models",
+    "latest_news": "2026年9月入选Peak XV的Surge 12加速计划，该批次集体融资超过9000万美元",
+    "latest_news_en": "Selected for Peak XV's Surge 12 cohort in September 2026, which collectively raised over $90 million in seed funding",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal",
+      "founder_background"
+    ],
+    "company_country": "unknown",
+    "confidence": 0.82,
+    "source_url": "https://techcrunch.com/2026/09/28/peak-xv-goes-bigger-at-seed-with-new-surge-cohort-as-series-a-bar-rises",
+    "funding_total": "",
+    "categories": [
+      "coding"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "Peak XV ups Surge seed investment ceiling to $5M, unveils 18-startup cohort | TechCrunch",
+    "website_source": "https://techcrunch.com/2026/09/28/peak-xv-goes-bigger-at-seed-with-new-surge-cohort-as-series-a-bar-rises",
+    "discovered_at": "2026-10-03",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261003T220047Z-8d636cc6",
+      "search_region": "sea",
+      "search_lane": "launch",
+      "website_verification": null,
+      "source_published_at": "2026-09-29T00:30:00+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "The venture firm invested more than $50 million across the cohort, which has collectively raised over $90 million in seed funding, according to Peak XV."
+        },
+        {
+          "criterion": "founder_background",
+          "quote": "Its founding team includes former Reducto engineers and a Cambridge computer science PhD who completed his doctorate at 24."
+        }
+      ]
+    }
+  },
+  {
+    "name": "Reinforce Labs",
+    "website": "https://www.reinforcelabs.ai/",
+    "description": "开发用于评估、红队测试和修复企业AI系统的工具平台",
+    "description_en": "Developing tools to evaluate, red-team, and remediate enterprise AI systems",
+    "category": "other",
+    "why_matters": "创始人曾创立被Airbnb收购的公司，并在Google担任总监领导AI和机器学习团队，专注于企业AI安全这一新兴关键领域",
+    "why_matters_en": "Founder previously built a company acquired by Airbnb and served as a director at Google leading AI and machine learning teams, focusing on the emerging critical field of enterprise AI safety",
+    "latest_news": "2026年9月入选Peak XV的Surge 12加速计划，获得种子轮投资",
+    "latest_news_en": "Selected for Peak XV's Surge 12 cohort in September 2026, receiving seed-stage investment",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal",
+      "founder_background"
+    ],
+    "company_country": "unknown",
+    "confidence": 0.88,
+    "source_url": "https://techcrunch.com/2026/09/28/peak-xv-goes-bigger-at-seed-with-new-surge-cohort-as-series-a-bar-rises",
+    "funding_total": "",
+    "categories": [
+      "other"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "Peak XV ups Surge seed investment ceiling to $5M, unveils 18-startup cohort | TechCrunch",
+    "website_source": "https://techcrunch.com/2026/09/28/peak-xv-goes-bigger-at-seed-with-new-surge-cohort-as-series-a-bar-rises",
+    "discovered_at": "2026-10-03",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261003T220047Z-8d636cc6",
+      "search_region": "sea",
+      "search_lane": "launch",
+      "website_verification": null,
+      "source_published_at": "2026-09-29T00:30:00+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "The new batch, called Surge 12, is the first to operate under Peak XV's higher investment ceiling of up to $5 million per company, up from $3 million previously."
+        },
+        {
+          "criterion": "founder_background",
+          "quote": "Sarma previously founded a company acquired by Airbnb and later served as a director at Google, where he led AI and machine-learning teams."
+        }
+      ]
+    }
+  },
+  {
+    "name": "Puralink",
+    "website": "https://www.puralink.com.au/",
+    "description": "开发能够在地下管道网络中自主导航的机器人系统",
+    "description_en": "Developing autonomous robots that can navigate underground pipe networks",
+    "category": "hardware",
+    "why_matters": "创始人从童年开始制造机器人，并将大学研究成果转化为获得专利的驱动技术，解决地下管道检测这一传统难题",
+    "why_matters_en": "Founder has been building robots since childhood and turned university research into patented drive technology, addressing the traditional challenge of underground pipe inspection",
+    "latest_news": "2026年9月入选Peak XV的Surge 12加速计划",
+    "latest_news_en": "Selected for Peak XV's Surge 12 cohort in September 2026",
+    "dark_horse_index": 2,
+    "criteria_met": [
+      "funding_signal",
+      "category_innovation"
+    ],
+    "company_country": "AU",
+    "confidence": 0.8,
+    "source_url": "https://techcrunch.com/2026/09/28/peak-xv-goes-bigger-at-seed-with-new-surge-cohort-as-series-a-bar-rises",
+    "funding_total": "",
+    "categories": [
+      "hardware"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "Peak XV ups Surge seed investment ceiling to $5M, unveils 18-startup cohort | TechCrunch",
+    "website_source": "https://techcrunch.com/2026/09/28/peak-xv-goes-bigger-at-seed-with-new-surge-cohort-as-series-a-bar-rises",
+    "discovered_at": "2026-10-03",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261003T220047Z-8d636cc6",
+      "search_region": "sea",
+      "search_lane": "launch",
+      "website_verification": null,
+      "source_published_at": "2026-09-29T00:30:00+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "Peak XV Partners, one of the largest venture capital firms investing in markets, including India and Southeast Asia with more than $10 billion in assets under management, has increased how much it invests per startup through Surge, its seed-stage investing platform, as it unveils a new cohort of 18 companies."
+        },
+        {
+          "criterion": "category_innovation",
+          "quote": "Crowe-Maxwell has been building robots since childhood and turned university research into the patented drive technology behind the startup."
+        }
+      ]
+    }
   }
 ]
