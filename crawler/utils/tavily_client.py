@@ -23,7 +23,7 @@ def parse_date(value):
     return date.replace(tzinfo=timezone.utc) if date.tzinfo is None else date.astimezone(timezone.utc)
 
 
-def search_articles(query, days=14, limit=10, now=None):
+def search_articles(query, days=14, limit=10, now=None, topic='news'):
     key = os.getenv("TAVILY_API_KEY", "").strip()
     if not key:
         raise TavilyError("TAVILY_API_KEY is missing")
@@ -33,9 +33,9 @@ def search_articles(query, days=14, limit=10, now=None):
     try:
         response = requests.post("https://api.tavily.com/search",
             headers={"Authorization": f"Bearer {key}"},
-            json={"query": query, "topic": "news", "search_depth": "basic", "max_results": limit,
+            json={"query": query, "topic": topic, "search_depth": "basic", "max_results": limit,
                   "start_date": since.date().isoformat(), "end_date": (now + timedelta(days=1)).date().isoformat(),
-                  "include_published_date": True, "filter_by_published_date": True,
+                  "include_published_date": True, "filter_by_published_date": topic == 'news',
                   "include_answer": False, "include_raw_content": False, "auto_parameters": False},
             timeout=(5, 25), allow_redirects=False)
         if response.status_code != 200:
@@ -50,7 +50,9 @@ def search_articles(query, days=14, limit=10, now=None):
         if not isinstance(item, dict):
             continue
         date = parse_date(item.get("published_date"))
-        if not date or not since <= date <= now:
+        # General search can discover small local publishers without an indexed
+        # date. They remain candidates until original-page publication validation.
+        if (date and not since <= date <= now) or (not date and topic == 'news'):
             continue
         if not all(isinstance(item.get(k), str) and item[k].strip() for k in ("url", "title", "content")):
             continue
@@ -58,6 +60,6 @@ def search_articles(query, days=14, limit=10, now=None):
             continue
         seen.add(item["url"])
         articles.append({"url": item["url"], "title": item["title"][:300], "source": "Tavily",
-                         "published_at": date.isoformat(), "search_published_at": date.isoformat(),
+                         "published_at": date.isoformat() if date else '', "search_published_at": date.isoformat() if date else '',
                          "summary": item["content"][:1500]})
     return articles[:limit]

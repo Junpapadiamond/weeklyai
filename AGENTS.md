@@ -174,6 +174,16 @@ Base: `http://localhost:5000/api/v1`
 
 ## Provider 路由
 
+**当前线上（2026-10-03）**：`DISCOVERY_PROVIDER=claude`，Claude 只分析原文证据；
+`DISCOVERY_SEARCH_PROVIDER=auto` 优先 Tavily，其次 Exa，无搜索 Key 时回退 RSS。
+美国、中国、欧洲、日本、韩国、东南亚每日各有发布/冷门两条搜索；其他市场轮换印度、拉美、非洲、中东。
+默认 40 篇原文、最多 24 次 Claude 请求（含重试），失败批次不阻止已验证产品发布。
+低曝光、未融资、开源和垂直产品可按证据收录为 2-3 分；4-5 分仍需至少两项有原文证据的信号。
+`crawler/data/discovery_state.json` 缓存已分析文章，成功批次缓存 1-3 天；失败批次不缓存。
+每次运行的地区覆盖、新增、拒绝原因及降级情况见 Actions Summary / discovery 报告。
+
+以下为保留的旧版 `auto/perplexity` 路由：
+
 ```
 cn → GLM (glm-4.7, search_pro/search_pro_quark/search_std)
 us/eu/jp(含日韩)/sea → Perplexity (sonar)

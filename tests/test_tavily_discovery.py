@@ -55,6 +55,18 @@ def test_tavily_missing_key_makes_no_request(monkeypatch):
         search_articles("AI")
 
 
+def test_general_search_can_collect_undated_candidates_without_inventing_dates(monkeypatch):
+    monkeypatch.setenv('TAVILY_API_KEY', 'private-test-key')
+    def post(url, **kwargs):
+        assert kwargs['json']['topic'] == 'general'
+        assert not kwargs['json']['filter_by_published_date']
+        return SimpleNamespace(status_code=200, json=lambda: {'results': [
+            {'url': 'https://local.test/new-tool', 'title': 'Local AI tool', 'content': 'Source text'}]})
+    monkeypatch.setattr(requests, 'post', post)
+    articles = search_articles('小众 AI', now=NOW, topic='general')
+    assert len(articles) == 1 and articles[0]['published_at'] == ''
+
+
 def test_preflight_rejects_explicit_search_without_key(monkeypatch):
     from tools.check_providers import check_providers
     monkeypatch.setenv("DISCOVERY_PROVIDER", "claude")
@@ -102,7 +114,7 @@ def test_search_gets_bounded_input_share_and_original_date_is_required(monkeypat
     setup_sources(monkeypatch)
     found = [{"url": 'https://search.test/' + name, "title": "Product news", "published_at": NOW.isoformat(),
               "source": "Tavily", "summary": "AI startup"} for name in ['new', 'old']]
-    monkeypatch.setattr("utils.tavily_client.search_articles", lambda *a: found)
+    monkeypatch.setattr("utils.tavily_client.search_articles", lambda *a, **kw: found)
     articles, statuses = discovery.collect_articles(14, 6, NOW)
     assert len(articles) == 6
     assert articles[0]["url"] == "https://search.test/new"
@@ -111,16 +123,17 @@ def test_search_gets_bounded_input_share_and_original_date_is_required(monkeypat
     assert statuses[-1]["readable_articles"] == statuses[-1]["selected_articles"] == 1
 
 
-def test_auto_falls_back_to_rss_but_explicit_tavily_reports_failure(monkeypatch):
+def test_search_outage_preserves_rss_with_visible_failure_status(monkeypatch):
     setup_sources(monkeypatch)
-    def fail(*args):
+    def fail(*args, **kwargs):
         raise TavilyError("Tavily returned HTTP 429")
     monkeypatch.setattr("utils.tavily_client.search_articles", fail)
     articles, statuses = discovery.collect_articles(14, 2, NOW)
     assert len(articles) == 2 and statuses[-1]["status"] == "unavailable"
     monkeypatch.setenv("DISCOVERY_SEARCH_PROVIDER", "tavily")
-    with pytest.raises(discovery.ClaudeError, match="HTTP 429"):
-        discovery.collect_articles(14, 2, NOW)
+    articles, statuses = discovery.collect_articles(14, 2, NOW)
+    assert len(articles) == 2 and statuses[-1]['status'] == 'unavailable'
+    assert all(q['error'] == 'Tavily returned HTTP 429' for q in statuses[-1]['queries'])
     monkeypatch.setenv("DISCOVERY_SEARCH_PROVIDER", "rss")
     assert len(discovery.collect_articles(14, 2, NOW)[1]) == 1
 

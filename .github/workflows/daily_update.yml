@@ -37,17 +37,18 @@ jobs:
           python -m pip install -r backend/requirements.txt
 
       - name: Run discovery + news
-        timeout-minutes: 18
+        timeout-minutes: 30
         env:
           DISCOVERY_PROVIDER: ${{ vars.DISCOVERY_PROVIDER || 'claude' }}
-          DISCOVERY_SEARCH_PROVIDER: ${{ vars.DISCOVERY_SEARCH_PROVIDER || 'rss' }}
+          DISCOVERY_SEARCH_PROVIDER: ${{ vars.DISCOVERY_SEARCH_PROVIDER || 'auto' }}
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
           TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
           CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
           CLAUDE_API_BASE_URL: ${{ vars.CLAUDE_API_BASE_URL || 'https://api.intenext.ai/v1' }}
           CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL || 'claude-sonnet-5' }}
-          CLAUDE_DISCOVERY_MAX_CALLS: '6'
-          CLAUDE_DISCOVERY_MAX_ARTICLES: '12'
+          CLAUDE_DISCOVERY_MAX_CALLS: ${{ vars.CLAUDE_DISCOVERY_MAX_CALLS || '24' }}
+          CLAUDE_DISCOVERY_MAX_ARTICLES: ${{ vars.CLAUDE_DISCOVERY_MAX_ARTICLES || '40' }}
+          CLAUDE_DISCOVERY_MAX_SECONDS: '900'
           PERPLEXITY_API_KEY: ${{ (vars.DISCOVERY_PROVIDER || 'claude') != 'claude' && secrets.PERPLEXITY_API_KEY || '' }}
           PERPLEXITY_MODEL: ${{ secrets.PERPLEXITY_MODEL || 'sonar' }}
           ZHIPU_API_KEY: ${{ (vars.DISCOVERY_PROVIDER || 'claude') != 'claude' && secrets.ZHIPU_API_KEY || '' }}
@@ -120,6 +121,9 @@ jobs:
       - name: Publish verification summary
         if: always()
         run: |
+          for report in crawler/logs/discovery/*.md; do
+            if [ -f "$report" ]; then cat "$report" >> "$GITHUB_STEP_SUMMARY"; fi
+          done
           if [ -f /tmp/data_report.md ]; then
             cat /tmp/data_report.md >> "$GITHUB_STEP_SUMMARY"
           else
@@ -135,6 +139,7 @@ jobs:
             /tmp/data_report.json
             /tmp/data_report.md
             crawler/logs/discovery/*.json
+            crawler/logs/discovery/*.md
 
       - name: Sync snapshot for backend deployment
         run: |
@@ -172,6 +177,7 @@ jobs:
 
           git add \
             crawler/data/products_featured.json \
+            crawler/data/discovery_state.json \
             crawler/data/blogs_news.json \
             crawler/data/last_updated.json \
             crawler/data/dark_horses \

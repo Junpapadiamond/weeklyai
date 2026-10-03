@@ -1585,7 +1585,7 @@ def validate_against_search_results(
     return False, f"product '{name}' not found in search results (possible hallucination)"
 
 
-def validate_product(product: dict) -> tuple[bool, str]:
+def validate_product(product: dict, *, evidence_backed: bool = False) -> tuple[bool, str]:
     """
     验证产品质量，返回 (是否通过, 原因)
 
@@ -1655,7 +1655,10 @@ def validate_product(product: dict) -> tuple[bool, str]:
         '领投', '融资', '估值', '用户', '增长', 'ARR', '首创', '首个',
         '前OpenAI', '前Google', '前Meta', 'YC', 'a16z', 'Sequoia',
     ])
-    if not has_number and not has_specific:
+    # Claude's evidence validator has already checked exact source quotations.
+    # Early niche products can have concrete differentiation without funding,
+    # traction or superlatives; do not encourage invented metrics to pass this gate.
+    if not has_number and not has_specific and not evidence_backed:
         return False, "why_matters lacks specific details"
 
     # 6. 检查 name 是否像新闻标题（中文区更容易把标题当产品名）
@@ -3700,6 +3703,7 @@ def main():
             print(f'ERROR: {exc}')
             sys.exit(1)
         print(f"Claude discovery complete: {len(report['accepted'])} accepted, {len(report['saved'])} saved.")
+        print(f"Discovery status: {report['status']}; details in logs/discovery/{report['id']}.md")
         # A successful scan can legitimately contain only already-known products.
         # --require-results still fails for no readable source articles or API failures.
         return

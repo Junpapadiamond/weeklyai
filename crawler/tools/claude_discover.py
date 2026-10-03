@@ -4,6 +4,7 @@ Invoked by auto_discover.py when DISCOVERY_PROVIDER=claude. No paid search API
 is required. Each run has a hard request cap and records sources and rejections.
 """
 import calendar
+from collections import Counter, deque
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 import ipaddress
@@ -24,6 +25,7 @@ import requests
 from utils.claude_client import ClaudeClient, ClaudeError
 from utils.rss_health import inspect_feed
 from utils.tavily_client import parse_date
+from utils.discovery_plan import search_plan, balanced_articles, markets_for, company_market, FEED_MARKETS
 
 FEEDS = [
     ("TechCrunch Startups", "https://techcrunch.com/category/startups/feed/"),
@@ -40,7 +42,7 @@ FEEDS = [
     ("BetaKit", "https://betakit.com/feed/"),
 ]
 SIGNALS = re.compile(r"\b(raises?|raised|funding|launch\w*|startup\w*|robot\w*|seed|series [abc]|YC)\b|融资|发布|推出|机器人|创投", re.I)
-AI = re.compile(r"\b(AI|artificial intelligence|machine learning|LLM|robot\w*|agents?)\b|人工智能|大模型|智能体|机器人", re.I)
+AI = re.compile(r"\b(AI|artificial intelligence|machine learning|LLM|robot\w*|agents?)\b|人工智能|人工知能|인공지능|大模型|智能体|机器人", re.I)
 PRIORITY = re.compile(r"\b(raises?|raised|funding|seed|series [abc]|startups?|demo day)\b|融资|创投", re.I)
 
 
@@ -141,7 +143,7 @@ def resolve_profile_links(links):
     return list({link['url']: link for link in resolved}.values())
 
 
-def collect_articles(days, limit, now=None):
+def collect_articles(days, limit, now=None, *, region='all', product_type='mixed', seen_urls=()):
     now = now or datetime.now(timezone.utc)
     def collect(feed):
         name, url = feed
@@ -159,8 +161,9 @@ def collect_articles(days, limit, now=None):
             return [], {"source": name, "url": url, "status": "blocked" if status_code in (403, 429) else "unavailable", "http_status": status_code}
         except (requests.RequestException, ValueError):
             return [], {"source": name, "url": url, "status": "unavailable"}
-    feed_results = list(ThreadPoolExecutor(max_workers=5).map(collect, FEEDS))
-    unique = {article["url"]: article for entries, _ in feed_results for article in entries}
+    with ThreadPoolExecutor(max_workers=5) as pool:
+        feed_results = list(pool.map(collect, FEEDS))
+    gathered = [article for entries, _ in feed_results for article in entries]
     source_mode = os.getenv("DISCOVERY_SEARCH_PROVIDER", "auto").lower()
     if source_mode not in {"auto", "rss", "exa", "tavily"}:
         raise ClaudeError("DISCOVERY_SEARCH_PROVIDER must be auto, rss, exa or tavily")
@@ -170,23 +173,29 @@ def collect_articles(days, limit, now=None):
     if selected_provider in {"exa", "tavily"}:
         from utils.exa_client import search_articles, ExaError
         from utils.tavily_client import search_articles as tavily_search, TavilyError
-        search = tavily_search if selected_provider == "tavily" else search_articles
         provider_name = selected_provider.title()
-        try:
-            found = search("emerging AI startups product launches seed funding US Europe Asia", days, min(limit, 10), now)
-            # Retrieve original articles with the same public-URL checks and link/quote
-            # validation as RSS. Search snippets alone can never publish a product.
-            for article in found:
-                unique.setdefault(article["url"], article)
-            feed_results.append(([], {"source": provider_name, "status": "ok" if found else "empty", "eligible_articles": len(found)}))
-        except (ExaError, TavilyError) as error:
-            feed_results.append(([], {"source": provider_name, "status": "unavailable", "error": str(error)}))
-            if source_mode != "auto":
-                raise ClaudeError(str(error)) from None
-    articles = sorted(unique.values(), key=lambda a: (bool(PRIORITY.search(a["title"])), a["published_at"]), reverse=True)
-    # Fetch before judging AI relevance: roundup titles may omit the word AI.
-    search_candidates = [a for a in articles if a["source"] in {"Tavily", "Exa"}][:min(limit, 10)]
-    articles = (search_candidates + [a for a in articles if a not in search_candidates])[:limit * 3]
+        def search_one(task):
+            try:
+                if selected_provider == 'tavily':
+                    found = tavily_search(task['query'], days, 8, now, topic=task['topic'])
+                else:
+                    found = search_articles(task['query'], days, 8, now)
+                tagged = [dict(article, search_region=task['region'], search_lane=task['lane']) for article in found]
+                return tagged, dict(task, status='ok' if found else 'empty', eligible_articles=len(found))
+            except (ExaError, TavilyError) as error:
+                return [], dict(task, status='unavailable', error=str(error), eligible_articles=0)
+        with ThreadPoolExecutor(max_workers=3) as pool:
+            searches = list(pool.map(search_one, search_plan(region, product_type, now)))
+        found = [article for entries, _ in searches for article in entries]
+        # Prefer explicit search provenance over RSS when the same URL occurs in both.
+        gathered = found + gathered
+        feed_results.append(([], {'source': provider_name, 'status': 'ok' if found else 'unavailable' if all(
+            status['status'] == 'unavailable' for _, status in searches) else 'empty',
+            'eligible_articles': len({a['url'] for a in found}), 'queries': [status for _, status in searches]}))
+    recent = [a for a in gathered if a['url'] not in seen_urls]
+    recent.sort(key=lambda a: a['published_at'], reverse=True)
+    # Fairness applies before expensive fetches as well as before model analysis.
+    articles = balanced_articles(recent, limit * 3, region)
     def enrich(article):
         try:
             data, final_url = fetch_public(article["url"])
@@ -213,17 +222,14 @@ def collect_articles(days, limit, now=None):
             return article if len(article["content"]) >= 200 and links and AI.search(article["content"]) else None
         except (requests.RequestException, ValueError):
             return None
-    enriched = [a for a in ThreadPoolExecutor(max_workers=5).map(enrich, articles) if a]
-    # Reserve part of the bounded model input for usable search discoveries.
-    # RSS volume must not silently crowd the configured search provider out.
-    searched = [a for a in enriched if a["source"] in {"Tavily", "Exa"}]
-    rss = [a for a in enriched if a["source"] not in {"Tavily", "Exa"}]
-    quota = max(1, limit // 3)
-    selected = (searched[:quota] + rss + searched[quota:])[:limit]
+    with ThreadPoolExecutor(max_workers=5) as pool:
+        enriched = [a for a in pool.map(enrich, articles) if a]
+    selected = balanced_articles(enriched, limit, region)
     statuses = [status for _, status in feed_results]
     for status in statuses:
         status["readable_articles"] = sum(a["source"] == status["source"] for a in enriched)
         status["selected_articles"] = sum(a["source"] == status["source"] for a in selected)
+        status['cached_articles'] = len({a['url'] for a in gathered if a['source'] == status['source'] and a['url'] in seen_urls})
     return selected, statuses
 
 
@@ -290,7 +296,8 @@ def validate_evidence(product, articles):
     if not source:
         return False, "source_url was not collected"
     name = normalized(product.get("name", ""))
-    if len(name) < 3 or name not in normalized(source["title"] + " " + source["content"]):
+    min_name_length = 2 if re.search(r'[\u3040-\u30ff\u3400-\u9fff\uac00-\ud7af]', name) else 3
+    if len(name) < min_name_length or name not in normalized(source["title"] + " " + source["content"]):
         return False, "product name missing from cited article"
     website = product.get("website", "")
     try:
@@ -337,6 +344,7 @@ dark_horse_index (integer 2-5), criteria_met, company_country (ISO code or unkno
 category must be one of coding, image, video, voice, writing, agent, hardware, finance, education, healthcare, other.
 Do not invent company country. funding_total is optional: include only a sourced TOTAL, not just the latest round.
 2-3 = promising early product. 4 = high potential, low exposure with at least TWO independent supported signals (funding_signal, founder_background, growth_anomaly, category_innovation, community_buzz).
+Actively include lesser-known, bootstrapped, local-language, open-source and specialist products at 2-3 when the source proves a concrete use case or technical difference. Funding, popularity and a numeric metric are NOT mandatory. Never inflate them to 4-5 to fill a quota.
 5 requires exceptional sourced evidence beyond funding alone. A launch alone is not category innovation. Investor interest alone is not user traction.
 funding_signal means an actual financing round or investment, NOT a customer purchase agreement. founder_background means notable prior work or credentials, NOT merely a founding date.
 criteria_met MUST be an array of strings, e.g. ["funding_signal", "founder_background"], NEVER objects or a dictionary.
@@ -346,49 +354,138 @@ Keep all factual claims conservative. Distinguish rumours, funding rounds, valua
 Search region is not nationality. Requested region: REGION; product type: TYPE. For a specific region include only companies located there according to source evidence.
 Existing products to skip: EXISTING
 ARTICLES:
-""".replace("REGION", region).replace("TYPE", product_type).replace("EXISTING", json.dumps(existing_names, ensure_ascii=False)) + json.dumps(articles, ensure_ascii=False)
+""".replace("REGION", 'Japan and South Korea' if region == 'jp' else region).replace("TYPE", product_type).replace("EXISTING", json.dumps(existing_names, ensure_ascii=False)) + json.dumps(articles, ensure_ascii=False)
+
+
+def load_seen(path, now):
+    try:
+        state = json.loads(path.read_text(encoding='utf-8'))
+        return {url: expires for url, expires in state.get('articles', {}).items()
+                if isinstance(expires, str) and (date := parse_date(expires)) and date > now}
+    except (OSError, ValueError, AttributeError, TypeError):
+        return {}
+
+
+def write_state(path, seen):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix('.tmp')
+    temporary.write_text(json.dumps({'version': 1, 'articles': seen}, ensure_ascii=False, indent=2), encoding='utf-8')
+    temporary.replace(path)
+
+
+def write_summary(report, path):
+    regions = markets_for(report['region'])
+    lines = ['## Product discovery', '',
+             f"Status: **{report['status']}**. Newly saved: **{len(report['saved'])}**; "
+             f"accepted: {len(report['accepted'])}; candidates: {len(report['candidates'])}; "
+             f"model requests: {report['model_requests']}/{report['max_calls']}.", '',
+             'Search market is a coverage target, not company nationality.', '',
+             '| Search market | Selected articles | Analyzed articles | Accepted products |',
+             '| --- | ---: | ---: | ---: |']
+    for region in regions:
+        def market(a):
+            return a.get('search_region') or FEED_MARKETS.get(a['source'], 'other')
+        lines.append(f"| {region} | {sum(market(a) == region for a in report.get('articles', []))} | "
+                     f"{sum(market(a) == region and a['url'] in report['analyzed_urls'] for a in report.get('articles', []))} | "
+                     f"{sum(p['extra']['search_region'] == region for p in report['accepted'])} |")
+    lines += ['', 'Accepted company countries: ' + json.dumps(dict(Counter(
+        p.get('company_country', 'unknown') for p in report['accepted'])), ensure_ascii=False), '',
+        'Rejection reasons: ' + json.dumps(dict(Counter(p['reason'] for p in report['rejected'])), ensure_ascii=False)]
+    for feed in report.get('feeds', []):
+        lines.append(f"- {feed['source']}: {feed['status']}; selected {feed.get('selected_articles', 0)}; cached {feed.get('cached_articles', 0)}")
+        for query in feed.get('queries', []):
+            lines.append(f"  - {query['region']}/{query['lane']}: {query['status']}, {query['eligible_articles']} results")
+    for error in report['errors']:
+        lines.append(f'- Warning: {error}')
+    path.write_text('\n'.join(lines) + '\n', encoding='utf-8')
 
 
 def run_discovery(engine, region="all", product_type="mixed", dry_run=False):
     days = max(1, min(30, int(os.getenv("CLAUDE_DISCOVERY_DAYS", "14"))))
-    max_calls = max(1, min(12, int(os.getenv("CLAUDE_DISCOVERY_MAX_CALLS", "6"))))
+    max_calls = max(1, min(48, int(os.getenv("CLAUDE_DISCOVERY_MAX_CALLS", "24"))))
     batch_size = 2
-    max_articles = max(1, min(max_calls * batch_size, int(os.getenv("CLAUDE_DISCOVERY_MAX_ARTICLES", "12"))))
+    max_articles = max(1, min(max_calls * batch_size, int(os.getenv("CLAUDE_DISCOVERY_MAX_ARTICLES", "40"))))
+    deadline = time.monotonic() + max(60, min(1500, int(os.getenv('CLAUDE_DISCOVERY_MAX_SECONDS', '900'))))
+    now = datetime.now(timezone.utc)
+    state_path = Path(engine.PROJECT_ROOT) / 'data' / 'discovery_state.json'
+    # A narrow scan must not hide another region/type's products in a roundup.
+    use_shared_cache = region == 'all' and product_type == 'mixed'
+    seen = load_seen(state_path, now) if use_shared_cache else {}
     client = ClaudeClient()
     run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "-" + uuid4().hex[:8]
     report = {"id": run_id, "provider": "claude", "model": client.model, "window_days": days,
-              "dry_run": dry_run, "saved": [], "accepted": [], "candidates": [], "rejected": [], "errors": [], "usage": client.usage}
+              "dry_run": dry_run, "saved": [], "accepted": [], "candidates": [], "rejected": [], "errors": [], "usage": client.usage,
+              'region': region, 'status': 'running', 'max_calls': max_calls, 'model_requests': 0,
+              'batches': [], 'analyzed_urls': [], 'cached_articles': len(seen)}
     report_dir = Path(engine.PROJECT_ROOT) / "logs" / "discovery"
     report_dir.mkdir(parents=True, exist_ok=True)
     report_path = report_dir / (run_id + ".json")
+    def checkpoint():
+        temporary = report_path.with_suffix('.tmp')
+        temporary.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
+        temporary.replace(report_path)
     try:
-        articles, statuses = collect_articles(days, max_articles)
+        articles, statuses = collect_articles(days, max_articles, region=region, product_type=product_type, seen_urls=seen)
         articles = articles[:max_articles]
         report["feeds"], report["articles"] = statuses, articles
+        checkpoint()
         print(f"Collected {len(articles)} dated articles; Claude cap: {max_calls} calls", flush=True)
         if not articles:
+            if any(s.get('cached_articles', 0) for s in statuses):
+                report['status'] = 'no_new_articles'
+                return report
             raise ClaudeError("No recent readable articles; check source access")
         featured = Path(engine.PROJECT_ROOT) / "data" / "products_featured.json"
         existing = json.loads(featured.read_text(encoding="utf-8")) if featured.exists() else []
         names = {normalized(p.get("name", "")) for p in existing}
         domains = engine.load_existing_domains()
         leader_names, leader_domains = industry_leaders(engine.PROJECT_ROOT)
-        for offset in range(0, len(articles), batch_size):
-            batch = articles[offset:offset + batch_size]
+        quotas = {'us': 6, 'cn': 4, 'eu': 3, 'jp': 2, 'kr': 2, 'sea': 2, 'other': 3, 'unknown': 3}
+        daily_counts = Counter(company_market(p.get('company_country') or p.get('country_code')) for p in existing
+                               if str(p.get('discovered_at', '')).startswith(now.date().isoformat()))
+        pending = deque((offset // batch_size + 1, articles[offset:offset + batch_size], 0)
+                        for offset in range(0, len(articles), batch_size))
+        completed = 0
+        while pending and report['model_requests'] < max_calls:
+            if time.monotonic() >= deadline:
+                report['errors'].append('Discovery time budget reached; remaining articles deferred.')
+                break
+            number, batch, attempt = pending.popleft()
             # Only relevant existing names enter the prompt; Python still deduplicates the entire dataset.
             text = normalized(" ".join(a["content"] for a in batch))
             skip_names = [p["name"] for p in existing if normalized(p.get("name", "")) in text]
-            print(f"Claude batch {offset // batch_size + 1}: {len(batch)} articles", flush=True)
+            print(f"Claude batch {number}, attempt {attempt + 1}: {len(batch)} articles", flush=True)
             inputs = [{key: a[key] for key in ('title', 'url', 'published_at', 'content', 'links')} for a in batch]
-            candidates = client.extract(build_prompt(inputs, skip_names, region, product_type))
+            report['model_requests'] += 1
+            try:
+                prompt = build_prompt(inputs, skip_names, region, product_type)
+                if attempt:
+                    prompt += '\nPrevious attempt failed. Return ONLY a complete JSON array, with at most 4 concise products.'
+                candidates = client.extract(prompt)
+            except ClaudeError as exc:
+                report['batches'].append({'batch': number, 'attempt': attempt + 1, 'status': 'failed', 'error': str(exc)})
+                report['errors'].append(f'Batch {number}, attempt {attempt + 1}: {exc}')
+                checkpoint()
+                print(f'WARNING: {report["errors"][-1]}', flush=True)
+                if not exc.retryable:
+                    break
+                if attempt == 0:
+                    # Finish other markets before retrying. Retries share the same hard budget.
+                    pending.append((number, batch, 1))
+                continue
+            completed += 1
+            report['batches'].append({'batch': number, 'attempt': attempt + 1, 'status': 'success'})
+            report['analyzed_urls'].extend(a['url'] for a in batch)
             report['candidates'].extend(json.loads(json.dumps(candidates)))
+            print(f'Batch {number}: {len(candidates)} candidates extracted', flush=True)
+            rejection_start = len(report['rejected'])
             for product in candidates:
                 name = str(product.get("name", ""))
                 try:
                     normalize_category(product)
                     valid, reason = validate_evidence(product, batch)
                     if valid:
-                        valid, reason = engine.validate_product(product)
+                        valid, reason = engine.validate_product(product, evidence_backed=True)
                     if not valid:
                         report["rejected"].append({"name": name, "reason": reason})
                         continue
@@ -398,6 +495,16 @@ def run_discovery(engine, region="all", product_type="mixed", dry_run=False):
                         continue
                     if host in domains or normalized(name) in names:
                         report["rejected"].append({"name": name, "reason": "already in catalog"})
+                        continue
+                    market = company_market(product.get('company_country'))
+                    if region != 'all' and market not in markets_for(region):
+                        report['rejected'].append({'name': name, 'reason': 'company country outside requested region or unknown'})
+                        continue
+                    if product_type == 'hardware' and product['category'] != 'hardware' or product_type == 'software' and product['category'] == 'hardware':
+                        report['rejected'].append({'name': name, 'reason': 'outside requested product type'})
+                        continue
+                    if daily_counts[market] >= quotas[market]:
+                        report['rejected'].append({'name': name, 'reason': 'daily market quota; deferred'})
                         continue
                     page, _ = fetch_public(product["website"])
                     homepage = BeautifulSoup(page, "html.parser").get_text(" ", strip=True)
@@ -412,6 +519,8 @@ def run_discovery(engine, region="all", product_type="mixed", dry_run=False):
                 product.update({"source": {"Exa": "claude_exa", "Tavily": "claude_tavily"}.get(source.get("source"), "claude_rss"), "source_title": source["title"],
                                 "website_source": website_link.get('via') or source["url"], "discovered_at": datetime.now(timezone.utc).date().isoformat(),
                                 "extra": {"discovery_provider": "claude", "discovery_run_id": run_id,
+                                          'search_region': source.get('search_region') or FEED_MARKETS.get(source['source'], 'other'),
+                                          'search_lane': source.get('search_lane', 'rss'),
                                           "source_published_at": source["published_at"], "evidence": product.pop("evidence")}})
                 report["accepted"].append(product)
                 if not dry_run:
@@ -429,11 +538,34 @@ def run_discovery(engine, region="all", product_type="mixed", dry_run=False):
                     report["saved"].append(name)
                 names.add(normalized(name))
                 domains.add(host)
+                daily_counts[market] += 1
                 print(f"{'Accepted' if dry_run else 'Saved'}: {name} ({product['dark_horse_index']}/5)", flush=True)
+                checkpoint()
+            # Only completed batches enter the cache; failures remain eligible next run.
+            # Rejected evidence gets another opportunity after one day, clean batches after three.
+            rejected = report['rejected'][rejection_start:]
+            if rejected:
+                print(f'Batch {number} rejections: {dict(Counter(p["reason"] for p in rejected))}', flush=True)
+            if not any('deferred' in p['reason'] or 'inaccessible' in p['reason'] for p in rejected):
+                expires = (now + timedelta(days=1 if rejected else 3)).isoformat()
+                for source in batch:
+                    seen[source['url']] = expires
+            checkpoint()
+        if not completed:
+            raise ClaudeError('No analysis batch succeeded; inspect discovery report for provider failures.')
+        if pending:
+            report['errors'].append(f'{len(pending)} batches deferred by request/time budget or provider failure.')
+        search_degraded = any(s['status'] in ('unavailable', 'blocked') or any(
+            q['status'] == 'unavailable' for q in s.get('queries', [])) for s in statuses)
+        report['status'] = 'partial' if report['errors'] or search_degraded else 'success'
+        if not dry_run and use_shared_cache:
+            write_state(state_path, seen)
         return report
     except ClaudeError as exc:
+        report['status'] = 'failed'
         report["errors"].append(str(exc))
         raise
     finally:
-        report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+        checkpoint()
+        write_summary(report, report_path.with_suffix('.md'))
         print(f"Discovery report: {report_path}", flush=True)

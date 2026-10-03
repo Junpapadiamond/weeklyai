@@ -40,6 +40,14 @@ def test_two_distinct_evidenced_signals_required_for_dark_horse():
     assert validate_evidence(candidate, [article()])[0]
 
 
+def test_two_character_cjk_brand_is_not_discarded_as_short_english_name():
+    candidate = product()
+    candidate['name'] = '星舟'
+    source = article()
+    source['title'] = '星舟发布 AI 产品'
+    assert validate_evidence(candidate, [source])[0]
+
+
 def test_feeds_skip_old_future_undated_and_external_entries():
     entries = []
     for label, date, host in [('fresh', '13 Sep', 'news.test'), ('old', '01 Aug', 'news.test'),
@@ -104,7 +112,8 @@ def test_bounded_dry_run_keeps_product_files_unchanged(tmp_path, monkeypatch):
     monkeypatch.setenv('CLAUDE_DISCOVERY_MAX_ARTICLES', '100')
     source = article()
     source['published_at'] = '2026-09-13T00:00:00+00:00'
-    monkeypatch.setattr('tools.claude_discover.collect_articles', lambda *a: ([source] * 9, []))
+    source['source'] = 'Test'
+    monkeypatch.setattr('tools.claude_discover.collect_articles', lambda *a, **kw: ([source] * 9, []))
     calls = []
     class Client:
         model = 'test'
@@ -115,7 +124,7 @@ def test_bounded_dry_run_keeps_product_files_unchanged(tmp_path, monkeypatch):
     monkeypatch.setattr('tools.claude_discover.ClaudeClient', Client)
     monkeypatch.setattr('tools.claude_discover.fetch_public', lambda url: (b'<title>ExampleAI</title>', url))
     engine = SimpleNamespace(PROJECT_ROOT=str(tmp_path), load_existing_domains=lambda: set(),
-                             validate_product=lambda p: (True, 'ok'),
+                             validate_product=lambda p, **kw: (True, 'ok'),
                              save_product=lambda p: pytest.fail('dry run must not save'))
     result = run_discovery(engine, dry_run=True)
     assert len(calls) == 1
