@@ -1,0 +1,203 @@
+{
+  "cache_key": "31ddb9364ec9ca781bc59188-bc0ae55c96f2dbcd8fbd9bda",
+  "product_key": "31ddb9364ec9ca781bc59188",
+  "fingerprint": "bc0ae55c96f2dbcd8fbd9bda",
+  "product_id": "p_136bb9316567279c",
+  "product_name": "Mitti Labs",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-03T16:02:16.749760+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "稻田减排项目监测",
+      "en": "Rice Field Emissions Monitoring"
+    },
+    "scenario": {
+      "zh": "某碳信用项目需要追踪5000公顷稻田的减排效果，验证农户是否按约定管理水位",
+      "en": "A carbon credit project needs to track emissions reduction across 5,000 hectares of rice fields"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择监测范围",
+          "en": "Select Monitoring Scope"
+        },
+        "instruction": {
+          "zh": "确定本次监测的地理范围和数据源",
+          "en": "Define geographic scope and data sources"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "雷达影像 + 抽样地面验证",
+              "en": "Radar imagery + sampled field checks"
+            },
+            "output": {
+              "zh": "已配置：卫星雷达全覆盖，每200公顷1个地面传感器，监测周期14天",
+              "en": "Configured: Full radar coverage with 1 ground sensor per 200 hectares, 14-day cycle"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "仅雷达影像（无地面数据）",
+              "en": "Radar imagery only (no ground data)"
+            },
+            "output": {
+              "zh": "已配置：仅卫星雷达数据，无地面验证，适用于初步筛查阶段",
+              "en": "Configured: Satellite radar only, no ground validation, suitable for initial screening"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "设置淹水检测阈值",
+          "en": "Set Flooding Detection Threshold"
+        },
+        "instruction": {
+          "zh": "调整雷达反射强度阈值，判定稻田是否处于淹水状态",
+          "en": "Adjust radar backscatter threshold to classify field flooding status"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "严格模式（高置信度）",
+              "en": "Strict mode (high confidence)"
+            },
+            "output": {
+              "zh": "淹水判定更保守，减少误报但可能漏检边缘地块，适合正式核查",
+              "en": "Conservative classification reduces false positives but may miss edge cases, suited for audits"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "宽松模式（高覆盖）",
+              "en": "Permissive mode (high coverage)"
+            },
+            "output": {
+              "zh": "淹水判定更宽松，覆盖更多潜在区域但可能产生误报，适合早期预警",
+              "en": "Permissive classification captures more areas but may include false positives, suited for early alerts"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspect",
+        "widget": "compare",
+        "title": {
+          "zh": "对比区域表现",
+          "en": "Compare Regional Performance"
+        },
+        "instruction": {
+          "zh": "查看不同管理措施下的淹水时长和合规情况",
+          "en": "Review flooding duration and compliance under different management practices"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "A区（传统连续淹水）",
+              "en": "Zone A (Traditional continuous flooding)"
+            },
+            "output": {
+              "zh": "全年淹水天数较高，土壤长期厌氧，甲烷排放基线水平",
+              "en": "High flooding days year-round, prolonged anaerobic soil conditions, baseline methane emission"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "B区（间歇灌溉试点）",
+              "en": "Zone B (Intermittent flooding pilot)"
+            },
+            "output": {
+              "zh": "淹水天数明显减少，干湿交替明显，符合项目减排要求",
+              "en": "Flooding days notably reduced, clear wet-dry cycles, meets project emission reduction targets"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "生成核查报告",
+          "en": "Generate Verification Report"
+        },
+        "instruction": {
+          "zh": "汇总监测数据，形成碳信用项目的核查依据",
+          "en": "Consolidate monitoring data for carbon credit project verification"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "导出项目周期汇总",
+              "en": "Export project cycle summary"
+            },
+            "output": {
+              "zh": "报告包含：地块合规率、淹水天数时序图、雷达与地面数据对比、减排估算依据",
+              "en": "Report includes: field compliance rate, flooding timeline, radar vs ground data, emission reduction basis"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "标记异常地块待复核",
+              "en": "Flag anomalous fields for review"
+            },
+            "output": {
+              "zh": "已标记37处地块：淹水模式与协议不符，需人工现场核查或农户访谈",
+              "en": "37 fields flagged: flooding pattern deviates from agreement, requires field inspection or farmer interview"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "GeoAI监测让碳信用项目从抽查变为全覆盖，雷达影像结合地面验证可快速定位管理问题",
+      "en": "GeoAI monitoring shifts carbon credit projects from sampling to full coverage, combining radar and field data to pinpoint management issues"
+    },
+    "sources": [
+      {
+        "url": "https://www.mittilabs.earth/",
+        "label": {
+          "zh": "Mitti Labs 官网",
+          "en": "Mitti Labs Official Site"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/09/10/google-signs-its-biggest-rice-methane-carbon-credit-deal-with-indian-startup-mitti-labs/",
+        "label": {
+          "zh": "TechCrunch 报道",
+          "en": "TechCrunch Coverage"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "document",
+      "label": {
+        "zh": "监测报告",
+        "en": "Monitoring Report"
+      },
+      "initial": {
+        "zh": "项目周期：2025年1月-12月 | 地块：5000公顷 | 目标：验证间歇灌溉实施情况与甲烷减排",
+        "en": "Period: Jan-Dec 2025 | Area: 5,000 ha | Goal: Verify intermittent flooding and methane reduction"
+      }
+    }
+  }
+}

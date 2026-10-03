@@ -1,0 +1,185 @@
+{
+  "cache_key": "ed82f6e5414ffa02a645958a-604feaa6ca0e08c12c1ebd15",
+  "product_key": "ed82f6e5414ffa02a645958a",
+  "fingerprint": "604feaa6ca0e08c12c1ebd15",
+  "product_id": "2",
+  "product_name": "Latent Labs",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-03T16:02:40.870776+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "WeeklyAI：蛋白质设计平台演练",
+      "en": "WeeklyAI: Protein Design Platform"
+    },
+    "scenario": {
+      "zh": "为罕见病靶点设计候选治疗蛋白",
+      "en": "Design therapeutic protein candidates for a rare disease target"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择设计起点",
+          "en": "Choose Design Starting Point"
+        },
+        "instruction": {
+          "zh": "确定蛋白质生成的初始约束",
+          "en": "Set initial constraints for protein generation"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "已知结构模板",
+              "en": "Known Structure Template"
+            },
+            "output": {
+              "zh": "加载参考折叠，将保留核心拓扑",
+              "en": "Reference fold loaded, core topology will be preserved"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "从序列约束开始",
+              "en": "Start from Sequence Constraints"
+            },
+            "output": {
+              "zh": "设定靶点结合位点，模型探索新折叠",
+              "en": "Binding site defined, model explores novel folds"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "定义功能需求",
+          "en": "Define Functional Requirements"
+        },
+        "instruction": {
+          "zh": "指定治疗性蛋白的目标特性",
+          "en": "Specify target properties for therapeutic protein"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "高亲和力优先",
+              "en": "Prioritize High Affinity"
+            },
+            "output": {
+              "zh": "生成 12 个结合紧密的候选，稳定性待验证",
+              "en": "Generated 12 tight-binding candidates, stability to be verified"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "稳定性与表达量平衡",
+              "en": "Balance Stability and Expression"
+            },
+            "output": {
+              "zh": "生成 8 个候选，预测热稳定性与可制造性更优",
+              "en": "Generated 8 candidates with better predicted thermostability and manufacturability"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "比较候选结构",
+          "en": "Compare Candidate Structures"
+        },
+        "instruction": {
+          "zh": "检查生成蛋白的结构与打分",
+          "en": "Review generated protein structures and scores"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "候选 A：紧凑折叠",
+              "en": "Candidate A: Compact Fold"
+            },
+            "output": {
+              "zh": "结合界面埋藏面积大，但柔性环区较多",
+              "en": "Large buried interface area, multiple flexible loops"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "候选 B：刚性骨架",
+              "en": "Candidate B: Rigid Scaffold"
+            },
+            "output": {
+              "zh": "二级结构规整，预测聚集倾向更低",
+              "en": "Well-ordered secondary structure, lower predicted aggregation propensity"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "准备实验验证",
+          "en": "Prepare Experimental Validation"
+        },
+        "instruction": {
+          "zh": "导出序列与结构用于合成与测试",
+          "en": "Export sequences and structures for synthesis and testing"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "导出前 3 位候选",
+              "en": "Export Top 3 Candidates"
+            },
+            "output": {
+              "zh": "序列文件、结构模型与预测置信度已准备",
+              "en": "Sequence files, structural models and confidence scores ready"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "导出全部 8 位候选",
+              "en": "Export All 8 Candidates"
+            },
+            "output": {
+              "zh": "完整批次已备，包含多样性分析与聚类信息",
+              "en": "Full batch ready with diversity analysis and clustering data"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Latent Labs 将生成式模型与蛋白质工程约束结合，加速从设计到实验的迭代。",
+      "en": "Latent Labs combines generative models with protein engineering constraints to accelerate design-to-experiment iteration."
+    },
+    "sources": [
+      {
+        "url": "https://www.latentlabs.com/",
+        "label": {
+          "zh": "Latent Labs 官网",
+          "en": "Latent Labs Official Site"
+        }
+      }
+    ]
+  }
+}

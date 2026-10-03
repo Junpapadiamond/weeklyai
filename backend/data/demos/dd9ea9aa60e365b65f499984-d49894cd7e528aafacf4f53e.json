@@ -1,0 +1,192 @@
+{
+  "cache_key": "dd9ea9aa60e365b65f499984-d49894cd7e528aafacf4f53e",
+  "product_key": "dd9ea9aa60e365b65f499984",
+  "fingerprint": "d49894cd7e528aafacf4f53e",
+  "product_id": "p_98b5f813dc2c0fff",
+  "product_name": "Lamb Labs",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-03T16:01:46.659930+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为推理工作负载选择定制MPU方案",
+      "en": "Choose Custom MPU for Inference Workload"
+    },
+    "scenario": {
+      "zh": "你的公司需要在边缘设备上运行视觉检测模型，评估Lamb Labs的硬编码权重芯片方案能否满足延迟和功耗需求",
+      "en": "Your company needs to run vision detection models on edge devices and evaluate if Lamb Labs' weight-hardcoded chip meets latency and power needs"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择目标模型",
+          "en": "Select Target Model"
+        },
+        "instruction": {
+          "zh": "选择需要在边缘设备部署的AI模型类型",
+          "en": "Choose the AI model type for edge deployment"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "轻量级物体检测（YOLOv8-nano）",
+              "en": "Lightweight object detection (YOLOv8-nano)"
+            },
+            "output": {
+              "zh": "选定3.2M参数模型，适合硬编码到定制芯片，推理延迟需求15ms以内",
+              "en": "Selected 3.2M parameter model, suitable for chip hardcoding with sub-15ms latency requirement"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "中型语义分割（SegFormer-B2）",
+              "en": "Medium semantic segmentation (SegFormer-B2)"
+            },
+            "output": {
+              "zh": "选定27M参数模型，权重硬编码需更大芯片面积，延迟需求40ms以内",
+              "en": "Selected 27M parameter model, requires larger chip area for weight hardcoding, sub-40ms latency need"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "configure",
+        "widget": "choice",
+        "title": {
+          "zh": "配置功耗约束",
+          "en": "Configure Power Budget"
+        },
+        "instruction": {
+          "zh": "根据边缘设备电源条件设定芯片功耗上限",
+          "en": "Set chip power ceiling based on edge device power conditions"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "电池供电设备（2W预算）",
+              "en": "Battery-powered device (2W budget)"
+            },
+            "output": {
+              "zh": "MPU配置为超低功耗模式，消除内存访问后功耗降至传统GPU方案的十分之一左右",
+              "en": "MPU configured for ultra-low power, eliminating memory access reduces consumption to roughly one-tenth of traditional GPU"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "有线供电设备（8W预算）",
+              "en": "Wired power device (8W budget)"
+            },
+            "output": {
+              "zh": "MPU配置为平衡模式，功耗宽裕可提升时钟频率，延迟表现优于低功耗模式",
+              "en": "MPU configured for balanced mode, ample power allows higher clock for better latency than low-power mode"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "compare",
+        "widget": "compare",
+        "title": {
+          "zh": "对比芯片方案",
+          "en": "Compare Chip Options"
+        },
+        "instruction": {
+          "zh": "对比Lamb Labs MPU与传统推理芯片的关键指标",
+          "en": "Compare Lamb Labs MPU with traditional inference chips on key metrics"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "Lamb Labs MPU（权重硬编码）",
+              "en": "Lamb Labs MPU (hardcoded weights)"
+            },
+            "output": {
+              "zh": "无内存带宽瓶颈，单次推理能耗大幅降低，但模型固定无法更新",
+              "en": "No memory bandwidth bottleneck, drastically lower energy per inference, but model fixed and non-updatable"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "通用推理加速器（外部权重）",
+              "en": "Generic inference accelerator (external weights)"
+            },
+            "output": {
+              "zh": "模型可灵活更新，但每次推理需从内存加载权重，功耗和延迟均明显更高",
+              "en": "Model flexibly updatable, but each inference loads weights from memory with noticeably higher power and latency"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "review",
+        "widget": "review",
+        "title": {
+          "zh": "审查部署方案",
+          "en": "Review Deployment Plan"
+        },
+        "instruction": {
+          "zh": "确认定制MPU是否适合你的边缘推理场景",
+          "en": "Confirm if custom MPU suits your edge inference scenario"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "采用硬编码MPU方案",
+              "en": "Adopt hardcoded MPU solution"
+            },
+            "output": {
+              "zh": "模型稳定且能效优先场景下，硬编码权重方案显著降低推理能耗并消除带宽瓶颈",
+              "en": "For stable models prioritizing efficiency, hardcoded weights drastically cut inference energy and eliminate bandwidth bottleneck"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "保留传统灵活方案",
+              "en": "Keep traditional flexible solution"
+            },
+            "output": {
+              "zh": "模型需频繁更新或A/B测试场景下，可编程加速器提供更高灵活性尽管能效较低",
+              "en": "For frequent model updates or A/B testing, programmable accelerators offer greater flexibility despite lower efficiency"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Lamb Labs将模型权重直接硬编码到芯片消除内存瓶颈，适合模型稳定的边缘推理场景实现超高能效",
+      "en": "Lamb Labs hardcodes model weights into silicon to eliminate memory bottleneck, ideal for stable-model edge inference with ultra-high efficiency"
+    },
+    "sources": [
+      {
+        "url": "http://lamb-labs.com",
+        "label": {
+          "zh": "Lamb Labs官网",
+          "en": "Lamb Labs Official"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/09/13/the-9-buzziest-startups-from-y-combinators-latest-demo-day-according-to-vcs/",
+        "label": {
+          "zh": "TechCrunch YC报道",
+          "en": "TechCrunch YC Coverage"
+        }
+      }
+    ]
+  }
+}

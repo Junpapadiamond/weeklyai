@@ -1,0 +1,203 @@
+{
+  "cache_key": "db5e7417d3f48c91ede6402f-302017d3c0679acbe797598b",
+  "product_key": "db5e7417d3f48c91ede6402f",
+  "fingerprint": "302017d3c0679acbe797598b",
+  "product_id": "p_924278a0941d8eae",
+  "product_name": "Peripheral Labs",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-03T16:01:16.307041+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "体积视频捕捉工作流",
+      "en": "Volumetric Video Capture Workflow"
+    },
+    "scenario": {
+      "zh": "大学篮球队希望为招募视频创建沉浸式球员集锦，展示三维投篮动作",
+      "en": "College basketball team wants immersive player highlights for recruiting video showing 3D shooting form"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择捕捉场景",
+          "en": "Select Capture Scenario"
+        },
+        "instruction": {
+          "zh": "确定体积捕捉的运动环境",
+          "en": "Define the athletic environment for volumetric capture"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "室内球馆 - 多机位固定阵列",
+              "en": "Indoor court - multi-camera fixed array"
+            },
+            "output": {
+              "zh": "简报已更新为室内设置 | 建议12台相机覆盖半场 | 照明条件优化用于深度重建",
+              "en": "Brief updated for indoor setup | 12-camera half-court coverage suggested | Lighting optimized for depth reconstruction"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "户外场地 - 移动捕捉装置",
+              "en": "Outdoor court - mobile capture rig"
+            },
+            "output": {
+              "zh": "简报已调整为户外条件 | 移动装置配置8台相机 | 自然光补偿已启用深度估算",
+              "en": "Brief adjusted for outdoor conditions | Mobile rig configured with 8 cameras | Natural light compensation enabled for depth estimation"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "定义追踪重点",
+          "en": "Define Tracking Focus"
+        },
+        "instruction": {
+          "zh": "选择无标记追踪分析的主要运动学数据",
+          "en": "Choose primary kinematic data for markerless tracking analysis"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "全身生物力学 - 关节角度和释放点",
+              "en": "Full-body biomechanics - joint angles and release point"
+            },
+            "output": {
+              "zh": "简报包含23个关节追踪点 | 投篮释放高度和手臂伸展已标记 | 体积网格密度设为高",
+              "en": "Brief includes 23 joint tracking points | Shot release height and arm extension marked | Volumetric mesh density set to high"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "球轨迹和空间位置",
+              "en": "Ball trajectory and spatial positioning"
+            },
+            "output": {
+              "zh": "简报侧重于球的飞行路径 | 球员位置映射到三维场地坐标 | 旋转和弧线数据已启用",
+              "en": "Brief focuses on ball flight path | Player position mapped to 3D court coordinates | Spin and arc data enabled"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "比较视角方案",
+          "en": "Compare Viewpoint Options"
+        },
+        "instruction": {
+          "zh": "选择最能展示运动分析的三维导航路径",
+          "en": "Select 3D navigation path that best showcases athletic analysis"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "环绕轨道 - 围绕球员旋转",
+              "en": "Orbital path - rotate around player"
+            },
+            "output": {
+              "zh": "故事板显示180度弧形环绕 | 从正面开始慢速旋转至侧面投篮形态 | 时间重映射用于关键动作",
+              "en": "Storyboard shows 180-degree arc around player | Slow rotation from front to side shooting form | Time remapping for key motion"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "冻结时刻 - 静态球员带虚拟相机移动",
+              "en": "Freeze moment - static player with virtual camera movement"
+            },
+            "output": {
+              "zh": "故事板展示投篮顶点冻结 | 相机向上推进查看释放角度 | 体积网格保持时间切片供检查",
+              "en": "Storyboard shows shot apex freeze | Camera push upward to examine release angle | Volumetric mesh holds time-slice for inspection"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "查看捕捉规格",
+          "en": "Review Capture Specifications"
+        },
+        "instruction": {
+          "zh": "确认最终的体积视频捕捉计划",
+          "en": "Confirm final volumetric video capture plan"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "确认并导出简报",
+              "en": "Confirm and export brief"
+            },
+            "output": {
+              "zh": "简报已准备完成 | 包含相机阵列布局、追踪参数和视角序列 | 可下载供现场团队使用",
+              "en": "Brief ready | Includes camera array layout, tracking parameters, and viewpoint sequence | Available for download by field team"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "调整网格分辨率",
+              "en": "Adjust mesh resolution"
+            },
+            "output": {
+              "zh": "简报已修改网格设置 | 更高保真度用于面部细节但需更多处理时间 | 重建质量与速度权衡已记录",
+              "en": "Brief modified with mesh settings | Higher fidelity for facial detail but longer processing time | Quality-speed tradeoff documented"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "体积视频捕捉将二维拍摄转换为完全可导航的三维空间，适用于体育分析和沉浸式内容",
+      "en": "Volumetric capture transforms 2D footage into fully navigable 3D space for sports analysis and immersive content"
+    },
+    "sources": [
+      {
+        "url": "https://www.peripheral.so/",
+        "label": {
+          "zh": "Peripheral Labs 官网",
+          "en": "Peripheral Labs Website"
+        }
+      },
+      {
+        "url": "https://betakit.com/peripheral-hires-former-meta-reality-labs-exec-to-lead-volumetric-video-push/",
+        "label": {
+          "zh": "体积视频技术报道",
+          "en": "Volumetric Video Coverage"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "video",
+      "label": {
+        "zh": "拍摄规划简报",
+        "en": "Capture Planning Brief"
+      },
+      "initial": {
+        "zh": "球员投篮集锦 | 重点：三步上篮和跳投 | 角度：360度旋转视角 | 时长：45秒",
+        "en": "Player shooting highlights | Focus: layups and jump shots | Angles: 360 rotation | Duration: 45s"
+      }
+    }
+  }
+}
