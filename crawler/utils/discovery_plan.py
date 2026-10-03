@@ -36,33 +36,42 @@ def search_plan(region='all', product_type='mixed', now=None):
     now = now or datetime.now(timezone.utc)
     day = now.date().toordinal()
     hardware, software = NICHES[day % len(NICHES)]
-    niche = hardware if product_type == 'hardware' or (product_type == 'mixed' and day % 5 < 2) else software
+    use_hardware = product_type == 'hardware' or (product_type == 'mixed' and day % 5 < 2)
+    niche = hardware if use_hardware else software
     # These are search targets, never inferred company nationality.
-    emerging = ['India AI startup', 'Latin America IA startup Brasil México',
-                'Africa AI startup Kenya Nigeria South Africa', 'Middle East AI startup UAE Saudi Arabia'][day % 4]
+    emerging = ['India', 'Latin America Brasil México',
+                'Africa Kenya Nigeria South Africa', 'Middle East UAE Saudi Arabia'][day % 4]
     native = {
-        'cn': ('中国 AI 初创公司 新产品 种子轮', '中国 小众 AI 独立开发 开源 垂直行业 工具 新发布'),
-        'jp': ('日本 AI スタートアップ 新サービス シード 資金調達', '日本 ニッチ AI 個人開発 業務特化 オープンソース 新製品'),
-        'kr': ('한국 AI 스타트업 신규 서비스 시드 투자', '한국 소규모 AI 부트스트랩 오픈소스 산업 특화 출시'),
+        'cn': ('中国 AI 初创 新产品', '中国 小众 AI 工具 发布'),
+        'jp': ('日本 AI スタートアップ 新サービス', '日本 ニッチ AI 新製品'),
+        'kr': ('한국 AI 스타트업 신규 서비스', '한국 소규모 AI 서비스 출시'),
     }
     result = []
     for market in markets_for(region):
-        label = emerging if market == 'other' else MARKETS[market][0]
+        label = emerging if market == 'other' else 'Southeast Asia' if market == 'sea' else MARKETS[market][0]
         launch, long_tail = native.get(market, (
-            f'{label} emerging AI startup seed new product launch',
-            f'{label} lesser known AI bootstrapped indie open source vertical product launch'))
+            f'{label} AI startup product launch seed',
+            f'{label} AI {niche.split("AI")[-1].strip()} launch'))
+        if market in native:
+            long_tail += {'cn': ' 智能硬件' if use_hardware else [' 独立开发', ' 开源', ' 垂直行业'][day % 3],
+                          'jp': ' ロボット' if use_hardware else [' 個人開発', ' オープンソース', ' 業務特化'][day % 3],
+                          'kr': ' 로봇' if use_hardware else [' 오픈소스', ' 부트스트랩', ' 산업특화'][day % 3]}[market]
         if market == 'eu':
-            long_tail += [' neue KI Werkzeuge Gründer', ' outils IA jeunes startups',
-                          ' nuevas herramientas IA startups', ' Nordic Baltic AI startup'][day % 4]
+            long_tail = ['Deutschland neue KI Werkzeuge Startup', 'France nouveaux outils IA startup',
+                         'España nuevas herramientas IA startup', 'Nordic Baltic indie AI product launch'][day % 4]
+            if use_hardware:
+                long_tail += ' robotics hardware'
         if market == 'sea':
-            long_tail += [' startup AI Indonesia baru', ' công cụ AI Việt Nam ra mắt',
-                          ' Thailand AI startup', ' Malaysia Philippines AI startup'][day % 4]
+            long_tail = ['Indonesia startup AI baru', 'Việt Nam công cụ AI ra mắt',
+                         'Thailand niche AI startup launch', 'Malaysia Philippines indie AI launch'][day % 4]
+            if use_hardware:
+                long_tail += ' robotics hardware'
         # Both lanes run every day. Hardware-only/software-only also constrain news.
         type_hint = (' AI hardware robotics devices' if product_type == 'hardware'
                      else ' AI software tools' if product_type == 'software' else '')
         result.extend([
             {'region': market, 'lane': 'launch', 'topic': 'news', 'query': f'{launch}{type_hint} {now.year}'},
-            {'region': market, 'lane': 'niche', 'topic': 'general', 'query': f'{long_tail} {niche} {now.year}'},
+            {'region': market, 'lane': 'niche', 'topic': 'general', 'query': f'{long_tail} {now.year}'},
         ])
     return result
 

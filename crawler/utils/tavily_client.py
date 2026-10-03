@@ -10,6 +10,32 @@ class TavilyError(RuntimeError):
     pass
 
 
+def search_official_sites(name, country=''):
+    """Retrieve candidate sites, never trust a model-supplied/guessed domain.
+
+    Homepage identity is checked by the caller. Website lookup is not evidence
+    for product claims and deliberately has no publication-date restriction.
+    """
+    key = os.getenv('TAVILY_API_KEY', '').strip()
+    if not key:
+        raise TavilyError('TAVILY_API_KEY is missing')
+    try:
+        response = requests.post('https://api.tavily.com/search',
+            headers={'Authorization': f'Bearer {key}'},
+            json={'query': f'"{name}" official website {country}', 'topic': 'general',
+                  'search_depth': 'basic', 'max_results': 3, 'include_answer': False,
+                  'include_raw_content': False, 'auto_parameters': False}, timeout=(5, 25), allow_redirects=False)
+        if response.status_code != 200:
+            raise TavilyError(f'Tavily website lookup returned HTTP {response.status_code}')
+        body = response.json()
+        if not isinstance(body, dict) or not isinstance(body.get('results'), list):
+            raise TavilyError('Tavily website lookup returned an invalid result envelope')
+        return [row for row in body['results'][:3] if isinstance(row, dict) and
+                all(isinstance(row.get(k), str) for k in ('url', 'title', 'content'))]
+    except (requests.RequestException, ValueError):
+        raise TavilyError('Tavily website lookup unavailable or invalid JSON') from None
+
+
 def parse_date(value):
     if not isinstance(value, str) or not value.strip():
         return None

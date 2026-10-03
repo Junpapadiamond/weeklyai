@@ -168,3 +168,51 @@ def test_niche_product_needs_evidence_without_forced_funding_metrics():
     assert validate_product(niche, evidence_backed=True)[0]
     niche['evidence'][0]['quote'] = 'invented proof not in the source'
     assert not discovery.validate_evidence(niche, [source(0)])[0]
+
+
+def test_missing_article_link_requires_retrieved_homepage_identity(setup_run, monkeypatch):
+    engine, outcomes, _, _ = setup_run
+    monkeypatch.setenv('TAVILY_API_KEY', 'test-key')
+    unknown = candidate(0)
+    unknown['website'] = ''
+    monkeypatch.setattr('utils.tavily_client.search_official_sites', lambda *a: [
+        {'url': 'https://wrong.test/', 'title': 'Example0', 'content': 'directory'},
+        {'url': 'https://product0.test/about', 'title': 'Example0 official', 'content': 'AI product'}])
+    def fetch(url):
+        title = 'Directory of startups' if 'wrong' in url else 'Example0'
+        return f'<html><title>{title}</title><body>{title} AI product</body></html>'.encode(), url
+    monkeypatch.setattr(discovery, 'fetch_public', fetch)
+    outcomes.extend([[unknown], [], []])
+    report = discovery.run_discovery(engine, dry_run=True)
+    assert report['accepted'][0]['website'] == 'https://product0.test/'
+    proof = report['accepted'][0]['extra']['website_verification']
+    assert proof['search_result_url'] == 'https://product0.test/about'
+    assert len(report['website_lookups']) == 1
+
+
+def test_website_lookup_does_not_rescue_invented_article_evidence(setup_run, monkeypatch):
+    engine, outcomes, _, _ = setup_run
+    monkeypatch.setenv('TAVILY_API_KEY', 'test-key')
+    invalid = candidate(0)
+    invalid['website'] = ''
+    invalid['evidence'][0]['quote'] = 'Invented quote with no support whatsoever'
+    monkeypatch.setattr(discovery, 'resolve_official_site', lambda *a: pytest.fail('Validate evidence before paid lookup'))
+    outcomes.extend([[invalid], [], []])
+    report = discovery.run_discovery(engine, dry_run=True)
+    assert not report['accepted'] and not report['website_lookups']
+
+
+def test_website_lookup_has_a_hard_request_limit(setup_run, monkeypatch):
+    engine, outcomes, _, _ = setup_run
+    monkeypatch.setenv('TAVILY_API_KEY', 'test-key')
+    sources = [source(i) for i in range(12)]
+    monkeypatch.setattr(discovery, 'collect_articles', lambda *a, **kw: (sources, []))
+    monkeypatch.setenv('CLAUDE_DISCOVERY_MAX_ARTICLES', '12')
+    monkeypatch.setenv('CLAUDE_DISCOVERY_MAX_CALLS', '6')
+    candidates = [dict(candidate(i), website='') for i in range(12)]
+    outcomes.extend([candidates[i:i + 2] for i in range(0, 12, 2)])
+    lookups = []
+    monkeypatch.setattr(discovery, 'resolve_official_site', lambda *a: lookups.append(a))
+    report = discovery.run_discovery(engine, dry_run=True)
+    assert len(lookups) == len(report['website_lookups']) == 8
+    assert not report['accepted']
