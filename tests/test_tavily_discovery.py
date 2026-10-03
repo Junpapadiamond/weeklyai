@@ -142,3 +142,17 @@ def test_article_date_uses_publication_not_modified_date():
     assert discovery.article_publication_date(BeautifulSoup('<script type="application/ld+json">{"dateModified":"2026-09-26"}</script>', 'html.parser')) is None
     soup = BeautifulSoup('<script type="application/ld+json">{"@graph":[{"datePublished":"2026-09-25"}]}</script>', 'html.parser')
     assert discovery.article_publication_date(soup).day == 25
+
+
+def test_local_article_without_outbound_links_can_reach_independent_verification(monkeypatch):
+    setup_sources(monkeypatch)
+    monkeypatch.setenv('DISCOVERY_SEARCH_PROVIDER', 'rss')
+    def fetch(url):
+        if url.endswith('/feed'):
+            return feed(), url
+        return ('<article>AI 小众产品发布。' + '离线处理本地语言数据，服务早期小团队。' * 30 + '</article>').encode(), url
+    monkeypatch.setattr(discovery, 'fetch_public', fetch)
+    articles, _ = discovery.collect_articles(14, 2, NOW)
+    assert len(articles) == 1 and articles[0]['links'] == []
+    monkeypatch.delenv('TAVILY_API_KEY')
+    assert discovery.collect_articles(14, 2, NOW)[0] == []

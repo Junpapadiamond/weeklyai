@@ -220,8 +220,10 @@ def collect_articles(days, limit, now=None, *, region='all', product_type='mixed
             article["content"] = root.get_text(" ", strip=True)[:18000]
             article["links"] = list({link["url"]: link for link in links}.values())[:100]
             article['links'].extend(resolve_profile_links(article['links']))
-            # Articles without outbound product links cannot meet the website evidence rule.
-            return article if len(article["content"]) >= 200 and links and AI.search(article["content"]) else None
+            # Local publishers often omit outbound links. A bounded independent
+            # website lookup can verify those products when Tavily is configured.
+            can_verify_site = links or os.getenv('TAVILY_API_KEY', '').strip()
+            return article if len(article["content"]) >= 200 and can_verify_site and AI.search(article["content"]) else None
         except (requests.RequestException, ValueError):
             return None
     with ThreadPoolExecutor(max_workers=5) as pool:
