@@ -366,12 +366,43 @@ def resolve_official_site(product, articles):
             title = soup.title.get_text(' ', strip=True) if soup.title else ''
             site_name = soup.select_one('meta[property="og:site_name"]')
             title += ' ' + (site_name.get('content', '') if site_name else '')
-            if website_identity_matches(product['name'], title) and website_identity_matches(
-                    product['name'], soup.get_text(' ', strip=True)):
+            for node in soup.select('script, style, nav, footer, header'):
+                node.decompose()
+            homepage = soup.get_text(' ', strip=True)
+            if (website_identity_matches(product['name'], title) and website_identity_matches(product['name'], homepage)
+                    and website_use_case_matches(product, homepage)):
                 return {'url': homepage_url, 'title': title.strip(), 'search_result_url': result['url']}
         except (requests.RequestException, ValueError):
             continue
     return None
+
+
+def website_use_case_matches(product, homepage):
+    """A matching brand alone can be a namesake artist/shop, not this AI product.
+
+    Require AI/hardware context plus two distinctive terms present in both the
+    already-validated article quotations and the actual homepage. Do not derive
+    these terms from the model's unverified description or search snippets.
+    """
+    if not AI.search(homepage) and not (product.get('category') == 'hardware' and re.search(
+            r'robot|sensor|chip|device|机器人|硬件|ロボット|로봇', homepage, re.I)):
+        return False
+    quotes = ' '.join(item.get('quote', '') for item in product.get('evidence', []) if isinstance(item, dict))
+    quotes = re.sub(re.escape(product['name']), ' ', quotes, flags=re.I)
+    common = set(('this that with from have been their they which about after before into over more than also '
+                  'will were first company startup product platform software technology technologies funding '
+                  'million billion raised raises round seed series capital venture ventures investment investors '
+                  'founded founder founders based announced launch launches launched global team people using '
+                  'uses used designed powered artificial intelligence business businesses built building').split())
+    terms = set(re.findall(r'\b[a-z]{4,}\b', quotes.lower())) - common
+    words = set(re.findall(r'\b[a-z]{4,}\b', homepage.lower()))
+    if len(terms & words) >= 2:
+        return True
+    # Local-language quotes often contain no Latin words; use distinct four-character
+    # spans rather than inferring a translation or guessing an English brand.
+    spans = {chunk[i:i + 4] for chunk in re.findall(r'[\u3040-\u30ff\u3400-\u9fff\uac00-\ud7af]{4,}', quotes)
+             for i in range(0, len(chunk) - 3, 4)}
+    return sum(span in homepage for span in spans) >= 2
 
 
 def build_prompt(articles, existing_names, region, product_type):

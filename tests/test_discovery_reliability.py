@@ -180,7 +180,7 @@ def test_missing_article_link_requires_retrieved_homepage_identity(setup_run, mo
         {'url': 'https://product0.test/about', 'title': 'Example0 official', 'content': 'AI product'}])
     def fetch(url):
         title = 'Directory of startups' if 'wrong' in url else 'Example0'
-        return f'<html><title>{title}</title><body>{title} AI product</body></html>'.encode(), url
+        return f'<html><title>{title}</title><body>{title} AI offline transcription for endangered languages</body></html>'.encode(), url
     monkeypatch.setattr(discovery, 'fetch_public', fetch)
     outcomes.extend([[unknown], [], []])
     report = discovery.run_discovery(engine, dry_run=True)
@@ -200,6 +200,13 @@ def test_website_lookup_does_not_rescue_invented_article_evidence(setup_run, mon
     outcomes.extend([[invalid], [], []])
     report = discovery.run_discovery(engine, dry_run=True)
     assert not report['accepted'] and not report['website_lookups']
+
+
+def test_same_name_artist_or_generic_ai_site_is_not_the_product():
+    product = candidate(0)
+    assert not discovery.website_use_case_matches(product, 'Example0 singer-songwriter with mesmerizing vocals and storytelling')
+    assert not discovery.website_use_case_matches(product, 'Example0 AI company platform product technology investment')
+    assert discovery.website_use_case_matches(product, 'Example0 AI offline transcription for endangered languages')
 
 
 def test_website_lookup_has_a_hard_request_limit(setup_run, monkeypatch):
