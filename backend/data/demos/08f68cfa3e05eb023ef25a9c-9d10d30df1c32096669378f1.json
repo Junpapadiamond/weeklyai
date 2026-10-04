@@ -1,0 +1,185 @@
+{
+  "cache_key": "08f68cfa3e05eb023ef25a9c-9d10d30df1c32096669378f1",
+  "product_key": "08f68cfa3e05eb023ef25a9c",
+  "fingerprint": "9d10d30df1c32096669378f1",
+  "product_id": "p_7e044d9cd8bafe63",
+  "product_name": "Lottie",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-04T22:25:08.596883+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "护理机构入住与账单管理流程",
+      "en": "Care Home Enquiry & Billing Flow"
+    },
+    "scenario": {
+      "zh": "护理机构经理处理新入住咨询、床位分配、账单生成和付款追踪",
+      "en": "Care home manager processes new enquiries, bed allocation, invoice generation and payment tracking"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择咨询类型",
+          "en": "Select Enquiry Type"
+        },
+        "instruction": {
+          "zh": "确定本周主要处理的护理服务咨询来源",
+          "en": "Determine main care enquiry source to process this week"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "医院转介(紧急出院)",
+              "en": "Hospital Referral (Urgent Discharge)"
+            },
+            "output": {
+              "zh": "任务面板显示急性转介记录,标记为高优先级并需快速床位评估",
+              "en": "Task board shows acute referral records, flagged as high priority requiring quick bed assessment"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "家属直接咨询(长期护理)",
+              "en": "Family Direct Enquiry (Long-term Care)"
+            },
+            "output": {
+              "zh": "任务面板显示家庭咨询记录,AI建议匹配护理等级和可用床位",
+              "en": "Task board shows family enquiry records, AI suggests matching care levels with available beds"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "配置护理方案",
+          "en": "Configure Care Plan"
+        },
+        "instruction": {
+          "zh": "为新入住居民选择房间类型和护理强度",
+          "en": "Choose room type and care intensity for new resident"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "标准护理 + 共享房间",
+              "en": "Standard Care + Shared Room"
+            },
+            "output": {
+              "zh": "面板更新床位分配和基础护理计划,费用明细显示每周标准档位",
+              "en": "Board updates bed assignment and basic care plan, cost breakdown shows weekly standard tier"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "强化护理 + 独立套间",
+              "en": "Enhanced Care + Private Suite"
+            },
+            "output": {
+              "zh": "面板更新套间预留和增强护理计划,费用明细显示每周强化档位",
+              "en": "Board updates suite reservation and enhanced care plan, cost breakdown shows weekly premium tier"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比账单策略",
+          "en": "Compare Billing Strategy"
+        },
+        "instruction": {
+          "zh": "选择账单发送和追踪方式",
+          "en": "Choose billing send and tracking approach"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "自动发送 + AI提醒",
+              "en": "Auto-send + AI Reminders"
+            },
+            "output": {
+              "zh": "预览显示自动发送时间线和AI分阶段提醒计划,减少人工跟进工作",
+              "en": "Preview shows auto-send timeline and AI staged reminder schedule, reducing manual follow-up work"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "手动审核 + 批量发送",
+              "en": "Manual Review + Batch Send"
+            },
+            "output": {
+              "zh": "预览显示财务审核检查点和批量发送日期,增强准确性但延长周期",
+              "en": "Preview shows finance review checkpoints and batch send date, enhancing accuracy but extending cycle"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "查看运营摘要",
+          "en": "Review Operations Summary"
+        },
+        "instruction": {
+          "zh": "确认本月关键指标和改进建议",
+          "en": "Confirm monthly key metrics and improvement suggestions"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "入住与账单总览",
+              "en": "Occupancy & Billing Overview"
+            },
+            "output": {
+              "zh": "文档预览显示床位使用情况、账单汇总和平均收款时长,AI标注改进机会",
+              "en": "Document preview shows bed utilization, billing summary and average collection time, AI highlights improvement opportunities"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "护理需求趋势",
+              "en": "Care Demand Trends"
+            },
+            "output": {
+              "zh": "文档预览显示护理等级分布变化和资源需求预测,AI建议人员配置调整",
+              "en": "Document preview shows care level distribution changes and resource demand forecast, AI suggests staffing adjustments"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Lottie通过AI整合咨询、床位和账单管理,减少护理机构手动行政工作",
+      "en": "Lottie uses AI to integrate enquiries, beds and billing, reducing manual admin work for care homes"
+    },
+    "sources": [
+      {
+        "url": "https://tech.eu/2026/10/02/lottie-snaps-up-caremaster-as-ai-push-moves-deeper-into-care-operations/",
+        "label": {
+          "zh": "Lottie收购CareMaster深化护理运营",
+          "en": "Lottie Acquires CareMaster"
+        }
+      }
+    ]
+  }
+}

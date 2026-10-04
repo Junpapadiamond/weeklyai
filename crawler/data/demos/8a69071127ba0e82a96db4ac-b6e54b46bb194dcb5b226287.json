@@ -1,0 +1,192 @@
+{
+  "cache_key": "8a69071127ba0e82a96db4ac-b6e54b46bb194dcb5b226287",
+  "product_key": "8a69071127ba0e82a96db4ac",
+  "fingerprint": "b6e54b46bb194dcb5b226287",
+  "product_id": "p_975b2754c31cd744",
+  "product_name": "Tynapse",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-04T22:26:01.232021+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "AI代理决策实时验证",
+      "en": "Real-Time AI Agent Decision Verification"
+    },
+    "scenario": {
+      "zh": "财务部署AI代理处理报销审批,需验证每项决策符合公司政策再执行",
+      "en": "Finance deploys AI agent for expense approvals, must verify each decision meets policy before execution"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择验证策略",
+          "en": "Choose Verification Strategy"
+        },
+        "instruction": {
+          "zh": "决定如何验证AI代理的审批决策",
+          "en": "Decide how to verify AI agent approval decisions"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "仅验证权限(CAN)",
+              "en": "Verify Permissions Only (CAN)"
+            },
+            "output": {
+              "zh": "系统检查代理是否有权访问财务数据,但未验证决策是否符合支出上限政策",
+              "en": "System checks agent has data access rights, but does not verify decisions match spending limit policy"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "验证政策合规(SHOULD)",
+              "en": "Verify Policy Compliance (SHOULD)"
+            },
+            "output": {
+              "zh": "Tynapse拦截决策,对照差旅与采购规则实时验证,确认代理判断符合公司标准",
+              "en": "Tynapse intercepts decisions, validates against travel and procurement rules in real-time, confirms agent judgment meets company standards"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "配置决策边界",
+          "en": "Configure Decision Boundaries"
+        },
+        "instruction": {
+          "zh": "定义AI代理必须遵守的业务规则",
+          "en": "Define business rules AI agent must follow"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "加载金融行业模板",
+              "en": "Load Financial Industry Template"
+            },
+            "output": {
+              "zh": "导入预设规则:交易限额分级审查、反洗钱合规检查、客户风险评估标准已就位",
+              "en": "Imported preset rules: tiered transaction review, AML compliance checks, customer risk assessment standards ready"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "自定义企业政策",
+              "en": "Customize Corporate Policy"
+            },
+            "output": {
+              "zh": "定义规则:单笔超5000需经理审批、供应商白名单限制、季度预算追踪已配置",
+              "en": "Defined rules: transactions over 5000 require manager approval, supplier whitelist restrictions, quarterly budget tracking configured"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比验证结果",
+          "en": "Compare Verification Results"
+        },
+        "instruction": {
+          "zh": "查看不同场景下的决策验证反馈",
+          "en": "Review decision verification feedback across scenarios"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "场景A:常规报销",
+              "en": "Scenario A: Routine Expense"
+            },
+            "output": {
+              "zh": "AI批准3500元差旅报销→Tynapse验证通过:符合差旅标准且有预算余额",
+              "en": "AI approves 3500 travel expense→Tynapse validates: meets travel standards with budget available"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "场景B:异常请求",
+              "en": "Scenario B: Unusual Request"
+            },
+            "output": {
+              "zh": "AI批准8000元非清单供应商采购→Tynapse拦截:违反供应商政策,需人工复核",
+              "en": "AI approves 8000 from unlisted vendor→Tynapse blocks: violates vendor policy, requires human review"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "生成信任报告",
+          "en": "Generate Trust Report"
+        },
+        "instruction": {
+          "zh": "总结决策验证成效与改进建议",
+          "en": "Summarize verification effectiveness and recommendations"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "基础报告",
+              "en": "Basic Report"
+            },
+            "output": {
+              "zh": "本周验证247项决策,拦截12项不合规操作,系统稳定性良好",
+              "en": "Verified 247 decisions this week, blocked 12 non-compliant actions, system stability strong"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "详细分析",
+              "en": "Detailed Analysis"
+            },
+            "output": {
+              "zh": "识别政策盲区:跨部门协作预算缺乏验证规则,建议补充联合项目审批流程",
+              "en": "Identified policy gap: cross-department budgets lack validation rules, recommend adding joint project approval flow"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Tynapse在AI执行前验证决策合规性,超越传统权限控制,确保AI代理符合企业政策标准",
+      "en": "Tynapse verifies decision compliance before AI execution, going beyond traditional access control to ensure agents meet corporate policy standards"
+    },
+    "sources": [
+      {
+        "url": "https://tynapse.com/",
+        "label": {
+          "zh": "Tynapse官网",
+          "en": "Tynapse Official Site"
+        }
+      },
+      {
+        "url": "https://zdnet.co.kr/view?no=20261004155331",
+        "label": {
+          "zh": "ZDNet Korea报道",
+          "en": "ZDNet Korea Coverage"
+        }
+      }
+    ]
+  }
+}

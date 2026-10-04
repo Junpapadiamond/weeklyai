@@ -1,0 +1,203 @@
+{
+  "cache_key": "0c04da3bbf14e00508f096a7-96cf9b984e3030c26a9d4fa6",
+  "product_key": "0c04da3bbf14e00508f096a7",
+  "fingerprint": "96cf9b984e3030c26a9d4fa6",
+  "product_id": "p_8c739175143f5fc7",
+  "product_name": "Falcon",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-04T22:26:33.028599+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为创业公司准备商业合同",
+      "en": "Prepare commercial contract for startup"
+    },
+    "scenario": {
+      "zh": "你的SaaS公司需要一份标准服务协议,传统律所报价需要2周和€3000,试试Falcon的固定费用同日交付",
+      "en": "Your SaaS needs a standard service agreement. Traditional firms quote 2 weeks and €3000. Try Falcon's flat-fee same-day delivery"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择服务类型",
+          "en": "Choose service type"
+        },
+        "instruction": {
+          "zh": "根据你的需求选择法律服务范围",
+          "en": "Select legal service scope based on your needs"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "单次合同审查(固定费用€299)",
+              "en": "Single contract review (flat €299)"
+            },
+            "output": {
+              "zh": "已创建单次项目:合同将在今日交付,由合格律师最终审核并签字",
+              "en": "Single project created: contract delivered today with qualified lawyer final review and sign-off"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "月度订阅(€899/月无限请求)",
+              "en": "Monthly subscription (€899/mo unlimited requests)"
+            },
+            "output": {
+              "zh": "已激活订阅计划:可提交多份文件,优先处理队列,包含所有商业法律类别",
+              "en": "Subscription activated: submit multiple documents, priority queue, all commercial legal categories included"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "提供合同背景",
+          "en": "Provide contract context"
+        },
+        "instruction": {
+          "zh": "AI需要了解业务细节以生成初稿",
+          "en": "AI needs business details to generate first draft"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "上传现有模板进行调整",
+              "en": "Upload existing template for adjustment"
+            },
+            "output": {
+              "zh": "AI已分析模板结构,识别15个需要本地化的条款,标记3处潜在风险点",
+              "en": "AI analyzed template structure, identified 15 clauses needing localization, flagged 3 risk areas"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "从要求简报开始新建",
+              "en": "Start fresh from requirements brief"
+            },
+            "output": {
+              "zh": "AI已根据简报生成符合GDPR的荷兰法服务协议草稿,包含标准SaaS条款库",
+              "en": "AI generated GDPR-compliant Dutch law service agreement draft from brief, includes standard SaaS clause library"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "审查AI建议",
+          "en": "Review AI recommendations"
+        },
+        "instruction": {
+          "zh": "AI已标记需要决策的关键条款,选择你的偏好",
+          "en": "AI flagged key clauses needing decisions, choose your preference"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "客户友好版本:灵活终止和退款",
+              "en": "Customer-friendly: flexible termination and refunds"
+            },
+            "output": {
+              "zh": "条款已更新为30天无理由取消和按比例退款,AI提示这降低流失纠纷但可能增加退订率",
+              "en": "Clauses updated to 30-day no-reason cancellation and prorated refunds, AI notes this reduces churn disputes but may increase cancellations"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "供应商保护版本:年度承诺和预付",
+              "en": "Vendor-protective: annual commitment and prepayment"
+            },
+            "output": {
+              "zh": "条款已设置为12个月最低期限和季度预付,AI提示这提高收入可预测性但可能影响成交率",
+              "en": "Clauses set to 12-month minimum term and quarterly prepayment, AI notes this improves revenue predictability but may impact close rates"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "律师最终审核",
+          "en": "Lawyer final review"
+        },
+        "instruction": {
+          "zh": "合格律师已完成人工审核并签字确认",
+          "en": "Qualified lawyer completed human review and signed off"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "查看律师批注",
+              "en": "View lawyer annotations"
+            },
+            "output": {
+              "zh": "律师确认AI草稿符合荷兰合同法,调整了2处责任上限表述,添加标准争议解决条款",
+              "en": "Lawyer confirmed AI draft complies with Dutch contract law, refined 2 liability cap phrasings, added standard dispute resolution clause"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "下载可执行文件",
+              "en": "Download executable document"
+            },
+            "output": {
+              "zh": "已准备带律师签名的最终合同PDF,可立即发送给客户签署,总用时4小时而非2周",
+              "en": "Final contract PDF with lawyer signature ready, can send to customer for signing immediately, total time 4 hours vs 2 weeks"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Falcon用AI起草和律师签字结合,以固定费用在同日交付商业合同,已服务Loop Earplugs等付费客户",
+      "en": "Falcon combines AI drafting with lawyer sign-off to deliver commercial contracts same-day at flat fees, serving paying customers like Loop Earplugs"
+    },
+    "sources": [
+      {
+        "url": "https://www.falcon.law",
+        "label": {
+          "zh": "Falcon官网",
+          "en": "Falcon website"
+        }
+      },
+      {
+        "url": "https://www.lawfuel.com/law-firm-startup-falcon-raises-money-to-bury-the-billable-hour",
+        "label": {
+          "zh": "Falcon融资报道",
+          "en": "Falcon funding coverage"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "document",
+      "label": {
+        "zh": "合同要求",
+        "en": "Contract Requirements"
+      },
+      "initial": {
+        "zh": "B2B SaaS服务协议:月度订阅、数据保护条款、30天终止权、荷兰法律适用",
+        "en": "B2B SaaS service agreement: monthly subscription, data protection clauses, 30-day termination, Dutch law"
+      }
+    }
+  }
+}

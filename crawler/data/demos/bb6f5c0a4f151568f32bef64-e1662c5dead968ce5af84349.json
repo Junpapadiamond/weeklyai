@@ -1,0 +1,196 @@
+{
+  "cache_key": "bb6f5c0a4f151568f32bef64-e1662c5dead968ce5af84349",
+  "product_key": "bb6f5c0a4f151568f32bef64",
+  "fingerprint": "e1662c5dead968ce5af84349",
+  "product_id": "p_1f3483df513b3f78",
+  "product_name": "SpaceFlow Technologies",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-04T22:26:59.518208+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "SpaceFlow 采购决策演练",
+      "en": "SpaceFlow Procurement Workflow"
+    },
+    "scenario": {
+      "zh": "为扩张的工程团队采购50台工作站，对比供应商并优化条款",
+      "en": "Procure 50 workstations for expanding engineering team, compare vendors and optimize terms"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "设置采购范围",
+          "en": "Define Procurement Scope"
+        },
+        "instruction": {
+          "zh": "选择采购策略以启动供应商搜寻",
+          "en": "Choose procurement strategy to begin vendor search"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "单一供应商全包",
+              "en": "Single vendor turnkey"
+            },
+            "output": {
+              "zh": "工作区更新：需求文档添加集成交付要求和单点联系人条款",
+              "en": "Workspace updated: brief includes integrated delivery and single point of contact terms"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "分拆硬件与服务",
+              "en": "Separate hardware and services"
+            },
+            "output": {
+              "zh": "工作区更新：需求文档拆分为设备采购和安装服务两个标段",
+              "en": "Workspace updated: brief split into equipment acquisition and installation service packages"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "vendor_input",
+        "widget": "choice",
+        "title": {
+          "zh": "供应商筛选",
+          "en": "Vendor Selection"
+        },
+        "instruction": {
+          "zh": "选择供应商评估维度以生成RFQ",
+          "en": "Choose vendor evaluation criteria to generate RFQ"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "优先交付速度",
+              "en": "Prioritize delivery speed"
+            },
+            "output": {
+              "zh": "工作区更新：RFQ强调60天交付承诺，包含阶段交付里程碑条款",
+              "en": "Workspace updated: RFQ emphasizes 60-day delivery commitment with milestone terms"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "优先成本控制",
+              "en": "Prioritize cost control"
+            },
+            "output": {
+              "zh": "工作区更新：RFQ要求分项报价，包含数量折扣和付款条件谈判空间",
+              "en": "Workspace updated: RFQ requests itemized pricing with volume discounts and payment terms"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比供应商响应",
+          "en": "Compare Vendor Responses"
+        },
+        "instruction": {
+          "zh": "选择供应商方案进入合同谈判",
+          "en": "Select vendor proposal for contract negotiation"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "方案A：本地经销商",
+              "en": "Option A: Local distributor"
+            },
+            "output": {
+              "zh": "工作区更新：合同草案包含75天交付、现场技术支持和本地化保修条款",
+              "en": "Workspace updated: contract draft with 75-day delivery, on-site support, local warranty"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "方案B：制造商直销",
+              "en": "Option B: Direct from manufacturer"
+            },
+            "output": {
+              "zh": "工作区更新：合同草案包含较低单价、90天交付和集中式远程支持条款",
+              "en": "Workspace updated: contract draft with lower unit cost, 90-day delivery, centralized support"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "finalize",
+        "widget": "review",
+        "title": {
+          "zh": "审查采购结果",
+          "en": "Review Procurement Outcome"
+        },
+        "instruction": {
+          "zh": "确认最终采购决策并生成内部审批文档",
+          "en": "Confirm final procurement decision and generate internal approval document"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "批准并下载采购简报",
+              "en": "Approve and download brief"
+            },
+            "output": {
+              "zh": "采购简报已准备：包含选定供应商、谈判条款摘要和风险缓释措施",
+              "en": "Procurement brief ready: includes selected vendor, negotiated terms summary, risk mitigation"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "标记条款待复核",
+              "en": "Flag terms for re-review"
+            },
+            "output": {
+              "zh": "工作区更新：合同中付款时间表和验收标准条款已高亮供法务审查",
+              "en": "Workspace updated: payment schedule and acceptance criteria clauses highlighted for legal review"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "SpaceFlow将RFQ生成、供应商比较和合同条款优化整合为端到端采购流程",
+      "en": "SpaceFlow integrates RFQ generation, vendor comparison, and contract optimization into end-to-end procurement"
+    },
+    "sources": [
+      {
+        "url": "https://spaceflow.tech",
+        "label": {
+          "zh": "SpaceFlow 官网",
+          "en": "SpaceFlow Official Site"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "document",
+      "label": {
+        "zh": "采购需求文档",
+        "en": "Procurement Brief"
+      },
+      "initial": {
+        "zh": "工程工作站×50，i9处理器/64GB内存/RTX显卡，需90天内交付，预算$15万",
+        "en": "Engineering workstations×50, i9/64GB/RTX GPU, delivery within 90 days, budget $150k"
+      }
+    }
+  }
+}

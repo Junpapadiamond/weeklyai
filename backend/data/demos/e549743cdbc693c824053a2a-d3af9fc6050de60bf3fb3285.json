@@ -1,0 +1,192 @@
+{
+  "cache_key": "e549743cdbc693c824053a2a-d3af9fc6050de60bf3fb3285",
+  "product_key": "e549743cdbc693c824053a2a",
+  "fingerprint": "d3af9fc6050de60bf3fb3285",
+  "product_id": "p_3fec3b3edcde9e7e",
+  "product_name": "OSCP",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-04T22:25:35.340973+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为自主机器人规划室内导航方案",
+      "en": "Plan indoor navigation for autonomous robot"
+    },
+    "scenario": {
+      "zh": "在GPS信号受阻的仓库环境中，为自主搬运机器人选择合适的导航传感器配置",
+      "en": "Select navigation sensor configuration for autonomous warehouse robot where GPS signals are blocked"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择运行环境",
+          "en": "Choose operating environment"
+        },
+        "instruction": {
+          "zh": "确定机器人的主要工作场景",
+          "en": "Identify the robot's primary work scenario"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "金属货架密集仓库",
+              "en": "Dense metal shelving warehouse"
+            },
+            "output": {
+              "zh": "环境特征：多层金属结构阻挡GPS，需要高精度惯性定位，行进路径复杂且重复",
+              "en": "Environment: multilayer metal blocks GPS, requires high-precision inertial positioning, complex repeated paths"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "地下停车场配送",
+              "en": "Underground parking delivery"
+            },
+            "output": {
+              "zh": "环境特征：完全无GPS信号，照明条件变化大，需要持续准确的姿态跟踪",
+              "en": "Environment: complete GPS blackout, varying lighting, requires continuous accurate attitude tracking"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "sensor_tier",
+        "widget": "choice",
+        "title": {
+          "zh": "选择传感器级别",
+          "en": "Select sensor tier"
+        },
+        "instruction": {
+          "zh": "根据精度需求选择IMU配置方案",
+          "en": "Choose IMU configuration based on accuracy needs"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "光子陀螺方案",
+              "en": "Photonic gyroscope solution"
+            },
+            "output": {
+              "zh": "配置特点：紧凑封装内实现光纤级精度，漂移率更低，适合长时间无参考点运行",
+              "en": "Configuration: fiber-optic grade accuracy in compact package, lower drift, suits long reference-free operation"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "标准MEMS方案",
+              "en": "Standard MEMS solution"
+            },
+            "output": {
+              "zh": "配置特点：体积小成本低，但漂移较快，需要频繁使用视觉或标记点校准位置",
+              "en": "Configuration: smaller and cheaper, but faster drift, requires frequent visual or landmark calibration"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比定位精度",
+          "en": "Compare positioning accuracy"
+        },
+        "instruction": {
+          "zh": "评估两种方案在相同路径下的表现",
+          "en": "Evaluate both solutions on identical path"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "光子陀螺：10分钟连续运行",
+              "en": "Photonic gyro: 10-min continuous run"
+            },
+            "output": {
+              "zh": "位置误差保持在厘米级，姿态稳定，返回起点偏差小，无需中途重定位",
+              "en": "Position error stays centimeter-level, stable attitude, minimal return-to-origin drift, no mid-path relocation needed"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "标准MEMS：10分钟连续运行",
+              "en": "Standard MEMS: 10-min continuous run"
+            },
+            "output": {
+              "zh": "位置误差逐渐累积至分米级，姿态有偏移，需每隔几分钟通过二维码校准",
+              "en": "Position error accumulates to decimeter-level, attitude drifts, requires QR code calibration every few minutes"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "确认传感器规格",
+          "en": "Confirm sensor specification"
+        },
+        "instruction": {
+          "zh": "选择最终导航配置并记录决策",
+          "en": "Select final navigation configuration and document decision"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "采用光子陀螺IMU",
+              "en": "Adopt photonic gyroscope IMU"
+            },
+            "output": {
+              "zh": "决策记录：在GPS拒止环境中实现持续高精度定位，减少辅助传感器依赖和维护成本",
+              "en": "Decision: achieve sustained high-precision positioning in GPS-denied environment, reduce auxiliary sensor dependency and maintenance"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "采用混合MEMS方案",
+              "en": "Adopt hybrid MEMS solution"
+            },
+            "output": {
+              "zh": "决策记录：通过增加视觉定位标记点和更频繁校准，以较低硬件成本满足基本导航需求",
+              "en": "Decision: meet basic navigation needs at lower hardware cost by adding visual landmarks and more frequent calibration"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "OSCP光子陀螺在紧凑尺寸内提供光纤级精度，适合GPS信号受限的自主导航场景",
+      "en": "OSCP photonic gyroscopes deliver fiber-optic grade accuracy in compact size, suited for GPS-denied autonomous navigation"
+    },
+    "sources": [
+      {
+        "url": "https://www.oscp.com",
+        "label": {
+          "zh": "OSCP官网",
+          "en": "OSCP Official Site"
+        }
+      },
+      {
+        "url": "https://betakit.com/oscp-closes-6-million-usd-series-a-round-to-power-navigation-without-gps/",
+        "label": {
+          "zh": "融资报道",
+          "en": "Funding Coverage"
+        }
+      }
+    ]
+  }
+}
