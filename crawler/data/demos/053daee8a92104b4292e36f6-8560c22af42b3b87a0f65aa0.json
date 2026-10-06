@@ -1,0 +1,192 @@
+{
+  "cache_key": "053daee8a92104b4292e36f6-8560c22af42b3b87a0f65aa0",
+  "product_key": "053daee8a92104b4292e36f6",
+  "fingerprint": "8560c22af42b3b87a0f65aa0",
+  "product_id": "p_04dd7e17d62fdfe3",
+  "product_name": "Ditto",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-06T00:49:29.659265+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "校园约会匹配助手",
+      "en": "Campus dating matchmaker"
+    },
+    "scenario": {
+      "zh": "大学生通过 iMessage 自然对话获得个性化约会推荐,从聊天到见面一站式体验",
+      "en": "College students get personalized date matches through natural iMessage chat, seamless from conversation to meetup"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择匹配偏好",
+          "en": "Choose matching preferences"
+        },
+        "instruction": {
+          "zh": "决定如何开始你的约会匹配之旅",
+          "en": "Decide how to start your dating match journey"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "兴趣爱好优先匹配",
+              "en": "Interest-based matching"
+            },
+            "output": {
+              "zh": "系统将根据共同爱好(运动、音乐、社团活动)推荐匹配对象,侧重长期兴趣契合度",
+              "en": "System matches based on shared interests like sports, music, clubs for long-term compatibility"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "活动场景优先匹配",
+              "en": "Activity-based matching"
+            },
+            "output": {
+              "zh": "系统根据即将发生的校园活动(音乐节、体育赛事)推荐匹配,侧重短期见面机会",
+              "en": "System matches around upcoming campus events like concerts, games for immediate meetup chances"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "设定交流风格",
+          "en": "Set conversation style"
+        },
+        "instruction": {
+          "zh": "选择你希望 AI 如何引导对话",
+          "en": "Choose how AI guides your conversation"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "轻松幽默破冰",
+              "en": "Casual and humorous icebreaker"
+            },
+            "output": {
+              "zh": "AI 生成轻松话题开场,如'你更喜欢图书馆还是咖啡馆学习?'减少初次对话压力",
+              "en": "AI suggests light topics like 'Do you prefer library or café for studying?' to ease first chat"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "深度话题引导",
+              "en": "Deep conversation starter"
+            },
+            "output": {
+              "zh": "AI 提供更深入问题引导,如'最近有什么让你兴奋的课程或项目?'建立有意义连接",
+              "en": "AI offers deeper prompts like 'Any exciting course or project lately?' for meaningful connection"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "review",
+        "title": {
+          "zh": "查看匹配建议",
+          "en": "Review match suggestions"
+        },
+        "instruction": {
+          "zh": "对比两个匹配对象的简介和推荐理由",
+          "en": "Compare profiles and match reasons for two candidates"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "匹配 A:同专业学长,共同参加创业社团",
+              "en": "Match A: Same major upperclassman, shared startup club"
+            },
+            "output": {
+              "zh": "推荐理由:你们都对科技创业感兴趣,最近都在关注 AI 应用方向,下周社团有聚会",
+              "en": "Reason: Both interested in tech startups and AI applications, club meetup next week"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "匹配 B:不同学院,都喜欢户外徒步",
+              "en": "Match B: Different school, both enjoy hiking"
+            },
+            "output": {
+              "zh": "推荐理由:你们都喜欢周末户外活动,对方刚组织了校园登山小组,正在招募新成员",
+              "en": "Reason: Both love weekend outdoor activities, they just started campus hiking group recruiting"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "choice",
+        "title": {
+          "zh": "确认见面方式",
+          "en": "Confirm meetup approach"
+        },
+        "instruction": {
+          "zh": "选择如何从聊天过渡到线下见面",
+          "en": "Choose how to transition from chat to in-person meeting"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "参加群体活动见面",
+              "en": "Meet at group activity"
+            },
+            "output": {
+              "zh": "AI 建议参加社团聚会或校园活动,在轻松氛围中自然认识,降低一对一见面的紧张感",
+              "en": "AI suggests club gathering or campus event for relaxed natural introduction, less pressure"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "约一对一咖啡见面",
+              "en": "Schedule one-on-one coffee"
+            },
+            "output": {
+              "zh": "AI 推荐校园内安全咖啡馆,提供对话话题建议,帮助安排具体时间和地点",
+              "en": "AI recommends safe on-campus café, suggests conversation topics and helps arrange time"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Ditto 将约会匹配融入 iMessage 日常对话,通过 AI 引导从兴趣发现到线下见面全流程",
+      "en": "Ditto integrates dating into everyday iMessage chat, AI-guided journey from interest discovery to meetup"
+    },
+    "sources": [
+      {
+        "url": "https://ditto.ai/",
+        "label": {
+          "zh": "Ditto 官网",
+          "en": "Ditto website"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/09/28/peak-xv-goes-bigger-at-seed-with-new-surge-cohort-as-series-a-bar-rises/",
+        "label": {
+          "zh": "融资新闻",
+          "en": "Funding news"
+        }
+      }
+    ]
+  }
+}

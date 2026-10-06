@@ -1,0 +1,192 @@
+{
+  "cache_key": "8cbecc9c04954443dc3e258e-125bea18c5e8ceebbcd4dcdd",
+  "product_key": "8cbecc9c04954443dc3e258e",
+  "fingerprint": "125bea18c5e8ceebbcd4dcdd",
+  "product_id": "p_8cbeb8707136b534",
+  "product_name": "Saia",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-06T00:48:32.124488+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为边缘设备选择 AI 推理方案",
+      "en": "Choose AI inference for edge devices"
+    },
+    "scenario": {
+      "zh": "你正在为智能相机产品选型,需要在设备上运行实时物体检测模型",
+      "en": "You're selecting hardware for smart cameras that run real-time object detection on device"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择部署规模",
+          "en": "Select deployment scale"
+        },
+        "instruction": {
+          "zh": "确定首批设备数量和预算范围",
+          "en": "Determine initial device volume and budget range"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "小批量试点(500台)",
+              "en": "Pilot batch (500 units)"
+            },
+            "output": {
+              "zh": "预算灵活,优先验证推理速度和功耗表现,可接受较高单价",
+              "en": "Flexible budget prioritizing inference speed and power validation, higher unit cost acceptable"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "量产部署(50000台)",
+              "en": "Volume production (50K units)"
+            },
+            "output": {
+              "zh": "成本敏感,需要平衡性能与单价,供应链稳定性是关键考量",
+              "en": "Cost-sensitive requiring performance-price balance, supply chain stability critical"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "评估模型复杂度",
+          "en": "Assess model complexity"
+        },
+        "instruction": {
+          "zh": "根据检测需求选择模型参数规模",
+          "en": "Choose model parameter scale based on detection requirements"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "轻量模型(20M参数)",
+              "en": "Lightweight model (20M params)"
+            },
+            "output": {
+              "zh": "闪存直读架构可完全加载模型,无需外部内存,降低物料成本",
+              "en": "Flash-direct architecture loads full model without external memory, reducing BOM cost"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "标准模型(70M参数)",
+              "en": "Standard model (70M params)"
+            },
+            "output": {
+              "zh": "模型容量需求较大,传统方案需增加DRAM,闪存方案保持成本优势",
+              "en": "Larger capacity requirement needs added DRAM in traditional approach, flash maintains cost advantage"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比技术方案",
+          "en": "Compare technical approaches"
+        },
+        "instruction": {
+          "zh": "查看传统GPU内存架构与闪存直读架构的差异",
+          "en": "Review differences between traditional GPU memory and flash-direct architecture"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "传统 GPU 方案",
+              "en": "Traditional GPU approach"
+            },
+            "output": {
+              "zh": "依赖高带宽内存实现推理,功耗较高,供应链受限于GPU厂商",
+              "en": "Relies on high-bandwidth memory for inference, higher power draw, supply chain tied to GPU vendors"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "闪存直读方案",
+              "en": "Flash-direct approach"
+            },
+            "output": {
+              "zh": "跳过内存瓶颈直接从闪存推理,容量扩展更经济,能效表现更优",
+              "en": "Bypasses memory bottleneck with direct flash inference, more economical capacity scaling, superior efficiency"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "制定采购策略",
+          "en": "Finalize procurement strategy"
+        },
+        "instruction": {
+          "zh": "基于评估结果确定技术路线和时间表",
+          "en": "Confirm technical direction and timeline based on evaluation"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "2027年测试芯片",
+              "en": "2027 test chips"
+            },
+            "output": {
+              "zh": "参与早期测试计划,为2028量产做准备,适合小批量试点场景",
+              "en": "Join early testing program preparing for 2028 production, suitable for pilot scenarios"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "2028年量产芯片",
+              "en": "2028 production chips"
+            },
+            "output": {
+              "zh": "等待成熟供应链,降低技术风险,适合大规模部署需求",
+              "en": "Wait for mature supply chain reducing technical risk, suitable for volume deployment"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "闪存直读架构通过创新设计绕过传统内存瓶颈,为边缘AI推理提供更高容量和能效的选择",
+      "en": "Flash-direct architecture bypasses traditional memory bottlenecks through innovative design, offering higher capacity and efficiency for edge AI inference"
+    },
+    "sources": [
+      {
+        "url": "https://www.saiacompute.com/",
+        "label": {
+          "zh": "Saia 官网",
+          "en": "Saia website"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/10/05/5-startups-that-caught-vcs-attention-at-the-latest-pearx-demo-day/",
+        "label": {
+          "zh": "TechCrunch 报道",
+          "en": "TechCrunch coverage"
+        }
+      }
+    ]
+  }
+}

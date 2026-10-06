@@ -1,0 +1,185 @@
+{
+  "cache_key": "431ea0e2716b8a398a5056aa-eb4fb4d4a74474196d1e8153",
+  "product_key": "431ea0e2716b8a398a5056aa",
+  "fingerprint": "eb4fb4d4a74474196d1e8153",
+  "product_id": "p_a206b05fac257d83",
+  "product_name": "Namespace",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-06T00:49:49.904781+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为AI代理搭建开发环境",
+      "en": "Set up dev environment for AI agents"
+    },
+    "scenario": {
+      "zh": "你的团队正在构建AI驱动的客户分析功能,需要快速配置开发和测试环境",
+      "en": "Your team is building an AI-powered customer analytics feature and needs to configure dev and test environments quickly"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择环境配置",
+          "en": "Choose environment setup"
+        },
+        "instruction": {
+          "zh": "为项目选择基础架构配置方式",
+          "en": "Select infrastructure configuration approach for your project"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "标准容器配置",
+              "en": "Standard container setup"
+            },
+            "output": {
+              "zh": "环境在常规时间内就绪,适合传统工作流程",
+              "en": "Environment ready in standard time, suitable for traditional workflows"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "AI代理优化配置",
+              "en": "AI agent-optimized setup"
+            },
+            "output": {
+              "zh": "环境配置明显加快,专为AI编码代理工作流程优化",
+              "en": "Environment setup significantly faster, optimized for AI coding agent workflows"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "部署测试管道",
+          "en": "Deploy test pipeline"
+        },
+        "instruction": {
+          "zh": "选择如何运行集成测试套件",
+          "en": "Choose how to run your integration test suite"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "顺序执行测试",
+              "en": "Sequential test execution"
+            },
+            "output": {
+              "zh": "测试按传统顺序完成,结果稳定",
+              "en": "Tests complete in traditional sequence, results stable"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "并行测试执行",
+              "en": "Parallel test execution"
+            },
+            "output": {
+              "zh": "测试时间大幅缩短,反馈循环更快",
+              "en": "Test time substantially reduced, feedback loop much faster"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "检查构建性能",
+          "en": "Inspect build performance"
+        },
+        "instruction": {
+          "zh": "对比不同基础设施配置的构建效率",
+          "en": "Compare build efficiency across infrastructure configurations"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "传统CI/CD构建",
+              "en": "Traditional CI/CD build"
+            },
+            "output": {
+              "zh": "构建在预期时间内完成,资源使用标准",
+              "en": "Build completes in expected time, resource usage standard"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "代理优化构建",
+              "en": "Agent-optimized build"
+            },
+            "output": {
+              "zh": "构建速度提升显著,AI代理迭代更流畅",
+              "en": "Build speed noticeably improved, AI agent iterations smoother"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "环境就绪",
+          "en": "Environment ready"
+        },
+        "instruction": {
+          "zh": "查看团队开发环境的最终配置",
+          "en": "Review final configuration of your team's development environment"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "开发环境已配置",
+              "en": "Dev environment configured"
+            },
+            "output": {
+              "zh": "团队可以开始构建和测试客户分析功能",
+              "en": "Team ready to build and test customer analytics feature"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "测试管道已激活",
+              "en": "Test pipeline activated"
+            },
+            "output": {
+              "zh": "AI代理和开发者可以快速验证代码变更",
+              "en": "AI agents and developers can rapidly validate code changes"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "针对AI代理优化的基础设施让开发团队更快构建、测试和部署软件",
+      "en": "Infrastructure optimized for AI agents enables dev teams to build, test and deploy software faster"
+    },
+    "sources": [
+      {
+        "url": "https://namespace.so",
+        "label": {
+          "zh": "Namespace官网",
+          "en": "Namespace website"
+        }
+      }
+    ]
+  }
+}

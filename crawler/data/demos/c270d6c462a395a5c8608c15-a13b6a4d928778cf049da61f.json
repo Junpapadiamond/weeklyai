@@ -1,0 +1,185 @@
+{
+  "cache_key": "c270d6c462a395a5c8608c15-a13b6a4d928778cf049da61f",
+  "product_key": "c270d6c462a395a5c8608c15",
+  "fingerprint": "a13b6a4d928778cf049da61f",
+  "product_id": "p_bd97057d7bb7aa84",
+  "product_name": "Instinct",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-06T00:49:01.115201+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "用群聊AI智能体规划团队活动",
+      "en": "Plan Team Events with Group Chat AI"
+    },
+    "scenario": {
+      "zh": "公司团建需要订场地、协调时间和安排拼车，用Instinct在群聊中完成协作规划",
+      "en": "Coordinate a company outing venue, schedules, and carpools using Instinct in your group chat"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择协作场景",
+          "en": "Choose Collaboration Scenario"
+        },
+        "instruction": {
+          "zh": "决定智能体在群聊中协助的主要任务类型",
+          "en": "Decide what the agent will help your group accomplish"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "活动场地与票务预订",
+              "en": "Event Venue & Ticket Booking"
+            },
+            "output": {
+              "zh": "智能体已加入群聊，开始收集成员的日期偏好和预算范围",
+              "en": "Agent joined chat and began collecting member date preferences and budget ranges"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "拼车与交通安排",
+              "en": "Carpool & Transportation"
+            },
+            "output": {
+              "zh": "智能体已加入群聊，开始询问成员出发地点和可载人数",
+              "en": "Agent joined chat and started asking members for departure locations and passenger capacity"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "处理无账户成员",
+          "en": "Handle Non-Account Members"
+        },
+        "instruction": {
+          "zh": "群里有3位朋友未注册Instinct，选择智能体的交互方式",
+          "en": "Three friends lack Instinct accounts; choose how the agent interacts"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "直接在群聊中收集信息",
+              "en": "Collect Info Directly in Chat"
+            },
+            "output": {
+              "zh": "智能体向所有成员提问并汇总回复，无账户成员正常参与讨论",
+              "en": "Agent asked questions and summarized replies; non-account members participated normally"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "仅与注册用户私聊",
+              "en": "Private Chat with Registered Only"
+            },
+            "output": {
+              "zh": "智能体通过私聊收集已注册成员意见，其他成员信息需手动转达",
+              "en": "Agent collected input from registered members privately; others required manual relay"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "review",
+        "title": {
+          "zh": "审核智能体的操作请求",
+          "en": "Review Agent Action Requests"
+        },
+        "instruction": {
+          "zh": "智能体请求分享你的日历和支付信息给群组，选择授权范围",
+          "en": "Agent requests to share your calendar and payment info with group; choose authorization"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "仅授权空闲时段分享",
+              "en": "Authorize Only Free Slots"
+            },
+            "output": {
+              "zh": "个人智能体已隔离隐私数据，仅向群组智能体提供可用日期",
+              "en": "Personal agent isolated private data and shared only available dates with group agent"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "拒绝并手动输入偏好",
+              "en": "Decline and Enter Manually"
+            },
+            "output": {
+              "zh": "智能体等待你在群聊中手动输入时间偏好，未访问个人数据",
+              "en": "Agent awaited manual input in chat without accessing personal data"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "compare",
+        "title": {
+          "zh": "查看协作结果",
+          "en": "View Collaboration Results"
+        },
+        "instruction": {
+          "zh": "对比智能体整理的两个方案，选择更适合团队的选项",
+          "en": "Compare two plans organized by the agent and select the better fit for your team"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "方案A：周六下午场地+5辆拼车",
+              "en": "Plan A: Saturday afternoon venue + 5 carpools"
+            },
+            "output": {
+              "zh": "智能体已整理：22人确认参加，预计费用分摊后人均较低",
+              "en": "Agent summarized: 22 confirmed attendees with lower per-person cost after split"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "方案B：周日早晨场地+公共交通",
+              "en": "Plan B: Sunday morning venue + public transit"
+            },
+            "output": {
+              "zh": "智能体已整理：18人确认参加，交通时间更短但需自行购票",
+              "en": "Agent summarized: 18 confirmed with shorter transit time but self-service ticketing"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Instinct的群聊智能体支持无账户成员协作，个人智能体会在分享数据前请求授权，隔离隐私信息",
+      "en": "Instinct's group agent works with non-account members while personal agents request authorization before sharing and isolate private data"
+    },
+    "sources": [
+      {
+        "url": "https://techcrunch.com/2026/10/05/instinct-brings-its-ai-agent-to-group-chats-even-for-friends-without-an-account/",
+        "label": {
+          "zh": "TechCrunch报道",
+          "en": "TechCrunch Coverage"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,192 @@
+{
+  "cache_key": "6bc8f4eaae95013a812950a9-3382139278b72d86e6f56cbc",
+  "product_key": "6bc8f4eaae95013a812950a9",
+  "fingerprint": "3382139278b72d86e6f56cbc",
+  "product_id": "p_10349dcd577a3c99",
+  "product_name": "Veros",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-06T00:48:06.913612+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为家族企业设计传承信托",
+      "en": "Design succession trust for family business"
+    },
+    "scenario": {
+      "zh": "客户拥有制造企业,希望为两个子女规划股权传承,需要选择信托结构并分配控制权",
+      "en": "Client owns manufacturing business, wants to plan equity succession for two children with trust structure and control allocation"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择信托类型",
+          "en": "Choose trust type"
+        },
+        "instruction": {
+          "zh": "根据客户的控制需求和税务目标选择信托结构",
+          "en": "Select trust structure based on client's control needs and tax goals"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "可撤销生前信托",
+              "en": "Revocable living trust"
+            },
+            "output": {
+              "zh": "客户保留完全控制权,可随时修改受益人和条款,遗产认证流程简化",
+              "en": "Client retains full control, can modify beneficiaries and terms anytime, probate simplified"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "不可撤销朝代信托",
+              "en": "Irrevocable dynasty trust"
+            },
+            "output": {
+              "zh": "资产移出遗产范围,多代免税传承,但客户放弃直接控制权",
+              "en": "Assets removed from estate, multi-generation tax-free transfer, client relinquishes direct control"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "设定分配规则",
+          "en": "Set distribution rules"
+        },
+        "instruction": {
+          "zh": "确定股权和收益如何在受益人之间分配",
+          "en": "Determine how equity and income distribute among beneficiaries"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "平均分配投票权",
+              "en": "Equal voting rights"
+            },
+            "output": {
+              "zh": "两位子女各持相同投票权,共同决策,收益按参与度分配",
+              "en": "Both children hold equal voting rights, joint decisions, income by participation level"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "长子优先控制权",
+              "en": "Eldest priority control"
+            },
+            "output": {
+              "zh": "长子持较多投票权负责经营,次子持较少投票权监督,收益平均分配",
+              "en": "Eldest holds more voting for operations, younger holds less for oversight, equal income split"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比受托人安排",
+          "en": "Compare trustee arrangements"
+        },
+        "instruction": {
+          "zh": "评估不同受托人安排下的管理连续性",
+          "en": "Evaluate management continuity under different trustee arrangements"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "专业受托人管理",
+              "en": "Professional trustee"
+            },
+            "output": {
+              "zh": "信托公司作受托人,中立执行条款,子女矛盾时保护企业稳定运营",
+              "en": "Trust company as trustee, neutral execution, protects business stability during disputes"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "家族成员共同受托",
+              "en": "Family co-trustees"
+            },
+            "output": {
+              "zh": "配偶与长子共同受托,决策更灵活,但需要明确争议解决机制",
+              "en": "Spouse and eldest as co-trustees, flexible decisions, requires clear dispute resolution"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "审核条款框架",
+          "en": "Review term framework"
+        },
+        "instruction": {
+          "zh": "查看推荐的信托条款要点,准备律师审核",
+          "en": "Review recommended trust provisions, prepare for attorney review"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "资产清单与估值",
+              "en": "Asset inventory and valuation"
+            },
+            "output": {
+              "zh": "企业股权、不动产、金融资产分类列明,建议专业估值时间表",
+              "en": "Business equity, real estate, financial assets categorized, professional valuation schedule suggested"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "受益人权利条款",
+              "en": "Beneficiary rights terms"
+            },
+            "output": {
+              "zh": "投票权、分红权、退出机制、继承条件逐项列明,触发事件定义清晰",
+              "en": "Voting rights, dividends, exit mechanisms, succession conditions itemized with clear triggers"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Veros将复杂信托规划拆解为结构化决策流程,推荐条款框架,为律师审核和执行提供基础",
+      "en": "Veros breaks complex trust planning into structured decisions, recommends term frameworks for attorney review and execution"
+    },
+    "sources": [
+      {
+        "url": "https://www.verostrust.com/",
+        "label": {
+          "zh": "Veros官网",
+          "en": "Veros official site"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/10/05/5-startups-that-caught-vcs-attention-at-the-latest-pearx-demo-day/",
+        "label": {
+          "zh": "TechCrunch报道",
+          "en": "TechCrunch coverage"
+        }
+      }
+    ]
+  }
+}
