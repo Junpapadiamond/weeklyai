@@ -15,7 +15,7 @@ from app.services.demo_profiles import product_profile
 _published_signature = None
 _published_entries = {}
 GENERATION_SECONDS = 55
-MAX_OUTPUT_TOKENS = 3000
+MAX_OUTPUT_TOKENS = 2200
 logger = logging.getLogger(__name__)
 
 
@@ -132,15 +132,34 @@ def envelope(product, spec, origin):
             "origin": origin, "generated_at": datetime.now(timezone.utc).isoformat(), "spec": spec}
 
 
+def _expand_compact(value, sources, hardware=False):
+    """Expand a smaller wire format; the exact same safety validator still runs."""
+    if not isinstance(value, dict) or value.get("format") != "compact-v1":
+        return value
+
+    def expand(item):
+        if isinstance(item, list):
+            if len(item) == 2 and all(isinstance(part, str) for part in item):
+                return {"zh": item[0], "en": item[1]}
+            return [expand(part) for part in item]
+        if isinstance(item, dict):
+            return {key: expand(part) for key, part in item.items()}
+        return item
+
+    result = expand(value)
+    result.update(version=2, confidence="illustrative", tier="concept" if hardware else "workflow",
+                  sources=[{"url": url, "label": {"zh": "公开资料", "en": "Public source"}} for url in sources])
+    return result
+
+
 def generate_spec(product):
     sources = list(dict.fromkeys(url for url in (product.get("website"), product.get("source_url")) if safe_url(url)))
     if not sources:
         raise StoreUnavailable("No source for this product")
-    copy = {"zh": "简短中文", "en": "Short English"}
-    shape = {"version": 2, "confidence": "illustrative", "tier": "workflow", "headline": copy,
+    copy = ["简短中文", "Short English"]
+    shape = {"format": "compact-v1", "headline": copy,
              "scenario": copy, "steps": [{"id": "setup", "widget": "choice", "title": copy,
-             "instruction": copy, "options": [{"label": copy, "output": copy}]}], "takeaway": copy,
-             "sources": [{"url": sources[0], "label": copy}]}
+             "instruction": copy, "options": [{"label": copy, "output": copy}]}], "takeaway": copy}
     context = {key: str(product.get(key, ""))[:1600] for key in
                ("name", "description", "description_en", "why_matters", "categories", "is_hardware")}
     prompt = (
@@ -153,7 +172,7 @@ def generate_spec(product):
         "visual storyboard with selectable shots for video, composition for image, result cards for search, "
         "document preview or task board. Choices update the workspace. It can play a local storyboard animation "
         "and download a text brief. It cannot generate actual AI media, export MP4, connect vendor accounts or operate devices. "
-        "For software include workspace:{kind:video|image|search|document|board,label:{zh,en},initial:{zh,en}}. "
+        "For software include workspace:{kind:video|image|search|document|board,label:[zh,en],initial:[zh,en]}. "
         "Choose the kind matching the product. initial is a concrete, editable example brief (<=100 chars per language). "
         "Use a customer problem and tangible deliverable, never making content ABOUT WeeklyAI. "
         "Never say an image/file was generated/exported. Do not use ANY numeric percentages, percent signs, "
@@ -162,11 +181,12 @@ def generate_spec(product):
         "No medical, legal or investment advice. For physical hardware/infrastructure use tier concept and "
         "scenario decisions, never imply real device operation. Never use generic tasks/timers unless it is an app builder. "
         "Allowed widgets: choice, review, compare (all use options); dial additionally requires "
-        "dial:{min:1,max:20,initial:5,factor:2,unit:{zh,en},result_label:{zh,en}} for explicitly fictional arithmetic; "
+        "dial:{min:1,max:20,initial:5,factor:2,unit:[zh,en],result_label:[zh,en]} for explicitly fictional arithmetic; "
         "app additionally requires app_kind:tasks|timer|expenses ONLY for an app builder. "
-        "Every copy field is {zh:string,en:string}. Keep text concise: titles and labels <=30 chars; instructions <=100; "
-        "outputs <=90 chars per language; scenario <=100; takeaway <=100. Unique step IDs. confidence illustrative. "
-        "Sources must be copied exactly from allowed URLs. Four steps are required even though this shape shows one. "
+        "Every copy field is a two-string array [Chinese,English]. Keep text concise: titles and labels <=24 chars per language; instructions <=55; "
+        "outputs <=65 chars per language; scenario <=80; takeaway <=80. Unique step IDs. "
+        "Omit sources, version, confidence, tier, option IDs and example_data; the server supplies these fields. "
+        "Four steps are required even though this shape shows one. "
         "Shape: " + json.dumps(shape, ensure_ascii=False) + "\nAllowed URLs: " + json.dumps(sources) +
         "\nCatalog: " + json.dumps(context, ensure_ascii=False))
     # One reservation allows at most two bounded calls, with one personal credit.
@@ -194,7 +214,7 @@ def generate_spec(product):
             except ValueError as error:
                 raise GenerationFailure("GENERATION_INVALID_RESPONSE", "Return one complete JSON object without commentary") from error
             try:
-                spec = validate_experience(value, allowed_sources=sources)
+                spec = validate_experience(_expand_compact(value, sources, product.get("is_hardware")), allowed_sources=sources)
             except ValueError as error:
                 raise GenerationFailure("GENERATION_INVALID_RESPONSE", str(error)) from error
             if product.get("is_hardware"):

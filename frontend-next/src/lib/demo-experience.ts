@@ -44,6 +44,8 @@ export async function readDemo(response: Response): Promise<DemoResponse> {
 const errorMessages: Record<string, [string, string]> = {
   DAILY_LIMIT: ["今天的生成次数已用完", "Today’s generation limit has been reached"],
   NOT_CONFIGURED: ["这个产品的演示还在准备中", "This product’s demo is not ready yet"],
+  NOT_GENERATED: ["还没有生成完成的演示，可以重新生成", "No completed experience yet. You can generate one."],
+  GENERATION_FAILED: ["这次生成没有完成，可以重新生成", "Generation ended without a result. You can try again."],
   GENERATOR_NOT_CONFIGURED: ["这个产品的演示还在准备中", "This product’s demo is not ready yet"],
   PENDING: ["演示仍在生成，请稍后重新检查", "Still generating. Check back shortly."],
   GENERATION_TIMEOUT: ["AI 响应超时，请稍后重试", "The AI service timed out. Please try again shortly."],

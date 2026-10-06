@@ -43,6 +43,7 @@ describe("product-utils", () => {
   });
 
   it("normalizes logo source for relative and absolute urls", () => {
+    expect(normalizeLogoSource("//cdn.example.com/logo.png")).toBe("https://cdn.example.com/logo.png");
     expect(normalizeLogoSource("/logos/a.png")).toBe("/logos/a.png");
     expect(normalizeLogoSource("logo.clearbit.com/a.com")).toBe("https://logo.clearbit.com/a.com");
     expect(normalizeLogoSource("https://a.com/logo.png")).toBe("https://a.com/logo.png");
@@ -125,6 +126,9 @@ describe("product-utils", () => {
   });
 
   it("resolves curated logo sources from the manifest", () => {
+    expect(resolveProductLogoSources({ name: "Veros", website: "https://www.verostrust.com/", logo_url: "https://www.verostrust.com/favicon.png?v=2" })).toEqual({
+      logoUrl: "/logos/verified/veros.png", secondaryLogoUrl: "https://www.verostrust.com/favicon.png?v=2",
+    });
     expect(
       resolveProductLogoSources({
         name: "Science Corp.",

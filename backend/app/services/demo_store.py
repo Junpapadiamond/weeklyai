@@ -74,6 +74,13 @@ class DemoStore:
         with self.connect() as conn:
             return {item[0] for item in conn.execute("SELECT key FROM demo_cache")}
 
+    def pending(self, key):
+        """Only a live lease is pending; failed/expired jobs must stop polling."""
+        if self.db is not None:
+            return bool(self.db.demo_leases.find_one({"_id": key, "expires": {"$gt": time.time()}}))
+        with self.connect() as conn:
+            return conn.execute("SELECT 1 FROM demo_leases WHERE key=? AND expires>?", (key, time.time())).fetchone() is not None
+
     def quota(self, actor, user_limit=None):
         day, reset = day_info()
         personal_limit = env_int("DEMO_DAILY_USER_LIMIT", 3) if user_limit is None else user_limit

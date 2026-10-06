@@ -27,11 +27,11 @@ export function DemoGallery({ initialFilter = "all" }: { initialFilter?: "all" |
     const timer = setTimeout(async () => {
       setBusy(true); setError(false);
       try {
-        const response = await fetch("/api/v1/demos/catalog?" + new URLSearchParams({ q: query, filter, page: String(page) }), { signal: controller.signal });
+        const response = await fetch("/api/v1/demos/catalog?" + new URLSearchParams({ q: query, filter, page: String(page) }), { signal: AbortSignal.any([controller.signal, AbortSignal.timeout(15000)]) });
         if (!response.ok) throw new Error("UNAVAILABLE");
         const body = await response.json();
         if (!body.success) throw new Error("INVALID_RESPONSE");
-        setCatalog(body);
+        if (!controller.signal.aborted) setCatalog(body);
       } catch { if (!controller.signal.aborted) setError(true); }
       finally { if (!controller.signal.aborted) setBusy(false); }
     }, query ? 250 : 0);

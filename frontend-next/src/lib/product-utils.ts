@@ -560,9 +560,9 @@ export function normalizeLogoSource(url: string | undefined | null): string {
     return path;
   }
 
+  if (trimmed.startsWith("//")) return `https:${trimmed}`;
   if (trimmed.startsWith("/")) return trimmed;
   if (/^https?:\/\//i.test(trimmed)) return trimmed;
-  if (trimmed.startsWith("//")) return `https:${trimmed}`;
 
   if (/^[a-z0-9.-]+\.[a-z]{2,}([/:?#]|$)/i.test(trimmed)) {
     return `https://${trimmed}`;
@@ -647,7 +647,10 @@ function getLogoManifestKeys(product: LogoBearingEntity): string[] {
 }
 
 function getManifestLogoUrl(product: LogoBearingEntity): string {
-  for (const key of getLogoManifestKeys(product)) {
+  const keys = getLogoManifestKeys(product);
+  const local = keys.map(key => LOGO_MANIFEST[key]).find(value => value?.startsWith("/logos/verified/"));
+  if (local) return local;
+  for (const key of keys) {
     const value = normalizeLogoSource(LOGO_MANIFEST[key]);
     if (value && !isRejectedCuratedLogoSource(value)) return value;
   }
@@ -682,7 +685,7 @@ export function resolveProductLogoSources(product: LogoBearingEntity): {
   const explicitPrimary = normalizeLogoSource(product.logo_url);
   const manifestPrimary = getManifestLogoUrl(product);
   const ordered = [
-    ...(manifestPrimary && (isDirectWebsiteFallbackLogo(explicitPrimary, product.website) || isStandardIconPathLogo(explicitPrimary))
+    ...(manifestPrimary && (manifestPrimary.startsWith("/logos/verified/") || isDirectWebsiteFallbackLogo(explicitPrimary, product.website) || isStandardIconPathLogo(explicitPrimary))
       ? [manifestPrimary, explicitPrimary]
       : [explicitPrimary, manifestPrimary]),
     normalizeLogoSource(product.logo),

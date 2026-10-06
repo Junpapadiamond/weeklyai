@@ -96,6 +96,32 @@ def demo_product(product_id):
     return _response({"success": True, "state": "ready" if entry else "not_generated", "experience": entry}, 200, context)
 
 
+@demos_bp.get("/prepared/<product_id>")
+def demo_prepared(product_id):
+    """Public playback can be cached near visitors without caching their quota."""
+    product = ProductService.get_product_by_id(product_id)
+    if not product:
+        return jsonify(success=False, error="NOT_FOUND"), 404
+    entry = ready_experience(product)
+    store = None
+    if not entry:
+        try:
+            store = DemoStore()
+            entry = ready_experience(product, store)
+        except Exception:
+            return jsonify(success=False, error="STORAGE_UNAVAILABLE"), 503
+    if entry:
+        response = jsonify(success=True, state="ready", experience=entry, cached=True)
+        response.headers["Cache-Control"] = "public, max-age=0, s-maxage=300, stale-while-revalidate=60"
+        return response
+    context = _context()
+    try:
+        pending = bool(store and store.pending(cache_key(product)))
+    except Exception:
+        return _response({"success": False, "error": "STORAGE_UNAVAILABLE"}, 503, context)
+    return _response({"success": True, "state": "generating" if pending else "not_generated"}, 200, context)
+
+
 @demos_bp.post("/generate")
 def demo_generate():
     context = _context()

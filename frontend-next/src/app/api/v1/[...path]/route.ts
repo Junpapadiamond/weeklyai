@@ -27,14 +27,16 @@ async function proxy(request: Request, context: { params: Promise<{ path: string
       },
       body,
       cache: 'no-store',
-      signal: AbortSignal.any([request.signal, AbortSignal.timeout(path[0] === 'demos' ? 110000 : 45000)]),
+      signal: AbortSignal.any([request.signal, AbortSignal.timeout(path[0] === 'demos' ? (request.method === 'POST' ? 70000 : 15000) : 45000)]),
       redirect: 'error',
     });
+    const publicPlayback = request.method === 'GET' && path.length === 3 && path[0] === 'demos' && path[1] === 'prepared'
+      && upstream.ok && !upstream.headers.has('set-cookie') && upstream.headers.get('cache-control')?.startsWith('public,');
     return new Response(upstream.body, {
       status: upstream.status,
       headers: {
         'Content-Type': upstream.headers.get('content-type') || 'application/json',
-        'Cache-Control': 'no-store',
+        'Cache-Control': publicPlayback ? 'public, max-age=0, s-maxage=300, stale-while-revalidate=60' : 'no-store',
         ...(path[0] === 'demos' && upstream.headers.has('set-cookie') ? { 'Set-Cookie': upstream.headers.get('set-cookie')! } : {}),
         ...(upstream.headers.has('retry-after') ? { 'Retry-After': upstream.headers.get('retry-after')! } : {}),
       },

@@ -12,6 +12,8 @@
 import json
 import os
 import re
+from pathlib import Path
+from html import unescape
 import requests
 from urllib.parse import urlparse, urljoin
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -134,7 +136,7 @@ def _extract_icon_candidates_from_html(base_url: str, html: str) -> list[tuple[i
         rel = rel_match.group(1).lower()
         if "icon" not in rel:
             continue
-        href = href_match.group(1).strip()
+        href = unescape(href_match.group(1)).strip()
         if not href or href.startswith("data:"):
             continue
 
@@ -167,7 +169,7 @@ def _extract_icon_candidates_from_html(base_url: str, html: str) -> list[tuple[i
         r'<meta[^>]+name=["\']twitter:image["\'][^>]+content=["\']([^"\']+)["\']',
     ):
         for match in re.finditer(meta_pattern, html, re.IGNORECASE):
-            href = match.group(1).strip()
+            href = unescape(match.group(1)).strip()
             if not href:
                 continue
             absolute = urljoin(base_url, href)
@@ -356,6 +358,14 @@ def fix_logos(
     """
     if not output_path:
         output_path = input_path
+
+    def save_progress():
+        # The scheduled job has a wall-clock timeout. Persist each completed
+        # result atomically so a slow site cannot discard all successful work.
+        target = Path(output_path)
+        temp = target.with_suffix(target.suffix + ".tmp")
+        temp.write_text(json.dumps(products, ensure_ascii=False, indent=2), encoding="utf-8")
+        temp.replace(target)
     
     # 加载数据
     print(f"📂 加载数据: {input_path}")
@@ -411,7 +421,7 @@ def fix_logos(
         futures = {
             executor.submit(
                 process_product,
-                p,
+                dict(p),
                 only_missing,
                 allow_clearbit,
             ): p
@@ -421,6 +431,10 @@ def fix_logos(
         for future in as_completed(futures):
             try:
                 result = future.result()
+                original = futures[future]
+                if result != original:
+                    original.update(result)
+                    save_progress()
                 logo_val = result.get('logo_url') or result.get('logo', '')
                 if logo_val and logo_val.startswith("http") and not _has_low_confidence_marker(logo_val):
                     stats["fixed"] += 1
@@ -431,12 +445,9 @@ def fix_logos(
                 stats["failed"] += 1
     
     # process_product 是原地更新，保持原始顺序
-    updated_products = products
-    
     # 保存
     print(f"\n💾 保存到: {output_path}")
-    with open(output_path, 'w', encoding='utf-8') as f:
-        json.dump(updated_products, f, ensure_ascii=False, indent=2)
+    save_progress()
     
     print(f"\n📊 修复统计:")
     print(f"   成功修复: {stats['fixed']}")

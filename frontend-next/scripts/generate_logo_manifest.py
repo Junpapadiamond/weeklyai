@@ -109,7 +109,7 @@ def is_rejected_logo(value: object) -> bool:
 
 
 def iter_products(path: Path) -> Iterable[dict]:
-    payload = json.loads(path.read_text())
+    payload = json.loads(path.read_text(encoding="utf-8"))
     if isinstance(payload, list):
         return payload
     if isinstance(payload, dict):
@@ -169,13 +169,22 @@ def build_manifest() -> dict[str, str]:
     for key, value in MANUAL_OVERRIDES.items():
         manifest[key] = value
 
+    # Verified copies are served by our CDN, avoiding vendor hotlink restrictions
+    # and long cross-region favicon fallback chains. Retain source provenance.
+    local_sources = ROOT / "frontend-next/public/logos/verified/sources.json"
+    if local_sources.exists():
+        for item in json.loads(local_sources.read_text(encoding="utf-8")):
+            if (ROOT / "frontend-next/public" / item["path"].lstrip("/")).is_file():
+                manifest[f"host::{item['host']}"] = item["path"]
+                manifest[f"hn::{item['host']}::{normalize_name_key(item['name'])}"] = item["path"]
+
     return manifest
 
 
 def main() -> None:
     manifest = build_manifest()
     GENERATED_PATH.parent.mkdir(parents=True, exist_ok=True)
-    GENERATED_PATH.write_text(json.dumps(manifest, ensure_ascii=False, separators=(",", ":")))
+    GENERATED_PATH.write_text(json.dumps(manifest, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     print(f"wrote {len(manifest)} keys to {GENERATED_PATH}")
 
 

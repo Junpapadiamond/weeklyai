@@ -10,6 +10,9 @@ from __future__ import annotations
 import os
 import sys
 import unittest
+import json
+import tempfile
+from pathlib import Path
 from unittest.mock import patch
 
 
@@ -24,6 +27,30 @@ class TestFixLogosHelpers(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         _ensure_import_paths()
+
+    def test_decodes_html_entities_in_icon_urls(self):
+        from tools.fix_logos import _extract_icon_candidates_from_html
+        candidates = _extract_icon_candidates_from_html("https://official.example", '<link rel="icon" href="/icon.png?w=192&amp;h=192">')
+        self.assertEqual(candidates[0][1], "https://official.example/icon.png?w=192&h=192")
+
+    def test_completed_logo_is_saved_before_the_next_worker_finishes(self):
+        from tools.fix_logos import fix_logos
+        from concurrent.futures import Future
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "products.json"
+            products = [{"name": "First", "website": "https://first.example"}, {"name": "Slow", "website": "https://slow.example"}]
+            path.write_text(json.dumps(products), encoding="utf-8")
+            first, slow = Future(), Future()
+            first.set_result({**products[0], "logo_url": "https://first.example/icon.png"})
+            slow.set_result(products[1])
+            def completed(_):
+                yield first
+                saved = json.loads(path.read_text(encoding="utf-8"))
+                self.assertEqual(saved[0]["logo_url"], "https://first.example/icon.png")
+                yield slow
+            with patch("tools.fix_logos.ThreadPoolExecutor") as executor, patch("tools.fix_logos.as_completed", completed):
+                executor.return_value.__enter__.return_value.submit.side_effect = [first, slow]
+                fix_logos(str(path), only_missing=True)
 
     def test_sanitize_clears_bad_logo_field_but_keeps_valid_logo_url(self) -> None:
         from tools.fix_logos import _sanitize_logo_fields

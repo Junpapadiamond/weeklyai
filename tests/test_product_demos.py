@@ -59,6 +59,63 @@ def test_cached_workflow_needs_no_model_and_costs_nothing(client, store, spec):
     assert not response.json["generation_available"]
 
 
+def test_prepared_playback_is_public_without_identity_or_quota(client, store, spec, monkeypatch):
+    key = cache_key(PRODUCT)
+    lease = store.reserve(key, "publisher")
+    store.finish(key, lease["token"], service.envelope(PRODUCT, spec, "pregenerated"))
+    monkeypatch.setattr(demos, "_context", lambda: pytest.fail("Public playback must not read personal quota"))
+    response = client.get("/api/v1/demos/prepared/demo-product")
+    assert response.status_code == 200 and response.json["state"] == "ready"
+    assert "s-maxage=300" in response.headers["Cache-Control"]
+    assert "Set-Cookie" not in response.headers
+    assert "quota" not in response.json and "generation_available" not in response.json
+
+
+def test_prepared_profile_works_even_when_database_is_down(client, monkeypatch):
+    monkeypatch.setattr(demos.ProductService, "get_product_by_id", lambda _: {**PRODUCT, "website": "https://higgsfield.ai"})
+    monkeypatch.setattr(demos, "DemoStore", lambda: pytest.fail("Reviewed profile needs no database"))
+    assert client.get("/api/v1/demos/prepared/demo-product").json["state"] == "ready"
+
+
+def test_prepared_pending_state_stops_after_failure_and_is_never_public(client, store):
+    key = cache_key(PRODUCT)
+    lease = store.reserve(key, "publisher")
+    response = client.get("/api/v1/demos/prepared/demo-product")
+    assert response.json["state"] == "generating"
+    assert "no-store" in response.headers["Cache-Control"]
+    store.finish(key, lease["token"])
+    assert client.get("/api/v1/demos/prepared/demo-product").json["state"] == "not_generated"
+
+
+def test_expired_generation_lease_is_not_pending(store, monkeypatch):
+    store.reserve(cache_key(PRODUCT), "publisher")
+    assert store.pending(cache_key(PRODUCT))
+    now = demo_store.time.time()
+    monkeypatch.setattr(demo_store.time, "time", lambda: now + demo_store.LEASE_SECONDS + 1)
+    assert not store.pending(cache_key(PRODUCT))
+
+
+def test_compact_generation_keeps_validation_and_server_sources(spec, monkeypatch):
+    def compact(value):
+        if isinstance(value, dict):
+            if set(value) == {"zh", "en"}:
+                return [value["zh"], value["en"]]
+            return {k: compact(v) for k, v in value.items()}
+        if isinstance(value, list):
+            return [compact(v) for v in value]
+        return value
+    wire = compact(spec)
+    wire.update(format="compact-v1", sources=[{"url": "https://invented.example"}], confidence="verified")
+    _mock_completions(monkeypatch, [wire])
+    result = service.generate_spec(PRODUCT)
+    assert result["confidence"] == "illustrative"
+    assert [s["url"] for s in result["sources"]] == [PRODUCT["website"]]
+    assert result["steps"] == validate_experience(spec)["steps"]
+    wire["steps"][0]["options"][0]["output"][1] = "Improved by 20%"
+    with pytest.raises(ValueError, match="Unsupported measured"):
+        validate_experience(service._expand_compact(wire, [PRODUCT["website"]]))
+
+
 def test_reviewed_profile_opens_without_model_quota_or_stale_cache(client, store, monkeypatch):
     product = {**PRODUCT, "name": "Higgsfield", "website": "https://higgsfield.ai/"}
     monkeypatch.setattr(demos.ProductService, "get_product_by_id", lambda value: product)

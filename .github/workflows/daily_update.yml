@@ -76,6 +76,7 @@ jobs:
             python tools/cleanup_unknowns_and_duplicates.py || true
           fi
           timeout 120s python -u tools/fix_logos.py --input data/products_featured.json --only-missing || true
+          python ../frontend-next/scripts/generate_logo_manifest.py
 
           BASELINE_BLOGS="/tmp/blogs_news.before_news.json"
           if [ -f data/blogs_news.json ]; then
@@ -176,6 +177,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add \
+            frontend-next/src/lib/generated/logo-manifest.json \
             crawler/data/products_featured.json \
             crawler/data/discovery_state.json \
             crawler/data/blogs_news.json \

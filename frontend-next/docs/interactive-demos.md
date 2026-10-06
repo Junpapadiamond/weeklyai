@@ -12,7 +12,7 @@ Video/image workspaces include an editable brief, portrait/landscape controls, s
 
 Higgsfield has a reviewed instant profile in `backend/data/demo_profiles/higgsfield.json`, based on its official Marketing Studio page reviewed September 26, 2026. Its scenario is a small shop creating a product ad, with assets → direction → storyboard → handoff. The profile is matched by exact official domain, appears in the ready catalog, supersedes old generic cached content and works without a model or generation credit. Additional product-specific profiles can use the same registry and validation.
 
-On-demand generation has a 55-second total budget, at most two calls including one repair/transient retry, and 3,000 output tokens per call. Shorter copy reduces generation load. The UI reports elapsed time and separates cached lookup from new generation. A live Exa-workspace trial completed in 27.42 seconds with the configured Claude relay; this is one trial, not a latency guarantee. The scheduled pre-generation job shares the production MongoDB budget.
+On-demand generation has a 55-second total budget, at most two calls including one repair/transient retry, and 2,200 output tokens per call. The model emits compact bilingual pairs; the server supplies invariant fields and source URLs, expands the response and runs the same validator. Shorter copy and less repeated JSON reduce generation load. The UI reports elapsed time and separates cached lookup from new generation. A previous Exa-workspace trial completed in 27.42 seconds with the configured Claude relay; this is one trial, not a latency guarantee. The scheduled pre-generation job shares the production MongoDB budget.
 
 ## Content and rendering
 
@@ -32,16 +32,19 @@ All routes are under `/api/v1/demos`, via the first-party Next proxy:
 | GET /catalog?q=&filter=all&page=1 | Catalog and quota; filters: all, ready, dark |
 | GET /status | Configuration readiness and quota, not a live provider health check |
 | GET /product/:id | Read cached experience; never calls a model |
+| GET /prepared/:id | Public cached playback, without personal quota or cookies; pending/missing responses remain private |
 | POST /generate | Body: `{ "product_id": "..." }`; cache hit is free |
 
 Generation returns 200 (ready), 202 (another request holds the generation lease), 429 (daily cap), or 503 (configuration/provider/storage failure). The browser polls only the free read endpoint when another request is generating. It does not issue repeated generation requests while polling. Closing the player cancels the browser request; already-started server work may still finish and become a cached experience.
+
+Prepared playback can use the CDN for five minutes, with one minute of stale-while-revalidate. The proxy only permits public caching on successful cookie-free `/prepared/:id` responses. Quota, catalog, generation, errors and missing experiences are never publicly cached. The browser also reuses validated experiences for five minutes (up to 50 entries), without retaining personal quota. Reads time out after 15 seconds; generation and polling share a 70-second client budget after lookup. Polling stops on errors or an ended lease. **Check again** is read-only; starting another generation requires **Generate again**.
 
 ## Daily budget
 
 - Default **3 new generations per anonymous browser per UTC day**.
 - Default **20 model attempts across the site per UTC day**, including scheduled preparation.
 - Cached playback and interactions are free.
-- One reservation starts at most two bounded provider calls (one initial call and one repair/transient retry), capped at 3,000 output tokens each within 55 seconds total.
+- One reservation starts at most two bounded provider calls (one initial call and one repair/transient retry), capped at 2,200 output tokens each within 55 seconds total.
 - Failure refunds personal allowance. The global attempt stays counted because a failed/timed-out request may still incur provider cost.
 - A signed, HttpOnly, SameSite=Lax cookie identifies an anonymous visitor. Clearing cookies can reset the personal allowance; the shared global cap is the spend boundary. This is not account-based abuse prevention.
 - MongoDB stores shared cache, daily counters and generation leases in separate `demo_*` collections. Atomic conditional updates prevent concurrent overspend. Local development uses a persistent SQLite database in ignored `artifacts/`.
@@ -85,3 +88,5 @@ Live provider trials on 2026-09-14:
 - intenext / claude-sonnet-5: minimal request succeeded; a four-step workflow completed in about 22 seconds.
 
 These are individual connectivity trials, not performance benchmarks. Provider identity/model names are as reported by the relay. Local SQLite paths are tested; the production MongoDB path still needs deployment-environment verification.
+
+On October 6, 2026, one compact-format Namespace workflow completed and validated in 20.64 seconds using the configured Claude Sonnet relay (four steps, 2,200-token cap). This was a bounded connectivity/format trial, not a regional latency benchmark.
