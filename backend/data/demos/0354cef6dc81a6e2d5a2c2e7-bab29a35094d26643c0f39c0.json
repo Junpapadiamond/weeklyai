@@ -1,0 +1,203 @@
+{
+  "cache_key": "0354cef6dc81a6e2d5a2c2e7-bab29a35094d26643c0f39c0",
+  "product_key": "0354cef6dc81a6e2d5a2c2e7",
+  "fingerprint": "bab29a35094d26643c0f39c0",
+  "product_id": "p_c5d2b2652ee1cd28",
+  "product_name": "Nous Research",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-07T23:41:27.685653+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为企业配置私密AI代理",
+      "en": "Configure Private AI Agent for Business"
+    },
+    "scenario": {
+      "zh": "某零售连锁店需要自动化处理客户退货申请,要求数据不离开公司服务器",
+      "en": "A retail chain needs to automate customer return requests while keeping data on company servers"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择部署环境",
+          "en": "Choose Deployment"
+        },
+        "instruction": {
+          "zh": "决定代理在哪里运行",
+          "en": "Decide where the agent runs"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "本地服务器部署",
+              "en": "On-Premise Server"
+            },
+            "output": {
+              "zh": "代理部署在公司数据中心,客户数据完全私密,符合金融级安全要求",
+              "en": "Agent deployed in company data center, customer data fully private, meets financial-grade security"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "混合云部署",
+              "en": "Hybrid Cloud"
+            },
+            "output": {
+              "zh": "代理在云端运行但连接本地数据库,处理速度更快但需配置VPN通道",
+              "en": "Agent runs in cloud but connects to local database, faster processing but requires VPN tunnel"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "配置工作流步骤",
+          "en": "Configure Workflow Steps"
+        },
+        "instruction": {
+          "zh": "定义代理如何处理退货请求",
+          "en": "Define how agent handles return requests"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "四步标准流程",
+              "en": "Four-Step Standard"
+            },
+            "output": {
+              "zh": "工作流:验证订单→政策检查→决策→通知,平均处理时长约2分钟",
+              "en": "Workflow: verify→check policy→decide→notify, average handling around 2 minutes"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "六步严格审核",
+              "en": "Six-Step Strict Review"
+            },
+            "output": {
+              "zh": "增加照片审核和库存确认步骤,准确度更高但处理时长约4分钟",
+              "en": "Added photo review and inventory check, higher accuracy but handling around 4 minutes"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比测试结果",
+          "en": "Compare Test Results"
+        },
+        "instruction": {
+          "zh": "用100个历史案例测试两个配置",
+          "en": "Test both configs with 100 historical cases"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "标准流程表现",
+              "en": "Standard Performance"
+            },
+            "output": {
+              "zh": "处理速度较快,客户满意度良好,少数复杂案例需人工介入",
+              "en": "Faster processing, good customer satisfaction, few complex cases need manual review"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "严格审核表现",
+              "en": "Strict Review Performance"
+            },
+            "output": {
+              "zh": "准确度明显更高,退货纠纷大幅减少,但高峰期可能出现积压",
+              "en": "Noticeably higher accuracy, disputes reduced significantly, but may backlog during peak hours"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "启用生产环境",
+          "en": "Enable Production"
+        },
+        "instruction": {
+          "zh": "选择最终配置并上线",
+          "en": "Choose final config and go live"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "启用标准流程",
+              "en": "Enable Standard"
+            },
+            "output": {
+              "zh": "代理开始处理实际退货请求,团队可监控面板查看处理状态和异常提醒",
+              "en": "Agent handles real return requests, team monitors dashboard for status and alerts"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "启用严格审核",
+              "en": "Enable Strict Review"
+            },
+            "output": {
+              "zh": "代理以高准确模式运行,系统自动在高峰时段增加处理容量",
+              "en": "Agent runs in high-accuracy mode, system auto-scales capacity during peak periods"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "企业可在本地部署开源Hermes代理,定制工作流程并保持数据完全私密",
+      "en": "Businesses can deploy open-source Hermes agents locally with custom workflows and full data privacy"
+    },
+    "sources": [
+      {
+        "url": "https://nousresearch.com",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/10/07/nous-research-confirms-it-hit-1-5b-valuation-launches-ai-agents-for-business-users/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "document",
+      "label": {
+        "zh": "代理工作流配置",
+        "en": "Agent Workflow Config"
+      },
+      "initial": {
+        "zh": "处理客户退货:验证订单→检查退货政策→批准或拒绝→通知客户",
+        "en": "Handle customer returns: verify order→check policy→approve/reject→notify customer"
+      }
+    }
+  }
+}

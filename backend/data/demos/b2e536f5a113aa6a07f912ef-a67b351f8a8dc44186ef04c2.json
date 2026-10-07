@@ -1,0 +1,203 @@
+{
+  "cache_key": "b2e536f5a113aa6a07f912ef-a67b351f8a8dc44186ef04c2",
+  "product_key": "b2e536f5a113aa6a07f912ef",
+  "fingerprint": "a67b351f8a8dc44186ef04c2",
+  "product_id": "p_5624c882190ab1b8",
+  "product_name": "CodeRabbit",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-07T23:41:48.372890+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "代码审查效率工作流",
+      "en": "Code Review Efficiency Workflow"
+    },
+    "scenario": {
+      "zh": "团队需要审查一个新功能的 PR，包含认证逻辑和数据库迁移",
+      "en": "Team needs to review a PR for a new feature with auth logic and database migration"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择审查范围",
+          "en": "Choose Review Scope"
+        },
+        "instruction": {
+          "zh": "决定首先关注哪个方面",
+          "en": "Decide which aspect to focus on first"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "安全性优先",
+              "en": "Security First"
+            },
+            "output": {
+              "zh": "工作区显示认证流程分析：发现密码哈希使用弱算法",
+              "en": "Workspace shows auth flow analysis: weak password hashing algorithm detected"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "架构优先",
+              "en": "Architecture First"
+            },
+            "output": {
+              "zh": "工作区显示依赖图：会话管理与现有缓存层耦合过紧",
+              "en": "Workspace shows dependency graph: session management tightly coupled with cache layer"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "设置审查深度",
+          "en": "Set Review Depth"
+        },
+        "instruction": {
+          "zh": "选择分析的详细程度",
+          "en": "Choose analysis detail level"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "快速扫描",
+              "en": "Quick Scan"
+            },
+            "output": {
+              "zh": "标记了 3 个关键问题和 8 个代码风格建议",
+              "en": "Flagged 3 critical issues and 8 style suggestions"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "深度分析",
+              "en": "Deep Analysis"
+            },
+            "output": {
+              "zh": "生成了完整的威胁模型和 5 个重构建议及示例代码",
+              "en": "Generated complete threat model and 5 refactoring suggestions with example code"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "比较修复方案",
+          "en": "Compare Fix Approaches"
+        },
+        "instruction": {
+          "zh": "评估两种解决方案",
+          "en": "Evaluate two solutions"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "渐进式修复",
+              "en": "Incremental Fix"
+            },
+            "output": {
+              "zh": "保持现有结构，添加验证层，改动范围较小但技术债增加",
+              "en": "Keep current structure, add validation layer: smaller change but adds technical debt"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "重构方案",
+              "en": "Refactor Approach"
+            },
+            "output": {
+              "zh": "分离认证服务，解耦缓存依赖，改动较大但架构更清晰",
+              "en": "Separate auth service, decouple cache: larger change but cleaner architecture"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "审查总结",
+          "en": "Review Summary"
+        },
+        "instruction": {
+          "zh": "确认反馈内容",
+          "en": "Confirm feedback content"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "批准合并",
+              "en": "Approve Merge"
+            },
+            "output": {
+              "zh": "审查报告已添加到 PR，建议在后续迭代中处理架构改进",
+              "en": "Review report added to PR, suggests addressing architecture in follow-up iteration"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "请求修改",
+              "en": "Request Changes"
+            },
+            "output": {
+              "zh": "详细反馈已发送，包含安全问题修复的具体代码示例",
+              "en": "Detailed feedback sent with specific code examples for security fixes"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "CodeRabbit 将人工代码审查从数小时压缩到数分钟，同时保持审查质量",
+      "en": "CodeRabbit compresses manual code review from hours to minutes while maintaining quality"
+    },
+    "sources": [
+      {
+        "url": "https://www.coderabbit.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.crv.com/content/ai-startups-to-invest-in",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "document",
+      "label": {
+        "zh": "代码审查报告",
+        "en": "Code Review Report"
+      },
+      "initial": {
+        "zh": "PR #847: 添加多因素认证支持，包含用户表迁移和会话管理更新",
+        "en": "PR #847: Add multi-factor authentication support with user table migration and session updates"
+      }
+    }
+  }
+}

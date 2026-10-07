@@ -239,5 +239,152 @@
         }
       ]
     }
+  },
+  {
+    "name": "Nous Research",
+    "website": "https://nousresearch.com",
+    "description": "开发开源Hermes Agent的AI公司,推出面向企业的定制化AI代理服务,可处理多步骤工作流程并保持数据私密和安全",
+    "description_en": "AI company developing the open source Hermes Agent, launching customized AI agents for businesses that can handle multi-step workflows while keeping data private and secure",
+    "category": "agent",
+    "why_matters": "开源Hermes Agent被克隆超过2400万次,驱动全球约2.5%的AI令牌使用量,2026年9月中旬年化收入约3600万美元,预计2026年底前突破1亿美元",
+    "why_matters_en": "Open source Hermes Agent has been cloned over 24 million times, driving roughly 2.5% of global AI token usage, with annualized revenue at roughly $36 million by mid-September 2026 and expected to pass $100 million before end of 2026",
+    "latest_news": "2026年10月完成9000万美元B轮融资,估值15亿美元,由Robot Ventures领投,英伟达、Union Square Ventures等参与,总融资额达1.58亿美元,推出企业版Hermes",
+    "latest_news_en": "Raised $90 million Series B at $1.5 billion valuation in October 2026 led by Robot Ventures with participation from Nvidia, Union Square Ventures and others, bringing total funding to $158 million, launched Hermes for Businesses",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "growth_anomaly"
+    ],
+    "company_country": "unknown",
+    "confidence": 0.9,
+    "source_url": "https://techcrunch.com/2026/10/07/nous-research-confirms-it-hit-1-5b-valuation-launches-ai-agents-for-business-users/",
+    "funding_total": "$158 million",
+    "categories": [
+      "agent"
+    ],
+    "region": "Unknown",
+    "source": "claude_rss",
+    "source_title": "Nous Research confirms it hit $1.5B valuation, launches AI agents for business users",
+    "website_source": "https://techcrunch.com/2026/10/07/nous-research-confirms-it-hit-1-5b-valuation-launches-ai-agents-for-business-users/",
+    "discovered_at": "2026-10-07",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261007T232919Z-28293b8b",
+      "search_region": "us",
+      "search_lane": "rss",
+      "website_verification": null,
+      "source_published_at": "2026-10-07T20:48:45+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "has raised a $90 million Series B at a $1.5 billion valuation"
+        },
+        {
+          "criterion": "growth_anomaly",
+          "quote": "Nous was at roughly $36 million in annualized revenue by mid-September 2026 and expects to pass $100 million before the end of 2026"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Autoheal",
+    "website": "https://autoheal.ai/",
+    "description": "帮助企业在软件工程工作流程中部署和持续改进AI代理的平台，专注于AI编码工具产生的运维工作负载管理",
+    "description_en": "Platform that helps enterprises deploy and continuously improve AI agents across software engineering workflows, targeting operational workload created by AI coding tools",
+    "category": "coding",
+    "why_matters": "针对AI编码工具带来的新问题提供解决方案：虽然编码代理可以加速软件开发，但增加的代码也会产生更多漏洞、生产事件和监控工作负载，同时推高AI模型支出。Autoheal通过AI控制平面解决这一结构性痛点",
+    "why_matters_en": "Addresses a structural problem created by AI coding tools: while coding agents accelerate development, the resulting code increase creates more vulnerabilities, production incidents, monitoring workloads, and drives up AI model spending. Autoheal solves this through an AI control plane",
+    "latest_news": "2026年9月完成790万美元种子轮融资，由Innovation Endeavors领投",
+    "latest_news_en": "Raised $7.9 million seed round in September 2026 led by Innovation Endeavors",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "category_innovation"
+    ],
+    "company_country": "US",
+    "funding_total": 7900000,
+    "confidence": 0.9,
+    "source_url": "https://entrepreneur.economictimes.indiatimes.com/news/funding/funding-wrap-nudge-gravity-alive-app-raise-fresh-capital/134614277",
+    "categories": [
+      "coding"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "AI Startups Secure Major Funding: Highlights from September 2023, ETEntrepreneur",
+    "website_source": "https://autoheal.ai/product",
+    "discovered_at": "2026-10-07",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261007T232919Z-28293b8b",
+      "search_region": "other",
+      "search_lane": "launch",
+      "website_verification": {
+        "url": "https://autoheal.ai/",
+        "title": "Autoheal",
+        "search_result_url": "https://autoheal.ai/product"
+      },
+      "source_published_at": "2026-10-01T09:43:32+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "AI startup Autoheal has raised $7.9 million in a seed round to build a platform that helps enterprises deploy and continuously improve AI agents across software engineering workflows. The round was led by Innovation Endeavors, with participation from Emergent Ventures, U&I Ventures, Darkmode Ventures, Batch Ventures and Param Hansa Values."
+        },
+        {
+          "criterion": "category_innovation",
+          "quote": "San Francisco-based Autoheal is targeting the operational workload created as companies increasingly use AI coding tools. While coding agents can accelerate software development, the resulting increase in code can also create more vulnerabilities, production incidents and monitoring workloads, while driving up spending on AI models."
+        }
+      ]
+    }
+  },
+  {
+    "name": "Cori Clinical",
+    "website": "http://www.cori-clinical.com/",
+    "description": "临床试验AI工作空间，整合组织历史试验知识与FDA、MHRA、EMA等监管机构外部情报，帮助临床团队将初步试验简报转化为完整协议、提交包和运营计划",
+    "description_en": "AI workspace for clinical trials that integrates organizational knowledge from previous trials with external intelligence from trial registries and regulatory guidance (FDA, MHRA, EMA), helping clinical teams turn trial briefs into full protocols and operational plans",
+    "category": "healthcare",
+    "why_matters": "内部建模显示可将平均试验启动成本降低至少33%，AI审查器识别出82%可避免的协议错误；已与全球五大CRO中的两家合作，并支持鹿特丹Erasmus MC的神经外科和神经肿瘤学试验",
+    "why_matters_en": "Internal modeling shows it can reduce average trial set-up costs by at least 33%; AI reviewer identified 82% of avoidable protocol errors; already working with two of the world's five largest CROs and supporting trials at Erasmus MC",
+    "latest_news": "2026年10月完成400万美元种子轮融资，由Breega领投，Enzo、Heartfelt、Together Ventures和Bynd参与；Emma Ogburn博士加入担任首席临床官",
+    "latest_news_en": "Raised $4M seed funding in October 2026 led by Breega, with participation from Enzo, Heartfelt, Together Ventures and Bynd; Dr Emma Ogburn joined as Chief Clinical Officer",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "founder_background",
+      "growth_anomaly"
+    ],
+    "company_country": "NL",
+    "confidence": 0.92,
+    "source_url": "https://tech.eu/2026/10/07/cori-clinical-secures-4m-seed-to-improve-clinical-trial-design-and-cut-delays/",
+    "funding_total": "$4M",
+    "categories": [
+      "healthcare"
+    ],
+    "region": "Unknown",
+    "source": "claude_rss",
+    "source_title": "Cori Clinical secures $4M seed to improve clinical trial design and cut delays",
+    "website_source": "https://tech.eu/2026/10/07/cori-clinical-secures-4m-seed-to-improve-clinical-trial-design-and-cut-delays/",
+    "discovered_at": "2026-10-07",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261007T232919Z-28293b8b",
+      "search_region": "eu",
+      "search_lane": "rss",
+      "website_verification": null,
+      "source_published_at": "2026-10-07T08:36:33+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "has raised $4 million in a seed funding round led by Breega, with participation from Enzo, Heartfelt, Together Ventures and Bynd"
+        },
+        {
+          "criterion": "founder_background",
+          "quote": "Dr Emma Ogburn as Chief Clinical Officer, bringing first-hand experience of addressing long clinical trial start-up timelines"
+        },
+        {
+          "criterion": "growth_anomaly",
+          "quote": "Cori is already working with two of the world's five largest enterprise clinical research organisations (CROs)"
+        }
+      ]
+    }
   }
 ]

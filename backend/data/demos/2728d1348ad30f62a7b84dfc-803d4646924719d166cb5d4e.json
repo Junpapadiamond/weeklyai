@@ -1,0 +1,203 @@
+{
+  "cache_key": "2728d1348ad30f62a7b84dfc-803d4646924719d166cb5d4e",
+  "product_key": "2728d1348ad30f62a7b84dfc",
+  "fingerprint": "803d4646924719d166cb5d4e",
+  "product_id": "p_bf3a5bc707e82f13",
+  "product_name": "Autoheal",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-07T23:41:07.307629+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为AI编码团队部署运维代理",
+      "en": "Deploy Operations Agents for AI Coding Teams"
+    },
+    "scenario": {
+      "zh": "某电商平台开发团队使用AI编码工具后代码量增长快，需要自动化处理增多的线上事件和监控告警",
+      "en": "E-commerce dev team using AI coding sees code volume surge, needs to automate growing production incidents and monitoring alerts"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择代理部署范围",
+          "en": "Choose Agent Deployment Scope"
+        },
+        "instruction": {
+          "zh": "先为哪类工作流部署AI代理？",
+          "en": "Which workflow should deploy AI agents first?"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "事件响应与根因分析",
+              "en": "Incident Response & Root Cause"
+            },
+            "output": {
+              "zh": "看板显示待处理告警：3个高延迟、2个内存溢出，代理自动关联日志",
+              "en": "Board shows pending alerts: 3 high latency, 2 memory overflow, agent auto-links logs"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "代码审查与漏洞扫描",
+              "en": "Code Review & Vulnerability Scan"
+            },
+            "output": {
+              "zh": "看板显示待审查PR：5个安全风险标记、8个性能问题待确认",
+              "en": "Board shows PRs for review: 5 security risk flags, 8 performance issues pending"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "配置代理工作模式",
+          "en": "Configure Agent Work Mode"
+        },
+        "instruction": {
+          "zh": "代理如何处理任务？",
+          "en": "How should agents handle tasks?"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "自动执行并通知结果",
+              "en": "Auto-Execute & Notify Results"
+            },
+            "output": {
+              "zh": "代理已分析3个告警的调用链，在看板标注疑似数据库连接池耗尽",
+              "en": "Agent analyzed 3 alerts' traces, marked suspected DB connection pool exhaustion on board"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "生成建议等待审批",
+              "en": "Generate Suggestions Await Approval"
+            },
+            "output": {
+              "zh": "代理提交诊断报告到看板：建议扩容连接池并添加超时熔断",
+              "en": "Agent submitted diagnostic report to board: suggests expanding pool and adding timeout circuit breaker"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "review",
+        "title": {
+          "zh": "检查代理执行效果",
+          "en": "Review Agent Execution Results"
+        },
+        "instruction": {
+          "zh": "对比人工处理与代理处理的差异",
+          "en": "Compare manual handling vs agent handling"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "代理处理",
+              "en": "Agent Handled"
+            },
+            "output": {
+              "zh": "15分钟内完成根因定位，自动生成修复任务并关联相关文档",
+              "en": "Root cause located in 15 min, auto-generated fix task linked to relevant docs"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "人工处理",
+              "en": "Manual Handled"
+            },
+            "output": {
+              "zh": "需要跨3个团队沟通，平均2小时定位问题，手动整理修复方案",
+              "en": "Requires cross-team coordination across 3 groups, 2 hours average to locate issue, manual fix plan"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "choice",
+        "title": {
+          "zh": "调整持续改进策略",
+          "en": "Adjust Continuous Improvement Strategy"
+        },
+        "instruction": {
+          "zh": "根据执行数据优化代理能力",
+          "en": "Optimize agent capability based on execution data"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "扩展代理到更多场景",
+              "en": "Expand Agent to More Scenarios"
+            },
+            "output": {
+              "zh": "看板新增性能优化、成本分析两类任务，代理覆盖面增强",
+              "en": "Board adds performance optimization and cost analysis tasks, agent coverage enhanced"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "深化单一场景处理",
+              "en": "Deepen Single Scenario Handling"
+            },
+            "output": {
+              "zh": "事件响应代理新增自动回滚能力，可直接执行紧急修复操作",
+              "en": "Incident response agent adds auto-rollback capability, can execute emergency fixes directly"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "通过AI代理控制平面，将AI编码带来的运维负担转化为自动化能力提升",
+      "en": "Transform operational burden from AI coding into automation capability boost via AI agent control plane"
+    },
+    "sources": [
+      {
+        "url": "https://autoheal.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://entrepreneur.economictimes.indiatimes.com/news/funding/funding-wrap-nudge-gravity-alive-app-raise-fresh-capital/134614277",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "board",
+      "label": {
+        "zh": "运维任务看板",
+        "en": "Operations Task Board"
+      },
+      "initial": {
+        "zh": "处理支付服务高延迟告警，分析日志并定位根因",
+        "en": "Handle payment service high latency alert, analyze logs and identify root cause"
+      }
+    }
+  }
+}

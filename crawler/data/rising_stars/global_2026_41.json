@@ -88,5 +88,238 @@
         }
       ]
     }
+  },
+  {
+    "name": "Quaddle",
+    "website": "https://www.petoi.com",
+    "description": "开源桌面四足机器人套件，15分钟组装完成，支持无代码动作学习、语音AI控制和情绪表达，起价109美元，面向教育、创客和物理AI实验",
+    "description_en": "Open-source desktop quadruped robot kit that assembles in 15 minutes, supports no-code trick learning, voice AI control, and mood expression, starting at $109, targeting education, makers, and physical AI experiments",
+    "category": "hardware",
+    "why_matters": "通过109美元的超低价格和无代码教学界面，Quaddle解决了物理AI与机器人技术的可及性难题，让学生和创客无需嵌入式系统背景即可实际操作真实机器人，开放的OpenCat平台和ROS兼容性进一步降低了从教育到研究的技术门槛",
+    "why_matters_en": "At $109 with no-code teaching interface, Quaddle solves physical AI accessibility by enabling students and makers to operate real robots without embedded systems expertise; open OpenCat platform and ROS compatibility further lower barriers from education to research",
+    "latest_news": "Kickstarter众筹在前两天内达成5万美元目标，计划2026年12月初交付，创始人Dr. Rongzhong Li此前推出的Bittle在2020年Kickstarter上达成11倍众筹目标",
+    "latest_news_en": "Kickstarter campaign reached $50,000 goal in first two days, targeting early December 2026 delivery; founder Dr. Rongzhong Li's prior robot Bittle achieved 11x its Kickstarter funding goal in 2020",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "founder_background",
+      "category_innovation"
+    ],
+    "company_country": "US",
+    "confidence": 0.85,
+    "source_url": "https://robots-blog.com/author/trella",
+    "categories": [
+      "hardware"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "Sebastian Trella | Robots-Blog",
+    "website_source": "https://robots-blog.com/author/trella",
+    "discovered_at": "2026-10-07",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261007T232919Z-28293b8b",
+      "search_region": "eu",
+      "search_lane": "niche",
+      "website_verification": null,
+      "source_published_at": "2026-09-21T11:40:21+00:00",
+      "evidence": [
+        {
+          "criterion": "founder_background",
+          "quote": "Founder Dr. Rongzhong Li built a robot cat as a personal project in 2016 while a physics lecturer at Wake Forest University, publishing the designs as OpenCat; he founded Petoi LLC in 2017 to commercialize it."
+        },
+        {
+          "criterion": "category_innovation",
+          "quote": "Starting at $109, it's the most accessible legged physical AI kit available — nothing else in this category comes close."
+        }
+      ]
+    }
+  },
+  {
+    "name": "Mirror Particle",
+    "website": "https://mirrorparticle.com/",
+    "description": "构建从零开始的基础模型来模拟人类行为变化及其背后原因的AI引擎,为品牌提供消费者行为预测,专注于捕捉人类行为随时间的纵向变化数据和触发因素",
+    "description_en": "Building a foundation model from scratch that simulates why humans do what they do and how human behavior changes over time, providing brands with an AI engine that predicts consumer behavior based on revealed behavior rather than self-reported data",
+    "category": "other",
+    "why_matters": "与依赖大语言模型进行角色扮演的现有方法不同,Mirror Particle从视觉感知、空间推理和社会智能等维度建模人类认知,使用包含客户数据、时事、流行文化和社交媒体的专有数据组合来追踪动机如何随经历演变,不仅预测行为还提供背后的'为什么'",
+    "why_matters_en": "Unlike status quo approaches that rely on LLMs prompted to role-play demographics, Mirror Particle models human cognition through visual perception, spatial reasoning, and social intelligence, tracking longitudinal behavior changes and providing the 'why' behind predictions with proprietary data combinations",
+    "latest_news": "两岁的旧金山初创公司已完成天使轮融资,即将完成首轮风险投资,并将参加2026年10月13-15日TechCrunch Disrupt的Startup Battlefield 200竞赛",
+    "latest_news_en": "The two-year-old San Francisco startup has raised an angel round and is close to closing its first venture round, competing in Startup Battlefield 200 at TechCrunch Disrupt 2026 on October 13-15",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "founder_background",
+      "category_innovation"
+    ],
+    "company_country": "US",
+    "confidence": 0.85,
+    "source_url": "https://techcrunch.com/2026/10/06/mirror-particle-is-building-a-world-model-of-human-behavior",
+    "categories": [
+      "other"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "Mirror Particle is building a ‘world model’ of human behavior | TechCrunch",
+    "website_source": "https://techcrunch.com/2026/10/06/mirror-particle-is-building-a-world-model-of-human-behavior",
+    "discovered_at": "2026-10-07",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261007T232919Z-28293b8b",
+      "search_region": "other",
+      "search_lane": "launch",
+      "website_verification": null,
+      "source_published_at": "2026-10-06T16:35:00+00:00",
+      "evidence": [
+        {
+          "criterion": "founder_background",
+          "quote": "Originally from India, she ended up studying at the University of Toronto, where she became inspired by AI pioneer Geoffrey Hinton's contributions to neural networks. After school, Ahuja ended up at Amazon Robotics building robots that build other robots."
+        },
+        {
+          "criterion": "category_innovation",
+          "quote": "Mirror Particle is taking another approach: building a foundation model, or as Ahuja describes it, a world model built from scratch that simulates why humans do what they do and how human behavior changes over time."
+        }
+      ]
+    }
+  },
+  {
+    "name": "Priori Analytica",
+    "website": "https://priorianalytica.com/",
+    "description": "防务分析初创公司,开发声纳信号分类平台,已扩展至北约和美国海军项目",
+    "description_en": "Defence-analytics startup scaling its sonar-signal classification platform into NATO and U.S. Navy programs",
+    "category": "other",
+    "why_matters": "专注于国防级声纳信号分类的垂直应用,已获得北约和美国海军项目采用,在高壁垒的国防科技领域建立实际客户基础",
+    "why_matters_en": "Focused on defence-grade sonar signal classification with actual adoption by NATO and U.S. Navy programs, establishing a customer base in the high-barrier defence tech sector",
+    "latest_news": "获得Eastend Ventures Fund 1投资,该基金已向包括Priori Analytica在内的七家公司部署超过800万美元",
+    "latest_news_en": "Received investment from Eastend Ventures Fund 1, which has deployed over $8 million across seven companies including Priori Analytica",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal",
+      "category_innovation"
+    ],
+    "company_country": "AU",
+    "confidence": 0.85,
+    "source_url": "https://www.saasrise.com/deals/eastend-ventures-nails-30-million-debut-fund-to-back-sa-wa-and-queensland-startups-3083e035-b65a-407f-8151-7b944b46ecb9",
+    "categories": [
+      "other"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "Eastend Ventures raises $30M debut fund | SaaS M&A and VC Deals",
+    "website_source": "https://priorianalytica.com",
+    "discovered_at": "2026-10-07",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261007T232919Z-28293b8b",
+      "search_region": "us",
+      "search_lane": "launch",
+      "website_verification": {
+        "url": "https://priorianalytica.com/",
+        "title": "Priori Analytica",
+        "search_result_url": "https://priorianalytica.com"
+      },
+      "source_published_at": "2026-09-30T00:00:00+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "the fund has deployed more than $8 million across seven portfolio companies. Defence‑analytics startup Priori Analytica"
+        },
+        {
+          "criterion": "category_innovation",
+          "quote": "Priori Analytica is scaling its sonar‑signal classification platform into NATO and U.S. Navy programs"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Heatseeker",
+    "website": "https://www.heatseeker.ai/",
+    "description": "人工智能驱动的营销测试工具,客户包括欧莱雅、思科和DoorDash,去年完成250万美元融资",
+    "description_en": "AI-driven marketing-testing tool with customers including L'Oréal, Cisco and DoorDash, raised $2.5 million last year",
+    "category": "other",
+    "why_matters": "已获得欧莱雅、思科、DoorDash等全球知名企业客户采用,证明其AI营销测试解决方案在大型企业场景中的实际价值",
+    "why_matters_en": "Secured adoption by globally recognized enterprise customers including L'Oréal, Cisco and DoorDash, validating its AI marketing-testing solution in large enterprise scenarios",
+    "latest_news": "获得Eastend Ventures投资,此前于2025年完成250万美元融资",
+    "latest_news_en": "Received investment from Eastend Ventures, following a $2.5 million raise last year",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal",
+      "growth_anomaly"
+    ],
+    "company_country": "AU",
+    "confidence": 0.9,
+    "source_url": "https://www.saasrise.com/deals/eastend-ventures-nails-30-million-debut-fund-to-back-sa-wa-and-queensland-startups-3083e035-b65a-407f-8151-7b944b46ecb9",
+    "categories": [
+      "other"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "Eastend Ventures raises $30M debut fund | SaaS M&A and VC Deals",
+    "website_source": "https://www.heatseeker.ai",
+    "discovered_at": "2026-10-07",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261007T232919Z-28293b8b",
+      "search_region": "us",
+      "search_lane": "launch",
+      "website_verification": {
+        "url": "https://www.heatseeker.ai/",
+        "title": "Heatseeker · AI market research, proven with real buyers",
+        "search_result_url": "https://www.heatseeker.ai"
+      },
+      "source_published_at": "2026-09-30T00:00:00+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "Heatseeker, an AI‑driven marketing‑testing tool, counts L'Oréal, Cisco and DoorDash among its customers after raising $2.5 million last year"
+        },
+        {
+          "criterion": "growth_anomaly",
+          "quote": "counts L'Oréal, Cisco and DoorDash among its customers"
+        }
+      ]
+    }
+  },
+  {
+    "name": "August AI",
+    "website": "https://www.meetaugust.ai/",
+    "description": "结合人工智能与医生主导护理的医疗平台,覆盖160个国家超过900万用户",
+    "description_en": "A healthcare platform that combines AI with physician-led care, reaching over 9 million users across 160 countries",
+    "category": "healthcare",
+    "why_matters": "创始人因个人医疗误诊经历创立,已实现全球规模化覆盖900万用户,展现出显著的用户增长和国际扩张能力",
+    "why_matters_en": "Founded after founder's personal medical misdiagnosis experience, achieved global scale with 9M+ users, demonstrating significant user growth and international expansion",
+    "latest_news": "加入Peak XV的Surge 12加速器,获得种子轮投资",
+    "latest_news_en": "Joined Peak XV's Surge 12 accelerator and received seed funding",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "growth_anomaly",
+      "funding_signal"
+    ],
+    "company_country": "IN",
+    "confidence": 0.9,
+    "source_url": "https://techcrunch.com/2026/09/28/peak-xv-goes-bigger-at-seed-with-new-surge-cohort-as-series-a-bar-rises",
+    "categories": [
+      "healthcare"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "Peak XV ups Surge seed investment ceiling to $5M, unveils 18-startup cohort | TechCrunch",
+    "website_source": "https://techcrunch.com/2026/09/28/peak-xv-goes-bigger-at-seed-with-new-surge-cohort-as-series-a-bar-rises",
+    "discovered_at": "2026-10-07",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261007T232919Z-28293b8b",
+      "search_region": "us",
+      "search_lane": "launch",
+      "website_verification": null,
+      "source_published_at": "2026-09-29T00:30:00+00:00",
+      "evidence": [
+        {
+          "criterion": "growth_anomaly",
+          "quote": "provides a healthcare platform that combines AI with physician-led care, reaching over 9 million users across 160 countries"
+        },
+        {
+          "criterion": "funding_signal",
+          "quote": "The venture firm invested more than $50 million across the cohort, which has collectively raised over $90 million in seed funding"
+        }
+      ]
+    }
   }
 ]

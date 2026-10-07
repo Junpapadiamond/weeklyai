@@ -1,0 +1,192 @@
+{
+  "cache_key": "6a1017d9f95c84c6594becef-fb85d8809608b6d4aba664d9",
+  "product_key": "6a1017d9f95c84c6594becef",
+  "fingerprint": "fb85d8809608b6d4aba664d9",
+  "product_id": "p_6cecf733c79e56d9",
+  "product_name": "Photon",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-07T23:42:06.839062+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为消息应用构建AI代理",
+      "en": "Build AI Agent for Messaging"
+    },
+    "scenario": {
+      "zh": "你需要为客户支持团队创建一个通过WhatsApp运行的订单查询代理",
+      "en": "You need to create an order lookup agent running via WhatsApp for support"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择消息渠道",
+          "en": "Select Messaging Channel"
+        },
+        "instruction": {
+          "zh": "决定代理的部署渠道",
+          "en": "Decide where to deploy the agent"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "WhatsApp Business",
+              "en": "WhatsApp Business"
+            },
+            "output": {
+              "zh": "渠道配置完成，webhook已连接，支持富媒体消息",
+              "en": "Channel configured, webhook connected, rich media supported"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "iMessage",
+              "en": "iMessage"
+            },
+            "output": {
+              "zh": "渠道配置完成，Apple Business Chat集成，支持交互式按钮",
+              "en": "Channel configured, Apple Business Chat integrated, interactive buttons enabled"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "设计对话流程",
+          "en": "Design Conversation Flow"
+        },
+        "instruction": {
+          "zh": "定义代理如何响应用户查询",
+          "en": "Define how agent responds to user queries"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "自然语言理解",
+              "en": "Natural Language Understanding"
+            },
+            "output": {
+              "zh": "代理可理解「我的订单在哪里」等自由文本，自动提取订单号",
+              "en": "Agent understands free text like 'where is my order', auto-extracts numbers"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "结构化菜单",
+              "en": "Structured Menu"
+            },
+            "output": {
+              "zh": "代理提供选项按钮：查询订单、退货、联系人工客服",
+              "en": "Agent offers option buttons: check order, return, contact human support"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "测试响应时间",
+          "en": "Test Response Time"
+        },
+        "instruction": {
+          "zh": "比较不同后端配置的性能",
+          "en": "Compare performance of different backend configs"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "同步API调用",
+              "en": "Synchronous API Calls"
+            },
+            "output": {
+              "zh": "用户发送订单号后等待约三秒收到完整追踪信息",
+              "en": "User waits about three seconds after sending order number for full tracking"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "异步队列处理",
+              "en": "Async Queue Processing"
+            },
+            "output": {
+              "zh": "用户立即收到确认，追踪信息在后台加载后推送",
+              "en": "User gets instant confirmation, tracking info pushed after background load"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "查看可观测性数据",
+          "en": "Review Observability Data"
+        },
+        "instruction": {
+          "zh": "检查代理在生产环境的表现",
+          "en": "Check agent performance in production"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "对话完成率高",
+              "en": "High Conversation Completion"
+            },
+            "output": {
+              "zh": "多数用户获得答案后未转人工，平均对话轮次为二到三轮",
+              "en": "Most users get answers without human handoff, average two to three turns"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "频繁转人工客服",
+              "en": "Frequent Human Handoff"
+            },
+            "output": {
+              "zh": "代理未能处理复杂退货请求，需增加意图识别训练",
+              "en": "Agent struggles with complex returns, needs more intent training"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "通过统一API和可扩展框架，快速部署跨渠道AI代理并监控对话质量",
+      "en": "Deploy cross-channel AI agents quickly with unified API and monitor conversation quality"
+    },
+    "sources": [
+      {
+        "url": "https://photon.codes/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/10/01/photon-held-a-funeral-for-mobile-apps-now-it-has-4-5m-to-help-replace-them-with-agents/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

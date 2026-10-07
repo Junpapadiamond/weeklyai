@@ -1,0 +1,203 @@
+{
+  "cache_key": "635a4715c3f6d1d8d8b95315-83349a8bc42a29c3230a1bf9",
+  "product_key": "635a4715c3f6d1d8d8b95315",
+  "fingerprint": "83349a8bc42a29c3230a1bf9",
+  "product_id": "p_2874b8371f74cb4e",
+  "product_name": "Cori Clinical",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-07T23:40:43.399705+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "临床试验协议设计",
+      "en": "Clinical Trial Protocol Design"
+    },
+    "scenario": {
+      "zh": "你在Erasmus MC筹备一项II期帕金森新药试验，需要制定完整协议和监管提交计划",
+      "en": "You're at Erasmus MC preparing a Phase II Parkinson's drug trial and need a full protocol with regulatory submission plan"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "知识库配置",
+          "en": "Knowledge Base Setup"
+        },
+        "instruction": {
+          "zh": "选择整合哪些外部监管情报源",
+          "en": "Choose which external regulatory intelligence to integrate"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "EMA神经疾病指南",
+              "en": "EMA Neurological Guidelines"
+            },
+            "output": {
+              "zh": "已连接EMA帕金森临床试验指南和欧盟受试者保护要求",
+              "en": "Connected EMA Parkinson's trial guidelines and EU subject protection requirements"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "FDA与EMA双重",
+              "en": "FDA and EMA Dual"
+            },
+            "output": {
+              "zh": "已连接FDA与EMA神经系统药物指南，为跨大西洋提交做准备",
+              "en": "Connected FDA and EMA neurological drug guidance, prepared for transatlantic submission"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "协议生成策略",
+          "en": "Protocol Generation Strategy"
+        },
+        "instruction": {
+          "zh": "选择协议起草的优先考虑点",
+          "en": "Choose the priority focus for protocol drafting"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "快速启动优先",
+              "en": "Fast Start Priority"
+            },
+            "output": {
+              "zh": "生成精简协议，最小化入选标准，建议单中心设计加速伦理审批",
+              "en": "Generated streamlined protocol with minimal inclusion criteria, single-center design for faster ethics approval"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "监管稳健优先",
+              "en": "Regulatory Robustness Priority"
+            },
+            "output": {
+              "zh": "生成详尽协议，纳入历史试验的安全监测结构和多层次质控计划",
+              "en": "Generated comprehensive protocol incorporating safety monitoring structures and multi-tier QC plan from historical trials"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "review",
+        "title": {
+          "zh": "协议审查",
+          "en": "Protocol Review"
+        },
+        "instruction": {
+          "zh": "查看AI标记的潜在问题",
+          "en": "Review AI-flagged potential issues"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "受试者负担过高",
+              "en": "Excessive Subject Burden"
+            },
+            "output": {
+              "zh": "访视频率较同类试验增加，建议将6次现场访视减至4次，增加远程评估",
+              "en": "Visit frequency higher than similar trials; recommend reducing 6 in-person visits to 4, adding remote assessments"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "终点测量时机",
+              "en": "Endpoint Timing"
+            },
+            "output": {
+              "zh": "主要终点12周评估与EMA建议的24周不一致，可能影响欧盟审批",
+              "en": "Primary endpoint at 12 weeks inconsistent with EMA-recommended 24 weeks, may affect EU approval"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "compare",
+        "title": {
+          "zh": "提交包生成",
+          "en": "Submission Package Generation"
+        },
+        "instruction": {
+          "zh": "选择优先提交的监管机构",
+          "en": "Choose priority regulatory authority for submission"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "荷兰CCMO先行",
+              "en": "Netherlands CCMO First"
+            },
+            "output": {
+              "zh": "生成CCMO格式的伦理提交包，包含荷兰语受试者信息和当地保险要求",
+              "en": "Generated CCMO-format ethics submission with Dutch subject information and local insurance requirements"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "EMA科学建议申请",
+              "en": "EMA Scientific Advice Application"
+            },
+            "output": {
+              "zh": "生成EMA科学建议申请文件，重点说明II期设计理由和III期路径",
+              "en": "Generated EMA scientific advice application explaining Phase II design rationale and Phase III pathway"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "协议草案已就绪，AI审查器识别关键监管不一致，可下载完整提交文档",
+      "en": "Protocol draft ready, AI reviewer identified key regulatory misalignments, full submission docs available for download"
+    },
+    "sources": [
+      {
+        "url": "http://www.cori-clinical.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://tech.eu/2026/10/07/cori-clinical-secures-4m-seed-to-improve-clinical-trial-design-and-cut-delays/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "document",
+      "label": {
+        "zh": "试验协议草案",
+        "en": "Trial Protocol Draft"
+      },
+      "initial": {
+        "zh": "II期帕金森新药随机对照试验，主要终点为UPDRS-III评分变化，120例受试者，12周随访",
+        "en": "Phase II RCT for Parkinson's drug, primary endpoint UPDRS-III change, 120 subjects, 12-week follow-up"
+      }
+    }
+  }
+}
