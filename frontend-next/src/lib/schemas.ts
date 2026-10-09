@@ -27,7 +27,9 @@ export const ProductSchema = z
     use_case: z.string().optional(),
     innovation_traits: z.array(z.string()).optional(),
     price: z.string().optional(),
-    funding_total: z.string().optional(),
+    // Discovery sources can supply a numeric amount or a formatted currency string.
+    // Keep the UI contract as text without letting one valid number reject the list.
+    funding_total: z.union([z.string(), z.number()]).transform(String).optional(),
     valuation: z.string().optional(),
     latest_news: z.string().optional(),
     latest_news_en: z.string().optional(),
