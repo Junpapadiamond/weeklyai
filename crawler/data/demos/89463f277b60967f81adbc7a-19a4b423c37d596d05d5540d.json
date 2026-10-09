@@ -1,0 +1,203 @@
+{
+  "cache_key": "89463f277b60967f81adbc7a-19a4b423c37d596d05d5540d",
+  "product_key": "89463f277b60967f81adbc7a",
+  "fingerprint": "19a4b423c37d596d05d5540d",
+  "product_id": "3",
+  "product_name": "Cradle",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-09T23:15:41.085014+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "用AI设计酶，加速工业生物制造",
+      "en": "Design enzymes with AI for faster biomanufacturing"
+    },
+    "scenario": {
+      "zh": "某化工企业希望开发一种耐高温的脂肪酶用于洗涤剂生产，传统筛选需要数月",
+      "en": "A chemical company needs a heat-stable lipase for detergent production; traditional screening takes months"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择起始蛋白模板",
+          "en": "Choose starting protein template"
+        },
+        "instruction": {
+          "zh": "从已知序列出发，或让AI探索新序列空间",
+          "en": "Start from a known sequence or let AI explore new sequence space"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "使用现有商用脂肪酶",
+              "en": "Use existing commercial lipase"
+            },
+            "output": {
+              "zh": "简报更新：基于Thermomyces酶骨架；AI将围绕已验证的催化位点优化",
+              "en": "Brief updated: based on Thermomyces enzyme scaffold; AI will optimize around validated catalytic site"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "从头设计全新骨架",
+              "en": "Design novel scaffold from scratch"
+            },
+            "output": {
+              "zh": "简报更新：探索非天然折叠；更高创新性但验证周期较长",
+              "en": "Brief updated: exploring non-natural folds; higher innovation potential but longer validation cycle"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "设定优化约束",
+          "en": "Set optimization constraints"
+        },
+        "instruction": {
+          "zh": "平衡稳定性与催化效率的权重",
+          "en": "Balance stability versus catalytic efficiency"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "最大化热稳定性",
+              "en": "Maximize thermal stability"
+            },
+            "output": {
+              "zh": "模型建议12处突变，重点强化疏水核心；预测熔点提升至75°C",
+              "en": "Model suggests 12 mutations reinforcing hydrophobic core; predicted melting point increase to 75°C"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "保持高催化活性",
+              "en": "Maintain high catalytic activity"
+            },
+            "output": {
+              "zh": "模型建议5处保守突变，活性位点构象保持；稳定性提升较温和",
+              "en": "Model suggests 5 conservative mutations preserving active site geometry; moderate stability gain"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspect",
+        "widget": "compare",
+        "title": {
+          "zh": "比较候选变体",
+          "en": "Compare candidate variants"
+        },
+        "instruction": {
+          "zh": "查看两个AI生成变体的预测性能",
+          "en": "Review predicted performance of two AI-generated variants"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "变体A：9处突变",
+              "en": "Variant A: 9 mutations"
+            },
+            "output": {
+              "zh": "预测稳定性高，但表达量可能降低；适合后续定向进化",
+              "en": "Predicted high stability but potentially lower expression; suitable for directed evolution"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "变体B：6处突变",
+              "en": "Variant B: 6 mutations"
+            },
+            "output": {
+              "zh": "预测性能均衡，表达友好；推荐优先实验验证",
+              "en": "Predicted balanced performance with expression-friendly profile; recommended for priority testing"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "准备实验验证",
+          "en": "Prepare experimental validation"
+        },
+        "instruction": {
+          "zh": "确认要合成测试的序列",
+          "en": "Confirm sequences for synthesis and testing"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "导出变体B序列",
+              "en": "Export variant B sequence"
+            },
+            "output": {
+              "zh": "简报中已记录完整氨基酸序列与突变位点注释，可交付合成团队",
+              "en": "Complete amino acid sequence with mutation annotations documented in brief for synthesis team"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "同时测试两个变体",
+              "en": "Test both variants in parallel"
+            },
+            "output": {
+              "zh": "简报包含A、B两个序列及对照组设计，建议96孔板热稳定性筛选",
+              "en": "Brief includes sequences A, B and control design; recommends 96-well thermal stability screen"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Cradle用生成式AI将蛋白质工程周期从数月缩短至数周，已为工业酶、食品等领域客户服务",
+      "en": "Cradle uses generative AI to compress protein engineering cycles from months to weeks, serving clients in industrial enzymes and food sectors"
+    },
+    "sources": [
+      {
+        "url": "https://www.cradle.bio/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.labiotech.eu/best-biotech/ai-drug-discovery-companies/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "document",
+      "label": {
+        "zh": "蛋白质设计简报",
+        "en": "Protein Design Brief"
+      },
+      "initial": {
+        "zh": "目标：耐高温脂肪酶（70°C稳定）；应用：液体洗涤剂；当前挑战：现有酶在55°C失活",
+        "en": "Target: heat-stable lipase (70°C stable); Application: liquid detergent; Current challenge: existing enzyme denatures at 55°C"
+      }
+    }
+  }
+}

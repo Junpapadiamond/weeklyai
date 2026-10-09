@@ -1,0 +1,203 @@
+{
+  "cache_key": "50603c902b46ef0adc3d3a54-d9ef51bdbb52d452efcae5ef",
+  "product_key": "50603c902b46ef0adc3d3a54",
+  "fingerprint": "d9ef51bdbb52d452efcae5ef",
+  "product_id": "p_906edfdc6b6d7b36",
+  "product_name": "Myca",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-09T23:15:16.043333+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "协调农场现场团队运营",
+      "en": "Coordinate Farm Field Operations"
+    },
+    "scenario": {
+      "zh": "管理500人采收团队,需追踪每日产量、质检照片和设备报修,减少主管人工汇总时间",
+      "en": "Manage 500-person harvest crew tracking daily yields, quality photos and equipment repairs to reduce manual supervisor consolidation"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "配置信息接收渠道",
+          "en": "Configure Information Channels"
+        },
+        "instruction": {
+          "zh": "选择现场团队主要使用的沟通方式",
+          "en": "Choose the primary communication method for field teams"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "WhatsApp群组+电话",
+              "en": "WhatsApp Groups + Calls"
+            },
+            "output": {
+              "zh": "面板显示23条消息和4通电话待处理,包含产量数字、照片和语音",
+              "en": "Board shows 23 messages and 4 calls pending, containing yield numbers, photos and voice notes"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "仅电话记录",
+              "en": "Call Records Only"
+            },
+            "output": {
+              "zh": "面板显示7通电话待处理,全部为语音描述,缺少可视化质检信息",
+              "en": "Board shows 7 calls pending, all voice descriptions, missing visual quality inspection data"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "处理混合信息输入",
+          "en": "Process Mixed Information Input"
+        },
+        "instruction": {
+          "zh": "决定AI代理如何转化非结构化现场反馈",
+          "en": "Decide how the AI agent transforms unstructured field feedback"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "自动提取并分类",
+              "en": "Auto-Extract and Categorize"
+            },
+            "output": {
+              "zh": "面板将消息归入产量报告、质检照片、设备报修三个栏目,数字和图片已关联",
+              "en": "Board organizes messages into yield reports, quality photos, equipment repairs with linked numbers and images"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "保持原始格式",
+              "en": "Keep Original Format"
+            },
+            "output": {
+              "zh": "面板按时间顺序显示所有消息,主管需手动查找关键信息并归类",
+              "en": "Board shows all messages chronologically, supervisor must manually find and categorize key information"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比监督工作量",
+          "en": "Compare Supervisory Workload"
+        },
+        "instruction": {
+          "zh": "查看两种方式下主管的跟进任务差异",
+          "en": "Review differences in supervisor follow-up tasks between two approaches"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "AI代理生成跟进",
+              "en": "AI Agent Generates Follow-Up"
+            },
+            "output": {
+              "zh": "面板显示3条待办:东区进度慢需调人,2号质检照片模糊需重拍,拖拉机维修已派单",
+              "en": "Board shows 3 tasks: East area needs more workers, photo #2 blurry needs retake, tractor repair dispatched"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "主管手动创建",
+              "en": "Supervisor Creates Manually"
+            },
+            "output": {
+              "zh": "主管需阅读全部原始消息,自行判断哪些需跟进并逐条创建任务卡片",
+              "en": "Supervisor must read all raw messages, judge which need follow-up and manually create task cards"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "查看结构化运营数据",
+          "en": "Review Structured Operations Data"
+        },
+        "instruction": {
+          "zh": "检查AI代理整理的当日运营摘要",
+          "en": "Check the daily operations summary organized by the AI agent"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "下载运营简报",
+              "en": "Download Operations Brief"
+            },
+            "output": {
+              "zh": "简报包含各区产量对比、质检合格率趋势、设备故障类型统计,可直接报告管理层",
+              "en": "Brief includes yield comparison by area, quality pass rate trends, equipment failure statistics for management reporting"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "导出原始记录",
+              "en": "Export Raw Records"
+            },
+            "output": {
+              "zh": "获得按时间排列的消息和通话记录文本文件,仍需人工分析提炼",
+              "en": "Receive text file of messages and call logs in chronological order, still requires manual analysis"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "AI代理将现场碎片化沟通转为可执行任务和决策数据,减少主管整理时间",
+      "en": "AI agent converts fragmented field communication into actionable tasks and decision data, reducing supervisor consolidation time"
+    },
+    "sources": [
+      {
+        "url": "https://www.myca.ag/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://agfundernews.com/myca-raises-1-3m-pre-seed-to-put-ai-agents-in-charge-of-agribusiness-field-operations",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "board",
+      "label": {
+        "zh": "团队任务面板",
+        "en": "Team Task Board"
+      },
+      "initial": {
+        "zh": "今日采收目标:东区芒果园12吨,质检每两小时拍照上传,设备故障立即上报",
+        "en": "Today's harvest target: East mango orchard 12 tons, quality photos every 2 hours, report equipment issues immediately"
+      }
+    }
+  }
+}

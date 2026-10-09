@@ -1,0 +1,206 @@
+{
+  "cache_key": "cfbd995d43b98fd90078e3ee-0978bb5a6910bb8d832d0a32",
+  "product_key": "cfbd995d43b98fd90078e3ee",
+  "fingerprint": "0978bb5a6910bb8d832d0a32",
+  "product_id": "8",
+  "product_name": "XCENA",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-09T23:16:01.635254+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "XCENA 内存瓶颈方案评估",
+      "en": "XCENA Memory Bottleneck Solution"
+    },
+    "scenario": {
+      "zh": "你负责 AI 基础设施采购，需评估 XCENA 芯片能否降低推理成本",
+      "en": "You manage AI infrastructure procurement and need to evaluate XCENA's chip for inference cost reduction"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择评估场景",
+          "en": "Choose Evaluation Scenario"
+        },
+        "instruction": {
+          "zh": "先确定优先测试的工作负载类型",
+          "en": "Select the workload type to prioritize"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "大模型推理集群",
+              "en": "LLM Inference Cluster"
+            },
+            "output": {
+              "zh": "聚焦语言模型推理，内存带宽是主要瓶颈",
+              "en": "Focus on language model inference where memory bandwidth is the main bottleneck"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "训练加速场景",
+              "en": "Training Acceleration"
+            },
+            "output": {
+              "zh": "聚焦模型训练阶段，显存容量与速度并重",
+              "en": "Focus on model training where memory capacity and speed both matter"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "dial",
+        "title": {
+          "zh": "设定集群规模",
+          "en": "Set Cluster Scale"
+        },
+        "instruction": {
+          "zh": "调整计划部署的 GPU 卡数",
+          "en": "Adjust the number of GPUs planned for deployment"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "标准 GPU 方案",
+              "en": "Standard GPU Setup"
+            },
+            "output": {
+              "zh": "使用现有 GPU，内存瓶颈明显，成本基准清晰",
+              "en": "Use existing GPUs with clear memory bottleneck and cost baseline"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "XCENA 混合方案",
+              "en": "XCENA Hybrid Setup"
+            },
+            "output": {
+              "zh": "加入 XCENA 内存芯片，带宽提升但集成复杂度增加",
+              "en": "Add XCENA memory chips for bandwidth boost but higher integration complexity"
+            }
+          }
+        ],
+        "example_data": true,
+        "dial": {
+          "min": 1,
+          "max": 20,
+          "initial": 8,
+          "factor": 4,
+          "unit": {
+            "zh": "张 GPU 卡",
+            "en": "GPU cards"
+          },
+          "result_label": {
+            "zh": "假设配置",
+            "en": "Hypothetical config"
+          }
+        }
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比架构权衡",
+          "en": "Compare Architecture Tradeoffs"
+        },
+        "instruction": {
+          "zh": "查看两种方案在成本与性能上的差异",
+          "en": "Review cost and performance differences between approaches"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "纯 GPU 方案",
+              "en": "GPU-Only"
+            },
+            "output": {
+              "zh": "硬件成熟但内存带宽受限，推理吞吐量较低",
+              "en": "Mature hardware but memory bandwidth limited, lower inference throughput"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "XCENA 增强方案",
+              "en": "XCENA-Enhanced"
+            },
+            "output": {
+              "zh": "内存带宽大幅改善，但需验证软件栈兼容性与供应稳定性",
+              "en": "Memory bandwidth greatly improved but requires software stack compatibility and supply stability verification"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "生成采购建议",
+          "en": "Generate Procurement Recommendation"
+        },
+        "instruction": {
+          "zh": "确认最终技术方向并输出决策要点",
+          "en": "Confirm final technical direction and output decision points"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "保守路线",
+              "en": "Conservative Path"
+            },
+            "output": {
+              "zh": "建议先小规模试点 XCENA 方案，同时保留标准 GPU 主力部署",
+              "en": "Recommend small-scale XCENA pilot while keeping standard GPU as main deployment"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "激进路线",
+              "en": "Aggressive Path"
+            },
+            "output": {
+              "zh": "建议大比例采用 XCENA 方案，需同步评估供应链与技术支持",
+              "en": "Recommend high XCENA adoption ratio with parallel supply chain and support evaluation"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "完成对 XCENA 内存芯片的架构评估，明确其在 AI 推理成本优化中的潜在价值与集成风险",
+      "en": "Completed architecture evaluation of XCENA memory chip, clarifying its potential value and integration risks in AI inference cost optimization"
+    },
+    "sources": [
+      {
+        "url": "https://xcena.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/05/29/xcena-secures-135m-at-570m-valuation-betting-on-memory-as-ais-real-bottleneck/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

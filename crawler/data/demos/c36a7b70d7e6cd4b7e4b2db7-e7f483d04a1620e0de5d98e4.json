@@ -1,0 +1,203 @@
+{
+  "cache_key": "c36a7b70d7e6cd4b7e4b2db7-e7f483d04a1620e0de5d98e4",
+  "product_key": "c36a7b70d7e6cd4b7e4b2db7",
+  "fingerprint": "e7f483d04a1620e0de5d98e4",
+  "product_id": "7",
+  "product_name": "Daloopa",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-09T23:16:28.733331+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为尽职调查构建财务数据工作流",
+      "en": "Build Financial Data Workflow for Due Diligence"
+    },
+    "scenario": {
+      "zh": "某私募基金正在评估一家 SaaS 公司，需要快速分析其三年收入增长趋势与毛利率变化",
+      "en": "A PE fund is evaluating a SaaS company and needs to quickly analyze its three-year revenue growth trend and gross margin changes"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择数据源接入方式",
+          "en": "Choose Data Source Connection"
+        },
+        "instruction": {
+          "zh": "决定如何获取目标公司的财务数据",
+          "en": "Decide how to retrieve target company financial data"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "自动提取公开披露文件",
+              "en": "Auto-extract Public Filings"
+            },
+            "output": {
+              "zh": "已连接 SEC 数据流，三年季报数据结构化完成，字段映射准确",
+              "en": "Connected SEC data stream, three years of quarterly data structured with accurate field mapping"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "导入客户提供的电子表格",
+              "en": "Import Client-provided Spreadsheet"
+            },
+            "output": {
+              "zh": "已解析上传文件，识别出收入与成本科目，但部分科目需人工确认",
+              "en": "Parsed uploaded file, identified revenue and cost accounts but some items need manual confirmation"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "配置自动化分析规则",
+          "en": "Configure Automation Rules"
+        },
+        "instruction": {
+          "zh": "设定工作流如何处理财务指标计算",
+          "en": "Define how workflow handles financial metric calculations"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "使用行业标准毛利率公式",
+              "en": "Use Industry-standard Gross Margin Formula"
+            },
+            "output": {
+              "zh": "工作流按 SaaS 行业惯例计算，已排除一次性项目，趋势线清晰",
+              "en": "Workflow applies SaaS conventions, excluded one-time items, trend line is clear"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "自定义调整项处理逻辑",
+              "en": "Customize Adjustment Logic"
+            },
+            "output": {
+              "zh": "工作流将股权激励成本单独标注，毛利率计算增加了可比性",
+              "en": "Workflow labeled equity compensation separately, margin calculation gained comparability"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "审查数据质量报告",
+          "en": "Review Data Quality Report"
+        },
+        "instruction": {
+          "zh": "对比不同质量检查策略的发现",
+          "en": "Compare findings from different quality check strategies"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "快速扫描异常值",
+              "en": "Quick Anomaly Scan"
+            },
+            "output": {
+              "zh": "标记了 Q2 2022 收入环比异常波动，未深入核查原因",
+              "en": "Flagged Q2 2022 sequential revenue anomaly but did not investigate cause"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "深度交叉验证",
+              "en": "Deep Cross-validation"
+            },
+            "output": {
+              "zh": "发现该季度确认了大额年度合同，并与现金流数据相互印证",
+              "en": "Found large annual contract recognized that quarter, corroborated by cash flow data"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "完成尽调数据包",
+          "en": "Finalize Due Diligence Package"
+        },
+        "instruction": {
+          "zh": "确认最终交付的分析成果",
+          "en": "Confirm final analytical deliverable"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "标准财务摘要文档",
+              "en": "Standard Financial Summary"
+            },
+            "output": {
+              "zh": "生成三年趋势图表与关键比率表格，适合投委会快速浏览",
+              "en": "Generated three-year trend charts and key ratio tables, suitable for quick IC review"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "交互式数据工作簿",
+              "en": "Interactive Data Workbook"
+            },
+            "output": {
+              "zh": "输出可追溯到原始披露的动态模型，支持情景假设调整",
+              "en": "Delivered dynamic model traceable to source filings, supports scenario adjustments"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Daloopa 的 AI 工作流将财务数据提取、验证与分析自动化，让金融团队专注于投资判断而非数据整理",
+      "en": "Daloopa's AI workflows automate financial data extraction, validation and analysis, letting finance teams focus on investment judgment rather than data wrangling"
+    },
+    "sources": [
+      {
+        "url": "https://daloopa.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://vcnewsdaily.com",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "document",
+      "label": {
+        "zh": "财务分析简报",
+        "en": "Financial Analysis Brief"
+      },
+      "initial": {
+        "zh": "目标公司：CloudTech Inc | 分析重点：2021-2023 收入与毛利率 | 关注点：增长可持续性",
+        "en": "Target: CloudTech Inc | Focus: 2021-2023 Revenue & Gross Margin | Key: Growth Sustainability"
+      }
+    }
+  }
+}

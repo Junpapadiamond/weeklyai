@@ -1,0 +1,203 @@
+{
+  "cache_key": "fc00b573b610bfecb0302bce-175e8dbdbb772860cf70a5f9",
+  "product_key": "fc00b573b610bfecb0302bce",
+  "fingerprint": "175e8dbdbb772860cf70a5f9",
+  "product_id": "p_f1235aa42ae2b834",
+  "product_name": "ChipMango",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-09T23:14:48.525968+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "ChipMango 芯片设计云端协作",
+      "en": "ChipMango Cloud Chip Design"
+    },
+    "scenario": {
+      "zh": "为智能门锁客户设计低功耗传感器芯片,在拉各斯和远程团队间协作验证",
+      "en": "Design low-power sensor chip for smart lock client, verify across Lagos and remote teams"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择设计起点",
+          "en": "Choose Design Starting Point"
+        },
+        "instruction": {
+          "zh": "客户需要超低功耗传感器芯片,如何开始项目?",
+          "en": "Client needs ultra-low-power sensor chip, how to start?"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "使用 Arm IP 模板",
+              "en": "Use Arm IP Template"
+            },
+            "output": {
+              "zh": "规格文档已加载 Cortex-M0+ 低功耗配置,团队可直接修改参数",
+              "en": "Spec loaded with Cortex-M0+ low-power config, team can edit parameters"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "从零开始自定义",
+              "en": "Custom Design from Scratch"
+            },
+            "output": {
+              "zh": "创建空白规格文档,需定义完整架构,设计周期较长",
+              "en": "Blank spec created, full architecture needed, longer design cycle"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "分配验证任务",
+          "en": "Assign Verification Tasks"
+        },
+        "instruction": {
+          "zh": "拉各斯团队完成 RTL 设计,下一步如何验证?",
+          "en": "Lagos team finished RTL design, how to verify next?"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "云端自动化测试",
+              "en": "Cloud Automated Testing"
+            },
+            "output": {
+              "zh": "平台运行功耗和时序仿真,远程工程师并行审查波形数据",
+              "en": "Platform runs power/timing simulation, remote engineers review waveforms in parallel"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "本地硬件原型",
+              "en": "Local Hardware Prototype"
+            },
+            "output": {
+              "zh": "等待 FPGA 板到货,验证周期延长两周,但可测试实际场景",
+              "en": "Wait for FPGA board delivery, adds two weeks but tests real scenarios"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比验证结果",
+          "en": "Compare Verification Results"
+        },
+        "instruction": {
+          "zh": "两个设计方案均通过测试,选择交付版本",
+          "en": "Both designs passed tests, choose delivery version"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "方案A:待机4µA",
+              "en": "Option A: 4µA Standby"
+            },
+            "output": {
+              "zh": "功耗更低但唤醒时间120ms,适合电池供电应用",
+              "en": "Lower power but 120ms wake, better for battery applications"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "方案B:待机6µA",
+              "en": "Option B: 6µA Standby"
+            },
+            "output": {
+              "zh": "唤醒时间80ms,响应更快,适合频繁交互的智能锁",
+              "en": "80ms wake, faster response, suits frequent-use smart locks"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "准备客户交付",
+          "en": "Prepare Client Delivery"
+        },
+        "instruction": {
+          "zh": "最终检查设计文档和测试报告",
+          "en": "Final review of design docs and test reports"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "生成交付包",
+              "en": "Generate Delivery Package"
+            },
+            "output": {
+              "zh": "规格文档、RTL 代码和仿真报告已打包,客户可下载查看",
+              "en": "Spec, RTL code and simulation reports packaged for client download"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "安排评审会议",
+              "en": "Schedule Review Meeting"
+            },
+            "output": {
+              "zh": "已邀请客户和拉各斯团队,准备在云端演示波形和功耗曲线",
+              "en": "Client and Lagos team invited to demo waveforms and power curves online"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "云端协作让分布式团队共享 IP 和工具,缩短芯片设计验证周期",
+      "en": "Cloud collaboration shares IP and tools across distributed teams, shortens chip design cycle"
+    },
+    "sources": [
+      {
+        "url": "https://chipmango.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://launchbaseafrica.com/2026/09/29/african-startup-deals",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "document",
+      "label": {
+        "zh": "设计规格文档",
+        "en": "Design Spec Document"
+      },
+      "initial": {
+        "zh": "传感器芯片:工作电压1.8V,待机电流<5µA,唤醒时间<100ms,支持I2C接口",
+        "en": "Sensor chip: 1.8V supply, standby <5µA, wake <100ms, I2C interface"
+      }
+    }
+  }
+}
