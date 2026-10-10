@@ -1,0 +1,192 @@
+{
+  "cache_key": "b57d1474b5fc62ab16b74a36-57fa115b9b8b63b3992b1f1e",
+  "product_key": "b57d1474b5fc62ab16b74a36",
+  "fingerprint": "57fa115b9b8b63b3992b1f1e",
+  "product_id": "p_6593d2e4daf31cb8",
+  "product_name": "BioRender",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-10T22:27:18.822689+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为细胞信号通路图绘制视觉方案",
+      "en": "Design a visual plan for cell signaling pathway"
+    },
+    "scenario": {
+      "zh": "你正在撰写关于MAPK通路的综述论文,需要一张清晰的示意图展示信号级联反应过程",
+      "en": "You're writing a review on MAPK pathway and need a clear diagram showing the signal cascade"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择图示重点",
+          "en": "Choose diagram focus"
+        },
+        "instruction": {
+          "zh": "确定你想强调通路的哪个方面",
+          "en": "Decide which aspect of the pathway to emphasize"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "分子互作细节",
+              "en": "Molecular interaction details"
+            },
+            "output": {
+              "zh": "工作区更新为多层级联结构,Leo建议使用蛋白质复合物图标",
+              "en": "Workspace shows multi-tier cascade; Leo suggests protein complex icons"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "疾病关联突变",
+              "en": "Disease-linked mutations"
+            },
+            "output": {
+              "zh": "工作区调整为对比布局,Leo推荐标注突变位点的模板",
+              "en": "Workspace shifts to comparison layout; Leo recommends mutation-marker template"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "导入科学元素",
+          "en": "Import scientific elements"
+        },
+        "instruction": {
+          "zh": "从图标库选择符合学术标准的组件",
+          "en": "Select academically vetted components from icon library"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "经典受体-激酶组件",
+              "en": "Classic receptor-kinase set"
+            },
+            "output": {
+              "zh": "已加载RTK、RAF、MEK、ERK标准图标,所有元素可单独编辑",
+              "en": "Loaded RTK, RAF, MEK, ERK standard icons; all elements individually editable"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "细胞器背景组件",
+              "en": "Organelle background set"
+            },
+            "output": {
+              "zh": "已加载细胞膜、细胞质、核膜剖面图,便于展示空间定位",
+              "en": "Loaded membrane, cytoplasm, nuclear envelope sections for spatial context"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比布局方案",
+          "en": "Compare layout options"
+        },
+        "instruction": {
+          "zh": "Leo生成了两种符合期刊要求的排版",
+          "en": "Leo generated two journal-compliant layouts"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "垂直级联流程",
+              "en": "Vertical cascade flow"
+            },
+            "output": {
+              "zh": "信号从上至下展开,适合单栏排版,箭头清晰标注磷酸化步骤",
+              "en": "Signal flows top-down; fits single-column format with phosphorylation steps labeled"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "循环反馈回路",
+              "en": "Circular feedback loop"
+            },
+            "output": {
+              "zh": "强调ERK对上游的负反馈,适合机制讨论,突出调控节点",
+              "en": "Emphasizes ERK negative feedback; suits mechanism discussion with regulation nodes highlighted"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "准备图示交付",
+          "en": "Prepare diagram handoff"
+        },
+        "instruction": {
+          "zh": "确认图示符合目标期刊的图形规范",
+          "en": "Confirm diagram meets target journal graphics standards"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "下载可编辑矢量文件",
+              "en": "Download editable vector file"
+            },
+            "output": {
+              "zh": "草案已就绪,包含所有图层和标注,可在BioRender中继续调整细节",
+              "en": "Draft ready with all layers and labels; further refinement available in BioRender"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "导出审稿用高分辨率版本",
+              "en": "Export high-res for peer review"
+            },
+            "output": {
+              "zh": "已准备符合期刊要求的TIFF格式草案,图例和比例尺已按规范配置",
+              "en": "Prepared journal-standard TIFF draft; legend and scale bar configured per guidelines"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Leo将科学图标库、布局模板和期刊规范整合,帮你快速构建准确的学术图示草案",
+      "en": "Leo integrates vetted icon libraries, layout templates and journal standards to rapidly build accurate academic diagram drafts"
+    },
+    "sources": [
+      {
+        "url": "https://www.biorender.com",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://betakit.com/biorender-launches-ai-agent-for-building-scientific-research-images/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

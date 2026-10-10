@@ -1,0 +1,203 @@
+{
+  "cache_key": "b6564b46f0ebc3fea11cca87-f17c194738175abb3c85179a",
+  "product_key": "b6564b46f0ebc3fea11cca87",
+  "fingerprint": "f17c194738175abb3c85179a",
+  "product_id": "p_83ab91df1654988d",
+  "product_name": "Kello",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-10T22:26:53.135866+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "识别潜力型候选人",
+      "en": "Discover High-Potential Candidates"
+    },
+    "scenario": {
+      "zh": "某初创公司需要招聘增长工程师,传统简历筛选无法判断候选人的学习能力和适应速度",
+      "en": "A startup needs a growth engineer but resumes alone cannot reveal learning velocity and adaptability"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "定义评估维度",
+          "en": "Define Assessment Dimensions"
+        },
+        "instruction": {
+          "zh": "选择优先评估的能力维度",
+          "en": "Choose the primary capability dimension"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "学习速度与适应性",
+              "en": "Learning Velocity & Adaptability"
+            },
+            "output": {
+              "zh": "系统将分析候选人的技能演进轨迹和跨领域转型案例",
+              "en": "System analyzes skill evolution trajectory and cross-domain transitions"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "协作影响力",
+              "en": "Collaboration Impact"
+            },
+            "output": {
+              "zh": "系统将评估候选人在团队项目中的贡献模式和沟通效能",
+              "en": "System evaluates contribution patterns and communication effectiveness in team projects"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "导入候选人信号",
+          "en": "Import Candidate Signals"
+        },
+        "instruction": {
+          "zh": "选择分析的数据范围",
+          "en": "Select the scope of data to analyze"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "公开技术活动",
+              "en": "Public Technical Activity"
+            },
+            "output": {
+              "zh": "已导入三位候选人的开源贡献、技术写作和社区参与记录",
+              "en": "Imported open-source contributions, technical writing and community participation for three candidates"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "职业发展路径",
+              "en": "Career Progression Path"
+            },
+            "output": {
+              "zh": "已导入三位候选人的角色转变、项目复杂度提升和职责扩展历史",
+              "en": "Imported role transitions, project complexity growth and responsibility expansion history for three candidates"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比潜力画像",
+          "en": "Compare Potential Profiles"
+        },
+        "instruction": {
+          "zh": "查看两位候选人的差异",
+          "en": "Review differences between two candidates"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "候选人A – 深度专精",
+              "en": "Candidate A – Deep Specialization"
+            },
+            "output": {
+              "zh": "三年内在同一技术栈持续深化,掌握高级优化技巧,适合需要专家的团队",
+              "en": "Deepened expertise in one stack over three years with advanced optimization skills, suits teams needing specialists"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "候选人B – 快速拓展",
+              "en": "Candidate B – Rapid Expansion"
+            },
+            "output": {
+              "zh": "两年内掌握三种新技术并成功交付跨栈项目,展现强学习曲线",
+              "en": "Mastered three new technologies in two years and delivered cross-stack projects, shows strong learning curve"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "生成推荐依据",
+          "en": "Generate Recommendation Rationale"
+        },
+        "instruction": {
+          "zh": "确认最终候选人选择",
+          "en": "Confirm final candidate selection"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "推荐候选人B",
+              "en": "Recommend Candidate B"
+            },
+            "output": {
+              "zh": "简报已更新:候选人B的快速技能拓展与岗位需求的实验文化高度匹配",
+              "en": "Brief updated: Candidate B's rapid skill expansion strongly aligns with the role's experimentation culture"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "推荐候选人A",
+              "en": "Recommend Candidate A"
+            },
+            "output": {
+              "zh": "简报已更新:候选人A的深度专精可为增长实验提供技术稳定性支撑",
+              "en": "Brief updated: Candidate A's deep specialization provides technical stability for growth experiments"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Kello通过分析潜力信号而非仅看资历,帮助团队发现适配文化和增长阶段的候选人",
+      "en": "Kello analyzes potential signals beyond credentials to help teams find candidates aligned with culture and growth stage"
+    },
+    "sources": [
+      {
+        "url": "https://kello.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/09/28/peak-xv-goes-bigger-at-seed-with-new-surge-cohort-as-series-a-bar-rises",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "document",
+      "label": {
+        "zh": "职位需求简报",
+        "en": "Role Brief"
+      },
+      "initial": {
+        "zh": "Growth Engineer – 快速迭代实验、数据驱动决策、跨职能协作能力",
+        "en": "Growth Engineer – rapid experimentation, data-driven decisions, cross-functional collaboration"
+      }
+    }
+  }
+}

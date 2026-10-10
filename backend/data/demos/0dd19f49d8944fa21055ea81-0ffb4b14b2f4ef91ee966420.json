@@ -1,0 +1,203 @@
+{
+  "cache_key": "0dd19f49d8944fa21055ea81-0ffb4b14b2f4ef91ee966420",
+  "product_key": "0dd19f49d8944fa21055ea81",
+  "fingerprint": "0ffb4b14b2f4ef91ee966420",
+  "product_id": "10",
+  "product_name": "Tractable",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-10T22:28:25.903096+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "保险定损视觉分析",
+      "en": "Insurance Visual Assessment"
+    },
+    "scenario": {
+      "zh": "某保险公司需要快速处理车辆事故理赔，使用视觉 AI 加速定损流程",
+      "en": "An insurer needs to process vehicle claims quickly using visual AI for damage assessment"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择评估重点",
+          "en": "Choose Assessment Focus"
+        },
+        "instruction": {
+          "zh": "确定这次分析的主要目标",
+          "en": "Define the primary goal for this analysis"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "结构安全优先",
+              "en": "Structure Safety Priority"
+            },
+            "output": {
+              "zh": "工作区切换至框架完整性检测视图，标注车身关键部位",
+              "en": "Workspace switches to frame integrity view, highlighting key body areas"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "维修成本优先",
+              "en": "Repair Cost Priority"
+            },
+            "output": {
+              "zh": "工作区切换至零部件损伤视图，标注需更换与修复项目",
+              "en": "Workspace switches to component damage view, marking replace and repair items"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "上传事故照片",
+          "en": "Upload Accident Photos"
+        },
+        "instruction": {
+          "zh": "选择照片采集方式",
+          "en": "Choose photo collection method"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "客户自拍 4 张",
+              "en": "Customer Self-Shot 4 Photos"
+            },
+            "output": {
+              "zh": "工作区显示：前、后、左、右四个角度照片，光线不均",
+              "en": "Workspace shows: front, rear, left, right angles, uneven lighting"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "理赔员现场 8 张",
+              "en": "Adjuster On-Site 8 Photos"
+            },
+            "output": {
+              "zh": "工作区显示：多角度特写与全景，光线充足，细节清晰",
+              "en": "Workspace shows: multi-angle close-ups and panoramas, well-lit, clear detail"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比分析方案",
+          "en": "Compare Analysis Approaches"
+        },
+        "instruction": {
+          "zh": "选择分析深度",
+          "en": "Choose analysis depth"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "快速扫描",
+              "en": "Quick Scan"
+            },
+            "output": {
+              "zh": "工作区标注：3 处明显损伤，建议人工复核边缘案例",
+              "en": "Workspace marks: 3 obvious damages, suggests manual review for edge cases"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "深度检测",
+              "en": "Deep Inspection"
+            },
+            "output": {
+              "zh": "工作区标注：5 处损伤含隐蔽部位，提供修复优先级排序",
+              "en": "Workspace marks: 5 damages including hidden areas, provides repair priority ranking"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "生成评估报告",
+          "en": "Generate Assessment Report"
+        },
+        "instruction": {
+          "zh": "确认交付内容",
+          "en": "Confirm deliverables"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "标准理赔单",
+              "en": "Standard Claim Form"
+            },
+            "output": {
+              "zh": "工作区显示：损伤清单、建议维修项、预估工时，可下载简报",
+              "en": "Workspace shows: damage list, suggested repairs, estimated labor, downloadable brief"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "详细技术档案",
+              "en": "Detailed Technical File"
+            },
+            "output": {
+              "zh": "工作区显示：标注图、零件编号、供应商建议，可下载简报",
+              "en": "Workspace shows: annotated images, part numbers, supplier suggestions, downloadable brief"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "视觉 AI 将车险定损从数天缩短至分钟级，提升理赔体验与运营效率",
+      "en": "Visual AI reduces auto claim assessment from days to minutes, improving experience and efficiency"
+    },
+    "sources": [
+      {
+        "url": "https://tractable.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://fizzdesigns.co.uk/top-ai-deals-in-europe/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "image",
+      "label": {
+        "zh": "事故照片分析工作区",
+        "en": "Accident Photo Analysis Workspace"
+      },
+      "initial": {
+        "zh": "客户提交：前保险杠碰撞，左侧车门划痕，需评估维修范围",
+        "en": "Client submitted: front bumper collision, left door scratch, assess repair scope"
+      }
+    }
+  }
+}

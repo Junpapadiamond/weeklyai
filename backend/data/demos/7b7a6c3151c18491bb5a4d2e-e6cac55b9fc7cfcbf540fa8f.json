@@ -1,0 +1,192 @@
+{
+  "cache_key": "7b7a6c3151c18491bb5a4d2e-e6cac55b9fc7cfcbf540fa8f",
+  "product_key": "7b7a6c3151c18491bb5a4d2e",
+  "fingerprint": "e6cac55b9fc7cfcbf540fa8f",
+  "product_id": "p_0ae0feabf51fd8c0",
+  "product_name": "Mecka AI",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-10T22:27:39.795877+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为人形机器人训练收集真实世界数据",
+      "en": "Collect Real-World Data to Train Humanoid Robots"
+    },
+    "scenario": {
+      "zh": "一家物流公司希望训练机器人在仓库内搬运包裹,需要收集人类操作员的动作数据",
+      "en": "A logistics company wants to train robots to move packages in warehouses and needs human operator motion data"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择数据采集设备",
+          "en": "Choose Data Collection Device"
+        },
+        "instruction": {
+          "zh": "为仓库搬运任务选择合适的数据采集方式",
+          "en": "Select the right data collection method for warehouse tasks"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "身体传感器套装",
+              "en": "Body Sensor Suite"
+            },
+            "output": {
+              "zh": "配置完成:全身17个关节点追踪,适合精确记录搬运动作",
+              "en": "Configuration ready: 17 joint tracking points, ideal for precise handling motions"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "iPhone第一人称采集",
+              "en": "iPhone First-Person Capture"
+            },
+            "output": {
+              "zh": "配置完成:视觉+IMU传感器,适合快速收集大量场景数据",
+              "en": "Configuration ready: vision plus IMU sensors, ideal for rapidly collecting diverse scenarios"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "设计数据采集任务",
+          "en": "Design Data Collection Task"
+        },
+        "instruction": {
+          "zh": "定义操作员需要执行的具体任务场景",
+          "en": "Define the specific task scenarios operators will perform"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "标准化路线搬运",
+              "en": "Standardized Route Handling"
+            },
+            "output": {
+              "zh": "任务就绪:固定货架到打包台路线,每班次记录200次重复操作",
+              "en": "Task ready: fixed shelf-to-packing route, 200 repetitions recorded per shift"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "多变场景搬运",
+              "en": "Variable Scenario Handling"
+            },
+            "output": {
+              "zh": "任务就绪:随机货架位置和障碍物,每班次记录80次不同情况",
+              "en": "Task ready: random shelf positions and obstacles, 80 different situations per shift"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比数据质量",
+          "en": "Compare Data Quality"
+        },
+        "instruction": {
+          "zh": "检查两种采集策略的数据特征",
+          "en": "Review data characteristics from both collection strategies"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "标准路线数据集",
+              "en": "Standard Route Dataset"
+            },
+            "output": {
+              "zh": "动作序列高度一致,适合学习流畅的基础搬运动作",
+              "en": "Highly consistent motion sequences, suitable for learning smooth basic handling"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "多变场景数据集",
+              "en": "Variable Scenario Dataset"
+            },
+            "output": {
+              "zh": "包含更多应对障碍和调整姿态的片段,适合泛化能力",
+              "en": "Contains more obstacle response and posture adjustment segments, better for generalization"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "准备训练数据集",
+          "en": "Prepare Training Dataset"
+        },
+        "instruction": {
+          "zh": "汇总采集成果并规划下一步训练",
+          "en": "Summarize collection results and plan next training steps"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "查看数据集摘要",
+              "en": "View Dataset Summary"
+            },
+            "output": {
+              "zh": "完成:三周采集窗口,标注完成的多模态数据集已同步到训练集群",
+              "en": "Complete: three-week collection window, annotated multimodal dataset synced to training cluster"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "导出采集报告",
+              "en": "Export Collection Report"
+            },
+            "output": {
+              "zh": "报告已生成:数据覆盖范围、质量指标和建议的训练配置",
+              "en": "Report generated: data coverage, quality metrics and recommended training configuration"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "通过真实操作员数据采集,为物理AI提供互联网无法获取的训练素材",
+      "en": "Collect real operator data to provide training material for physical AI that internet cannot supply"
+    },
+    "sources": [
+      {
+        "url": "https://www.mecka.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://betakit.com/mecka-ai-reveals-60-million-usd-series-b-round-backed-by-sequoia-nvidia/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

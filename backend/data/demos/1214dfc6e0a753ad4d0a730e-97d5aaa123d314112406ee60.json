@@ -1,0 +1,203 @@
+{
+  "cache_key": "1214dfc6e0a753ad4d0a730e-97d5aaa123d314112406ee60",
+  "product_key": "1214dfc6e0a753ad4d0a730e",
+  "fingerprint": "97d5aaa123d314112406ee60",
+  "product_id": "p_f9d850fa4bd23a23",
+  "product_name": "Finches",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-10T22:28:04.532492+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "农业采购供应链风险预警",
+      "en": "Agricultural Supply Risk Forecast"
+    },
+    "scenario": {
+      "zh": "某饮料公司依赖单一地区柑橘供应,需提前识别减产风险并规划替代方案",
+      "en": "Beverage company relies on single-region citrus supply, needs early warning of shortfall and backup plan"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择监测数据源范围",
+          "en": "Select Monitoring Data Scope"
+        },
+        "instruction": {
+          "zh": "整合哪些信息流以构建早期预警能力",
+          "en": "Which data streams to consolidate for early warnings"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "仅供应商自报产量",
+              "en": "Supplier-reported yield only"
+            },
+            "output": {
+              "zh": "基础视角已加载,缺少独立验证和外部风险信号",
+              "en": "Basic view loaded, lacks independent verification and external risk signals"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "田间+气候+卫星综合",
+              "en": "Field + climate + satellite combined"
+            },
+            "output": {
+              "zh": "多源数据已整合,可交叉验证作物状态并捕捉区域性威胁",
+              "en": "Multi-source data consolidated, enables crop status cross-check and regional threat detection"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "设定预警触发条件",
+          "en": "Set Alert Trigger Conditions"
+        },
+        "instruction": {
+          "zh": "定义何时发出供应链风险警报",
+          "en": "Define when to issue supply chain risk alerts"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "产量低于合同量15%",
+              "en": "Yield drops below contract 15%"
+            },
+            "output": {
+              "zh": "阈值已设定,系统将在减产确认后触发预警",
+              "en": "Threshold set, system alerts after shortfall confirmed"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "异常气候+病害模式出现",
+              "en": "Abnormal climate + disease pattern detected"
+            },
+            "output": {
+              "zh": "前置指标已激活,可在减产发生前三个月预警",
+              "en": "Leading indicators active, enables three-month advance warning before actual shortfall"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比两个时间窗口预警",
+          "en": "Compare Two Time-Window Alerts"
+        },
+        "instruction": {
+          "zh": "检查不同预警策略的决策时间差异",
+          "en": "Review decision time difference between alert strategies"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "8周预警(气候前兆)",
+              "en": "8-week alert (climate precursor)"
+            },
+            "output": {
+              "zh": "报告显示干旱模式+柑橘溃疡病早期信号,备选供应商仍有库存",
+              "en": "Report shows drought pattern + early citrus canker signal, backup suppliers still have inventory"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "2周预警(产量确认)",
+              "en": "2-week alert (yield confirmed)"
+            },
+            "output": {
+              "zh": "报告显示减产已成定局,多数替代供应商已被竞争对手锁定",
+              "en": "Report shows shortfall certain, most alternative suppliers already locked by competitors"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "审阅最终预警报告",
+          "en": "Review Final Alert Report"
+        },
+        "instruction": {
+          "zh": "确认可下载的采购行动建议文档",
+          "en": "Confirm downloadable procurement action brief"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "查看风险量化与时间线",
+              "en": "View risk quantification & timeline"
+            },
+            "output": {
+              "zh": "报告展示三个供应商减产概率、影响范围和建议行动窗口",
+              "en": "Report shows three suppliers' shortfall probability, impact scope and recommended action window"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "查看替代供应商清单",
+              "en": "View alternative supplier list"
+            },
+            "output": {
+              "zh": "报告列出四个备选产区供应商及其当前产能和联系优先级",
+              "en": "Report lists four backup-region suppliers with current capacity and contact priority"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "整合分散数据源,将供应链反应时间从事后2周提前到风险出现前8周",
+      "en": "Consolidating scattered data extends supply chain reaction time from 2-week post-crisis to 8-week pre-risk"
+    },
+    "sources": [
+      {
+        "url": "https://www.finches.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.eu-startups.com/2026/10/bavarias-female-founded-startup-finches-raises-e2-million-to-bring-ai-early-warnings-to-agricultural-procurement",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "document",
+      "label": {
+        "zh": "风险预警报告",
+        "en": "Risk Alert Report"
+      },
+      "initial": {
+        "zh": "巴西圣保罗州柑橘采购 | 供应商:3家 | 月需求:800吨 | 合同期:2025Q2-Q4",
+        "en": "São Paulo citrus sourcing | 3 suppliers | 800t/month | Contract: 2025Q2-Q4"
+      }
+    }
+  }
+}
