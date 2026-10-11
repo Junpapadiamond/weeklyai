@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
-from app.services.chat_service import _providers, _is_perplexity
+from app.services.chat_service import _providers, _is_perplexity, _provider_protocol
 from app.services.demo_contract import cache_key, product_key, fingerprint, safe_url, validate_experience
 from app.services.demo_store import StoreUnavailable
 from app.services.demo_profiles import product_profile
@@ -191,11 +191,16 @@ def generate_spec(product):
         "\nCatalog: " + json.dumps(context, ensure_ascii=False))
     # One reservation allows at most two bounded calls, with one personal credit.
     # A repair must pass the same validator; we never publish a fabricated fallback.
-    _, base, key, model = providers()[0]
+    label, base, key, model = providers()[0]
     payload = {"model": model, "messages": [{"role": "user", "content": prompt}],
                "temperature": .25, "max_tokens": MAX_OUTPUT_TOKENS, "stream": False}
-    protocol = os.getenv("DEMO_API_PROTOCOL") or os.getenv("DEMO_API_STYLE") or ("anthropic" if model.startswith("claude") else "openai")
-    anthropic = bool(os.getenv("DEMO_API_KEY") and protocol == "anthropic")
+    demo_configured = bool(os.getenv("DEMO_API_KEY") and (os.getenv("DEMO_API_BASE_URL") or os.getenv("DEMO_API_BASE")))
+    protocol = ((os.getenv("DEMO_API_PROTOCOL") or os.getenv("DEMO_API_STYLE") or
+                 ("anthropic" if model.startswith("claude") else "openai")) if demo_configured else
+                _provider_protocol(label, model))
+    anthropic = protocol == "anthropic"
+    if anthropic:
+        payload.pop("temperature", None)
     endpoint = "/messages" if anthropic else "/chat/completions"
     headers = {"x-api-key": key, "anthropic-version": "2023-06-01"} if anthropic else {"Authorization": "Bearer " + key}
     if _is_perplexity(base):

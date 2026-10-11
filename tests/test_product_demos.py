@@ -311,6 +311,25 @@ def _mock_completions(monkeypatch, specs, stops=None):
     return post
 
 
+def test_demo_inherits_claude_messages_protocol(monkeypatch, spec):
+    for key in ('DEMO_API_KEY', 'DEMO_API_BASE_URL', 'DEMO_API_BASE', 'CHAT_API_BASE_URL'):
+        monkeypatch.delenv(key, raising=False)
+    monkeypatch.setenv('CLAUDE_API_KEY', 'private-shared-key')
+    monkeypatch.setenv('CLAUDE_API_BASE_URL', 'https://relay.example/v1')
+    monkeypatch.setenv('CLAUDE_MODEL', 'claude-sonnet-5')
+    monkeypatch.setenv('DEMO_API_PROTOCOL', 'openai')  # Inactive without a demo-specific provider.
+    body = {'content': [{'type': 'text', 'text': json.dumps(spec)}], 'stop_reason': 'end_turn'}
+    response = MagicMock()
+    response.__enter__.return_value = response
+    response.iter_content.return_value = [json.dumps(body).encode()]
+    post = MagicMock(return_value=response)
+    monkeypatch.setattr(service.requests, 'post', post)
+    assert service.generate_spec(PRODUCT) == validate_experience(spec)
+    assert post.call_args.args[0] == 'https://relay.example/v1/messages'
+    assert post.call_args.kwargs['headers']['x-api-key'] == 'private-shared-key'
+    assert 'temperature' not in post.call_args.kwargs['json']
+
+
 def test_invalid_outcome_is_repaired_once_and_charged_once(client, store, spec, monkeypatch, caplog):
     invalid = copy.deepcopy(spec)
     invalid["steps"][0]["options"][0]["output"]["en"] = "Improved by 20%"

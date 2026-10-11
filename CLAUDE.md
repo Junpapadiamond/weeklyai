@@ -1227,6 +1227,16 @@ cd frontend-next && npm test
 
 ## 全部环境变量
 
+### AI 产品助手
+
+`/api/v1/chat` 默认复用发现引擎的 `CLAUDE_API_KEY`、`CLAUDE_API_BASE_URL`、
+`CLAUDE_MODEL`，通过 Anthropic `/messages` 请求。Vercel `backend` 项目须单独配置
+这三项，GitHub Actions 的密钥不会自动同步。Claude 默认不回退到 Perplexity。
+`CHAT_API_BASE_URL`、`CHAT_API_KEY`、`CHAT_MODEL` 可覆盖共享配置；
+`CHAT_API_PROTOCOL=anthropic|openai` 可显式选择协议，否则按模型名称推断。
+没有 Claude 配置时仍支持旧 Perplexity 路由。`/chat/status` 和 `/health` 使用同一配置判断。
+请求预算 `CHAT_TIMEOUT_TOTAL` 默认 35 秒、上限 40 秒，为前端 45 秒超时留出余量。
+
 | 变量 | 说明 | 默认值 |
 |------|------|--------|
 | `MONGO_URI` | MongoDB 连接 URI | (未设置则用 JSON) |
@@ -1234,6 +1244,9 @@ cd frontend-next && npm test
 | `NEXT_PUBLIC_API_BASE_URL` | 前端浏览器侧 API 基地址 | `http://localhost:5000/api/v1` |
 | `PERPLEXITY_API_KEY` | Perplexity API Key | (required) |
 | `PERPLEXITY_MODEL` | Perplexity 模型 | `sonar` |
+| `CLAUDE_API_KEY` | 发现引擎 / 产品助手 Claude Key | 空 |
+| `CLAUDE_API_BASE_URL` | Anthropic Messages 兼容基地址（含 `/v1`） | `https://api.anthropic.com/v1` |
+| `CLAUDE_MODEL` | 发现引擎 / 产品助手 Claude 模型 | `claude-sonnet-5` |
 | `ZHIPU_API_KEY` | 智谱 API Key | (required for cn) |
 | `GLM_MODEL` | GLM 模型 | `glm-4.7` |
 | `GLM_SEARCH_ENGINE` | GLM 搜索引擎 | `search_pro` |

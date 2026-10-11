@@ -104,6 +104,7 @@ def create_app():
     @app.get('/api/v1/health')
     def health():
         from app.services.product_repository import ProductRepository, _mongo_uri_configured
+        from app.services.chat_service import active_provider
         products = ProductRepository.load_products()
         updated = ProductRepository.get_last_updated()
         return jsonify({
@@ -112,7 +113,7 @@ def create_app():
             'product_count': len(products),
             'storage': updated['storage'],
             'mongo_configured': _mongo_uri_configured(),
-            'chat_configured': bool(sanitize_env_value(os.getenv('PERPLEXITY_API_KEY', ''))),
+            'chat_configured': bool(active_provider()['provider']),
             'product_last_updated': updated['product_last_updated'],
             'product_hours_ago': updated['product_hours_ago'],
         }), 200 if products else 503

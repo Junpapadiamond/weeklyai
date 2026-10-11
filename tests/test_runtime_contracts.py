@@ -9,6 +9,14 @@ import pytest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'backend'))
 
 
+@pytest.fixture(autouse=True)
+def legacy_chat_configuration(monkeypatch):
+    # These tests exercise the legacy OpenAI/Perplexity contract independently
+    # of credentials loaded by crawler modules elsewhere in the test suite.
+    monkeypatch.delenv('CLAUDE_API_KEY', raising=False)
+    monkeypatch.delenv('CHAT_API_PROTOCOL', raising=False)
+
+
 @pytest.fixture
 def client():
     from app import create_app, rate_limiter
