@@ -1,6 +1,7 @@
 "use client";
 
 import { ChatCircleDots, UserCircle } from "@phosphor-icons/react";
+import { Fragment } from "react";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import type { ChatMessage } from "./use-chat";
 
@@ -8,13 +9,32 @@ type ChatMessageProps = {
   message: ChatMessage;
 };
 
+function bareLink(text: string): string {
+  let href = text;
+  // Prose often wraps a URL in parentheses. Keep balanced parentheses that
+  // belong to the URL itself, and leave trailing prose outside the anchor.
+  for (;;) {
+    const previous = href;
+    href = href.replace(/[.,;!?。，；！？]+$/, "");
+    for (const [open, close] of [["(", ")"], ["[", "]"], ["（", "）"]]) {
+      if (href.endsWith(close) && href.split(close).length > href.split(open).length) {
+        href = href.slice(0, -1);
+      }
+    }
+    if (href === previous) return href;
+  }
+}
+
 // Render source links without accepting HTML or unsafe URL schemes from the model.
 function linkedText(text: string) {
   return text.split(/(\[[^\]\n]+\]\(https?:\/\/[^\s)]+\)|https?:\/\/[^\s<>]+)/g).map((part, index) => {
     const markdown = part.match(/^\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)$/);
-    const href = markdown?.[2] || (/^https?:\/\//.test(part) ? part.replace(/[.,;!?。，；！？]+$/, "") : "");
+    const href = markdown?.[2] || (/^https?:\/\//.test(part) ? bareLink(part) : "");
     if (!href) return part;
-    return <a key={index} href={href} target="_blank" rel="noopener noreferrer">{markdown?.[1] || href}</a>;
+    return <Fragment key={index}>
+      <a href={href} target="_blank" rel="noopener noreferrer">{markdown?.[1] || href}</a>
+      {markdown ? "" : part.slice(href.length)}
+    </Fragment>;
   });
 }
 
