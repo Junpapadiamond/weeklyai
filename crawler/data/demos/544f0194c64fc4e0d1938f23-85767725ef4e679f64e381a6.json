@@ -1,0 +1,192 @@
+{
+  "cache_key": "544f0194c64fc4e0d1938f23-85767725ef4e679f64e381a6",
+  "product_key": "544f0194c64fc4e0d1938f23",
+  "fingerprint": "85767725ef4e679f64e381a6",
+  "product_id": "12",
+  "product_name": "allO",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-11T22:55:03.333535+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为餐厅配置 AI 运营助手",
+      "en": "Configure AI operating assistant for restaurant"
+    },
+    "scenario": {
+      "zh": "你经营一家意大利餐厅，需要 AI 助手处理订单、库存和排班",
+      "en": "You run an Italian restaurant and need an AI assistant to handle orders, inventory and scheduling"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择首要自动化场景",
+          "en": "Choose primary automation scenario"
+        },
+        "instruction": {
+          "zh": "从最耗时的运营环节开始",
+          "en": "Start with the most time-consuming operation"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "电话订单处理",
+              "en": "Phone order handling"
+            },
+            "output": {
+              "zh": "看板显示 AI 接听模块，自动记录菜品、过敏信息和取餐时间",
+              "en": "Board shows AI call module capturing dishes, allergies and pickup times"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "食材库存追踪",
+              "en": "Ingredient inventory tracking"
+            },
+            "output": {
+              "zh": "看板显示库存卡片，AI 根据菜单用量预测补货需求",
+              "en": "Board shows inventory cards with AI predicting restock needs from menu usage"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "设定运营规则",
+          "en": "Set operational rules"
+        },
+        "instruction": {
+          "zh": "定义 AI 助手的决策边界",
+          "en": "Define decision boundaries for AI assistant"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "自主处理常规任务",
+              "en": "Autonomous for routine tasks"
+            },
+            "output": {
+              "zh": "AI 直接确认标准订单，标记特殊要求供人工审核",
+              "en": "AI confirms standard orders directly, flags special requests for review"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "全程人工确认",
+              "en": "Manual confirmation required"
+            },
+            "output": {
+              "zh": "AI 整理信息草稿，所有决定由店长最终批准",
+              "en": "AI prepares information drafts, manager approves all decisions"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "review",
+        "title": {
+          "zh": "查看助手工作日志",
+          "en": "Review assistant activity log"
+        },
+        "instruction": {
+          "zh": "检查 AI 在晚高峰的实际表现",
+          "en": "Check AI performance during evening rush"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "订单准确性",
+              "en": "Order accuracy"
+            },
+            "output": {
+              "zh": "42 通来电中 39 单完整记录，3 单因方言转人工",
+              "en": "39 of 42 calls recorded completely, 3 transferred due to dialect"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "库存预测质量",
+              "en": "Inventory forecast quality"
+            },
+            "output": {
+              "zh": "番茄和罗勒预测与实际用量接近，帕尔马干酪略有偏差",
+              "en": "Tomato and basil predictions close to actual usage, Parmesan slightly off"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "choice",
+        "title": {
+          "zh": "调整助手配置",
+          "en": "Adjust assistant configuration"
+        },
+        "instruction": {
+          "zh": "根据日志优化下周运营",
+          "en": "Optimize next week's operations based on log"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "扩展至排班建议",
+              "en": "Expand to shift suggestions"
+            },
+            "output": {
+              "zh": "看板新增排班卡片，AI 基于历史客流推荐周末人员安排",
+              "en": "Board adds shift cards, AI recommends weekend staffing from traffic history"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "接入供应商系统",
+              "en": "Connect supplier system"
+            },
+            "output": {
+              "zh": "看板显示供应商对接状态，AI 可直接生成采购清单草稿",
+              "en": "Board shows supplier integration status, AI drafts purchase lists directly"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "垂直场景的 AI agent 通过明确规则和日志反馈持续优化餐厅运营",
+      "en": "Vertical AI agents optimize restaurant operations through clear rules and log feedback"
+    },
+    "sources": [
+      {
+        "url": "https://allo.restaurant/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://bebeez.eu/2026/05/27/munichs-allo-raises-e12-million-series-a-to-expand-its-ai-operating-system-for-restaurants-across-europe/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

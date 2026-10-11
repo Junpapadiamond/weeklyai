@@ -1,0 +1,203 @@
+{
+  "cache_key": "2c57707441db3f38fccd3006-be81e4db98bfaca9100afdcd",
+  "product_key": "2c57707441db3f38fccd3006",
+  "fingerprint": "be81e4db98bfaca9100afdcd",
+  "product_id": "25",
+  "product_name": "IVRy",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-11T22:55:53.318725+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "IVRy 电话AI应答配置",
+      "en": "IVRy Phone AI Setup"
+    },
+    "scenario": {
+      "zh": "某连锁餐厅午市电话订座激增，人工接听常占线漏单，需配置AI话务分流",
+      "en": "A restaurant chain faces lunch rush phone overflow; configure AI to route reservations"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择接入场景",
+          "en": "Choose Entry Point"
+        },
+        "instruction": {
+          "zh": "决定AI何时接管来电",
+          "en": "Decide when AI takes calls"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "占线时自动接管",
+              "en": "Takeover When Busy"
+            },
+            "output": {
+              "zh": "AI仅在人工全忙时介入，高峰保底接通但平时仍人工优先",
+              "en": "AI steps in only when staff unavailable; peak coverage with human priority off-peak"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "全天优先AI应答",
+              "en": "AI First All Day"
+            },
+            "output": {
+              "zh": "所有来电先由AI分类处理，复杂咨询再转人工，话务量大幅减轻",
+              "en": "All calls screened by AI first; complex queries escalated, workload greatly reduced"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "设定应答逻辑",
+          "en": "Configure Response Logic"
+        },
+        "instruction": {
+          "zh": "定义AI如何处理常见订座请求",
+          "en": "Define how AI handles reservation requests"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "简单确认直接预订",
+              "en": "Simple Confirm & Book"
+            },
+            "output": {
+              "zh": "脚本更新：收集姓名、人数、时段后立即确认，快速但灵活性低",
+              "en": "Script updated: collect name, size, time then confirm; fast but less flexible"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "询问偏好推荐方案",
+              "en": "Ask Preference & Suggest"
+            },
+            "output": {
+              "zh": "脚本更新：先问窗边或包间、有无儿童座椅需求，体验更佳但通话稍长",
+              "en": "Script updated: ask window/private room, child seat needs; better experience, slightly longer"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比应答路径",
+          "en": "Compare Call Paths"
+        },
+        "instruction": {
+          "zh": "检查两种场景下的AI对话流程",
+          "en": "Review AI conversation flow in two scenarios"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "满座时段应答",
+              "en": "Full Slot Response"
+            },
+            "output": {
+              "zh": "AI礼貌告知无空位，推荐外卖或晚市替代，记录回电需求并致歉",
+              "en": "AI politely notes no availability, suggests takeout or dinner, logs callback and apologizes"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "有空位时应答",
+              "en": "Available Slot Response"
+            },
+            "output": {
+              "zh": "AI确认预订细节，告知到店注意事项，发送短信确认码并感谢来电",
+              "en": "AI confirms booking details, shares arrival notes, sends SMS code and thanks caller"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "准备正式上线",
+          "en": "Prepare for Launch"
+        },
+        "instruction": {
+          "zh": "最终检查配置并生成交付清单",
+          "en": "Final config check and handoff"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "导出配置文档",
+              "en": "Export Config Doc"
+            },
+            "output": {
+              "zh": "应答脚本、转接规则、短信模板已整理，可交付门店培训使用",
+              "en": "Call script, routing rules, SMS templates compiled; ready for store training"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "查看测试建议",
+              "en": "View Test Plan"
+            },
+            "output": {
+              "zh": "建议先用内线模拟高峰、满座、特殊需求场景，确认AI应答自然流畅",
+              "en": "Recommend internal test calls simulating peak, full slots, special requests for natural flow"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "IVRy让餐饮等行业低成本接入对话AI，从占线保底到全流程分流均可配置",
+      "en": "IVRy enables restaurants to adopt conversational AI affordably, from overflow to full routing"
+    },
+    "sources": [
+      {
+        "url": "https://ivry.jp/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://note.com/maru56/n/n169c2f5c2794",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "document",
+      "label": {
+        "zh": "应答脚本",
+        "en": "Call Script"
+      },
+      "initial": {
+        "zh": "午间订座：问姓名、人数、时段，满座推荐外卖或晚市，记录回电号码",
+        "en": "Lunch reservations: ask name, party size, time; if full suggest takeout or dinner, log callback"
+      }
+    }
+  }
+}

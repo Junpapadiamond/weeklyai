@@ -1,0 +1,192 @@
+{
+  "cache_key": "f70f66b01b35f5a18473b02d-f35c7033a9c1699cdcba05c0",
+  "product_key": "f70f66b01b35f5a18473b02d",
+  "fingerprint": "f35c7033a9c1699cdcba05c0",
+  "product_id": "26",
+  "product_name": "Human Archive",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-11T22:56:19.021287+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为机器人训练采集真实任务数据",
+      "en": "Collect Real Task Data for Robot Training"
+    },
+    "scenario": {
+      "zh": "你的仓库机器人需要学习分拣包裹，需要大量真人操作视频来训练模型",
+      "en": "Your warehouse robot needs to learn package sorting and requires human operator videos to train the model"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择采集场景",
+          "en": "Choose Collection Scenario"
+        },
+        "instruction": {
+          "zh": "确定需要机器人学习的具体任务类型",
+          "en": "Define the specific task type for robot learning"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "仓库包裹分拣",
+              "en": "Warehouse Package Sorting"
+            },
+            "output": {
+              "zh": "计划书更新：印度班加罗尔物流中心，100小时第一视角操作录制",
+              "en": "Plan updated: Bangalore logistics center, 100 hours first-person operation recording"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "餐厅食材配送",
+              "en": "Restaurant Food Delivery"
+            },
+            "output": {
+              "zh": "计划书更新：孟买餐饮区域，80小时配送员视角数据采集",
+              "en": "Plan updated: Mumbai dining district, 80 hours delivery personnel perspective data collection"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "配置采集设备",
+          "en": "Configure Collection Equipment"
+        },
+        "instruction": {
+          "zh": "选择头戴设备的录制参数配置方案",
+          "en": "Select recording parameter configuration for headset"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "标准分辨率快速部署",
+              "en": "Standard Resolution Quick Deploy"
+            },
+            "output": {
+              "zh": "配置完成：720p录制，12台设备即日启动，覆盖早晚班次",
+              "en": "Configuration complete: 720p recording, 12 devices start today, covering morning and evening shifts"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "高清详细动作捕捉",
+              "en": "HD Detailed Motion Capture"
+            },
+            "output": {
+              "zh": "配置完成：1080p录制，8台设备两天内到位，重点记录手部操作",
+              "en": "Configuration complete: 1080p recording, 8 devices ready in two days, focus on hand operations"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "review",
+        "title": {
+          "zh": "检查采集质量",
+          "en": "Review Collection Quality"
+        },
+        "instruction": {
+          "zh": "查看样本片段，确认数据符合训练要求",
+          "en": "Review sample clips to confirm data meets training requirements"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "视角稳定性良好",
+              "en": "Stable Perspective Quality"
+            },
+            "output": {
+              "zh": "样本确认：操作者头部移动自然，物体识别清晰，适合模型学习",
+              "en": "Sample confirmed: Natural head movement, clear object recognition, suitable for model learning"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "需要调整设备角度",
+              "en": "Need Equipment Angle Adjustment"
+            },
+            "output": {
+              "zh": "现场调整：摄像头下倾15度，重新采集关键分拣动作片段",
+              "en": "On-site adjustment: Camera tilted down 15 degrees, re-collect key sorting action segments"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "compare",
+        "title": {
+          "zh": "交付训练数据集",
+          "en": "Deliver Training Dataset"
+        },
+        "instruction": {
+          "zh": "选择最终数据集规模和标注深度",
+          "en": "Select final dataset scale and annotation depth"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "基础标注快速迭代",
+              "en": "Basic Annotation Fast Iteration"
+            },
+            "output": {
+              "zh": "数据集就绪：60小时有效片段，物体边界框标注，可立即开始训练",
+              "en": "Dataset ready: 60 hours valid clips, object bounding boxes annotated, training can start immediately"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "精细标注深度训练",
+              "en": "Detailed Annotation Deep Training"
+            },
+            "output": {
+              "zh": "数据集就绪：45小时高质量片段，手部关键点与动作序列标注完整",
+              "en": "Dataset ready: 45 hours high-quality clips, hand keypoints and action sequences fully annotated"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "真实任务视角数据帮助机器人学习人类操作模式，加速实际场景部署能力",
+      "en": "Real task perspective data helps robots learn human operation patterns and accelerates real-world deployment capability"
+    },
+    "sources": [
+      {
+        "url": "https://www.humanarchive.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/05/26/human-archive-taps-into-indias-services-startups-to-collect-data-for-physical-ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

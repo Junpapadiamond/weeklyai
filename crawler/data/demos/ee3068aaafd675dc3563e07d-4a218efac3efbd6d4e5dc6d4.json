@@ -1,0 +1,203 @@
+{
+  "cache_key": "ee3068aaafd675dc3563e07d-4a218efac3efbd6d4e5dc6d4",
+  "product_key": "ee3068aaafd675dc3563e07d",
+  "fingerprint": "4a218efac3efbd6d4e5dc6d4",
+  "product_id": "11",
+  "product_name": "Seldon",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-11T22:54:38.552230+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "Seldon 企业模型部署",
+      "en": "Seldon Enterprise Model Deployment"
+    },
+    "scenario": {
+      "zh": "你的数据团队训练了一个需求预测模型，需要快速部署到生产环境供业务系统调用",
+      "en": "Your data team trained a demand forecasting model that needs rapid deployment to production for business systems"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择部署策略",
+          "en": "Choose Deployment Strategy"
+        },
+        "instruction": {
+          "zh": "决定如何将模型引入生产环境",
+          "en": "Decide how to introduce the model to production"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "金丝雀发布（10%流量）",
+              "en": "Canary Release (10% traffic)"
+            },
+            "output": {
+              "zh": "配置已更新：新模型接收少量真实流量，旧版本继续服务大部分请求",
+              "en": "Config updated: new model receives limited real traffic, legacy version serves most requests"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "蓝绿部署（完整切换）",
+              "en": "Blue-Green Deployment (full switch)"
+            },
+            "output": {
+              "zh": "配置已更新：新环境完整复制，验证通过后一次性切换全部流量",
+              "en": "Config updated: new environment fully replicated, all traffic switches after validation"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "配置监控指标",
+          "en": "Configure Monitoring Metrics"
+        },
+        "instruction": {
+          "zh": "选择生产环境中重点追踪的指标",
+          "en": "Select key metrics to track in production"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "延迟与吞吐量",
+              "en": "Latency & Throughput"
+            },
+            "output": {
+              "zh": "文档已添加：P95响应时间、每秒请求数、资源利用率仪表盘",
+              "en": "Document updated: P95 response time, requests per second, resource utilization dashboard"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "预测准确度漂移",
+              "en": "Prediction Accuracy Drift"
+            },
+            "output": {
+              "zh": "文档已添加：实时预测分布对比、标签反馈循环、异常检测阈值",
+              "en": "Document updated: real-time prediction distribution comparison, label feedback loop, anomaly thresholds"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比推理引擎",
+          "en": "Compare Inference Engines"
+        },
+        "instruction": {
+          "zh": "评估不同运行时对这个模型的适配性",
+          "en": "Evaluate runtime compatibility for this model"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "TensorFlow Serving",
+              "en": "TensorFlow Serving"
+            },
+            "output": {
+              "zh": "原生TF支持，自动批处理，适合现有TensorFlow模型快速上线",
+              "en": "Native TF support, auto-batching, suitable for quick launch of existing TensorFlow models"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "ONNX Runtime",
+              "en": "ONNX Runtime"
+            },
+            "output": {
+              "zh": "跨框架兼容，优化推理速度，适合多种框架训练的模型统一管理",
+              "en": "Cross-framework compatible, optimized inference speed, suitable for unified management of models from various frameworks"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "确认部署计划",
+          "en": "Confirm Deployment Plan"
+        },
+        "instruction": {
+          "zh": "最终检查配置文档，准备交付运维团队",
+          "en": "Final review of config document before handoff to operations team"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "生成部署清单",
+              "en": "Generate Deployment Checklist"
+            },
+            "output": {
+              "zh": "文档已整理：包含镜像版本、资源配额、回滚步骤和联系人清单",
+              "en": "Document organized: includes image version, resource quotas, rollback steps and contact list"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "添加故障预案",
+              "en": "Add Failure Contingency"
+            },
+            "output": {
+              "zh": "文档已补充：自动降级逻辑、备用模型路径、告警升级机制",
+              "en": "Document supplemented: auto-degradation logic, fallback model path, alert escalation mechanism"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Seldon 简化了从训练模型到生产 API 的完整路径，为企业 ML 团队提供标准化部署流程",
+      "en": "Seldon simplifies the complete path from trained model to production API, providing standardized deployment workflows for enterprise ML teams"
+    },
+    "sources": [
+      {
+        "url": "https://seldon.io/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://fizzdesigns.co.uk/top-ai-deals-in-europe/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "document",
+      "label": {
+        "zh": "部署配置文档",
+        "en": "Deployment Config Document"
+      },
+      "initial": {
+        "zh": "模型：demand_forecast_v2 | 环境：生产集群 | 预期QPS：200",
+        "en": "Model: demand_forecast_v2 | Environment: production cluster | Expected QPS: 200"
+      }
+    }
+  }
+}

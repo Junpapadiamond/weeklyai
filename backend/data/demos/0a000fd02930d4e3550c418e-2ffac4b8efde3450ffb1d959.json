@@ -1,0 +1,203 @@
+{
+  "cache_key": "0a000fd02930d4e3550c418e-2ffac4b8efde3450ffb1d959",
+  "product_key": "0a000fd02930d4e3550c418e",
+  "fingerprint": "2ffac4b8efde3450ffb1d959",
+  "product_id": "19",
+  "product_name": "Lucis",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-11T22:55:24.812778+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "预防健康计划定制",
+      "en": "Preventive Health Plan Design"
+    },
+    "scenario": {
+      "zh": "为欧洲中年职场人士设计个性化预防健康方案，结合生物标志物与生活数据",
+      "en": "Design a personalized preventive health plan for a European professional combining biomarkers and lifestyle data"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择数据范围",
+          "en": "Select Data Scope"
+        },
+        "instruction": {
+          "zh": "确定用于生成健康洞察的输入数据类型",
+          "en": "Choose input data types for generating health insights"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "基础血液标志物 + 问卷",
+              "en": "Basic Blood Markers + Questionnaire"
+            },
+            "output": {
+              "zh": "方案聚焦脂质代谢与炎症指标，覆盖心血管与代谢系统",
+              "en": "Plan focuses on lipid metabolism and inflammation markers covering cardiovascular and metabolic systems"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "完整生物标志物 + 可穿戴数据",
+              "en": "Full Biomarkers + Wearable Data"
+            },
+            "output": {
+              "zh": "方案整合 11 个身体系统与活动、睡眠、心率变异性数据",
+              "en": "Plan integrates 11 body systems with activity, sleep, and heart rate variability data"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "设定风险优先级",
+          "en": "Set Risk Priority"
+        },
+        "instruction": {
+          "zh": "选择首要关注的健康风险领域",
+          "en": "Choose primary health risk area to address"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "心血管风险最小化",
+              "en": "Minimize Cardiovascular Risk"
+            },
+            "output": {
+              "zh": "方案强调血压管理、有氧运动与 omega-3 补充建议",
+              "en": "Plan emphasizes blood pressure management, aerobic exercise, and omega-3 supplementation recommendations"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "代谢健康优化",
+              "en": "Optimize Metabolic Health"
+            },
+            "output": {
+              "zh": "方案强调胰岛素敏感性、间歇性禁食与力量训练建议",
+              "en": "Plan emphasizes insulin sensitivity, intermittent fasting, and strength training recommendations"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "review",
+        "title": {
+          "zh": "审核 AI 建议",
+          "en": "Review AI Recommendations"
+        },
+        "instruction": {
+          "zh": "比较医生审核前后的行动建议差异",
+          "en": "Compare action recommendations before and after physician review"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "AI 初始输出",
+              "en": "AI Initial Output"
+            },
+            "output": {
+              "zh": "建议包含 8 项行动：3 项饮食调整、2 项运动方案、3 项补充剂",
+              "en": "Recommendations include 8 actions: 3 dietary adjustments, 2 exercise protocols, 3 supplements"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "医生审核版本",
+              "en": "Physician-Reviewed Version"
+            },
+            "output": {
+              "zh": "建议精简至 5 项优先行动，移除 2 项补充剂，增加复查时间节点",
+              "en": "Recommendations refined to 5 priority actions, 2 supplements removed, follow-up milestones added"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "choice",
+        "title": {
+          "zh": "选择交付格式",
+          "en": "Choose Delivery Format"
+        },
+        "instruction": {
+          "zh": "确定个性化健康计划的最终呈现方式",
+          "en": "Determine final presentation of personalized health plan"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "3 个月阶段性方案",
+              "en": "3-Month Phased Plan"
+            },
+            "output": {
+              "zh": "方案分为启动期、适应期与巩固期，每阶段含具体指标与行动清单",
+              "en": "Plan divided into initiation, adaptation, and consolidation phases with specific metrics and action lists per phase"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "6 个月连续监测方案",
+              "en": "6-Month Continuous Monitoring Plan"
+            },
+            "output": {
+              "zh": "方案整合季度生物标志物复测节点与可穿戴数据趋势追踪",
+              "en": "Plan integrates quarterly biomarker retesting checkpoints and wearable data trend tracking"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "结合深度生物标志物与医生审核，输出可执行的分阶段健康干预计划",
+      "en": "Combine deep biomarkers with physician review to output actionable phased health intervention plans"
+    },
+    "sources": [
+      {
+        "url": "https://www.lucis.life/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://healthaiinsiders.com/lucis-20m-series-a-ai-preventive-health-europe/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "document",
+      "label": {
+        "zh": "健康行动方案",
+        "en": "Health Action Plan"
+      },
+      "initial": {
+        "zh": "目标：降低心血管风险，改善代谢健康。基线：血脂偏高，久坐工作，睡眠不足。",
+        "en": "Goal: reduce cardiovascular risk, improve metabolic health. Baseline: elevated lipids, sedentary work, insufficient sleep."
+      }
+    }
+  }
+}
