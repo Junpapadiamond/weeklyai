@@ -28,6 +28,7 @@ jobs:
       - run: npm run lint
       - run: npx tsc --noEmit
       - run: npm test
+      - run: npm run verify:catalog
       - run: npm run build
 
   backend:

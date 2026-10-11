@@ -1,6 +1,7 @@
 "use client";
 
 import { PointerEvent, TouchEvent, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { ArrowLeft, BookmarkSimple, Check } from "@phosphor-icons/react";
 import type { Product } from "@/types/api";
 import { SmartLogo } from "@/components/common/smart-logo";
@@ -46,6 +47,7 @@ const SWIPE_INERTIA_STRONG_THRESHOLD = 0.28;
 type DiscoveryDeckProps = {
   products: Product[];
   onLike: (product: Product) => void;
+  onExhausted?: () => void;
 };
 
 type SwipedState = {
@@ -72,6 +74,8 @@ function getSwipedProducts(): SwipedState {
     if (!stored) return { keys: [], timestamp: Date.now() };
 
     const parsed = JSON.parse(stored) as SwipedState;
+    if (!parsed || !Array.isArray(parsed.keys) || !parsed.keys.every((key) => typeof key === "string")
+      || !Number.isFinite(parsed.timestamp)) return { keys: [], timestamp: Date.now() };
     const expiryMs = SWIPED_EXPIRY_DAYS * 24 * 60 * 60 * 1000;
     if (Date.now() - parsed.timestamp > expiryMs) {
       window.localStorage.removeItem(SWIPED_KEY);
@@ -86,7 +90,11 @@ function getSwipedProducts(): SwipedState {
 
 function saveSwipedProducts(data: SwipedState) {
   if (typeof window === "undefined") return;
-  window.localStorage.setItem(SWIPED_KEY, JSON.stringify(data));
+  try {
+    window.localStorage.setItem(SWIPED_KEY, JSON.stringify(data));
+  } catch {
+    // Browsing still works when storage is blocked or full.
+  }
 }
 
 function shuffle<T>(arr: T[]): T[] {
@@ -106,7 +114,7 @@ function createDeck(products: Product[]) {
   });
 
   if (filtered.length === 0 && typeof window !== "undefined") {
-    window.localStorage.removeItem(SWIPED_KEY);
+    try { window.localStorage.removeItem(SWIPED_KEY); } catch { /* Optional history. */ }
   }
 
   const source = filtered.length ? filtered : [...products];
@@ -162,7 +170,7 @@ function SwipeCardIdentity({ product, compact = false, locale, t }: SwipeCardIde
   );
 }
 
-export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) {
+export default function DiscoveryDeck({ products, onLike, onExhausted }: DiscoveryDeckProps) {
   const { locale, t } = useSiteLocale();
   const [deck, setDeck] = useState(() => createDeck(products));
   const [liked, setLiked] = useState(0);
@@ -199,7 +207,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
   function dismissSwipeGuide() {
     setShowSwipeGuide(false);
     if (typeof window === "undefined") return;
-    window.localStorage.setItem(SWIPE_GUIDE_SEEN_KEY, "1");
+    try { window.localStorage.setItem(SWIPE_GUIDE_SEEN_KEY, "1"); } catch { /* Optional preference. */ }
   }
 
   useEffect(() => {
@@ -219,7 +227,9 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (window.localStorage.getItem(SWIPE_GUIDE_SEEN_KEY) === "1") return;
+    try {
+      if (window.localStorage.getItem(SWIPE_GUIDE_SEEN_KEY) === "1") return;
+    } catch { /* Show the guide when storage is unavailable. */ }
     const rafId = window.requestAnimationFrame(() => setShowSwipeGuide(true));
     return () => window.cancelAnimationFrame(rafId);
   }, []);
@@ -255,6 +265,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
 
     const { nextStack, nextPool } = refill(restStack, pool);
     setDeck({ stack: nextStack, pool: nextPool });
+    if (!nextStack.length) onExhausted?.();
   }
 
   function resetDrag() {
@@ -562,7 +573,9 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
       <div className="empty-state">
         <div className="empty-state-icon"><Check size={28} aria-hidden="true" /></div>
         <p className="empty-state-text">
-          {t("已经看完这一轮，稍后再来看看新产品吧。", "You've reached the end of this round. Check back later for new products.")}
+          {onExhausted
+            ? t("这一组已经看完，继续探索下一组。", "This group is complete. Continue with the next group.")
+            : t("已经看完这一轮，稍后再来看看新产品吧。", "You've reached the end of this round. Check back later for new products.")}
         </p>
       </div>
     );
@@ -720,6 +733,9 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
           ) : null}
 
           <div className="swipe-card-meta">
+            <Link className="swipe-link" href={`/product/${encodeURIComponent(current._id || current.name)}`}>
+              {t("查看详情", "View details")}
+            </Link>
             {isValidWebsite(website) && !current.needs_verification ? (
               <a
                 className="swipe-link"
@@ -728,7 +744,7 @@ export default function DiscoveryDeck({ products, onLike }: DiscoveryDeckProps) 
                 rel="noopener noreferrer"
                 onClick={(event) => handleExternalAnchorClick(event, website)}
               >
-                {t("访问官网", "Learn more")} →
+                {t("访问官网", "Official website")} →
               </a>
             ) : (
               <a

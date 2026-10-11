@@ -192,7 +192,8 @@ def sort_by_recency(products: List[Dict]) -> List[Dict]:
         key=lambda x: (
             get_product_date(x) or epoch,
             get_heat_score(x),
-            parse_funding(x.get('funding_total', ''))
+            parse_funding(x.get('funding_total', '')),
+            str(x.get('_id') or x.get('website') or x.get('name') or '')
         ),
         reverse=True
     )

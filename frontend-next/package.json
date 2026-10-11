@@ -12,6 +12,7 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
+    "verify:catalog": "node scripts/verify-catalog.mjs",
     "generate:logo-manifest": "python3 scripts/generate_logo_manifest.py"
   },
   "dependencies": {

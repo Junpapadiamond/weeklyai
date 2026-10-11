@@ -6,20 +6,40 @@ import { searchProductsClient } from "@/lib/api-client";
 import type { SearchParams } from "@/types/api";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import { ProductCard } from "@/components/product/product-card";
+import { parseSearchState, searchStateUrl, type SearchState } from "@/lib/search-state";
 
 const SEARCH_DEBOUNCE_MS = 360;
 
 type SearchClientProps = {
-  initialQuery?: string;
+  initialState: SearchState;
 };
 
-export function SearchClient({ initialQuery = "" }: SearchClientProps) {
+export function SearchClient({ initialState }: SearchClientProps) {
   const { locale, t } = useSiteLocale();
-  const seedQuery = initialQuery.trim();
+  const seedQuery = initialState.q;
   const [q, setQ] = useState(seedQuery);
   const [submittedQ, setSubmittedQ] = useState(seedQuery);
-  const [type, setType] = useState<SearchParams["type"]>("all");
-  const [page, setPage] = useState(1);
+  const [type, setType] = useState<SearchState["type"]>(initialState.type);
+  const [page, setPage] = useState(initialState.page);
+
+  useEffect(() => {
+    const url = searchStateUrl({ q: submittedQ, type, page });
+    if (`${window.location.pathname}${window.location.search}` !== url) {
+      window.history.replaceState(null, "", url);
+    }
+  }, [submittedQ, type, page]);
+
+  useEffect(() => {
+    const restore = () => {
+      const state = parseSearchState(new URLSearchParams(window.location.search));
+      setQ(state.q);
+      setSubmittedQ(state.q);
+      setType(state.type);
+      setPage(state.page);
+    };
+    window.addEventListener("popstate", restore);
+    return () => window.removeEventListener("popstate", restore);
+  }, []);
 
   const params = useMemo<SearchParams>(
     () => ({
@@ -84,7 +104,7 @@ export function SearchClient({ initialQuery = "" }: SearchClientProps) {
     setPage(1);
   }
 
-  function updateType(nextType: SearchParams["type"]) {
+  function updateType(nextType: SearchState["type"]) {
     setType(nextType);
     setPage(1);
   }
@@ -92,7 +112,7 @@ export function SearchClient({ initialQuery = "" }: SearchClientProps) {
   const resultCount = data?.pagination?.total ?? 0;
   const totalPages = data?.pagination?.pages ?? 0;
   const currentPage = data?.pagination?.page ?? page;
-  const hasResults = (data?.data.length ?? 0) > 0;
+  const hasResults = shouldSearch && (data?.data.length ?? 0) > 0;
   const hasTypeFilter = type !== "all";
   const statusText = isLoading
     ? t("搜索中...", "Searching...")
@@ -133,7 +153,7 @@ export function SearchClient({ initialQuery = "" }: SearchClientProps) {
       <div className="search-toolbar search-toolbar--minimal">
         <label className="search-toolbar__item">
           {t("类型", "Type")}
-          <select value={type} onChange={(event) => updateType(event.target.value as SearchParams["type"])}>
+          <select value={type} onChange={(event) => updateType(event.target.value as SearchState["type"])}>
             <option value="all">{t("全部", "All")}</option>
             <option value="software">{t("软件", "Software")}</option>
             <option value="hardware">{t("硬件", "Hardware")}</option>
@@ -160,7 +180,7 @@ export function SearchClient({ initialQuery = "" }: SearchClientProps) {
       ) : null}
 
       {shouldSearch && !error ? (
-        <p className="search-result-meta">
+        <p className="search-result-meta" role="status" aria-live="polite">
           {locale === "en-US"
             ? `${resultCount} results${hasTypeFilter ? ` (${type === "software" ? "Software" : "Hardware"})` : ""}`
             : `共找到 ${resultCount} 个结果${hasTypeFilter ? `（${type === "software" ? "软件" : "硬件"}）` : ""}`}
@@ -169,14 +189,14 @@ export function SearchClient({ initialQuery = "" }: SearchClientProps) {
       ) : null}
 
       {hasResults ? (
-        <div className="products-grid search-results-grid">
+        <div className="products-grid search-results-grid" aria-busy={isValidating || isDebouncing}>
           {data?.data.map((product) => (
             <ProductCard key={product._id || product.name} product={product} />
           ))}
         </div>
       ) : null}
 
-      {data?.pagination && totalPages > 1 ? (
+      {shouldSearch && data?.pagination && totalPages > 1 ? (
         <div className="pagination">
           <button
             type="button"

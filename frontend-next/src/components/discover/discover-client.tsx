@@ -3,7 +3,8 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { BookmarkSimple, House } from "@phosphor-icons/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { getDiscoveryPage } from "@/lib/api-client";
 import type { Product } from "@/types/api";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import { addProductFavorite, countFavorites, openFavoritesPanel, subscribeFavorites } from "@/lib/favorites";
@@ -14,12 +15,31 @@ const DiscoveryDeck = dynamic(() => import("@/components/home/discovery-deck"), 
 });
 
 type DiscoverClientProps = {
-  products: Product[];
+  initialPage: Awaited<ReturnType<typeof getDiscoveryPage>>;
 };
 
-export function DiscoverClient({ products }: DiscoverClientProps) {
+export function DiscoverClient({ initialPage }: DiscoverClientProps) {
   const { t } = useSiteLocale();
   const [favoritesCount, setFavoritesCount] = useState(0);
+  const [batch, setBatch] = useState(initialPage);
+  const [loading, setLoading] = useState(false);
+  const [loadError, setLoadError] = useState(false);
+  const loadingRef = useRef(false);
+
+  async function loadNext() {
+    if (loadingRef.current || !batch.pagination.has_more) return;
+    loadingRef.current = true;
+    setLoading(true);
+    setLoadError(false);
+    try {
+      setBatch(await getDiscoveryPage(batch.pagination.offset + batch.pagination.limit));
+    } catch {
+      setLoadError(true);
+    } finally {
+      loadingRef.current = false;
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
     const sync = () => setFavoritesCount(countFavorites());
@@ -57,13 +77,22 @@ export function DiscoverClient({ products }: DiscoverClientProps) {
         </Link>
       </div>
 
-      {products.length ? (
-        <DiscoveryDeck key={`discover-${products.length}`} products={products} onLike={addFavorite} />
+      {batch.data.length ? (
+        <DiscoveryDeck key={`discover-${batch.pagination.offset}`} products={batch.data} onLike={addFavorite}
+          onExhausted={batch.pagination.has_more ? loadNext : undefined} />
       ) : (
         <div className="empty-state">
           <p className="empty-state-text">{t("暂时没有更多产品，过会儿再来看看。", "No products available to explore right now. Please try again later.")}</p>
         </div>
       )}
+      {batch.pagination.has_more ? (
+        <div className="load-more-container" aria-live="polite">
+          {loadError ? <p role="alert">{t("下一组暂时加载失败，可以重试。", "Could not load the next group. Please retry.")}</p> : null}
+          <button className="load-more-btn" type="button" disabled={loading} onClick={loadNext}>
+            {loading ? t("加载下一组…", "Loading more…") : loadError ? t("重试", "Retry") : t("换一组产品", "Explore another group")}
+          </button>
+        </div>
+      ) : null}
     </section>
   );
 }

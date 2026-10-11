@@ -637,7 +637,11 @@ class ProductRepository:
         except Exception:
             hours_ago = None
 
-        products = ProductRepository.load_products()
+        # Use the same normalized cache as the product endpoints. Alternating
+        # filters_module=None with the service's filter module invalidated the
+        # shared cache and reloaded the entire MongoDB catalog on each visit.
+        from . import product_filters
+        products = ProductRepository.load_products(filters_module=product_filters)
         dates = [sorting.get_effective_date(p) for p in products]
         newest = max((date for date in dates if date and date <= datetime.utcnow()), default=None)
         return {'last_updated': last_updated, 'hours_ago': hours_ago,

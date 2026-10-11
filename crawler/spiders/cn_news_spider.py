@@ -35,11 +35,6 @@ CN_RSS_FEEDS = [
 
 
 AI_KEYWORDS = [
-    "ai",
-    "llm",
-    "gpt",
-    "agent",
-    "aigc",
     "生成式",
     "人工智能",
     "大模型",
@@ -50,6 +45,18 @@ AI_KEYWORDS = [
     "芯片",
     "算力",
 ]
+
+# ASCII word boundaries still allow Chinese forms such as “AI工具”, while
+# avoiding false positives in “AirPods”, “said”, “retail”, and image names.
+AI_ENGLISH_PATTERN = re.compile(
+    r"(?<![a-z0-9])(?:ai|aigc|llms?|gpt(?:-?\d[\w.-]*)?|agents?|"
+    r"openai|chatgpt|deepseek|claude|gemini|qwen)(?![a-z0-9])", re.I
+)
+
+
+def is_ai_relevant(title: str, summary: str) -> bool:
+    text = f"{title} {summary}"
+    return bool(AI_ENGLISH_PATTERN.search(text)) or any(keyword in text for keyword in AI_KEYWORDS)
 
 
 def _strip_html(text: str) -> str:
@@ -169,8 +176,7 @@ class CNNewsSpider(BaseSpider):
                 continue
 
             summary = _strip_html(entry.get("summary") or entry.get("description") or "")
-            text = f"{title} {summary}".lower()
-            if not any(keyword in text for keyword in AI_KEYWORDS):
+            if not is_ai_relevant(title, summary):
                 continue
 
             items.append(self.create_product(

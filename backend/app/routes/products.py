@@ -4,6 +4,24 @@ from app.services import product_sorting as sorting
 
 products_bp = Blueprint('products', __name__)
 
+
+@products_bp.route('/discovery-feed', methods=['GET'])
+def get_discovery_feed():
+    """Bounded, deterministic pages of the complete discovery catalog."""
+    offset = max(0, request.args.get('offset', 0, type=int))
+    limit = min(60, max(1, request.args.get('limit', 36, type=int)))
+    # Slice one common ordering, rather than diversifying each page separately.
+    # Existing product IDs provide a stable tie-breaker between requests.
+    products = ProductService.get_weekly_top_products(limit=0, sort_by='recency')
+    return jsonify({
+        'success': True,
+        'data': products[offset:offset + limit],
+        'pagination': {
+            'offset': offset, 'limit': limit, 'total': len(products),
+            'has_more': offset + limit < len(products),
+        },
+    })
+
 @products_bp.route('/trending', methods=['GET'])
 def get_trending_products():
     """获取热门推荐产品（前5个）"""

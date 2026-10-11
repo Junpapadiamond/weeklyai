@@ -9,7 +9,8 @@ export async function HomeDataSection() {
   const [darkHorses, allProducts, lastUpdated] = await Promise.all([
     getDarkHorses(DARK_HORSE_FETCH_LIMIT, 4),
     getWeeklyTop(HOME_INITIAL_PRODUCTS_LIMIT, HOME_DEFAULT_SORT),
-    getLastUpdated(),
+    // Freshness metadata is optional; its outage must not hide working products.
+    getLastUpdated().catch(() => ({ hours_ago: null })),
   ]);
 
   return (

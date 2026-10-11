@@ -36,7 +36,9 @@ jobs:
           python -m pip install -r crawler/requirements.txt
           python -m pip install -r backend/requirements.txt
 
-      - name: Run discovery + news
+      - name: Discover and publish products
+        id: discovery
+        continue-on-error: true
         timeout-minutes: 30
         env:
           DISCOVERY_PROVIDER: ${{ vars.DISCOVERY_PROVIDER || 'claude' }}
@@ -78,15 +80,35 @@ jobs:
           timeout 120s python -u tools/fix_logos.py --input data/products_featured.json --only-missing || true
           python ../frontend-next/scripts/generate_logo_manifest.py
 
+      # News has independent RSS sources. A discovery-provider outage must not
+      # suppress news or prevent publication of the last validated catalog.
+      - name: Refresh news independently
+        id: news
+        continue-on-error: true
+        timeout-minutes: 10
+        env:
+          DISCOVERY_PROVIDER: ${{ vars.DISCOVERY_PROVIDER || 'claude' }}
+          PERPLEXITY_API_KEY: ${{ (vars.DISCOVERY_PROVIDER || 'claude') != 'claude' && secrets.PERPLEXITY_API_KEY || '' }}
+          PERPLEXITY_MODEL: ${{ secrets.PERPLEXITY_MODEL || 'sonar' }}
+          ZHIPU_API_KEY: ${{ (vars.DISCOVERY_PROVIDER || 'claude') != 'claude' && secrets.ZHIPU_API_KEY || '' }}
+          GLM_MODEL: ${{ secrets.GLM_MODEL || 'glm-4.7' }}
+          GLM_SEARCH_ENGINE: ${{ secrets.GLM_SEARCH_ENGINE || 'search_pro' }}
+          USE_GLM_FOR_CN: ${{ secrets.ZHIPU_API_KEY && 'true' || 'false' }}
+        working-directory: crawler
+        run: |
+          set -euo pipefail
+          export CONTENT_YEAR="$(date -u +%Y)"
           BASELINE_BLOGS="/tmp/blogs_news.before_news.json"
           if [ -f data/blogs_news.json ]; then
             cp -f data/blogs_news.json "$BASELINE_BLOGS"
           fi
 
-          timeout 180s python -u main.py --news-only || true
+          news_failed=0
+          timeout 180s python -u main.py --news-only || news_failed=1
           # A news outage must not discard verified product discoveries. Keep
           # the previous multilingual news snapshot if the merge cannot finish.
           if ! timeout 120s python -u tools/cn_news_only.py --baseline-file "$BASELINE_BLOGS"; then
+            news_failed=1
             if [ -f "$BASELINE_BLOGS" ]; then cp -f "$BASELINE_BLOGS" data/blogs_news.json; fi
             echo "News refresh deferred; retained previous snapshot. Product publication continues." >> "$GITHUB_STEP_SUMMARY"
           fi
@@ -99,6 +121,20 @@ jobs:
           if [ "${DISCOVERY_PROVIDER}" != "claude" ]; then
             timeout 120s python tools/rss_to_products.py --input data/blogs_news.json --sources youtube,x,xhs,wechat --enrich-featured || true
           fi
+          exit "$news_failed"
+
+      - name: Setup Node for publication contract
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: frontend-next/package-lock.json
+
+      - name: Validate frontend catalog contract before publication
+        working-directory: frontend-next
+        run: |
+          npm ci --ignore-scripts
+          npm run verify:catalog
 
       - name: Verify JSON data sources (deterministic)
         timeout-minutes: 2
@@ -234,3 +270,9 @@ jobs:
           else
             python crawler/tools/sync_to_mongodb.py --blogs --demos
           fi
+
+      - name: Report degraded content refresh
+        if: always() && (steps.discovery.outcome == 'failure' || steps.news.outcome == 'failure')
+        run: |
+          echo "Content refresh was degraded. Discovery: ${{ steps.discovery.outcome }}; news: ${{ steps.news.outcome }}. Independent successful updates were preserved; inspect the failed step before the next run." >> "$GITHUB_STEP_SUMMARY"
+          exit 1

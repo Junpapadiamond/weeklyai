@@ -22,6 +22,9 @@ import {
 import { BROWSER_API_BASE, getServerApiBase } from "@/lib/api-base";
 export type WeeklyTopSort = "composite" | "trending" | "recency" | "funding";
 type FetchConfig = RequestInit & { next?: { revalidate?: number; tags?: string[] } };
+// Public catalog data is shared across visitors. Revalidate frequently without
+// making every page navigation wait for the backend and database again.
+const CATALOG_CACHE = { next: { revalidate: 60, tags: ["products"] } };
 
 async function fetchJson(path: string, config?: FetchConfig): Promise<unknown> {
   const base = typeof window === "undefined" ? getServerApiBase() : BROWSER_API_BASE;
@@ -64,9 +67,7 @@ function hasUsableWebsite(product: Product): boolean {
 }
 
 export const getDarkHorses = cache(async (limit = 10, minIndex = 4): Promise<Product[]> => {
-  const json = await fetchJson(`/products/dark-horses?limit=${limit}&min_index=${minIndex}`, {
-    cache: "no-store",
-  });
+  const json = await fetchJson(`/products/dark-horses?limit=${limit}&min_index=${minIndex}`, CATALOG_CACHE);
   const parsed = safeParse(productListSchema, json, { data: [] });
   return parsed.data.filter(hasUsableWebsite);
 });
@@ -76,10 +77,20 @@ export const getWeeklyTop = cache(async (limit = 0, sortBy: WeeklyTopSort = "com
   params.set("limit", String(limit));
   params.set("sort_by", sortBy);
 
-  const json = await fetchJson(`/products/weekly-top?${params.toString()}`, { cache: "no-store" });
+  const json = await fetchJson(`/products/weekly-top?${params.toString()}`, CATALOG_CACHE);
   const parsed = safeParse(productListSchema, json, { data: [] });
   return parsed.data.filter(hasUsableWebsite);
 });
+
+const discoveryPageSchema = z.object({
+  data: z.array(ProductSchema),
+  pagination: z.object({ offset: z.number(), limit: z.number(), total: z.number(), has_more: z.boolean() }),
+});
+
+export async function getDiscoveryPage(offset = 0) {
+  const json = await fetchJson(`/products/discovery-feed?offset=${offset}&limit=36`, CATALOG_CACHE);
+  return discoveryPageSchema.parse(json);
+}
 
 export const getIndustryLeaders = cache(async (): Promise<IndustryLeadersPayload> => {
   const json = await fetchJson(`/products/industry-leaders`, {
@@ -90,9 +101,7 @@ export const getIndustryLeaders = cache(async (): Promise<IndustryLeadersPayload
 });
 
 export const getLastUpdated = cache(async (): Promise<LastUpdatedPayload> => {
-  const json = await fetchJson(`/products/last-updated`, {
-    cache: "no-store",
-  });
+  const json = await fetchJson(`/products/last-updated`, CATALOG_CACHE);
   const parsed = safeParse(lastUpdatedEnvelopeSchema, json, {});
   return {
     last_updated: parsed.last_updated,
