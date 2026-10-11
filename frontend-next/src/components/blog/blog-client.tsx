@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import useSWR from "swr";
 import { getBlogsClient } from "@/lib/api-client";
+import { formatNewsDate } from "@/lib/news-date";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { FavoriteButton } from "@/components/favorites/favorite-button";
 import { useSiteLocale } from "@/components/layout/locale-provider";
@@ -132,19 +133,15 @@ function BlogCard({ item }: { item: BlogPost }) {
     published_at: item.published_at,
   }, new Date(), locale);
   const resolvedLogo = resolveProductLogoSources(item);
-  const publishedLabel = item.published_at
-    ? new Date(item.published_at).toLocaleString(locale, {
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-      })
-    : t("时间待补充", "Timestamp unavailable");
+  const publishedLabel = formatNewsDate(item.published_at, locale);
 
   return (
     <article className="research-news">
       <div className="research-news__content">
-        <p className="research-news__meta">{`${marketLabel} · ${sourceLabel} · ${freshness}`}</p>
+        <p className="research-news__meta">
+          {`${marketLabel} · ${sourceLabel} · `}
+          <time dateTime={item.published_at} suppressHydrationWarning>{freshness}</time>
+        </p>
 
         <header className="research-news__header">
           <div className="research-news__identity">
