@@ -1,6 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import useSWR from "swr";
+import { getBlogsClient } from "@/lib/api-client";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { FavoriteButton } from "@/components/favorites/favorite-button";
 import { useSiteLocale } from "@/components/layout/locale-provider";
@@ -93,12 +95,6 @@ function inferMarket(item: BlogPost): "cn" | "us" | "global" {
   const fromExtra = String(extra.news_market || "").trim().toLowerCase();
   if (fromExtra === "cn" || fromExtra === "us" || fromExtra === "global") return fromExtra as "cn" | "us" | "global";
   return "global";
-}
-
-function matchesMarket(item: BlogPost, selectedMarket: string): boolean {
-  const market = String(selectedMarket || "").trim().toLowerCase();
-  if (!market || market === "hybrid" || market === "global") return true;
-  return inferMarket(item) === market;
 }
 
 function buildSourceOptions(data: BlogPost[] | undefined) {
@@ -208,12 +204,23 @@ export function BlogClient({ initialBlogs }: BlogClientProps) {
     { value: "us", label: marketLabels.us },
   ] as const;
 
-  const marketBlogs = useMemo(() => initialBlogs.filter((item) => matchesMarket(item, market)), [initialBlogs, market]);
+  // A market has its own feed, not merely the few items present in the hybrid
+  // preview. Refresh open pages so a successful daily update becomes visible.
+  const { data: marketBlogs, isLoading, error, mutate } = useSWR(
+    ["blogs", market],
+    ([, selectedMarket]) => getBlogsClient("", 120, selectedMarket),
+    {
+      fallbackData: market === "hybrid" ? initialBlogs : undefined,
+      refreshInterval: 120_000,
+      dedupingInterval: 60_000,
+      revalidateOnFocus: false,
+    }
+  );
   const sourceOptions = useMemo(() => buildSourceOptions(marketBlogs), [marketBlogs]);
 
   const activeSource = source && sourceOptions.includes(source) ? source : "";
   const posts = useMemo(
-    () => marketBlogs.filter((item) => matchesSource(item, activeSource)),
+    () => (marketBlogs || []).filter((item) => matchesSource(item, activeSource)),
     [activeSource, marketBlogs]
   );
 
@@ -232,8 +239,8 @@ export function BlogClient({ initialBlogs }: BlogClientProps) {
         <p className="briefing-kicker">{t("行业动态", "THE SIGNAL REPORT / NEWS & SIGNALS")}</p>
         <h1 className="section-title">{t("AI 资讯", "News & Signals")}</h1>
         <p className="section-desc">{t("看看国内外 AI 圈最近在聊什么。", "China-local and global sources in one feed, with quick market switching.")}</p>
-        <p className="section-micro-note">
-          {marketSummary} · {sourceSummary} · {locale === "en-US" ? `${posts.length} items` : `共 ${posts.length} 条`}
+        <p className="section-micro-note" role="status" aria-live="polite">
+          {marketSummary} · {sourceSummary} · {isLoading ? t("加载中…", "Loading…") : locale === "en-US" ? `Showing ${posts.length} items` : `当前展示 ${posts.length} 条`}
         </p>
       </div>
 
@@ -273,13 +280,20 @@ export function BlogClient({ initialBlogs }: BlogClientProps) {
         })}
       </div>
 
-      <div className="research-news-grid">
+      {error ? (
+        <div className="error-block" role="alert">
+          <p>{t("资讯暂时无法更新，请重试。", "News could not be refreshed. Please retry.")}</p>
+          <button className="link-btn" type="button" onClick={() => void mutate()}>{t("重试", "Retry")}</button>
+        </div>
+      ) : null}
+
+      <div className="research-news-grid" aria-busy={isLoading}>
         {posts.map((item) => (
           <BlogCard item={item} key={`${item.source || "source"}-${item.website || item.name}`} />
         ))}
       </div>
 
-      {posts.length === 0 ? (
+      {!isLoading && !error && posts.length === 0 ? (
         <div className="empty-state">
           <p className="empty-state-text">{emptyStateText}</p>
         </div>

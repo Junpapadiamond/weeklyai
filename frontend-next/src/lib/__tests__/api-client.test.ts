@@ -1,5 +1,5 @@
 import { afterEach, expect, it, vi } from 'vitest';
-import { getDiscoveryPage, getProductById, getWeeklyTop } from '../api-client';
+import { getBlogsClient, getDiscoveryPage, getProductById, getWeeklyTop } from '../api-client';
 
 afterEach(() => { vi.unstubAllGlobals(); vi.unstubAllEnvs(); });
 
@@ -38,4 +38,12 @@ it('requests only a bounded discovery page and keeps numeric funding renderable'
 it('does not silently terminate discovery when pagination is missing', async () => {
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue(Response.json({ data: [] })));
   await expect(getDiscoveryPage()).rejects.toThrow();
+});
+
+it('loads a separate regional news feed instead of filtering the hybrid preview', async () => {
+  vi.stubEnv('API_BASE_URL_SERVER', 'https://backend.example/api/v1');
+  const fetcher = vi.fn().mockResolvedValue(Response.json({ data: [{ name: 'New China news', market: 'cn' }] }));
+  vi.stubGlobal('fetch', fetcher);
+  expect(await getBlogsClient('', 120, 'cn')).toEqual([expect.objectContaining({ name: 'New China news' })]);
+  expect(fetcher.mock.calls[0][0]).toBe('https://backend.example/api/v1/products/blogs?limit=120&market=cn');
 });
