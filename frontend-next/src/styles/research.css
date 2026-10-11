@@ -180,6 +180,8 @@ a.website-preview:hover { border-color: var(--primary-border); }
 .discover-page .swipe-card.is-active { box-shadow: 0 12px 28px color-mix(in oklab, var(--line) 6%, transparent); }
 .discover-page .swipe-card-desc { font-size: 1rem; line-height: 1.9; }
 .discover-page .swipe-card-highlight { border-radius: 0; border-left: 2px solid var(--primary); background: transparent; padding-left: 1rem; }
+.discover-page .swipe-card-meta { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; margin-top: .5rem; }
+.discover-page .swipe-card-meta .swipe-link { display: inline-flex; align-items: center; min-height: 44px; }
 .discover-page .swipe-badge { border-radius: 4px; background: var(--bg-elevated); color: var(--text-soft); }
 .discover-page .swipe-onboarding { position: relative; inset: auto; background: var(--bg-elevated); border-color: var(--border); border-radius: 6px; padding: 1rem; backdrop-filter: none; text-align: left; justify-content: flex-start; }
 .discover-page .swipe-onboarding__title { line-height: 1.7; }
@@ -214,6 +216,10 @@ a.website-preview:hover { border-color: var(--primary-border); }
   .discover-page > .discover-shell { grid-column: 2; grid-row: 1 / 4; margin: 0; }
 }
 @media (max-width: 760px) {
+  .discover-page > .section-header { padding: 1rem 0; margin-bottom: 1rem; gap: .5rem; }
+  .discover-page > .section-header :is(.briefing-kicker, .section-micro-note) { display: none; }
+  .discover-page .discover-page__controls { margin-bottom: .5rem; }
+  .discover-page .discover-shell { margin-top: .5rem; }
   .demo-gallery-header { align-items: start; gap: 1.5rem; }
   .demo-catalog-grid { gap: 0 1.5rem; }
   .demo-card-top { flex-wrap: wrap; }
