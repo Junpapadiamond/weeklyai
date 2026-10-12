@@ -39,7 +39,7 @@ Preset selections are not completion records. Explanations and provenance are co
 
 ## Verification snapshot and limits
 
-- **183 Python tests and all 117 frontend tests passed.** Full ESLint and the Next production build (including TypeScript) passed during integration; the gallery focus change receives a final build before publishing.
+- **183 Python tests and all 117 frontend tests passed.** Full ESLint and the Next production build (including TypeScript) passed, including the final gallery focus change. The later scenario-label edit passed 97 relevant backend tests.
 - Local Chrome checks: Autentic switches excerpt/theme and dependency branches; a native select retains keyboard focus; the downloaded file includes explanatory limits and the complete takeaway. Chinese narrow-screen layout has no horizontal overflow. Higgsfield switches proposed shot sequences. Lovable supports add/check/delete and both guidance choices. Legacy Exa opens prepared output with its catalog hidden.
 - Tractable and XCENA returned the existing not-ready state against the local catalog. Their old stored specs are covered by compatibility tests, not a claim of completed browser playback. Generation was disabled during local checks.
-- Production rollout is verified separately in the handoff. No paid generation, real vendor execution, or first-time human comprehension test is established here. Agent review remains simulated expert judgment.
+- Production application commit `823c1d426c1d1019c000960ba927b4da54428340` was READY on frontend and backend, then verified in Chrome: Autentic, a Helix cache from the current production catalog, catalog focus restoration, and unchanged replay quota. See project-root `design-qa.md` for captures and limits. No paid generation, real vendor execution, or first-time human comprehension test is established here. Agent review remains simulated expert judgment.
