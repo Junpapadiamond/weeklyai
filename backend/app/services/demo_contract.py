@@ -40,6 +40,20 @@ def cache_key(product):
     return f"{product_key(product)}-{fingerprint(product)}"
 
 
+def compatible_cache_keys(product):
+    """Catalog normalization changes missing is_hardware to False, not product facts.
+
+    Keep existing fingerprints and only bridge these two equivalent values.
+    A changed description, URL, source or actual hardware flag still invalidates.
+    """
+    keys = [cache_key(product)]
+    hardware = product.get("is_hardware")
+    if hardware is None or hardware is False:
+        alternate = {**product, "is_hardware": False if hardware is None else None}
+        keys.append(cache_key(alternate))
+    return keys
+
+
 def safe_url(value):
     try:
         parsed = urlparse(value)
@@ -48,27 +62,29 @@ def safe_url(value):
         return False
 
 
-def _text(value, maximum=400):
+def _text(value, maximum=400, path="text"):
     if not isinstance(value, str) or not 1 <= len(value.strip()) <= maximum:
-        raise ValueError("Invalid text")
+        # Field/length only: do not expose model content in repair logs.
+        size = len(value.strip()) if isinstance(value, str) else type(value).__name__
+        raise ValueError(f"Invalid text at {path}: expected 1-{maximum} characters, got {size}")
     return value.strip()
 
 
-def _copy(value, maximum=400):
+def _copy(value, maximum=400, path="copy"):
     if not isinstance(value, dict):
-        raise ValueError("Bilingual copy required")
-    return {locale: _text(value.get(locale), maximum) for locale in ("zh", "en")}
+        raise ValueError(f"Bilingual copy required at {path}")
+    return {locale: _text(value.get(locale), maximum, f"{path}.{locale}") for locale in ("zh", "en")}
 
 
-def _artifact(value):
+def _artifact(value, path="artifact"):
     """Bounded, plain-text examples; no URLs, media, markup or executable fields."""
     if not isinstance(value, dict) or not isinstance(value.get("kind"), str) or value["kind"] not in ARTIFACTS:
         raise ValueError("Unsupported artifact kind")
     result = {"kind": value["kind"]}
     for field, maximum in (("input_label", 40), ("output_label", 40), ("input", 220), ("output", 220)):
-        result[field] = _copy(value.get(field), maximum)
+        result[field] = _copy(value.get(field), maximum, f"{path}.{field}")
     if "emphasis" in value:
-        emphasis = _copy(value["emphasis"], 100)
+        emphasis = _copy(value["emphasis"], 100, f"{path}.emphasis")
         if any(emphasis[locale] not in result["input"][locale] for locale in ("zh", "en")):
             raise ValueError("Artifact emphasis must occur in its input in both languages")
         result["emphasis"] = emphasis
@@ -77,8 +93,9 @@ def _artifact(value):
         if (value["kind"] not in {"sequence", "list"} or not isinstance(items, list)
                 or not 2 <= len(items) <= 4 or any(not isinstance(item, dict) for item in items)):
             raise ValueError("Artifact items require a sequence or list with 2–4 items")
-        result["items"] = [{"label": _copy(item.get("label"), 60), "detail": _copy(item.get("detail"), 160)}
-                           for item in items]
+        result["items"] = [{"label": _copy(item.get("label"), 60, f"{path}.items[{i}].label"),
+                            "detail": _copy(item.get("detail"), 160, f"{path}.items[{i}].detail")}
+                           for i, item in enumerate(items)]
     copies = [copy for field, copy in result.items() if field not in {"kind", "items"}]
     copies.extend(copy for item in result.get("items", []) for copy in item.values())
     if any(ARTIFACT_UNSAFE_COPY.search(text) for copy in copies for text in copy.values()):
@@ -97,10 +114,11 @@ def validate_experience(value, allowed_sources=None):
     validated = []
     seen = set()
     previous_options = {}
-    for step in steps:
+    for step_index, step in enumerate(steps):
+        path = f"steps[{step_index}]"
         if not isinstance(step, dict) or step.get("widget") not in WIDGETS:
             raise ValueError("Unsupported widget")
-        step_id = _text(step.get("id"), 40)
+        step_id = _text(step.get("id"), 40, f"{path}.id")
         if step_id in seen or not step_id.replace("-", "").replace("_", "").isalnum():
             raise ValueError("Step identifiers must be unique")
         seen.add(step_id)
@@ -111,12 +129,13 @@ def validate_experience(value, allowed_sources=None):
         for index, option in enumerate(options):
             if not isinstance(option, dict):
                 raise ValueError("Invalid option")
-            output = _copy(option.get("output"), 700)
+            option_path = f"{path}.options[{index}]"
+            output = _copy(option.get("output"), 700, f"{option_path}.output")
             if any(re.search(r"\d+(?:\.\d+)?\s*[%％]|已导出|已保存本地|文件已保存|视频已生成|Exported:|saved (?:locally|to (?:your |the )?(?:device|computer))", text, re.I) for text in output.values()):
                 raise ValueError("Unsupported measured or executed outcome")
-            choice = {"id": str(index), "label": _copy(option.get("label"), 80), "output": output}
+            choice = {"id": str(index), "label": _copy(option.get("label"), 80, f"{option_path}.label"), "output": output}
             if "artifact" in option:
-                choice["artifact"] = _artifact(option["artifact"])
+                choice["artifact"] = _artifact(option["artifact"], f"{option_path}.artifact")
             when = option.get("when")
             if when is not None:
                 if (not isinstance(when, dict) or when.get("step_id") not in previous_options
@@ -129,8 +148,8 @@ def validate_experience(value, allowed_sources=None):
                 and {o["when"]["option_id"] for o in choices} != previous_options[next(iter(conditional_steps))]):
             raise ValueError("Each earlier choice needs an available outcome")
         previous_options[step_id] = {o["id"] for o in choices}
-        item = {"id": step_id, "widget": step["widget"], "title": _copy(step.get("title"), 80),
-                "instruction": _copy(step.get("instruction"), 300), "options": choices,
+        item = {"id": step_id, "widget": step["widget"], "title": _copy(step.get("title"), 80, f"{path}.title"),
+                "instruction": _copy(step.get("instruction"), 300, f"{path}.instruction"), "options": choices,
                 "example_data": True}
         if step["widget"] == "dial":
             dial = step.get("dial")
@@ -139,8 +158,8 @@ def validate_experience(value, allowed_sources=None):
             if not 0 <= dial["min"] < dial["max"] <= 1000 or not dial["min"] <= dial["initial"] <= dial["max"] or not 1 <= dial["factor"] <= 100:
                 raise ValueError("Unbounded scenario dial")
             item["dial"] = {key: dial[key] for key in ("min", "max", "initial", "factor")}
-            item["dial"]["unit"] = _copy(dial.get("unit"), 40)
-            item["dial"]["result_label"] = _copy(dial.get("result_label"), 80)
+            item["dial"]["unit"] = _copy(dial.get("unit"), 40, f"{path}.dial.unit")
+            item["dial"]["result_label"] = _copy(dial.get("result_label"), 80, f"{path}.dial.result_label")
         if step["widget"] == "app":
             if step.get("app_kind") not in ("tasks", "timer", "expenses"):
                 raise ValueError("Invalid app preview")
@@ -150,18 +169,18 @@ def validate_experience(value, allowed_sources=None):
     if not isinstance(sources, list) or not 1 <= len(sources) <= 6:
         raise ValueError("Evidence is required")
     links = []
-    for source in sources:
+    for source_index, source in enumerate(sources):
         if not isinstance(source, dict) or not safe_url(source.get("url")):
             raise ValueError("Invalid source")
         url = source["url"]
         if allowed_sources is not None and url not in allowed_sources:
             raise ValueError("The model cannot invent sources")
-        links.append({"url": url, "label": _copy(source.get("label"), 100)})
+        links.append({"url": url, "label": _copy(source.get("label"), 100, f"sources[{source_index}].label")})
     result = {"version": VERSION, "confidence": "illustrative", "tier": value["tier"],
-            "headline": _copy(value.get("headline"), 120), "scenario": _copy(value.get("scenario"), 400),
-            "steps": validated, "takeaway": _copy(value.get("takeaway"), 500), "sources": links}
+            "headline": _copy(value.get("headline"), 120, "headline"), "scenario": _copy(value.get("scenario"), 400, "scenario"),
+            "steps": validated, "takeaway": _copy(value.get("takeaway"), 500, "takeaway"), "sources": links}
     if "focus_step_id" in value:
-        focus_step_id = _text(value["focus_step_id"], 40)
+        focus_step_id = _text(value["focus_step_id"], 40, "focus_step_id")
         if focus_step_id not in seen:
             raise ValueError("Focus step must reference an existing step")
         result["focus_step_id"] = focus_step_id
@@ -169,12 +188,12 @@ def validate_experience(value, allowed_sources=None):
     if context is not None:
         if not isinstance(context, dict) or any(context.get(key) not in [s["url"] for s in links] for key in ("source_url", "trial_url")):
             raise ValueError("Product context links must be cited sources")
-        result["product_context"] = {key: _copy(context.get(key), 300) for key in ("job", "input", "output", "trial_note")}
+        result["product_context"] = {key: _copy(context.get(key), 300, f"product_context.{key}") for key in ("job", "input", "output", "trial_note")}
         result["product_context"].update(source_url=context["source_url"], trial_url=context["trial_url"])
     workspace = value.get("workspace")
     if workspace is not None:
         if not isinstance(workspace, dict) or workspace.get("kind") not in WORKSPACES:
             raise ValueError("Unsupported workspace")
-        result["workspace"] = {"kind": workspace["kind"], "label": _copy(workspace.get("label"), 80),
-                               "initial": _copy(workspace.get("initial"), 200)}
+        result["workspace"] = {"kind": workspace["kind"], "label": _copy(workspace.get("label"), 80, "workspace.label"),
+                               "initial": _copy(workspace.get("initial"), 200, "workspace.initial")}
     return result

@@ -7,6 +7,7 @@ from unittest.mock import MagicMock
 
 import pytest
 import requests
+from urllib3.exceptions import ReadTimeoutError
 from app import create_app, rate_limiter
 from app.routes import demos
 from app.services import demo_experiences as service
@@ -100,6 +101,44 @@ def test_prepared_profile_works_even_when_database_is_down(client, monkeypatch):
     monkeypatch.setattr(demos.ProductService, "get_product_by_id", lambda _: {**PRODUCT, "website": "https://higgsfield.ai"})
     monkeypatch.setattr(demos, "DemoStore", lambda: pytest.fail("Reviewed profile needs no database"))
     assert client.get("/api/v1/demos/prepared/demo-product").json["state"] == "ready"
+
+
+@pytest.mark.parametrize("stored_flag,served_flag", [(None, False), (False, None)])
+def test_normalized_hardware_flag_replays_and_catalog_marks_ready(client, store, spec, monkeypatch, stored_flag, served_flag):
+    stored = {**PRODUCT, "is_hardware": stored_flag}
+    served = {**PRODUCT, "is_hardware": served_flag}
+    entry = service.envelope(stored, spec, "pregenerated")
+    entries = {entry["cache_key"]: entry}
+    monkeypatch.setattr(service, "published", lambda: entries)
+    monkeypatch.setattr(demos, "published", lambda: entries)
+    monkeypatch.setattr(demos.ProductService, "get_product_by_id", lambda _: served)
+    monkeypatch.setattr(demos.ProductService, "get_discovery_products", lambda: [served])
+    monkeypatch.setattr(service, "generate_spec", lambda _: pytest.fail("Equivalent metadata must not regenerate"))
+    response = client.get("/api/v1/demos/prepared/demo-product")
+    assert response.json["state"] == "ready"
+    assert "Set-Cookie" not in response.headers
+    catalog = client.get("/api/v1/demos/catalog?filter=ready").json
+    assert catalog["ready_count"] == 1 and catalog["products"][0]["demo_ready"]
+    result = client.post("/api/v1/demos/generate", json={"product_id": "demo-product"})
+    assert result.json["cached"] and result.json["quota"]["remaining"] == 3
+
+
+def test_equivalent_metadata_can_replay_shared_cache(store, spec, monkeypatch):
+    monkeypatch.setattr(service, "published", lambda: {})
+    key = cache_key(PRODUCT)
+    lease = store.reserve(key, "publisher")
+    store.finish(key, lease["token"], service.envelope(PRODUCT, spec, "ai"))
+    assert service.ready_experience({**PRODUCT, "is_hardware": False}, store)["origin"] == "ai"
+    for changed in ({"is_hardware": True}, {"description": "A different function"}, {"website": "https://other.example"}):
+        assert service.ready_experience({**PRODUCT, "is_hardware": False, **changed}, store) is None
+
+
+@pytest.mark.parametrize("name", ["Kello", "Finches"])
+def test_homepage_products_replay_shipped_examples_after_normalization(name):
+    catalog = json.loads(Path("backend/data/products_featured.json").read_text(encoding="utf-8"))
+    product = next(p for p in catalog if p["name"] == name)
+    entry = service.ready_experience({**product, "is_hardware": False})
+    assert entry is not None and entry["product_name"] == name
 
 
 def test_autentic_reviewed_example_replaces_stale_claims_without_generation(client, monkeypatch):
@@ -421,7 +460,8 @@ def test_failed_repair_refunds_personal_credit_and_never_publishes_invalid_spec(
 
 def test_repair_does_not_start_when_time_budget_is_exhausted(monkeypatch, spec):
     post = _mock_completions(monkeypatch, [{**spec, "steps": []}])
-    clock = iter([0, 0, 50, 50, 50])
+    end = service.GENERATION_SECONDS - 5
+    clock = iter([0, 0, end, end, end])
     monkeypatch.setattr(service.time, "monotonic", lambda: next(clock))
     with pytest.raises(service.GenerationFailure, match="GENERATION_INVALID_RESPONSE"):
         service.generate_spec(PRODUCT)
@@ -440,7 +480,7 @@ def test_provider_http_errors_are_safe_and_not_retried(client, monkeypatch, spec
     assert "private-key" not in caplog.text and "private-key" not in json.dumps(result.json)
 
 
-@pytest.mark.parametrize("failure", [requests.ReadTimeout(), requests.HTTPError(response=type("Upstream", (), {"status_code": 503})())])
+@pytest.mark.parametrize("failure", [requests.ConnectTimeout(), requests.HTTPError(response=type("Upstream", (), {"status_code": 503})())])
 def test_temporary_provider_failure_retries_once_with_same_credit(client, spec, monkeypatch, failure):
     post = _mock_completions(monkeypatch, [spec])
     response = next(post.side_effect)
@@ -450,12 +490,47 @@ def test_temporary_provider_failure_retries_once_with_same_credit(client, spec, 
     assert result.json["quota"]["site_remaining"] == 19 and post.call_count == 2
 
 
-def test_repeated_timeout_stops_after_two_calls_and_refunds(client, spec, monkeypatch):
+@pytest.mark.parametrize("failure", [requests.ReadTimeout(), requests.ConnectionError(ReadTimeoutError(None, "/messages", "read timed out"))])
+def test_read_timeout_does_not_duplicate_work_still_running_at_relay(client, spec, monkeypatch, failure):
     post = _mock_completions(monkeypatch, [])
-    post.side_effect = requests.ReadTimeout()
+    post.side_effect = failure
     result = client.post("/api/v1/demos/generate", json={"product_id": "demo-product"})
     assert result.json["error"] == "GENERATION_TIMEOUT"
-    assert result.json["quota"]["remaining"] == 3 and post.call_count == 2
+    assert result.json["quota"]["remaining"] == 3 and post.call_count == 1
+
+
+def test_slow_valid_response_is_not_cut_off_at_35_seconds(monkeypatch, spec):
+    post = _mock_completions(monkeypatch, [spec])
+    elapsed = [0]
+    response = next(post.side_effect)
+    def slow_reply(*args, **kwargs):
+        assert kwargs["timeout"][1] > 52
+        elapsed[0] = 52
+        return response
+    post.side_effect = slow_reply
+    monkeypatch.setattr(service.time, "monotonic", lambda: elapsed[0])
+    assert service.generate_spec(PRODUCT) == validate_experience(spec)
+    assert post.call_count == 1
+
+
+def test_repair_has_time_to_finish_after_a_29_second_invalid_response(client, spec, monkeypatch, caplog):
+    invalid = copy.deepcopy(spec)
+    invalid["steps"][0]["options"][0]["artifact"]["input"]["en"] = ""
+    post = _mock_completions(monkeypatch, [invalid, spec])
+    responses = iter(post.side_effect)
+    elapsed = [0]
+    def timed_reply(*args, **kwargs):
+        duration = 29 if elapsed[0] == 0 else 30
+        assert kwargs["timeout"][1] > duration
+        elapsed[0] += duration
+        return next(responses)
+    post.side_effect = timed_reply
+    monkeypatch.setattr(service.time, "monotonic", lambda: elapsed[0])
+    result = client.post("/api/v1/demos/generate", json={"product_id": "demo-product"})
+    assert result.status_code == 200 and result.json["quota"]["remaining"] == 2
+    assert elapsed[0] == 59 and post.call_count == 2
+    assert "steps[0].options[0].artifact.input.en" in caplog.text
+    assert "expected 1-220 characters, got 0" in post.call_args.kwargs["json"]["messages"][-1]["content"]
 
 
 def test_exhausted_quota_returns_429_without_calling_provider(client, store, monkeypatch):

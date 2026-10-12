@@ -53,6 +53,43 @@ it("does not keep polling an error response", async () => {
   expect(fetcher.mock.calls.filter(call => call[1].method === "POST")).toHaveLength(1);
 });
 
+it.each(["disconnect", "proxy-error"])("recovers a saved result after %s without a second generation", async failure => {
+  const fetcher = vi.fn().mockResolvedValueOnce(payload({ state: "not_generated" }));
+  if (failure === "disconnect") fetcher.mockRejectedValueOnce(new TypeError("fetch failed"));
+  else fetcher.mockResolvedValueOnce(payload({ success: false, error: "SERVICE_UNAVAILABLE" }));
+  fetcher.mockResolvedValueOnce(payload({ state: "ready", experience }));
+  vi.stubGlobal("fetch", fetcher);
+  const result = await loadProductDemo(`recover-${failure}`, { signal: controller().signal });
+  expect(result.experience).toBeTruthy();
+  expect(fetcher).toHaveBeenCalledTimes(3);
+  expect(fetcher.mock.calls.filter(call => call[1].method === "POST")).toHaveLength(1);
+});
+
+it("joins a running generation after losing its POST response", async () => {
+  vi.useFakeTimers();
+  const fetcher = vi.fn()
+    .mockResolvedValueOnce(payload({ state: "not_generated" }))
+    .mockRejectedValueOnce(new TypeError("network disconnected"))
+    .mockResolvedValueOnce(payload({ state: "generating" }))
+    .mockResolvedValueOnce(payload({ state: "ready", experience }));
+  vi.stubGlobal("fetch", fetcher);
+  const pending = loadProductDemo("recover-pending", { signal: controller().signal });
+  await vi.advanceTimersByTimeAsync(2000);
+  expect((await pending).experience).toBeTruthy();
+  expect(fetcher.mock.calls.filter(call => call[1].method === "POST")).toHaveLength(1);
+});
+
+it("does not regenerate if recovery finds no completed or pending result", async () => {
+  const fetcher = vi.fn()
+    .mockResolvedValueOnce(payload({ state: "not_generated" }))
+    .mockRejectedValueOnce(new TypeError("network disconnected"))
+    .mockResolvedValueOnce(payload({ state: "not_generated" }));
+  vi.stubGlobal("fetch", fetcher);
+  const result = await loadProductDemo("recover-missing", { signal: controller().signal });
+  expect(result).toMatchObject({ success: false, error: "SERVICE_UNAVAILABLE" });
+  expect(fetcher).toHaveBeenCalledTimes(3);
+});
+
 it("cancels polling when the user closes the experience", async () => {
   vi.useFakeTimers();
   const fetcher = vi.fn().mockResolvedValue(payload({ state: "generating" }));

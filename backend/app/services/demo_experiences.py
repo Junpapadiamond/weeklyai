@@ -7,14 +7,17 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
+from urllib3.exceptions import ReadTimeoutError
 from app.services.chat_service import _providers, _is_perplexity, _provider_protocol
-from app.services.demo_contract import cache_key, product_key, fingerprint, safe_url, validate_experience
+from app.services.demo_contract import cache_key, compatible_cache_keys, product_key, fingerprint, safe_url, validate_experience
 from app.services.demo_store import StoreUnavailable
 from app.services.demo_profiles import product_profile, profile_updated_at
 
 _published_signature = None
 _published_entries = {}
-GENERATION_SECONDS = 55
+# Allows a normal 30-50s completion plus one validation repair. The proxy has
+# 110s and the Vercel function 120s, leaving time for storage and the response.
+GENERATION_SECONDS = 90
 MAX_OUTPUT_TOKENS = 2200
 logger = logging.getLogger(__name__)
 
@@ -33,7 +36,7 @@ def _completion(base, endpoint, headers, payload, deadline):
         raise GenerationFailure("GENERATION_TIMEOUT")
     try:
         with requests.post(base + endpoint, json=payload, headers=headers,
-                           timeout=(3, min(35, remaining - 3)), stream=True, allow_redirects=False) as response:
+                           timeout=(3, remaining - 3), stream=True, allow_redirects=False) as response:
             response.raise_for_status()
             raw = bytearray()
             for chunk in response.iter_content(1024):
@@ -44,8 +47,13 @@ def _completion(base, endpoint, headers, payload, deadline):
                     raise GenerationFailure("GENERATION_INVALID_RESPONSE", "Response exceeds size limit")
         return json.loads(raw)
     except requests.Timeout as error:
-        raise GenerationFailure("GENERATION_TIMEOUT", retryable=True) from error
+        # A read timeout does not cancel generation at a relay. Retrying it can
+        # pay twice for work still running upstream; only connection setup retries.
+        raise GenerationFailure("GENERATION_TIMEOUT", retryable=isinstance(error, requests.ConnectTimeout)) from error
     except requests.RequestException as error:
+        # requests wraps timeouts raised while iterating a streamed body.
+        if error.args and isinstance(error.args[0], ReadTimeoutError):
+            raise GenerationFailure("GENERATION_TIMEOUT") from error
         status = error.response.status_code if error.response is not None else None
         code = "GENERATOR_BUSY" if status == 429 else "GENERATOR_UNAVAILABLE"
         # Never include the provider's response, headers or exception text in logs.
@@ -116,13 +124,23 @@ def ready_experience(product, store=None):
         entry = envelope(product, profile, "curated")
         entry["generated_at"] = profile_updated_at(product)
         return entry
-    key = cache_key(product)
-    entry = published().get(key) or (store.get(key) if store else None)
-    if entry:
-        try:
-            return {**entry, "spec": validate_experience(entry["spec"])}
-        except (ValueError, KeyError, TypeError):
-            return None
+    keys = compatible_cache_keys(product)
+    entries = published()
+    # Prefer any shipped equivalent before consulting the database.
+    for entry in [entries.get(key) for key in keys]:
+        if entry:
+            try:
+                return {**entry, "spec": validate_experience(entry["spec"])}
+            except (ValueError, KeyError, TypeError):
+                continue
+    if store:
+        for key in keys:
+            entry = store.get(key)
+            if entry:
+                try:
+                    return {**entry, "spec": validate_experience(entry["spec"])}
+                except (ValueError, KeyError, TypeError):
+                    continue
     return None
 
 
@@ -209,7 +227,9 @@ def generate_spec(product):
         "Allowed widgets: choice, review, compare (all use options); dial additionally requires "
         "dial:{min:1,max:20,initial:5,factor:2,unit:[zh,en],result_label:[zh,en]} for explicitly fictional arithmetic; "
         "app additionally requires app_kind:tasks|timer|expenses ONLY for an app builder; it is a fixed local preview, not vendor execution. "
-        "Every copy field is a two-string array [Chinese,English]. Keep text concise: titles and labels <=24 chars per language; instructions <=55; "
+        "Every copy field is a two-string array [Chinese,English] with BOTH strings nonempty. "
+        "Omit optional fields entirely when unused; never emit empty emphasis, items, context, workspace or dial fields. "
+        "Keep text concise: titles and labels <=24 chars per language; instructions <=55; "
         "outputs <=65 chars per language; scenario <=80; takeaway <=80. Unique step IDs. "
         "Artifact labels <=24 chars per language, input/output <=120, emphasis <=60, item labels <=24 and details <=65. "
         "Avoid repeating artifact text in option.output; that field is only a short explanation of the choice. "

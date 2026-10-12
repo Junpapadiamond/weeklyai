@@ -27,7 +27,7 @@ async function proxy(request: Request, context: { params: Promise<{ path: string
       },
       body,
       cache: 'no-store',
-      signal: AbortSignal.any([request.signal, AbortSignal.timeout(path[0] === 'demos' ? (request.method === 'POST' ? 70000 : 15000) : 45000)]),
+      signal: AbortSignal.any([request.signal, AbortSignal.timeout(path[0] === 'demos' ? (request.method === 'POST' ? 110000 : 15000) : 45000)]),
       redirect: 'error',
     });
     const publicPlayback = request.method === 'GET' && path.length === 3 && path[0] === 'demos' && path[1] === 'prepared'

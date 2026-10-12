@@ -4,7 +4,7 @@ import os
 import uuid
 from flask import Blueprint, jsonify, request
 from itsdangerous import URLSafeTimedSerializer, BadSignature
-from app.services.demo_contract import cache_key
+from app.services.demo_contract import cache_key, compatible_cache_keys
 from app.services.demo_experiences import published, ready_experience, prepare_experience, provider_available
 from app.services.demo_store import DemoStore, production
 from app.services.demo_profiles import profile_name
@@ -63,24 +63,27 @@ def demo_catalog():
             context = (*context[:3], None, None)
     products = ProductService.get_discovery_products()
     keys.update(cache_key(p) for p in products if profile_name(p))
-    ready = sum(cache_key(p) in keys for p in products)
+    def is_prepared(product):
+        return any(key in keys for key in compatible_cache_keys(product))
+
+    ready = sum(is_prepared(p) for p in products)
     dark = sum(float(p.get("dark_horse_index") or 0) >= 4 for p in products)
     query, category = request.args.get("q", "").strip().lower()[:160], request.args.get("filter", "all")
     filtered = []
     for p in products:
-        is_ready = cache_key(p) in keys
+        is_ready = is_prepared(p)
         if category == "ready" and not is_ready or category == "dark" and float(p.get("dark_horse_index") or 0) < 4:
             continue
         if query and query not in " ".join(str(p.get(k, "")) for k in ("name", "description", "description_en", "categories", "country_name")).lower():
             continue
         filtered.append(p)
-    filtered.sort(key=lambda p: (cache_key(p) not in keys, -float(p.get("dark_horse_index") or 0), p["name"].lower()))
+    filtered.sort(key=lambda p: (not is_prepared(p), -float(p.get("dark_horse_index") or 0), p["name"].lower()))
     try:
         page, limit = max(1, int(request.args.get("page", 1))), min(60, max(1, int(request.args.get("limit", 24))))
     except ValueError:
         return _response({"success": False, "error": "BAD_REQUEST"}, 400, context)
     fields = ("_id", "name", "website", "logo_url", "logo", "source_url", "description", "description_en", "categories", "country_name", "dark_horse_index", "is_hardware")
-    items = [{**{k: p.get(k) for k in fields}, "_id": str(p.get("_id") or p["name"]), "demo_ready": cache_key(p) in keys}
+    items = [{**{k: p.get(k) for k in fields}, "_id": str(p.get("_id") or p["name"]), "demo_ready": is_prepared(p)}
              for p in filtered[(page - 1) * limit:page * limit]]
     return _response({"success": True, "products": items, "total": len(filtered), "catalog_total": len(products),
                       "ready_count": ready, "dark_count": dark, "page": page, "limit": limit}, 200, context)

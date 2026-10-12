@@ -2,7 +2,9 @@ import { readDemo, type DemoResponse, type ExperienceEntry } from "./demo-experi
 
 const ready = new Map<string, { experience: ExperienceEntry; expires: number }>();
 const READ_TIMEOUT = 15000;
-const GENERATION_TIMEOUT = 70000;
+// The backend allows 90s for generation plus storage; its proxy allows 110s.
+const GENERATION_TIMEOUT = 130000;
+const POST_TIMEOUT = 115000;
 
 export async function fetchPreparedDemo(id: string, signal: AbortSignal): Promise<DemoResponse> {
   return readDemo(await fetch(`/api/v1/demos/prepared/${encodeURIComponent(id)}`, {
@@ -33,10 +35,25 @@ export async function loadProductDemo(id: string, options: {
     options.onGenerating?.();
     const signal = AbortSignal.any([options.signal, AbortSignal.timeout(GENERATION_TIMEOUT)]);
     if (next.state !== "generating") {
-      next = await readDemo(await fetch("/api/v1/demos/generate", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ product_id: id }), signal,
-      }));
+      try {
+        next = await readDemo(await fetch("/api/v1/demos/generate", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ product_id: id }),
+          signal: AbortSignal.any([signal, AbortSignal.timeout(POST_TIMEOUT)]),
+        }));
+      } catch (error) {
+        if (signal.aborted) throw error;
+        if (error instanceof Error && error.message === "GENERATION_INVALID_RESPONSE") throw error;
+        next = { ...next, success: false, error: "SERVICE_UNAVAILABLE" };
+      }
+      // Losing the POST response does not mean generation failed. Recover the
+      // saved result or join its lease with GETs only, never a second paid POST.
+      if (next.error === "SERVICE_UNAVAILABLE") {
+        next = await fetchPreparedDemo(id, signal);
+        if (next.success && next.state === "not_generated") {
+          return { ...next, success: false, error: "SERVICE_UNAVAILABLE" };
+        }
+      }
     }
     while (next.success && next.state === "generating" && !next.experience) {
       await pause(signal);
