@@ -49,6 +49,7 @@ export function DemoExplorer({ products }: { products: Product[] }) {
   const [elapsed, setElapsed] = useState(0);
   const abortRef = useRef<AbortController | null>(null);
   const resultRef = useRef<HTMLDivElement | null>(null);
+  const searchRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -58,6 +59,10 @@ export function DemoExplorer({ products }: { products: Product[] }) {
   }, []);
 
   useEffect(() => () => abortRef.current?.abort(), []);
+
+  useEffect(() => {
+    if (phase.kind === "ready" || phase.kind === "failed") resultRef.current?.focus({ preventScroll: true });
+  }, [phase.kind]);
 
   useEffect(() => {
     if (phase.kind !== "loading") return;
@@ -97,12 +102,10 @@ export function DemoExplorer({ products }: { products: Product[] }) {
     setSelected(product);
 
     const key = productKey(product);
-    const isReady = ready.has(demoSlug(product.name)) && !refresh;
-
     setRun((value) => value + 1);
     setElapsed(0);
-    setPhase({ kind: "loading", productName: product.name, building: !isReady });
-    window.setTimeout(() => resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 0);
+    setPhase({ kind: "loading", productName: product.name, building: refresh });
+    window.setTimeout(() => resultRef.current?.scrollIntoView({ behavior: "instant", block: "start" }), 0);
 
     // Ask for an existing demo first whatever the ready list says: it is a hint
     // for labelling the cards, not the record of what exists.
@@ -116,6 +119,7 @@ export function DemoExplorer({ products }: { products: Product[] }) {
       }
     }
 
+    setPhase({ kind: "loading", productName: product.name, building: true });
     const built = await generateDemo(key, { refresh, signal: controller.signal });
     if (controller.signal.aborted) return;
     if (built.ok) {
@@ -126,19 +130,25 @@ export function DemoExplorer({ products }: { products: Product[] }) {
     setPhase({ kind: "failed", error: built.error, message: built.message });
   }
 
+  function returnToPicker() {
+    abortRef.current?.abort();
+    setPhase({ kind: "idle" });
+    requestAnimationFrame(() => searchRef.current?.focus());
+  }
+
   const failureCopy: Record<DemoError, string> = {
     GENERATION_DISABLED: t(
       "暂时无法生成新演示，请选择「已有演示」查看。",
-      "On-demand demos are switched off on this site. The ones already built still work — use the 'Ready now' filter above."
+      "New examples are unavailable. Choose another product marked Ready."
     ),
     NOT_CONFIGURED: t(
       "暂时无法生成新演示，请选择「已有演示」查看。",
-      "On-demand generation has no provider key configured. Pre-built demos still work — use the 'Ready now' filter above."
+      "New examples are unavailable. Choose another product marked Ready."
     ),
     PROVIDER_UNAVAILABLE: t("生成服务暂时不可用，请稍后再试。", "The generator is unavailable right now. Try again shortly."),
     INVALID_SPEC: t(
       "这次生成的演示无法使用，请重试。",
-      "The generated demo failed validation, so it was not shown. We would rather show nothing than something possibly wrong."
+      "This example could not be prepared. Please try again."
     ),
     TOO_MANY_REQUESTS: t(
       `生成有频率限制${status ? `（每小时 ${status.generateLimitPerHour} 次）` : ""}。已建好的演示不受影响。`,
@@ -152,20 +162,26 @@ export function DemoExplorer({ products }: { products: Product[] }) {
   return (
     <section className="section demo-explorer">
       <header className="section-header">
-        <h1 className="section-title">{t("产品演示", "Interactive demos")}</h1>
-        <p className="section-desc">
+        <h1 className="section-title">{t("交互示例", "Interactive examples")}</h1>
+        {phase.kind === "idle" ? <p className="section-desc">
           {t(
-            "选择产品，查看根据公开资料制作的交互示例。演示使用示例数据，实际功能以官网为准。",
-            "Pick a product and see what it does — no signup, no docs. Built ones open instantly; the rest are generated on the spot."
+            "选择产品，查看本站根据公开资料制作的独立示例。",
+            "Choose a product to explore an independent example based on public information."
           )}
-        </p>
+        </p> : null}
       </header>
 
+      {phase.kind !== "idle" ? <button type="button" className="demo-back-picker" onClick={returnToPicker}>
+        {t("← 选择其他产品", "← Choose another product")}
+      </button> : null}
+
+      <div className="demo-picker" hidden={phase.kind !== "idle"}>
       <div className="demo-controls">
         <label className="demo-search">
           <span className="sr-only">{t("搜索产品", "Search products")}</span>
           <input
             type="search"
+            ref={searchRef}
             value={query}
             onChange={(event) => setQuery(event.currentTarget.value)}
             placeholder={t("搜索产品、类别或国家", "Search products, categories or countries")}
@@ -177,7 +193,7 @@ export function DemoExplorer({ products }: { products: Product[] }) {
         </label>
         {status && !status.generationAvailable ? (
           <span className="demo-note-inline">
-            {t("暂时无法生成新演示，已有演示可以正常查看。", "Live generation is off; pre-built demos are available.")}
+            {t("暂时无法生成新示例，可查看已有示例。", "New examples are unavailable. Prepared examples remain available.")}
           </span>
         ) : null}
       </div>
@@ -229,8 +245,9 @@ export function DemoExplorer({ products }: { products: Product[] }) {
             : t("没有匹配的产品，换个关键词试试。", "No products match. Try a different search.")}
         </p>
       ) : null}
+      </div>
 
-      <div className="demo-result" ref={resultRef}>
+      <div className="demo-result" ref={resultRef} tabIndex={-1}>
         {phase.kind === "loading" ? (
           <div className="demo-loading" role="status" aria-live="polite">
             <strong>
@@ -241,18 +258,15 @@ export function DemoExplorer({ products }: { products: Product[] }) {
             <span>
               {phase.building
                 ? t(
-                    `已用 ${elapsed} 秒。首次生成通常需要 15–40 秒，之后所有人都能立即打开。`,
-                    `${elapsed}s elapsed. A first build usually takes 15–40 seconds; after that it opens instantly for everyone.`
+                    `已用 ${elapsed} 秒，完成后可重复查看。`,
+                    `${elapsed}s elapsed. The prepared example can be replayed.`
                   )
                 : t(`已用 ${elapsed} 秒。`, `${elapsed}s elapsed.`)}
             </span>
             <button
               type="button"
               className="demo-btn"
-              onClick={() => {
-                abortRef.current?.abort();
-                setPhase({ kind: "idle" });
-              }}
+              onClick={returnToPicker}
             >
               {t("取消", "Cancel")}
             </button>
@@ -272,7 +286,7 @@ export function DemoExplorer({ products }: { products: Product[] }) {
         ) : null}
 
         {phase.kind === "ready" ? (
-          <DemoPlayer spec={phase.spec} onRegenerate={selected ? () => void open(selected, true) : undefined} />
+          <DemoPlayer key={`${phase.spec.product_slug}-${run}`} spec={phase.spec} onRegenerate={selected ? () => void open(selected, true) : undefined} />
         ) : null}
       </div>
     </section>

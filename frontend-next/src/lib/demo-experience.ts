@@ -1,11 +1,25 @@
 import { z } from "zod";
 
 const copy = (max: number) => z.object({ zh: z.string().trim().min(1).max(max), en: z.string().trim().min(1).max(max) });
+export const ExperienceArtifactSchema = z.object({
+  kind: z.enum(["excerpt", "sequence", "comparison", "list", "text"]),
+  input_label: copy(40), output_label: copy(40), input: copy(220), output: copy(220),
+  emphasis: copy(100).optional(),
+  items: z.array(z.object({ label: copy(60), detail: copy(160) })).min(2).max(4).optional(),
+}).superRefine((value, ctx) => {
+  if (value.emphasis && (["zh", "en"] as const).some(lang => !value.input[lang].includes(value.emphasis![lang])))
+    ctx.addIssue({ code: "custom", message: "Artifact emphasis must appear in both input languages" });
+  if (value.items && value.kind !== "sequence" && value.kind !== "list")
+    ctx.addIssue({ code: "custom", message: "Artifact items require a sequence or list" });
+});
+export type ExperienceArtifactData = z.infer<typeof ExperienceArtifactSchema>;
+
 const step = z.object({
   id: z.string().min(1).max(40), widget: z.enum(["choice", "review", "dial", "compare", "app"]),
   title: copy(80), instruction: copy(300), example_data: z.literal(true),
   options: z.array(z.object({ id: z.string(), label: copy(80), output: copy(700),
     when: z.object({ step_id: z.string(), option_id: z.string() }).optional(),
+    artifact: ExperienceArtifactSchema.optional(),
   })).min(1).max(4),
   app_kind: z.enum(["timer", "tasks", "expenses"]).optional(),
   dial: z.object({ min: z.number().int().min(0), max: z.number().int().max(1000), initial: z.number().int(),
@@ -17,7 +31,8 @@ const step = z.object({
 });
 export const ExperienceSchema = z.object({
   version: z.literal(2), confidence: z.literal("illustrative"), tier: z.enum(["workflow", "concept"]),
-  headline: copy(120), scenario: copy(400), steps: z.array(step).min(3).max(6), takeaway: copy(500),
+  headline: copy(120), scenario: copy(400), steps: z.array(step).min(1).max(6), takeaway: copy(500),
+  focus_step_id: z.string().min(1).max(40).optional(),
   workspace: z.object({ kind: z.enum(["video", "image", "search", "document", "board"]), label: copy(80), initial: copy(200) }).optional(),
   product_context: z.object({ job: copy(300), input: copy(300), output: copy(300), trial_note: copy(300),
     source_url: z.string().url(), trial_url: z.string().url() }).optional(),
@@ -27,6 +42,8 @@ export const ExperienceSchema = z.object({
   }) })).min(1).max(6),
 }).refine(value => new Set(value.steps.map(s => s.id)).size === value.steps.length, "Duplicate steps")
   .superRefine((value, ctx) => {
+    if (value.focus_step_id && !value.steps.some(s => s.id === value.focus_step_id))
+      ctx.addIssue({ code: "custom", message: "Focus must reference an existing step" });
     const previous = new Map<string, Set<string>>();
     for (const s of value.steps) {
       const conditions = s.options.flatMap(o => o.when ? [o.when] : []);

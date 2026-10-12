@@ -284,3 +284,63 @@
 @media (max-width: 1100px) { .experience-workbench { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 680px) { .experience-controls .demo-launch { width: auto; flex-shrink: 1; } .experience-step h2, .experience-finish h2 { scroll-margin-top: 205px; } }
 @media (prefers-reduced-motion: reduce) { .workspace-composition, .workspace-canvas { transition: none; } }
+
+/* Shared focus layout: current and cached examples use the same quiet shell. */
+.experience-focus { max-width: 1040px; margin-inline: auto; background: var(--surface); }
+.focus-header, .focus-content, .focus-footer { width: min(100%, 900px); margin-inline: auto; padding-inline: 36px; box-sizing: border-box; }
+.focus-header { padding-top: 34px; padding-bottom: 28px; }
+.focus-product { display: flex; align-items: center; gap: 13px; }
+.focus-product h3 { margin: 0; font-size: 29px; line-height: 1.3; letter-spacing: -.7px; }
+.focus-promise { margin: 15px 0 9px; font-size: 18px; line-height: 1.6; color: var(--text-soft); }
+.focus-boundary { margin: 0; color: var(--text-muted); font-size: 13px; line-height: 1.65; }
+.focus-content { padding-top: 24px; padding-bottom: 12px; border-top: 1px solid var(--border); }
+.focus-part-control { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; min-width: 0; font-size: 13px; color: var(--text-muted); }
+.focus-part-control select, .focus-context-control select { min-width: 0; max-width: 100%; border: 1px solid var(--border); border-radius: 6px; padding: 9px 30px 9px 10px; background: var(--surface); color: var(--text-soft); font: inherit; }
+.focus-part-control select { flex: 1; }
+.focus-part-control > span { font: 12px var(--font-mono); white-space: nowrap; }
+.focus-content > h2 { margin: 0 0 22px; font-size: clamp(22px, 2.5vw, 28px); font-weight: 650; letter-spacing: -.65px; line-height: 1.45; scroll-margin-top: 150px; overflow-wrap: anywhere; }
+.focus-context-control { display: flex; gap: 15px; align-items: center; margin: 0 0 22px; font-size: 13px; color: var(--text-soft); }
+.focus-context-control select { flex: 1; }
+.focus-result { min-width: 0; }
+.focus-choices { padding: 0; border: 0; margin: 24px 0 32px; min-width: 0; }
+.focus-choices legend { padding: 0 0 12px; color: var(--text-muted); font-size: 12px; }
+.focus-choices > div { display: flex; flex-wrap: wrap; gap: 10px; }
+.focus-choices button { display: flex; align-items: center; gap: 9px; min-height: 44px; padding: 11px 16px; border: 1px solid var(--border); border-radius: 7px; background: var(--surface); color: var(--text-soft); font-size: 14px; line-height: 1.5; cursor: pointer; text-align: left; }
+.focus-choices button svg { flex-shrink: 0; }
+.focus-choices button[aria-pressed=true] { background: var(--text); border-color: var(--text); color: var(--surface); }
+.focus-details { margin-top: 26px; border-top: 1px solid var(--border); padding: 18px 0; color: var(--text-soft); font-size: 14px; line-height: 1.85; }
+.focus-details > summary { cursor: pointer; width: fit-content; font-size: 13px; }
+.focus-details p { max-width: 65ch; margin: 15px 0; }
+.focus-details dl { margin: 16px 0; }
+.focus-details dt { font-weight: 600; }
+.focus-details dd { margin: 4px 0 14px; }
+.focus-details a { display: inline-flex; align-items: center; gap: 5px; color: var(--text); }
+.focus-details ul { padding-left: 19px; }
+.focus-tools { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 20px; }
+.focus-tools button { display: inline-flex; align-items: center; gap: 7px; padding: 9px 12px; border: 1px solid var(--border); background: var(--surface); border-radius: 5px; color: var(--text-soft); font: inherit; cursor: pointer; }
+.focus-footer { padding-top: 20px; padding-bottom: 30px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; border-top: 1px solid var(--border); }
+.focus-footer a { display: inline-flex; gap: 7px; align-items: center; color: var(--primary); font-size: 14px; text-decoration: none; }
+.focus-footer small { color: var(--text-muted); font-size: 12px; line-height: 1.7; max-width: 45ch; }
+.focus-local-app > .demo-eyebrow { line-height: 1.8; margin-bottom: 16px; }
+.focus-local-app .demo-mini-app { box-shadow: none; }
+.focus-app-guidance { margin: 16px 0 0; color: var(--text-soft); font-size: 14px; line-height: 1.7; }
+.experience-focus button:focus-visible, .experience-focus a:focus-visible, .experience-focus summary:focus-visible, .experience-focus select:focus-visible, .experience-focus input:focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
+.demo-invitation--open { padding: 16px 30px; background: var(--surface); border-bottom: 1px solid var(--border); }
+.demo-invitation--open .demo-launch { min-height: 36px; padding: 5px 0 5px 14px; background: transparent; color: var(--text-soft); font-size: 12px; }
+@media (max-width: 680px) {
+  .focus-header, .focus-content, .focus-footer { padding-inline: 18px; }
+  .focus-header { padding-top: 18px; padding-bottom: 18px; }
+  .focus-product h3 { font-size: 24px; }
+  .focus-promise { font-size: 16px; }
+  .focus-content { padding-top: 18px; }
+  .focus-content > h2 { margin-bottom: 14px; }
+  .focus-part-control { gap: 8px; margin-bottom: 23px; }
+  .focus-part-control > span { display: none; }
+  .focus-context-control { align-items: stretch; flex-direction: column; gap: 7px; margin-bottom: 14px; }
+  .focus-choices > div { display: grid; grid-template-columns: minmax(0,1fr); }
+  .focus-choices button { width: 100%; }
+  .focus-footer { align-items: flex-start; flex-direction: column; gap: 12px; }
+  .demo-invitation--open { padding: 14px 18px; gap: 10px; flex-direction: row; }
+  .demo-invitation--open .demo-eyebrow { font-size: 9px; letter-spacing: .5px; }
+  .demo-invitation--open .demo-launch { width: auto; flex-shrink: 0; }
+}

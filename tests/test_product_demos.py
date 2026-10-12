@@ -23,6 +23,13 @@ def spec():
     entry = next(iter(service.published().values()))
     result = copy.deepcopy(entry["spec"])
     result["sources"] = [{"url": PRODUCT["website"], "label": {"zh": "官网", "en": "Official"}}]
+    # Provider fixtures model the new first-value contract; legacy cache replay
+    # without artifacts is separately covered in test_demo_artifacts.py.
+    for option in result["steps"][0]["options"]:
+        option["artifact"] = {"kind": "text", "input_label": {"zh": "示例问题", "en": "Example question"},
+            "input": {"zh": "如何查找参考资料？", "en": "How could I find reference material?"},
+            "output_label": {"zh": "示例方向", "en": "Example direction"},
+            "output": {"zh": "比较资料范围与来源。", "en": "Compare the scope and sources."}}
     return result
 
 

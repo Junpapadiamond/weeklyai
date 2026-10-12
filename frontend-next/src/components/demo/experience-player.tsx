@@ -1,94 +1,89 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Check, Download, ArrowCounterClockwise } from "@phosphor-icons/react";
+import { useId, useRef, useState } from "react";
+import { ArrowRight, ArrowUpRight, Check, Download, ArrowCounterClockwise } from "@phosphor-icons/react";
 import { useSiteLocale } from "@/components/layout/locale-provider";
-import { availableExperienceOptions, updateExperienceChoice, type ExperienceEntry } from "@/lib/demo-experience";
+import { availableExperienceOptions, type ExperienceEntry } from "@/lib/demo-experience";
+import { defaultExperienceChoices, selectExperienceChoice, initialExperienceIndex, experienceArtifact } from "@/lib/demo-presentation";
 import { exampleSpec } from "@/lib/live-demo";
 import { DemoAppPreview } from "./demo-app-preview";
 import { SmartLogo } from "@/components/common/smart-logo";
-import { ExperienceWorkspace } from "./experience-workspace";
+import { ExperienceArtifact } from "./experience-artifact";
 
+/** Prepared presets are visible immediately, never recorded as completed user tasks. */
 export function ExperiencePlayer({ entry, productName, website, logoUrl, secondaryLogoUrl }: { entry: ExperienceEntry; productName: string; website?: string; logoUrl?: string; secondaryLogoUrl?: string }) {
   const { locale, t } = useSiteLocale();
   const lang = locale === "en-US" ? "en" : "zh";
   const { spec } = entry;
-  const [index, setIndex] = useState(0);
-  const [choices, setChoices] = useState<Record<string, string>>({});
+  const [index, setIndex] = useState(() => initialExperienceIndex(spec));
+  const [choices, setChoices] = useState(() => defaultExperienceChoices(spec));
   const [dials, setDials] = useState<Record<string, number>>({});
-  const [reviews, setReviews] = useState<Record<string, boolean>>({});
   const [revision, setRevision] = useState(0);
-  const [customBrief, setCustomBrief] = useState<string | null>(null);
-  const [ratio, setRatio] = useState<"9:16" | "16:9">("9:16");
-  const brief = customBrief ?? spec.workspace?.initial[lang] ?? spec.scenario[lang];
   const heading = useRef<HTMLHeadingElement>(null);
-  const complete = index === spec.steps.length;
-  const step = spec.steps[Math.min(index, spec.steps.length - 1)];
+  const id = useId();
+  const step = spec.steps[index];
   const options = availableExperienceOptions(step, choices);
-  const selected = options.find(o => o.id === choices[step.id]);
+  const selected = options.find(o => o.id === choices[step.id]) ?? options[0];
+  const artifact = experienceArtifact(spec, step, selected);
   const dialValue = dials[step.id] ?? step.dial?.initial ?? 0;
-  const canContinue = !!selected && (step.widget !== "review" || reviews[step.id]);
-  function choose(optionId: string) {
-    if (selected?.id === optionId) return;
-    setChoices(old => updateExperienceChoice(spec, old, step.id, optionId));
-    const earlier = new Set(spec.steps.slice(0, index).map(s => s.id));
-    setReviews(old => Object.fromEntries(Object.entries(old).filter(([id]) => earlier.has(id))));
-    setDials(old => Object.fromEntries(Object.entries(old).filter(([id]) => earlier.has(id))));
+  const dependencyId = options.find(o => o.when)?.when?.step_id;
+  const dependency = spec.steps.find(s => s.id === dependencyId);
+
+  function choose(stepId: string, optionId: string) {
+    setChoices(old => selectExperienceChoice(spec, old, stepId, optionId));
   }
-  function move(next: number) { setIndex(next); requestAnimationFrame(() => { heading.current?.focus({ preventScroll: true }); heading.current?.scrollIntoView({ block: "start", behavior: "instant" }); }); }
+  function move(next: number) {
+    setIndex(next);
+  }
   function download() {
-    const lines = [productName + " / Darkhorse Radar", t("模拟摘要 · 虚构示例 · 非官方", "Simulation summary · Fictional examples · Unofficial"),
-      t("本摘要来自本站示例，没有运行原厂产品、开展访谈或访问原始视频。", "This summary comes from a prepared walkthrough. The vendor product was not run; no interviews or source-video access took place."), spec.headline[lang],
-      brief, ...(spec.workspace?.kind === "video" || spec.workspace?.kind === "image" ? [ratio] : []), ...spec.steps.flatMap(s => {
-        const choice = s.options.find(o => o.id === choices[s.id]);
-        return [s.title[lang], choice?.label[lang] || "", choice?.output[lang] || "",
-          s.dial ? (dials[s.id] ?? s.dial.initial) + " " + s.dial.unit[lang] : ""];
+    const lines = [productName + " / DarkHorseRadar", t("独立虚构示例 · 非原厂输出", "Independent fictional example · Not vendor output"),
+      t("这是预设示例路径，部分选项可能未经修改。没有运行原厂产品。", "This is a prepared example path; some presets may be unchanged. The vendor product was not run."),
+      spec.headline[lang], ...spec.steps.flatMap(s => {
+        const option = s.options.find(o => o.id === choices[s.id]);
+        const a = option?.artifact;
+        return [s.title[lang], option?.label[lang] ?? "", ...(a ? [a.input_label[lang], a.input[lang], a.output_label[lang], a.output[lang],
+          ...(a.items?.flatMap(item => [item.label[lang], item.detail[lang]]) ?? []), option && option.output[lang] !== a.output[lang] ? option.output[lang] : ""] : [option?.output[lang] ?? ""]),
+          s.dial ? (dials[s.id] ?? s.dial.initial) + " × " + s.dial.factor + " = " + (dials[s.id] ?? s.dial.initial) * s.dial.factor + " (" + s.dial.result_label[lang] + "; " + t("示例算式", "illustrative arithmetic") + ")" : ""];
       }), spec.takeaway[lang], ...spec.sources.map(s => s.url)];
-    const url = URL.createObjectURL(new Blob([lines.join("\n\n")], { type: "text/plain;charset=utf-8" }));
-    const a = document.createElement("a"); a.href = url; a.download = "darkhorseradar-demo.txt"; a.click();
+    const url = URL.createObjectURL(new Blob([lines.filter(Boolean).join("\n\n")], { type: "text/plain;charset=utf-8" }));
+    const a = document.createElement("a"); a.href = url; a.download = "darkhorseradar-example.txt"; a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
-  return <div className="experience-shell">
-    {spec.product_context ? <section className="experience-product-context" aria-label={t("真实产品与本站示例", "The real product and this walkthrough")}>
-      <div><span className="demo-eyebrow">{t("先了解产品", "WHAT THE PRODUCT DOES")}</span><h3>{productName}</h3><p>{spec.product_context.job[lang]}</p>
-        <dl><div><dt>{t("你提供", "You provide")}</dt><dd>{spec.product_context.input[lang]}</dd></div><div><dt>{t("厂商描述的交付物", "Vendor-described output")}</dt><dd>{spec.product_context.output[lang]}</dd></div></dl>
-        <a href={spec.product_context.source_url} target="_blank" rel="noopener noreferrer">{t("查看厂商说明", "Read the vendor’s explanation")} ↗</a></div>
-      <div className="experience-vendor-trial"><strong>{t("想体验真实的 AI 访谈？", "Want to try the actual AI interviewer?")}</strong><p>{spec.product_context.trial_note[lang]}</p><a className="demo-launch" href={spec.product_context.trial_url} target="_blank" rel="noopener noreferrer">{t("前往官网体验入口", "Open the official trial page")} ↗</a><small>{t("下方为本站制作的交互讲解。", "Below: an independent, fictional walkthrough.")}</small></div>
-    </section> : null}
-    <header className="experience-top"><div><SmartLogo className="demo-product-logo" name={productName} logoUrl={logoUrl} secondaryLogoUrl={secondaryLogoUrl} website={website} trustPrimaryLogo size={29} /><strong>{productName}</strong><span className="experience-origin">{entry.origin === "ai" ? t("预先生成的 AI 示例", "Prepared AI example") : t("已准备的示例", "Prepared example")}</span></div>
-      <span className="experience-disclosure">{spec.tier === "concept" ? t("概念演示", "Concept explorer") : t("流程演示", "Workflow simulation")} · {t("示例数据 · 非官方演示", "Example data · Unofficial")}</span></header>
-    <div className="experience-body">
-      <aside className="experience-rail"><span className="demo-eyebrow">{t("通过示例理解流程", "LEARN THROUGH AN EXAMPLE")}</span><h3>{spec.headline[lang]}</h3><p>{spec.scenario[lang]}</p>
-        <ol>{spec.steps.map((s, i) => <li key={s.id}><button type="button" disabled={i > index} aria-current={index === i ? "step" : undefined} onClick={() => move(i)}><span>{i < index ? <Check size={14} /> : String(i + 1).padStart(2, "0")}</span>{s.title[lang]}</button></li>)}</ol>
-        <span className="experience-free">{t("查看和操作演示不消耗生成次数", "Interactions use no generation credits")}</span>
-      </aside>
-      <div className="experience-stage">
-        <div className="experience-stage-meta"><span>{complete ? t("模拟完成", "SIMULATION COMPLETE") : t(`第 ${index + 1} 步，共 ${spec.steps.length} 步`, "STEP " + String(index + 1).padStart(2, "0") + " / " + String(spec.steps.length).padStart(2, "0"))}</span><button type="button" onClick={() => { setChoices({}); setDials({}); setReviews({}); setCustomBrief(null); setRatio("9:16"); setRevision(v => v + 1); move(0); }}><ArrowCounterClockwise size={13} />{t("重新开始", "Start over")}</button></div>
-        <div className="experience-simulation-note"><strong>{t("本站模拟 · 虚构示例", "SIMULATION ONLY · FICTIONAL EXAMPLES")}</strong><p>{t("选择不同选项，了解决策如何影响示例摘要。这里没有运行原厂产品，也没有开展真实访谈或访问原始视频。", "Explore how choices affect an example summary. The vendor product is not running here; no real interviews or source videos are used.")}</p></div>
-        <div className={spec.tier === "workflow" ? "experience-workbench" : undefined}>
-        {complete ? <div className="experience-finish">
-          <span className="experience-done"><Check size={26} /></span><h2 ref={heading} tabIndex={-1}>{t("你的模拟决策摘要", "Your example decision summary")}</h2><p>{spec.takeaway[lang]}</p>
-          <div className="experience-summary">{spec.steps.map(s => <div key={s.id}><span>{s.title[lang]}</span><strong>{s.options.find(o => o.id === choices[s.id])?.label[lang]}</strong></div>)}</div>
-          <div className="experience-actions"><button type="button" className="demo-launch" onClick={download}><Download size={16} />{t("下载模拟摘要", "Download simulation summary")}</button>{website ? <a href={spec.product_context?.trial_url ?? website} target="_blank" rel="noopener noreferrer">{t("前往原厂产品", "Continue on the vendor’s site")} ↗</a> : null}</div>
-        </div> : <div key={step.id} className="experience-step">
-          <h2 ref={heading} tabIndex={-1}>{step.title[lang]}</h2><p>{step.instruction[lang]}</p>
-          <div className={"experience-options " + (step.widget === "compare" ? "experience-options--compare" : "")}>
-            {options.map(option => <button key={option.id} type="button" aria-pressed={selected?.id === option.id} onClick={() => choose(option.id)}>
-              <span className="experience-radio">{selected?.id === option.id ? <Check size={13} /> : null}</span><strong>{option.label[lang]}</strong>
-              {step.widget === "compare" ? <span>{option.output[lang]}</span> : <ArrowRight size={15} />}
-            </button>)}
-          </div>
-          {step.dial ? <div className="experience-dial"><label htmlFor={"dial-" + step.id}>{step.dial.unit[lang]}<strong>{dialValue}</strong></label><input id={"dial-" + step.id} type="range" min={step.dial.min} max={step.dial.max} value={dialValue} onChange={event => setDials(old => ({ ...old, [step.id]: Number(event.target.value) }))} /><div>{step.dial.result_label[lang]}<strong>{dialValue * step.dial.factor}</strong></div><small>{t("演示计算：输入 × ", "Example calculation: input × ")}{step.dial.factor}{t("，并非真实测算。", "; not a real estimate.")}</small></div> : null}
-          {selected ? <div className="experience-output" aria-live="polite"><span className="demo-eyebrow">{t("虚构示例 · 非原厂输出", "FICTIONAL EXAMPLE · NOT VENDOR OUTPUT")}</span><p>{selected.output[lang]}</p>
-            {step.widget === "app" && step.app_kind ? <DemoAppPreview key={revision} spec={exampleSpec(step.app_kind, lang === "en")} en={lang === "en"} /> : null}
-          </div> : <div className="experience-empty">{t("选择一项，查看预先写好的示例。", "Make a choice to reveal a prepared example.")}</div>}
-          {step.widget === "review" && selected ? <label className="experience-review"><input type="checkbox" checked={!!reviews[step.id]} onChange={e => setReviews(old => ({ ...old, [step.id]: e.target.checked }))} />{t("我已阅读这段虚构示例", "I reviewed this fictional example.")}</label> : null}
-          <nav className="experience-controls" aria-label={t("演示步骤", "Experience steps")}><button type="button" disabled={index === 0} onClick={() => move(index - 1)}><ArrowLeft size={16} />{t("上一步", "Back")}</button><button type="button" className="demo-launch" disabled={!canContinue} onClick={() => move(index + 1)}>{index === spec.steps.length - 1 ? t("查看模拟摘要", "See example summary") : t("继续", "Continue")}<ArrowRight size={16} /></button></nav>
-        </div>}
-        {spec.tier === "workflow" ? <ExperienceWorkspace key={revision} spec={spec} lang={lang} choices={choices} brief={brief} onBriefChange={setCustomBrief} ratio={ratio} onRatioChange={setRatio} /> : null}
-        </div>
+  return <div className="experience-shell experience-focus">
+    <header className="focus-header">
+      <div className="focus-product"><SmartLogo className="demo-product-logo" name={productName} logoUrl={logoUrl} secondaryLogoUrl={secondaryLogoUrl} website={website} trustPrimaryLogo size={30} /><h3>{productName}</h3></div>
+      <p className="focus-promise">{spec.headline[lang]}</p>
+      <p className="focus-boundary">{t("本站独立示例；未运行原厂产品。", "An independent example. The vendor product is not running here.")}</p>
+    </header>
+    <div className="focus-content">
+      <h2 ref={heading} tabIndex={-1}>{step.title[lang]}</h2>
+      {dependency ? <div className="focus-context-control"><label htmlFor={id + "-context"}>{dependency.title[lang]}</label><select id={id + "-context"} value={choices[dependency.id]} onChange={e => choose(dependency.id, e.target.value)}>
+        {availableExperienceOptions(dependency, choices).map(o => <option key={o.id} value={o.id}>{o.label[lang]}</option>)}
+      </select></div> : null}
+      <div className="focus-result">
+        {step.widget === "app" && step.app_kind ? <section className="focus-local-app"><p className="demo-eyebrow">{t("本地示例应用 · 非原厂界面", "LOCAL SAMPLE APP · NOT THE VENDOR INTERFACE")}</p><DemoAppPreview key={revision + step.id} spec={exampleSpec(step.app_kind, lang === "en")} en={lang === "en"} /><p className="focus-app-guidance" aria-live="polite">{selected?.output[lang]}</p></section> : <ExperienceArtifact artifact={artifact} lang={lang} />}
       </div>
+      {step.dial ? <section className="experience-dial"><label htmlFor={id + "-dial"}>{step.dial.unit[lang]}<strong>{dialValue}</strong></label>
+        <input id={id + "-dial"} type="range" min={step.dial.min} max={step.dial.max} value={dialValue} onChange={e => setDials(old => ({ ...old, [step.id]: Number(e.target.value) }))} />
+        <div aria-live="polite">{step.dial.result_label[lang]}<strong>{dialValue * step.dial.factor}</strong></div>
+        <small>{t("示例算式，非真实测算：", "Illustrative arithmetic, not a real estimate: ")}{dialValue} × {step.dial.factor} = {dialValue * step.dial.factor}</small></section> : null}
+      {options.length > 1 ? <fieldset className="focus-choices"><legend>{t("切换示例", "Compare prepared examples")}</legend><div>
+        {options.map(option => <button key={option.id} type="button" aria-pressed={selected?.id === option.id} onClick={() => choose(step.id, option.id)}>
+          {selected?.id === option.id ? <Check size={16} aria-hidden="true" /> : <ArrowRight size={16} aria-hidden="true" />}<span>{option.label[lang]}</span>
+        </button>)}
+      </div></fieldset> : null}
+      {spec.steps.length > 1 ? <div className="focus-part-control"><label htmlFor={id + "-part"}>{t("其他部分", "Other parts")}</label><select id={id + "-part"} value={index} onChange={e => move(Number(e.target.value))}>
+        {spec.steps.map((s, i) => <option key={s.id} value={i}>{s.title[lang]}</option>)}
+      </select></div> : null}
+      <details className="focus-details"><summary>{t("示例说明与来源", "About this example & sources")}</summary>
+        <p>{step.instruction[lang]}</p><p>{spec.scenario[lang]}</p>
+        {spec.product_context ? <><p>{spec.product_context.job[lang]}</p><dl><dt>{t("输入", "Input")}</dt><dd>{spec.product_context.input[lang]}</dd><dt>{t("厂商描述的输出", "Vendor-described output")}</dt><dd>{spec.product_context.output[lang]}</dd></dl></> : null}
+        <p>{t("交互会切换预先准备的示例，并非实时调用原厂服务。示例不构成真实研究、模型效果或设备性能的证据。", "Interactions switch prepared examples, not live vendor results. They do not establish research findings, model quality, or device performance.")}</p>
+        <ul>{spec.sources.map((s, i) => <li key={s.url + i}><a href={s.url} target="_blank" rel="noopener noreferrer">{s.label[lang]} <ArrowUpRight size={13} /></a></li>)}</ul>
+        <p>{spec.takeaway[lang]}</p>
+        <div className="focus-tools"><button type="button" onClick={download}><Download size={15} />{t("保存这份示例", "Save this example")}</button><button type="button" onClick={() => { setChoices(defaultExperienceChoices(spec)); setDials({}); setRevision(v => v + 1); move(initialExperienceIndex(spec)); }}><ArrowCounterClockwise size={15} />{t("恢复预设", "Reset presets")}</button></div>
+      </details>
     </div>
-    <footer className="experience-sources"><span>{t("产品资料", "Product sources")}</span>{spec.sources.map((source, i) => <a href={source.url} target="_blank" rel="noopener noreferrer" key={source.url + i}>{source.label[lang]} ↗</a>)}<span>{t("本演示根据公开资料制作，实际效果以产品官网为准。", "Based on public information; not a measure of model quality.")}</span></footer>
+    {website ? <footer className="focus-footer"><a href={spec.product_context?.trial_url ?? website} target="_blank" rel="noopener noreferrer">{t("前往官方产品", "Visit the official product")} <ArrowUpRight size={16} /></a>{spec.product_context ? <small>{spec.product_context.trial_note[lang]}</small> : null}</footer> : null}
   </div>;
 }

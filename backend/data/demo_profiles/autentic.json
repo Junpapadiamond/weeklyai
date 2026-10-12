@@ -3,41 +3,517 @@
   "confidence": "illustrative",
   "tier": "workflow",
   "product_context": {
-    "job": {"zh": "Autentic 将研究简报转化为 AI 主持的访谈，再汇总对话中的主题和引语。以下是厂商公开介绍，不代表本站已验证效果。", "en": "Autentic describes a service that turns a research brief into AI-moderated interviews, then organizes conversations into themes and quotes. These are vendor-described capabilities."},
-    "input": {"zh": "研究目标、目标受众，以及想探索的问题。", "en": "A research goal, target audience, and questions to explore."},
-    "output": {"zh": "访谈转录与综合分析。本站下方只展示虚构内容的格式和决策关系。", "en": "Interview transcripts and synthesis. The walkthrough below illustrates their structure and use with fictional content."},
-    "trial_note": {"zh": "官网先要求填写姓名、工作邮箱和电话，以发送访谈链接。本站不会代填或提交。", "en": "Autentic asks for your name, work email, and phone number to send an interview link. This opens its own site."},
+    "job": {
+      "zh": "Autentic 将研究简报转化为 AI 主持的访谈，再汇总对话中的主题和引语。以下是厂商公开介绍，不代表本站已验证效果。",
+      "en": "Autentic describes a service that turns a research brief into AI-moderated interviews, then organizes conversations into themes and quotes. These are vendor-described capabilities."
+    },
+    "input": {
+      "zh": "研究目标、目标受众，以及想探索的问题。",
+      "en": "A research goal, target audience, and questions to explore."
+    },
+    "output": {
+      "zh": "访谈转录与综合分析。本站下方只展示虚构内容的格式和决策关系。",
+      "en": "Interview transcripts and synthesis. The walkthrough below illustrates their structure and use with fictional content."
+    },
+    "trial_note": {
+      "zh": "官网需要联系信息才能发送访谈链接。",
+      "en": "The vendor requests contact details to send an interview link."
+    },
     "source_url": "https://www.autentic.ai/businesses",
     "trial_url": "https://www.autentic.ai/try-interviewer"
   },
-  "headline": {"zh": "从研究问题，到待验证的产品方向", "en": "From a research question to a design hypothesis"},
-  "scenario": {"zh": "用健身伙伴匹配这个虚构案例，了解研究流程：选择受众 → 确定研究重点 → 阅读虚构洞察 → 比较设计方向。你会得到一份示例决策摘要；这里不会招募受访者、开展访谈或运行原厂产品。", "en": "Explore a fictional workout-buddy feature: choose an audience, pick a research focus, review fictional insights, then compare design directions. Leave with an example decision summary. This walkthrough does not recruit people, run interviews, or operate Autentic AI."},
-  "workspace": {"kind": "document", "label": {"zh": "示例研究简报（仅供演示）", "en": "Example research brief (simulation only)"}, "initial": {"zh": "虚构案例：探索健身伙伴匹配功能，练习从研究问题形成待验证的设计假设。", "en": "Fictional case: explore workout-buddy matching and turn a research question into a design hypothesis to test."}},
+  "headline": {
+    "zh": "从访谈内容，到主题与引语",
+    "en": "From interview answers to themes and quotes"
+  },
+  "scenario": {
+    "zh": "用健身伙伴匹配这个虚构案例，了解研究流程：选择受众 → 确定研究重点 → 阅读虚构洞察 → 比较设计方向。你会得到一份示例决策摘要；这里不会招募受访者、开展访谈或运行原厂产品。",
+    "en": "Explore a fictional workout-buddy feature: choose an audience, pick a research focus, review fictional insights, then compare design directions. Leave with an example decision summary. This walkthrough does not recruit people, run interviews, or operate Autentic AI."
+  },
+  "workspace": {
+    "kind": "document",
+    "label": {
+      "zh": "示例研究简报（仅供演示）",
+      "en": "Example research brief (simulation only)"
+    },
+    "initial": {
+      "zh": "虚构案例：探索健身伙伴匹配功能，练习从研究问题形成待验证的设计假设。",
+      "en": "Fictional case: explore workout-buddy matching and turn a research question into a design hypothesis to test."
+    }
+  },
   "steps": [
-    {"id": "setup", "widget": "choice", "title": {"zh": "选择示例受众", "en": "Choose an example audience"}, "instruction": {"zh": "选择你想了解的受众。这里只设定虚构研究情境，不招募或联系任何人。", "en": "Choose whose needs you would explore. This sets a fictional scenario; nobody is recruited or contacted."}, "options": [
-      {"label": {"zh": "健身房常客", "en": "Regular gym-goers"}, "output": {"zh": "示例研究问题：常去健身房的人会如何看待伙伴匹配？安全性与健身目标可以成为待探索的话题。", "en": "Example question: how might regular gym-goers view buddy matching? Safety and fitness goals are topics to explore, not findings."}},
-      {"label": {"zh": "居家健身者", "en": "Home workout enthusiasts"}, "output": {"zh": "示例研究问题：居家健身者会如何看待远程伙伴？互动方式与时间安排可以成为待探索的话题。", "en": "Example question: how might home exercisers view a remote buddy? Interaction and scheduling are topics to explore, not findings."}}
-    ]},
-    {"id": "input", "widget": "choice", "title": {"zh": "选择研究重点", "en": "Choose a research focus"}, "instruction": {"zh": "同一个功能，研究重点不同，问题也不同。选择一个方向，看看它如何影响后续决策。", "en": "The same feature can raise different questions. Pick a focus to see how a research question can guide a design decision."}, "options": [
-      {"label": {"zh": "功能使用意愿", "en": "Feature adoption willingness"}, "output": {"zh": "示例提纲可询问使用动机、使用时机和付费意愿。这里没有开展访谈，也没有验证市场需求。", "en": "An example guide could ask about motivation, occasions for use, and willingness to pay. No interviews or demand validation take place here."}},
-      {"label": {"zh": "潜在使用障碍", "en": "Potential usage barriers"}, "output": {"zh": "示例提纲可询问隐私、安全和使用难点。这些是准备研究的问题，不是已经收集到的反馈。", "en": "An example guide could ask about privacy, safety, and usability. These are questions to investigate, not collected feedback."}}
-    ]},
-    {"id": "inspection", "widget": "review", "title": {"zh": "阅读虚构洞察示例", "en": "Review fictional example insights"}, "instruction": {"zh": "以下引语和解释都是为演示编写的。没有实际访谈、受访者回答或可访问的原始视频。选择一条，练习如何解读。", "en": "These quotes and interpretations are fictional examples. No interviews were conducted, and no source videos are available. Choose one to practice interpreting it."}, "options": [
-      {"when": {"step_id": "input", "option_id": "0"}, "label": {"zh": "虚构引语：「有人一起更容易坚持」", "en": "Fictional quote: 'A buddy could help me keep a routine'"}, "output": {"zh": "虚构洞察卡：动机＝坚持习惯；可追问＝什么时候最容易放弃？设计假设＝固定时间邀约。没有实际受访者或访谈证据。", "en": "Fictional insight card: motivation = consistency; follow-up = when is a routine hardest to keep? Hypothesis = recurring invites. No real participant or interview evidence."}},
-      {"when": {"step_id": "input", "option_id": "0"}, "label": {"zh": "虚构引语：「先试一次，再考虑付费」", "en": "Fictional quote: 'I would try it once before paying'"}, "output": {"zh": "虚构洞察卡：动机＝先确认价值；可追问＝第一次体验需要提供什么？设计假设＝先试用再承诺。没有验证付费意愿。", "en": "Fictional insight card: motivation = testing value first; follow-up = what would make a first session worthwhile? Hypothesis = a low-commitment trial. Willingness to pay is unverified."}},
-      {"when": {"step_id": "input", "option_id": "1"}, "label": {"zh": "虚构引语：「想先了解健身水平和目标」", "en": "Fictional quote: 'I want to see fitness level and goals first'"}, "output": {"zh": "虚构洞察卡：障碍＝无法判断是否合适；可追问＝需要先了解哪些信息？设计假设＝按目标筛选。没有实际受访者或视频证据。", "en": "Fictional insight card: barrier = uncertain fit; follow-up = what would you need to know first? Hypothesis = goals-based filters. No real participant or video evidence."}},
-      {"when": {"step_id": "input", "option_id": "1"}, "label": {"zh": "虚构引语：「不想暴露具体位置」", "en": "Fictional quote: 'I don't want to reveal my exact location'"}, "output": {"zh": "虚构洞察卡：障碍＝位置隐私；可追问＝愿意分享多大范围的位置？设计假设＝大致位置与主动选择分享。没有原始访谈或视频。", "en": "Fictional insight card: barrier = location privacy; follow-up = how broad a location would you share? Hypothesis = approximate location and opt-in sharing. No underlying interview or video."}}
-    ]},
-    {"id": "output", "widget": "compare", "title": {"zh": "比较待验证的设计方向", "en": "Compare design hypotheses"}, "instruction": {"zh": "根据刚才的虚构示例，比较两种设计思路。这里无法判断真实用户偏好或产品效果。", "en": "Use the fictional examples to compare two design ideas. This does not establish real user preferences or product performance."}, "options": [
-      {"when": {"step_id": "input", "option_id": "0"}, "label": {"zh": "固定时间伙伴邀约", "en": "Recurring buddy invitations"}, "output": {"zh": "示例决策：测试固定时间邀约是否有助于形成习惯；需要访谈和实际使用证据，才能判断它是否有效。", "en": "Example decision: test whether recurring invites support a routine. Interviews and observed use would be needed to assess that idea."}},
-      {"when": {"step_id": "input", "option_id": "0"}, "label": {"zh": "一次低承诺试用", "en": "One low-commitment trial"}, "output": {"zh": "示例决策：测试一次体验能否让用户理解价值；不要把这个虚构案例当成付费或转化证据。", "en": "Example decision: test whether a first session makes the value clear. This fictional case provides no payment or conversion evidence."}},
-      {"when": {"step_id": "input", "option_id": "1"}, "label": {"zh": "技能等级优先匹配", "en": "Skill-level priority matching"}, "output": {"zh": "示例假设：按水平和目标筛选可能更合适，但仍需探索隐私控制，并向真实用户验证。", "en": "Example hypothesis: level and goals filters might help. Privacy controls and the idea itself still need testing with real users."}},
-      {"when": {"step_id": "input", "option_id": "1"}, "label": {"zh": "附近地点即时配对", "en": "Nearby location instant pairing"}, "output": {"zh": "示例假设：附近配对可能更方便，但可能涉及位置隐私。需要真实研究，不能据此断言用户偏好。", "en": "Example hypothesis: nearby pairing might be convenient but raise location-privacy questions. Real research is needed before claiming a preference."}}
-    ]}
+    {
+      "id": "setup",
+      "widget": "choice",
+      "title": {
+        "zh": "选择示例受众",
+        "en": "Choose an example audience"
+      },
+      "instruction": {
+        "zh": "选择你想了解的受众。这里只设定虚构研究情境，不招募或联系任何人。",
+        "en": "Choose whose needs you would explore. This sets a fictional scenario; nobody is recruited or contacted."
+      },
+      "options": [
+        {
+          "label": {
+            "zh": "健身房常客",
+            "en": "Regular gym-goers"
+          },
+          "output": {
+            "zh": "示例研究问题：常去健身房的人会如何看待伙伴匹配？安全性与健身目标可以成为待探索的话题。",
+            "en": "Example question: how might regular gym-goers view buddy matching? Safety and fitness goals are topics to explore, not findings."
+          },
+          "artifact": {
+            "kind": "text",
+            "input_label": {
+              "zh": "示例选择",
+              "en": "Example choice"
+            },
+            "input": {
+              "zh": "健身房常客",
+              "en": "Regular gym-goers"
+            },
+            "output_label": {
+              "zh": "待探索的方向",
+              "en": "Direction to explore"
+            },
+            "output": {
+              "zh": "示例研究问题：常去健身房的人会如何看待伙伴匹配？安全性与健身目标可以成为待探索的话题。",
+              "en": "Example question: how might regular gym-goers view buddy matching? Safety and fitness goals are topics to explore, not findings."
+            }
+          }
+        },
+        {
+          "label": {
+            "zh": "居家健身者",
+            "en": "Home workout enthusiasts"
+          },
+          "output": {
+            "zh": "示例研究问题：居家健身者会如何看待远程伙伴？互动方式与时间安排可以成为待探索的话题。",
+            "en": "Example question: how might home exercisers view a remote buddy? Interaction and scheduling are topics to explore, not findings."
+          },
+          "artifact": {
+            "kind": "text",
+            "input_label": {
+              "zh": "示例选择",
+              "en": "Example choice"
+            },
+            "input": {
+              "zh": "居家健身者",
+              "en": "Home workout enthusiasts"
+            },
+            "output_label": {
+              "zh": "待探索的方向",
+              "en": "Direction to explore"
+            },
+            "output": {
+              "zh": "示例研究问题：居家健身者会如何看待远程伙伴？互动方式与时间安排可以成为待探索的话题。",
+              "en": "Example question: how might home exercisers view a remote buddy? Interaction and scheduling are topics to explore, not findings."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "input",
+      "widget": "choice",
+      "title": {
+        "zh": "选择研究重点",
+        "en": "Choose a research focus"
+      },
+      "instruction": {
+        "zh": "同一个功能，研究重点不同，问题也不同。选择一个方向，看看它如何影响后续决策。",
+        "en": "The same feature can raise different questions. Pick a focus to see how a research question can guide a design decision."
+      },
+      "options": [
+        {
+          "label": {
+            "zh": "功能使用意愿",
+            "en": "Feature adoption willingness"
+          },
+          "output": {
+            "zh": "示例提纲可询问使用动机、使用时机和付费意愿。这里没有开展访谈，也没有验证市场需求。",
+            "en": "An example guide could ask about motivation, occasions for use, and willingness to pay. No interviews or demand validation take place here."
+          },
+          "artifact": {
+            "kind": "text",
+            "input_label": {
+              "zh": "示例选择",
+              "en": "Example choice"
+            },
+            "input": {
+              "zh": "功能使用意愿",
+              "en": "Feature adoption willingness"
+            },
+            "output_label": {
+              "zh": "待探索的方向",
+              "en": "Direction to explore"
+            },
+            "output": {
+              "zh": "示例提纲可询问使用动机、使用时机和付费意愿。这里没有开展访谈，也没有验证市场需求。",
+              "en": "An example guide could ask about motivation, occasions for use, and willingness to pay. No interviews or demand validation take place here."
+            }
+          }
+        },
+        {
+          "label": {
+            "zh": "潜在使用障碍",
+            "en": "Potential usage barriers"
+          },
+          "output": {
+            "zh": "示例提纲可询问隐私、安全和使用难点。这些是准备研究的问题，不是已经收集到的反馈。",
+            "en": "An example guide could ask about privacy, safety, and usability. These are questions to investigate, not collected feedback."
+          },
+          "artifact": {
+            "kind": "text",
+            "input_label": {
+              "zh": "示例选择",
+              "en": "Example choice"
+            },
+            "input": {
+              "zh": "潜在使用障碍",
+              "en": "Potential usage barriers"
+            },
+            "output_label": {
+              "zh": "待探索的方向",
+              "en": "Direction to explore"
+            },
+            "output": {
+              "zh": "示例提纲可询问隐私、安全和使用难点。这些是准备研究的问题，不是已经收集到的反馈。",
+              "en": "An example guide could ask about privacy, safety, and usability. These are questions to investigate, not collected feedback."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "inspection",
+      "widget": "review",
+      "title": {
+        "zh": "看看回答如何对应主题",
+        "en": "See how an answer connects to a theme"
+      },
+      "instruction": {
+        "zh": "这些问答为本站虚构。切换主题，查看对应的示例用语。",
+        "en": "These exchanges are fictional. No interviews were conducted. Switch themes to inspect the corresponding words."
+      },
+      "options": [
+        {
+          "when": {
+            "step_id": "input",
+            "option_id": "0"
+          },
+          "label": {
+            "zh": "坚持习惯",
+            "en": "Routine support"
+          },
+          "output": {
+            "zh": "虚构洞察卡：动机＝坚持习惯；可追问＝什么时候最容易放弃？设计假设＝固定时间邀约。没有实际受访者或访谈证据。",
+            "en": "Fictional insight card: motivation = consistency; follow-up = when is a routine hardest to keep? Hypothesis = recurring invites. No real participant or interview evidence."
+          },
+          "artifact": {
+            "kind": "excerpt",
+            "input_label": {
+              "zh": "虚构问答",
+              "en": "Fictional exchange"
+            },
+            "input": {
+              "zh": "问：伙伴对你有什么帮助？\n答：有人一起更容易坚持。",
+              "en": "Q: What could a buddy help with?\nA: A buddy could help me keep a routine."
+            },
+            "output_label": {
+              "zh": "示例主题",
+              "en": "Example theme"
+            },
+            "output": {
+              "zh": "坚持习惯",
+              "en": "Routine support"
+            },
+            "emphasis": {
+              "zh": "更容易坚持",
+              "en": "keep a routine"
+            }
+          }
+        },
+        {
+          "when": {
+            "step_id": "input",
+            "option_id": "0"
+          },
+          "label": {
+            "zh": "先试一次",
+            "en": "A low-commitment trial"
+          },
+          "output": {
+            "zh": "虚构洞察卡：动机＝先确认价值；可追问＝第一次体验需要提供什么？设计假设＝先试用再承诺。没有验证付费意愿。",
+            "en": "Fictional insight card: motivation = testing value first; follow-up = what would make a first session worthwhile? Hypothesis = a low-commitment trial. Willingness to pay is unverified."
+          },
+          "artifact": {
+            "kind": "excerpt",
+            "input_label": {
+              "zh": "虚构问答",
+              "en": "Fictional exchange"
+            },
+            "input": {
+              "zh": "问：什么时候会考虑付费？\n答：先试一次，再考虑付费。",
+              "en": "Q: When would you consider paying?\nA: I would try it once before paying."
+            },
+            "output_label": {
+              "zh": "示例主题",
+              "en": "Example theme"
+            },
+            "output": {
+              "zh": "先试一次",
+              "en": "A low-commitment trial"
+            },
+            "emphasis": {
+              "zh": "先试一次",
+              "en": "try it once"
+            }
+          }
+        },
+        {
+          "when": {
+            "step_id": "input",
+            "option_id": "1"
+          },
+          "label": {
+            "zh": "健身目标匹配",
+            "en": "Fitness compatibility"
+          },
+          "output": {
+            "zh": "虚构洞察卡：障碍＝无法判断是否合适；可追问＝需要先了解哪些信息？设计假设＝按目标筛选。没有实际受访者或视频证据。",
+            "en": "Fictional insight card: barrier = uncertain fit; follow-up = what would you need to know first? Hypothesis = goals-based filters. No real participant or video evidence."
+          },
+          "artifact": {
+            "kind": "excerpt",
+            "input_label": {
+              "zh": "虚构问答",
+              "en": "Fictional exchange"
+            },
+            "input": {
+              "zh": "问：见面前想了解什么？\n答：想先了解健身水平和目标。",
+              "en": "Q: What would you want to know before meeting?\nA: I want to see fitness level and goals first."
+            },
+            "output_label": {
+              "zh": "示例主题",
+              "en": "Example theme"
+            },
+            "output": {
+              "zh": "健身目标匹配",
+              "en": "Fitness compatibility"
+            },
+            "emphasis": {
+              "zh": "健身水平和目标",
+              "en": "fitness level and goals"
+            }
+          }
+        },
+        {
+          "when": {
+            "step_id": "input",
+            "option_id": "1"
+          },
+          "label": {
+            "zh": "位置隐私",
+            "en": "Location privacy"
+          },
+          "output": {
+            "zh": "虚构洞察卡：障碍＝位置隐私；可追问＝愿意分享多大范围的位置？设计假设＝大致位置与主动选择分享。没有原始访谈或视频。",
+            "en": "Fictional insight card: barrier = location privacy; follow-up = how broad a location would you share? Hypothesis = approximate location and opt-in sharing. No underlying interview or video."
+          },
+          "artifact": {
+            "kind": "excerpt",
+            "input_label": {
+              "zh": "虚构问答",
+              "en": "Fictional exchange"
+            },
+            "input": {
+              "zh": "问：分享信息时会担心什么？\n答：不想暴露具体位置。",
+              "en": "Q: What would concern you about sharing details?\nA: I do not want to reveal my exact location."
+            },
+            "output_label": {
+              "zh": "示例主题",
+              "en": "Example theme"
+            },
+            "output": {
+              "zh": "位置隐私",
+              "en": "Location privacy"
+            },
+            "emphasis": {
+              "zh": "具体位置",
+              "en": "exact location"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "output",
+      "widget": "compare",
+      "title": {
+        "zh": "比较待验证的设计方向",
+        "en": "Compare design hypotheses"
+      },
+      "instruction": {
+        "zh": "根据刚才的虚构示例，比较两种设计思路。这里无法判断真实用户偏好或产品效果。",
+        "en": "Use the fictional examples to compare two design ideas. This does not establish real user preferences or product performance."
+      },
+      "options": [
+        {
+          "when": {
+            "step_id": "input",
+            "option_id": "0"
+          },
+          "label": {
+            "zh": "固定时间伙伴邀约",
+            "en": "Recurring buddy invitations"
+          },
+          "output": {
+            "zh": "示例决策：测试固定时间邀约是否有助于形成习惯；需要访谈和实际使用证据，才能判断它是否有效。",
+            "en": "Example decision: test whether recurring invites support a routine. Interviews and observed use would be needed to assess that idea."
+          },
+          "artifact": {
+            "kind": "comparison",
+            "input_label": {
+              "zh": "示例选择",
+              "en": "Example choice"
+            },
+            "input": {
+              "zh": "固定时间伙伴邀约",
+              "en": "Recurring buddy invitations"
+            },
+            "output_label": {
+              "zh": "待探索的方向",
+              "en": "Direction to explore"
+            },
+            "output": {
+              "zh": "示例决策：测试固定时间邀约是否有助于形成习惯；需要访谈和实际使用证据，才能判断它是否有效。",
+              "en": "Example decision: test whether recurring invites support a routine. Interviews and observed use would be needed to assess that idea."
+            }
+          }
+        },
+        {
+          "when": {
+            "step_id": "input",
+            "option_id": "0"
+          },
+          "label": {
+            "zh": "一次低承诺试用",
+            "en": "One low-commitment trial"
+          },
+          "output": {
+            "zh": "示例决策：测试一次体验能否让用户理解价值；不要把这个虚构案例当成付费或转化证据。",
+            "en": "Example decision: test whether a first session makes the value clear. This fictional case provides no payment or conversion evidence."
+          },
+          "artifact": {
+            "kind": "comparison",
+            "input_label": {
+              "zh": "示例选择",
+              "en": "Example choice"
+            },
+            "input": {
+              "zh": "一次低承诺试用",
+              "en": "One low-commitment trial"
+            },
+            "output_label": {
+              "zh": "待探索的方向",
+              "en": "Direction to explore"
+            },
+            "output": {
+              "zh": "示例决策：测试一次体验能否让用户理解价值；不要把这个虚构案例当成付费或转化证据。",
+              "en": "Example decision: test whether a first session makes the value clear. This fictional case provides no payment or conversion evidence."
+            }
+          }
+        },
+        {
+          "when": {
+            "step_id": "input",
+            "option_id": "1"
+          },
+          "label": {
+            "zh": "技能等级优先匹配",
+            "en": "Skill-level priority matching"
+          },
+          "output": {
+            "zh": "示例假设：按水平和目标筛选可能更合适，但仍需探索隐私控制，并向真实用户验证。",
+            "en": "Example hypothesis: level and goals filters might help. Privacy controls and the idea itself still need testing with real users."
+          },
+          "artifact": {
+            "kind": "comparison",
+            "input_label": {
+              "zh": "示例选择",
+              "en": "Example choice"
+            },
+            "input": {
+              "zh": "技能等级优先匹配",
+              "en": "Skill-level priority matching"
+            },
+            "output_label": {
+              "zh": "待探索的方向",
+              "en": "Direction to explore"
+            },
+            "output": {
+              "zh": "示例假设：按水平和目标筛选可能更合适，但仍需探索隐私控制，并向真实用户验证。",
+              "en": "Example hypothesis: level and goals filters might help. Privacy controls and the idea itself still need testing with real users."
+            }
+          }
+        },
+        {
+          "when": {
+            "step_id": "input",
+            "option_id": "1"
+          },
+          "label": {
+            "zh": "附近地点即时配对",
+            "en": "Nearby location instant pairing"
+          },
+          "output": {
+            "zh": "示例假设：附近配对可能更方便，但可能涉及位置隐私。需要真实研究，不能据此断言用户偏好。",
+            "en": "Example hypothesis: nearby pairing might be convenient but raise location-privacy questions. Real research is needed before claiming a preference."
+          },
+          "artifact": {
+            "kind": "comparison",
+            "input_label": {
+              "zh": "示例选择",
+              "en": "Example choice"
+            },
+            "input": {
+              "zh": "附近地点即时配对",
+              "en": "Nearby location instant pairing"
+            },
+            "output_label": {
+              "zh": "待探索的方向",
+              "en": "Direction to explore"
+            },
+            "output": {
+              "zh": "示例假设：附近配对可能更方便，但可能涉及位置隐私。需要真实研究，不能据此断言用户偏好。",
+              "en": "Example hypothesis: nearby pairing might be convenient but raise location-privacy questions. Real research is needed before claiming a preference."
+            }
+          }
+        }
+      ]
+    }
   ],
-  "takeaway": {"zh": "你完成了从研究问题到设计假设的虚构流程，得到的是示例决策摘要。没有开展访谈，也没有收集真实洞察或访问原始视频。实际功能与结果需到 Autentic AI 官网进一步核验。", "en": "You explored a fictional path from a research question to a design hypothesis. This is an example decision summary: no interviews were conducted, no real insights collected, and no source videos accessed. Verify actual capabilities and outcomes with Autentic AI."},
+  "takeaway": {
+    "zh": "你完成了从研究问题到设计假设的虚构流程，得到的是示例决策摘要。没有开展访谈，也没有收集真实洞察或访问原始视频。实际功能与结果需到 Autentic AI 官网进一步核验。",
+    "en": "You explored a fictional path from a research question to a design hypothesis. This is an example decision summary: no interviews were conducted, no real insights collected, and no source videos accessed. Verify actual capabilities and outcomes with Autentic AI."
+  },
   "sources": [
-    {"url": "https://www.autentic.ai/businesses", "label": {"zh": "厂商产品介绍 · 2026-10-12 核对", "en": "Vendor product overview · checked Oct 12, 2026"}},
-    {"url": "https://www.autentic.ai/try-interviewer", "label": {"zh": "厂商访谈体验入口", "en": "Vendor interviewer trial"}}
-  ]
+    {
+      "url": "https://www.autentic.ai/businesses",
+      "label": {
+        "zh": "厂商产品介绍 · 2026-10-12 核对",
+        "en": "Vendor product overview · checked Oct 12, 2026"
+      }
+    },
+    {
+      "url": "https://www.autentic.ai/try-interviewer",
+      "label": {
+        "zh": "厂商访谈体验入口",
+        "en": "Vendor interviewer trial"
+      }
+    }
+  ],
+  "focus_step_id": "inspection"
 }

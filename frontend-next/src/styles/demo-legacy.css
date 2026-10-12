@@ -6,6 +6,24 @@
   flex-direction: column;
   gap: var(--space-6);
 }
+:where(.legacy-demo-surface) .demo-picker:not([hidden]) {
+  display: grid;
+  gap: var(--space-5);
+}
+:where(.legacy-demo-surface) .demo-back-picker {
+  align-self: flex-start;
+  padding: 0.5rem 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-soft);
+  font: inherit;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+:where(.legacy-demo-surface) :is(button, summary, input, [tabindex="0"]):focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
 
 /* ---- controls ---- */
 :where(.legacy-demo-surface) .demo-controls {
@@ -50,7 +68,7 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 232px), 1fr));
   gap: var(--space-3);
 }
 :where(.legacy-demo-surface) .demo-card {
@@ -129,6 +147,16 @@
 }
 
 /* ---- result states ---- */
+:where(.legacy-demo-surface) .demo-result {
+  width: 100%;
+  max-width: 52rem;
+  min-width: 0;
+  margin-inline: auto;
+  scroll-margin-top: 6rem;
+}
+:where(.legacy-demo-surface) .demo-result:focus {
+  outline: none;
+}
 :where(.legacy-demo-surface) .demo-result:empty {
   display: none;
 }
@@ -161,20 +189,25 @@
 :where(.legacy-demo-surface) .demo-player {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
-  padding: var(--space-6);
+  gap: var(--space-6);
+  min-width: 0;
+  padding: clamp(1rem, 4vw, 2rem);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   background: var(--surface);
-  box-shadow: var(--shadow-sm);
 }
 :where(.legacy-demo-surface) .demo-player__head {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
-:where(.legacy-demo-surface) .demo-player__titles h2 {
-  margin: 0 0 var(--space-2);
+:where(.legacy-demo-surface) .demo-player__product {
+  color: var(--text-soft);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+:where(.legacy-demo-surface) .demo-player__head h2 {
+  margin: 0;
   font-family: var(--font-display);
   font-size: clamp(1.3rem, 3vw, 1.75rem);
   line-height: 1.2;
@@ -186,32 +219,12 @@
   max-width: 62ch;
 }
 
-/* The labelling badge. Not dismissible, not conditional - see the Tier 2
-   contract in docs/research/realtime-product-demos.md §8a. */
-:where(.legacy-demo-surface) .demo-badge {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem 0.6rem;
-  margin: 0;
-  padding: 0.6rem 0.85rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.83rem;
-  line-height: 1.45;
-  border: 1px solid var(--border);
-  background: var(--surface-soft);
-  color: var(--text-soft);
-}
-:where(.legacy-demo-surface) .demo-badge strong {
-  color: var(--text);
-}
-:where(.legacy-demo-surface) .demo-badge--reconstruction {
-  border-color: var(--primary-border);
-  background: var(--primary-soft);
-}
+/* The compact artifact label stays visible; longer context is optional. */
 :where(.legacy-demo-surface) .demo-disclosure {
   margin: 0;
-  font-size: 0.82rem;
-  color: var(--text-muted);
+  font-size: 0.78rem;
+  color: var(--text-soft);
+  line-height: 1.5;
 }
 
 :where(.legacy-demo-surface) .demo-steps {
@@ -231,6 +244,9 @@
   font: inherit;
   font-size: 0.85rem;
   cursor: pointer;
+  min-height: 42px;
+  text-align: left;
+  overflow-wrap: anywhere;
 }
 :where(.legacy-demo-surface) .demo-step:focus-visible,
 :where(.legacy-demo-surface) .demo-chip:focus-visible,
@@ -244,19 +260,12 @@
   color: var(--text);
   background: var(--primary-soft);
 }
-:where(.legacy-demo-surface) .demo-step.is-done {
-  color: var(--text-muted);
-}
-:where(.legacy-demo-surface) .demo-step__n {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-}
-
 :where(.legacy-demo-surface) .demo-stage-body {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  min-height: 220px;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 :where(.legacy-demo-surface) .demo-narration {
   margin: 0;
@@ -265,17 +274,6 @@
   max-width: 64ch;
 }
 
-:where(.legacy-demo-surface) .demo-player__controls {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-}
-:where(.legacy-demo-surface) .demo-progress {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  font-variant-numeric: tabular-nums;
-}
 :where(.legacy-demo-surface) .demo-btn {
   padding: 0.45rem 0.95rem;
   border-radius: var(--radius-pill);
@@ -296,10 +294,31 @@
   color: #fff;
 }
 
-:where(.legacy-demo-surface) .demo-evidence summary {
+:where(.legacy-demo-surface) :is(.demo-evidence, .demo-explanation) {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-3);
+}
+:where(.legacy-demo-surface) :is(.demo-evidence, .demo-explanation) summary {
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   color: var(--text-soft);
+  padding-block: 0.4rem;
+}
+:where(.legacy-demo-surface) :is(.demo-evidence, .demo-explanation) p {
+  margin-top: var(--space-3);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+:where(.legacy-demo-surface) .demo-provenance-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+  font-size: 0.84rem;
+}
+:where(.legacy-demo-surface) .demo-provenance-actions a {
+  color: var(--primary);
 }
 :where(.legacy-demo-surface) .demo-evidence ul {
   margin: var(--space-3) 0 0;
@@ -313,14 +332,6 @@
   display: block;
   word-break: break-all;
   color: var(--primary);
-}
-:where(.legacy-demo-surface) .demo-player__foot {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  align-items: flex-start;
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--border);
 }
 :where(.legacy-demo-surface) .demo-provenance {
   margin: 0;
@@ -348,6 +359,8 @@
   font-size: 0.8rem;
   text-align: left;
   cursor: pointer;
+  min-height: 42px;
+  overflow-wrap: anywhere;
 }
 :where(.legacy-demo-surface) .demo-chip.is-active {
   border-color: var(--primary);
@@ -404,7 +417,7 @@
 }
 :where(.legacy-demo-surface) .demo-split__panes {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
   gap: var(--space-3);
 }
 :where(.legacy-demo-surface) .demo-pane {
@@ -455,6 +468,7 @@
   margin: 0;
   font-size: 0.9rem;
   line-height: 1.6;
+  white-space: pre-wrap;
 }
 
 /* ---- pipeline ---- */
@@ -496,7 +510,7 @@
 }
 :where(.legacy-demo-surface) .demo-pipeline__detail {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
   gap: var(--space-3);
   padding: var(--space-4);
   border-radius: var(--radius-sm);
@@ -552,7 +566,7 @@
 }
 :where(.legacy-demo-surface) .demo-branch__card {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
   gap: var(--space-3);
   padding: var(--space-4);
   border-radius: var(--radius-sm);
@@ -612,25 +626,13 @@
   margin: 0;
   padding: 0;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: var(--space-2);
 }
-:where(.legacy-demo-surface) .demo-hotspot__notes button {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  width: 100%;
-  text-align: left;
-  background: none;
-  border: none;
-  color: var(--text-soft);
-  font: inherit;
-  font-size: 0.86rem;
-  cursor: pointer;
-  padding: 0;
-}
-:where(.legacy-demo-surface) .demo-hotspot__notes li.is-active button {
-  color: var(--text);
+:where(.legacy-demo-surface) .demo-hotspot__note {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
 }
 
 /* ---- param_dial ---- */
@@ -762,5 +764,14 @@
 @media (prefers-reduced-motion: reduce) {
   :where(.legacy-demo-surface) .demo-card {
     transition: none;
+  }
+}
+
+@media (max-width: 600px) {
+  :where(.legacy-demo-surface) .demo-player {
+    gap: var(--space-4);
+  }
+  :where(.legacy-demo-surface) :is(.demo-step, .demo-chip, .demo-btn, .demo-stage, .demo-more) {
+    min-height: 44px;
   }
 }

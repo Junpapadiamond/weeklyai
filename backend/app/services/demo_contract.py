@@ -7,6 +7,23 @@ from urllib.parse import urlparse
 VERSION = 2
 WIDGETS = {"choice", "review", "dial", "compare", "app"}
 WORKSPACES = {"video", "image", "search", "document", "board"}
+ARTIFACTS = {"excerpt", "sequence", "comparison", "list", "text"}
+
+# These checks reject known unsafe representations, not establish factual truth.
+# The renderer must still label every artifact as fictional and not vendor output.
+ARTIFACT_UNSAFE_COPY = re.compile(
+    r"https?://|www\.|javascript:|data:|<\s*/?\s*[a-z][^>]*>"
+    r"|\d+(?:\.\d+)?\s*[%％]"
+    r"|\b(?:accuracy|precision|recall|latency|throughput|speedup|response time)\s*(?:[:=]|of|is)?\s*\d"
+    r"|\b\d+(?:\.\d+)?\s*(?:ms|milliseconds|times faster)\b|Exported:"
+    r"|\b(?:agent deployed|connected (?:to |the )?(?:vendor|account|SEC|data stream)|"
+    r"interviews? (?:completed|conducted)|(?:completed|conducted) interviews?|"
+    r"video (?:generated|rendered)|(?:file|image|video) (?:saved|exported)|"
+    r"saved (?:locally|to (?:your |the )?(?:device|computer))|"
+    r"contract delivered)\b"
+    r"|已(?:部署|连接|开展访谈|完成访谈|导出|保存本地)|文件已保存|视频已生成",
+    re.I,
+)
 
 
 def product_key(product):
@@ -43,14 +60,40 @@ def _copy(value, maximum=400):
     return {locale: _text(value.get(locale), maximum) for locale in ("zh", "en")}
 
 
+def _artifact(value):
+    """Bounded, plain-text examples; no URLs, media, markup or executable fields."""
+    if not isinstance(value, dict) or not isinstance(value.get("kind"), str) or value["kind"] not in ARTIFACTS:
+        raise ValueError("Unsupported artifact kind")
+    result = {"kind": value["kind"]}
+    for field, maximum in (("input_label", 40), ("output_label", 40), ("input", 220), ("output", 220)):
+        result[field] = _copy(value.get(field), maximum)
+    if "emphasis" in value:
+        emphasis = _copy(value["emphasis"], 100)
+        if any(emphasis[locale] not in result["input"][locale] for locale in ("zh", "en")):
+            raise ValueError("Artifact emphasis must occur in its input in both languages")
+        result["emphasis"] = emphasis
+    if "items" in value:
+        items = value["items"]
+        if (value["kind"] not in {"sequence", "list"} or not isinstance(items, list)
+                or not 2 <= len(items) <= 4 or any(not isinstance(item, dict) for item in items)):
+            raise ValueError("Artifact items require a sequence or list with 2–4 items")
+        result["items"] = [{"label": _copy(item.get("label"), 60), "detail": _copy(item.get("detail"), 160)}
+                           for item in items]
+    copies = [copy for field, copy in result.items() if field not in {"kind", "items"}]
+    copies.extend(copy for item in result.get("items", []) for copy in item.values())
+    if any(ARTIFACT_UNSAFE_COPY.search(text) for copy in copies for text in copy.values()):
+        raise ValueError("Artifact text cannot contain URLs, markup, measured claims or completed vendor execution")
+    return result
+
+
 def validate_experience(value, allowed_sources=None):
     if not isinstance(value, dict) or value.get("version") != VERSION or value.get("confidence") != "illustrative":
         raise ValueError("Invalid experience version or confidence")
     if value.get("tier") not in ("workflow", "concept"):
         raise ValueError("Unsupported experience tier")
     steps = value.get("steps")
-    if not isinstance(steps, list) or not 3 <= len(steps) <= 6:
-        raise ValueError("An experience needs 3–6 steps")
+    if not isinstance(steps, list) or not 1 <= len(steps) <= 6:
+        raise ValueError("An experience needs 1–6 example sections")
     validated = []
     seen = set()
     previous_options = {}
@@ -72,6 +115,8 @@ def validate_experience(value, allowed_sources=None):
             if any(re.search(r"\d+(?:\.\d+)?\s*[%％]|已导出|已保存本地|文件已保存|视频已生成|Exported:|saved (?:locally|to (?:your |the )?(?:device|computer))", text, re.I) for text in output.values()):
                 raise ValueError("Unsupported measured or executed outcome")
             choice = {"id": str(index), "label": _copy(option.get("label"), 80), "output": output}
+            if "artifact" in option:
+                choice["artifact"] = _artifact(option["artifact"])
             when = option.get("when")
             if when is not None:
                 if (not isinstance(when, dict) or when.get("step_id") not in previous_options
@@ -115,6 +160,11 @@ def validate_experience(value, allowed_sources=None):
     result = {"version": VERSION, "confidence": "illustrative", "tier": value["tier"],
             "headline": _copy(value.get("headline"), 120), "scenario": _copy(value.get("scenario"), 400),
             "steps": validated, "takeaway": _copy(value.get("takeaway"), 500), "sources": links}
+    if "focus_step_id" in value:
+        focus_step_id = _text(value["focus_step_id"], 40)
+        if focus_step_id not in seen:
+            raise ValueError("Focus step must reference an existing step")
+        result["focus_step_id"] = focus_step_id
     context = value.get("product_context")
     if context is not None:
         if not isinstance(context, dict) or any(context.get(key) not in [s["url"] for s in links] for key in ("source_url", "trial_url")):

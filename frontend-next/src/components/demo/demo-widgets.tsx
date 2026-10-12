@@ -69,13 +69,12 @@ function QueryResponse({ widget }: { widget: Extract<Widget, { type: "query_resp
   const preset = widget.presets[Math.min(active, widget.presets.length - 1)];
   return (
     <div className="demo-query">
-      <div className="demo-query__presets" role="tablist" aria-label={t("示例查询", "Example queries")}>
+      <div className="demo-query__presets" role="group" aria-label={t("示例查询", "Example queries")}>
         {widget.presets.map((item, index) => (
           <button
             key={item.query}
             type="button"
-            role="tab"
-            aria-selected={index === active}
+            aria-pressed={index === active}
             className={`demo-chip${index === active ? " is-active" : ""}`}
             onClick={() => setActive(index)}
           >
@@ -83,9 +82,9 @@ function QueryResponse({ widget }: { widget: Extract<Widget, { type: "query_resp
           </button>
         ))}
       </div>
-      <div className="demo-query__panel">
+      <div className="demo-query__panel" aria-live="polite">
         <span className="demo-eyebrow">
-          {widget.mode === "live" ? t("实时结果", "Live result") : t("预先记录的结果", "Recorded result")}
+          {t("预设回答示例 · 未执行查询", "Prepared response · No query executed")}
         </span>
         <p>{text(preset.response)}</p>
       </div>
@@ -106,7 +105,7 @@ function PipelineWidget({ widget }: { widget: Extract<Widget, { type: "pipeline"
               type="button"
               className={`demo-stage${index === open ? " is-active" : ""}`}
               onClick={() => setOpen(index)}
-              aria-expanded={index === open}
+              aria-pressed={index === open}
             >
               <span className="demo-stage__n">{index + 1}</span>
               <span className="demo-stage__name">{text(stage.name)}</span>
@@ -114,7 +113,7 @@ function PipelineWidget({ widget }: { widget: Extract<Widget, { type: "pipeline"
           </li>
         ))}
       </ol>
-      <div className="demo-pipeline__detail">
+      <div className="demo-pipeline__detail" aria-live="polite">
         <div>
           <span className="demo-eyebrow">{t("输入", "In")}</span>
           <p>{text(widget.stages[open].input)}</p>
@@ -136,9 +135,10 @@ function SpecMatrix({
   evidence: { claim: string; source_url: string }[];
 }) {
   const text = useText();
+  const { t } = useSiteLocale();
   const columns = [widget.subject, ...widget.competitors];
   return (
-    <div className="demo-matrix">
+    <div className="demo-matrix" role="region" aria-label={t("参数对照表，可横向滚动", "Specification comparison, scroll horizontally")} tabIndex={0}>
       <table>
         <thead>
           <tr>
@@ -174,13 +174,12 @@ function ScenarioBranch({ widget }: { widget: Extract<Widget, { type: "scenario_
   const branch = widget.branches[Math.min(active, widget.branches.length - 1)];
   return (
     <div className="demo-branch">
-      <div className="demo-branch__picks" role="tablist" aria-label={t("选择场景", "Pick a situation")}>
+      <div className="demo-branch__picks" role="group" aria-label={t("选择场景", "Pick a situation")}>
         {widget.branches.map((item, index) => (
           <button
             key={index}
             type="button"
-            role="tab"
-            aria-selected={index === active}
+            aria-pressed={index === active}
             className={`demo-chip${index === active ? " is-active" : ""}`}
             onClick={() => setActive(index)}
           >
@@ -188,7 +187,7 @@ function ScenarioBranch({ widget }: { widget: Extract<Widget, { type: "scenario_
           </button>
         ))}
       </div>
-      <div className="demo-branch__card">
+      <div className="demo-branch__card" aria-live="polite">
         <div>
           <span className="demo-eyebrow">{t("情境", "Situation")}</span>
           <p>{text(branch.situation)}</p>
@@ -204,6 +203,7 @@ function ScenarioBranch({ widget }: { widget: Extract<Widget, { type: "scenario_
 
 function HotspotShot({ widget }: { widget: Extract<Widget, { type: "hotspot_shot" }> }) {
   const text = useText();
+  const { t } = useSiteLocale();
   const [active, setActive] = useState(0);
   return (
     <div className="demo-hotspot">
@@ -218,21 +218,21 @@ function HotspotShot({ widget }: { widget: Extract<Widget, { type: "hotspot_shot
             style={{ left: `${spot.x}%`, top: `${spot.y}%` }}
             onClick={() => setActive(index)}
             aria-label={text(spot.note)}
+            aria-pressed={index === active}
           >
             {index + 1}
           </button>
         ))}
       </div>
-      <ol className="demo-hotspot__notes">
+      <div className="demo-hotspot__notes" role="group" aria-label={t("选择说明位置", "Choose an annotation")}>
         {widget.hotspots.map((spot, index) => (
-          <li key={index} className={index === active ? "is-active" : undefined}>
-            <button type="button" onClick={() => setActive(index)}>
-              <span className="demo-pin demo-pin--inline">{index + 1}</span>
-              {text(spot.note)}
-            </button>
-          </li>
+          <button key={index} type="button" className={`demo-chip${index === active ? " is-active" : ""}`}
+            onClick={() => setActive(index)} aria-pressed={index === active} aria-label={text(spot.note)}>
+            {index + 1}
+          </button>
         ))}
-      </ol>
+      </div>
+      <p className="demo-hotspot__note" aria-live="polite">{text(widget.hotspots[active].note)}</p>
     </div>
   );
 }
@@ -279,8 +279,8 @@ function ParamDial({
       </ul>
       <p className="demo-dial__caveat">
         {t(
-          "滑块用于说明变量之间的关系，不代表该产品的实际报价。",
-          "The slider illustrates how the variables relate. It is not a quote for this product."
+          "滑块只改变所选参数，下方数值为预设示例。",
+          "The slider changes the selected parameter only. Values below are prepared examples."
         )}
       </p>
     </div>
@@ -298,14 +298,14 @@ function TranscriptWidget({ widget }: { widget: Extract<Widget, { type: "transcr
       <ol>
         {visible.map((turn, index) => (
           <li key={index} className={`demo-turn demo-turn--${turn.speaker}`}>
-            <span className="demo-turn__who">{turn.speaker === "user" ? t("用户", "User") : t("产品", "Product")}</span>
+            <span className="demo-turn__who">{turn.speaker === "user" ? t("示例提问", "Example question") : t("示例回答", "Example response")}</span>
             <p>{text(turn.text)}</p>
           </li>
         ))}
       </ol>
       {remaining > 0 ? (
-        <button type="button" className="demo-more" onClick={() => setShown(shown + 2)}>
-          {t(`继续（还有 ${remaining} 条）`, `Continue (${remaining} more)`)}
+        <button type="button" className="demo-more" onClick={() => setShown(count => count + 2)}>
+          {t(`查看更多对话（还有 ${remaining} 条）`, `Show more dialogue (${remaining} remaining)`)}
         </button>
       ) : null}
     </div>
