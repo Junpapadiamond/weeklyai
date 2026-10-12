@@ -290,6 +290,7 @@
 .focus-header, .focus-content, .focus-footer { width: min(100%, 900px); margin-inline: auto; padding-inline: 36px; box-sizing: border-box; }
 .focus-header { padding-top: 34px; padding-bottom: 28px; }
 .focus-product { display: flex; align-items: center; gap: 13px; }
+.focus-product .demo-product-logo { background: #fff; color: #202834; }
 .focus-product h3 { margin: 0; font-size: 29px; line-height: 1.3; letter-spacing: -.7px; }
 .focus-promise { margin: 15px 0 9px; font-size: 18px; line-height: 1.6; color: var(--text-soft); }
 .focus-boundary { margin: 0; color: var(--text-muted); font-size: 13px; line-height: 1.65; }
