@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { readdirSync, readFileSync } from "node:fs";
-import { demoErrorMessage, ExperienceSchema, readDemo } from "../demo-experience";
+import { availableExperienceOptions, demoErrorMessage, ExperienceSchema, readDemo, updateExperienceChoice } from "../demo-experience";
 
 describe("data-only workflow renderer", () => {
   const folder = "../backend/data/demos";
@@ -16,6 +16,25 @@ describe("data-only workflow renderer", () => {
     expect(ExperienceSchema.parse(spec).workspace?.kind).toBe("video");
     expect(ExperienceSchema.safeParse({ ...spec, workspace: { ...spec.workspace, kind: "iframe" } }).success).toBe(false);
     expect(ExperienceSchema.parse({ ...spec, workspace: { ...spec.workspace, script: "alert(1)" } }).workspace).not.toHaveProperty("script");
+  });
+  it("changes Autentic insights and decisions with the research focus, clearing stale choices", () => {
+    const profile = JSON.parse(readFileSync("../backend/data/demo_profiles/autentic.json", "utf8"));
+    const spec = ExperienceSchema.parse({ ...profile, steps: profile.steps.map((s: { options: object[] }) => ({
+      ...s, example_data: true, options: s.options.map((o, i) => ({ ...o, id: String(i) })),
+    })) });
+    const barriers = { setup: "0", input: "1", inspection: "3", output: "2" };
+    expect(availableExperienceOptions(spec.steps[2], barriers).map(o => o.id)).toEqual(["2", "3"]);
+    expect(updateExperienceChoice(spec, barriers, "input", "1")).toEqual(barriers);
+    const adoption = updateExperienceChoice(spec, barriers, "input", "0");
+    expect(adoption).toEqual({ setup: "0", input: "0" });
+    expect(availableExperienceOptions(spec.steps[2], adoption).map(o => o.id)).toEqual(["0", "1"]);
+    expect(availableExperienceOptions(spec.steps[3], adoption).map(o => o.id)).toEqual(["0", "1"]);
+    expect(updateExperienceChoice(spec, adoption, "inspection", "3")).toEqual(adoption);
+    expect(spec.product_context?.trial_url).toBe("https://www.autentic.ai/try-interviewer");
+    expect(ExperienceSchema.safeParse({ ...spec, product_context: { ...spec.product_context, trial_url: "https://uncited.example" } }).success).toBe(false);
+    const broken = structuredClone(spec);
+    broken.steps[2].options[0].when = { step_id: "output", option_id: "0" };
+    expect(ExperienceSchema.safeParse(broken).success).toBe(false);
   });
   it("rejects executable widgets and forged evidence links", () => {
     const spec = specs[0];

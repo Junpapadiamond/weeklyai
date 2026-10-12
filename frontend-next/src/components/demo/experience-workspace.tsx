@@ -27,11 +27,11 @@ export function ExperienceWorkspace({ spec, lang, choices, brief, onBriefChange,
   }, [playing]);
 
   return <section className="workflow-workspace" aria-label={en ? "Interactive workspace" : "可交互工作区"}>
-    <div className="workspace-topbar"><span><i /><i /><i /></span><strong>{en ? "CREATIVE WORKSPACE" : "创作工作区"}</strong><small>{en ? "Sample" : "示例"}</small></div>
+    <div className="workspace-topbar"><span><i /><i /><i /></span><strong>{en ? "EXAMPLE DECISION SUMMARY" : "示例决策摘要"}</strong><small>{en ? "Simulation" : "模拟"}</small></div>
     <div className="workspace-content">
-      <label className="workspace-brief">{spec.workspace?.label[lang] ?? (en ? "Your brief" : "描述你的需求")}
+      {spec.product_context ? (visual ? <p className="workspace-note">{brief}</p> : null) : <label className="workspace-brief">{spec.workspace?.label[lang] ?? (en ? "Your brief" : "描述你的需求")}
         <textarea maxLength={200} value={brief} onChange={event => onBriefChange(event.target.value)} rows={3} />
-      </label>
+      </label>}
       {visual ? <>
         <div className="workspace-toolbar"><span>{kind === "video" ? (en ? "Storyboard" : "分镜预览") : (en ? "Composition" : "构图预览")}</span><div role="group" aria-label={en ? "Aspect ratio" : "画幅"}>
           <button type="button" aria-pressed={ratio === "9:16"} onClick={() => onRatioChange("9:16")}><DeviceMobile size={13} />9:16</button>
@@ -48,9 +48,10 @@ export function ExperienceWorkspace({ spec, lang, choices, brief, onBriefChange,
         <p className="workspace-note" aria-live="polite">{active?.output[lang] ?? (en ? "Your choices shape the creative plan here." : "选择左侧的方案，在这里查看创意变化。")}</p>
       </> : <div className={"workspace-artifact workspace-artifact--" + kind}>
         <div className="workspace-artifact-header">{kind === "search" ? <MagnifyingGlass size={17} /> : kind === "board" ? <Stack size={17} /> : <FileText size={17} />}<strong>{brief || spec.headline[lang]}</strong></div>
-        {spec.steps.map((step, i) => <article key={step.id} data-ready={!!chosen[i]}><span>{String(i + 1).padStart(2, "0")} · {step.title[lang]}</span><h4>{chosen[i]?.label[lang] ?? (en ? "Awaiting your choice" : "等待你的选择")}</h4><p>{chosen[i]?.output[lang] ?? step.instruction[lang]}</p></article>)}
+        {!chosen.some(Boolean) ? <p>{en ? "Make your first choice to add an example here." : "完成第一个选择，在这里查看示例摘要。"}</p> : null}
+        {spec.steps.map((step, i) => chosen[i] ? <article key={step.id} data-ready><span>{String(i + 1).padStart(2, "0")} · {step.title[lang]}</span><h4>{chosen[i]?.label[lang]}</h4><p>{chosen[i]?.output[lang]}</p></article> : null)}
       </div>}
-      <div className="workspace-bottom"><ImageIcon size={13} />{en ? "Your brief and choices carry across every step." : "你填写的内容和选择会保留到后续步骤。"}</div>
+      <div className="workspace-bottom"><ImageIcon size={13} />{spec.product_context ? (en ? "Prepared fictional examples · no vendor execution" : "预先编写的虚构示例 · 未运行原厂产品") : (en ? "Prepared examples, not live output. Editing the brief changes this summary only." : "预先编写的示例，非实时输出。编辑简报只会修改此摘要。")}</div>
     </div>
   </section>;
 }

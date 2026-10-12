@@ -71,10 +71,52 @@ def test_prepared_playback_is_public_without_identity_or_quota(client, store, sp
     assert "quota" not in response.json and "generation_available" not in response.json
 
 
+def test_branching_profile_rejects_dead_ends_and_uncited_links():
+    from app.services.demo_profiles import product_profile
+    spec = product_profile({"website": "https://autentic.ai"})
+    assert {o["when"]["option_id"] for o in spec["steps"][2]["options"]} == {"0", "1"}
+    broken = copy.deepcopy(spec)
+    broken["steps"][2]["options"] = broken["steps"][2]["options"][:2]
+    with pytest.raises(ValueError, match="available outcome"):
+        validate_experience(broken)
+    broken = copy.deepcopy(spec)
+    broken["steps"][2]["options"][0]["when"]["step_id"] = "output"
+    with pytest.raises(ValueError, match="earlier choice"):
+        validate_experience(broken)
+    broken = copy.deepcopy(spec)
+    broken["product_context"]["trial_url"] = "https://uncited.example"
+    with pytest.raises(ValueError, match="cited sources"):
+        validate_experience(broken)
+
+
 def test_prepared_profile_works_even_when_database_is_down(client, monkeypatch):
     monkeypatch.setattr(demos.ProductService, "get_product_by_id", lambda _: {**PRODUCT, "website": "https://higgsfield.ai"})
     monkeypatch.setattr(demos, "DemoStore", lambda: pytest.fail("Reviewed profile needs no database"))
     assert client.get("/api/v1/demos/prepared/demo-product").json["state"] == "ready"
+
+
+def test_autentic_reviewed_example_replaces_stale_claims_without_generation(client, monkeypatch):
+    product = {**PRODUCT, "name": "Autentic AI", "website": "https://www.autentic.ai/"}
+    monkeypatch.setattr(demos.ProductService, "get_product_by_id", lambda _: product)
+    monkeypatch.setattr(demos, "DemoStore", lambda: pytest.fail("Prepared example must not need storage"))
+    monkeypatch.setattr(demos, "_context", lambda: pytest.fail("Prepared example must not use quota"))
+    monkeypatch.setattr(service, "published", lambda: pytest.fail("Stale generated examples must not win"))
+    monkeypatch.setattr(service, "generate_spec", lambda _: pytest.fail("No model call during playback"))
+    response = client.get("/api/v1/demos/prepared/demo-product")
+    assert response.status_code == 200
+    entry = response.json["experience"]
+    assert entry["origin"] == "curated"
+    assert entry["generated_at"].startswith("2026-10-12")
+    spec = validate_experience(entry["spec"])
+    assert len(spec["steps"]) == 4
+    assert spec["steps"][1]["id"] == "input"
+    assert spec["steps"][2]["widget"] == "review"
+    assert "No interviews" in spec["steps"][2]["instruction"]["en"]
+    assert "fictional" in spec["takeaway"]["en"]
+    copy_text = json.dumps(spec, ensure_ascii=False)
+    for old_claim in ("Configured 50", "related video evidence available", "Completed in-depth interviews", "可查看相关视频证据", "在数天内完成深度访谈"):
+        assert old_claim not in copy_text
+    assert "Set-Cookie" not in response.headers
 
 
 def test_prepared_pending_state_stops_after_failure_and_is_never_public(client, store):

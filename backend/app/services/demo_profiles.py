@@ -6,7 +6,8 @@ from urllib.parse import urlsplit
 
 from app.services.demo_contract import validate_experience
 
-PROFILES = {"higgsfield.ai": "higgsfield.json"}
+PROFILES = {"higgsfield.ai": "higgsfield.json", "autentic.ai": "autentic.json"}
+PROFILE_DATES = {"higgsfield.json": "2026-09-27T00:00:00+00:00", "autentic.json": "2026-10-12T00:00:00+00:00"}
 
 
 def profile_name(product):
@@ -26,3 +27,7 @@ def read_profile(name):
 def product_profile(product):
     name = profile_name(product)
     return read_profile(name) if name else None
+
+
+def profile_updated_at(product):
+    return PROFILE_DATES[profile_name(product)]

@@ -53,6 +53,7 @@ def validate_experience(value, allowed_sources=None):
         raise ValueError("An experience needs 3–6 steps")
     validated = []
     seen = set()
+    previous_options = {}
     for step in steps:
         if not isinstance(step, dict) or step.get("widget") not in WIDGETS:
             raise ValueError("Unsupported widget")
@@ -70,7 +71,19 @@ def validate_experience(value, allowed_sources=None):
             output = _copy(option.get("output"), 700)
             if any(re.search(r"\d+(?:\.\d+)?\s*[%％]|已导出|已保存本地|文件已保存|视频已生成|Exported:|saved (?:locally|to (?:your |the )?(?:device|computer))", text, re.I) for text in output.values()):
                 raise ValueError("Unsupported measured or executed outcome")
-            choices.append({"id": str(index), "label": _copy(option.get("label"), 80), "output": output})
+            choice = {"id": str(index), "label": _copy(option.get("label"), 80), "output": output}
+            when = option.get("when")
+            if when is not None:
+                if (not isinstance(when, dict) or when.get("step_id") not in previous_options
+                        or when.get("option_id") not in previous_options[when["step_id"]]):
+                    raise ValueError("Option condition must reference an earlier choice")
+                choice["when"] = {"step_id": when["step_id"], "option_id": when["option_id"]}
+            choices.append(choice)
+        conditional_steps = {o["when"]["step_id"] for o in choices if "when" in o}
+        if len(conditional_steps) > 1 or (conditional_steps and all("when" in o for o in choices)
+                and {o["when"]["option_id"] for o in choices} != previous_options[next(iter(conditional_steps))]):
+            raise ValueError("Each earlier choice needs an available outcome")
+        previous_options[step_id] = {o["id"] for o in choices}
         item = {"id": step_id, "widget": step["widget"], "title": _copy(step.get("title"), 80),
                 "instruction": _copy(step.get("instruction"), 300), "options": choices,
                 "example_data": True}
@@ -102,6 +115,12 @@ def validate_experience(value, allowed_sources=None):
     result = {"version": VERSION, "confidence": "illustrative", "tier": value["tier"],
             "headline": _copy(value.get("headline"), 120), "scenario": _copy(value.get("scenario"), 400),
             "steps": validated, "takeaway": _copy(value.get("takeaway"), 500), "sources": links}
+    context = value.get("product_context")
+    if context is not None:
+        if not isinstance(context, dict) or any(context.get(key) not in [s["url"] for s in links] for key in ("source_url", "trial_url")):
+            raise ValueError("Product context links must be cited sources")
+        result["product_context"] = {key: _copy(context.get(key), 300) for key in ("job", "input", "output", "trial_note")}
+        result["product_context"].update(source_url=context["source_url"], trial_url=context["trial_url"])
     workspace = value.get("workspace")
     if workspace is not None:
         if not isinstance(workspace, dict) or workspace.get("kind") not in WORKSPACES:
