@@ -1,0 +1,250 @@
+{
+  "cache_key": "12769265ada1acf6247cc312-0624cd260fc599dae4c93f89",
+  "product_key": "12769265ada1acf6247cc312",
+  "fingerprint": "0624cd260fc599dae4c93f89",
+  "product_id": "28",
+  "product_name": "Evertune",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-13T01:23:24.739546+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "AI 搜索答案优化模拟",
+      "en": "AI Search Answer Optimization"
+    },
+    "scenario": {
+      "zh": "品牌提交内容和竞品，探索 AI 答案中的可见策略；所有结果为虚构演示",
+      "en": "Brand submits content and competitors to explore visibility strategies in AI answers; all results are fictional examples"
+    },
+    "steps": [
+      {
+        "id": "content_input",
+        "widget": "choice",
+        "title": {
+          "zh": "选择优化场景",
+          "en": "Choose Optimization Scenario"
+        },
+        "instruction": {
+          "zh": "选一个品牌内容类型开始",
+          "en": "Pick a content type to start"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "产品功能说明",
+              "en": "Product Feature Description"
+            },
+            "output": {
+              "zh": "识别功能关键词和引用点",
+              "en": "Identifies key terms and citation opportunities"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "品牌内容片段",
+                "en": "Brand Content Excerpt"
+              },
+              "output_label": {
+                "zh": "关键引用要素",
+                "en": "Key Citation Elements"
+              },
+              "input": {
+                "zh": "CloudSync 提供实时协作编辑，支持多人同时修改文档，所有变更即时同步到云端，确保团队成员始终查看最新版本。",
+                "en": "CloudSync offers real-time collaborative editing, allowing multiple users to modify documents simultaneously with instant cloud sync, ensuring team members always view the latest version."
+              },
+              "output": {
+                "zh": "实时协作编辑、多人同时修改、即时同步",
+                "en": "real-time collaborative editing, simultaneous modification, instant sync"
+              },
+              "emphasis": {
+                "zh": "实时协作编辑",
+                "en": "real-time collaborative editing"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "客户案例引述",
+              "en": "Customer Case Quote"
+            },
+            "output": {
+              "zh": "提取可信度信号和场景",
+              "en": "Extracts credibility signals and context"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "虚构客户反馈",
+                "en": "Fictional Customer Feedback"
+              },
+              "output_label": {
+                "zh": "引用建议",
+                "en": "Citation Suggestions"
+              },
+              "input": {
+                "zh": "财务总监 Li 表示：'切换到 FinTrack 后，月度关账时间从五天缩短到一天，审计准备工作量显著减少。'",
+                "en": "CFO Li stated: 'After switching to FinTrack, monthly close time dropped from five days to one day, with significantly reduced audit prep workload.'"
+              },
+              "output": {
+                "zh": "具体角色、量化对比、工作流改进",
+                "en": "specific role, quantified comparison, workflow improvement"
+              },
+              "emphasis": {
+                "zh": "月度关账时间从五天缩短到一天",
+                "en": "monthly close time dropped from five days to one day"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "competitor_context",
+        "widget": "choice",
+        "title": {
+          "zh": "设定竞争对比",
+          "en": "Set Competitive Context"
+        },
+        "instruction": {
+          "zh": "选择竞品对比维度",
+          "en": "Choose competitor comparison dimension"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "功能差异对比",
+              "en": "Feature Differentiation"
+            },
+            "output": {
+              "zh": "突出独特功能优势点",
+              "en": "Highlights unique feature advantages"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "虚构对比维度",
+                "en": "Fictional Comparison Dimension"
+              },
+              "output_label": {
+                "zh": "差异化要点",
+                "en": "Differentiation Points"
+              },
+              "input": {
+                "zh": "CloudSync: 离线编辑+冲突自动解决 | 竞品 A: 仅在线编辑 | 竞品 B: 离线编辑但需手动合并",
+                "en": "CloudSync: offline editing + automatic conflict resolution | Competitor A: online-only editing | Competitor B: offline editing with manual merge"
+              },
+              "output": {
+                "zh": "自动冲突解决是独有能力",
+                "en": "automatic conflict resolution is unique capability"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "使用场景适配",
+              "en": "Use Case Fit"
+            },
+            "output": {
+              "zh": "匹配特定用户需求场景",
+              "en": "Matches specific user need scenarios"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "虚构场景需求",
+                "en": "Fictional Scenario Needs"
+              },
+              "output_label": {
+                "zh": "适配建议",
+                "en": "Fit Recommendation"
+              },
+              "input": {
+                "zh": "远程团队需要异步协作 | 需要合规审计追踪 | 需要移动端完整功能",
+                "en": "remote teams need async collaboration | require compliance audit trails | need full mobile functionality"
+              },
+              "output": {
+                "zh": "CloudSync 全场景覆盖，竞品部分满足",
+                "en": "CloudSync covers all scenarios, competitors partially satisfy"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "visibility_strategy",
+        "widget": "review",
+        "title": {
+          "zh": "查看优化建议",
+          "en": "Review Optimization Suggestions"
+        },
+        "instruction": {
+          "zh": "基于内容和竞品的虚构策略",
+          "en": "Fictional strategies based on content and competitors"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "强化引用结构",
+              "en": "Strengthen Citation Structure"
+            },
+            "output": {
+              "zh": "在品牌内容中增加可验证的具体细节",
+              "en": "Add verifiable details to brand content"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "优化语义关联",
+              "en": "Optimize Semantic Association"
+            },
+            "output": {
+              "zh": "调整用词与目标查询的语义距离",
+              "en": "Adjust wording semantic distance to target queries"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "丰富对比维度",
+              "en": "Enrich Comparison Dimensions"
+            },
+            "output": {
+              "zh": "明确差异化优势的具体表述",
+              "en": "Clarify specific differentiation advantages"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了内容和竞品如何影响 AI 答案优化策略；实际引用表现需在真实 AI 搜索引擎中验证；访问 Evertune 平台查看完整 GEO 分析工具",
+      "en": "Illustrated how content and competitors influence AI answer optimization strategies; actual citation performance must be verified in real AI search engines; visit Evertune platform for complete GEO analysis tools"
+    },
+    "sources": [
+      {
+        "url": "https://www.evertune.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.evertune.ai/resources/insights-on-ai/evertune-raises-15-million-series-a-to-scale-its-ai-marketing-and-discovery-platform",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

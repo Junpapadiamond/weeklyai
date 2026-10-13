@@ -1,0 +1,194 @@
+{
+  "cache_key": "d20619faa5e9d5d7186a656d-c579cbada73e668eb91f43f7",
+  "product_key": "d20619faa5e9d5d7186a656d",
+  "fingerprint": "c579cbada73e668eb91f43f7",
+  "product_id": "p_471ddadbfb9ea029",
+  "product_name": "Scarlet",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-13T01:22:09.621469+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "医疗器械认证时间对比",
+      "en": "Medical Device Certification Timeline"
+    },
+    "scenario": {
+      "zh": "展示 AI 原生认证如何将软件医疗器械审批周期从传统 12-18 个月缩短至快速迭代发布",
+      "en": "Show how AI-native certification reduces software medical device approval from traditional 12-18 months to rapid iterative releases"
+    },
+    "steps": [
+      {
+        "id": "device_type",
+        "widget": "choice",
+        "title": {
+          "zh": "选择医疗器械类型",
+          "en": "Select Device Type"
+        },
+        "instruction": {
+          "zh": "选择需要认证的医疗器械",
+          "en": "Choose the device needing certification"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "AI 诊断软件",
+              "en": "AI Diagnostic Software"
+            },
+            "output": {
+              "zh": "需频繁更新模型",
+              "en": "Requires frequent model updates"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "认证方式",
+                "en": "Certification Method"
+              },
+              "output_label": {
+                "zh": "审批周期",
+                "en": "Approval Cycle"
+              },
+              "input": {
+                "zh": "传统认证流程\n\nScarlet AI 原生流程",
+                "en": "Traditional Certification\n\nScarlet AI-Native Process"
+              },
+              "output": {
+                "zh": "初次审批 14 个月\n每次小更新 6-8 个月\n\n初次审批加速\n每月发布两次更新",
+                "en": "Initial approval 14 months\n6-8 months per minor update\n\nAccelerated initial approval\nTwo releases per month"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "临床决策支持系统",
+              "en": "Clinical Decision Support"
+            },
+            "output": {
+              "zh": "持续优化算法",
+              "en": "Continuous algorithm optimization"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "认证方式",
+                "en": "Certification Method"
+              },
+              "output_label": {
+                "zh": "迭代速度",
+                "en": "Iteration Speed"
+              },
+              "input": {
+                "zh": "传统流程\n\nScarlet 流程",
+                "en": "Traditional Process\n\nScarlet Process"
+              },
+              "output": {
+                "zh": "每个升级版本等待半年以上\n\n持续迭代，每月两次合规发布",
+                "en": "Wait over half a year per upgrade\n\nContinuous iteration, two compliant releases monthly"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "certification_scope",
+        "widget": "choice",
+        "title": {
+          "zh": "认证管辖区域",
+          "en": "Certification Jurisdiction"
+        },
+        "instruction": {
+          "zh": "选择目标市场",
+          "en": "Select target market"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "欧盟 MDR",
+              "en": "EU MDR"
+            },
+            "output": {
+              "zh": "欧盟指定机构认证",
+              "en": "EU Notified Body certification"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "认证资质",
+                "en": "Certification Authority"
+              },
+              "output_label": {
+                "zh": "覆盖范围",
+                "en": "Coverage"
+              },
+              "input": {
+                "zh": "Scarlet 是欧盟医疗器械法规 (MDR) 约 52 家指定机构中唯一专注软件和 AI 的认证机构",
+                "en": "Scarlet is the only software and AI-focused body among ~52 EU MDR Notified Bodies"
+              },
+              "output": {
+                "zh": "可在所有欧盟成员国销售医疗器械",
+                "en": "Enables device sales across all EU member states"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "多区域认证",
+              "en": "Multi-Region Certification"
+            },
+            "output": {
+              "zh": "欧盟、英国、美国",
+              "en": "EU, UK, US"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "监管认可",
+                "en": "Regulatory Recognition"
+              },
+              "output_label": {
+                "zh": "市场准入",
+                "en": "Market Access"
+              },
+              "input": {
+                "zh": "获得欧盟、英国 MHRA 和美国 FDA 认可",
+                "en": "Recognized by EU, UK MHRA, and US FDA"
+              },
+              "output": {
+                "zh": "单一认证机构支持跨三大市场的合规路径",
+                "en": "Single body supports compliance pathways across three major markets"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了 Scarlet AI 原生认证相比传统流程的时间优势和多区域认可。实际认证周期和要求需在 Scarlet 平台上提交器械文档后确认",
+      "en": "Demonstrated Scarlet's AI-native certification timeline advantages and multi-region recognition versus traditional processes. Actual certification timeline and requirements must be confirmed after submitting device documentation on Scarlet's platform"
+    },
+    "sources": [
+      {
+        "url": "https://www.scarlet.cc/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://tech.eu/2026/10/12/scarlet-raises-50m-series-b-to-accelerate-ai-medical-device-certification/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

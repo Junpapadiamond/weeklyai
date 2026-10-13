@@ -1,0 +1,265 @@
+{
+  "cache_key": "f060abc21edd9f08072dda4a-c36932252ca9f7d0cf7fb2bb",
+  "product_key": "f060abc21edd9f08072dda4a",
+  "fingerprint": "c36932252ca9f7d0cf7fb2bb",
+  "product_id": "30",
+  "product_name": "Nourish",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-13T01:22:41.003856+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "每周 AI 新星：Nourish",
+      "en": "WeeklyAI Spotlight: Nourish"
+    },
+    "scenario": {
+      "zh": "Nourish 刚完成 1 亿美元融资，用 AI 提供健康服务。我们用虚构案例演示其可能的工作方式。",
+      "en": "Nourish raised $100M for AI-powered health services. We'll use fictional examples to show how it might work."
+    },
+    "steps": [
+      {
+        "id": "condition",
+        "widget": "choice",
+        "title": {
+          "zh": "选择健康目标",
+          "en": "Choose Health Goal"
+        },
+        "instruction": {
+          "zh": "选一个虚构用户的健康关注点",
+          "en": "Pick a fictional user's health focus"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "血糖管理",
+              "en": "Blood Sugar Management"
+            },
+            "output": {
+              "zh": "AI 分析饮食记录，识别血糖波动模式",
+              "en": "AI analyzes meal logs to identify glucose patterns"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "本周饮食记录（虚构）",
+                "en": "This Week's Meals (Fictional)"
+              },
+              "output_label": {
+                "zh": "AI 识别的模式",
+                "en": "AI-Identified Patterns"
+              },
+              "input": {
+                "zh": "周一：燕麦粥、鸡胸沙拉、米饭牛肉\n周二：全麦面包、意面、披萨\n周三：煎蛋、三明治、炒面",
+                "en": "Mon: Oatmeal, chicken salad, rice with beef\nTue: Whole wheat bread, pasta, pizza\nWed: Fried eggs, sandwich, stir-fry noodles"
+              },
+              "output": {
+                "zh": "精制碳水集中在周二晚餐后，建议分散摄入；蛋白质摄入稳定；缺少绿叶蔬菜",
+                "en": "Refined carbs cluster at Tuesday dinner—suggest spreading intake; protein intake steady; lacking leafy greens"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "碳水峰值",
+                    "en": "Carb Spikes"
+                  },
+                  "detail": {
+                    "zh": "周二意面+披萨后可能血糖上升快",
+                    "en": "Pasta + pizza on Tue may spike glucose"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "蛋白质稳定",
+                    "en": "Stable Protein"
+                  },
+                  "detail": {
+                    "zh": "每天都有鸡蛋或肉类",
+                    "en": "Eggs or meat present daily"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "纤维不足",
+                    "en": "Low Fiber"
+                  },
+                  "detail": {
+                    "zh": "三天仅一份沙拉",
+                    "en": "Only one salad in three days"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "体重管理",
+              "en": "Weight Management"
+            },
+            "output": {
+              "zh": "AI 对比目标，给出热量缺口建议",
+              "en": "AI compares to goal, suggests calorie adjustments"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "当前 vs 目标（虚构）",
+                "en": "Current vs Target (Fictional)"
+              },
+              "output_label": {
+                "zh": "AI 建议",
+                "en": "AI Recommendation"
+              },
+              "input": {
+                "zh": "当前摄入：约 2200 千卡/天\n目标摄入：1800 千卡/天\n运动：每周 2 次快走",
+                "en": "Current intake: ~2200 kcal/day\nTarget intake: 1800 kcal/day\nExercise: 2× brisk walks/week"
+              },
+              "output": {
+                "zh": "建议每天减少 300 千卡，增加一次力量训练；早餐可加蛋白质延长饱腹感",
+                "en": "Suggest cutting 300 kcal daily, add one strength session; boost breakfast protein for satiety"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "guidance",
+        "widget": "choice",
+        "title": {
+          "zh": "获取个性化方案",
+          "en": "Get Personalized Plan"
+        },
+        "instruction": {
+          "zh": "AI 根据虚构数据生成建议",
+          "en": "AI generates advice from fictional data"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "7 天餐单",
+              "en": "7-Day Meal Plan"
+            },
+            "output": {
+              "zh": "结合用户偏好和营养目标的虚构菜单",
+              "en": "Fictional menu matching preferences and goals"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "用户偏好（虚构）",
+                "en": "User Preferences (Fictional)"
+              },
+              "output_label": {
+                "zh": "AI 生成餐单",
+                "en": "AI-Generated Menu"
+              },
+              "input": {
+                "zh": "不吃海鲜，喜欢中式，每天 1800 千卡",
+                "en": "No seafood, prefer Chinese cuisine, 1800 kcal/day"
+              },
+              "output": {
+                "zh": "周一至周日的早中晚餐，平衡蛋白质、碳水和脂肪",
+                "en": "Mon-Sun breakfast, lunch, dinner balancing protein, carbs, fat"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "周一",
+                    "en": "Monday"
+                  },
+                  "detail": {
+                    "zh": "早：燕麦粥+鸡蛋 午：鸡胸西兰花 晚：糙米豆腐",
+                    "en": "B: Oatmeal+egg L: Chicken broccoli D: Brown rice tofu"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "周二",
+                    "en": "Tuesday"
+                  },
+                  "detail": {
+                    "zh": "早：全麦馒头 午：牛肉菠菜 晚：藜麦蔬菜",
+                    "en": "B: Whole wheat bun L: Beef spinach D: Quinoa veggies"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "周三",
+                    "en": "Wednesday"
+                  },
+                  "detail": {
+                    "zh": "早：豆浆油条 午：鸡腿沙拉 晚：红薯鸡胸",
+                    "en": "B: Soy milk youtiao L: Chicken salad D: Sweet potato chicken"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "运动建议",
+              "en": "Exercise Recommendations"
+            },
+            "output": {
+              "zh": "匹配健康目标的虚构训练计划",
+              "en": "Fictional workout plan matching health goal"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "review",
+        "widget": "review",
+        "title": {
+          "zh": "回顾本次探索",
+          "en": "Review This Example"
+        },
+        "instruction": {
+          "zh": "查看为虚构用户生成的方案",
+          "en": "See the plan built for fictional user"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "查看完整方案",
+              "en": "View Full Plan"
+            },
+            "output": {
+              "zh": "整合饮食、运动和监测的虚构建议",
+              "en": "Integrated fictional diet, exercise and tracking advice"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "我们用虚构数据演示了 Nourish 可能如何分析健康记录并生成方案。真实效果、医疗合规性和数据安全需在 nourish.com 确认。",
+      "en": "We used fictional data to show how Nourish might analyze health records and generate plans. Real effectiveness, medical compliance and data security must be verified at nourish.com."
+    },
+    "sources": [
+      {
+        "url": "https://www.nourish.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.alleywatch.com/2026/05/the-alleywatch-startup-daily-funding-report-5-19-2026/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

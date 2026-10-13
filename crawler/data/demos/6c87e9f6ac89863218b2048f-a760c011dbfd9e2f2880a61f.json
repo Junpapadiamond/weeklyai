@@ -1,0 +1,253 @@
+{
+  "cache_key": "6c87e9f6ac89863218b2048f-a760c011dbfd9e2f2880a61f",
+  "product_key": "6c87e9f6ac89863218b2048f",
+  "fingerprint": "a760c011dbfd9e2f2880a61f",
+  "product_id": "p_79f4577db0cdedd6",
+  "product_name": "Chargeflow",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-13T01:21:10.424844+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "争议订单证据整理",
+      "en": "Chargeback Evidence Builder"
+    },
+    "scenario": {
+      "zh": "商家收到信用卡退单争议,需在限期内整理订单记录、物流凭证和沟通记录提交申诉",
+      "en": "Merchant receives a chargeback dispute and must compile order records, shipping proof, and communication history within deadline"
+    },
+    "steps": [
+      {
+        "id": "dispute_type",
+        "widget": "choice",
+        "title": {
+          "zh": "争议类型",
+          "en": "Dispute Type"
+        },
+        "instruction": {
+          "zh": "选择本次争议情况",
+          "en": "Select the dispute scenario"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "未收到货",
+              "en": "Item Not Received"
+            },
+            "output": {
+              "zh": "重点收集物流签收证明",
+              "en": "Focus on delivery confirmation"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "争议详情",
+                "en": "Dispute Details"
+              },
+              "output_label": {
+                "zh": "待提交证据",
+                "en": "Evidence to Submit"
+              },
+              "input": {
+                "zh": "订单 #8834 买家声称未收到货物,要求退款 $127",
+                "en": "Order #8834 buyer claims non-delivery, requests $127 refund"
+              },
+              "output": {
+                "zh": "物流追踪显示已签收,包含签名照片和GPS坐标",
+                "en": "Tracking shows delivered with signature photo and GPS coordinates"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "承运商记录",
+                    "en": "Carrier Record"
+                  },
+                  "detail": {
+                    "zh": "2024年12月3日 14:22 前门签收,签名:J.Smith",
+                    "en": "Dec 3, 2024 14:22 front door delivery, signed: J.Smith"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "买家沟通",
+                    "en": "Buyer Communication"
+                  },
+                  "detail": {
+                    "zh": "12月5日邮件确认收货并询问使用方法",
+                    "en": "Dec 5 email confirmed receipt, asked usage questions"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "商品不符",
+              "en": "Item Not as Described"
+            },
+            "output": {
+              "zh": "整理商品页描述记录",
+              "en": "Compile product listing history"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "争议声明",
+                "en": "Dispute Claim"
+              },
+              "output_label": {
+                "zh": "商品页描述",
+                "en": "Listing Description"
+              },
+              "input": {
+                "zh": "买家称商品材质与描述不符",
+                "en": "Buyer claims material differs from description"
+              },
+              "output": {
+                "zh": "商品页明确标注合成材料,附有材质说明图",
+                "en": "Listing clearly states synthetic material with specification diagram"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "evidence_review",
+        "widget": "review",
+        "title": {
+          "zh": "证据清单",
+          "en": "Evidence Checklist"
+        },
+        "instruction": {
+          "zh": "确认自动收集的资料",
+          "en": "Review auto-collected materials"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "订单数据",
+              "en": "Order Data"
+            },
+            "output": {
+              "zh": "交易时间、金额、IP地址",
+              "en": "Transaction time, amount, IP address"
+            },
+            "when": {
+              "step_id": "dispute_type",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "物流记录",
+              "en": "Shipping Records"
+            },
+            "output": {
+              "zh": "追踪号、签收时间和地点",
+              "en": "Tracking number, delivery time and location"
+            },
+            "when": {
+              "step_id": "dispute_type",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "订单数据",
+              "en": "Order Data"
+            },
+            "output": {
+              "zh": "购买时间、商品SKU、页面快照",
+              "en": "Purchase time, product SKU, page snapshot"
+            },
+            "when": {
+              "step_id": "dispute_type",
+              "option_id": "1"
+            }
+          },
+          {
+            "id": "3",
+            "label": {
+              "zh": "商品信息",
+              "en": "Product Information"
+            },
+            "output": {
+              "zh": "详情页历史版本、规格说明",
+              "en": "Listing history, specification details"
+            },
+            "when": {
+              "step_id": "dispute_type",
+              "option_id": "1"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "submission",
+        "widget": "choice",
+        "title": {
+          "zh": "提交方式",
+          "en": "Submission Method"
+        },
+        "instruction": {
+          "zh": "选择向支付机构提交",
+          "en": "Choose payment processor submission"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "Stripe争议",
+              "en": "Stripe Dispute"
+            },
+            "output": {
+              "zh": "格式化为Stripe要求格式",
+              "en": "Formatted for Stripe requirements"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "PayPal案件",
+              "en": "PayPal Case"
+            },
+            "output": {
+              "zh": "整理为PayPal申诉模板",
+              "en": "Organized into PayPal template"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了争议证据的分类整理流程,实际使用需在Chargeflow连接店铺系统后自动收集真实订单数据",
+      "en": "Illustrated evidence organization workflow; actual use requires connecting store system on Chargeflow to auto-collect real order data"
+    },
+    "sources": [
+      {
+        "url": "https://www.chargeflow.io/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://note.com/hidemaro_diary/n/nf4e0bae9b198",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

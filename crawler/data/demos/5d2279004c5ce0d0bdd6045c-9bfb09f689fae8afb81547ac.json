@@ -1,0 +1,238 @@
+{
+  "cache_key": "5d2279004c5ce0d0bdd6045c-9bfb09f689fae8afb81547ac",
+  "product_key": "5d2279004c5ce0d0bdd6045c",
+  "fingerprint": "9bfb09f689fae8afb81547ac",
+  "product_id": "p_8bffa91010c00365",
+  "product_name": "Coval",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-13T01:21:49.714236+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "测试语音AI在复杂场景下的表现",
+      "en": "Test voice AI under complex scenarios"
+    },
+    "scenario": {
+      "zh": "为餐厅电话预订AI准备测试场景,发现其在噪音、中断、信息缺失时的处理能力",
+      "en": "Prepare test scenarios for a restaurant phone booking AI to find how it handles noise, interruptions, and missing information"
+    },
+    "steps": [
+      {
+        "id": "scenario_type",
+        "widget": "choice",
+        "title": {
+          "zh": "选择测试场景类型",
+          "en": "Choose test scenario type"
+        },
+        "instruction": {
+          "zh": "选择一种真实通话挑战",
+          "en": "Pick one real call challenge"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "背景噪音环境",
+              "en": "Background noise"
+            },
+            "output": {
+              "zh": "模拟嘈杂环境下的通话",
+              "en": "Simulate calls in noisy settings"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "测试脚本",
+                "en": "Test script"
+              },
+              "output_label": {
+                "zh": "发现的问题",
+                "en": "Issue found"
+              },
+              "input": {
+                "zh": "顾客:你好[车辆喇叭声]我想订周五晚上[狗吠声]七点的位子",
+                "en": "Customer: Hello [car horn] I'd like to book Friday evening [dog barking] seven o'clock"
+              },
+              "output": {
+                "zh": "AI未能识别预订时间,要求重复三次后放弃",
+                "en": "AI failed to recognize booking time, gave up after three repeat requests"
+              },
+              "emphasis": {
+                "zh": "[车辆喇叭声]我想订周五晚上[狗吠声]",
+                "en": "[car horn] I'd like to book Friday evening [dog barking]"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "通话中断恢复",
+              "en": "Call interruption"
+            },
+            "output": {
+              "zh": "测试信号中断后的处理",
+              "en": "Test handling after signal drops"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "测试脚本",
+                "en": "Test script"
+              },
+              "output_label": {
+                "zh": "发现的问题",
+                "en": "Issue found"
+              },
+              "input": {
+                "zh": "顾客:我要订四个人的桌子[信号中断5秒]还在吗?AI:您好,请问需要什么帮助",
+                "en": "Customer: I need a table for four [signal drops 5 sec] are you there? AI: Hello, how may I help you"
+              },
+              "output": {
+                "zh": "AI在恢复后丢失了前文信息,重新开始对话流程",
+                "en": "AI lost context after reconnection and restarted the conversation flow"
+              },
+              "emphasis": {
+                "zh": "[信号中断5秒]还在吗",
+                "en": "[signal drops 5 sec] are you there"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "信息提供不完整",
+              "en": "Incomplete information"
+            },
+            "output": {
+              "zh": "客户逐步补充预订细节",
+              "en": "Customer provides booking details gradually"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "测试脚本",
+                "en": "Test script"
+              },
+              "output_label": {
+                "zh": "发现的问题",
+                "en": "Issue found"
+              },
+              "input": {
+                "zh": "顾客:我想订桌 AI:请问几位?顾客:嗯…稍等,我问问朋友[停顿8秒]",
+                "en": "Customer: I'd like a table AI: For how many? Customer: Um... hold on, let me ask [pause 8 sec]"
+              },
+              "output": {
+                "zh": "AI在停顿后自动结束通话,未等待客户回应",
+                "en": "AI ended call after pause without waiting for customer response"
+              },
+              "emphasis": {
+                "zh": "我问问朋友[停顿8秒]",
+                "en": "let me ask [pause 8 sec]"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "review_results",
+        "widget": "review",
+        "title": {
+          "zh": "查看测试结果汇总",
+          "en": "Review test results summary"
+        },
+        "instruction": {
+          "zh": "确认发现的薄弱环节",
+          "en": "Confirm identified weaknesses"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "生成测试报告",
+              "en": "Generate test report"
+            },
+            "output": {
+              "zh": "列出所有失败场景和改进建议",
+              "en": "List all failed scenarios with improvement suggestions"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "测试的12个场景",
+                "en": "12 tested scenarios"
+              },
+              "output_label": {
+                "zh": "需要修复的问题",
+                "en": "Issues to fix"
+              },
+              "input": {
+                "zh": "噪音场景、中断场景、停顿场景各若干",
+                "en": "Multiple noise, interruption, and pause scenarios"
+              },
+              "output": {
+                "zh": "三类问题需要优化处理逻辑",
+                "en": "Three issue types need handling logic improvements"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "噪音识别",
+                    "en": "Noise recognition"
+                  },
+                  "detail": {
+                    "zh": "多数噪音场景未正确理解",
+                    "en": "Most noisy scenarios misunderstood"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "中断恢复",
+                    "en": "Interruption recovery"
+                  },
+                  "detail": {
+                    "zh": "中断测试全部丢失上下文",
+                    "en": "Interruption tests lost context"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "等待超时",
+                    "en": "Wait timeout"
+                  },
+                  "detail": {
+                    "zh": "长停顿场景提前挂断",
+                    "en": "Long-pause scenarios hung up early"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了三类真实通话挑战的测试方法和问题发现。未验证实际AI系统的修复能力。访问Coval网站配置您的语音AI测试",
+      "en": "Demonstrated test methods for three real call challenges and issue detection. Actual AI system repair capability not verified. Visit Coval site to configure your voice AI testing"
+    },
+    "sources": [
+      {
+        "url": "https://www.coval.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://note.com/hidemaro_diary/n/nf4e0bae9b198",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}
