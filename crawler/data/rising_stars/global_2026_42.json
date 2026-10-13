@@ -221,5 +221,95 @@
         }
       ]
     }
+  },
+  {
+    "name": "Farm to Feed",
+    "website": "https://farmtofeedkenya.com/",
+    "description": "农业科技平台,通过AI支持的企业系统连接5500名注册小农与160多家B2B机构买家(酒店、学校、加工商),将农场食物损失减少81%,农民收入提高249%,连续3年实现100%同比增长",
+    "description_en": "AgriTech platform operating an AI-backed enterprise system connecting 5,500 registered smallholder farmers with 160+ B2B institutional buyers (hotels, schools, processors), cutting on-farm food loss by 81% and boosting farmer incomes by 249%, with 100% YoY growth for 3 consecutive years",
+    "category": "other",
+    "why_matters": "由女性创业者创立并获得2X标签影响力投资,通过Grade Rescue模式和可预测采购匹配实现具体社会影响(食物损失减少81%、农民收入增长249%、NPS 92分),展示农业科技在小农供应链中的实际落地能力",
+    "why_matters_en": "Founded by women entrepreneurs with 2X-labelled impact investment, demonstrates concrete social impact through Grade Rescue model and predictable off-take matching (81% food loss reduction, 249% farmer income increase, 92 NPS), showing AgriTech's practical implementation capability in smallholder supply chains",
+    "latest_news": "2026年从Proparco(ID Group)获得15万欧元2X标签债务融资",
+    "latest_news_en": "€150,000 debt financing with 2X label from Proparco (ID Group) in 2026",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal",
+      "growth_anomaly"
+    ],
+    "company_country": "KE",
+    "confidence": 0.85,
+    "source_url": "https://launchbaseafrica.com/2026/10/12/african-startup-deal",
+    "categories": [
+      "other"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "African Startup Deal Tracker — Newest Deals - Launch Base Africa",
+    "website_source": "https://launchbaseafrica.com/2026/10/12/african-startup-deal",
+    "discovered_at": "2026-10-13",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261013T231201Z-3c4bc72d",
+      "search_region": "other",
+      "search_lane": "launch",
+      "website_verification": null,
+      "source_published_at": "2026-10-12T03:33:00+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "€150,000 Debt Financing (Proparco 2X-labelled investment) Investor: Proparco (ID Group)"
+        },
+        {
+          "criterion": "growth_anomaly",
+          "quote": "Achieved 100% YoY growth for 3 consecutive years with a 92 NPS, cutting on-farm food loss by 81% and boosting farmer incomes by 249%"
+        }
+      ]
+    }
+  },
+  {
+    "name": "LightVela",
+    "website": "https://lightvela.com",
+    "description": "腾讯轻量云推出的云端 AI Agent 托管产品，提供专属云主机实例（2核8GB起），支持微信、QQ、企业微信、飞书、钉钉接入，具备长期记忆、定时任务、技能扩展等功能，月费45元起",
+    "description_en": "Tencent Lighthouse's cloud-hosted AI Agent platform providing dedicated cloud instances (starting at 2 vCPU, 8GB), supporting WeChat, QQ, Enterprise WeChat, Feishu, and DingTalk integration, with persistent memory, scheduled tasks, and skill expansion capabilities, starting at ¥45/month",
+    "category": "agent",
+    "why_matters": "在 Meta Muse 仅限美国地区时，LightVela 比 Muse 早五个月上线（2026年4月），通过云托管解决本地 Agent 需要持续运行的痛点，并深度集成国内主流即时通讯工具；从 OpenClaw 线下装机活动（456场、7万人参与）验证需求后转向云端托管，证明了从本地到云端的产品演进路径；首购免费一个月加4500积分的力度显示腾讯云在用真实成本换取用户习惯",
+    "why_matters_en": "Launched five months before Meta Muse (April 2026) and available when Muse remains US-only, LightVela solves the persistent-runtime problem of local agents through cloud hosting while deeply integrating China's mainstream IM platforms; evolved from OpenClaw's offline installation events (456 sessions, 70,000 participants) validating demand before pivoting to cloud hosting, demonstrating a proven local-to-cloud product trajectory; free one-month trial with 4,500 credits shows Tencent Cloud using real cost to acquire user habits",
+    "latest_news": "2026年9月23日升级启航版内存从4GB到8GB、巡游版从8GB到16GB，价格不变；9月下旬正式对外推广并开放免费体验；8月18日转入公测",
+    "latest_news_en": "September 23, 2026: upgraded Launch tier memory from 4GB to 8GB and Cruise tier from 8GB to 16GB at unchanged pricing; late September: formal public promotion with free trial; August 18: entered public beta",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "founder_background",
+      "growth_anomaly"
+    ],
+    "company_country": "CN",
+    "confidence": 0.92,
+    "source_url": "https://zicode.com/blog/lightvela-tencent-cloud-agent",
+    "categories": [
+      "agent"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "腾讯 LightVela：把 AI Agent 托管到云端，接进微信",
+    "website_source": "https://zicode.com/blog/lightvela-tencent-cloud-agent",
+    "discovered_at": "2026-10-13",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261013T231201Z-3c4bc72d",
+      "search_region": "cn",
+      "search_lane": "niche",
+      "website_verification": null,
+      "source_published_at": "2026-09-28T00:00:00+00:00",
+      "evidence": [
+        {
+          "criterion": "founder_background",
+          "quote": "腾讯轻量云团队推出的 云端 Agent 托管产品"
+        },
+        {
+          "criterion": "growth_anomaly",
+          "quote": "3 月 6 日，在深圳腾讯大厦楼下办第一场 OpenClaw 公益装机活动，之后铺到 40 多个城市、456 场、7 万人参与，深圳龙岗的千人装机节是中国最大规模的单场 AI 工具安装活动"
+        }
+      ]
+    }
   }
 ]
