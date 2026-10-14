@@ -1,0 +1,387 @@
+{
+  "cache_key": "e1c1b4c7ec93af036e702a19-e23fbe93cda0f7e34b1e545e",
+  "product_key": "e1c1b4c7ec93af036e702a19",
+  "fingerprint": "e23fbe93cda0f7e34b1e545e",
+  "product_id": "p_f7aed8dd03fd8471",
+  "product_name": "Promise Robotics",
+  "origin": "ai",
+  "generated_at": "2026-10-14T20:33:30.358946+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "工厂机器人组装房屋部件",
+      "en": "Factory Robots Assemble Housing Components"
+    },
+    "scenario": {
+      "zh": "上传房屋设计图纸，AI解读后生成生产计划，机器人在工厂组装墙体、屋顶等部件，然后运至现场安装",
+      "en": "Upload home design plans, AI interprets them to generate production schedules, robots assemble walls, roofs and other components in the factory, then ship to site for installation"
+    },
+    "steps": [
+      {
+        "id": "design_input",
+        "widget": "choice",
+        "title": {
+          "zh": "选择房屋设计",
+          "en": "Choose Home Design"
+        },
+        "instruction": {
+          "zh": "选择要生产的房型",
+          "en": "Select the home model to produce"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "三居室平层",
+              "en": "Three-Bedroom Ranch"
+            },
+            "output": {
+              "zh": "识别12面墙体、4个屋顶组件",
+              "en": "Identified 12 wall panels, 4 roof assemblies"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "设计规格",
+                "en": "Design Specifications"
+              },
+              "output_label": {
+                "zh": "生产清单",
+                "en": "Production Manifest"
+              },
+              "input": {
+                "zh": "1650平方英尺单层住宅，带车库和门廊，标准木结构框架",
+                "en": "1650 sq ft single-story home with garage and porch, standard wood-frame construction"
+              },
+              "output": {
+                "zh": "12个墙体面板（含门窗开口）、4个屋顶桁架组件、3个内墙单元，预计工厂周期5天",
+                "en": "12 wall panels (with door/window openings), 4 roof truss assemblies, 3 interior wall units, estimated factory cycle 5 days"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "外墙A-C",
+                    "en": "Exterior Walls A-C"
+                  },
+                  "detail": {
+                    "zh": "前立面三组，含车库门开口",
+                    "en": "Three front-facing units with garage opening"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "屋顶组件",
+                    "en": "Roof Assemblies"
+                  },
+                  "detail": {
+                    "zh": "四个预制桁架单元",
+                    "en": "Four prefabricated truss units"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "内部分隔",
+                    "en": "Interior Partitions"
+                  },
+                  "detail": {
+                    "zh": "卧室和浴室隔墙",
+                    "en": "Bedroom and bathroom dividers"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "两层复式",
+              "en": "Two-Story Duplex"
+            },
+            "output": {
+              "zh": "识别18面墙体、6个楼板组件",
+              "en": "Identified 18 wall panels, 6 floor assemblies"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "设计规格",
+                "en": "Design Specifications"
+              },
+              "output_label": {
+                "zh": "生产清单",
+                "en": "Production Manifest"
+              },
+              "input": {
+                "zh": "2400平方英尺双层建筑，两个独立单元，共用中央墙体",
+                "en": "2400 sq ft two-story building, two independent units, shared center wall"
+              },
+              "output": {
+                "zh": "18个墙体面板、6个二层楼板组件、2套楼梯单元，预计工厂周期7天",
+                "en": "18 wall panels, 6 second-floor assemblies, 2 staircase units, estimated factory cycle 7 days"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "共用承重墙",
+                    "en": "Shared Load Wall"
+                  },
+                  "detail": {
+                    "zh": "中央双层结构墙体",
+                    "en": "Central two-story structural wall"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "楼板系统",
+                    "en": "Floor System"
+                  },
+                  "detail": {
+                    "zh": "六个二层地板框架",
+                    "en": "Six second-story floor frames"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "楼梯组件",
+                    "en": "Stair Assemblies"
+                  },
+                  "detail": {
+                    "zh": "两套预制楼梯单元",
+                    "en": "Two prefabricated stair units"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "production_review",
+        "widget": "review",
+        "title": {
+          "zh": "查看机器人工作站",
+          "en": "Review Robot Workstations"
+        },
+        "instruction": {
+          "zh": "查看各工作站的任务分配",
+          "en": "View task assignments across workstations"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "框架组装站",
+              "en": "Framing Station"
+            },
+            "output": {
+              "zh": "机器人切割和钉接木材框架",
+              "en": "Robots cut and nail timber frames"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "工作站任务",
+                "en": "Station Tasks"
+              },
+              "output_label": {
+                "zh": "执行顺序",
+                "en": "Execution Sequence"
+              },
+              "input": {
+                "zh": "墙体A-01: 2x4木材，8英尺高，门窗已标记",
+                "en": "Wall A-01: 2x4 lumber, 8ft height, door/window marked"
+              },
+              "output": {
+                "zh": "已按顺序分配给三台机器人：切割、定位、固定",
+                "en": "Assigned sequentially to three robots: cutting, positioning, fastening"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "机器人1切割",
+                    "en": "Robot 1 Cuts"
+                  },
+                  "detail": {
+                    "zh": "按尺寸裁切12根立柱和横梁",
+                    "en": "Cut 12 studs and beams to size"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "机器人2定位",
+                    "en": "Robot 2 Positions"
+                  },
+                  "detail": {
+                    "zh": "在工作台上排列框架部件",
+                    "en": "Arrange frame components on table"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "机器人3固定",
+                    "en": "Robot 3 Fastens"
+                  },
+                  "detail": {
+                    "zh": "钉接所有连接点",
+                    "en": "Nail all connection points"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "覆板安装站",
+              "en": "Sheathing Station"
+            },
+            "output": {
+              "zh": "机器人安装外层防护板",
+              "en": "Robots install outer sheathing panels"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "工作站任务",
+                "en": "Station Tasks"
+              },
+              "output_label": {
+                "zh": "执行顺序",
+                "en": "Execution Sequence"
+              },
+              "input": {
+                "zh": "墙体A-01框架已完成，需要OSB覆板和防水层",
+                "en": "Wall A-01 frame complete, needs OSB sheathing and weather barrier"
+              },
+              "output": {
+                "zh": "已安排两台机器人完成覆板和密封",
+                "en": "Two robots scheduled for sheathing and sealing"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "机器人4覆板",
+                    "en": "Robot 4 Sheathes"
+                  },
+                  "detail": {
+                    "zh": "固定OSB板材到框架",
+                    "en": "Attach OSB panels to frame"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "机器人5密封",
+                    "en": "Robot 5 Seals"
+                  },
+                  "detail": {
+                    "zh": "安装防水膜和接缝带",
+                    "en": "Install weather barrier and joint tape"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "quality_check",
+        "widget": "compare",
+        "title": {
+          "zh": "对比质量检测",
+          "en": "Compare Quality Checks"
+        },
+        "instruction": {
+          "zh": "查看传统与机器人方式的差异",
+          "en": "View differences between traditional and robotic methods"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "墙体垂直度",
+              "en": "Wall Plumb Accuracy"
+            },
+            "output": {
+              "zh": "机器人精度更高且一致",
+              "en": "Robotic precision higher and consistent"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "检测项目",
+                "en": "Inspection Item"
+              },
+              "output_label": {
+                "zh": "对比结果",
+                "en": "Comparison Result"
+              },
+              "input": {
+                "zh": "8英尺墙体垂直度偏差测量",
+                "en": "8ft wall plumb deviation measurement"
+              },
+              "output": {
+                "zh": "传统人工: 偏差范围较大，机器人: 偏差始终较小",
+                "en": "Traditional manual: larger deviation range, Robotic: consistently smaller deviation"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "钉接间距",
+              "en": "Fastener Spacing"
+            },
+            "output": {
+              "zh": "机器人间距均匀标准",
+              "en": "Robotic spacing uniform and standardized"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "检测项目",
+                "en": "Inspection Item"
+              },
+              "output_label": {
+                "zh": "对比结果",
+                "en": "Comparison Result"
+              },
+              "input": {
+                "zh": "墙体框架钉接点间距一致性",
+                "en": "Wall frame fastener spacing consistency"
+              },
+              "output": {
+                "zh": "传统人工: 间距有变化，机器人: 间距完全一致",
+                "en": "Traditional manual: spacing varies, Robotic: spacing perfectly consistent"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了从图纸到生产清单、机器人工位分配和质量对比的虚构流程，实际性能需在Promise Robotics工厂验证",
+      "en": "Demonstrated fictional workflow from plans to production manifest, robot station assignments and quality comparison; actual performance must be verified at Promise Robotics facilities"
+    },
+    "sources": [
+      {
+        "url": "https://promiserobotics.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://betakit.com/promise-robotics-strikes-deal-to-supply-largest-us-homebuilder-dr-horton/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

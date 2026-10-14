@@ -1,0 +1,239 @@
+{
+  "cache_key": "8a79832deb1abb37958f5868-1784ae236c9b30f78130e515",
+  "product_key": "8a79832deb1abb37958f5868",
+  "fingerprint": "1784ae236c9b30f78130e515",
+  "product_id": "p_8319303a37bd8821",
+  "product_name": "Industrial Next",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-14T22:16:38.898604+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "工厂产线快速重配",
+      "en": "Fast Factory Line Retooling"
+    },
+    "scenario": {
+      "zh": "为新产品型号部署精密装配工作站，输入任务需求和零件特征，获得可立即训练的机器人配置方案",
+      "en": "Deploy a precision assembly station for a new product model by providing task requirements and part characteristics to receive a ready-to-train robotic configuration"
+    },
+    "steps": [
+      {
+        "id": "task_define",
+        "widget": "choice",
+        "title": {
+          "zh": "选择装配任务",
+          "en": "Choose Assembly Task"
+        },
+        "instruction": {
+          "zh": "选择需要自动化的精密装配场景",
+          "en": "Select the precision assembly scenario to automate"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "软性排线穿线",
+              "en": "Flexible Cable Threading"
+            },
+            "output": {
+              "zh": "识别柔性材料特征，规划穿孔路径",
+              "en": "Identifies flexible material traits, plans threading path"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "任务说明",
+                "en": "Task Brief"
+              },
+              "output_label": {
+                "zh": "配置方案",
+                "en": "Configuration Plan"
+              },
+              "input": {
+                "zh": "0.3mm柔性排线需穿过直径0.5mm孔位，材料易弯曲，孔位公差±0.05mm，需保持排线平整无折痕",
+                "en": "0.3mm flex cable must thread through 0.5mm diameter hole, material bends easily, hole tolerance ±0.05mm, cable must stay flat without creasing"
+              },
+              "output": {
+                "zh": "视觉系统：微米级孔位定位+排线姿态检测 / 运动规划：柔性材料张力控制+三轴对齐策略 / 仿真训练：500组弯曲变形场景",
+                "en": "Vision: micron-level hole detection + cable posture tracking / Motion: flexible material tension control + tri-axis alignment / Simulation: 500 bending deformation scenarios"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "微型连接器扣接",
+              "en": "Micro-Connector Snapping"
+            },
+            "output": {
+              "zh": "定位微小卡扣位置，控制扣合力度",
+              "en": "Locates tiny latch points, controls snapping force"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "任务说明",
+                "en": "Task Brief"
+              },
+              "output_label": {
+                "zh": "配置方案",
+                "en": "Configuration Plan"
+              },
+              "input": {
+                "zh": "1.2mm连接器帽需扣接到PCB插座，卡扣位置4个，每个0.8mm宽，扣合需听到咔哒声，过度用力会损坏",
+                "en": "1.2mm connector cap must snap onto PCB socket, 4 latch points each 0.8mm wide, must hear click sound, excessive force causes damage"
+              },
+              "output": {
+                "zh": "视觉系统：四点卡扣对齐检测+高速力反馈 / 运动规划：渐进施力曲线+声学确认触发 / 仿真训练：200组角度偏差+力度边界测试",
+                "en": "Vision: four-point latch alignment + high-speed force feedback / Motion: progressive force curve + acoustic confirmation / Simulation: 200 angle deviation + force boundary tests"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "deploy_speed",
+        "widget": "review",
+        "title": {
+          "zh": "部署时间对比",
+          "en": "Deployment Time Comparison"
+        },
+        "instruction": {
+          "zh": "查看传统编程与AI工作站的配置差异",
+          "en": "Review configuration differences between traditional programming and AI station"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "查看对比",
+              "en": "View Comparison"
+            },
+            "output": {
+              "zh": "显示配置周期和适应能力的实际差距",
+              "en": "Shows real gaps in setup cycles and adaptation capability"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "方法",
+                "en": "Method"
+              },
+              "output_label": {
+                "zh": "部署周期",
+                "en": "Setup Time"
+              },
+              "input": {
+                "zh": "传统机器人编程",
+                "en": "Traditional robot programming"
+              },
+              "output": {
+                "zh": "数周：硬编码每个动作路径，反复调试参数，型号变更需重新编写",
+                "en": "Weeks: hard-code each motion path, iterative parameter tuning, model changes require rewriting"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "AI工作站方式",
+              "en": "AI Station Method"
+            },
+            "output": {
+              "zh": "通过仿真训练快速适应新任务",
+              "en": "Rapidly adapts to new tasks via simulation training"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "方法",
+                "en": "Method"
+              },
+              "output_label": {
+                "zh": "部署周期",
+                "en": "Setup Time"
+              },
+              "input": {
+                "zh": "Industrial Next工作站",
+                "en": "Industrial Next station"
+              },
+              "output": {
+                "zh": "几分钟：仿真引擎自动生成策略，基础模型理解任务上下文，零件变化时快速重新训练",
+                "en": "Minutes: simulation engine auto-generates strategy, foundation model understands task context, rapid retraining when parts change"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "outcome",
+        "widget": "review",
+        "title": {
+          "zh": "性能表现",
+          "en": "Performance Results"
+        },
+        "instruction": {
+          "zh": "查看实际生产线部署的精度和速度",
+          "en": "Review precision and speed from actual production deployment"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "剥膜工作站",
+              "en": "Film Peeling Station"
+            },
+            "output": {
+              "zh": "达到人类速度且完全准确",
+              "en": "Matches human speed with full accuracy"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "部署场景（虚构示例）",
+                "en": "Deployment Scenario (fictional example)"
+              },
+              "output_label": {
+                "zh": "测量结果（虚构示例）",
+                "en": "Measured Results (fictional example)"
+              },
+              "input": {
+                "zh": "全球热门智能手机屏幕保护膜剥离，0.1mm薄膜需无气泡撕除，边缘无残留胶痕，此任务制造商数年未能自动化",
+                "en": "Screen protector peeling for popular global smartphone, 0.1mm film must be removed bubble-free, no adhesive residue on edges, task manufacturer couldn't automate for years"
+              },
+              "output": {
+                "zh": "速度与熟练工人相当，准确率达到完美标准，无需人工返工，已在量产线稳定运行",
+                "en": "Speed matches skilled workers, accuracy reaches perfect standard, no manual rework needed, stable in mass production"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "本示例展示了任务配置和部署周期对比（虚构场景），实际性能数据、仿真引擎细节和客户产线需在Industrial Next官网确认",
+      "en": "This demo illustrated task configuration and deployment comparison (fictional scenarios); actual performance data, simulation engine details and customer lines must be verified on Industrial Next site"
+    },
+    "sources": [
+      {
+        "url": "https://industrialnext.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/10/13/industrial-next-wants-factory-robots-to-switch-tasks-in-minutes-not-weeks/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

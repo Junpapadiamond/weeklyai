@@ -290,5 +290,60 @@
         }
       ]
     }
+  },
+  {
+    "name": "Sonilo",
+    "website": "https://sonilo.com/",
+    "description": "一个生成式音频平台,利用多模态AI技术(Sound World Model)自动为视频内容创作匹配的音乐和音效。该系统能够理解视频画面的运动和情感变化,逐帧分析场景,生成与视频内容自然同步的商用音频。此外还提供AI配音和唇形同步功能,帮助短剧和内容工作室进行多语言本地化。",
+    "description_en": "A generative audio platform that uses multimodal AI technology (Sound World Model) to automatically create music and sound effects that match video content. The system understands movement and emotional shifts in video footage, analyzes scenes frame by frame, and generates audio naturally synced for commercial use. Also offers AI dubbing with lip-sync for video localization.",
+    "category": "voice",
+    "why_matters": "Sonilo区别于传统音频工具的核心在于其多模态视频理解能力:不是简单生成独立音轨,而是通过分析视频内容的节奏、情感和叙事自动匹配音频。创始团队来自TikTok的AI和音乐部门,拥有深厚技术和行业背景。在版权方面采用授权音乐训练模型,与Shutterstock等机构合作并与艺术家分成,为短视频创作者和企业提供合规的AI原生视频音频解决方案。",
+    "why_matters_en": "Sonilo differentiates itself through multimodal video comprehension: rather than generating standalone audio, it analyzes video pacing, emotion, and narrative to automatically fit audio to scenes. The founding team comes from TikTok's AI and music divisions with deep technical and industry expertise. On rights, models are trained on licensed music, partnering with Shutterstock and revenue-sharing with artists, providing compliant AI-native video audio solutions for short-form creators and enterprises.",
+    "latest_news": "2026年10月获得B Capital领投、Redpoint参投的1100万美元融资,资金将用于扩展计算能力以扩大模型规模。已与TapNow和ComfyUI达成早期分发合作,消费者应用计划于2026年第四季度推出。",
+    "latest_news_en": "Raised $11 million in October 2026 led by B Capital with Redpoint participating, funding will pay for computing power to scale models. Signed early distribution partnerships with TapNow and ComfyUI, consumer app set to launch in Q4 2026.",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "founder_background",
+      "category_innovation"
+    ],
+    "company_country": "US",
+    "confidence": 0.95,
+    "source_url": "https://variety.com/2026/digital/news/ai-audio-startup-sonilo-tiktok-veterans-11-million-1236904917",
+    "funding_total": "$11M",
+    "categories": [
+      "voice"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "TikTok Veterans' AI Audio Startup Sonilo Raises $11 Million",
+    "website_source": "https://sonilo.com/terms-of-service",
+    "discovered_at": "2026-10-14",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261014T220624Z-95daf754",
+      "search_region": "eu",
+      "search_lane": "launch",
+      "website_verification": {
+        "url": "https://sonilo.com/",
+        "title": "Sonilo: AI Music & Sound Effects for Your Videos Sonilo",
+        "search_result_url": "https://sonilo.com/terms-of-service"
+      },
+      "source_published_at": "2026-10-08T13:00:00+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "San Francisco-based Sonilo secured the round with B Capital leading and Redpoint also taking part."
+        },
+        {
+          "criterion": "founder_background",
+          "quote": "Song, who trained at CMU, led multimodal AI technology work at TikTok, where he worked alongside Alex Yin, Sonilo's CTO. Yin earned a doctorate in computer music at the University of York. COO Keli Li built and ran TikTok's global music operation"
+        },
+        {
+          "criterion": "category_innovation",
+          "quote": "Sonilo's core technology, which it calls the Sound World Model, is a multimodal system that ties video comprehension to audio generation and timing. It doesn't handle music and effects as standalone pieces. Instead, it reads a scene's movement and emotional shifts, then produces audio built for that particular footage."
+        }
+      ]
+    }
   }
 ]

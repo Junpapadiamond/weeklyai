@@ -1,0 +1,260 @@
+{
+  "cache_key": "f3505bb411f6fd40a43433e8-7fa3030c14199d101f7f6657",
+  "product_key": "f3505bb411f6fd40a43433e8",
+  "fingerprint": "7fa3030c14199d101f7f6657",
+  "product_id": "31",
+  "product_name": "Pivot",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-14T22:17:27.005542+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "AI 采购审批路由",
+      "en": "AI Procurement Approval Router"
+    },
+    "scenario": {
+      "zh": "你提供采购请求详情，Pivot 判断金额与类型，输出对应审批流程",
+      "en": "You provide purchase request details; Pivot reads amount and type, returns the approval workflow"
+    },
+    "steps": [
+      {
+        "id": "request",
+        "widget": "choice",
+        "title": {
+          "zh": "选择采购请求",
+          "en": "Choose Purchase Request"
+        },
+        "instruction": {
+          "zh": "查看 AI 如何路由不同采购",
+          "en": "See how AI routes different purchases"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "办公用品",
+              "en": "Office Supplies"
+            },
+            "output": {
+              "zh": "常规审批，预算内免二级",
+              "en": "Standard approval, no L2 if in budget"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "采购申请单",
+                "en": "Purchase Request"
+              },
+              "output_label": {
+                "zh": "审批路线",
+                "en": "Approval Route"
+              },
+              "input": {
+                "zh": "品项：办公椅 12 把\n预算：¥18,000\n部门：行政部",
+                "en": "Item: 12 office chairs\nBudget: ¥18,000\nDept: Admin"
+              },
+              "output": {
+                "zh": "路线：部门主管 → 财务复核\n预计 1 个工作日",
+                "en": "Route: Dept Head → Finance Review\nEst. 1 business day"
+              },
+              "emphasis": {
+                "zh": "¥18,000",
+                "en": "¥18,000"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "软件订阅",
+              "en": "Software Subscription"
+            },
+            "output": {
+              "zh": "IT 与采购双线审批",
+              "en": "IT and Procurement dual review"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "采购申请单",
+                "en": "Purchase Request"
+              },
+              "output_label": {
+                "zh": "审批路线",
+                "en": "Approval Route"
+              },
+              "input": {
+                "zh": "品项：Slack 企业版年费\n预算：$42,000\n部门：产品部",
+                "en": "Item: Slack Enterprise annual\nBudget: $42,000\nDept: Product"
+              },
+              "output": {
+                "zh": "路线：IT 安全评估 → 采购经理 → CFO\n预计 3 个工作日",
+                "en": "Route: IT Security → Procurement Mgr → CFO\nEst. 3 business days"
+              },
+              "emphasis": {
+                "zh": "$42,000",
+                "en": "$42,000"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "supplier",
+        "widget": "choice",
+        "title": {
+          "zh": "供应商匹配",
+          "en": "Supplier Match"
+        },
+        "instruction": {
+          "zh": "AI 从供应商库找符合条件的",
+          "en": "AI finds qualifying suppliers from catalog"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "新供应商",
+              "en": "New Supplier"
+            },
+            "output": {
+              "zh": "触发尽调与合规审查",
+              "en": "Triggers due diligence and compliance check"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "申请信息",
+                "en": "Request Info"
+              },
+              "output_label": {
+                "zh": "待办清单",
+                "en": "Action Items"
+              },
+              "input": {
+                "zh": "供应商：Acme Industrial Ltd\n类别：制造设备\n金额：$125,000",
+                "en": "Supplier: Acme Industrial Ltd\nCategory: Manufacturing Equipment\nAmount: $125,000"
+              },
+              "output": {
+                "zh": "必填任务",
+                "en": "Required Tasks"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "营业执照核验",
+                    "en": "Business License Verification"
+                  },
+                  "detail": {
+                    "zh": "采购部 3 日内完成",
+                    "en": "Procurement team, 3 days"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "财务信用报告",
+                    "en": "Financial Credit Report"
+                  },
+                  "detail": {
+                    "zh": "财务部 5 日内完成",
+                    "en": "Finance team, 5 days"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "ISO 认证确认",
+                    "en": "ISO Certification Confirmation"
+                  },
+                  "detail": {
+                    "zh": "质量部 2 日内完成",
+                    "en": "Quality team, 2 days"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "已认证供应商",
+              "en": "Certified Supplier"
+            },
+            "output": {
+              "zh": "跳过尽调，直接审批",
+              "en": "Skip due diligence, proceed to approval"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "申请信息",
+                "en": "Request Info"
+              },
+              "output_label": {
+                "zh": "流程简化",
+                "en": "Streamlined Process"
+              },
+              "input": {
+                "zh": "供应商：Dell Technologies\n类别：IT 硬件\n金额：$38,000",
+                "en": "Supplier: Dell Technologies\nCategory: IT Hardware\nAmount: $38,000"
+              },
+              "output": {
+                "zh": "供应商：已认证级别 Gold\n路线：部门主管 → 采购确认\n预计 1 日",
+                "en": "Supplier: Certified Gold tier\nRoute: Dept Head → Procurement Confirm\nEst. 1 day"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "outcome",
+        "widget": "review",
+        "title": {
+          "zh": "审批结果",
+          "en": "Approval Outcome"
+        },
+        "instruction": {
+          "zh": "示例：批准后自动触发下游",
+          "en": "Example: Auto-trigger downstream after approval"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "已批准",
+              "en": "Approved"
+            },
+            "output": {
+              "zh": "生成 PO，通知供应商与财务",
+              "en": "Generate PO, notify supplier and finance"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例展示了 AI 如何根据金额、类型与供应商状态路由审批；实际准确性、供应商库完整度与企业系统集成需在 Pivot 平台验证",
+      "en": "Examples show AI routing by amount, type, and supplier status; actual accuracy, supplier catalog coverage, and enterprise system integration must be verified on the Pivot platform"
+    },
+    "sources": [
+      {
+        "url": "https://www.pivot.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techfundingnews.com/tag/europe/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

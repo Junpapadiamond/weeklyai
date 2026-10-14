@@ -1,0 +1,250 @@
+{
+  "cache_key": "70b6d541ed65f76934f11541-b0f56777c10167c2bb9338be",
+  "product_key": "70b6d541ed65f76934f11541",
+  "fingerprint": "b0f56777c10167c2bb9338be",
+  "product_id": "p_2911d03ea39fe678",
+  "product_name": "Sonilo",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-14T22:16:04.663502+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为短视频匹配音效",
+      "en": "Match Sound to Short Video"
+    },
+    "scenario": {
+      "zh": "上传一段无声视频,系统分析画面运动和情感,生成同步的音乐和音效",
+      "en": "Upload a silent video clip; the system analyzes motion and emotion to generate synchronized music and sound effects"
+    },
+    "steps": [
+      {
+        "id": "video_input",
+        "widget": "choice",
+        "title": {
+          "zh": "选择视频类型",
+          "en": "Choose Video Type"
+        },
+        "instruction": {
+          "zh": "示例展示不同场景的音频生成",
+          "en": "Examples show audio generation for different scenes"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "产品展示",
+              "en": "Product Demo"
+            },
+            "output": {
+              "zh": "轻快节奏配合产品旋转特写",
+              "en": "Upbeat rhythm matching product rotation"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "视频描述",
+                "en": "Video Description"
+              },
+              "output_label": {
+                "zh": "生成音频方案",
+                "en": "Generated Audio Plan"
+              },
+              "input": {
+                "zh": "15秒产品旋转镜头,白色背景,缓慢360度展示智能手表",
+                "en": "15-second product rotation, white background, slow 360-degree smartwatch reveal"
+              },
+              "output": {
+                "zh": "柔和电子乐随旋转加速,细微咔哒声强调金属质感",
+                "en": "Soft electronic music accelerates with rotation, subtle clicks emphasize metallic finish"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "情感短片",
+              "en": "Emotional Scene"
+            },
+            "output": {
+              "zh": "舒缓弦乐跟随镜头情绪变化",
+              "en": "Soothing strings follow emotional shifts"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "视频描述",
+                "en": "Video Description"
+              },
+              "output_label": {
+                "zh": "生成音频方案",
+                "en": "Generated Audio Plan"
+              },
+              "input": {
+                "zh": "20秒虚构场景:日落海滩,人物背影,镜头缓慢推进",
+                "en": "20-second fictional scene: sunset beach, silhouette figure, slow camera push"
+              },
+              "output": {
+                "zh": "钢琴和弦随镜头推进渐强,海浪环境音自然融入",
+                "en": "Piano chords build with camera push, ocean ambience naturally layered"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "动作场景",
+              "en": "Action Sequence"
+            },
+            "output": {
+              "zh": "紧凑节奏匹配快速剪辑",
+              "en": "Tight rhythm matches fast cuts"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "视频描述",
+                "en": "Video Description"
+              },
+              "output_label": {
+                "zh": "生成音频方案",
+                "en": "Generated Audio Plan"
+              },
+              "input": {
+                "zh": "虚构运动片段:跑酷跳跃,4个快速镜头切换,落地特写",
+                "en": "Fictional sports clip: parkour jump, 4 quick angle cuts, landing closeup"
+              },
+              "output": {
+                "zh": "重低音对齐每次落地,鼓点随切换加速",
+                "en": "Bass hits align with each landing, drum tempo accelerates with cuts"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "audio_layers",
+        "widget": "choice",
+        "title": {
+          "zh": "调整音频层次",
+          "en": "Adjust Audio Layers"
+        },
+        "instruction": {
+          "zh": "为同一视频尝试不同音效组合",
+          "en": "Try different sound combinations for the same video"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "仅背景音乐",
+              "en": "Music Only"
+            },
+            "output": {
+              "zh": "纯配乐无环境声或音效",
+              "en": "Pure score without ambient or effects"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "虚构调整请求",
+                "en": "Fictional Adjustment Request"
+              },
+              "output_label": {
+                "zh": "修改后方案",
+                "en": "Revised Plan"
+              },
+              "input": {
+                "zh": "保留原视频,移除所有环境音和点击音效",
+                "en": "Keep original video, remove all ambient and click effects"
+              },
+              "output": {
+                "zh": "电子乐主旋律保持,移除咔哒声和背景嗡鸣",
+                "en": "Electronic melody retained, clicks and background hum removed"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "增强环境音",
+              "en": "Boost Ambience"
+            },
+            "output": {
+              "zh": "强化场景的自然声音氛围",
+              "en": "Amplify natural scene atmosphere"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "虚构调整请求",
+                "en": "Fictional Adjustment Request"
+              },
+              "output_label": {
+                "zh": "修改后方案",
+                "en": "Revised Plan"
+              },
+              "input": {
+                "zh": "日落海滩片段,海浪声音更明显",
+                "en": "Sunset beach clip, make ocean waves more prominent"
+              },
+              "output": {
+                "zh": "海浪层音量提升,增加远处海鸥叫声细节",
+                "en": "Wave layer volume increased, distant seagull calls added for depth"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "export_note",
+        "widget": "review",
+        "title": {
+          "zh": "下一步操作",
+          "en": "Next Steps"
+        },
+        "instruction": {
+          "zh": "在Sonilo平台完成实际生成",
+          "en": "Complete actual generation on Sonilo platform"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "访问平台",
+              "en": "Visit Platform"
+            },
+            "output": {
+              "zh": "上传真实视频,调整参数,下载授权音频文件用于商用发布",
+              "en": "Upload real video, adjust settings, download licensed audio for commercial release"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例展示了视频分析到音频生成的逻辑,实际音质、同步精度和授权细节需在sonilo.com测试",
+      "en": "Examples showed video-to-audio logic; actual quality, sync precision, and licensing details require testing at sonilo.com"
+    },
+    "sources": [
+      {
+        "url": "https://sonilo.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://variety.com/2026/digital/news/ai-audio-startup-sonilo-tiktok-veterans-11-million-1236904917",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,270 @@
+{
+  "cache_key": "d70aa29bbb3809bd86d93c1b-9b31c0a71af2e25502a6bb5f",
+  "product_key": "d70aa29bbb3809bd86d93c1b",
+  "fingerprint": "9b31c0a71af2e25502a6bb5f",
+  "product_id": "p_0b87e66db12c0b32",
+  "product_name": "Cloud9",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-14T22:16:59.501684+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "跨境贸易收款模拟",
+      "en": "Cross-Border Trade Payment"
+    },
+    "scenario": {
+      "zh": "一家肯尼亚出口商从欧洲客户收取付款,通过稳定币结算快速转换为本地货币",
+      "en": "A Kenyan exporter receives payment from a European client, settling via stablecoin and converting to local currency"
+    },
+    "steps": [
+      {
+        "id": "incoming",
+        "widget": "choice",
+        "title": {
+          "zh": "收款来源",
+          "en": "Payment Source"
+        },
+        "instruction": {
+          "zh": "选择客户付款的货币",
+          "en": "Choose the currency your client pays in"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "欧元客户",
+              "en": "EUR Client"
+            },
+            "output": {
+              "zh": "欧元通过稳定币转换",
+              "en": "EUR converted via stablecoin"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "传入付款",
+                "en": "Incoming Payment"
+              },
+              "output_label": {
+                "zh": "稳定币结算",
+                "en": "Stablecoin Settlement"
+              },
+              "input": {
+                "zh": "客户支付 €12,500",
+                "en": "Client pays €12,500"
+              },
+              "output": {
+                "zh": "USDC 13,200 已接收",
+                "en": "USDC 13,200 received"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "英镑客户",
+              "en": "GBP Client"
+            },
+            "output": {
+              "zh": "英镑通过稳定币转换",
+              "en": "GBP converted via stablecoin"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "传入付款",
+                "en": "Incoming Payment"
+              },
+              "output_label": {
+                "zh": "稳定币结算",
+                "en": "Stablecoin Settlement"
+              },
+              "input": {
+                "zh": "客户支付 £9,800",
+                "en": "Client pays £9,800"
+              },
+              "output": {
+                "zh": "USDT 12,450 已接收",
+                "en": "USDT 12,450 received"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "convert",
+        "widget": "choice",
+        "title": {
+          "zh": "本地货币转换",
+          "en": "Local Currency"
+        },
+        "instruction": {
+          "zh": "选择提取到本地账户的货币",
+          "en": "Choose currency for local withdrawal"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "提取肯尼亚先令",
+              "en": "Withdraw to KES"
+            },
+            "output": {
+              "zh": "稳定币转为肯尼亚先令",
+              "en": "Stablecoin converted to KES"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "稳定币余额",
+                "en": "Stablecoin Balance"
+              },
+              "output_label": {
+                "zh": "本地账户",
+                "en": "Local Account"
+              },
+              "input": {
+                "zh": "USDC 13,200",
+                "en": "USDC 13,200"
+              },
+              "output": {
+                "zh": "KES 1,704,000 已到账",
+                "en": "KES 1,704,000 deposited"
+              }
+            },
+            "when": {
+              "step_id": "incoming",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "提取肯尼亚先令",
+              "en": "Withdraw to KES"
+            },
+            "output": {
+              "zh": "稳定币转为肯尼亚先令",
+              "en": "Stablecoin converted to KES"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "稳定币余额",
+                "en": "Stablecoin Balance"
+              },
+              "output_label": {
+                "zh": "本地账户",
+                "en": "Local Account"
+              },
+              "input": {
+                "zh": "USDT 12,450",
+                "en": "USDT 12,450"
+              },
+              "output": {
+                "zh": "KES 1,610,100 已到账",
+                "en": "KES 1,610,100 deposited"
+              }
+            },
+            "when": {
+              "step_id": "incoming",
+              "option_id": "1"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "保留稳定币",
+              "en": "Keep Stablecoin"
+            },
+            "output": {
+              "zh": "余额保留为稳定币",
+              "en": "Balance remains in stablecoin"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "当前余额",
+                "en": "Current Balance"
+              },
+              "output_label": {
+                "zh": "账户状态",
+                "en": "Account Status"
+              },
+              "input": {
+                "zh": "USDC 13,200",
+                "en": "USDC 13,200"
+              },
+              "output": {
+                "zh": "可用于下次支付或转换",
+                "en": "Available for next payment or conversion"
+              }
+            },
+            "when": {
+              "step_id": "incoming",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "3",
+            "label": {
+              "zh": "保留稳定币",
+              "en": "Keep Stablecoin"
+            },
+            "output": {
+              "zh": "余额保留为稳定币",
+              "en": "Balance remains in stablecoin"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "当前余额",
+                "en": "Current Balance"
+              },
+              "output_label": {
+                "zh": "账户状态",
+                "en": "Account Status"
+              },
+              "input": {
+                "zh": "USDT 12,450",
+                "en": "USDT 12,450"
+              },
+              "output": {
+                "zh": "可用于下次支付或转换",
+                "en": "Available for next payment or conversion"
+              }
+            },
+            "when": {
+              "step_id": "incoming",
+              "option_id": "1"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "展示了稳定币在跨境收款中的货币转换路径,实际汇率、费用和到账时效需在Cloud9平台确认",
+      "en": "Illustrated stablecoin-based currency conversion for cross-border receipts; actual rates, fees, and settlement times must be confirmed on the Cloud9 platform"
+    },
+    "sources": [
+      {
+        "url": "https://cloud9.money/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://launchbaseafrica.com/2026/10/12/african-startup-deal",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

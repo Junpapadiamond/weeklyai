@@ -1,0 +1,244 @@
+{
+  "cache_key": "afc6ccb2726dfd37af2b1c0e-ae00dc270324997e6feededa",
+  "product_key": "afc6ccb2726dfd37af2b1c0e",
+  "fingerprint": "ae00dc270324997e6feededa",
+  "product_id": "32",
+  "product_name": "Vesence",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-14T22:18:08.156295+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "合同审查助手演示",
+      "en": "Contract Review Assistant Demo"
+    },
+    "scenario": {
+      "zh": "律师在 Word 中完成合同草稿，Vesence 在发送客户前检查条款一致性与定义问题",
+      "en": "Lawyer finishes contract draft in Word, Vesence checks clause consistency and definitions before sending to client"
+    },
+    "steps": [
+      {
+        "id": "contract_check",
+        "widget": "choice",
+        "title": {
+          "zh": "选择审查重点",
+          "en": "Choose Review Focus"
+        },
+        "instruction": {
+          "zh": "选一个合同条款类型查看检查结果",
+          "en": "Pick a contract clause type to see check results"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "定义词一致性",
+              "en": "Defined Term Consistency"
+            },
+            "output": {
+              "zh": "发现首字母大小写不一致",
+              "en": "Found capitalization mismatch"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "合同草稿片段",
+                "en": "Contract Draft Excerpt"
+              },
+              "output_label": {
+                "zh": "发现的问题",
+                "en": "Issues Found"
+              },
+              "input": {
+                "zh": "第 3 条：卖方应在交割日前提供所有文件。第 9 条：买方在交割日（Closing Date）后承担风险。",
+                "en": "Section 3: Seller shall provide all documents before the Closing Date. Section 9: Buyer assumes risk after the closing date."
+              },
+              "output": {
+                "zh": "'交割日'与'Closing Date'大小写不一致，可能造成定义歧义",
+                "en": "'Closing Date' capitalization inconsistent, may create definition ambiguity"
+              },
+              "emphasis": {
+                "zh": "交割日",
+                "en": "closing date"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "交叉引用准确性",
+              "en": "Cross-Reference Accuracy"
+            },
+            "output": {
+              "zh": "条款编号已过期",
+              "en": "Clause number outdated"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "合同草稿片段",
+                "en": "Contract Draft Excerpt"
+              },
+              "output_label": {
+                "zh": "发现的问题",
+                "en": "Issues Found"
+              },
+              "input": {
+                "zh": "第 12 条规定的赔偿责任，见第 8.2 条详细说明。",
+                "en": "Indemnification obligations under Section 12 are detailed in Section 8.2."
+              },
+              "output": {
+                "zh": "第 8.2 条不存在；当前文档中赔偿条款位于第 9.1 条",
+                "en": "Section 8.2 does not exist; indemnification clause is now in Section 9.1"
+              },
+              "emphasis": {
+                "zh": "第 8.2 条",
+                "en": "Section 8.2"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "合规条款缺失",
+              "en": "Missing Compliance Clause"
+            },
+            "output": {
+              "zh": "标准保护条款未包含",
+              "en": "Standard protection clause absent"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "合同草稿片段",
+                "en": "Contract Draft Excerpt"
+              },
+              "output_label": {
+                "zh": "发现的问题",
+                "en": "Issues Found"
+              },
+              "input": {
+                "zh": "本协议受英国法律管辖。双方同意伦敦法院专属管辖。",
+                "en": "This Agreement is governed by English law. Parties consent to exclusive jurisdiction of London courts."
+              },
+              "output": {
+                "zh": "缺少数据处理条款，涉及跨境个人数据时通常需要",
+                "en": "Missing data processing clause, typically required when personal data crosses borders"
+              },
+              "emphasis": {
+                "zh": "英国法律",
+                "en": "English law"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "email_draft",
+        "widget": "choice",
+        "title": {
+          "zh": "邮件发送前检查",
+          "en": "Pre-Send Email Check"
+        },
+        "instruction": {
+          "zh": "选一封客户邮件查看潜在问题",
+          "en": "Pick a client email to see potential issues"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "附件遗漏提醒",
+              "en": "Missing Attachment Alert"
+            },
+            "output": {
+              "zh": "正文提及但未附加文件",
+              "en": "Body mentions but no file attached"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "邮件草稿",
+                "en": "Email Draft"
+              },
+              "output_label": {
+                "zh": "检查结果",
+                "en": "Check Result"
+              },
+              "input": {
+                "zh": "亲爱的 Smith 先生，附件是修订后的股东协议第 4 版，请在周五前审阅。",
+                "en": "Dear Mr. Smith, Please find attached the revised Shareholders Agreement v4 for review by Friday."
+              },
+              "output": {
+                "zh": "邮件提到'附件'和'股东协议'但未检测到附加文件",
+                "en": "Email mentions 'attached' and 'Agreement' but no file detected"
+              },
+              "emphasis": {
+                "zh": "附件",
+                "en": "attached"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "敏感信息泄露",
+              "en": "Sensitive Info Exposure"
+            },
+            "output": {
+              "zh": "包含内部备注内容",
+              "en": "Contains internal note content"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "邮件草稿",
+                "en": "Email Draft"
+              },
+              "output_label": {
+                "zh": "检查结果",
+                "en": "Check Result"
+              },
+              "input": {
+                "zh": "我们同意降低违约金至 50 万英镑。[内部：这是我们底线，再低合伙人不会批]",
+                "en": "We agree to reduce the penalty to £500k. [Internal: this is our floor, partners won't approve lower]"
+              },
+              "output": {
+                "zh": "检测到'[内部：'标记，可能不应发送给客户",
+                "en": "Detected '[Internal:' marker, likely should not be sent to client"
+              },
+              "emphasis": {
+                "zh": "内部：",
+                "en": "Internal:"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了定义词、交叉引用和邮件附件的虚拟检查例子；实际产品功能、准确率和集成方式需在 Vesence 官网确认",
+      "en": "Showed fictional examples of definition, cross-reference, and email attachment checks; actual product capabilities, accuracy, and integration must be confirmed on Vesence site"
+    },
+    "sources": [
+      {
+        "url": "https://www.vesence.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://sifted.eu/articles/yc-backed-legal-tech-vesence-raises-9m-seed-round",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}
