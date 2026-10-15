@@ -1,0 +1,328 @@
+{
+  "cache_key": "41773322e45b917fd547173c-279cbc9202b30a70d9d433fa",
+  "product_key": "41773322e45b917fd547173c",
+  "fingerprint": "279cbc9202b30a70d9d433fa",
+  "product_id": "p_1c603a86bbc21d39",
+  "product_name": "PhysicsX",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-15T22:10:29.893760+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "工程仿真方案探索",
+      "en": "Engineering Simulation Explorer"
+    },
+    "scenario": {
+      "zh": "演示如何用AI快速评估设计方案，对比不同参数下的物理表现，缩短传统仿真周期",
+      "en": "Demonstrate how AI rapidly evaluates design alternatives, comparing physical behavior across parameters to shorten traditional simulation cycles"
+    },
+    "steps": [
+      {
+        "id": "system",
+        "widget": "choice",
+        "title": {
+          "zh": "选择系统类型",
+          "en": "Choose System Type"
+        },
+        "instruction": {
+          "zh": "选择要分析的工程系统",
+          "en": "Select the engineering system to analyze"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "流体系统",
+              "en": "Fluid System"
+            },
+            "output": {
+              "zh": "设定流动条件和边界",
+              "en": "Define flow conditions and boundaries"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "系统描述",
+                "en": "System Description"
+              },
+              "output_label": {
+                "zh": "分析重点",
+                "en": "Analysis Focus"
+              },
+              "input": {
+                "zh": "管道网络，入口压力三个大气压，出口开放，三个分支节点，总长度二十米",
+                "en": "Pipe network, inlet pressure three atmospheres, open outlet, three branch nodes, total length twenty meters"
+              },
+              "output": {
+                "zh": "压力分布、流速分布、流量分配",
+                "en": "Pressure distribution, velocity distribution, flow allocation"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "几何",
+                    "en": "Geometry"
+                  },
+                  "detail": {
+                    "zh": "管径和节点布置",
+                    "en": "Pipe diameter and node layout"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "边界",
+                    "en": "Boundaries"
+                  },
+                  "detail": {
+                    "zh": "入口压力和出口条件",
+                    "en": "Inlet pressure and outlet conditions"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "结果",
+                    "en": "Results"
+                  },
+                  "detail": {
+                    "zh": "各分支流量和压降",
+                    "en": "Branch flow and pressure drop"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "结构系统",
+              "en": "Structural System"
+            },
+            "output": {
+              "zh": "定义载荷和约束条件",
+              "en": "Define loads and constraints"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "系统描述",
+                "en": "System Description"
+              },
+              "output_label": {
+                "zh": "分析重点",
+                "en": "Analysis Focus"
+              },
+              "input": {
+                "zh": "悬臂梁，长度五米，固定端在左侧，自由端施加集中载荷，矩形截面",
+                "en": "Cantilever beam, length five meters, fixed at left end, concentrated load at free end, rectangular cross-section"
+              },
+              "output": {
+                "zh": "位移分布、应力分布、最大变形位置",
+                "en": "Displacement distribution, stress distribution, maximum deformation location"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "几何",
+                    "en": "Geometry"
+                  },
+                  "detail": {
+                    "zh": "梁长和截面尺寸",
+                    "en": "Beam length and cross-section"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "载荷",
+                    "en": "Loading"
+                  },
+                  "detail": {
+                    "zh": "力的大小和作用点",
+                    "en": "Force magnitude and application point"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "响应",
+                    "en": "Response"
+                  },
+                  "detail": {
+                    "zh": "变形和应力水平",
+                    "en": "Deformation and stress levels"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "热系统",
+              "en": "Thermal System"
+            },
+            "output": {
+              "zh": "配置温度和热源",
+              "en": "Configure temperature and heat sources"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "系统描述",
+                "en": "System Description"
+              },
+              "output_label": {
+                "zh": "分析重点",
+                "en": "Analysis Focus"
+              },
+              "input": {
+                "zh": "散热片，底部接触热源，周围自然对流，铝合金材质，十二个竖直翅片",
+                "en": "Heat sink, base contacts heat source, natural convection surroundings, aluminum alloy material, twelve vertical fins"
+              },
+              "output": {
+                "zh": "温度场分布、散热效率、热点位置",
+                "en": "Temperature field distribution, cooling efficiency, hotspot locations"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "热源",
+                    "en": "Heat Source"
+                  },
+                  "detail": {
+                    "zh": "功率和接触面积",
+                    "en": "Power and contact area"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "对流",
+                    "en": "Convection"
+                  },
+                  "detail": {
+                    "zh": "环境温度和换热系数",
+                    "en": "Ambient temperature and heat transfer coefficient"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "性能",
+                    "en": "Performance"
+                  },
+                  "detail": {
+                    "zh": "最高温度和散热能力",
+                    "en": "Peak temperature and cooling capacity"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "compare",
+        "widget": "choice",
+        "title": {
+          "zh": "对比设计方案",
+          "en": "Compare Design Options"
+        },
+        "instruction": {
+          "zh": "选择要对比的设计变化",
+          "en": "Select design variation to compare"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "尺寸变化",
+              "en": "Size Variation"
+            },
+            "output": {
+              "zh": "对比不同尺寸的性能",
+              "en": "Compare performance across sizes"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "三种尺寸",
+                "en": "Three Sizes"
+              },
+              "output_label": {
+                "zh": "性能对比",
+                "en": "Performance Comparison"
+              },
+              "input": {
+                "zh": "小型：三米长度，中型：五米长度，大型：七米长度",
+                "en": "Small: three meters length, medium: five meters length, large: seven meters length"
+              },
+              "output": {
+                "zh": "大型尺寸承载能力强但重量大，小型尺寸轻便但刚度不足，中型尺寸为平衡方案",
+                "en": "Large size offers strong load capacity but high weight, small size is lightweight but lacks stiffness, medium size is balanced"
+              },
+              "emphasis": {
+                "zh": "五米长度",
+                "en": "five meters length"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "材料对比",
+              "en": "Material Comparison"
+            },
+            "output": {
+              "zh": "评估材料选择影响",
+              "en": "Evaluate material choice impact"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "材料选项",
+                "en": "Material Options"
+              },
+              "output_label": {
+                "zh": "特性对比",
+                "en": "Property Comparison"
+              },
+              "input": {
+                "zh": "钢材：高强度高密度，铝合金：中强度低密度，复合材料：定制性能",
+                "en": "Steel: high strength high density, aluminum alloy: medium strength low density, composite: tailored properties"
+              },
+              "output": {
+                "zh": "钢材刚度最佳但重量大，铝合金重量轻但强度较低，复合材料性能可调但成本高",
+                "en": "Steel offers best stiffness but heavy weight, aluminum is lightweight but lower strength, composite allows tuning but high cost"
+              },
+              "emphasis": {
+                "zh": "铝合金",
+                "en": "aluminum alloy"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了参数对比和方案评估的流程，实际物理仿真需访问PhysicsX平台运行完整模型",
+      "en": "Demonstrated parametric comparison and design evaluation workflow; actual physical simulation requires visiting PhysicsX platform to run full models"
+    },
+    "sources": [
+      {
+        "url": "https://www.physicsx.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://tech.eu/2026/10/15/ai-europes-10-most-funded-companies-in-h1-2026/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

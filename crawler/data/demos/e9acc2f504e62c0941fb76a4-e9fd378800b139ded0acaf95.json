@@ -1,0 +1,292 @@
+{
+  "cache_key": "e9acc2f504e62c0941fb76a4-e9fd378800b139ded0acaf95",
+  "product_key": "e9acc2f504e62c0941fb76a4",
+  "fingerprint": "e9fd378800b139ded0acaf95",
+  "product_id": "33",
+  "product_name": "Ema",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-15T22:13:00.307694+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "企业流程代理示例",
+      "en": "Enterprise Process Agent Example"
+    },
+    "scenario": {
+      "zh": "演示 Ema 如何协助员工处理企业任务，使用虚构数据和本地示例",
+      "en": "Demonstrates how Ema assists employees with enterprise tasks using fictional data and local examples"
+    },
+    "steps": [
+      {
+        "id": "task_type",
+        "widget": "choice",
+        "title": {
+          "zh": "选择企业任务",
+          "en": "Choose Enterprise Task"
+        },
+        "instruction": {
+          "zh": "选择一个常见企业流程场景",
+          "en": "Select a common enterprise process scenario"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "采购审批查询",
+              "en": "Purchase Approval Query"
+            },
+            "output": {
+              "zh": "显示相关审批记录和状态",
+              "en": "Shows relevant approval records and status"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "员工问题",
+                "en": "Employee Question"
+              },
+              "output_label": {
+                "zh": "虚构查询结果",
+                "en": "Fictional Query Result"
+              },
+              "input": {
+                "zh": "我提交的 MarketPro 软件采购申请现在到哪一步了？预算代码 MKT-2024-089",
+                "en": "What's the status of my MarketPro software purchase request? Budget code MKT-2024-089"
+              },
+              "output": {
+                "zh": "申请编号 PO-4521 当前在财务副总监审核阶段，已通过部门主管和 IT 安全审查，预计两个工作日内完成",
+                "en": "Request PO-4521 is currently with Finance VP for review, already passed department head and IT security checks, expected completion in two business days"
+              },
+              "emphasis": {
+                "zh": "MKT-2024-089",
+                "en": "MKT-2024-089"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "客户数据汇总",
+              "en": "Customer Data Summary"
+            },
+            "output": {
+              "zh": "整合多个系统的客户信息",
+              "en": "Consolidates customer info from multiple systems"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "请求内容",
+                "en": "Request Content"
+              },
+              "output_label": {
+                "zh": "虚构整合结果",
+                "en": "Fictional Consolidated Result"
+              },
+              "input": {
+                "zh": "汇总 Acme Corp 在 CRM、支持票据和账单系统中的最新记录",
+                "en": "Summarize latest Acme Corp records across CRM, support tickets, and billing"
+              },
+              "output": {
+                "zh": "Acme Corp：上季度合同续签，当前三张开放工单（两张低优先级），账单周期正常，客户满意度评分良好",
+                "en": "Acme Corp: Renewed contract last quarter, three open tickets (two low-priority), billing cycle normal, customer satisfaction score good"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "合规文档准备",
+              "en": "Compliance Document Prep"
+            },
+            "output": {
+              "zh": "生成政策摘要和检查清单",
+              "en": "Generates policy summary and checklist"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "合规需求",
+                "en": "Compliance Need"
+              },
+              "output_label": {
+                "zh": "虚构准备清单",
+                "en": "Fictional Prep Checklist"
+              },
+              "input": {
+                "zh": "为即将到来的 SOC 2 审计准备访问控制文档",
+                "en": "Prepare access control documentation for upcoming SOC 2 audit"
+              },
+              "output": {
+                "zh": "审计准备清单：访问日志导出、角色权限矩阵、变更记录汇总、第三方集成清单",
+                "en": "Audit prep checklist: Access logs export, role permission matrix, change log summary, third-party integration inventory"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "访问日志导出",
+                    "en": "Access Logs Export"
+                  },
+                  "detail": {
+                    "zh": "过去十二个月的系统访问记录",
+                    "en": "System access records for past twelve months"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "角色权限矩阵",
+                    "en": "Role Permission Matrix"
+                  },
+                  "detail": {
+                    "zh": "当前所有用户角色和权限映射",
+                    "en": "Current user role and permission mappings"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "变更记录汇总",
+                    "en": "Change Log Summary"
+                  },
+                  "detail": {
+                    "zh": "权限变更和审批历史",
+                    "en": "Permission changes and approval history"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "tool_integration",
+        "widget": "choice",
+        "title": {
+          "zh": "企业工具协作",
+          "en": "Enterprise Tool Integration"
+        },
+        "instruction": {
+          "zh": "查看如何与现有系统交互",
+          "en": "See how it interacts with existing systems"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "跨系统搜索",
+              "en": "Cross-System Search"
+            },
+            "output": {
+              "zh": "在多个企业平台中定位信息",
+              "en": "Locates information across multiple enterprise platforms"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "搜索请求",
+                "en": "Search Request"
+              },
+              "output_label": {
+                "zh": "虚构搜索发现",
+                "en": "Fictional Search Findings"
+              },
+              "input": {
+                "zh": "查找所有与供应商 TechVendor Inc 相关的合同和沟通记录",
+                "en": "Find all contracts and communications related to vendor TechVendor Inc"
+              },
+              "output": {
+                "zh": "发现：两份有效合同（SharePoint），十五封邮件线程（Exchange），上月会议纪要（Confluence），四张未关闭支持工单（Jira）",
+                "en": "Found: Two active contracts (SharePoint), fifteen email threads (Exchange), last month meeting notes (Confluence), four open support tickets (Jira)"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "工作流触发",
+              "en": "Workflow Trigger"
+            },
+            "output": {
+              "zh": "启动预定义的企业流程",
+              "en": "Initiates predefined enterprise processes"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "流程指令",
+                "en": "Process Command"
+              },
+              "output_label": {
+                "zh": "虚构执行步骤",
+                "en": "Fictional Execution Steps"
+              },
+              "input": {
+                "zh": "为新员工 Zhang Wei 启动标准入职流程",
+                "en": "Start standard onboarding process for new employee Zhang Wei"
+              },
+              "output": {
+                "zh": "入职流程已准备：账号创建任务、设备申请、培训日程、团队介绍会议",
+                "en": "Onboarding process ready: Account creation task, equipment request, training schedule, team intro meeting"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "账号创建",
+                    "en": "Account Creation"
+                  },
+                  "detail": {
+                    "zh": "IT 系统访问权限请求已提交",
+                    "en": "IT system access request submitted"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "设备申请",
+                    "en": "Equipment Request"
+                  },
+                  "detail": {
+                    "zh": "笔记本电脑和显示器采购单生成",
+                    "en": "Laptop and monitor purchase order generated"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "培训日程",
+                    "en": "Training Schedule"
+                  },
+                  "detail": {
+                    "zh": "三天新员工培训已预定",
+                    "en": "Three-day new hire training reserved"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "此示例展示了虚构的企业任务处理场景，实际集成能力、安全控制和准确性需在 Ema 平台上验证，请访问官方网站了解部署要求",
+      "en": "This example shows fictional enterprise task scenarios; actual integration capabilities, security controls, and accuracy must be verified on the Ema platform—visit the official site for deployment requirements"
+    },
+    "sources": [
+      {
+        "url": "https://ema.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://startups.gallery/companies/ema",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

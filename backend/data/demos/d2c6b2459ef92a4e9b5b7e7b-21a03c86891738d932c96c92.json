@@ -1,0 +1,243 @@
+{
+  "cache_key": "d2c6b2459ef92a4e9b5b7e7b-21a03c86891738d932c96c92",
+  "product_key": "d2c6b2459ef92a4e9b5b7e7b",
+  "fingerprint": "21a03c86891738d932c96c92",
+  "product_id": "p_e337974056711ff7",
+  "product_name": "Parallel Loop",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-15T22:12:27.487081+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为企业设计AI工作流",
+      "en": "Design AI workflows for enterprises"
+    },
+    "scenario": {
+      "zh": "展示如何将企业场景转化为AI工作流,使用虚构示例说明整合思路",
+      "en": "Show how enterprise scenarios become AI workflows using fictional examples to illustrate integration"
+    },
+    "steps": [
+      {
+        "id": "scenario",
+        "widget": "choice",
+        "title": {
+          "zh": "选择业务场景",
+          "en": "Choose business scenario"
+        },
+        "instruction": {
+          "zh": "从实际业务问题开始",
+          "en": "Start with a real business problem"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "客户支持请求",
+              "en": "Customer support request"
+            },
+            "output": {
+              "zh": "整合工单与知识库",
+              "en": "Integrate tickets with knowledge"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "客户工单",
+                "en": "Customer ticket"
+              },
+              "output_label": {
+                "zh": "处理步骤",
+                "en": "Resolution steps"
+              },
+              "input": {
+                "zh": "订单延迟五天,客户询问状态并要求补偿",
+                "en": "Order delayed five days, customer asks status and compensation"
+              },
+              "output": {
+                "zh": "查询物流系统获取当前位置,检查补偿政策匹配延迟天数,准备包含追踪信息和优惠方案的回复",
+                "en": "Query logistics system for current location, check compensation policy matching delay days, prepare reply with tracking info and discount offer"
+              },
+              "emphasis": {
+                "zh": "延迟五天",
+                "en": "delayed five days"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "库存补货决策",
+              "en": "Inventory replenishment"
+            },
+            "output": {
+              "zh": "连接销售与供应数据",
+              "en": "Connect sales and supply data"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "产品库存状态",
+                "en": "Product inventory status"
+              },
+              "output_label": {
+                "zh": "补货建议",
+                "en": "Restock recommendation"
+              },
+              "input": {
+                "zh": "产品甲当前库存120件,近期日均销售18件 | 产品乙当前库存340件,近期日均销售25件",
+                "en": "Product A current stock 120 units, recent daily sales 18 | Product B current stock 340 units, recent daily sales 25"
+              },
+              "output": {
+                "zh": "产品甲库存仅够一周需立即补货,产品乙库存充足可等待常规周期",
+                "en": "Product A stock covers only one week requires immediate reorder, Product B stock sufficient can wait regular cycle"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "workflow",
+        "widget": "choice",
+        "title": {
+          "zh": "配置工作流逻辑",
+          "en": "Configure workflow logic"
+        },
+        "instruction": {
+          "zh": "定义数据流和处理规则",
+          "en": "Define data flow and processing rules"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "自动优先级判断",
+              "en": "Auto priority assessment"
+            },
+            "output": {
+              "zh": "根据延迟天数分级",
+              "en": "Classify by delay duration"
+            },
+            "when": {
+              "step_id": "scenario",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "生成回复模板",
+              "en": "Generate response template"
+            },
+            "output": {
+              "zh": "基于历史案例填充",
+              "en": "Populate from past cases"
+            },
+            "when": {
+              "step_id": "scenario",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "计算补货时机",
+              "en": "Calculate reorder timing"
+            },
+            "output": {
+              "zh": "结合交付周期预测",
+              "en": "Factor in lead time forecast"
+            },
+            "when": {
+              "step_id": "scenario",
+              "option_id": "1"
+            }
+          },
+          {
+            "id": "3",
+            "label": {
+              "zh": "供应商选择",
+              "en": "Supplier selection"
+            },
+            "output": {
+              "zh": "比较成本与交付时效",
+              "en": "Compare cost and delivery speed"
+            },
+            "when": {
+              "step_id": "scenario",
+              "option_id": "1"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "result",
+        "widget": "review",
+        "title": {
+          "zh": "工作流输出",
+          "en": "Workflow output"
+        },
+        "instruction": {
+          "zh": "查看整合后的结果",
+          "en": "Review integrated result"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "支持场景处理结果",
+              "en": "Support scenario result"
+            },
+            "output": {
+              "zh": "工单标记为高优先级,系统从历史案例库提取相似处理方式,生成包含物流追踪和折扣码的回复草稿,等待客服审核",
+              "en": "Ticket marked high priority, system extracts similar handling from case history, generates draft with tracking and discount code, awaits agent review"
+            },
+            "when": {
+              "step_id": "scenario",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "库存场景处理结果",
+              "en": "Inventory scenario result"
+            },
+            "output": {
+              "zh": "产品甲触发紧急补货流程,系统比较三家供应商后推荐交付最快的选项,已准备采购申请单待审批",
+              "en": "Product A triggers urgent restock process, system compares three suppliers and recommends fastest delivery option, purchase request prepared for approval"
+            },
+            "when": {
+              "step_id": "scenario",
+              "option_id": "1"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了AI工作流整合企业数据的方式,实际部署需访问客户真实系统并配置主权AI环境",
+      "en": "Demonstrated how AI workflows integrate enterprise data; actual deployment requires access to customer systems and sovereign AI environment setup"
+    },
+    "sources": [
+      {
+        "url": "http://www.parallelloop.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.electronicsmedia.info/2026/10/14/parallel-loop-ai",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

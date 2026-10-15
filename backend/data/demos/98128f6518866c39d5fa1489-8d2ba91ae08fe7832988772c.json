@@ -1,0 +1,202 @@
+{
+  "cache_key": "98128f6518866c39d5fa1489-8d2ba91ae08fe7832988772c",
+  "product_key": "98128f6518866c39d5fa1489",
+  "fingerprint": "8d2ba91ae08fe7832988772c",
+  "product_id": "p_967e9c84cf8c4932",
+  "product_name": "FLÆ Robotics",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-15T22:11:41.978214+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "酒店前台查询自动分流",
+      "en": "Hotel Front-Desk Enquiry Routing"
+    },
+    "scenario": {
+      "zh": "访客提交一条客人问题,系统识别意图并给出答复或转给人工",
+      "en": "Visitor submits a guest enquiry; system identifies intent and replies or routes to staff"
+    },
+    "steps": [
+      {
+        "id": "enquiry",
+        "widget": "choice",
+        "title": {
+          "zh": "选择客人查询",
+          "en": "Choose guest enquiry"
+        },
+        "instruction": {
+          "zh": "选一条典型前台消息",
+          "en": "Pick a typical front-desk message"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "房间升级请求",
+              "en": "Room upgrade request"
+            },
+            "output": {
+              "zh": "常见需求,已准备答复",
+              "en": "Common need, reply prepared"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "客人留言",
+                "en": "Guest message"
+              },
+              "output_label": {
+                "zh": "系统答复",
+                "en": "System reply"
+              },
+              "input": {
+                "zh": "您好,我今晚入住,可以升级到海景房吗?",
+                "en": "Hi, I'm checking in tonight—can I upgrade to a sea-view room?"
+              },
+              "output": {
+                "zh": "您好!海景房今晚有空,补差价€45即可升级,需要为您预订吗?",
+                "en": "Hello! Sea-view rooms are available tonight for an additional €45. Shall I book one for you?"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "特殊设施咨询",
+              "en": "Special facility enquiry"
+            },
+            "output": {
+              "zh": "需要人工判断转接",
+              "en": "Requires staff judgement"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "客人留言",
+                "en": "Guest message"
+              },
+              "output_label": {
+                "zh": "系统决定",
+                "en": "System decision"
+              },
+              "input": {
+                "zh": "我的服务犬可以进游泳池区域吗?",
+                "en": "Can my service dog access the pool area?"
+              },
+              "output": {
+                "zh": "已转接前台经理——涉及政策例外情况,需要人工确认",
+                "en": "Routed to front-desk manager—policy exception requires staff confirmation"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "action",
+        "widget": "choice",
+        "title": {
+          "zh": "系统后续操作",
+          "en": "System follow-up"
+        },
+        "instruction": {
+          "zh": "选择下一步动作",
+          "en": "Choose next action"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "自动完成预订",
+              "en": "Complete booking automatically"
+            },
+            "output": {
+              "zh": "可直接操作的任务",
+              "en": "Task system can execute"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "客人确认",
+                "en": "Guest confirmation"
+              },
+              "output_label": {
+                "zh": "完成记录",
+                "en": "Completion record"
+              },
+              "input": {
+                "zh": "好的,请帮我升级",
+                "en": "Yes, please upgrade me"
+              },
+              "output": {
+                "zh": "已升级至海景房402,€45已记账,确认邮件已发送",
+                "en": "Upgraded to sea-view room 402, €45 charged to account, confirmation sent"
+              }
+            },
+            "when": {
+              "step_id": "enquiry",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "记录并通知员工",
+              "en": "Log and notify staff"
+            },
+            "output": {
+              "zh": "转交需判断的情况",
+              "en": "Hand off cases needing judgement"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "转接通知",
+                "en": "Routing note"
+              },
+              "output_label": {
+                "zh": "员工视图",
+                "en": "Staff view"
+              },
+              "input": {
+                "zh": "客人询问:服务犬进入泳池区",
+                "en": "Guest enquiry: service dog pool access"
+              },
+              "output": {
+                "zh": "已通知前台经理Anna,客人等待答复,预计2分钟内处理",
+                "en": "Front-desk manager Anna notified, guest awaiting reply, handled within 2 min"
+              }
+            },
+            "when": {
+              "step_id": "enquiry",
+              "option_id": "1"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例展示了查询分流和简单预订完成;实际部署需在酒店系统中配置并验证",
+      "en": "Example shows enquiry routing and simple booking; real deployment requires hotel system setup and verification"
+    },
+    "sources": [
+      {
+        "url": "https://flaerobotics.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.eu-startups.com/2026/10/flae-robotics-raises-over-e1-million-in-seed-funding-to-develop-its-ai-hospitality-agent",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

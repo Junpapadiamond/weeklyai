@@ -1,0 +1,339 @@
+{
+  "cache_key": "c5ea45abbdaa874bd63e418a-ed05ba197b3a2f3ab52bb9ff",
+  "product_key": "c5ea45abbdaa874bd63e418a",
+  "fingerprint": "ed05ba197b3a2f3ab52bb9ff",
+  "product_id": "p_b2c99c097e1f0541",
+  "product_name": "Loops",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-15T22:11:20.086979+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "电商AI购物助手配置",
+      "en": "E-commerce AI Shopping Assistant Setup"
+    },
+    "scenario": {
+      "zh": "零售商希望用自然语言搜索和产品推荐提升在线购物体验,将顾客描述转化为精准商品匹配",
+      "en": "A retailer wants to enhance online shopping with natural language search and recommendations, turning customer descriptions into precise product matches"
+    },
+    "steps": [
+      {
+        "id": "query_type",
+        "widget": "choice",
+        "title": {
+          "zh": "顾客查询类型",
+          "en": "Customer Query Type"
+        },
+        "instruction": {
+          "zh": "选择一个顾客搜索场景",
+          "en": "Choose a customer search scenario"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "描述性需求",
+              "en": "Descriptive Need"
+            },
+            "output": {
+              "zh": "理解意图并推荐匹配商品",
+              "en": "Understand intent and recommend matching items"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "顾客输入(虚构)",
+                "en": "Customer Input (fictional)"
+              },
+              "output_label": {
+                "zh": "推荐结果(虚构)",
+                "en": "Recommendation (fictional)"
+              },
+              "input": {
+                "zh": "我需要一件适合春季户外徒步的防水夹克,轻便透气",
+                "en": "I need a waterproof jacket for spring hiking, lightweight and breathable"
+              },
+              "output": {
+                "zh": "UltraLight Trail 防水夹克 - 三层薄膜面料,重量320克,透气评级高",
+                "en": "UltraLight Trail Waterproof Jacket - 3-layer membrane, 320g weight, high breathability rating"
+              },
+              "emphasis": {
+                "zh": "防水夹克",
+                "en": "waterproof jacket"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "场景式提问",
+              "en": "Scenario Question"
+            },
+            "output": {
+              "zh": "解析使用场景并建议商品",
+              "en": "Parse usage context and suggest items"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "顾客输入(虚构)",
+                "en": "Customer Input (fictional)"
+              },
+              "output_label": {
+                "zh": "助手回应(虚构)",
+                "en": "Assistant Response (fictional)"
+              },
+              "input": {
+                "zh": "我要参加朋友的海滩婚礼,需要什么样的鞋子",
+                "en": "I'm attending a friend's beach wedding, what shoes should I wear"
+              },
+              "output": {
+                "zh": "推荐凉鞋款式:编织皮革平底鞋,适合沙地行走且正式感足够",
+                "en": "Suggest sandal styles: woven leather flats, suitable for sand and formal enough"
+              },
+              "emphasis": {
+                "zh": "海滩婚礼",
+                "en": "beach wedding"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "比较请求",
+              "en": "Comparison Request"
+            },
+            "output": {
+              "zh": "对比多个选项并解释差异",
+              "en": "Compare options and explain differences"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "顾客输入(虚构)",
+                "en": "Customer Input (fictional)"
+              },
+              "output_label": {
+                "zh": "对比说明(虚构)",
+                "en": "Comparison (fictional)"
+              },
+              "input": {
+                "zh": "这两款咖啡机有什么区别",
+                "en": "What's the difference between these two coffee makers"
+              },
+              "output": {
+                "zh": "机型A适合小家庭,单杯速度快;机型B容量更大,可编程预约功能",
+                "en": "Model A suits small households, faster single-cup; Model B larger capacity, programmable timer"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "enrichment",
+        "widget": "choice",
+        "title": {
+          "zh": "产品信息增强",
+          "en": "Product Information Enrichment"
+        },
+        "instruction": {
+          "zh": "选择如何丰富商品详情",
+          "en": "Choose how to enrich product details"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "生成特征标签",
+              "en": "Generate Feature Tags"
+            },
+            "output": {
+              "zh": "从描述中提取关键属性",
+              "en": "Extract key attributes from descriptions"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "原始描述(虚构)",
+                "en": "Original Description (fictional)"
+              },
+              "output_label": {
+                "zh": "提取标签(虚构)",
+                "en": "Extracted Tags (fictional)"
+              },
+              "input": {
+                "zh": "经典款牛仔裤,采用有机棉,中腰直筒版型,适合日常穿着",
+                "en": "Classic jeans made from organic cotton, mid-rise straight fit for everyday wear"
+              },
+              "output": {
+                "zh": "材质、版型、使用场景标签已生成",
+                "en": "Material, fit, and usage tags generated"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "材质",
+                    "en": "Material"
+                  },
+                  "detail": {
+                    "zh": "有机棉",
+                    "en": "Organic cotton"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "版型",
+                    "en": "Fit"
+                  },
+                  "detail": {
+                    "zh": "中腰直筒",
+                    "en": "Mid-rise straight"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "场景",
+                    "en": "Occasion"
+                  },
+                  "detail": {
+                    "zh": "日常休闲",
+                    "en": "Everyday casual"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "补充尺寸建议",
+              "en": "Add Sizing Guidance"
+            },
+            "output": {
+              "zh": "提供合身度说明",
+              "en": "Provide fit information"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "产品数据(虚构)",
+                "en": "Product Data (fictional)"
+              },
+              "output_label": {
+                "zh": "尺寸建议(虚构)",
+                "en": "Sizing Suggestion (fictional)"
+              },
+              "input": {
+                "zh": "运动鞋款,标准EU尺码",
+                "en": "Sneaker style, standard EU sizing"
+              },
+              "output": {
+                "zh": "建议:正常尺码合适,宽脚型考虑大半码;窄楦设计,适合正常到窄脚型",
+                "en": "Suggestion: true to size, wide feet consider half size up; narrow last suits normal to slim feet"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "virtual_tryon",
+        "widget": "choice",
+        "title": {
+          "zh": "虚拟试穿场景",
+          "en": "Virtual Try-On Scenario"
+        },
+        "instruction": {
+          "zh": "选择试穿类型示例",
+          "en": "Choose a try-on type example"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "服装搭配",
+              "en": "Outfit Styling"
+            },
+            "output": {
+              "zh": "展示搭配效果说明",
+              "en": "Show styling description"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "选择商品(虚构)",
+                "en": "Selected Items (fictional)"
+              },
+              "output_label": {
+                "zh": "搭配方案(虚构)",
+                "en": "Styling Plan (fictional)"
+              },
+              "input": {
+                "zh": "白色衬衫+深蓝色西装裤",
+                "en": "White shirt + navy trousers"
+              },
+              "output": {
+                "zh": "商务休闲风格,适合办公或半正式场合;可访问Loops平台体验虚拟试穿效果",
+                "en": "Business casual style for office or semi-formal; visit Loops platform to experience virtual try-on effect"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "配饰预览",
+              "en": "Accessory Preview"
+            },
+            "output": {
+              "zh": "描述配饰匹配方式",
+              "en": "Describe accessory match"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "配饰选择(虚构)",
+                "en": "Accessory Choice (fictional)"
+              },
+              "output_label": {
+                "zh": "预览说明(虚构)",
+                "en": "Preview Description (fictional)"
+              },
+              "input": {
+                "zh": "圆形金属框眼镜",
+                "en": "Round metal-frame glasses"
+              },
+              "output": {
+                "zh": "复古文艺风格,适合椭圆和方形脸型;需在Loops网站查看实际试戴效果",
+                "en": "Vintage literary style, suits oval and square faces; see actual try-on at Loops site"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了自然语言搜索、产品增强和虚拟试穿场景的示例交互;实际转化率提升需在Loops平台部署并测试",
+      "en": "Illustrated example interactions for natural language search, product enrichment, and virtual try-on scenarios; actual conversion improvement requires deployment and testing on Loops platform"
+    },
+    "sources": [
+      {
+        "url": "https://loops.so/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://theaiinsider.tech/2026/10/13/loops-closes-3-5m-in-funding-to-build-the-ai-operating-system-for-commerce",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}
