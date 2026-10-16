@@ -1,0 +1,226 @@
+{
+  "cache_key": "2561dcea0804ca1875e3e6d5-a28f9e5f9a8c828ad69f68d9",
+  "product_key": "2561dcea0804ca1875e3e6d5",
+  "fingerprint": "a28f9e5f9a8c828ad69f68d9",
+  "product_id": "p_85288867790377a1",
+  "product_name": "Melius",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-16T22:09:11.829814+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "用自然语言生成广告创意",
+      "en": "Generate ad creatives with plain language"
+    },
+    "scenario": {
+      "zh": "你描述产品和目标受众，Melius 生成广告文案和视觉方案",
+      "en": "You describe your product and audience; Melius generates ad copy and visual concepts"
+    },
+    "steps": [
+      {
+        "id": "brief",
+        "widget": "choice",
+        "title": {
+          "zh": "描述你的产品",
+          "en": "Describe your product"
+        },
+        "instruction": {
+          "zh": "选择一个产品类型开始",
+          "en": "Choose a product type to start"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "健康饮料",
+              "en": "Health beverage"
+            },
+            "output": {
+              "zh": "为能量饮料生成创意方向",
+              "en": "Generate creative directions for energy drink"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "产品简介",
+                "en": "Product brief"
+              },
+              "output_label": {
+                "zh": "创意方向",
+                "en": "Creative direction"
+              },
+              "input": {
+                "zh": "有机绿茶能量饮料，含天然咖啡因和维生素B，目标客户是25-35岁注重健康的职场人士",
+                "en": "Organic green tea energy drink with natural caffeine and vitamin B, targeting health-conscious professionals aged 25-35"
+              },
+              "output": {
+                "zh": "展示早晨办公场景，重点是清新提神而非过度刺激；配色使用柔和绿色和白色；文案强调天然成分和持久能量",
+                "en": "Show morning office setting, emphasizing gentle alertness over overstimulation; use soft green and white palette; messaging highlights natural ingredients and sustained energy"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "学习应用",
+              "en": "Learning app"
+            },
+            "output": {
+              "zh": "为语言学习应用生成创意",
+              "en": "Generate creatives for language learning app"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "产品简介",
+                "en": "Product brief"
+              },
+              "output_label": {
+                "zh": "创意方向",
+                "en": "Creative direction"
+              },
+              "input": {
+                "zh": "AI对话式语言学习应用，通过真实场景对话练习，适合想快速掌握日常交流的成年学习者",
+                "en": "AI conversational language learning app using real-world scenarios, for adults who want practical communication skills"
+              },
+              "output": {
+                "zh": "展示用户在旅行、餐厅等场景使用应用；视觉突出手机界面中的对话气泡；文案聚焦实用会话和即时反馈",
+                "en": "Show users in travel, restaurant scenarios using the app; visuals highlight conversation bubbles in phone interface; copy focuses on practical dialogue and instant feedback"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "format",
+        "widget": "choice",
+        "title": {
+          "zh": "选择广告格式",
+          "en": "Choose ad format"
+        },
+        "instruction": {
+          "zh": "为你的创意选择呈现方式",
+          "en": "Pick the format for your creative"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "社交媒体图片",
+              "en": "Social media image"
+            },
+            "output": {
+              "zh": "生成静态图片广告文案和构图",
+              "en": "Generate static image ad copy and layout"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "格式要求",
+                "en": "Format specs"
+              },
+              "output_label": {
+                "zh": "广告元素",
+                "en": "Ad elements"
+              },
+              "input": {
+                "zh": "Instagram 正方形图片",
+                "en": "Instagram square image"
+              },
+              "output": {
+                "zh": "主标题：自然能量，清醒一整天 | 副标题：有机绿茶提取 | 构图：产品瓶居中，背景是晨光中的绿叶",
+                "en": "Headline: Natural energy, all day clarity | Subhead: Organic green tea extract | Layout: Product bottle centered, morning light through green leaves background"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "短视频脚本",
+              "en": "Short video script"
+            },
+            "output": {
+              "zh": "生成视频分镜脚本",
+              "en": "Generate video storyboard"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "时长要求",
+                "en": "Duration requirement"
+              },
+              "output_label": {
+                "zh": "分镜脚本",
+                "en": "Storyboard"
+              },
+              "input": {
+                "zh": "竖屏短视频",
+                "en": "Vertical short video"
+              },
+              "output": {
+                "zh": "三个场景展示每日能量转变",
+                "en": "Three scenes showing daily energy transformation"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "开场",
+                    "en": "Opening"
+                  },
+                  "detail": {
+                    "zh": "早晨疲惫状态，特写困倦表情",
+                    "en": "Morning fatigue, close-up of tired expression"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "产品",
+                    "en": "Product"
+                  },
+                  "detail": {
+                    "zh": "打开饮料，自然光透过绿色液体",
+                    "en": "Open drink, natural light through green liquid"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "结尾",
+                    "en": "Closing"
+                  },
+                  "detail": {
+                    "zh": "充满活力工作，笑容和专注表情",
+                    "en": "Energized work, smiling and focused expression"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例展示了如何用产品描述生成广告创意方向和格式化方案；实际视觉资产需在 Melius 平台制作",
+      "en": "Examples show how product descriptions generate creative directions and formatted proposals; actual visual assets are created on the Melius platform"
+    },
+    "sources": [
+      {
+        "url": "https://www.melius.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/10/06/ex-ramp-engineers-raise-20m-for-platform-melius-after-scrapping-their-first-product",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

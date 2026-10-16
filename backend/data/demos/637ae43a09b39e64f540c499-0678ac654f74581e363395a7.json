@@ -1,0 +1,196 @@
+{
+  "cache_key": "637ae43a09b39e64f540c499-0678ac654f74581e363395a7",
+  "product_key": "637ae43a09b39e64f540c499",
+  "fingerprint": "0678ac654f74581e363395a7",
+  "product_id": "p_eaee8b9d8e3a7085",
+  "product_name": "GasLab",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-16T22:09:35.083452+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "AI音乐创作与归因",
+      "en": "AI Music Creation with Attribution"
+    },
+    "scenario": {
+      "zh": "为创作者提供音乐生成工具,同时通过归因技术追踪原始素材来源,确保版权所有者获得认可",
+      "en": "Provides music generation tools for creators while tracking original source material through attribution technology to ensure rights holders receive credit"
+    },
+    "steps": [
+      {
+        "id": "style_input",
+        "widget": "choice",
+        "title": {
+          "zh": "选择创作方向",
+          "en": "Choose Creative Direction"
+        },
+        "instruction": {
+          "zh": "描述你想要的音乐风格和情绪",
+          "en": "Describe the music style and mood you want"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "深沉科技舞曲",
+              "en": "Deep Techno"
+            },
+            "output": {
+              "zh": "生成驱动力强的律动和低音线条",
+              "en": "Generates driving rhythms with bass lines"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "创作描述",
+                "en": "Creative Brief"
+              },
+              "output_label": {
+                "zh": "构成计划",
+                "en": "Composition Plan"
+              },
+              "input": {
+                "zh": "深沉科技舞曲,140 BPM,工业氛围,重复合成器模式,低音驱动",
+                "en": "Deep techno track, 140 BPM, industrial atmosphere, repetitive synth patterns, bass-driven"
+              },
+              "output": {
+                "zh": "四层结构:底鼓和低音基础,合成器循环层,打击乐纹理,环境效果。需在GasLab平台生成音频",
+                "en": "Four-layer structure: kick and bass foundation, synth loop layer, percussion texture, ambient effects. Audio generation requires GasLab platform"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "氛围电子乐",
+              "en": "Ambient Electronic"
+            },
+            "output": {
+              "zh": "创建空间感和演变的音景",
+              "en": "Creates spacious and evolving soundscapes"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "创作描述",
+                "en": "Creative Brief"
+              },
+              "output_label": {
+                "zh": "构成计划",
+                "en": "Composition Plan"
+              },
+              "input": {
+                "zh": "氛围电子乐,缓慢发展,柔和合成器铺垫,细微纹理变化",
+                "en": "Ambient electronic, slow development, soft synth pads, subtle texture shifts"
+              },
+              "output": {
+                "zh": "三段式发展:开场铺垫建立,中段引入旋律片段,结尾渐隐。需在GasLab平台生成音频",
+                "en": "Three-part development: opening pad establishment, middle melodic fragments, fade-out ending. Audio generation requires GasLab platform"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "attribution_check",
+        "widget": "review",
+        "title": {
+          "zh": "归因追踪",
+          "en": "Attribution Tracking"
+        },
+        "instruction": {
+          "zh": "查看生成音乐的来源识别结果",
+          "en": "Review source identification for generated music"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "查看归因报告",
+              "en": "View Attribution Report"
+            },
+            "output": {
+              "zh": "显示训练数据中识别的原始作品和创作者(示例数据)",
+              "en": "Shows identified original works and creators from training data (example data)"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "生成的音乐片段",
+                "en": "Generated Music Segment"
+              },
+              "output_label": {
+                "zh": "识别的来源(虚构)",
+                "en": "Identified Sources (fictional)"
+              },
+              "input": {
+                "zh": "8小节科技舞曲,包含合成器模式和鼓组编排",
+                "en": "8-bar techno segment with synth pattern and drum arrangement"
+              },
+              "output": {
+                "zh": "归因记录显示潜在来源(虚构示例)",
+                "en": "Attribution record shows potential sources (fictional example)"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "合成器模式",
+                    "en": "Synth Pattern"
+                  },
+                  "detail": {
+                    "zh": "检测到与特定科技舞曲制作人风格相似的元素(虚构)",
+                    "en": "Detected elements similar to specific techno producer style (fictional)"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "鼓组结构",
+                    "en": "Drum Structure"
+                  },
+                  "detail": {
+                    "zh": "识别出常见的工业科技舞曲节奏框架(虚构)",
+                    "en": "Identified common industrial techno rhythm framework (fictional)"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "版权持有人",
+                    "en": "Rights Holders"
+                  },
+                  "detail": {
+                    "zh": "系统标记潜在相关的创作者以供审核(虚构)",
+                    "en": "System flags potentially related creators for review (fictional)"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了从创作描述到归因追踪的流程概念,实际音频生成、版权验证和报酬分配需在GasLab平台完成",
+      "en": "Illustrated the flow concept from creative brief to attribution tracking; actual audio generation, rights verification, and compensation require the GasLab platform"
+    },
+    "sources": [
+      {
+        "url": "https://gaslab.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://tech.eu/2026/10/16/dj-reinier-zonneveld-launches-ai-music-startup-gaslab-with-1m-pre-seed-funding/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

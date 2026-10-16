@@ -1,0 +1,163 @@
+{
+  "cache_key": "61502a7b0f3c76485547d83e-ba87b48cf022c1f8be3b95ed",
+  "product_key": "61502a7b0f3c76485547d83e",
+  "fingerprint": "ba87b48cf022c1f8be3b95ed",
+  "product_id": "p_88431f1f8d87562d",
+  "product_name": "Gallatin AI",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-16T22:11:38.000683+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "军事后勤任务协调",
+      "en": "Military Logistics Coordination"
+    },
+    "scenario": {
+      "zh": "输入任务需求和资源状态，Navigator平台生成协调方案和优先级建议",
+      "en": "Input mission requirements and resource status; Navigator generates coordination plan and priority recommendations"
+    },
+    "steps": [
+      {
+        "id": "mission_input",
+        "widget": "choice",
+        "title": {
+          "zh": "任务类型",
+          "en": "Mission Type"
+        },
+        "instruction": {
+          "zh": "选择需要协调的后勤任务",
+          "en": "Choose logistics task to coordinate"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "车辆准备",
+              "en": "Vehicle Readiness"
+            },
+            "output": {
+              "zh": "识别维护需求和部署优先级",
+              "en": "Identifies maintenance needs and deployment priorities"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "车队状态报告",
+                "en": "Fleet Status Report"
+              },
+              "output_label": {
+                "zh": "协调建议",
+                "en": "Coordination Recommendations"
+              },
+              "input": {
+                "zh": "15辆运输车辆，3辆需要轮胎更换，2辆引擎故障，5辆油量不足，任务要求48小时内出动12辆",
+                "en": "15 transport vehicles, 3 need tire replacement, 2 engine failures, 5 low fuel, mission requires 12 ready in 48 hours"
+              },
+              "output": {
+                "zh": "立即处理：2辆引擎故障送维修站；优先加油5辆并完成检查；延后轮胎更换至任务后",
+                "en": "Immediate: send 2 engine failures to shop; priority fuel 5 vehicles and inspect; defer tire replacement until post-mission"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "关键路径",
+                    "en": "Critical Path"
+                  },
+                  "detail": {
+                    "zh": "引擎维修预计36小时，需确认备用车辆可用性",
+                    "en": "Engine repair estimated 36 hours; confirm backup availability"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "资源分配",
+                    "en": "Resource Allocation"
+                  },
+                  "detail": {
+                    "zh": "调配3名技师至加油和检查任务",
+                    "en": "Assign 3 technicians to fueling and inspection"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "医疗物资",
+              "en": "Medical Supplies"
+            },
+            "output": {
+              "zh": "规划补给路线和交付顺序",
+              "en": "Plans resupply routes and delivery sequence"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "补给需求",
+                "en": "Resupply Requirements"
+              },
+              "output_label": {
+                "zh": "分发方案",
+                "en": "Distribution Plan"
+              },
+              "input": {
+                "zh": "前线3个医疗站，A站急需血浆和抗生素，B站需常规补给，C站库存充足但缺少运输能力，仓库有2架直升机和4辆卡车",
+                "en": "3 forward medical stations: A needs urgent plasma and antibiotics, B needs routine resupply, C well-stocked but lacks transport, warehouse has 2 helicopters and 4 trucks"
+              },
+              "output": {
+                "zh": "直升机1优先A站紧急物资；卡车队向B站运送常规补给；直升机2将C站多余物资转运至A站",
+                "en": "Helicopter 1 priority to Station A urgent items; truck convoy routine resupply to B; Helicopter 2 redistribute excess from C to A"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "时间窗口",
+                    "en": "Time Window"
+                  },
+                  "detail": {
+                    "zh": "A站血浆需求12小时内到达，直升机飞行时间90分钟",
+                    "en": "Station A plasma needed within 12 hours; helicopter flight 90 minutes"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "备选方案",
+                    "en": "Contingency"
+                  },
+                  "detail": {
+                    "zh": "若天气恶化，地面车队备用路线增加4小时",
+                    "en": "If weather deteriorates, ground convoy alternate adds 4 hours"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例展示Navigator如何根据资源和约束生成后勤协调建议；实际平台功能和军方部署细节需在官方渠道验证",
+      "en": "Examples show how Navigator generates logistics coordination from resources and constraints; actual platform capabilities and military deployment require verification through official channels"
+    },
+    "sources": [
+      {
+        "url": "https://www.gallatin.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://dot.la/la-tech-week-2026-guide-2678063741.html",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}
