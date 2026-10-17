@@ -1,0 +1,212 @@
+{
+  "cache_key": "fb03ed3db96a6de4a6ee3700-ec953912a4358caf852b1ea3",
+  "product_key": "fb03ed3db96a6de4a6ee3700",
+  "fingerprint": "ec953912a4358caf852b1ea3",
+  "product_id": "p_e185667e16c67c2e",
+  "product_name": "Healthleap",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-17T21:30:16.832407+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "识别高风险患者",
+      "en": "Identify At-Risk Patients"
+    },
+    "scenario": {
+      "zh": "医院上传电子病历数据，系统分析后标记可能被遗漏的高风险病例",
+      "en": "Hospital uploads EHR data; system analyzes and flags potentially missed high-risk cases"
+    },
+    "steps": [
+      {
+        "id": "condition_focus",
+        "widget": "choice",
+        "title": {
+          "zh": "筛查重点",
+          "en": "Screening Focus"
+        },
+        "instruction": {
+          "zh": "选择要分析的医疗状况",
+          "en": "Select medical condition to analyze"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "营养不良风险",
+              "en": "Malnutrition Risk"
+            },
+            "output": {
+              "zh": "标记了三名需要营养评估的患者",
+              "en": "Three patients flagged for nutrition assessment"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "病历摘录",
+                "en": "Record Excerpt"
+              },
+              "output_label": {
+                "zh": "风险指标",
+                "en": "Risk Indicators"
+              },
+              "input": {
+                "zh": "67岁男性，心衰入院第5天；近期实验室：白蛋白 2.8 g/dL，淋巴细胞计数低；体重较入院时下降 3 kg",
+                "en": "67-year-old male, day 5 heart failure admission; recent labs: albumin 2.8 g/dL, low lymphocyte count; weight down 3 kg since admission"
+              },
+              "output": {
+                "zh": "多项营养不良指标：低白蛋白、体重下降、免疫功能下降",
+                "en": "Multiple malnutrition markers: low albumin, weight loss, immune decline"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "实验室异常",
+                    "en": "Lab Abnormalities"
+                  },
+                  "detail": {
+                    "zh": "白蛋白和淋巴细胞水平低于正常范围",
+                    "en": "Albumin and lymphocyte levels below normal range"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "体重变化",
+                    "en": "Weight Change"
+                  },
+                  "detail": {
+                    "zh": "短期内显著体重下降",
+                    "en": "Significant weight loss over short period"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "谵妄风险",
+              "en": "Delirium Risk"
+            },
+            "output": {
+              "zh": "标记了两名需要认知评估的患者",
+              "en": "Two patients flagged for cognitive assessment"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "病历摘录",
+                "en": "Record Excerpt"
+              },
+              "output_label": {
+                "zh": "风险指标",
+                "en": "Risk Indicators"
+              },
+              "input": {
+                "zh": "82岁女性，髋部骨折术后第3天；新处方：羟考酮每4小时；护士记录：患者夜间躁动，定向力混乱",
+                "en": "82-year-old female, post-op day 3 hip fracture; new rx: oxycodone q4h; nursing note: patient restless overnight, disoriented"
+              },
+              "output": {
+                "zh": "多项谵妄风险因素：高龄、术后、阿片类药物、认知变化",
+                "en": "Multiple delirium risk factors: advanced age, post-surgical, opioid use, cognitive changes"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "药物风险",
+                    "en": "Medication Risk"
+                  },
+                  "detail": {
+                    "zh": "新使用阿片类止痛药",
+                    "en": "Newly started opioid pain medication"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "行为变化",
+                    "en": "Behavioral Change"
+                  },
+                  "detail": {
+                    "zh": "护士观察到定向力和行为异常",
+                    "en": "Nursing observations of disorientation and agitation"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "review_case",
+        "widget": "review",
+        "title": {
+          "zh": "审查病例",
+          "en": "Review Case"
+        },
+        "instruction": {
+          "zh": "查看完整的风险分析",
+          "en": "View complete risk analysis"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "查看详细分析",
+              "en": "View Detailed Analysis"
+            },
+            "output": {
+              "zh": "显示支持该风险评估的所有临床数据点",
+              "en": "Shows all clinical data points supporting this risk assessment"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "数据来源",
+                "en": "Data Source"
+              },
+              "output_label": {
+                "zh": "相关发现",
+                "en": "Relevant Findings"
+              },
+              "input": {
+                "zh": "实验室结果、生命体征、护士记录、当前药物、既往诊断",
+                "en": "Lab results, vital signs, nursing notes, current medications, past diagnoses"
+              },
+              "output": {
+                "zh": "综合五类临床数据识别出的风险模式",
+                "en": "Risk pattern identified across five clinical data types"
+              },
+              "emphasis": {
+                "zh": "实验室结果、生命体征、护士记录",
+                "en": "Lab results, vital signs, nursing notes"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例展示了系统如何分析病历数据并标记风险患者；实际诊断需要临床团队在医院系统中评估完整病历",
+      "en": "Example shows how system analyzes record data and flags at-risk patients; actual diagnosis requires clinical team review of complete records in hospital system"
+    },
+    "sources": [
+      {
+        "url": "https://healthleap.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://followict.news/en/african-startup-news-oct-16-2026",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

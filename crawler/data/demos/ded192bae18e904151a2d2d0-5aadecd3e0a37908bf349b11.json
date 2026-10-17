@@ -1,0 +1,218 @@
+{
+  "cache_key": "ded192bae18e904151a2d2d0-5aadecd3e0a37908bf349b11",
+  "product_key": "ded192bae18e904151a2d2d0",
+  "fingerprint": "5aadecd3e0a37908bf349b11",
+  "product_id": "37",
+  "product_name": "Fresha",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-17T21:33:06.369632+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "美业预约运营示例",
+      "en": "Beauty Booking Example"
+    },
+    "scenario": {
+      "zh": "美甲工作室通过平台管理客户预约，查看服务记录并生成复购提醒文案",
+      "en": "A nail studio manages client bookings through the platform, reviews service records and generates rebooking reminder text"
+    },
+    "steps": [
+      {
+        "id": "view_client",
+        "widget": "choice",
+        "title": {
+          "zh": "查看客户记录",
+          "en": "View Client Record"
+        },
+        "instruction": {
+          "zh": "选择一位客户查看服务历史",
+          "en": "Select a client to view service history"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "常客李娜",
+              "en": "Regular Li Na"
+            },
+            "output": {
+              "zh": "过去三个月四次预约记录",
+              "en": "Four bookings in past three months"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "客户档案",
+                "en": "Client Profile"
+              },
+              "output_label": {
+                "zh": "最近服务",
+                "en": "Recent Service"
+              },
+              "input": {
+                "zh": "李娜 · 会员M2847 · 上次到店4月10日 · 选择法式美甲白边款",
+                "en": "Li Na · Member M2847 · Last visit Apr 10 · Selected French tips white edge"
+              },
+              "output": {
+                "zh": "法式美甲偏好已标记",
+                "en": "French manicure preference marked"
+              },
+              "emphasis": {
+                "zh": "法式美甲白边款",
+                "en": "French tips white edge"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "新客王悦",
+              "en": "New Client Wang Yue"
+            },
+            "output": {
+              "zh": "首次到店完成基础修甲",
+              "en": "First visit completed basic manicure"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "客户档案",
+                "en": "Client Profile"
+              },
+              "output_label": {
+                "zh": "首次体验",
+                "en": "Initial Experience"
+              },
+              "input": {
+                "zh": "王悦 · 会员M3104 · 4月28日首次到店 · 咨询过光疗指甲持久度",
+                "en": "Wang Yue · Member M3104 · First visit Apr 28 · Asked about gel nail durability"
+              },
+              "output": {
+                "zh": "光疗兴趣已记录",
+                "en": "Gel interest recorded"
+              },
+              "emphasis": {
+                "zh": "光疗指甲持久度",
+                "en": "gel nail durability"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "reminder_text",
+        "widget": "choice",
+        "title": {
+          "zh": "生成提醒文案",
+          "en": "Generate Reminder"
+        },
+        "instruction": {
+          "zh": "根据服务记录创建复购邀请",
+          "en": "Create rebooking invite from service record"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "法式套餐推荐",
+              "en": "French Package"
+            },
+            "output": {
+              "zh": "针对偏好推出组合优惠",
+              "en": "Combo offer for preference"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "服务偏好",
+                "en": "Service Preference"
+              },
+              "output_label": {
+                "zh": "提醒文案",
+                "en": "Reminder Text"
+              },
+              "input": {
+                "zh": "法式美甲白边款",
+                "en": "French tips white edge"
+              },
+              "output": {
+                "zh": "法式美甲三次套餐现已推出，预约时提及享优惠价",
+                "en": "French manicure three-visit package now available, mention for special rate"
+              },
+              "emphasis": {
+                "zh": "法式美甲白边款",
+                "en": "French tips white edge"
+              }
+            },
+            "when": {
+              "step_id": "view_client",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "光疗体验邀请",
+              "en": "Gel Trial Invite"
+            },
+            "output": {
+              "zh": "介绍持久款式特点",
+              "en": "Introduce long-lasting style"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "客户询问",
+                "en": "Client Question"
+              },
+              "output_label": {
+                "zh": "提醒文案",
+                "en": "Reminder Text"
+              },
+              "input": {
+                "zh": "咨询过光疗指甲持久度",
+                "en": "Asked about gel nail durability"
+              },
+              "output": {
+                "zh": "光疗美甲可保持三周光泽，新客体验价等你预约",
+                "en": "Gel nails maintain shine for three weeks, trial rate awaits your booking"
+              },
+              "emphasis": {
+                "zh": "光疗指甲持久度",
+                "en": "gel nail durability"
+              }
+            },
+            "when": {
+              "step_id": "view_client",
+              "option_id": "1"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了从虚构客户档案生成复购文案，实际预约系统和建议功能需访问 Fresha 平台确认",
+      "en": "Showed rebooking text from fictional client profiles; actual booking system and suggestion features require confirmation on Fresha platform"
+    },
+    "sources": [
+      {
+        "url": "https://www.fresha.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://sifted.eu/articles/kkr-backs-uks-newest-unicorn-in-80m-round",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

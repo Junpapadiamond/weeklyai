@@ -1,0 +1,274 @@
+{
+  "cache_key": "60b2fecd218daf97b60613cc-23e89bda85cac1b694c3b028",
+  "product_key": "60b2fecd218daf97b60613cc",
+  "fingerprint": "23e89bda85cac1b694c3b028",
+  "product_id": "p_bbd2a7f007992e26",
+  "product_name": "Holo",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-17T21:31:03.789551+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "小企业营销计划生成",
+      "en": "Marketing Plan for Small Business"
+    },
+    "scenario": {
+      "zh": "通过业务描述和目标客户生成完整营销计划,包括渠道选择和内容方向",
+      "en": "Generate a complete marketing plan from business description and target audience, including channel selection and content direction"
+    },
+    "steps": [
+      {
+        "id": "business",
+        "widget": "choice",
+        "title": {
+          "zh": "描述业务",
+          "en": "Describe Business"
+        },
+        "instruction": {
+          "zh": "选择业务类型查看营销计划示例",
+          "en": "Choose a business type to see example plan"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "本地咖啡店",
+              "en": "Local Coffee Shop"
+            },
+            "output": {
+              "zh": "生成三个月启动计划",
+              "en": "Three-month launch plan generated"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "业务简介",
+                "en": "Business Brief"
+              },
+              "output_label": {
+                "zh": "营销计划摘要",
+                "en": "Marketing Plan Summary"
+              },
+              "input": {
+                "zh": "市中心精品咖啡店,提供手冲咖啡和轻食,目标客户是25-40岁上班族和自由职业者",
+                "en": "Downtown specialty coffee shop offering pour-over coffee and light meals, targeting 25-40 professionals and freelancers"
+              },
+              "output": {
+                "zh": "第1月:Instagram开店内容+谷歌本地SEO,第2月:首次顾客邮件优惠+社区活动,第3月:常客计划推广+用户评价收集",
+                "en": "Month 1: Instagram shop content + Google local SEO, Month 2: First-time customer email offer + community events, Month 3: Loyalty program launch + review collection"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "在线辅导服务",
+              "en": "Online Tutoring Service"
+            },
+            "output": {
+              "zh": "生成三个月启动计划",
+              "en": "Three-month launch plan generated"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "业务简介",
+                "en": "Business Brief"
+              },
+              "output_label": {
+                "zh": "营销计划摘要",
+                "en": "Marketing Plan Summary"
+              },
+              "input": {
+                "zh": "数学和科学在线辅导,针对中学生,一对一视频课程,目标客户是关注孩子学业的家长",
+                "en": "Math and science online tutoring for middle school students, one-on-one video sessions, targeting parents focused on academic performance"
+              },
+              "output": {
+                "zh": "第1月:家长论坛内容营销+免费试课广告,第2月:成功案例邮件系列+Facebook家长群,第3月:学期套餐推广+推荐奖励计划",
+                "en": "Month 1: Parent forum content + free trial ads, Month 2: Success story email series + Facebook parent groups, Month 3: Semester package promotion + referral rewards"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "content",
+        "widget": "choice",
+        "title": {
+          "zh": "首周内容",
+          "en": "First Week Content"
+        },
+        "instruction": {
+          "zh": "查看为所选业务生成的首周发布内容",
+          "en": "See generated content for the first week"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "社交媒体帖子",
+              "en": "Social Media Posts"
+            },
+            "output": {
+              "zh": "三条Instagram帖子草稿",
+              "en": "Three Instagram post drafts"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "营销计划",
+                "en": "Marketing Plan"
+              },
+              "output_label": {
+                "zh": "帖子内容",
+                "en": "Post Content"
+              },
+              "input": {
+                "zh": "第1周:Instagram开店内容,展示咖啡制作过程和店内氛围",
+                "en": "Week 1: Instagram shop content, showcase coffee-making process and atmosphere"
+              },
+              "output": {
+                "zh": "虚构发布内容示例",
+                "en": "Fictional content examples"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "周一:开业预告",
+                    "en": "Mon: Opening Teaser"
+                  },
+                  "detail": {
+                    "zh": "新的早晨从这里开始。下周三正式营业,手冲咖啡等你来品",
+                    "en": "New mornings start here. Grand opening Wednesday, pour-over awaits"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "周三:制作过程",
+                    "en": "Wed: Brewing Process"
+                  },
+                  "detail": {
+                    "zh": "每一杯都值得等待。我们的咖啡师用四分钟完成完美萃取",
+                    "en": "Every cup worth the wait. Four minutes to perfect extraction"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "周五:店内一角",
+                    "en": "Fri: Cozy Corner"
+                  },
+                  "detail": {
+                    "zh": "靠窗的位置已经成为常客最爱。阳光、咖啡、安静的下午",
+                    "en": "Window seats already a favorite. Sunlight, coffee, peaceful afternoons"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "欢迎邮件",
+              "en": "Welcome Email"
+            },
+            "output": {
+              "zh": "首次顾客邮件草稿",
+              "en": "First-time customer email draft"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "营销计划",
+                "en": "Marketing Plan"
+              },
+              "output_label": {
+                "zh": "邮件内容",
+                "en": "Email Content"
+              },
+              "input": {
+                "zh": "第2月:首次顾客邮件优惠,建立长期关系",
+                "en": "Month 2: First-time customer email offer, build long-term relationship"
+              },
+              "output": {
+                "zh": "主题:感谢您的第一次光临。正文:很高兴为您制作那杯卡布奇诺。作为新朋友,下次来店出示此邮件享受第二杯半价。",
+                "en": "Subject: Thanks for Your First Visit. Body: Great making that cappuccino for you. Show this email for half-price second drink next visit."
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "review",
+        "widget": "review",
+        "title": {
+          "zh": "计划概览",
+          "en": "Plan Overview"
+        },
+        "instruction": {
+          "zh": "查看完整三个月营销计划",
+          "en": "Review complete three-month plan"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "第一月",
+              "en": "Month One"
+            },
+            "output": {
+              "zh": "建立线上存在和本地可见性",
+              "en": "Establish online presence and local visibility"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "第二月",
+              "en": "Month Two"
+            },
+            "output": {
+              "zh": "转化首批顾客为回头客",
+              "en": "Convert first customers to repeat visitors"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "第三月",
+              "en": "Month Three"
+            },
+            "output": {
+              "zh": "启动长期留存机制",
+              "en": "Launch long-term retention programs"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例展示了从业务描述到营销计划和内容的生成过程。实际效果需在Holo平台测试,平台会持续学习品牌风格并执行发布",
+      "en": "Example shows generation from business description to marketing plan and content. Actual performance requires testing on Holo platform, which continuously learns brand style and executes publishing"
+    },
+    "sources": [
+      {
+        "url": "https://tryholo.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.eu-startups.com/2026/10/vilnius-based-holo-raises-e5-million-to-put-marketing-on-autopilot-for-small-businesses",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

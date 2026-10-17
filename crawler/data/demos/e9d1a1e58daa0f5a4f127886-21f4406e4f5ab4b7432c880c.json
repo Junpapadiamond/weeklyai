@@ -1,0 +1,197 @@
+{
+  "cache_key": "e9d1a1e58daa0f5a4f127886-21f4406e4f5ab4b7432c880c",
+  "product_key": "e9d1a1e58daa0f5a4f127886",
+  "fingerprint": "21f4406e4f5ab4b7432c880c",
+  "product_id": "34",
+  "product_name": "Status AI",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-17T21:32:26.888782+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "体验 AI 社交世界创作",
+      "en": "Try AI Social World Creation"
+    },
+    "scenario": {
+      "zh": "访客选择一个虚拟身份主题，看到 AI 如何生成该角色的社交世界框架和互动场景示例",
+      "en": "Visitor picks a virtual identity theme and sees how AI generates a social world framework and interaction scenario for that character"
+    },
+    "steps": [
+      {
+        "id": "identity",
+        "widget": "choice",
+        "title": {
+          "zh": "选择虚拟身份主题",
+          "en": "Choose Virtual Identity Theme"
+        },
+        "instruction": {
+          "zh": "为你的 AI 角色选一个起点",
+          "en": "Pick a starting point for your AI character"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "赛博朋克黑客",
+              "en": "Cyberpunk Hacker"
+            },
+            "output": {
+              "zh": "生成了暗网风格社交世界",
+              "en": "Generated darknet-style social world"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "角色设定",
+                "en": "Character Setup"
+              },
+              "output_label": {
+                "zh": "世界框架",
+                "en": "World Framework"
+              },
+              "input": {
+                "zh": "代号 Cipher，擅长破解加密系统，常在地下论坛交易情报",
+                "en": "Codename Cipher, skilled at cracking encryption, trades intel on underground forums"
+              },
+              "output": {
+                "zh": "数字暗巷：匿名论坛、加密任务板、虚拟黑市三个社交空间；其他黑客可发布合作请求或挑战",
+                "en": "Digital Alley: anonymous forum, encrypted mission board, virtual black market; other hackers post collaboration requests or challenges"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "奇幻法师学徒",
+              "en": "Fantasy Mage Apprentice"
+            },
+            "output": {
+              "zh": "生成了魔法学院社交世界",
+              "en": "Generated magic academy social world"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "角色设定",
+                "en": "Character Setup"
+              },
+              "output_label": {
+                "zh": "世界框架",
+                "en": "World Framework"
+              },
+              "input": {
+                "zh": "初学者 Lyra，正在学习元素魔法，喜欢和同学交流咒语心得",
+                "en": "Beginner Lyra, learning elemental magic, enjoys sharing spell insights with classmates"
+              },
+              "output": {
+                "zh": "水晶塔学院：图书馆讨论区、练习场、魔药实验室三个社交空间；同学可分享配方或组队试炼",
+                "en": "Crystal Tower Academy: library discussion area, practice grounds, potion lab; classmates share recipes or team up for trials"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "太空探险家",
+              "en": "Space Explorer"
+            },
+            "output": {
+              "zh": "生成了星际前哨社交世界",
+              "en": "Generated interstellar outpost social world"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "角色设定",
+                "en": "Character Setup"
+              },
+              "output_label": {
+                "zh": "世界框架",
+                "en": "World Framework"
+              },
+              "input": {
+                "zh": "飞行员 Nova，驾驶小型侦察船，寻找未知星系中的资源星球",
+                "en": "Pilot Nova, flying a scout ship, searching for resource planets in unknown systems"
+              },
+              "output": {
+                "zh": "前哨站 Theta：补给码头、星图交易所、探险者酒吧三个社交空间；其他探险者可分享航线或求助维修",
+                "en": "Outpost Theta: supply dock, star chart exchange, explorer's bar; other explorers share routes or request repairs"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "interaction",
+        "widget": "choice",
+        "title": {
+          "zh": "添加互动场景",
+          "en": "Add Interaction Scenario"
+        },
+        "instruction": {
+          "zh": "选择一个社交事件类型",
+          "en": "Choose a social event type"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "合作任务",
+              "en": "Cooperative Mission"
+            },
+            "output": {
+              "zh": "其他角色可响应并组队",
+              "en": "Other characters can respond and team up"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "技能交易",
+              "en": "Skill Trade"
+            },
+            "output": {
+              "zh": "开放技能交换或教学请求",
+              "en": "Opens skill exchange or teaching request"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "随机遭遇",
+              "en": "Random Encounter"
+            },
+            "output": {
+              "zh": "触发偶然事件供其他人加入",
+              "en": "Triggers chance event for others to join"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了 AI 如何根据虚拟身份生成社交世界结构和互动可能；实际产品的完整玩法、用户生成内容和社交机制需在 Status AI 平台体验",
+      "en": "Showed how AI generates social world structure and interaction possibilities from virtual identity; full gameplay, user-generated content, and social mechanics require the Status AI platform"
+    },
+    "sources": [
+      {
+        "url": "https://www.statusai.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.kucoin.com/blog/status-ai-raises-17m-seed-series-a-from-general-catalyst-yc-to-build-gamified-ai-social-world",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

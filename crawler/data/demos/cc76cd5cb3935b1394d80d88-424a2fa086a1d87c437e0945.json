@@ -1,0 +1,196 @@
+{
+  "cache_key": "cc76cd5cb3935b1394d80d88-424a2fa086a1d87c437e0945",
+  "product_key": "cc76cd5cb3935b1394d80d88",
+  "fingerprint": "424a2fa086a1d87c437e0945",
+  "product_id": "36",
+  "product_name": "Exa",
+  "origin": "ai",
+  "generated_at": "2026-09-27T02:26:56.089513+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为 AI agent 配置实时检索",
+      "en": "Configure real-time retrieval for AI agent"
+    },
+    "scenario": {
+      "zh": "你正在为客户支持 agent 配置产品文档检索，需要选择最合适的搜索策略",
+      "en": "You're configuring product documentation retrieval for a customer support agent"
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择检索模式",
+          "en": "Choose retrieval mode"
+        },
+        "instruction": {
+          "zh": "决定 agent 如何查找信息",
+          "en": "Decide how the agent finds information"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "语义理解检索",
+              "en": "Semantic retrieval"
+            },
+            "output": {
+              "zh": "agent 将根据意图匹配相关内容，适合复杂问题",
+              "en": "Agent matches content by intent, suitable for complex questions"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "关键词精确匹配",
+              "en": "Keyword exact match"
+            },
+            "output": {
+              "zh": "agent 将查找包含特定术语的文档，适合政策查询",
+              "en": "Agent finds docs with specific terms, suitable for policy queries"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "input",
+        "widget": "choice",
+        "title": {
+          "zh": "设置数据源范围",
+          "en": "Set data source scope"
+        },
+        "instruction": {
+          "zh": "选择 agent 检索的内容来源",
+          "en": "Choose where the agent searches"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "仅限公司文档站",
+              "en": "Company docs only"
+            },
+            "output": {
+              "zh": "检索限定在内部知识库，结果权威但覆盖面窄",
+              "en": "Search limited to internal knowledge base, authoritative but narrow"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "包含行业参考资料",
+              "en": "Include industry references"
+            },
+            "output": {
+              "zh": "检索扩展到相关行业内容，覆盖更广但需要过滤",
+              "en": "Search extends to industry content, broader coverage but needs filtering"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "inspection",
+        "widget": "compare",
+        "title": {
+          "zh": "对比检索结果",
+          "en": "Compare search results"
+        },
+        "instruction": {
+          "zh": "查看两种配置返回的示例结果",
+          "en": "Review example results from both configurations"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "配置 A：语义+公司文档",
+              "en": "Config A: Semantic + company docs"
+            },
+            "output": {
+              "zh": "返回 8 篇高度相关的政策文档，包含上下文关联内容",
+              "en": "Returns 8 highly relevant policy docs with contextual connections"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "配置 B：关键词+行业参考",
+              "en": "Config B: Keyword + industry refs"
+            },
+            "output": {
+              "zh": "返回 23 篇精确匹配文档，包含通用行业标准说明",
+              "en": "Returns 23 exact matches including general industry standards"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "确认检索配置",
+          "en": "Confirm retrieval config"
+        },
+        "instruction": {
+          "zh": "选择最终应用的配置方案",
+          "en": "Select final configuration to apply"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "采用语义理解方案",
+              "en": "Use semantic approach"
+            },
+            "output": {
+              "zh": "agent 现在能理解问题意图并返回相关文档摘要",
+              "en": "Agent now understands question intent and returns relevant doc summaries"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "采用关键词精确方案",
+              "en": "Use keyword approach"
+            },
+            "output": {
+              "zh": "agent 现在精确匹配术语并返回完整政策文本",
+              "en": "Agent now matches terms precisely and returns full policy text"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "Exa 为 AI agent 提供灵活的检索策略，根据场景选择语义或精确匹配",
+      "en": "Exa offers flexible retrieval strategies for AI agents based on scenario needs"
+    },
+    "sources": [
+      {
+        "url": "https://exa.ai/",
+        "label": {
+          "zh": "Exa 官网",
+          "en": "Exa Official"
+        }
+      }
+    ],
+    "workspace": {
+      "kind": "search",
+      "label": {
+        "zh": "检索配置",
+        "en": "Search Configuration"
+      },
+      "initial": {
+        "zh": "查找关于退款政策和配送时效的最新文档",
+        "en": "Find latest docs on refund policy and shipping timeframes"
+      }
+    }
+  }
+}
