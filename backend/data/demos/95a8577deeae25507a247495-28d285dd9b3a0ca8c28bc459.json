@@ -1,0 +1,256 @@
+{
+  "cache_key": "95a8577deeae25507a247495-28d285dd9b3a0ca8c28bc459",
+  "product_key": "95a8577deeae25507a247495",
+  "fingerprint": "28d285dd9b3a0ca8c28bc459",
+  "product_id": "38",
+  "product_name": "Primer",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-18T21:29:35.212837+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "支付路由智能编排",
+      "en": "Payment Routing Orchestration"
+    },
+    "scenario": {
+      "zh": "商户提供交易场景与历史规则，平台推荐最优支付路由策略",
+      "en": "Merchant provides transaction context and existing rules; platform recommends optimal routing strategy"
+    },
+    "steps": [
+      {
+        "id": "transaction_context",
+        "widget": "choice",
+        "title": {
+          "zh": "交易场景",
+          "en": "Transaction Context"
+        },
+        "instruction": {
+          "zh": "选择需要优化的支付场景",
+          "en": "Select payment scenario to optimize"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "跨境订阅续费",
+              "en": "Cross-border Subscription"
+            },
+            "output": {
+              "zh": "识别高失败率区域和支付方式",
+              "en": "Identifies high-decline regions and methods"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "当前路由规则",
+                "en": "Current Routing Rules"
+              },
+              "output_label": {
+                "zh": "建议调整",
+                "en": "Recommended Adjustments"
+              },
+              "input": {
+                "zh": "欧洲用户统一 Stripe，亚洲用户统一 Adyen，失败重试同一通道",
+                "en": "Europe unified Stripe, Asia unified Adyen, retry same channel on decline"
+              },
+              "output": {
+                "zh": "欧洲保持 Stripe；亚洲优先本地钱包配合 Adyen 备选；失败后切换处理器",
+                "en": "Europe keep Stripe; Asia prioritize local wallets with Adyen fallback; switch processor on decline"
+              },
+              "emphasis": {
+                "zh": "失败重试同一通道",
+                "en": "retry same channel on decline"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "大额企业支付",
+              "en": "High-value B2B Payment"
+            },
+            "output": {
+              "zh": "匹配低成本高成功率通道",
+              "en": "Matches lower-cost high-approval channel"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "交易特征",
+                "en": "Transaction Profile"
+              },
+              "output_label": {
+                "zh": "路由建议",
+                "en": "Routing Suggestion"
+              },
+              "input": {
+                "zh": "金额五万美元，买家英国，卖家德国，发票支付 NET30",
+                "en": "Amount fifty thousand dollars, buyer UK, seller Germany, invoice payment NET30"
+              },
+              "output": {
+                "zh": "优先银行转账降低手续费；备选企业信用卡通道，避开消费级处理器额度限制",
+                "en": "Prioritize bank transfer for lower fees; fallback to commercial card rails, avoid consumer processor limits"
+              },
+              "emphasis": {
+                "zh": "发票支付 NET30",
+                "en": "invoice payment NET30"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "rule_refinement",
+        "widget": "choice",
+        "title": {
+          "zh": "规则优化方向",
+          "en": "Optimization Focus"
+        },
+        "instruction": {
+          "zh": "选择编排策略的调整重点",
+          "en": "Choose orchestration adjustment priority"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "降低交易成本",
+              "en": "Reduce Transaction Cost"
+            },
+            "output": {
+              "zh": "推荐成本更低的支付方式组合",
+              "en": "Suggests lower-cost payment method mix"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "历史成本分布",
+                "en": "Historical Cost Distribution"
+              },
+              "output_label": {
+                "zh": "成本优化路径",
+                "en": "Cost Optimization Path"
+              },
+              "input": {
+                "zh": "卡支付占比最高但费率较贵，银行转账占比较少但费率最低，钱包居中",
+                "en": "Card payments most common but most expensive, bank transfer least common but cheapest, wallet in between"
+              },
+              "output": {
+                "zh": "引导低风险交易至银行转账和钱包；对小额高频订单保留卡支付便利性",
+                "en": "Steer low-risk transactions to bank transfer and wallets; keep card convenience for small frequent orders"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "订阅续费",
+                    "en": "Subscription Renewal"
+                  },
+                  "detail": {
+                    "zh": "推送用户绑定银行账户降低长期成本",
+                    "en": "Prompt users to link bank account reduce long-term cost"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "大额采购",
+                    "en": "Large Purchases"
+                  },
+                  "detail": {
+                    "zh": "默认显示银行转账选项卡支付作备选",
+                    "en": "Default to bank transfer option card as fallback"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "提升成功率",
+              "en": "Improve Approval Rate"
+            },
+            "output": {
+              "zh": "识别失败模式并调整重试策略",
+              "en": "Identifies decline patterns and adjusts retry logic"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "失败案例",
+                "en": "Decline Pattern"
+              },
+              "output_label": {
+                "zh": "重试策略",
+                "en": "Retry Strategy"
+              },
+              "input": {
+                "zh": "用户卡支付失败错误代码余额不足，该卡历史成功率不稳定",
+                "en": "User card declined code insufficient funds, card historical success rate unstable"
+              },
+              "output": {
+                "zh": "延迟后重试同一卡片；同时向用户推荐备用支付方式如钱包或另一张卡",
+                "en": "Retry same card after delay; meanwhile prompt user for alternative method like wallet or different card"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "即时反馈",
+                    "en": "Immediate Feedback"
+                  },
+                  "detail": {
+                    "zh": "显示友好提示避免用户流失",
+                    "en": "Show friendly message to retain user"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "自动重试",
+                    "en": "Automated Retry"
+                  },
+                  "detail": {
+                    "zh": "延迟重试同一卡片提高成功概率",
+                    "en": "Delayed retry on same card increases success chance"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "备选方案",
+                    "en": "Fallback Option"
+                  },
+                  "detail": {
+                    "zh": "引导用户添加其他支付方式",
+                    "en": "Guide user to add alternative payment method"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了支付路由策略的优化方向，实际编排规则需在 Primer 平台配置并通过真实交易数据验证",
+      "en": "Illustrated payment routing optimization directions; actual orchestration rules must be configured on Primer platform and validated with real transaction data"
+    },
+    "sources": [
+      {
+        "url": "https://primer.io/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://sifted.eu/articles/primer-raises-100m-series-c",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

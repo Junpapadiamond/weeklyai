@@ -1,0 +1,225 @@
+{
+  "cache_key": "156ebf140df6c4a80b506eac-58d2e9c2286225380eb4c29c",
+  "product_key": "156ebf140df6c4a80b506eac",
+  "fingerprint": "58d2e9c2286225380eb4c29c",
+  "product_id": "44",
+  "product_name": "Viktor",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-18T21:30:02.052213+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "AI 同事接管重复性工作",
+      "en": "AI coworker handles repetitive work"
+    },
+    "scenario": {
+      "zh": "访客提供日常业务任务描述，Viktor 返回可执行的自动化流程方案",
+      "en": "Visitor provides a routine business task description, Viktor returns an executable automation workflow"
+    },
+    "steps": [
+      {
+        "id": "task_type",
+        "widget": "choice",
+        "title": {
+          "zh": "选择要自动化的任务",
+          "en": "Choose task to automate"
+        },
+        "instruction": {
+          "zh": "Viktor 将哪类重复工作变成自动流程？",
+          "en": "Which repetitive work should Viktor turn into an automated workflow?"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "客户入职流程",
+              "en": "Customer onboarding"
+            },
+            "output": {
+              "zh": "检测到 4 个可自动化步骤",
+              "en": "Detected 4 automatable steps"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "当前手动流程",
+                "en": "Current manual process"
+              },
+              "output_label": {
+                "zh": "Viktor 自动化方案",
+                "en": "Viktor automation plan"
+              },
+              "input": {
+                "zh": "新客户填表后，销售手动发欢迎邮件、创建 CRM 记录、安排入职会议、分配客户经理",
+                "en": "After new customer submits form, sales manually sends welcome email, creates CRM record, schedules onboarding call, assigns account manager"
+              },
+              "output": {
+                "zh": "表单提交触发：即时发送个性化欢迎邮件、自动创建 CRM 条目并填充字段、检查日历空位并发送会议邀请、根据地区规则分配经理",
+                "en": "Form submission triggers: instant personalized welcome email, auto-create CRM entry with populated fields, check calendar availability and send meeting invite, assign manager based on region rules"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "邮件发送",
+                    "en": "Email dispatch"
+                  },
+                  "detail": {
+                    "zh": "使用客户名称和产品选择生成内容",
+                    "en": "Generate content using customer name and product choice"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "CRM 同步",
+                    "en": "CRM sync"
+                  },
+                  "detail": {
+                    "zh": "映射表单字段到 CRM 对象",
+                    "en": "Map form fields to CRM objects"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "会议安排",
+                    "en": "Meeting scheduling"
+                  },
+                  "detail": {
+                    "zh": "查询团队日历并发送邀请链接",
+                    "en": "Query team calendar and send invite link"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "经理分配",
+                    "en": "Manager assignment"
+                  },
+                  "detail": {
+                    "zh": "应用地区和负载均衡逻辑",
+                    "en": "Apply region and load-balancing logic"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "发票处理",
+              "en": "Invoice processing"
+            },
+            "output": {
+              "zh": "提取关键字段并路由审批",
+              "en": "Extract key fields and route for approval"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "收到的发票邮件",
+                "en": "Received invoice email"
+              },
+              "output_label": {
+                "zh": "提取的结构化数据",
+                "en": "Extracted structured data"
+              },
+              "input": {
+                "zh": "邮件附件：Acme Corp 发票，日期 2024-03-15，总额 €4,850，付款条款 Net 30，项目代码 PRJ-2024-089",
+                "en": "Email attachment: Acme Corp invoice, date 2024-03-15, total €4,850, payment terms Net 30, project code PRJ-2024-089"
+              },
+              "output": {
+                "zh": "供应商 Acme Corp、金额 €4,850、到期 2024-04-14、项目 PRJ-2024-089；已路由至财务主管审批队列",
+                "en": "Vendor Acme Corp, amount €4,850, due 2024-04-14, project PRJ-2024-089; routed to finance lead approval queue"
+              },
+              "emphasis": {
+                "zh": "€4,850",
+                "en": "€4,850"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "支持工单分类",
+              "en": "Support ticket triage"
+            },
+            "output": {
+              "zh": "识别问题类型并分配专家",
+              "en": "Identify issue type and assign specialist"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "客户工单内容",
+                "en": "Customer ticket content"
+              },
+              "output_label": {
+                "zh": "分类和路由决策",
+                "en": "Classification and routing decision"
+              },
+              "input": {
+                "zh": "我们的仪表板加载很慢，尤其是在切换到报告页面时。使用 Chrome 浏览器，已清除缓存但问题依旧。",
+                "en": "Our dashboard loads slowly, especially when switching to the reports page. Using Chrome browser, cleared cache but issue persists."
+              },
+              "output": {
+                "zh": "问题类型：性能 - 前端延迟；优先级：中；分配至前端工程团队；建议初步检查：网络瀑布、包大小",
+                "en": "Issue type: Performance - frontend latency; priority: medium; assigned to frontend engineering team; suggested initial check: network waterfall, bundle size"
+              },
+              "emphasis": {
+                "zh": "加载很慢",
+                "en": "loads slowly"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "review_workflow",
+        "widget": "review",
+        "title": {
+          "zh": "确认自动化逻辑",
+          "en": "Confirm automation logic"
+        },
+        "instruction": {
+          "zh": "Viktor 将这些步骤串联成完整流程",
+          "en": "Viktor connects these steps into a complete workflow"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "查看完整流程图",
+              "en": "View complete workflow"
+            },
+            "output": {
+              "zh": "显示触发条件、执行顺序和异常处理",
+              "en": "Shows trigger conditions, execution order, and error handling"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了 Viktor 如何将重复任务转化为自动化流程方案；实际部署、系统集成和执行监控需在 Viktor 平台完成",
+      "en": "Demonstrated how Viktor converts repetitive tasks into automation workflow plans; actual deployment, system integration, and execution monitoring happen on the Viktor platform"
+    },
+    "sources": [
+      {
+        "url": "https://www.viktor.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.startupasradar.com",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

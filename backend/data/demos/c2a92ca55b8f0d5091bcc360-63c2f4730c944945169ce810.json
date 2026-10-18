@@ -1,0 +1,231 @@
+{
+  "cache_key": "c2a92ca55b8f0d5091bcc360-63c2f4730c944945169ce810",
+  "product_key": "c2a92ca55b8f0d5091bcc360",
+  "fingerprint": "63c2f4730c944945169ce810",
+  "product_id": "47",
+  "product_name": "Ocean",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-18T21:31:32.630100+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "模拟钓鱼邮件检测",
+      "en": "Simulate phishing detection"
+    },
+    "scenario": {
+      "zh": "提供一封可疑邮件样本，Ocean 分析其中的钓鱼特征并标记风险点",
+      "en": "Provide a suspicious email sample; Ocean analyzes phishing signals and flags risks"
+    },
+    "steps": [
+      {
+        "id": "email_input",
+        "widget": "choice",
+        "title": {
+          "zh": "选择邮件类型",
+          "en": "Choose email type"
+        },
+        "instruction": {
+          "zh": "选一封可疑邮件进行检测",
+          "en": "Pick a suspicious email to scan"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "伪装高管请求",
+              "en": "Executive impersonation"
+            },
+            "output": {
+              "zh": "检测到发件人域名仿冒和紧急语气",
+              "en": "Detected spoofed sender domain and urgency tactics"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "邮件正文",
+                "en": "Email body"
+              },
+              "output_label": {
+                "zh": "风险标记",
+                "en": "Risk flags"
+              },
+              "input": {
+                "zh": "发件人: cfo@comp4ny-holdings.com\n主题: 紧急付款请求\n\n请在今天下班前向以下账户转账，用于供应商预付款。这是机密项目，请勿与他人讨论。",
+                "en": "From: cfo@comp4ny-holdings.com\nSubject: Urgent Payment Request\n\nPlease wire funds to the account below before end of day for vendor prepayment. Confidential project—do not discuss with others."
+              },
+              "output": {
+                "zh": "域名拼写异常：数字替代字母\n制造紧迫感：今天截止\n保密要求阻止核实\n未经授权的付款请求",
+                "en": "Domain typo: number substitutes letter\nUrgency pressure: today deadline\nSecrecy prevents verification\nUnauthorized payment request"
+              },
+              "emphasis": {
+                "zh": "comp4ny",
+                "en": "comp4ny"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "账户验证诈骗",
+              "en": "Account verification scam"
+            },
+            "output": {
+              "zh": "识别伪造域名和虚假警告",
+              "en": "Identified fake domain and false alert"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "邮件正文",
+                "en": "Email body"
+              },
+              "output_label": {
+                "zh": "风险标记",
+                "en": "Risk flags"
+              },
+              "input": {
+                "zh": "发件人: security@emaiI-verify.com\n主题: 账户即将停用\n\n检测到异常登录。请回复确认身份，否则账户将在 24 小时内停用。",
+                "en": "From: security@emaiI-verify.com\nSubject: Account Will Be Disabled\n\nUnusual login detected. Reply to confirm your identity or account will be disabled in 24 hours."
+              },
+              "output": {
+                "zh": "发件人域名使用大写字母 I 伪装\n创建虚假紧迫性\n要求通过邮件回复敏感信息\n未使用官方验证流程",
+                "en": "Sender domain uses capital I to mimic lowercase l\nFalse urgency created\nRequests sensitive info via email reply\nDoes not use official verification flow"
+              },
+              "emphasis": {
+                "zh": "emaiI-verify",
+                "en": "emaiI-verify"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "供应商发票更改",
+              "en": "Vendor invoice change"
+            },
+            "output": {
+              "zh": "发现新账户请求与历史不符",
+              "en": "Found new account request inconsistent with history"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "邮件正文",
+                "en": "Email body"
+              },
+              "output_label": {
+                "zh": "风险标记",
+                "en": "Risk flags"
+              },
+              "input": {
+                "zh": "发件人: accounts@trusted-vendor.com\n主题: 银行账户更新\n\n我们的银行账户已更改。请将未来所有付款发送至新账户。感谢您的配合。",
+                "en": "From: accounts@trusted-vendor.com\nSubject: Bank Account Update\n\nOur bank account has changed. Please send all future payments to the new account below. Thank you for your cooperation."
+              },
+              "output": {
+                "zh": "突然更改付款信息\n缺少正式通知流程\n未提供验证联系方式\n常见供应商欺诈模式",
+                "en": "Sudden payment information change\nLacks formal notification process\nNo verification contact provided\nCommon vendor fraud pattern"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "context_check",
+        "widget": "choice",
+        "title": {
+          "zh": "验证发件人身份",
+          "en": "Verify sender identity"
+        },
+        "instruction": {
+          "zh": "检查发件人是否为合法联系人",
+          "en": "Check if sender is legitimate contact"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "无历史通信记录",
+              "en": "No communication history"
+            },
+            "output": {
+              "zh": "首次联系且要求敏感操作，风险升高",
+              "en": "First contact requesting sensitive action—risk elevated"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "邮件头信息异常",
+              "en": "Abnormal email headers"
+            },
+            "output": {
+              "zh": "认证记录与声称发件人不符",
+              "en": "Authentication records do not match claimed sender"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "语言模式不匹配",
+              "en": "Language pattern mismatch"
+            },
+            "output": {
+              "zh": "用词与该联系人以往风格明显不同",
+              "en": "Wording differs significantly from contact's usual style"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "action_review",
+        "widget": "review",
+        "title": {
+          "zh": "综合判定结果",
+          "en": "Overall verdict"
+        },
+        "instruction": {
+          "zh": "查看此邮件的最终风险评估",
+          "en": "Review final risk assessment"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "高风险钓鱼邮件",
+              "en": "High-risk phishing email"
+            },
+            "output": {
+              "zh": "多项特征符合 AI 生成钓鱼攻击模式，建议隔离并通知安全团队",
+              "en": "Multiple signals match AI-generated phishing patterns—recommend quarantine and notify security team"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了 Ocean 如何检测邮件中的钓鱼特征；真实防护需在企业邮件网关部署并持续学习攻击模式",
+      "en": "Showed how Ocean detects phishing signals in email; real protection requires deployment at enterprise email gateway with continuous threat learning"
+    },
+    "sources": [
+      {
+        "url": "https://ocean.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/05/19/from-teen-hacker-to-iron-dome-researcher-this-founder-raised-28m-to-fight-ai-phishing/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

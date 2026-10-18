@@ -1,0 +1,266 @@
+{
+  "cache_key": "69000abbf25e506657b86d81-2572ffe376aa1d4677f93526",
+  "product_key": "69000abbf25e506657b86d81",
+  "fingerprint": "2572ffe376aa1d4677f93526",
+  "product_id": "p_9fd9cf0dbb299af9",
+  "product_name": "Vesta",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-18T21:28:49.353720+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "审查商业贷款申请文件",
+      "en": "Review Commercial Loan Documents"
+    },
+    "scenario": {
+      "zh": "贷款机构收到借款人提交的财务报表和产权文件，需要快速识别关键风险点和缺失信息",
+      "en": "Lender receives borrower's financial statements and title documents, needs to quickly identify key risk factors and missing information"
+    },
+    "steps": [
+      {
+        "id": "doc_review",
+        "widget": "choice",
+        "title": {
+          "zh": "选择审查重点",
+          "en": "Choose Review Focus"
+        },
+        "instruction": {
+          "zh": "选择需要优先检查的文档类型",
+          "en": "Select document type to prioritize"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "财务报表完整性",
+              "en": "Financial Statement Completeness"
+            },
+            "output": {
+              "zh": "标记缺失的季度数据和不一致的收入项",
+              "en": "Flags missing quarterly data and inconsistent revenue items"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "提交的财务文件",
+                "en": "Submitted Financial Documents"
+              },
+              "output_label": {
+                "zh": "发现的问题",
+                "en": "Issues Identified"
+              },
+              "input": {
+                "zh": "2023年度损益表、2024Q1-Q2报表、银行对账单（1-8月）",
+                "en": "2023 P&L, 2024 Q1-Q2 statements, bank records (Jan-Aug)"
+              },
+              "output": {
+                "zh": "缺少2024Q3财务数据；Q1营业收入与银行存款记录差异较大；未提供应收账款账龄表",
+                "en": "Missing 2024 Q3 financials; Q1 revenue inconsistent with bank deposits; no aging schedule for receivables"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "缺失文件",
+                    "en": "Missing Documents"
+                  },
+                  "detail": {
+                    "zh": "2024年第三季度财务报表、应收账款明细",
+                    "en": "2024 Q3 financial statement, receivables detail"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "数据不一致",
+                    "en": "Data Inconsistency"
+                  },
+                  "detail": {
+                    "zh": "第一季度营业收入与银行流水不匹配",
+                    "en": "Q1 revenue does not match bank transactions"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "需要澄清",
+                    "en": "Needs Clarification"
+                  },
+                  "detail": {
+                    "zh": "大额应收账款的回收计划未说明",
+                    "en": "Collection plan for large receivables not explained"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "产权文件审核",
+              "en": "Title Document Check"
+            },
+            "output": {
+              "zh": "识别留置权记录和产权瑕疵",
+              "en": "Identifies lien records and title defects"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "产权报告摘录",
+                "en": "Title Report Excerpt"
+              },
+              "output_label": {
+                "zh": "风险提示",
+                "en": "Risk Alert"
+              },
+              "input": {
+                "zh": "物业地址：洛杉矶市中心第五街1200号。现有留置权：2019年记录的机械师留置权$45,000，状态未解除。相邻地块正在进行分区变更申请。",
+                "en": "Property: 1200 Fifth Street, Downtown LA. Existing liens: mechanic's lien $45,000 recorded 2019, status unreleased. Adjacent parcel has pending zoning change application."
+              },
+              "output": {
+                "zh": "未解除的机械师留置权需要借款人提供解决方案或留置权解除证明；相邻地块分区变更可能影响物业价值",
+                "en": "Unreleased mechanic's lien requires borrower resolution or release proof; adjacent zoning change may affect property value"
+              },
+              "emphasis": {
+                "zh": "机械师留置权$45,000，状态未解除",
+                "en": "mechanic's lien $45,000 recorded 2019, status unreleased"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "underwriting",
+        "widget": "choice",
+        "title": {
+          "zh": "承保决策建议",
+          "en": "Underwriting Recommendation"
+        },
+        "instruction": {
+          "zh": "基于审查结果生成决策要点",
+          "en": "Generate decision points from review"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "批准条件清单",
+              "en": "Approval Conditions"
+            },
+            "output": {
+              "zh": "列出放款前必须满足的具体条件",
+              "en": "Lists specific conditions required before funding"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "审查发现",
+                "en": "Review Findings"
+              },
+              "output_label": {
+                "zh": "放款前条件",
+                "en": "Conditions Precedent"
+              },
+              "input": {
+                "zh": "缺少Q3财务、留置权未解除、债务覆盖率需进一步验证",
+                "en": "Missing Q3 financials, unresolved lien, debt coverage needs verification"
+              },
+              "output": {
+                "zh": "需满足三项条件方可放款：提交完整Q3财务报表、提供留置权解除文件、补充说明债务偿还计划",
+                "en": "Three conditions required for funding: submit complete Q3 financials, provide lien release, explain debt repayment plan"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "财务文件",
+                    "en": "Financial Documents"
+                  },
+                  "detail": {
+                    "zh": "提交经审计的2024年第三季度财务报表",
+                    "en": "Submit audited 2024 Q3 financial statement"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "产权清理",
+                    "en": "Title Clearance"
+                  },
+                  "detail": {
+                    "zh": "提供机械师留置权的解除证明或托管解决方案",
+                    "en": "Provide lien release or escrow solution for mechanic's lien"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "偿债能力",
+                    "en": "Debt Service"
+                  },
+                  "detail": {
+                    "zh": "书面说明未来12个月现金流和债务偿还安排",
+                    "en": "Written explanation of 12-month cash flow and debt payment schedule"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "拒绝理由",
+              "en": "Decline Rationale"
+            },
+            "output": {
+              "zh": "整理不符合承保标准的关键原因",
+              "en": "Compiles key reasons failing underwriting criteria"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "风险因素",
+                "en": "Risk Factors"
+              },
+              "output_label": {
+                "zh": "决策依据",
+                "en": "Decision Basis"
+              },
+              "input": {
+                "zh": "借款人债务收入比3.8倍，超出政策上限3.0倍；物业位于地震高风险区且无地震保险；近6个月内有两次逾期还款记录。",
+                "en": "Borrower debt-to-income ratio 3.8x, exceeds policy limit of 3.0x; property in high seismic risk zone without earthquake insurance; two late payments in past 6 months."
+              },
+              "output": {
+                "zh": "债务收入比超标、缺少必要保险、还款记录不佳，不符合当前承保政策，建议拒绝申请",
+                "en": "Debt ratio exceeds limit, required insurance missing, payment history inadequate; does not meet current underwriting policy, recommend decline"
+              },
+              "emphasis": {
+                "zh": "债务收入比3.8倍，超出政策上限3.0倍",
+                "en": "debt-to-income ratio 3.8x, exceeds policy limit of 3.0x"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了文档审查和承保建议的示例输出；实际风险评估需要在Vesta平台完成完整的文件上传和政策配置",
+      "en": "Illustrated example outputs for document review and underwriting recommendations; actual risk assessment requires full document upload and policy configuration on Vesta platform"
+    },
+    "sources": [
+      {
+        "url": "https://www.vesta.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://dot.la/la-tech-week-2026-guide-2678063741.html",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}
