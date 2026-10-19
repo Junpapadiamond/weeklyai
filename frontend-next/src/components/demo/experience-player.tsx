@@ -11,7 +11,7 @@ import { SmartLogo } from "@/components/common/smart-logo";
 import { ExperienceArtifact } from "./experience-artifact";
 
 /** Prepared presets are visible immediately, never recorded as completed user tasks. */
-export function ExperiencePlayer({ entry, productName, website, logoUrl, secondaryLogoUrl }: { entry: ExperienceEntry; productName: string; website?: string; logoUrl?: string; secondaryLogoUrl?: string }) {
+export function ExperiencePlayer({ entry, productName, website, logoUrl, secondaryLogoUrl, embedded = false }: { entry: ExperienceEntry; productName: string; website?: string; logoUrl?: string; secondaryLogoUrl?: string; embedded?: boolean }) {
   const { locale, t } = useSiteLocale();
   const lang = locale === "en-US" ? "en" : "zh";
   const { spec } = entry;
@@ -49,11 +49,10 @@ export function ExperiencePlayer({ entry, productName, website, logoUrl, seconda
     const a = document.createElement("a"); a.href = url; a.download = "darkhorseradar-example.txt"; a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
-  return <div className="experience-shell experience-focus">
+  return <div className={`experience-shell experience-focus${embedded ? " experience-focus--embedded" : ""}`}>
     <header className="focus-header">
-      <div className="focus-product"><SmartLogo className="demo-product-logo" name={productName} logoUrl={logoUrl} secondaryLogoUrl={secondaryLogoUrl} website={website} trustPrimaryLogo size={30} /><h3>{productName}</h3></div>
-      <p className="focus-promise">{spec.headline[lang]}</p>
-      <p className="focus-boundary">{t("本站独立示例；未运行原厂产品。", "An independent example. The vendor product is not running here.")}</p>
+      {embedded ? <h2 className="focus-promise">{spec.headline[lang]}</h2> : <><div className="focus-product"><SmartLogo className="demo-product-logo" name={productName} logoUrl={logoUrl} secondaryLogoUrl={secondaryLogoUrl} website={website} trustPrimaryLogo size={30} /><h3>{productName}</h3></div><p className="focus-promise">{spec.headline[lang]}</p></>}
+      {!embedded ? <p className="focus-boundary">{t("本站独立示例；未运行原厂产品。", "An independent example. The vendor product is not running here.")}</p> : null}
     </header>
     <div className="focus-content">
       <h2 ref={heading} tabIndex={-1}>{step.title[lang]}</h2>

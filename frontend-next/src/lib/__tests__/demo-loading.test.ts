@@ -1,12 +1,23 @@
 import { afterEach, expect, it, vi } from "vitest";
 import { readdirSync, readFileSync } from "node:fs";
-import { loadProductDemo } from "../demo-loading";
+import { fetchPreparedDemo, loadProductDemo } from "../demo-loading";
 
 const folder = "../backend/data/demos";
 const experience = JSON.parse(readFileSync(`${folder}/${readdirSync(folder).find(f => f.endsWith(".json"))}`, "utf8"));
 const controller = () => new AbortController();
 const payload = (body: object) => Response.json({ success: true, generation_available: true, quota: null, ...body });
 afterEach(() => { vi.unstubAllGlobals(); vi.useRealTimers(); });
+
+it.each(["not_generated", "generating", "ready"])("detail arrival only reads once for %s even when generation is available", async state => {
+  vi.useFakeTimers();
+  const fetcher = vi.fn().mockResolvedValue(payload({ state, ...(state === "ready" ? { experience } : {}) }));
+  vi.stubGlobal("fetch", fetcher);
+  await fetchPreparedDemo("detail-preview", controller().signal);
+  await vi.advanceTimersByTimeAsync(10000);
+  expect(fetcher).toHaveBeenCalledTimes(1);
+  expect(fetcher.mock.calls[0][0]).toContain("/demos/prepared/");
+  expect(fetcher.mock.calls[0][1].method).not.toBe("POST");
+});
 
 it("reopens validated experiences without another network request or stale personal quota", async () => {
   const fetcher = vi.fn().mockResolvedValue(payload({ state: "ready", experience, quota: { remaining: 2 } }));

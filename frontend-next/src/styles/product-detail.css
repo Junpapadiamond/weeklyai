@@ -1,0 +1,130 @@
+/* Product details: a useful example beside a compact, source-backed record. */
+.product-profile { padding-top: 1.4rem; }
+.profile-breadcrumb { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem; margin-bottom: 1.8rem; color: var(--text-muted); font-size: .8rem; overflow-wrap: anywhere; }
+.profile-breadcrumb a { display: inline-flex; align-items: center; gap: .5rem; min-height: 32px; color: var(--text-soft); text-decoration: none; }
+.profile-hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "identity actions" "description actions"; gap: 1rem 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.profile-identity { grid-area: identity; display: flex; align-items: center; gap: 1.15rem; min-width: 0; }
+.profile-identity > div { min-width: 0; }
+.profile-logo { display: inline-flex; align-items: center; justify-content: center; width: 72px; height: 72px; flex: none; overflow: hidden; border: 1px solid #dce0e5; border-radius: 16px; background: #fff; color: #27313f; }
+.profile-logo img { width: 100%; height: 100%; padding: 8px; object-fit: contain; }
+.profile-eyebrow { display: flex; align-items: center; flex-wrap: wrap; gap: .8rem; color: var(--text-muted); font-size: .76rem; }
+.profile-score { display: inline-flex; align-items: center; gap: .65rem; border-left: 1px solid var(--border); padding-left: .8rem; color: var(--text-soft); }
+.profile-score strong { font-weight: 600; color: var(--primary); }
+.profile-score strong > span { color: var(--text-muted); font-weight: 400; }
+.profile-identity h1 { margin: .3rem 0 0; font-size: clamp(1.8rem, 3vw, 2.5rem); line-height: 1.3; font-weight: 650; letter-spacing: -.035em; overflow-wrap: anywhere; }
+.profile-description { grid-area: description; max-width: 76ch; margin: 0; color: var(--text-soft); font-size: .96rem; line-height: 1.85; overflow-wrap: anywhere; }
+.profile-actions { grid-area: actions; align-self: center; display: flex; align-items: center; flex-wrap: wrap; justify-content: flex-end; gap: .7rem; max-width: 300px; }
+.profile-primary, .profile-actions .favorite-btn { display: inline-flex; align-items: center; justify-content: center; gap: .6rem; min-height: 44px; width: auto; border-radius: 7px; padding: .7rem 1rem; font: 500 .85rem/1.4 var(--font-body), sans-serif; text-decoration: none; box-shadow: none; }
+.profile-primary { background: var(--text); color: var(--bg); border: 1px solid var(--text); }
+.profile-primary:hover { opacity: .86; }
+.profile-actions .favorite-btn { border: 1px solid var(--border); background: transparent; color: var(--text-soft); }
+.profile-actions .favorite-btn.is-active { background: var(--primary-soft); color: var(--primary); border-color: var(--primary-border); }
+.profile-text-link, .profile-source-link { display: inline-flex; align-items: center; gap: .45rem; min-height: 44px; color: var(--text-soft); font-size: .8rem; text-decoration: none; }
+.profile-actions .profile-text-link { flex-basis: 100%; justify-content: flex-end; min-height: 32px; }
+.profile-text-link:hover, .profile-source-link:hover { color: var(--primary); }
+.profile-layout { display: grid; grid-template-columns: minmax(0, 1.9fr) minmax(270px, 1fr); grid-template-areas: "main facts"; gap: 1.5rem 3rem; align-items: start; padding-top: 2rem; }
+.profile-layout--insight { grid-template-areas: "main insight" "main facts"; grid-template-rows: auto 1fr; }
+.profile-main { grid-area: main; }
+.profile-sidebar { grid-area: facts; }
+.profile-main, .profile-sidebar { min-width: 0; }
+.profile-kicker { display: inline-flex; align-items: center; gap: .5rem; color: var(--text-muted); font-size: .77rem; font-weight: 500; line-height: 1.6; }
+.profile-insight { grid-area: insight; min-width: 0; padding: 1.35rem 1.4rem; border-left: 2px solid var(--primary); background: color-mix(in oklab, var(--primary) 5%, var(--bg)); }
+.profile-insight h2 { margin: 0; }
+.profile-insight .profile-kicker { color: var(--primary); }
+.profile-insight p { margin: .85rem 0 0; font-size: .91rem; line-height: 1.95; color: var(--text); overflow-wrap: anywhere; }
+.profile-facts { padding: 0; }
+.profile-facts h2, .profile-section h2 { margin: 0; font-size: 1rem; line-height: 1.6; font-weight: 600; }
+.profile-facts dl { margin: .8rem 0 0; }
+.profile-facts dl > div { display: grid; grid-template-columns: minmax(70px, .8fr) minmax(0, 1.2fr); gap: 1rem; border-bottom: 1px solid var(--border); padding: .85rem 0; font-size: .82rem; line-height: 1.7; }
+.profile-facts dt { color: var(--text-muted); }
+.profile-facts dd { margin: 0; text-align: right; color: var(--text); overflow-wrap: anywhere; }
+.profile-provenance { padding-top: 1.1rem; }
+.profile-provenance a { display: flex; align-items: center; gap: .65rem; min-height: 44px; color: var(--text-soft); font-size: .8rem; text-decoration: none; }
+.profile-provenance a > span { min-width: 0; flex: 1; overflow-wrap: anywhere; }
+.profile-provenance a > svg { flex: none; }
+.profile-provenance a:hover { color: var(--primary); }
+.profile-provenance p { margin: .7rem 0 0; color: var(--text-muted); font-size: .76rem; line-height: 1.8; }
+.profile-section { padding: 1.5rem 0; }
+.profile-section > p { margin: .9rem 0 0; color: var(--text-soft); font-size: .92rem; line-height: 1.9; white-space: pre-wrap; overflow-wrap: anywhere; }
+.profile-update { margin-top: 1.5rem; border-top: 1px solid var(--border); }
+.profile-section-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem; }
+.profile-section-heading time { font-size: .78rem; color: var(--text-muted); }
+.profile-source-link { margin-top: .65rem; color: var(--primary); }
+.profile-verification { padding: 1rem 1.2rem; margin: 1.25rem 0 0; border-left: 2px solid var(--primary); background: var(--primary-soft); font-size: .9rem; line-height: 1.8; }
+.profile-example { scroll-margin-top: 110px; min-width: 0; }
+.profile-example:focus { outline: 2px solid var(--primary); outline-offset: 5px; }
+.profile-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.profile-example-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .6rem; margin-bottom: .9rem; }
+.profile-example-heading > span:last-child { font-size: .75rem; color: var(--text-muted); }
+.profile-example-heading button { border: 0; padding: .5rem; background: transparent; color: var(--text-soft); font: inherit; font-size: .8rem; min-height: 44px; cursor: pointer; }
+.profile-example .experience-focus { max-width: none; margin: 0; border: 1px solid var(--border); border-radius: 10px; box-shadow: none; overflow: hidden; }
+.profile-example .focus-header, .profile-example .focus-content, .profile-example .focus-footer { width: 100%; padding-inline: 1.5rem; }
+.profile-example .focus-header { padding-top: 1.25rem; padding-bottom: 1rem; }
+.profile-example .focus-promise { margin: 0 0 .5rem; color: var(--text); font-size: 1.2rem; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; }
+.profile-example .focus-boundary { font-size: .76rem; }
+.profile-example .focus-content { padding-top: 1.15rem; }
+.profile-example .focus-content > h2 { margin: 0 0 .9rem; color: var(--text-soft); font-size: .9rem; font-weight: 500; letter-spacing: 0; }
+.profile-example .experience-artifact__input, .profile-example .experience-artifact__result { padding: 1rem 1.1rem; background: var(--bg); }
+.profile-example .experience-artifact__connector { padding-left: 1.1rem; background: var(--bg); }
+.profile-example .experience-artifact__result { padding-top: .5rem; }
+.profile-example .experience-artifact__text { font-size: .94rem; line-height: 1.85; }
+.profile-example .experience-artifact__label { font-size: .76rem; margin-bottom: .5rem; }
+.profile-example .experience-artifact__items { margin-top: 1rem; }
+.profile-example .experience-artifact__items li { padding-block: .8rem; }
+.profile-example .experience-artifact__items h4 { font-size: .86rem; }
+.profile-example .experience-artifact__items p { font-size: .82rem; }
+@media (min-width: 1100px) {
+  .profile-example .experience-artifact { display: grid; grid-template-columns: minmax(0, .9fr) 24px minmax(0, 1.1fr); align-items: stretch; }
+  .profile-example .experience-artifact__disclosure { grid-column: 1 / -1; }
+  .profile-example .experience-artifact__input, .profile-example .experience-artifact__result { border: 1px solid var(--border); border-radius: 6px; padding: 1rem; }
+  .profile-example .experience-artifact__connector { height: auto; padding: 0; justify-content: center; border: 0; background: transparent; }
+  .profile-example .experience-artifact__connector svg { transform: rotate(-90deg); }
+}
+.profile-example .focus-choices { margin: 1.25rem 0; }
+.profile-example .focus-choices button { padding: .65rem .9rem; font-size: .82rem; }
+.profile-example .focus-details { margin-top: 1rem; padding-block: .85rem; font-size: .84rem; }
+.profile-example .focus-details summary { min-height: 32px; }
+.profile-example .focus-footer { padding-block: 1rem; }
+.profile-example .focus-footer a { font-size: .82rem; min-height: 32px; }
+.profile-example .product-demo { margin: 0; border: 0; border-radius: 10px; }
+.profile-example-empty { padding: 1.4rem 1.5rem; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
+.profile-example-empty h2 { margin: 0; font-size: 1.15rem; line-height: 1.5; }
+.profile-example-empty p { margin: .75rem 0 0; color: var(--text-soft); font-size: .86rem; line-height: 1.85; }
+.profile-example-empty small { display: block; margin-top: .9rem; font-size: .75rem; color: var(--text-muted); line-height: 1.8; }
+.profile-example-actions { display: flex; align-items: center; flex-wrap: wrap; gap: .7rem 1rem; margin-top: 1.1rem; }
+.profile-example-actions button, .profile-example-actions a { display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; font: inherit; font-size: .82rem; text-decoration: none; }
+.profile-example-actions button { padding: .65rem .9rem; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); cursor: pointer; }
+.profile-example-actions a { color: var(--text-soft); }
+.profile-example-skeleton { display: grid; gap: .7rem; margin-top: 1.5rem; }
+.profile-example-skeleton span { height: 1rem; width: 85%; border-radius: 4px; background: var(--bg-elevated); }
+.profile-example-skeleton span:last-child { width: 58%; }
+.profile-related { margin-top: 3rem; padding-top: 1.75rem; border-top: 1px solid var(--border); }
+.profile-related > .profile-section-heading { margin-bottom: 1.5rem; }
+.profile-related h2 { margin: .4rem 0 0; font-size: 1.35rem; font-weight: 600; }
+.product-profile :is(a, button, summary, select, input):focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; }
+
+@media (max-width: 960px) {
+  .profile-layout { grid-template-columns: minmax(0, 1.6fr) minmax(230px, 1fr); gap: 1.5rem; }
+  .profile-hero { gap: 1rem 1.5rem; }
+  .profile-actions { max-width: 240px; }
+  .profile-insight { padding: 1rem; }
+}
+@media (max-width: 760px) {
+  .product-profile { padding-top: .8rem; }
+  .profile-breadcrumb { margin-bottom: 1.2rem; }
+  .profile-hero { grid-template-columns: minmax(0, 1fr); grid-template-areas: "identity" "description" "actions"; padding-bottom: 1.5rem; gap: 1rem; }
+  .profile-identity { gap: .9rem; }
+  .profile-logo { width: 60px; height: 60px; border-radius: 12px; }
+  .profile-identity h1 { font-size: 1.8rem; }
+  .profile-description { font-size: .9rem; }
+  .profile-actions { max-width: none; justify-content: flex-start; gap: .6rem; }
+  .profile-actions .profile-text-link { flex-basis: auto; justify-content: flex-start; min-height: 44px; }
+  .profile-layout { grid-template-columns: minmax(0, 1fr); grid-template-areas: "main" "facts"; gap: 1.5rem; padding-top: 1.5rem; }
+  .profile-layout--insight { grid-template-areas: "insight" "main" "facts"; grid-template-rows: auto; }
+  .profile-sidebar { border-top: 1px solid var(--border); padding-top: 1.5rem; }
+  .profile-example .focus-header, .profile-example .focus-content, .profile-example .focus-footer { padding-inline: 1rem; }
+  .profile-example-empty { padding: 1.2rem 1rem; }
+  .profile-example .experience-artifact__input, .profile-example .experience-artifact__result { padding-inline: .9rem; }
+  .profile-section-heading { align-items: flex-start; }
+  .profile-related { margin-top: 2rem; }
+}
