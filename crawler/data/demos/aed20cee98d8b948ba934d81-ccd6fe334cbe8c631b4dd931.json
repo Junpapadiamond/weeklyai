@@ -1,0 +1,305 @@
+{
+  "cache_key": "aed20cee98d8b948ba934d81-ccd6fe334cbe8c631b4dd931",
+  "product_key": "aed20cee98d8b948ba934d81",
+  "fingerprint": "ccd6fe334cbe8c631b4dd931",
+  "product_id": "p_079389d7edcca7d0",
+  "product_name": "Readily",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-20T22:22:35.872346+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "监管合规差距分析",
+      "en": "Regulatory Compliance Gap Analysis"
+    },
+    "scenario": {
+      "zh": "提交一份现有政策文本，对照最新CMS监管要求，找出需要更新的具体条款",
+      "en": "Submit an existing policy document against new CMS regulatory requirements to identify specific clauses needing updates"
+    },
+    "steps": [
+      {
+        "id": "policy_input",
+        "widget": "choice",
+        "title": {
+          "zh": "选择合规场景",
+          "en": "Choose Compliance Scenario"
+        },
+        "instruction": {
+          "zh": "选择要检查的政策类型",
+          "en": "Select the policy type to review"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "患者隐私政策",
+              "en": "Patient Privacy Policy"
+            },
+            "output": {
+              "zh": "发现三处与新规不符",
+              "en": "Found three gaps with new rules"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "现有政策摘录",
+                "en": "Current Policy Excerpt"
+              },
+              "output_label": {
+                "zh": "需更新的条款",
+                "en": "Clauses Requiring Updates"
+              },
+              "input": {
+                "zh": "患者有权在30个工作日内获取医疗记录副本。费用按每页0.25美元收取。",
+                "en": "Patients have the right to obtain copies of medical records within 30 business days. Fees are charged at $0.25 per page."
+              },
+              "output": {
+                "zh": "时限需改为15个日历日；禁止按页收费，仅可收取实际劳动成本；需增加电子访问条款",
+                "en": "Timeline must change to 15 calendar days; per-page fees prohibited, only actual labor costs allowed; electronic access clause required"
+              },
+              "emphasis": {
+                "zh": "30个工作日",
+                "en": "30 business days"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "计费透明度政策",
+              "en": "Billing Transparency Policy"
+            },
+            "output": {
+              "zh": "标识两处缺失要求",
+              "en": "Identified two missing requirements"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "现有政策摘录",
+                "en": "Current Policy Excerpt"
+              },
+              "output_label": {
+                "zh": "缺失的监管要求",
+                "en": "Missing Regulatory Requirements"
+              },
+              "input": {
+                "zh": "患者可要求费用估算。我们将在可行时提供估算信息。",
+                "en": "Patients may request cost estimates. We will provide estimate information when feasible."
+              },
+              "output": {
+                "zh": "必须在3个工作日内提供书面善意估算；需列出具体服务代码和预期费用范围",
+                "en": "Written good faith estimate must be provided within 3 business days; must list specific service codes and expected cost ranges"
+              },
+              "emphasis": {
+                "zh": "可行时",
+                "en": "when feasible"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "action_plan",
+        "widget": "choice",
+        "title": {
+          "zh": "分配整改任务",
+          "en": "Assign Remediation Tasks"
+        },
+        "instruction": {
+          "zh": "选择如何处理发现的差距",
+          "en": "Choose how to address identified gaps"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "按条款分配",
+              "en": "Assign by Clause"
+            },
+            "output": {
+              "zh": "为每个条款指定责任人",
+              "en": "Assigned owner for each clause"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "待整改条款",
+                "en": "Clauses to Remediate"
+              },
+              "output_label": {
+                "zh": "分配的任务",
+                "en": "Assigned Tasks"
+              },
+              "input": {
+                "zh": "三个不符合项需要政策修订",
+                "en": "Three non-compliant items require policy revision"
+              },
+              "output": {
+                "zh": "已创建三个任务并设置截止日期",
+                "en": "Three tasks created with deadlines set"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "访问时限更新",
+                    "en": "Access Timeline Update"
+                  },
+                  "detail": {
+                    "zh": "法务团队 | 1月15日前完成",
+                    "en": "Legal Team | Due Jan 15"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "费用结构修订",
+                    "en": "Fee Structure Revision"
+                  },
+                  "detail": {
+                    "zh": "财务合规 | 1月20日前完成",
+                    "en": "Finance Compliance | Due Jan 20"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "电子访问条款",
+                    "en": "Electronic Access Clause"
+                  },
+                  "detail": {
+                    "zh": "IT政策组 | 1月18日前完成",
+                    "en": "IT Policy Group | Due Jan 18"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "按部门分配",
+              "en": "Assign by Department"
+            },
+            "output": {
+              "zh": "整合为部门级任务",
+              "en": "Consolidated into department tasks"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "待整改条款",
+                "en": "Clauses to Remediate"
+              },
+              "output_label": {
+                "zh": "部门任务",
+                "en": "Department Tasks"
+              },
+              "input": {
+                "zh": "三个不符合项需要政策修订",
+                "en": "Three non-compliant items require policy revision"
+              },
+              "output": {
+                "zh": "已创建两个部门任务",
+                "en": "Two department tasks created"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "法务部综合更新",
+                    "en": "Legal Comprehensive Update"
+                  },
+                  "detail": {
+                    "zh": "时限与费用条款 | 1月22日前",
+                    "en": "Timeline and fee clauses | Due Jan 22"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "IT技术实施",
+                    "en": "IT Technical Implementation"
+                  },
+                  "detail": {
+                    "zh": "电子访问功能 | 1月25日前",
+                    "en": "Electronic access features | Due Jan 25"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "evidence_check",
+        "widget": "review",
+        "title": {
+          "zh": "查看支持依据",
+          "en": "Review Supporting Evidence"
+        },
+        "instruction": {
+          "zh": "检查系统引用的监管依据",
+          "en": "Review regulatory citations used by the system"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "查看CMS规则引用",
+              "en": "View CMS Rule Citations"
+            },
+            "output": {
+              "zh": "显示具体规则段落",
+              "en": "Shows specific rule sections"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "识别的差距",
+                "en": "Identified Gap"
+              },
+              "output_label": {
+                "zh": "监管依据（虚构示例）",
+                "en": "Regulatory Basis (Fictional Example)"
+              },
+              "input": {
+                "zh": "时限需改为15个日历日",
+                "en": "Timeline must change to 15 calendar days"
+              },
+              "output": {
+                "zh": "45 CFR 164.524(b)(2) 修订版：要求在收到请求后15个日历日内提供访问，不得超过30日",
+                "en": "45 CFR 164.524(b)(2) as amended: Access must be provided within 15 calendar days of request, not to exceed 30 days"
+              },
+              "emphasis": {
+                "zh": "15个日历日",
+                "en": "15 calendar days"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "本演示展示了将政策文本与监管要求对照的过程，使用虚构样本条款和监管引用。实际使用需在Readily平台上传真实政策文档并连接当前CMS规则库。",
+      "en": "This demo illustrated the process of comparing policy text against regulatory requirements using fictional sample clauses and regulatory citations. Actual use requires uploading real policy documents and connecting to current CMS rule databases on the Readily platform."
+    },
+    "sources": [
+      {
+        "url": "https://www.readily.ai/about",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.fiercehealthcare.com/health-tech/fierce-healthcare-fundraising-tracker-26",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

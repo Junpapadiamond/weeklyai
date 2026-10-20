@@ -1,0 +1,325 @@
+{
+  "cache_key": "275b290c3077f2e3567cea24-c1fafc410417acdabe0b67c8",
+  "product_key": "275b290c3077f2e3567cea24",
+  "fingerprint": "c1fafc410417acdabe0b67c8",
+  "product_id": "p_1924c60d51f0ed7b",
+  "product_name": "Matters",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-20T22:23:10.295066+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "AI 消费顾问模拟",
+      "en": "AI Spending Advisor Demo"
+    },
+    "scenario": {
+      "zh": "用户提供消费计划,AI 顾问分析并提出更谨慎的建议,帮助平衡支出与储蓄目标",
+      "en": "User provides spending plan, AI advisor analyzes and suggests more careful choices to balance spending with savings goals"
+    },
+    "steps": [
+      {
+        "id": "spending_plan",
+        "widget": "choice",
+        "title": {
+          "zh": "本月消费计划",
+          "en": "This Month's Plan"
+        },
+        "instruction": {
+          "zh": "选择一个消费场景",
+          "en": "Choose a spending scenario"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "周末购物清单",
+              "en": "Weekend Shopping List"
+            },
+            "output": {
+              "zh": "AI 识别可延后项目",
+              "en": "AI identifies deferrable items"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "计划购买",
+                "en": "Planned Purchases"
+              },
+              "output_label": {
+                "zh": "顾问建议",
+                "en": "Advisor Suggestion"
+              },
+              "input": {
+                "zh": "冬季外套 ¥1200、运动鞋 ¥650、咖啡机 ¥380",
+                "en": "Winter coat ¥1200, sneakers ¥650, coffee maker ¥380"
+              },
+              "output": {
+                "zh": "外套必需;运动鞋可等促销;咖啡机非紧急,建议储蓄优先",
+                "en": "Coat needed; wait for sneaker sale; coffee maker non-urgent, prioritize savings"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "冬季外套",
+                    "en": "Winter Coat"
+                  },
+                  "detail": {
+                    "zh": "必需品,当前库存不足",
+                    "en": "Essential, current stock low"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "运动鞋",
+                    "en": "Sneakers"
+                  },
+                  "detail": {
+                    "zh": "建议等待双十一",
+                    "en": "Suggest waiting for sale"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "咖啡机",
+                    "en": "Coffee Maker"
+                  },
+                  "detail": {
+                    "zh": "非紧急,延后两月",
+                    "en": "Non-urgent, defer two months"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "餐饮娱乐预算",
+              "en": "Dining & Entertainment"
+            },
+            "output": {
+              "zh": "建议优化频次",
+              "en": "Suggests frequency adjustment"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "本月安排",
+                "en": "This Month's Plans"
+              },
+              "output_label": {
+                "zh": "顾问建议",
+                "en": "Advisor Suggestion"
+              },
+              "input": {
+                "zh": "外出晚餐 8 次、电影 3 次、咖啡馆 12 次",
+                "en": "Dining out 8×, cinema 3×, cafés 12×"
+              },
+              "output": {
+                "zh": "晚餐减至 5 次节省 ¥450;电影保持;咖啡馆减半可存 ¥180",
+                "en": "Cut dining to 5× saves ¥450; keep cinema; halve cafés saves ¥180"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "外出晚餐",
+                    "en": "Dining Out"
+                  },
+                  "detail": {
+                    "zh": "从 8 次降至 5 次",
+                    "en": "Reduce from 8× to 5×"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "电影",
+                    "en": "Cinema"
+                  },
+                  "detail": {
+                    "zh": "频次合理,保持",
+                    "en": "Frequency reasonable, keep"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "咖啡馆",
+                    "en": "Cafés"
+                  },
+                  "detail": {
+                    "zh": "从 12 次降至 6 次",
+                    "en": "Reduce from 12× to 6×"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "savings_goal",
+        "widget": "choice",
+        "title": {
+          "zh": "储蓄目标",
+          "en": "Savings Goal"
+        },
+        "instruction": {
+          "zh": "设定短期目标",
+          "en": "Set a near-term goal"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "旅行基金",
+              "en": "Travel Fund"
+            },
+            "output": {
+              "zh": "计算每月所需储蓄",
+              "en": "Calculates monthly requirement"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "目标描述",
+                "en": "Goal Description"
+              },
+              "output_label": {
+                "zh": "达成路径",
+                "en": "Achievement Path"
+              },
+              "input": {
+                "zh": "六个月后日本旅行,预算 ¥9000",
+                "en": "Japan trip in 6 months, budget ¥9000"
+              },
+              "output": {
+                "zh": "每月需存 ¥1500;结合消费优化建议,可从餐饮和延后购物中实现",
+                "en": "Need ¥1500/month; combined with spending adjustments, achievable through dining and deferred purchases"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "应急储备",
+              "en": "Emergency Fund"
+            },
+            "output": {
+              "zh": "评估当前缺口",
+              "en": "Assesses current gap"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "当前状态",
+                "en": "Current Status"
+              },
+              "output_label": {
+                "zh": "建议方案",
+                "en": "Suggested Plan"
+              },
+              "input": {
+                "zh": "应急基金 ¥3000,目标三个月生活费 ¥18000",
+                "en": "Emergency fund ¥3000, target 3-month expenses ¥18000"
+              },
+              "output": {
+                "zh": "缺口 ¥15000;通过每月存 ¥2500,可在六个月内达成;建议先削减非必需消费",
+                "en": "Gap ¥15000; saving ¥2500/month reaches goal in 6 months; prioritize cutting non-essentials"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "cashback_view",
+        "widget": "choice",
+        "title": {
+          "zh": "返现收益",
+          "en": "Cashback Earnings"
+        },
+        "instruction": {
+          "zh": "查看返现来源",
+          "en": "View cashback sources"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "本月返现明细",
+              "en": "This Month's Detail"
+            },
+            "output": {
+              "zh": "汇总各类返现",
+              "en": "Summarizes all cashback"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "交易记录",
+                "en": "Transaction Record"
+              },
+              "output_label": {
+                "zh": "返现明细",
+                "en": "Cashback Breakdown"
+              },
+              "input": {
+                "zh": "超市 ¥840、在线购物 ¥520、境外消费 €45",
+                "en": "Supermarket ¥840, online ¥520, abroad €45"
+              },
+              "output": {
+                "zh": "刷卡返现 ¥18;汇率返现 ¥6;总计 ¥24 已入账,可用于储蓄",
+                "en": "Card fees ¥18; FX fees ¥6; total ¥24 credited, available for savings"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "刷卡手续费",
+                    "en": "Card Charges"
+                  },
+                  "detail": {
+                    "zh": "商家支付部分返还 ¥18",
+                    "en": "Merchant fees returned ¥18"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "货币兑换费",
+                    "en": "FX Fees"
+                  },
+                  "detail": {
+                    "zh": "汇率差价返还 ¥6",
+                    "en": "Exchange spread returned ¥6"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了 AI 顾问如何分析消费计划、匹配储蓄目标并返还银行费用;实际建议需在 Matters 银行账户中根据真实交易生成",
+      "en": "Illustrated how AI advisor analyzes spending, matches savings goals, and returns bank fees; actual advice requires real transactions in a Matters bank account"
+    },
+    "sources": [
+      {
+        "url": "https://matters.inc/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://thenextweb.com/news/matters-ai-bank-5m-pre-seed-osterstrom",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

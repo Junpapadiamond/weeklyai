@@ -1,0 +1,268 @@
+{
+  "cache_key": "91520bf803bed9f31284b8bf-afa748863d5a1ee8b2ff09e2",
+  "product_key": "91520bf803bed9f31284b8bf",
+  "fingerprint": "afa748863d5a1ee8b2ff09e2",
+  "product_id": "p_2e21782d2b2c4c5b",
+  "product_name": "Arlequin AI",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-20T22:24:07.507286+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "企业信息决策分析",
+      "en": "Enterprise Information Analysis"
+    },
+    "scenario": {
+      "zh": "上传内部文档和市场资料，平台识别关键信息并提出决策方向",
+      "en": "Upload internal documents and market materials; platform identifies key information and suggests decision directions"
+    },
+    "steps": [
+      {
+        "id": "doc_type",
+        "widget": "choice",
+        "title": {
+          "zh": "选择分析文档",
+          "en": "Select Analysis Documents"
+        },
+        "instruction": {
+          "zh": "从什么类型的材料中提取信息？",
+          "en": "Extract information from what type of material?"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "财务季报",
+              "en": "Quarterly Financials"
+            },
+            "output": {
+              "zh": "识别收入和成本趋势",
+              "en": "Identify revenue and cost trends"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "报告摘录（虚构）",
+                "en": "Report Excerpt (fictional)"
+              },
+              "output_label": {
+                "zh": "提取的发现",
+                "en": "Extracted Findings"
+              },
+              "input": {
+                "zh": "本季收入同比增速回落，云服务毛利承压，研发投入比例提升，客户续约率保持稳定",
+                "en": "Revenue growth decelerated quarter-over-quarter, cloud margins under pressure, R&D investment ratio increased, customer renewal rate remained stable"
+              },
+              "output": {
+                "zh": "增长放缓但留存健康，利润压缩源于基础设施扩张，研发占比上升显示产品迭代",
+                "en": "Growth slowing but retention healthy; margin compression from infrastructure expansion; rising R&D share indicates product iteration"
+              },
+              "emphasis": {
+                "zh": "增速回落",
+                "en": "growth decelerated"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "市场竞争报告",
+              "en": "Market Competition Report"
+            },
+            "output": {
+              "zh": "对比竞争者定位",
+              "en": "Compare competitor positioning"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "市场观察（虚构）",
+                "en": "Market Observation (fictional)"
+              },
+              "output_label": {
+                "zh": "竞争格局",
+                "en": "Competitive Landscape"
+              },
+              "input": {
+                "zh": "主要对手推出中小企业优惠方案，新进入者聚焦行业垂直解决方案，通用平台降价竞争加剧",
+                "en": "Major rivals launched SMB discount programs; new entrants focus on industry-vertical solutions; general platforms intensify price competition"
+              },
+              "output": {
+                "zh": "中小企业市场价格战升级，垂直专业化成为差异路径，通用产品面临定价压力",
+                "en": "SMB market price war escalating; vertical specialization emerging as differentiation; general products face pricing pressure"
+              },
+              "emphasis": {
+                "zh": "降价竞争加剧",
+                "en": "intensify price competition"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "客户反馈汇总",
+              "en": "Customer Feedback Summary"
+            },
+            "output": {
+              "zh": "识别需求和痛点",
+              "en": "Identify needs and pain points"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "反馈记录（虚构）",
+                "en": "Feedback Record (fictional)"
+              },
+              "output_label": {
+                "zh": "主要诉求",
+                "en": "Primary Requests"
+              },
+              "input": {
+                "zh": "多家大客户提出数据导出灵活性要求，部分客户询问本地部署选项，第三方工具集成需求持续增长",
+                "en": "Multiple enterprise clients raised data export flexibility requirements; some customers inquired about on-premise deployment options; third-party tool integration needs continue growing"
+              },
+              "output": {
+                "zh": "数据互操作性影响续约，本地部署需求反映隐私关切，生态集成能力成为选型因素",
+                "en": "Data interoperability affects renewals; on-premise requests reflect privacy concerns; ecosystem integration capability becomes selection factor"
+              },
+              "emphasis": {
+                "zh": "本地部署选项",
+                "en": "on-premise deployment options"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "recommendation",
+        "widget": "choice",
+        "title": {
+          "zh": "生成决策方向",
+          "en": "Generate Decision Directions"
+        },
+        "instruction": {
+          "zh": "基于分析建议什么行动？",
+          "en": "What actions to recommend from analysis?"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "产品优先级",
+              "en": "Product Priorities"
+            },
+            "output": {
+              "zh": "排序功能开发方向",
+              "en": "Rank feature development directions"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "综合分析（虚构）",
+                "en": "Combined Analysis (fictional)"
+              },
+              "output_label": {
+                "zh": "建议行动（虚构）",
+                "en": "Suggested Actions (fictional)"
+              },
+              "input": {
+                "zh": "利润承压、客户要求本地部署、竞争者降价",
+                "en": "Margin pressure, customer on-premise requests, competitor price cuts"
+              },
+              "output": {
+                "zh": "基于虚构输入的行动示例",
+                "en": "Action examples from fictional input"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "近期重点",
+                    "en": "Near-term Focus"
+                  },
+                  "detail": {
+                    "zh": "推出数据导出标准接口，响应企业客户核心需求",
+                    "en": "Launch standardized data export API responding to core enterprise needs"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "中期评估",
+                    "en": "Mid-term Evaluation"
+                  },
+                  "detail": {
+                    "zh": "研究本地部署版本可行性，满足隐私敏感客户",
+                    "en": "Study on-premise version feasibility for privacy-sensitive customers"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "持续跟踪",
+                    "en": "Ongoing Tracking"
+                  },
+                  "detail": {
+                    "zh": "监控竞争定价动态，准备中小市场应对方案",
+                    "en": "Monitor competitive pricing dynamics; prepare SMB market response"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "市场策略",
+              "en": "Market Strategy"
+            },
+            "output": {
+              "zh": "选择目标细分方向",
+              "en": "Choose target segmentation direction"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "策略选项（虚构）",
+                "en": "Strategy Options (fictional)"
+              },
+              "output_label": {
+                "zh": "方向评估（虚构）",
+                "en": "Direction Assessment (fictional)"
+              },
+              "input": {
+                "zh": "通用平台横向扩展 vs 垂直行业深耕",
+                "en": "General platform horizontal expansion vs vertical industry deepening"
+              },
+              "output": {
+                "zh": "垂直深耕初期投入高但粘性强，横向扩展竞争激烈但规模空间大，建议组合路径",
+                "en": "Vertical deepening requires high initial investment but stronger retention; horizontal expansion faces intense competition with larger scale opportunity; combined path recommended"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了从虚构文档提取信息并生成决策方向的流程，实际效果依赖上传材料的质量和完整性，需访问 https://arlq.ai/ 使用真实企业数据",
+      "en": "Demonstrated workflow of extracting information from fictional documents and generating decision directions; actual effectiveness depends on quality and completeness of uploaded materials; visit https://arlq.ai/ to use real enterprise data"
+    },
+    "sources": [
+      {
+        "url": "https://arlq.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://news.microsoft.com/source/emea/2026/10/microsoft-france-ouvre-les-candidatures-de-la-quatrieme-promotion-du-microsoft-genai-studio-a-station-f?lang=fr",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

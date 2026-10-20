@@ -1,0 +1,325 @@
+{
+  "cache_key": "23f400d0f1e17ace0efa056a-768faf15df82acbb1bd26b26",
+  "product_key": "23f400d0f1e17ace0efa056a",
+  "fingerprint": "768faf15df82acbb1bd26b26",
+  "product_id": "45",
+  "product_name": "Unframe",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-20T22:25:22.132312+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "企业流程自动化代理",
+      "en": "Enterprise Process Agent"
+    },
+    "scenario": {
+      "zh": "为企业任务配置 AI 代理，从示例对话生成自动化流程",
+      "en": "Configure an AI agent for enterprise tasks, generating automation from example dialogues"
+    },
+    "steps": [
+      {
+        "id": "task_scope",
+        "widget": "choice",
+        "title": {
+          "zh": "选择企业任务类型",
+          "en": "Choose Enterprise Task"
+        },
+        "instruction": {
+          "zh": "选择一个需要自动化的业务流程",
+          "en": "Select a business process to automate"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "客户入职审核",
+              "en": "Customer Onboarding"
+            },
+            "output": {
+              "zh": "代理将处理文档并路由至相应团队",
+              "en": "Agent will process documents and route to appropriate teams"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "客户提交内容",
+                "en": "Customer Submission"
+              },
+              "output_label": {
+                "zh": "代理决策",
+                "en": "Agent Decision"
+              },
+              "input": {
+                "zh": "新客户 Acme Corp 提交了营业执照、银行对账单和联系人信息表格",
+                "en": "New customer Acme Corp submitted business license, bank statement, and contact form"
+              },
+              "output": {
+                "zh": "文档完整，已转发至合规团队进行背景调查，预计 2 个工作日完成初审",
+                "en": "Documents complete, forwarded to compliance for background check, initial review expected in 2 business days"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "费用报销处理",
+              "en": "Expense Processing"
+            },
+            "output": {
+              "zh": "代理将验证收据并执行批准规则",
+              "en": "Agent will verify receipts and apply approval rules"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "员工提交",
+                "en": "Employee Submission"
+              },
+              "output_label": {
+                "zh": "处理结果",
+                "en": "Processing Result"
+              },
+              "input": {
+                "zh": "张伟提交差旅费用：机票 ¥3200、酒店 ¥1800、餐饮 ¥450，附带 3 张扫描收据",
+                "en": "Zhang Wei submitted travel expenses: flight ¥3200, hotel ¥1800, meals ¥450 with 3 scanned receipts"
+              },
+              "output": {
+                "zh": "机票和酒店符合政策自动批准，餐饮超出每日限额需经理审批",
+                "en": "Flight and hotel approved automatically per policy, meals exceed daily limit and require manager approval"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "IT 支持工单分类",
+              "en": "IT Ticket Routing"
+            },
+            "output": {
+              "zh": "代理将识别问题类型并分配专家",
+              "en": "Agent will identify issue type and assign specialist"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "工单描述",
+                "en": "Ticket Description"
+              },
+              "output_label": {
+                "zh": "分配决策",
+                "en": "Assignment Decision"
+              },
+              "input": {
+                "zh": "用户报告无法访问 CRM 系统，错误提示权限不足，昨天还能正常登录",
+                "en": "User reports cannot access CRM system, error shows insufficient permissions, was working yesterday"
+              },
+              "output": {
+                "zh": "识别为权限配置问题，已分配至身份管理团队，优先级设为高",
+                "en": "Identified as permissions issue, assigned to identity management team, priority set to high"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "example_dialogue",
+        "widget": "choice",
+        "title": {
+          "zh": "提供示例对话",
+          "en": "Provide Example Dialogue"
+        },
+        "instruction": {
+          "zh": "输入几轮理想的人工处理示例",
+          "en": "Enter a few turns of ideal human handling"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "简单审批流程",
+              "en": "Simple Approval Flow"
+            },
+            "output": {
+              "zh": "代理学习二元决策模式",
+              "en": "Agent learns binary decision pattern"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "对话记录",
+                "en": "Dialogue Record"
+              },
+              "output_label": {
+                "zh": "提取规则",
+                "en": "Extracted Rule"
+              },
+              "input": {
+                "zh": "人工示例对话",
+                "en": "Human example dialogue"
+              },
+              "output": {
+                "zh": "IF 金额 ≤ ¥5000 且有收据 THEN 自动批准 ELSE 转人工",
+                "en": "IF amount ≤ ¥5000 and has receipt THEN auto-approve ELSE escalate"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "请求",
+                    "en": "Request"
+                  },
+                  "detail": {
+                    "zh": "员工：我需要报销 ¥2800 的培训费用",
+                    "en": "Employee: I need to reimburse ¥2800 training cost"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "检查",
+                    "en": "Check"
+                  },
+                  "detail": {
+                    "zh": "审批人：收据齐全吗？金额在限额内",
+                    "en": "Approver: Receipt complete? Amount within limit"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "结果",
+                    "en": "Result"
+                  },
+                  "detail": {
+                    "zh": "审批人：已批准，3 日内到账",
+                    "en": "Approver: Approved, paid within 3 days"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "多条件路由",
+              "en": "Multi-Condition Routing"
+            },
+            "output": {
+              "zh": "代理学习复杂分支逻辑",
+              "en": "Agent learns complex branching logic"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "对话记录",
+                "en": "Dialogue Record"
+              },
+              "output_label": {
+                "zh": "提取规则",
+                "en": "Extracted Rule"
+              },
+              "input": {
+                "zh": "人工示例对话",
+                "en": "Human example dialogue"
+              },
+              "output": {
+                "zh": "根据紧急度和类别组合，路由至 4 个不同团队之一",
+                "en": "Route to one of 4 teams based on urgency and category combination"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "工单",
+                    "en": "Ticket"
+                  },
+                  "detail": {
+                    "zh": "用户：无法打印，打印机显示离线",
+                    "en": "User: Cannot print, printer shows offline"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "分类",
+                    "en": "Classification"
+                  },
+                  "detail": {
+                    "zh": "支持：硬件问题，非紧急，办公设备组",
+                    "en": "Support: Hardware issue, non-urgent, office equipment team"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "分配",
+                    "en": "Assignment"
+                  },
+                  "detail": {
+                    "zh": "支持：已分配给李明，预计今日内响应",
+                    "en": "Support: Assigned to Li Ming, response expected today"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "review_automation",
+        "widget": "review",
+        "title": {
+          "zh": "审查自动化规则",
+          "en": "Review Automation Rules"
+        },
+        "instruction": {
+          "zh": "确认代理理解的处理逻辑",
+          "en": "Confirm agent's understood logic"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "规则看起来正确",
+              "en": "Rules Look Correct"
+            },
+            "output": {
+              "zh": "准备在测试环境部署",
+              "en": "Ready to deploy in test environment"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "需要调整条件",
+              "en": "Need to Adjust Conditions"
+            },
+            "output": {
+              "zh": "返回修改示例对话",
+              "en": "Return to modify example dialogue"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了从示例对话生成审批和路由规则，实际部署需在 Unframe 平台配置触发器和集成企业系统",
+      "en": "Demonstrated generating approval and routing rules from example dialogues; actual deployment requires configuring triggers and integrating enterprise systems on Unframe platform"
+    },
+    "sources": [
+      {
+        "url": "https://www.unframe.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.startupasradar.com",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}
