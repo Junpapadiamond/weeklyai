@@ -84,5 +84,100 @@
         }
       ]
     }
+  },
+  {
+    "name": "Apate.ai",
+    "website": "https://www.apate.ai/",
+    "description": "部署数千个AI代理伪装成普通人与欺诈者互动，可接听诈骗电话、回复可疑消息和邮件、点击钓鱼链接并加入社交媒体群组，采用不同年龄、性别、口音并支持多语言，目的是让诈骗者保持足够长的互动时间以收集有用信息",
+    "description_en": "Deploys thousands of AI agents that pose as unsuspecting people to engage fraudsters, answering scam calls, responding to suspicious messages and emails, following phishing links and joining social media groups, adopting different ages, genders and accents while speaking multiple languages to keep scammers engaged long enough to gather useful information",
+    "category": "agent",
+    "why_matters": "通过主动诱骗和拖延欺诈者，而非被动防御，收集诈骗情报，这种反向社会工程方法为网络安全提供了新的防御维度，可能帮助执法机构追踪诈骗网络",
+    "why_matters_en": "Uses proactive scam-baiting rather than passive defense to gather fraud intelligence through reverse social engineering, providing a new defensive dimension for cybersecurity that could help law enforcement track scam networks",
+    "latest_news": "入围TechCrunch Disrupt 2026创业战场决赛，将于2026年10月15日在旧金山进行最终展示，竞争10万美元奖金",
+    "latest_news_en": "Reached Startup Battlefield finals at TechCrunch Disrupt 2026, scheduled to pitch on October 15, 2026 in San Francisco for $100,000 prize",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "category_innovation",
+      "community_buzz"
+    ],
+    "company_country": "unknown",
+    "confidence": 0.75,
+    "source_url": "https://mezha.net/eng/news/mezha-a03e24ff4ddaa00945aeeead_meet_the_five/",
+    "categories": [
+      "agent"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "Meet the Five Companies Competing in the Startup Battlefield Finals at Disrupt 2026 - Mezha.net",
+    "website_source": "https://www.apate.ai/post/apate-ai-raises-us-8-15m-taking-its-autonomous-fleet-of-ai-agents-to-a-global-fight-against-scammers-and-reincorporates-in-the-united-states",
+    "discovered_at": "2026-10-21",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261021T221039Z-a7792684",
+      "search_region": "us",
+      "search_lane": "launch",
+      "website_verification": {
+        "url": "https://www.apate.ai/",
+        "title": "Apate | AI powered fraud prevention and intelligence",
+        "search_result_url": "https://www.apate.ai/post/apate-ai-raises-us-8-15m-taking-its-autonomous-fleet-of-ai-agents-to-a-global-fight-against-scammers-and-reincorporates-in-the-united-states"
+      },
+      "source_published_at": "2026-10-15T02:21:41+00:00",
+      "evidence": [
+        {
+          "criterion": "category_innovation",
+          "quote": "Apate deploys thousands of AI agents that pose as unsuspecting people to engage fraudsters. They can answer scam calls, respond to suspicious messages and emails, follow phishing links and join social media groups."
+        },
+        {
+          "criterion": "community_buzz",
+          "quote": "Five startups have reached the Startup Battlefield finals at TechCrunch Disrupt 2026"
+        }
+      ]
+    }
+  },
+  {
+    "name": "PataBid",
+    "website": "https://www.patabid.com/",
+    "description": "面向建筑行业的AI驱动工程估算工具，可在数小时内根据项目图纸生成估算，服务于电气、机械、消防和管道等领域的承包商",
+    "description_en": "AI-powered construction estimating tool that prepares project estimates from drawings in hours, serving contractors in electrical, mechanical, fire protection, and plumbing sectors",
+    "category": "other",
+    "why_matters": "传统建筑估算流程依赖手工和过时工具，PataBid的Quantify平台通过AI自动化替代这一痛点，目前正在开发名为Newton的代理AI进一步增强能力，在北美46.3万承包商的市场中具有显著增长空间",
+    "why_matters_en": "Addresses a major pain point in construction by automating outdated manual estimating processes with AI; developing agentic AI 'Newton' for 2027 launch; serves market of 463,000 North American contractors with clear monetization model",
+    "latest_news": "2026年10月获得Graphite Ventures领投的200万美元pre-seed轮融资，用于加速产品商业化和北美市场扩张",
+    "latest_news_en": "Raised $2 million pre-seed funding led by Graphite Ventures in October 2026 to accelerate commercialization and North American expansion",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal",
+      "category_innovation"
+    ],
+    "company_country": "CA",
+    "confidence": 0.95,
+    "source_url": "https://betakit.com/patabid-raises-2-million-to-expand-ai-construction-estimator/",
+    "funding_total": "$2M",
+    "categories": [
+      "other"
+    ],
+    "region": "Unknown",
+    "source": "claude_rss",
+    "source_title": "PataBid raises $2 million to expand AI construction estimator",
+    "website_source": "https://betakit.com/patabid-raises-2-million-to-expand-ai-construction-estimator/",
+    "discovered_at": "2026-10-21",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261021T221039Z-a7792684",
+      "search_region": "other",
+      "search_lane": "rss",
+      "website_verification": null,
+      "source_published_at": "2026-10-21T21:25:39+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "PataBid has raised $2 million in pre-seed funding to help accelerate the commercialization of its AI-powered construction estimating tool. The news: PataBid announced the funding on Tuesday, telling BetaKit the round was led by Graphite Ventures"
+        },
+        {
+          "criterion": "category_innovation",
+          "quote": "PataBid's platform Quantify is marketed as a replacement for manual and legacy estimating tools used by the construction industry. Integrating AI, Quantify is capable of preparing estimates for construction projects based off of project drawings in a matter of hours"
+        }
+      ]
+    }
   }
 ]
