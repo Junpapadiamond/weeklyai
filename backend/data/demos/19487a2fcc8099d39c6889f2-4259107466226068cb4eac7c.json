@@ -1,0 +1,175 @@
+{
+  "cache_key": "19487a2fcc8099d39c6889f2-4259107466226068cb4eac7c",
+  "product_key": "19487a2fcc8099d39c6889f2",
+  "fingerprint": "4259107466226068cb4eac7c",
+  "product_id": "49",
+  "product_name": "Prelude",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-22T22:22:33.484690+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "Prelude 自动化用户审核",
+      "en": "Prelude automated user review"
+    },
+    "scenario": {
+      "zh": "访客提交注册信息，Prelude 自动判断是否需要人工复核，输出审核决策与理由",
+      "en": "Visitor submits registration details; Prelude automatically decides if manual review is needed and outputs decision with reasoning"
+    },
+    "steps": [
+      {
+        "id": "application",
+        "widget": "choice",
+        "title": {
+          "zh": "选择注册申请",
+          "en": "Choose application"
+        },
+        "instruction": {
+          "zh": "查看不同申请场景的审核结果",
+          "en": "See review outcome for different scenarios"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "企业账户申请",
+              "en": "Business account"
+            },
+            "output": {
+              "zh": "证件齐全，自动通过",
+              "en": "Documents complete, auto-approved"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "申请信息（虚构）",
+                "en": "Application data (fictional)"
+              },
+              "output_label": {
+                "zh": "审核决策",
+                "en": "Review decision"
+              },
+              "input": {
+                "zh": "公司名称：Tech Solutions SAS，注册号：882 123 456，地址：15 Rue de Rivoli Paris，联系人：Marie Dubois，邮箱：marie@techsol.fr",
+                "en": "Company: Tech Solutions SAS, Registration: 882 123 456, Address: 15 Rue de Rivoli Paris, Contact: Marie Dubois, Email: marie@techsol.fr"
+              },
+              "output": {
+                "zh": "通过 — 注册号已验证，地址与公开记录匹配，联系人邮箱域名一致",
+                "en": "Approved — Registration verified, address matches public records, contact email domain consistent"
+              },
+              "emphasis": {
+                "zh": "注册号：882 123 456",
+                "en": "Registration: 882 123 456"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "个人账户申请",
+              "en": "Personal account"
+            },
+            "output": {
+              "zh": "地址不一致，转人工",
+              "en": "Address mismatch, manual review"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "申请信息（虚构）",
+                "en": "Application data (fictional)"
+              },
+              "output_label": {
+                "zh": "审核决策",
+                "en": "Review decision"
+              },
+              "input": {
+                "zh": "姓名：Luc Bernard，证件号：1234567890123，证件地址：28 Avenue Montaigne Lyon，申请地址：12 Rue du Commerce Marseille",
+                "en": "Name: Luc Bernard, ID: 1234567890123, ID Address: 28 Avenue Montaigne Lyon, Application Address: 12 Rue du Commerce Marseille"
+              },
+              "output": {
+                "zh": "待人工 — 证件地址与申请地址不在同一城市，需确认当前居住情况",
+                "en": "Manual review — ID address and application address in different cities, need to confirm current residence"
+              },
+              "emphasis": {
+                "zh": "证件地址：28 Avenue Montaigne Lyon，申请地址：12 Rue du Commerce Marseille",
+                "en": "ID Address: 28 Avenue Montaigne Lyon, Application Address: 12 Rue du Commerce Marseille"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "review",
+        "widget": "review",
+        "title": {
+          "zh": "查看推荐行动",
+          "en": "View recommended action"
+        },
+        "instruction": {
+          "zh": "确认系统建议的下一步",
+          "en": "Confirm system's next step"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "批准开户",
+              "en": "Approve account"
+            },
+            "output": {
+              "zh": "用户立即可登录使用",
+              "en": "User can log in immediately"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "转人工审核",
+              "en": "Route to manual review"
+            },
+            "output": {
+              "zh": "排入合规团队队列",
+              "en": "Added to compliance team queue"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "请求补充材料",
+              "en": "Request additional documents"
+            },
+            "output": {
+              "zh": "向用户发送材料清单",
+              "en": "Send document checklist to user"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了自动审核如何分类申请并提供理由；实际合规逻辑和审核准确率需在 Prelude 平台验证",
+      "en": "Demonstrated how automated review classifies applications with reasoning; actual compliance logic and accuracy must be verified on Prelude platform"
+    },
+    "sources": [
+      {
+        "url": "https://preludehq.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://tech.eu/category/artificial-intelligence/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

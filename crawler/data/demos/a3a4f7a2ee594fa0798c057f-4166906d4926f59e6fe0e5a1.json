@@ -1,0 +1,302 @@
+{
+  "cache_key": "a3a4f7a2ee594fa0798c057f-4166906d4926f59e6fe0e5a1",
+  "product_key": "a3a4f7a2ee594fa0798c057f",
+  "fingerprint": "4166906d4926f59e6fe0e5a1",
+  "product_id": "p_c3be145c735e99b9",
+  "product_name": "ugo",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-22T22:21:24.131986+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "巡检机器人路线规划",
+      "en": "Inspection Robot Route Planning"
+    },
+    "scenario": {
+      "zh": "为ugo mini规划仓库巡检路线，查看根据点位和任务生成的巡检方案",
+      "en": "Plan a warehouse inspection route for ugo mini and review the generated patrol schedule based on checkpoints and tasks"
+    },
+    "steps": [
+      {
+        "id": "checkpoints",
+        "widget": "choice",
+        "title": {
+          "zh": "选择巡检区域",
+          "en": "Select Inspection Area"
+        },
+        "instruction": {
+          "zh": "选择需要机器人巡检的区域类型",
+          "en": "Choose the area type for robot inspection"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "仓库货架区",
+              "en": "Warehouse Shelf Area"
+            },
+            "output": {
+              "zh": "已规划6小时巡检路线",
+              "en": "6-hour route planned"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "巡检点位",
+                "en": "Checkpoint List"
+              },
+              "output_label": {
+                "zh": "路线方案",
+                "en": "Route Plan"
+              },
+              "input": {
+                "zh": "A区货架、B区货架、叉车通道、消防设备、装卸区、仓库出入口",
+                "en": "Shelf A, Shelf B, Forklift Lane, Fire Equipment, Loading Zone, Warehouse Entry"
+              },
+              "output": {
+                "zh": "循环路线，每点停留2分钟，完整巡检需80分钟，单次充电可完成4轮",
+                "en": "Loop route, 2 min per point, full cycle 80 min, 4 rounds per charge"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "A区货架",
+                    "en": "Shelf A"
+                  },
+                  "detail": {
+                    "zh": "检查货物堆放、温度读数",
+                    "en": "Check stacking, temperature"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "消防设备",
+                    "en": "Fire Equipment"
+                  },
+                  "detail": {
+                    "zh": "确认灭火器位置、通道畅通",
+                    "en": "Verify extinguisher, clear path"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "装卸区",
+                    "en": "Loading Zone"
+                  },
+                  "detail": {
+                    "zh": "监测人员活动、设备状态",
+                    "en": "Monitor activity, equipment status"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "生产车间",
+              "en": "Production Workshop"
+            },
+            "output": {
+              "zh": "已规划设备巡检路线",
+              "en": "Equipment route planned"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "巡检点位",
+                "en": "Checkpoint List"
+              },
+              "output_label": {
+                "zh": "路线方案",
+                "en": "Route Plan"
+              },
+              "input": {
+                "zh": "生产线1、生产线2、质检台、原料存放区、成品区、安全出口",
+                "en": "Line 1, Line 2, QC Station, Raw Material, Finished Goods, Safety Exit"
+              },
+              "output": {
+                "zh": "优先路线，关键设备点增加停留时间，完整巡检需65分钟",
+                "en": "Priority route, extended stops at key equipment, full cycle 65 min"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "生产线1",
+                    "en": "Line 1"
+                  },
+                  "detail": {
+                    "zh": "记录运行状态、异响检测",
+                    "en": "Log status, detect anomalies"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "质检台",
+                    "en": "QC Station"
+                  },
+                  "detail": {
+                    "zh": "确认工作台整洁、工具归位",
+                    "en": "Check cleanliness, tool placement"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "schedule",
+        "widget": "choice",
+        "title": {
+          "zh": "设定巡检频率",
+          "en": "Set Inspection Frequency"
+        },
+        "instruction": {
+          "zh": "选择机器人执行巡检的时间安排",
+          "en": "Choose robot patrol schedule"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "夜间无人值守",
+              "en": "Overnight Unmanned"
+            },
+            "output": {
+              "zh": "配置为每2小时自动巡检",
+              "en": "Set to auto-patrol every 2 hours"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "时段设置",
+                "en": "Time Settings"
+              },
+              "output_label": {
+                "zh": "执行计划",
+                "en": "Execution Plan"
+              },
+              "input": {
+                "zh": "22:00-06:00无人时段",
+                "en": "22:00-06:00 unmanned period"
+              },
+              "output": {
+                "zh": "22:00首次巡检，00:00、02:00、04:00后续巡检，06:00返回充电",
+                "en": "First at 22:00, follow-ups at 00:00, 02:00, 04:00, return at 06:00"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "22:00",
+                    "en": "22:00"
+                  },
+                  "detail": {
+                    "zh": "完整路线巡检，记录基准数据",
+                    "en": "Full route, log baseline data"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "00:00",
+                    "en": "00:00"
+                  },
+                  "detail": {
+                    "zh": "重点区域巡检，对比异常",
+                    "en": "Key areas, compare anomalies"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "06:00",
+                    "en": "06:00"
+                  },
+                  "detail": {
+                    "zh": "最终巡检，生成夜间报告",
+                    "en": "Final patrol, generate night report"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "白班协同巡检",
+              "en": "Day Shift Collaboration"
+            },
+            "output": {
+              "zh": "配置为每4小时定时巡检",
+              "en": "Set to scheduled patrol every 4 hours"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "时段设置",
+                "en": "Time Settings"
+              },
+              "output_label": {
+                "zh": "执行计划",
+                "en": "Execution Plan"
+              },
+              "input": {
+                "zh": "08:00-20:00工作时段",
+                "en": "08:00-20:00 work hours"
+              },
+              "output": {
+                "zh": "08:00、12:00、16:00、20:00定时巡检，避开人流高峰",
+                "en": "Patrols at 08:00, 12:00, 16:00, 20:00, avoid peak traffic"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "08:00",
+                    "en": "08:00"
+                  },
+                  "detail": {
+                    "zh": "开工前巡检，确认环境安全",
+                    "en": "Pre-shift patrol, confirm safety"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "12:00",
+                    "en": "12:00"
+                  },
+                  "detail": {
+                    "zh": "午休时段巡检，减少干扰",
+                    "en": "Lunch break patrol, minimal disruption"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了为ugo mini规划巡检路线和时段的方案。实际部署需在现场测试避障、充电对接和实时数据采集功能。访问ugo官网了解部署支持。",
+      "en": "Demonstrated route and schedule planning for ugo mini. Actual deployment requires on-site testing of obstacle avoidance, charging docking, and real-time data collection. Visit ugo website for deployment support."
+    },
+    "sources": [
+      {
+        "url": "https://ugo.plus",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://note.com/kmoriyama/n/n8d4aa5aee0f6",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

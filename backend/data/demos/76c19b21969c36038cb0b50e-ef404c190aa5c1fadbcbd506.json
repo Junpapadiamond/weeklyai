@@ -1,0 +1,252 @@
+{
+  "cache_key": "76c19b21969c36038cb0b50e-ef404c190aa5c1fadbcbd506",
+  "product_key": "76c19b21969c36038cb0b50e",
+  "fingerprint": "ef404c190aa5c1fadbcbd506",
+  "product_id": "p_b73ee4944e681f29",
+  "product_name": "Vayo",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-22T22:20:56.398170+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "AI 旅行助手整合行程",
+      "en": "AI travel assistant consolidating trips"
+    },
+    "scenario": {
+      "zh": "你提供邮箱访问权限，Vayo 自动提取确认邮件并整理完整行程，包括在其他平台预订的内容",
+      "en": "You grant inbox access, Vayo extracts confirmation emails and organizes your complete itinerary including bookings from other platforms"
+    },
+    "steps": [
+      {
+        "id": "inbox_scan",
+        "widget": "choice",
+        "title": {
+          "zh": "识别确认邮件",
+          "en": "Identify confirmation emails"
+        },
+        "instruction": {
+          "zh": "选择邮箱中的旅行邮件类型",
+          "en": "Choose travel email types in inbox"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "航班和酒店确认",
+              "en": "Flight and hotel confirmations"
+            },
+            "output": {
+              "zh": "提取航班号、酒店地址和日期",
+              "en": "Extracts flight numbers, hotel addresses and dates"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "邮件示例",
+                "en": "Email sample"
+              },
+              "output_label": {
+                "zh": "提取的行程项",
+                "en": "Extracted itinerary items"
+              },
+              "input": {
+                "zh": "主题：您的预订确认 - 东京凯悦酒店\n\n尊敬的李明，感谢预订。入住：2025年3月15日，退房：3月18日。确认号HTK-8829。",
+                "en": "Subject: Your Booking Confirmation - Hyatt Tokyo\n\nDear Li Ming, thank you for booking. Check-in: March 15, 2025, Check-out: March 18. Confirmation HTK-8829."
+              },
+              "output": {
+                "zh": "东京凯悦酒店\n2025年3月15-18日\n确认号 HTK-8829",
+                "en": "Hyatt Tokyo\nMarch 15-18, 2025\nConfirmation HTK-8829"
+              },
+              "emphasis": {
+                "zh": "2025年3月15日",
+                "en": "March 15, 2025"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "餐厅和活动预订",
+              "en": "Restaurant and activity bookings"
+            },
+            "output": {
+              "zh": "提取餐厅名称、时间和人数",
+              "en": "Extracts restaurant names, times and party size"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "邮件示例",
+                "en": "Email sample"
+              },
+              "output_label": {
+                "zh": "提取的行程项",
+                "en": "Extracted itinerary items"
+              },
+              "input": {
+                "zh": "预订确认：寿司大\n\n您已预订3月16日晚上7点，2位。地址：筑地市场5-2-1。请准时到达。",
+                "en": "Reservation Confirmed: Sushi Dai\n\nYou have reserved March 16 at 7pm, party of 2. Address: Tsukiji Market 5-2-1. Please arrive on time."
+              },
+              "output": {
+                "zh": "寿司大晚餐\n3月16日 19:00\n2人 | 筑地市场",
+                "en": "Sushi Dai Dinner\nMarch 16, 7pm\n2 people | Tsukiji Market"
+              },
+              "emphasis": {
+                "zh": "3月16日晚上7点",
+                "en": "March 16 at 7pm"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "cross_platform",
+        "widget": "choice",
+        "title": {
+          "zh": "跨平台行程整合",
+          "en": "Cross-platform trip consolidation"
+        },
+        "instruction": {
+          "zh": "查看来自不同预订网站的项目",
+          "en": "View items from different booking sites"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "Booking 之外的预订",
+              "en": "Bookings outside Booking brands"
+            },
+            "output": {
+              "zh": "合并 Airbnb、携程等平台预订",
+              "en": "Merges Airbnb, Ctrip and other platforms"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "多平台确认邮件",
+                "en": "Multi-platform confirmations"
+              },
+              "output_label": {
+                "zh": "统一行程视图",
+                "en": "Unified itinerary view"
+              },
+              "input": {
+                "zh": "1. Booking.com 酒店确认\n2. Airbnb 公寓确认\n3. 携程机票确认",
+                "en": "1. Booking.com hotel confirmation\n2. Airbnb apartment confirmation\n3. Ctrip flight confirmation"
+              },
+              "output": {
+                "zh": "完整东京行程已整合\n包含3个平台的5项预订",
+                "en": "Complete Tokyo trip consolidated\nIncludes 5 bookings across 3 platforms"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "航班",
+                    "en": "Flights"
+                  },
+                  "detail": {
+                    "zh": "携程预订的往返航班",
+                    "en": "Round-trip via Ctrip"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "住宿",
+                    "en": "Accommodation"
+                  },
+                  "detail": {
+                    "zh": "前2晚酒店，后2晚公寓",
+                    "en": "Hotel first 2 nights, apartment last 2"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "活动",
+                    "en": "Activities"
+                  },
+                  "detail": {
+                    "zh": "餐厅和博物馆预订",
+                    "en": "Restaurant and museum bookings"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "learning_prefs",
+        "widget": "review",
+        "title": {
+          "zh": "学习旅行偏好",
+          "en": "Learning travel preferences"
+        },
+        "instruction": {
+          "zh": "AI 从历史行程发现的模式",
+          "en": "Patterns AI discovered from trip history"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "偏好靠近地铁的酒店",
+              "en": "Prefers hotels near metro"
+            },
+            "output": {
+              "zh": "未来搜索优先地铁附近",
+              "en": "Future searches prioritize metro proximity"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "常预订周五出发行程",
+              "en": "Often books Friday departures"
+            },
+            "output": {
+              "zh": "建议周五航班和住宿",
+              "en": "Suggests Friday flights and stays"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "喜欢当地餐厅体验",
+              "en": "Enjoys local dining experiences"
+            },
+            "output": {
+              "zh": "推荐非连锁餐厅选项",
+              "en": "Recommends non-chain restaurant options"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例展示了 Vayo 如何从邮箱提取和整合多平台预订，实际 AI 学习效果需在产品中验证，访问 vayo.com 授权邮箱开始使用",
+      "en": "Example showed how Vayo extracts and consolidates multi-platform bookings from inbox, actual AI learning requires verification in product, visit vayo.com to authorize inbox access"
+    },
+    "sources": [
+      {
+        "url": "https://vayo.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://skift.com/2026/10/14/booking-holdings-second-ai-startup-vayo-launches-in-private-beta/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

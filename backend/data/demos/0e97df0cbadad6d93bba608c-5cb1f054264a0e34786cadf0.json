@@ -1,0 +1,290 @@
+{
+  "cache_key": "0e97df0cbadad6d93bba608c-5cb1f054264a0e34786cadf0",
+  "product_key": "0e97df0cbadad6d93bba608c",
+  "fingerprint": "5cb1f054264a0e34786cadf0",
+  "product_id": "54",
+  "product_name": "Bunch",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-22T22:23:15.490889+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "投资尽调文档分析",
+      "en": "Investment Diligence Analysis"
+    },
+    "scenario": {
+      "zh": "从创业公司文档中提取关键指标，生成结构化尽调要点",
+      "en": "Extract key metrics from startup documents and generate structured diligence points"
+    },
+    "steps": [
+      {
+        "id": "doc_type",
+        "widget": "choice",
+        "title": {
+          "zh": "选择分析文档",
+          "en": "Select Document Type"
+        },
+        "instruction": {
+          "zh": "选择要分析的尽调文档类型",
+          "en": "Choose diligence document to analyze"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "财务报表",
+              "en": "Financial Statement"
+            },
+            "output": {
+              "zh": "识别收入、成本和增长趋势",
+              "en": "Identify revenue, costs, growth trends"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "财务摘录（虚构）",
+                "en": "Financial Excerpt (fictional)"
+              },
+              "output_label": {
+                "zh": "提取的指标",
+                "en": "Extracted Metrics"
+              },
+              "input": {
+                "zh": "2024年Q1收入120万美元，Q2收入180万美元，Q3收入245万美元。销售成本占比从48降至39。",
+                "en": "Q1 2024 revenue 1.2M USD, Q2 1.8M USD, Q3 2.45M USD. Cost of sales ratio decreased from 48 to 39."
+              },
+              "output": {
+                "zh": "季度增长加速，毛利率持续改善，运营效率提升明显",
+                "en": "Accelerating quarterly growth, improving gross margin, clear operational efficiency gains"
+              },
+              "emphasis": {
+                "zh": "120万美元，Q2收入180万美元，Q3收入245万",
+                "en": "1.2M USD, Q2 1.8M USD, Q3 2.45M"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "市场调研",
+              "en": "Market Research"
+            },
+            "output": {
+              "zh": "总结竞争格局和定位机会",
+              "en": "Summarize competitive landscape"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "调研摘录（虚构）",
+                "en": "Research Excerpt (fictional)"
+              },
+              "output_label": {
+                "zh": "竞争洞察",
+                "en": "Competitive Insight"
+              },
+              "input": {
+                "zh": "现有供应商主要服务大企业客户，中小企业需求未被满足。访谈显示中小客户愿意为简化方案支付溢价。",
+                "en": "Existing vendors serve primarily enterprise clients, SMB demand underserved. Interviews show SMB willingness to pay premium for simplified solutions."
+              },
+              "output": {
+                "zh": "中小企业市场空白，客户支付意愿验证，差异化定位清晰",
+                "en": "SMB market gap identified, payment willingness validated, clear differentiation opportunity"
+              },
+              "emphasis": {
+                "zh": "中小企业需求未被满足",
+                "en": "SMB demand underserved"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "focus_area",
+        "widget": "choice",
+        "title": {
+          "zh": "深入分析维度",
+          "en": "Deep Analysis Dimension"
+        },
+        "instruction": {
+          "zh": "选择重点关注的尽调角度",
+          "en": "Choose diligence focus area"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "增长驱动因素",
+              "en": "Growth Drivers"
+            },
+            "output": {
+              "zh": "识别增长来源和可持续性",
+              "en": "Identify growth sources and sustainability"
+            },
+            "when": {
+              "step_id": "doc_type",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "成本结构",
+              "en": "Cost Structure"
+            },
+            "output": {
+              "zh": "分析支出分布和优化空间",
+              "en": "Analyze spending distribution"
+            },
+            "when": {
+              "step_id": "doc_type",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "市场切入策略",
+              "en": "Market Entry Strategy"
+            },
+            "output": {
+              "zh": "评估进入壁垒和策略可行性",
+              "en": "Assess entry barriers and feasibility"
+            },
+            "when": {
+              "step_id": "doc_type",
+              "option_id": "1"
+            }
+          },
+          {
+            "id": "3",
+            "label": {
+              "zh": "客户获取",
+              "en": "Customer Acquisition"
+            },
+            "output": {
+              "zh": "分析获客成本和渠道效率",
+              "en": "Analyze acquisition cost and channels"
+            },
+            "when": {
+              "step_id": "doc_type",
+              "option_id": "1"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output_format",
+        "widget": "choice",
+        "title": {
+          "zh": "生成输出格式",
+          "en": "Generate Output Format"
+        },
+        "instruction": {
+          "zh": "选择尽调报告的呈现方式",
+          "en": "Choose diligence report format"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "要点清单",
+              "en": "Key Points List"
+            },
+            "output": {
+              "zh": "结构化要点，便于快速审阅",
+              "en": "Structured points for quick review"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "分析输入（虚构）",
+                "en": "Analysis Input (fictional)"
+              },
+              "output_label": {
+                "zh": "尽调要点",
+                "en": "Diligence Points"
+              },
+              "input": {
+                "zh": "Q1至Q3财务数据，销售成本趋势，市场访谈反馈",
+                "en": "Q1-Q3 financial data, cost trends, market interview feedback"
+              },
+              "output": {
+                "zh": "尽调发现清单（虚构示例）",
+                "en": "Diligence findings list (fictional)"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "收入增长",
+                    "en": "Revenue Growth"
+                  },
+                  "detail": {
+                    "zh": "三季度复合增长率显著，客户留存率支撑扩张",
+                    "en": "Strong three-quarter compound growth rate, retention supports expansion"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "运营效率",
+                    "en": "Operational Efficiency"
+                  },
+                  "detail": {
+                    "zh": "毛利率改善趋势明确，规模效应开始显现",
+                    "en": "Clear margin improvement trend, economies of scale emerging"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "市场定位",
+                    "en": "Market Positioning"
+                  },
+                  "detail": {
+                    "zh": "中小企业细分市场验证，差异化价值主张清晰",
+                    "en": "SMB segment validated, differentiated value proposition clear"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "风险评估",
+              "en": "Risk Assessment"
+            },
+            "output": {
+              "zh": "突出潜在风险和缓解建议",
+              "en": "Highlight risks and mitigation suggestions"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了从虚构文档中提取投资指标的示例流程，实际尽调需在 Bunch 平台验证",
+      "en": "Demonstrated example workflow for extracting investment metrics from fictional documents; actual diligence requires validation on Bunch platform"
+    },
+    "sources": [
+      {
+        "url": "https://bunch.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://sifted.eu/articles/ai-platform-for-vcs-raises-35m",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

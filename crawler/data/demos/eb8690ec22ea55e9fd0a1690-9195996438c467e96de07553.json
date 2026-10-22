@@ -1,0 +1,266 @@
+{
+  "cache_key": "eb8690ec22ea55e9fd0a1690-9195996438c467e96de07553",
+  "product_key": "eb8690ec22ea55e9fd0a1690",
+  "fingerprint": "9195996438c467e96de07553",
+  "product_id": "p_132b36c322e275bf",
+  "product_name": "Daytona",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-22T22:22:13.033662+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为 AI 代理选择计算环境",
+      "en": "Choose Compute Environment for AI Agents"
+    },
+    "scenario": {
+      "zh": "展示如何根据代理任务特点选择操作系统和资源配置,使用虚构场景演示环境配置决策",
+      "en": "Demonstrate how to select operating system and resource configuration based on agent task characteristics using fictional scenarios"
+    },
+    "steps": [
+      {
+        "id": "os_choice",
+        "widget": "choice",
+        "title": {
+          "zh": "选择操作系统环境",
+          "en": "Select Operating System"
+        },
+        "instruction": {
+          "zh": "根据代理工具需求选择环境",
+          "en": "Choose environment based on agent tool requirements"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "Linux 环境",
+              "en": "Linux Environment"
+            },
+            "output": {
+              "zh": "适合脚本和容器化工具",
+              "en": "Suitable for scripts and containerized tools"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "代理需求",
+                "en": "Agent Requirements"
+              },
+              "output_label": {
+                "zh": "环境特征",
+                "en": "Environment Features"
+              },
+              "input": {
+                "zh": "代理需要运行 Python 数据处理脚本,使用开源分析库,处理表格数据文件",
+                "en": "Agent needs to run Python data processing scripts, use open-source analysis libraries, handle tabular data files"
+              },
+              "output": {
+                "zh": "Ubuntu 系统,Python 运行时,常用科学计算库可用,独立文件空间",
+                "en": "Ubuntu system, Python runtime, common scientific libraries available, isolated file space"
+              },
+              "emphasis": {
+                "zh": "Python 数据处理脚本",
+                "en": "Python data processing scripts"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "Windows 环境",
+              "en": "Windows Environment"
+            },
+            "output": {
+              "zh": "支持 Windows 专用工具",
+              "en": "Supports Windows-specific tools"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "代理需求",
+                "en": "Agent Requirements"
+              },
+              "output_label": {
+                "zh": "环境特征",
+                "en": "Environment Features"
+              },
+              "input": {
+                "zh": "代理需要调用 PowerShell 脚本管理文档,使用 Windows 自动化工具处理办公文件",
+                "en": "Agent needs to invoke PowerShell scripts to manage documents, use Windows automation tools to process office files"
+              },
+              "output": {
+                "zh": "Windows Server 系统,PowerShell 环境,自动化框架就绪,受控文件访问",
+                "en": "Windows Server system, PowerShell environment, automation framework ready, controlled file access"
+              },
+              "emphasis": {
+                "zh": "PowerShell 脚本",
+                "en": "PowerShell scripts"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "macOS 环境",
+              "en": "macOS Environment"
+            },
+            "output": {
+              "zh": "适合 Apple 生态工具",
+              "en": "Suitable for Apple ecosystem tools"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "代理需求",
+                "en": "Agent Requirements"
+              },
+              "output_label": {
+                "zh": "环境特征",
+                "en": "Environment Features"
+              },
+              "input": {
+                "zh": "代理需要测试 iOS 应用构建流程,运行 Xcode 命令行工具,验证应用签名",
+                "en": "Agent needs to test iOS app build process, run Xcode command-line tools, verify app signatures"
+              },
+              "output": {
+                "zh": "macOS 系统,Xcode 工具链,模拟器支持,隔离开发环境",
+                "en": "macOS system, Xcode toolchain, simulator support, isolated development environment"
+              },
+              "emphasis": {
+                "zh": "Xcode 命令行工具",
+                "en": "Xcode command-line tools"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "scale_resources",
+        "widget": "choice",
+        "title": {
+          "zh": "配置资源规模",
+          "en": "Configure Resource Scale"
+        },
+        "instruction": {
+          "zh": "根据任务负载选择资源层级",
+          "en": "Select resource tier based on task workload"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "轻量级配置",
+              "en": "Lightweight Configuration"
+            },
+            "output": {
+              "zh": "适合简单脚本和短任务",
+              "en": "Suitable for simple scripts and short tasks"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "任务特征",
+                "en": "Task Characteristics"
+              },
+              "output_label": {
+                "zh": "资源分配",
+                "en": "Resource Allocation"
+              },
+              "input": {
+                "zh": "每小时运行一次,执行时间约五分钟,处理小型文本文件",
+                "en": "Runs once per hour, execution time around five minutes, processes small text files"
+              },
+              "output": {
+                "zh": "双核处理器,四GB 内存,十GB 临时存储,按使用时长计费",
+                "en": "Dual-core processor, four GB memory, ten GB temporary storage, billed by usage duration"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "标准配置",
+              "en": "Standard Configuration"
+            },
+            "output": {
+              "zh": "平衡性能和成本",
+              "en": "Balanced performance and cost"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "任务特征",
+                "en": "Task Characteristics"
+              },
+              "output_label": {
+                "zh": "资源分配",
+                "en": "Resource Allocation"
+              },
+              "input": {
+                "zh": "持续运行,中等计算密集度,需要处理多个并发请求",
+                "en": "Continuous operation, moderate compute intensity, needs to handle multiple concurrent requests"
+              },
+              "output": {
+                "zh": "四核处理器,八GB 内存,五十GB 临时存储,支持自动扩展",
+                "en": "Quad-core processor, eight GB memory, fifty GB temporary storage, supports auto-scaling"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "高性能配置",
+              "en": "High-Performance Configuration"
+            },
+            "output": {
+              "zh": "适合密集计算任务",
+              "en": "Suitable for compute-intensive tasks"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "任务特征",
+                "en": "Task Characteristics"
+              },
+              "output_label": {
+                "zh": "资源分配",
+                "en": "Resource Allocation"
+              },
+              "input": {
+                "zh": "大规模数据处理,复杂模型训练,需要较长执行时间",
+                "en": "Large-scale data processing, complex model training, requires extended execution time"
+              },
+              "output": {
+                "zh": "八核处理器,三十二GB 内存,两百GB 临时存储,优先级调度",
+                "en": "Octa-core processor, thirty-two GB memory, two hundred GB temporary storage, priority scheduling"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了根据代理工具和负载特征选择计算环境的虚构配置示例。实际环境需通过 Daytona API 创建,资源会根据需求弹性伸缩",
+      "en": "Illustrated fictional configuration examples for selecting compute environments based on agent tools and workload characteristics. Actual environments must be created through Daytona API with elastic resource scaling"
+    },
+    "sources": [
+      {
+        "url": "https://www.daytona.io/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://tech.eu/2026/10/20/daytona-hits-1b-valuation-with-60m-series-b-for-ai-agent-cloud/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}
