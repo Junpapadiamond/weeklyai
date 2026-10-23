@@ -1,0 +1,250 @@
+{
+  "cache_key": "77f882542ec4f775104b3f73-f18e35a1f738d94295d18b84",
+  "product_key": "77f882542ec4f775104b3f73",
+  "fingerprint": "f18e35a1f738d94295d18b84",
+  "product_id": "59",
+  "product_name": "Nectar Social",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-23T22:03:59.723650+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "AI 社交洞察到投放决策",
+      "en": "Social Insight to Campaign Decision"
+    },
+    "scenario": {
+      "zh": "品牌营销团队从受众讨论中提取趋势，快速验证投放方向",
+      "en": "Marketing team extracts trends from audience discussions to validate campaign direction"
+    },
+    "steps": [
+      {
+        "id": "extract",
+        "widget": "choice",
+        "title": {
+          "zh": "识别受众信号",
+          "en": "Identify Audience Signal"
+        },
+        "instruction": {
+          "zh": "选择一个社交讨论场景",
+          "en": "Choose a social discussion scenario"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "护肤品讨论",
+              "en": "Skincare Discussion"
+            },
+            "output": {
+              "zh": "提取高频关注点和情绪",
+              "en": "Extract frequent concerns and sentiment"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "社交讨论样本",
+                "en": "Social Discussion Sample"
+              },
+              "output_label": {
+                "zh": "识别的关注点",
+                "en": "Identified Concerns"
+              },
+              "input": {
+                "zh": "用了三周，脸颊泛红减轻了但 T 区还是出油。希望有专门控油的版本。冬天用很舒服，夏天可能太厚重。",
+                "en": "Used for three weeks, cheek redness reduced but T-zone still oily. Hope for an oil-control version. Great in winter, may be too heavy in summer."
+              },
+              "output": {
+                "zh": "季节适配性关注、分区护理需求、质地偏好差异",
+                "en": "Seasonal adaptability concern, zone-specific care need, texture preference variation"
+              },
+              "emphasis": {
+                "zh": "T 区还是出油",
+                "en": "T-zone still oily"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "运动装备评价",
+              "en": "Fitness Gear Review"
+            },
+            "output": {
+              "zh": "发现未满足的使用场景",
+              "en": "Discover unmet use scenarios"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "用户评价片段",
+                "en": "User Review Fragment"
+              },
+              "output_label": {
+                "zh": "场景缺口",
+                "en": "Scenario Gap"
+              },
+              "input": {
+                "zh": "跑步很稳，但做瑜伽时鞋底抓地不够。如果能出一款多功能的就完美了。价格可以接受。",
+                "en": "Stable for running, but sole grip insufficient for yoga. A multi-function version would be perfect. Price acceptable."
+              },
+              "output": {
+                "zh": "跨场景使用诉求、功能整合期待、价格敏感度低",
+                "en": "Cross-scenario use demand, function integration expectation, low price sensitivity"
+              },
+              "emphasis": {
+                "zh": "做瑜伽时鞋底抓地不够",
+                "en": "sole grip insufficient for yoga"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "position",
+        "widget": "choice",
+        "title": {
+          "zh": "定位投放角度",
+          "en": "Position Campaign Angle"
+        },
+        "instruction": {
+          "zh": "基于洞察选择传播重点",
+          "en": "Choose messaging focus based on insight"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "强调分区方案",
+              "en": "Emphasize Zone Solutions"
+            },
+            "output": {
+              "zh": "针对混合肤质的精准定位",
+              "en": "Precision positioning for combination skin"
+            },
+            "when": {
+              "step_id": "extract",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "突出季节搭配",
+              "en": "Highlight Seasonal Pairing"
+            },
+            "output": {
+              "zh": "四季适配的产品组合建议",
+              "en": "Year-round product combination suggestion"
+            },
+            "when": {
+              "step_id": "extract",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "主打多场景",
+              "en": "Lead with Multi-Scenario"
+            },
+            "output": {
+              "zh": "全天候运动的一体化方案",
+              "en": "All-day workout integration solution"
+            },
+            "when": {
+              "step_id": "extract",
+              "option_id": "1"
+            }
+          },
+          {
+            "id": "3",
+            "label": {
+              "zh": "聚焦专业性能",
+              "en": "Focus on Pro Performance"
+            },
+            "output": {
+              "zh": "单项运动的技术深度传播",
+              "en": "Technical depth messaging for single sport"
+            },
+            "when": {
+              "step_id": "extract",
+              "option_id": "1"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "verify",
+        "widget": "review",
+        "title": {
+          "zh": "验证投放逻辑",
+          "en": "Verify Campaign Logic"
+        },
+        "instruction": {
+          "zh": "检查决策依据完整性",
+          "en": "Check decision rationale completeness"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "受众信号来源",
+              "en": "Audience Signal Source"
+            },
+            "output": {
+              "zh": "虚构讨论文本，非真实平台数据",
+              "en": "Fictional discussion text, not real platform data"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "转化路径设计",
+              "en": "Conversion Path Design"
+            },
+            "output": {
+              "zh": "需在实际平台配置落地页和追踪",
+              "en": "Requires landing page and tracking setup on actual platform"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "投放效果预测",
+              "en": "Campaign Performance Forecast"
+            },
+            "output": {
+              "zh": "示例未提供点击率或转化率测算",
+              "en": "Example provides no CTR or conversion rate estimation"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了从虚构讨论到定位方向的决策流程；实际受众数据、投放配置和效果追踪需在 Nectar Social 平台完成",
+      "en": "Demonstrated decision flow from fictional discussion to positioning direction; actual audience data, campaign setup and performance tracking must be completed on Nectar Social platform"
+    },
+    "sources": [
+      {
+        "url": "https://www.nectarsocial.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.thefashionlaw.com/generative-ai-investment-and-ma-tracker/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

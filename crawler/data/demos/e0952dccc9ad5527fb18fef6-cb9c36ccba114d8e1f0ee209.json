@@ -1,0 +1,232 @@
+{
+  "cache_key": "e0952dccc9ad5527fb18fef6-cb9c36ccba114d8e1f0ee209",
+  "product_key": "e0952dccc9ad5527fb18fef6",
+  "fingerprint": "cb9c36ccba114d8e1f0ee209",
+  "product_id": "81",
+  "product_name": "eyeo",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-23T22:05:38.233817+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "eyeo 纳米光子成像演示",
+      "en": "eyeo Nanophotonic Imaging Demo"
+    },
+    "scenario": {
+      "zh": "探索 eyeo 纳米光子成像在不同场景下如何提升视觉传感性能",
+      "en": "Explore how eyeo nanophotonic imaging enhances vision and sensing performance across scenarios"
+    },
+    "steps": [
+      {
+        "id": "scenario",
+        "widget": "choice",
+        "title": {
+          "zh": "选择应用场景",
+          "en": "Choose Application"
+        },
+        "instruction": {
+          "zh": "选择一个场景查看成像对比",
+          "en": "Select a scenario to see imaging comparison"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "工业检测",
+              "en": "Industrial Inspection"
+            },
+            "output": {
+              "zh": "对比传统与纳米光子成像",
+              "en": "Compare conventional vs nanophotonic imaging"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "检测目标",
+                "en": "Inspection Target"
+              },
+              "output_label": {
+                "zh": "成像对比",
+                "en": "Imaging Comparison"
+              },
+              "input": {
+                "zh": "半导体晶圆表面缺陷（5微米级）",
+                "en": "Semiconductor wafer surface defects (5-micron level)"
+              },
+              "output": {
+                "zh": "传统方案：边缘模糊需多次扫描 | eyeo 方案：单次清晰捕获边界细节",
+                "en": "Conventional: blurred edges require multiple scans | eyeo: single-pass capture with clear boundary detail"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "医疗成像",
+              "en": "Medical Imaging"
+            },
+            "output": {
+              "zh": "在低光条件下的表现",
+              "en": "Performance under low-light conditions"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "成像条件",
+                "en": "Imaging Condition"
+              },
+              "output_label": {
+                "zh": "信噪比对比",
+                "en": "Signal-to-Noise Comparison"
+              },
+              "input": {
+                "zh": "微创内窥镜环境（低光照）",
+                "en": "Minimally invasive endoscope environment (low light)"
+              },
+              "output": {
+                "zh": "传统方案：噪点明显组织边界不清 | eyeo 方案：组织层次清晰可辨",
+                "en": "Conventional: visible noise with unclear tissue boundaries | eyeo: clear distinguishable tissue layers"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "自动驾驶传感",
+              "en": "Autonomous Sensing"
+            },
+            "output": {
+              "zh": "复杂光照下的识别",
+              "en": "Recognition under complex lighting"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "环境条件",
+                "en": "Environmental Condition"
+              },
+              "output_label": {
+                "zh": "目标识别",
+                "en": "Object Recognition"
+              },
+              "input": {
+                "zh": "夜间城市街道（强光源与阴影交错）",
+                "en": "Urban street at night (mixed strong light and shadow)"
+              },
+              "output": {
+                "zh": "传统方案：阴影区行人轮廓丢失 | eyeo 方案：全场景稳定捕获行人与车辆边界",
+                "en": "Conventional: pedestrian contours lost in shadow | eyeo: stable capture of pedestrians and vehicles across full scene"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "tech",
+        "widget": "choice",
+        "title": {
+          "zh": "技术优势维度",
+          "en": "Technical Advantage"
+        },
+        "instruction": {
+          "zh": "选择一个维度查看示例",
+          "en": "Select a dimension to see example"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "光学分辨率",
+              "en": "Optical Resolution"
+            },
+            "output": {
+              "zh": "纳米级结构分辨能力",
+              "en": "Nanoscale structure resolution"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "测试样本",
+                "en": "Test Sample"
+              },
+              "output_label": {
+                "zh": "分辨结果",
+                "en": "Resolution Result"
+              },
+              "input": {
+                "zh": "生物细胞膜表面蛋白分布（100纳米间距）",
+                "en": "Cell membrane surface protein distribution (100nm spacing)"
+              },
+              "output": {
+                "zh": "清晰分辨单个蛋白簇，间距误差小于10纳米",
+                "en": "Clear resolution of individual protein clusters, spacing error under 10nm"
+              },
+              "emphasis": {
+                "zh": "100纳米间距",
+                "en": "100nm spacing"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "动态范围",
+              "en": "Dynamic Range"
+            },
+            "output": {
+              "zh": "同时捕获亮暗区域",
+              "en": "Simultaneous bright and dark capture"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "场景描述",
+                "en": "Scene Description"
+              },
+              "output_label": {
+                "zh": "成像效果",
+                "en": "Imaging Result"
+              },
+              "input": {
+                "zh": "金属表面反射区与深槽暗部同时存在",
+                "en": "Metal surface with both reflective areas and deep groove shadows"
+              },
+              "output": {
+                "zh": "反光区细节未过曝，暗部纹理完整可见",
+                "en": "Detail in reflective areas not overexposed, dark area texture fully visible"
+              },
+              "emphasis": {
+                "zh": "反射区与深槽暗部",
+                "en": "reflective areas and deep groove shadows"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了 eyeo 纳米光子成像在工业、医疗、自动驾驶场景下的示例对比；实际性能需在 eyeo 官方设备上验证；访问 eyeo.com 了解技术细节与合作方式",
+      "en": "Demonstrated eyeo nanophotonic imaging example comparisons across industrial, medical, and autonomous scenarios; actual performance requires verification on eyeo official devices; visit eyeo.com for technical details and partnerships"
+    },
+    "sources": [
+      {
+        "url": "https://eyeo.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://tech.eu/category/deep-tech/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

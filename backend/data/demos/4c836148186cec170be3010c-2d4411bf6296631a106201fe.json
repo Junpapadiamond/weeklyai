@@ -1,0 +1,179 @@
+{
+  "cache_key": "4c836148186cec170be3010c-2d4411bf6296631a106201fe",
+  "product_key": "4c836148186cec170be3010c",
+  "fingerprint": "2d4411bf6296631a106201fe",
+  "product_id": "69",
+  "product_name": "White Circle",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-23T22:04:43.108748+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "企业 AI 安全检查点",
+      "en": "Enterprise AI Safety Checkpoint"
+    },
+    "scenario": {
+      "zh": "在员工使用 AI 工具前，检查请求是否符合公司政策并过滤风险输出",
+      "en": "Before employees use AI tools, check if requests comply with company policy and filter risky outputs"
+    },
+    "steps": [
+      {
+        "id": "rule_check",
+        "widget": "choice",
+        "title": {
+          "zh": "选择检查场景",
+          "en": "Choose Inspection Scenario"
+        },
+        "instruction": {
+          "zh": "选一个典型的企业 AI 使用场景",
+          "en": "Pick a typical enterprise AI use case"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "客服回复审核",
+              "en": "Customer Support Review"
+            },
+            "output": {
+              "zh": "请求违反数据保护政策，已拦截",
+              "en": "Request violates data policy, blocked"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "员工输入",
+                "en": "Employee Input"
+              },
+              "output_label": {
+                "zh": "检查结果",
+                "en": "Check Result"
+              },
+              "input": {
+                "zh": "帮我写一封邮件，告诉客户 John Smith，他的信用卡尾号 4532 的退款已处理",
+                "en": "Write an email telling customer John Smith that his refund for card ending 4532 is processed"
+              },
+              "output": {
+                "zh": "已拦截：请求包含客户 PII（姓名、卡号），违反数据保护规则第 3.2 条",
+                "en": "Blocked: Request contains customer PII (name, card number), violates data protection rule 3.2"
+              },
+              "emphasis": {
+                "zh": "John Smith，他的信用卡尾号 4532",
+                "en": "John Smith that his refund for card ending 4532"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "代码生成审核",
+              "en": "Code Generation Review"
+            },
+            "output": {
+              "zh": "输出包含硬编码密钥，已过滤",
+              "en": "Output contains hardcoded key, filtered"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "开发者请求",
+                "en": "Developer Request"
+              },
+              "output_label": {
+                "zh": "检查结果",
+                "en": "Check Result"
+              },
+              "input": {
+                "zh": "生成连接生产数据库的 Python 代码",
+                "en": "Generate Python code to connect to production database"
+              },
+              "output": {
+                "zh": "已过滤 AI 输出：检测到硬编码凭证（db_password），违反安全编码规则",
+                "en": "Filtered AI output: Hardcoded credential detected (db_password), violates secure coding rule"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "市场文案审核",
+              "en": "Marketing Copy Review"
+            },
+            "output": {
+              "zh": "文案符合品牌规范，已通过",
+              "en": "Copy meets brand guidelines, approved"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "营销请求",
+                "en": "Marketing Request"
+              },
+              "output_label": {
+                "zh": "检查结果",
+                "en": "Check Result"
+              },
+              "input": {
+                "zh": "为新产品写一段社交媒体文案，强调 AI 驱动的创新",
+                "en": "Write social media copy for our new product, emphasizing AI-driven innovation"
+              },
+              "output": {
+                "zh": "已通过：内容符合品牌调性规则，未检测到禁用词汇或夸大声明",
+                "en": "Approved: Content meets brand tone rules, no banned terms or exaggerated claims detected"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "outcome",
+        "widget": "review",
+        "title": {
+          "zh": "查看拦截逻辑",
+          "en": "Review Block Logic"
+        },
+        "instruction": {
+          "zh": "了解规则如何应用到这次检查",
+          "en": "See how rules applied to this check"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "规则匹配详情",
+              "en": "Rule Match Details"
+            },
+            "output": {
+              "zh": "显示触发的具体规则条款和建议修改方向",
+              "en": "Shows triggered rule clause and suggested revision direction"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例展示了虚构的输入检查和输出过滤；实际规则配置、拦截准确性和企业集成需在 White Circle 平台验证",
+      "en": "Example shows fictional input check and output filter; actual rule config, block accuracy and enterprise integration must be verified on White Circle platform"
+    },
+    "sources": [
+      {
+        "url": "https://whitecircle.ai/?ref=siliconsnark.com",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.siliconsnark.com/white-circle-raised-11m-to-put-a-chaperone-on-your-ai-agents/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

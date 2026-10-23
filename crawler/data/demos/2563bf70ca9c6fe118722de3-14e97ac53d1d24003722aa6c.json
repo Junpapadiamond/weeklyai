@@ -1,0 +1,201 @@
+{
+  "cache_key": "2563bf70ca9c6fe118722de3-14e97ac53d1d24003722aa6c",
+  "product_key": "2563bf70ca9c6fe118722de3",
+  "fingerprint": "14e97ac53d1d24003722aa6c",
+  "product_id": "64",
+  "product_name": "Dust",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-23T22:04:22.572037+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为 Dust 创建知识查询 agent",
+      "en": "Create a knowledge query agent in Dust"
+    },
+    "scenario": {
+      "zh": "团队需要快速从内部文档找到项目答案，构建一个连接知识库的 agent 来自动检索相关内容",
+      "en": "Team needs to quickly find project answers from internal docs; build an agent connecting knowledge bases to auto-retrieve relevant content"
+    },
+    "steps": [
+      {
+        "id": "connect_source",
+        "widget": "choice",
+        "title": {
+          "zh": "连接内部知识源",
+          "en": "Connect internal knowledge source"
+        },
+        "instruction": {
+          "zh": "选择 agent 可以查询的知识来源",
+          "en": "Choose knowledge source the agent can query"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "项目文档库",
+              "en": "Project documentation"
+            },
+            "output": {
+              "zh": "agent 将检索产品规格与技术决策",
+              "en": "Agent will retrieve product specs and technical decisions"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "虚构的查询问题",
+                "en": "Fictional query question"
+              },
+              "output_label": {
+                "zh": "虚构的检索结果片段",
+                "en": "Fictional retrieved excerpt"
+              },
+              "input": {
+                "zh": "我们的 API 速率限制是多少？",
+                "en": "What is our API rate limit?"
+              },
+              "output": {
+                "zh": "根据架构文档第 12 页：默认限制为每秒 100 次请求，企业客户可提升至 500 次",
+                "en": "Per architecture doc page 12: default limit is 100 requests/second, enterprise customers can increase to 500"
+              },
+              "emphasis": {
+                "zh": "API 速率限制",
+                "en": "API rate limit"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "客户支持记录",
+              "en": "Customer support records"
+            },
+            "output": {
+              "zh": "agent 将查找历史工单与解决方案",
+              "en": "Agent will find historical tickets and solutions"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "虚构的查询问题",
+                "en": "Fictional query question"
+              },
+              "output_label": {
+                "zh": "虚构的检索结果片段",
+                "en": "Fictional retrieved excerpt"
+              },
+              "input": {
+                "zh": "如何处理支付失败的退款？",
+                "en": "How to handle refunds for failed payments?"
+              },
+              "output": {
+                "zh": "根据工单 #3847 处理记录：失败支付在 24 小时内自动退回原支付方式，客户无需额外操作",
+                "en": "Per ticket #3847 resolution: failed payments automatically refund to original method within 24 hours, no customer action needed"
+              },
+              "emphasis": {
+                "zh": "支付失败的退款",
+                "en": "refunds for failed payments"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "refine_response",
+        "widget": "choice",
+        "title": {
+          "zh": "设定回答格式",
+          "en": "Set response format"
+        },
+        "instruction": {
+          "zh": "决定 agent 如何组织检索到的信息",
+          "en": "Decide how agent organizes retrieved information"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "摘要 + 来源引用",
+              "en": "Summary + source citation"
+            },
+            "output": {
+              "zh": "提供简洁答案并标注原始文档位置",
+              "en": "Provide concise answer with original doc location"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "对比多个文档",
+              "en": "Compare multiple docs"
+            },
+            "output": {
+              "zh": "并列展示不同文档中的相关内容",
+              "en": "Show side-by-side content from different docs"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "直接引用原文",
+              "en": "Direct quote from source"
+            },
+            "output": {
+              "zh": "返回文档中最相关的完整段落",
+              "en": "Return most relevant complete paragraph from doc"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "test_query",
+        "widget": "review",
+        "title": {
+          "zh": "测试知识查询",
+          "en": "Test knowledge query"
+        },
+        "instruction": {
+          "zh": "在 Dust 平台提问验证 agent 效果",
+          "en": "Ask test question on Dust platform to verify agent performance"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "提问并检查来源准确性",
+              "en": "Ask and check source accuracy"
+            },
+            "output": {
+              "zh": "需在 Dust 实际运行 agent 来确认检索质量与答案可靠性",
+              "en": "Must run agent on actual Dust to confirm retrieval quality and answer reliability"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了从虚构知识库检索答案的流程；真实检索准确性、多源整合能力需在 Dust 平台配置实际数据源后验证；前往 dust.tt 连接团队知识并部署 agent",
+      "en": "Illustrated workflow retrieving answers from fictional knowledge base; real retrieval accuracy and multi-source integration require configuring actual data sources on Dust platform; visit dust.tt to connect team knowledge and deploy agent"
+    },
+    "sources": [
+      {
+        "url": "https://dust.tt/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://sifted.eu/articles/dust-series-b-40m",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

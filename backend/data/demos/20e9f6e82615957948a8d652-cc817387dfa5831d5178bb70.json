@@ -1,0 +1,279 @@
+{
+  "cache_key": "20e9f6e82615957948a8d652-cc817387dfa5831d5178bb70",
+  "product_key": "20e9f6e82615957948a8d652",
+  "fingerprint": "cc817387dfa5831d5178bb70",
+  "product_id": "76",
+  "product_name": "Sprouts.ai",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-23T22:05:13.560354+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "AI 收入代理演示",
+      "en": "AI Revenue Agent Demo"
+    },
+    "scenario": {
+      "zh": "为 B2B 企业自动化销售线索跟进和转化流程",
+      "en": "Automate B2B lead follow-up and conversion workflows"
+    },
+    "steps": [
+      {
+        "id": "lead_source",
+        "widget": "choice",
+        "title": {
+          "zh": "选择线索来源",
+          "en": "Choose Lead Source"
+        },
+        "instruction": {
+          "zh": "选择一个待处理的销售线索",
+          "en": "Select a lead to process"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "网站表单提交",
+              "en": "Website Form Submit"
+            },
+            "output": {
+              "zh": "识别企业背景和需求信号",
+              "en": "Identified company context and intent signals"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "表单内容",
+                "en": "Form Content"
+              },
+              "output_label": {
+                "zh": "线索分析",
+                "en": "Lead Analysis"
+              },
+              "input": {
+                "zh": "公司：TechFlow Inc | 角色：VP of Sales | 需求：寻找销售自动化方案 | 团队规模：50人",
+                "en": "Company: TechFlow Inc | Role: VP of Sales | Need: Looking for sales automation | Team: 50 people"
+              },
+              "output": {
+                "zh": "中型 B2B SaaS 企业，决策层询问，明确预算场景，建议优先联系",
+                "en": "Mid-size B2B SaaS, decision-maker inquiry, clear budget fit, priority contact recommended"
+              },
+              "emphasis": {
+                "zh": "VP of Sales",
+                "en": "VP of Sales"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "会议后续线索",
+              "en": "Post-Meeting Lead"
+            },
+            "output": {
+              "zh": "提取讨论要点和行动项",
+              "en": "Extracted discussion points and action items"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "会议记录",
+                "en": "Meeting Notes"
+              },
+              "output_label": {
+                "zh": "跟进建议",
+                "en": "Follow-up Plan"
+              },
+              "input": {
+                "zh": "DataSync 团队对产品感兴趣，提到当前工具响应慢，希望两周内看到演示方案",
+                "en": "DataSync team interested, mentioned current tools are slow, wants demo within two weeks"
+              },
+              "output": {
+                "zh": "时间敏感需求，竞品替换场景，72小时内发送定制演示链接",
+                "en": "Time-sensitive need, replacement scenario, send custom demo link within 72 hours"
+              },
+              "emphasis": {
+                "zh": "两周内",
+                "en": "within two weeks"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "outreach",
+        "widget": "choice",
+        "title": {
+          "zh": "生成跟进内容",
+          "en": "Generate Outreach"
+        },
+        "instruction": {
+          "zh": "为线索创建个性化联系方案",
+          "en": "Create personalized contact approach"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "邮件跟进",
+              "en": "Email Follow-up"
+            },
+            "output": {
+              "zh": "基于企业情况生成邮件草稿",
+              "en": "Draft email based on company context"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "线索信息",
+                "en": "Lead Info"
+              },
+              "output_label": {
+                "zh": "邮件草稿",
+                "en": "Email Draft"
+              },
+              "input": {
+                "zh": "TechFlow Inc，VP of Sales 询问销售自动化，50人团队",
+                "en": "TechFlow Inc, VP of Sales asking about sales automation, 50-person team"
+              },
+              "output": {
+                "zh": "主题：为 TechFlow 销售团队提升转化率 | 正文：了解到贵团队在寻找自动化方案。针对50人规模，我们可在一周内展示如何减少重复跟进工作。方便本周三下午通话吗？",
+                "en": "Subject: Boost TechFlow Sales Conversion | Body: Learned your team seeks automation. For 50-person scale, we can show how to reduce repetitive follow-up within one week. Available Wednesday PM for a call?"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "LinkedIn 消息",
+              "en": "LinkedIn Message"
+            },
+            "output": {
+              "zh": "生成简洁的社交平台消息",
+              "en": "Generate concise social platform message"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "场景",
+                "en": "Context"
+              },
+              "output_label": {
+                "zh": "消息内容",
+                "en": "Message"
+              },
+              "input": {
+                "zh": "DataSync 会议后续，需要两周内演示",
+                "en": "DataSync post-meeting, needs demo in two weeks"
+              },
+              "output": {
+                "zh": "感谢上次交流。根据您提到的响应速度问题，我准备了一个针对 DataSync 场景的演示方案。这周能安排15分钟快速过一遍吗？",
+                "en": "Thanks for the discussion. Based on the speed issues you mentioned, I prepared a demo tailored for DataSync. Can we do a quick 15-min walkthrough this week?"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "conversion",
+        "widget": "review",
+        "title": {
+          "zh": "查看转化建议",
+          "en": "Review Conversion Plan"
+        },
+        "instruction": {
+          "zh": "检查自动生成的推进策略",
+          "en": "Review auto-generated progression strategy"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "发送并跟踪",
+              "en": "Send and Track"
+            },
+            "output": {
+              "zh": "内容已准备，虚拟演示已排期跟踪",
+              "en": "Content ready, fictional demo scheduled for tracking"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "行动计划",
+                "en": "Action Plan"
+              },
+              "output_label": {
+                "zh": "执行清单",
+                "en": "Execution Checklist"
+              },
+              "input": {
+                "zh": "TechFlow 邮件跟进",
+                "en": "TechFlow email follow-up"
+              },
+              "output": {
+                "zh": "推进阶段",
+                "en": "Progression Stage"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "立即发送邮件",
+                    "en": "Send email now"
+                  },
+                  "detail": {
+                    "zh": "使用生成的草稿联系 VP",
+                    "en": "Contact VP with generated draft"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "48小时后检查",
+                    "en": "Check in 48 hours"
+                  },
+                  "detail": {
+                    "zh": "未回复则发送补充案例",
+                    "en": "Send case study if no response"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "一周后电话",
+                    "en": "Call after one week"
+                  },
+                  "detail": {
+                    "zh": "直接预约演示时间",
+                    "en": "Directly schedule demo slot"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了 AI 如何分析线索并生成个性化跟进内容。实际产品整合、多渠道执行和转化追踪需在 Sprouts.ai 平台验证。",
+      "en": "Showed how AI analyzes leads and generates personalized outreach. Actual integration, multi-channel execution and conversion tracking must be verified on Sprouts.ai platform."
+    },
+    "sources": [
+      {
+        "url": "https://sprouts.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://pulse2.com/artificial-intelligence/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}
