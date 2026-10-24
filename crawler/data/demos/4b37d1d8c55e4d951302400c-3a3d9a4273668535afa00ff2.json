@@ -1,0 +1,344 @@
+{
+  "cache_key": "4b37d1d8c55e4d951302400c-3a3d9a4273668535afa00ff2",
+  "product_key": "4b37d1d8c55e4d951302400c",
+  "fingerprint": "3a3d9a4273668535afa00ff2",
+  "product_id": "p_442bc0d0ca5f7e9f",
+  "product_name": "Mural",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-24T21:38:05.748811+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "企业跨境账户管理演示",
+      "en": "Cross-border Account Demo"
+    },
+    "scenario": {
+      "zh": "演示如何为企业客户配置统一的多币种账户结构,简化国际支付流程",
+      "en": "Demo configuring unified multi-currency account structure for business clients to simplify international payments"
+    },
+    "steps": [
+      {
+        "id": "account_structure",
+        "widget": "choice",
+        "title": {
+          "zh": "选择账户场景",
+          "en": "Select Account Scenario"
+        },
+        "instruction": {
+          "zh": "选择企业的跨境业务类型",
+          "en": "Choose the cross-border business type"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "跨境电商收款",
+              "en": "E-commerce Payments"
+            },
+            "output": {
+              "zh": "设置多货币收款账户",
+              "en": "Multi-currency receiving setup"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "业务需求",
+                "en": "Business Needs"
+              },
+              "output_label": {
+                "zh": "账户配置方案",
+                "en": "Account Configuration"
+              },
+              "input": {
+                "zh": "某跨境电商平台需要接收来自欧洲、东南亚和拉美的客户付款",
+                "en": "Cross-border e-commerce platform receiving payments from Europe, Southeast Asia and Latin America"
+              },
+              "output": {
+                "zh": "配置EUR、SGD、BRL三个本地货币接收账户,自动归集至USD主账户,客户看到本地货币价格",
+                "en": "Configure EUR, SGD, BRL local receiving accounts, auto-settle to USD master account, customers see local prices"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "欧洲账户",
+                    "en": "Europe Account"
+                  },
+                  "detail": {
+                    "zh": "EUR接收,当日汇率结算",
+                    "en": "EUR receiving, same-day settlement"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "东南亚账户",
+                    "en": "SEA Account"
+                  },
+                  "detail": {
+                    "zh": "SGD接收,T+1结算",
+                    "en": "SGD receiving, T+1 settlement"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "拉美账户",
+                    "en": "LatAm Account"
+                  },
+                  "detail": {
+                    "zh": "BRL接收,本地合规持有",
+                    "en": "BRL receiving, local compliant custody"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "供应商批量付款",
+              "en": "Vendor Bulk Payments"
+            },
+            "output": {
+              "zh": "配置批量支付通道",
+              "en": "Batch payment channel setup"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "付款需求",
+                "en": "Payment Needs"
+              },
+              "output_label": {
+                "zh": "支付方案",
+                "en": "Payment Solution"
+              },
+              "input": {
+                "zh": "制造企业需每月向15个国家的200多家供应商支付货款",
+                "en": "Manufacturing company paying 200+ vendors across 15 countries monthly"
+              },
+              "output": {
+                "zh": "统一USD主账户发起,自动拆分为本地货币支付,供应商收到当地货币,减少汇兑成本",
+                "en": "Initiate from unified USD master, auto-split to local currencies, vendors receive local payment, reduced FX costs"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "亚洲供应商",
+                    "en": "Asia Vendors"
+                  },
+                  "detail": {
+                    "zh": "CNY、JPY、KRW直接到账",
+                    "en": "CNY, JPY, KRW direct deposit"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "欧洲供应商",
+                    "en": "Europe Vendors"
+                  },
+                  "detail": {
+                    "zh": "EUR、GBP当日到账",
+                    "en": "EUR, GBP same-day arrival"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "payment_flow",
+        "widget": "choice",
+        "title": {
+          "zh": "选择支付方式",
+          "en": "Select Payment Method"
+        },
+        "instruction": {
+          "zh": "根据场景选择支付通道",
+          "en": "Choose payment channel based on scenario"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "传统银行转账",
+              "en": "Traditional Wire"
+            },
+            "output": {
+              "zh": "使用SWIFT网络,2-3天到账",
+              "en": "SWIFT network, 2-3 days settlement"
+            },
+            "when": {
+              "step_id": "account_structure",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "稳定币即时结算",
+              "en": "Stablecoin Instant"
+            },
+            "output": {
+              "zh": "USDC链上转账,10分钟确认",
+              "en": "USDC on-chain transfer, 10-min confirmation"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "付款指令",
+                "en": "Payment Instruction"
+              },
+              "output_label": {
+                "zh": "结算对比",
+                "en": "Settlement Comparison"
+              },
+              "input": {
+                "zh": "向新加坡供应商支付等值5万美元货款",
+                "en": "Pay Singapore vendor equivalent of $50,000 USD"
+              },
+              "output": {
+                "zh": "传统方式需3天和75美元手续费,稳定币方式20分钟到账手续费不到2美元",
+                "en": "Traditional takes 3 days with $75 fee, stablecoin arrives in 20 minutes with under $2 fee"
+              }
+            },
+            "when": {
+              "step_id": "account_structure",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "混合通道批处理",
+              "en": "Hybrid Batch"
+            },
+            "output": {
+              "zh": "稳定币优先,传统银行备用",
+              "en": "Stablecoin priority, bank fallback"
+            },
+            "when": {
+              "step_id": "account_structure",
+              "option_id": "1"
+            }
+          },
+          {
+            "id": "3",
+            "label": {
+              "zh": "预授权自动扣款",
+              "en": "Pre-authorized Debit"
+            },
+            "output": {
+              "zh": "供应商授权后自动按期扣款",
+              "en": "Auto-debit after vendor authorization"
+            },
+            "when": {
+              "step_id": "account_structure",
+              "option_id": "1"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "reconciliation",
+        "widget": "review",
+        "title": {
+          "zh": "对账记录示例",
+          "en": "Reconciliation Example"
+        },
+        "instruction": {
+          "zh": "查看统一平台的交易记录",
+          "en": "Review unified platform transaction records"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "查看示例记录",
+              "en": "View Sample Records"
+            },
+            "output": {
+              "zh": "显示虚构的三笔跨境交易",
+              "en": "Shows three fictional cross-border transactions"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "交易日志",
+                "en": "Transaction Log"
+              },
+              "output_label": {
+                "zh": "统一视图",
+                "en": "Unified View"
+              },
+              "input": {
+                "zh": "2025年1月某企业账户的三笔代表性交易",
+                "en": "Three representative transactions from January 2025 corporate account"
+              },
+              "output": {
+                "zh": "所有货币、通道和状态集中在单一界面,无需登录多个银行系统",
+                "en": "All currencies, channels and statuses in single interface without logging into multiple bank systems"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "EUR收款",
+                    "en": "EUR Receipt"
+                  },
+                  "detail": {
+                    "zh": "客户支付€12,450,已结算为$13,201 USD",
+                    "en": "Customer paid €12,450, settled as $13,201 USD"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "USDC支付",
+                    "en": "USDC Payment"
+                  },
+                  "detail": {
+                    "zh": "向供应商支付$8,000 USDC,已确认上链",
+                    "en": "Paid vendor $8,000 USDC, confirmed on-chain"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "BRL待处理",
+                    "en": "BRL Pending"
+                  },
+                  "detail": {
+                    "zh": "等待合规审核,预计明日放行",
+                    "en": "Awaiting compliance review, expected release tomorrow"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了统一平台如何管理多币种账户和不同支付通道的虚构示例,实际功能、合规要求和费率需在Mural官网确认,并完成企业认证后使用",
+      "en": "Demonstrated fictional examples of managing multi-currency accounts and payment channels on unified platform; actual features, compliance requirements and rates must be confirmed on Mural's official site and used after business verification"
+    },
+    "sources": [
+      {
+        "url": "https://www.mural.co/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://fortune.com/2026/10/20/mural-startup-former-palantir-engineers-15-million-bid-banks-bot-economy",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

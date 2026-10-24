@@ -1,0 +1,311 @@
+{
+  "cache_key": "03e96967630fa08b8823d5bc-1945dfa88ac1bf28953d7d00",
+  "product_key": "03e96967630fa08b8823d5bc",
+  "fingerprint": "1945dfa88ac1bf28953d7d00",
+  "product_id": "p_312d68c1d07396ac",
+  "product_name": "Abby Care",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-24T21:37:31.755274+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "家庭护理员培训匹配",
+      "en": "Family Caregiver Training Match"
+    },
+    "scenario": {
+      "zh": "为照顾老年家人的成员匹配合适的护理培训课程",
+      "en": "Match appropriate care training courses for family members caring for elderly relatives"
+    },
+    "steps": [
+      {
+        "id": "care_focus",
+        "widget": "choice",
+        "title": {
+          "zh": "选择护理重点",
+          "en": "Choose Care Focus"
+        },
+        "instruction": {
+          "zh": "描述家人当前最需要的护理协助",
+          "en": "Describe the care assistance your family member needs most"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "日常生活协助",
+              "en": "Daily Living Assistance"
+            },
+            "output": {
+              "zh": "匹配基础护理技能培训",
+              "en": "Matched with basic care skills training"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "护理需求",
+                "en": "Care Needs"
+              },
+              "output_label": {
+                "zh": "建议培训内容",
+                "en": "Suggested Training Content"
+              },
+              "input": {
+                "zh": "协助母亲洗澡、穿衣和用餐",
+                "en": "Help mother with bathing, dressing and meals"
+              },
+              "output": {
+                "zh": "安全转移、个人卫生、用餐支持",
+                "en": "Safe transfers, personal hygiene, meal support"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "安全转移",
+                    "en": "Safe Transfers"
+                  },
+                  "detail": {
+                    "zh": "防跌倒和移动技巧",
+                    "en": "Fall prevention and mobility techniques"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "个人卫生",
+                    "en": "Personal Hygiene"
+                  },
+                  "detail": {
+                    "zh": "洗澡协助和皮肤护理",
+                    "en": "Bathing help and skin care"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "用餐支持",
+                    "en": "Meal Support"
+                  },
+                  "detail": {
+                    "zh": "准备食物和喂食方法",
+                    "en": "Food prep and feeding methods"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "慢性病照护",
+              "en": "Chronic Condition Care"
+            },
+            "output": {
+              "zh": "匹配疾病管理培训",
+              "en": "Matched with condition management training"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "护理需求",
+                "en": "Care Needs"
+              },
+              "output_label": {
+                "zh": "建议培训内容",
+                "en": "Suggested Training Content"
+              },
+              "input": {
+                "zh": "帮助父亲管理糖尿病和用药",
+                "en": "Help father manage diabetes and medications"
+              },
+              "output": {
+                "zh": "血糖监测、用药管理、症状识别",
+                "en": "Glucose monitoring, medication management, symptom recognition"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "血糖监测",
+                    "en": "Glucose Monitoring"
+                  },
+                  "detail": {
+                    "zh": "测量方法和记录",
+                    "en": "Measurement methods and logging"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "用药管理",
+                    "en": "Medication Management"
+                  },
+                  "detail": {
+                    "zh": "服药时间表和提醒",
+                    "en": "Dosing schedule and reminders"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "症状识别",
+                    "en": "Symptom Recognition"
+                  },
+                  "detail": {
+                    "zh": "常见警示信号",
+                    "en": "Common warning signs"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "rn_support",
+        "widget": "choice",
+        "title": {
+          "zh": "护士指导场景",
+          "en": "RN Guidance Scenario"
+        },
+        "instruction": {
+          "zh": "选择需要注册护士协助的情况",
+          "en": "Choose a situation needing RN care manager help"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "状况评估",
+              "en": "Situation Assessment"
+            },
+            "output": {
+              "zh": "获得护士的评估建议",
+              "en": "Receive assessment advice from RN"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "观察到的情况",
+                "en": "Observed Situation"
+              },
+              "output_label": {
+                "zh": "护士建议",
+                "en": "RN Recommendation"
+              },
+              "input": {
+                "zh": "母亲今天呼吸急促,说话时气短",
+                "en": "Mother breathing fast today, short of breath talking"
+              },
+              "output": {
+                "zh": "测量血氧,让其坐直休息,持续观察,必要时联系医生",
+                "en": "Check oxygen levels, have her sit upright and rest, monitor closely, contact doctor if needed"
+              },
+              "emphasis": {
+                "zh": "呼吸急促",
+                "en": "breathing fast"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "护理调整",
+              "en": "Care Adjustment"
+            },
+            "output": {
+              "zh": "护士更新护理方案",
+              "en": "RN updates care approach"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "护理员反馈",
+                "en": "Caregiver Feedback"
+              },
+              "output_label": {
+                "zh": "调整方案",
+                "en": "Adjusted Plan"
+              },
+              "input": {
+                "zh": "父亲常忘记吃药,两次重复服用",
+                "en": "Father often forgets pills, double-dosed twice"
+              },
+              "output": {
+                "zh": "使用药盒分装,每日当面确认并记录,每周电话随访",
+                "en": "Use pill organizer, confirm daily in person and log, weekly phone check-in"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "skill_check",
+        "widget": "review",
+        "title": {
+          "zh": "技能认证",
+          "en": "Skills Certification"
+        },
+        "instruction": {
+          "zh": "完成培训后的实操评估",
+          "en": "Complete hands-on assessment after training"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "转移技能演示",
+              "en": "Transfer Skills Demo"
+            },
+            "output": {
+              "zh": "护士评估操作并认证",
+              "en": "RN assesses performance and certifies"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "演示内容",
+                "en": "Demonstration Content"
+              },
+              "output_label": {
+                "zh": "评估反馈",
+                "en": "Assessment Feedback"
+              },
+              "input": {
+                "zh": "协助长者从床移到轮椅:锁定刹车,沟通每步,保持平衡",
+                "en": "Help elder move from bed to wheelchair: lock brakes, communicate each step, keep balance"
+              },
+              "output": {
+                "zh": "正确执行安全检查和沟通步骤,动作稳定,通过认证",
+                "en": "Correctly executed safety checks and communication, stable movements, certification granted"
+              },
+              "emphasis": {
+                "zh": "锁定刹车,沟通每步",
+                "en": "lock brakes, communicate each step"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了护理培训匹配和护士指导的虚拟场景,实际服务需在平台验证,访问官网查询服务地区",
+      "en": "Demonstrated fictional care training matching and RN guidance scenarios; actual service requires platform verification; visit official site to check service areas"
+    },
+    "sources": [
+      {
+        "url": "https://www.abbycare.org/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.fiercehealthcare.com/health-tech/fierce-healthcare-fundraising-tracker-26",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

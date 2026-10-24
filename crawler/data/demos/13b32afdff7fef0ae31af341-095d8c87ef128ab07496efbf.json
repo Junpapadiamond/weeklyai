@@ -1,0 +1,262 @@
+{
+  "cache_key": "13b32afdff7fef0ae31af341-095d8c87ef128ab07496efbf",
+  "product_key": "13b32afdff7fef0ae31af341",
+  "fingerprint": "095d8c87ef128ab07496efbf",
+  "product_id": "83",
+  "product_name": "UroMems",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-24T21:38:31.613078+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "UroMems 监管申报进展追踪",
+      "en": "UroMems Regulatory Filing Tracker"
+    },
+    "scenario": {
+      "zh": "追踪 UroMems 植入式器械从融资到美欧监管申报的关键里程碑",
+      "en": "Track UroMems implantable device milestones from funding to US/EU regulatory submissions"
+    },
+    "steps": [
+      {
+        "id": "milestone",
+        "widget": "choice",
+        "title": {
+          "zh": "选择关注的里程碑",
+          "en": "Choose milestone to track"
+        },
+        "instruction": {
+          "zh": "查看不同阶段的进展信息",
+          "en": "View progress at different stages"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "6000万美元融资轮",
+              "en": "$60M funding round"
+            },
+            "output": {
+              "zh": "显示融资公告的关键信息",
+              "en": "Shows key details from funding announcement"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "融资公告摘录",
+                "en": "Funding announcement excerpt"
+              },
+              "output_label": {
+                "zh": "提取的关键信息",
+                "en": "Extracted key information"
+              },
+              "input": {
+                "zh": "UroMems 完成 6000 万美元 B 轮融资，将用于推进其自动化植入式泌尿医疗器械的临床试验和监管申报准备工作",
+                "en": "UroMems closed $60M Series B to advance clinical trials and regulatory submission prep for its automated implantable urological device"
+              },
+              "output": {
+                "zh": "融资规模 6000 万美元，用途：临床试验推进、监管申报准备",
+                "en": "Funding size $60M, use: clinical trial advancement, regulatory prep"
+              },
+              "emphasis": {
+                "zh": "6000 万美元",
+                "en": "$60M"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "美国 FDA 申报筹备",
+              "en": "US FDA submission prep"
+            },
+            "output": {
+              "zh": "展示申报前的准备清单",
+              "en": "Shows pre-submission preparation checklist"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "申报前核查项",
+                "en": "Pre-submission checklist"
+              },
+              "output_label": {
+                "zh": "当前状态",
+                "en": "Current status"
+              },
+              "input": {
+                "zh": "FDA 申报筹备项目清单",
+                "en": "FDA submission prep checklist"
+              },
+              "output": {
+                "zh": "临床数据收集进行中，质量体系文件待完善",
+                "en": "Clinical data collection ongoing, quality system docs pending"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "临床数据包",
+                    "en": "Clinical data package"
+                  },
+                  "detail": {
+                    "zh": "多中心试验数据采集中",
+                    "en": "Multi-center trial data collection underway"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "质量体系文件",
+                    "en": "Quality system documentation"
+                  },
+                  "detail": {
+                    "zh": "ISO 13485 审核待完成",
+                    "en": "ISO 13485 audit pending completion"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "生物相容性测试",
+                    "en": "Biocompatibility testing"
+                  },
+                  "detail": {
+                    "zh": "符合 ISO 10993 标准",
+                    "en": "Meets ISO 10993 standards"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "欧洲 CE 认证路径",
+              "en": "EU CE certification path"
+            },
+            "output": {
+              "zh": "比较不同认证机构的时间线",
+              "en": "Compares timelines across notified bodies"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "认证机构选项",
+                "en": "Notified body options"
+              },
+              "output_label": {
+                "zh": "预估时间线",
+                "en": "Estimated timeline"
+              },
+              "input": {
+                "zh": "三家公告机构的认证周期对比",
+                "en": "Three notified bodies certification cycle comparison"
+              },
+              "output": {
+                "zh": "机构 A 需 18-24 个月，机构 B 需 14-18 个月",
+                "en": "Body A requires 18-24 months, Body B 14-18 months"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "timeline",
+        "widget": "review",
+        "title": {
+          "zh": "查看完整时间线",
+          "en": "Review full timeline"
+        },
+        "instruction": {
+          "zh": "浏览从融资到申报的关键节点",
+          "en": "Browse key nodes from funding to submission"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "2024-2025 路线图",
+              "en": "2024-2025 roadmap"
+            },
+            "output": {
+              "zh": "展示各季度的计划里程碑",
+              "en": "Shows planned milestones by quarter"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "季度目标",
+                "en": "Quarterly targets"
+              },
+              "output_label": {
+                "zh": "进度评估",
+                "en": "Progress assessment"
+              },
+              "input": {
+                "zh": "2024Q4 至 2025Q4 的监管推进计划",
+                "en": "Regulatory advancement plan 2024Q4 to 2025Q4"
+              },
+              "output": {
+                "zh": "Q1 临床数据锁定，Q2 技术文件提交，Q3 审查响应",
+                "en": "Q1 clinical data lock, Q2 technical file submission, Q3 review response"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "2024Q4",
+                    "en": "2024Q4"
+                  },
+                  "detail": {
+                    "zh": "完成临床数据采集",
+                    "en": "Complete clinical data collection"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "2025Q1",
+                    "en": "2025Q1"
+                  },
+                  "detail": {
+                    "zh": "锁定数据并启动统计分析",
+                    "en": "Lock data and initiate statistical analysis"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "2025Q2",
+                    "en": "2025Q2"
+                  },
+                  "detail": {
+                    "zh": "向 FDA 和公告机构提交技术文件",
+                    "en": "Submit technical files to FDA and notified body"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "此示例展示了融资、申报筹备和时间线的虚拟追踪，实际监管状态和批准结果需在 UroMems 官方渠道或监管机构数据库确认",
+      "en": "This example shows fictional tracking of funding, submission prep and timelines; actual regulatory status and approval outcomes must be verified through UroMems official channels or regulatory databases"
+    },
+    "sources": [
+      {
+        "url": "https://www.uromems.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://scalingeurope.substack.com/p/scaling-europe-daily-155",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

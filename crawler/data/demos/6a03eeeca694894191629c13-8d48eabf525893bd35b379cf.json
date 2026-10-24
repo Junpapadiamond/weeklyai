@@ -1,0 +1,300 @@
+{
+  "cache_key": "6a03eeeca694894191629c13-8d48eabf525893bd35b379cf",
+  "product_key": "6a03eeeca694894191629c13",
+  "fingerprint": "8d48eabf525893bd35b379cf",
+  "product_id": "85",
+  "product_name": "Exaforce",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-24T21:39:17.497581+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "Exaforce 威胁检测演示",
+      "en": "Exaforce Threat Detection Demo"
+    },
+    "scenario": {
+      "zh": "模拟安全事件触发智能代理分析和响应过程",
+      "en": "Simulate security event triggering agent analysis and response"
+    },
+    "steps": [
+      {
+        "id": "incident",
+        "widget": "choice",
+        "title": {
+          "zh": "选择安全事件类型",
+          "en": "Choose Security Incident"
+        },
+        "instruction": {
+          "zh": "查看 Exabot 如何分析不同威胁",
+          "en": "See how Exabot analyzes threats"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "异常登录尝试",
+              "en": "Unusual Login Attempt"
+            },
+            "output": {
+              "zh": "检测到地理位置异常",
+              "en": "Geographic anomaly detected"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "原始日志",
+                "en": "Raw Log"
+              },
+              "output_label": {
+                "zh": "威胁评估",
+                "en": "Threat Assessment"
+              },
+              "input": {
+                "zh": "2025-01-15 03:42 UTC | User: admin@acme.com | IP: 185.220.101.47 | Location: Bucharest | Failed MFA",
+                "en": "2025-01-15 03:42 UTC | User: admin@acme.com | IP: 185.220.101.47 | Location: Bucharest | Failed MFA"
+              },
+              "output": {
+                "zh": "高风险：历史登录均来自加州；此IP关联已知钓鱼活动；凭证可能已泄露",
+                "en": "High risk: historical logins California-only; IP linked to known phishing; credentials likely compromised"
+              },
+              "emphasis": {
+                "zh": "185.220.101.47",
+                "en": "185.220.101.47"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "可疑文件传输",
+              "en": "Suspicious File Transfer"
+            },
+            "output": {
+              "zh": "识别数据外泄模式",
+              "en": "Data exfiltration pattern identified"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "网络流量",
+                "en": "Network Traffic"
+              },
+              "output_label": {
+                "zh": "行为分析",
+                "en": "Behavior Analysis"
+              },
+              "input": {
+                "zh": "下午11:08 | 主机 DB-PROD-07 | 出站 45.2GB | 目标 cloud-backup.tk | 端口 443 | 加密传输",
+                "en": "11:08 PM | Host DB-PROD-07 | Outbound 45.2GB | Destination cloud-backup.tk | Port 443 | Encrypted"
+              },
+              "output": {
+                "zh": "异常：该主机正常传输量<500MB；域名注册仅3天；使用非标准加密协议",
+                "en": "Anomalous: host baseline <500MB; domain registered 3 days ago; non-standard encryption protocol"
+              },
+              "emphasis": {
+                "zh": "cloud-backup.tk",
+                "en": "cloud-backup.tk"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "权限提升行为",
+              "en": "Privilege Escalation"
+            },
+            "output": {
+              "zh": "发现未授权访问尝试",
+              "en": "Unauthorized access attempt found"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "系统审计",
+                "en": "System Audit"
+              },
+              "output_label": {
+                "zh": "关联发现",
+                "en": "Correlation Findings"
+              },
+              "input": {
+                "zh": "用户 jdoe 执行 sudo su root | 源进程 python3 /tmp/.hidden/escalate.py | 成功获取 root shell",
+                "en": "User jdoe executed sudo su root | Source python3 /tmp/.hidden/escalate.py | Root shell obtained"
+              },
+              "output": {
+                "zh": "威胁链：该脚本利用CVE-2024-1086内核漏洞；jdoe账户24小时前密码被重置；关联3起类似事件",
+                "en": "Threat chain: script exploits CVE-2024-1086 kernel vuln; jdoe password reset 24h ago; 3 similar events linked"
+              },
+              "emphasis": {
+                "zh": "escalate.py",
+                "en": "escalate.py"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "response",
+        "widget": "choice",
+        "title": {
+          "zh": "选择响应策略",
+          "en": "Choose Response Strategy"
+        },
+        "instruction": {
+          "zh": "决定 Exabot 自动执行的操作",
+          "en": "Decide Exabot automated action"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "立即隔离",
+              "en": "Immediate Isolation"
+            },
+            "output": {
+              "zh": "阻断威胁扩散路径",
+              "en": "Block threat propagation"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "待执行操作",
+                "en": "Actions to Execute"
+              },
+              "output_label": {
+                "zh": "执行结果预览",
+                "en": "Execution Preview"
+              },
+              "input": {
+                "zh": "示例隔离操作列表",
+                "en": "Example isolation actions list"
+              },
+              "output": {
+                "zh": "操作已在示例中列出，实际执行需访问 Exaforce 平台",
+                "en": "Actions listed in example; actual execution requires Exaforce platform"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "断开网络",
+                    "en": "Network Disconnect"
+                  },
+                  "detail": {
+                    "zh": "隔离受影响主机所有网络连接",
+                    "en": "Isolate all network connections for affected host"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "冻结账户",
+                    "en": "Freeze Account"
+                  },
+                  "detail": {
+                    "zh": "暂停相关用户凭证直至审查完成",
+                    "en": "Suspend credentials pending review"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "通知团队",
+                    "en": "Alert Team"
+                  },
+                  "detail": {
+                    "zh": "向安全响应组发送高优先级警报",
+                    "en": "Send high-priority alert to security team"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "监控观察",
+              "en": "Monitor and Observe"
+            },
+            "output": {
+              "zh": "收集更多攻击证据",
+              "en": "Gather additional attack evidence"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "监控项目",
+                "en": "Monitoring Items"
+              },
+              "output_label": {
+                "zh": "追踪指标",
+                "en": "Tracking Metrics"
+              },
+              "input": {
+                "zh": "示例监控项目列表",
+                "en": "Example monitoring items list"
+              },
+              "output": {
+                "zh": "追踪示例已列出，实际数据需在 Exaforce 查看",
+                "en": "Tracking examples listed; real data on Exaforce platform"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "横向移动",
+                    "en": "Lateral Movement"
+                  },
+                  "detail": {
+                    "zh": "记录该实体访问其他系统的尝试",
+                    "en": "Log attempts to access other systems"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "数据访问",
+                    "en": "Data Access"
+                  },
+                  "detail": {
+                    "zh": "追踪敏感文件和数据库查询",
+                    "en": "Track sensitive file and database queries"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "通信模式",
+                    "en": "Communication Pattern"
+                  },
+                  "detail": {
+                    "zh": "分析与外部服务器的交互频率",
+                    "en": "Analyze interaction frequency with external servers"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了 Exabot 分析虚拟威胁并建议响应；实际检测能力、实时性能和自动化范围需在 Exaforce 平台验证",
+      "en": "Demonstrated Exabot analyzing fictional threats and suggesting responses; actual detection capabilities, real-time performance, and automation scope require verification on Exaforce platform"
+    },
+    "sources": [
+      {
+        "url": "https://www.exaforce.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/05/12/exaforce-raises-125m-series-b-to-build-ai-for-catching-and-stopping-cyberattacks-as-they-happen/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,204 @@
+{
+  "cache_key": "ff44b159344f6a0b7a0e023e-7ec5e1a7e2ea8c735c7d7086",
+  "product_key": "ff44b159344f6a0b7a0e023e",
+  "fingerprint": "7ec5e1a7e2ea8c735c7d7086",
+  "product_id": "p_6633308cd827a243",
+  "product_name": "Leapsome",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-24T21:36:40.716755+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "预览 HR 代理的筛选与入职流程",
+      "en": "Preview HR agent screening and onboarding"
+    },
+    "scenario": {
+      "zh": "为科技公司运营岗位演示候选人筛选和入职准备，使用虚构简历和政策",
+      "en": "Demonstrate candidate screening and onboarding prep for a tech company operations role using fictional resumes and policies"
+    },
+    "steps": [
+      {
+        "id": "screen",
+        "widget": "choice",
+        "title": {
+          "zh": "筛选候选人",
+          "en": "Screen candidate"
+        },
+        "instruction": {
+          "zh": "选择一份虚构简历开始",
+          "en": "Pick a fictional resume to start"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "运营经理简历",
+              "en": "Operations manager resume"
+            },
+            "output": {
+              "zh": "识别相关经验和缺口",
+              "en": "Identifies relevant experience and gaps"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "候选人简历摘录",
+                "en": "Candidate resume excerpt"
+              },
+              "output_label": {
+                "zh": "筛选评估",
+                "en": "Screening assessment"
+              },
+              "input": {
+                "zh": "Alex Chen, 5年 SaaS 运营经验，曾在 50 人团队管理客户成功流程，熟悉 Salesforce 和 HubSpot，擅长跨部门协作",
+                "en": "Alex Chen, 5 years SaaS operations experience, managed customer success workflows in 50-person team, familiar with Salesforce and HubSpot, strong cross-functional collaboration"
+              },
+              "output": {
+                "zh": "工具经验匹配职位要求，团队规模相近，建议面试时深入了解流程优化案例和数据分析能力",
+                "en": "Tool experience matches requirements, team size is comparable, recommend interview to explore process improvement examples and data analysis skills"
+              },
+              "emphasis": {
+                "zh": "5年 SaaS 运营经验",
+                "en": "5 years SaaS operations experience"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "产品运营简历",
+              "en": "Product ops resume"
+            },
+            "output": {
+              "zh": "标记技能转移可能性",
+              "en": "Flags skill transferability"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "候选人简历摘录",
+                "en": "Candidate resume excerpt"
+              },
+              "output_label": {
+                "zh": "筛选评估",
+                "en": "Screening assessment"
+              },
+              "input": {
+                "zh": "Jordan Lee, 3年产品运营背景，支持过两次产品发布，参与用户研究和 A/B 测试，较少直接管理运营流程",
+                "en": "Jordan Lee, 3 years product ops background, supported two product launches, involved in user research and A/B testing, limited direct operations process management"
+              },
+              "output": {
+                "zh": "产品思维有价值但运营管理经验不足，若团队有导师资源可考虑培养，否则优先级较低",
+                "en": "Product mindset valuable but operations management experience is limited, consider if mentorship available, otherwise lower priority"
+              },
+              "emphasis": {
+                "zh": "较少直接管理运营流程",
+                "en": "limited direct operations process management"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "onboard",
+        "widget": "choice",
+        "title": {
+          "zh": "准备入职任务",
+          "en": "Prepare onboarding tasks"
+        },
+        "instruction": {
+          "zh": "基于岗位生成入职清单",
+          "en": "Generate onboarding checklist for the role"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "运营经理入职",
+              "en": "Operations manager onboarding"
+            },
+            "output": {
+              "zh": "列出首周关键任务",
+              "en": "Lists first-week key tasks"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "岗位要求",
+                "en": "Role requirements"
+              },
+              "output_label": {
+                "zh": "入职任务清单",
+                "en": "Onboarding task list"
+              },
+              "input": {
+                "zh": "运营经理需管理客户工单流程、协调产品和支持团队、分析运营指标",
+                "en": "Operations manager to manage customer ticket workflows, coordinate product and support teams, analyze operational metrics"
+              },
+              "output": {
+                "zh": "首周入职任务示例",
+                "en": "Sample first-week tasks"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "系统权限配置",
+                    "en": "System access setup"
+                  },
+                  "detail": {
+                    "zh": "开通 Salesforce、Slack 工作区和内部文档库访问权限",
+                    "en": "Grant Salesforce, Slack workspace, and internal doc access"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "流程文档学习",
+                    "en": "Process documentation review"
+                  },
+                  "detail": {
+                    "zh": "阅读客户工单 SLA 政策和上季度运营报告",
+                    "en": "Review customer ticket SLA policy and last quarter ops report"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "团队对接会议",
+                    "en": "Team alignment meetings"
+                  },
+                  "detail": {
+                    "zh": "与产品经理和支持主管各安排一小时会议",
+                    "en": "Schedule one-hour meetings with product manager and support lead"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了虚构简历筛选逻辑和入职任务生成，真实候选人评估和政策合规需在 Leapsome 平台完成",
+      "en": "Illustrated fictional resume screening logic and onboarding task generation; actual candidate evaluation and policy compliance must be completed on the Leapsome platform"
+    },
+    "sources": [
+      {
+        "url": "https://www.leapsome.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.startuprad.io/post/leapsome-from-bootstrapped-hr-tool-to-agentic-hr-platform",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}
