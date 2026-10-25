@@ -1,0 +1,231 @@
+{
+  "cache_key": "9080f645598984ed38fd092d-4f8758dc01e5f3c0db466a69",
+  "product_key": "9080f645598984ed38fd092d",
+  "fingerprint": "4f8758dc01e5f3c0db466a69",
+  "product_id": "93",
+  "product_name": "Blitzy",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-25T21:43:53.923112+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "用 Agent 构建企业应用原型",
+      "en": "Build enterprise app prototypes with agents"
+    },
+    "scenario": {
+      "zh": "提供功能需求和业务规则，让 Agent 生成可运行的应用代码和架构方案",
+      "en": "Provide feature requirements and business rules; agents generate runnable app code and architecture"
+    },
+    "steps": [
+      {
+        "id": "requirements",
+        "widget": "choice",
+        "title": {
+          "zh": "描述应用需求",
+          "en": "Describe app requirements"
+        },
+        "instruction": {
+          "zh": "选择要构建的应用类型",
+          "en": "Choose the app type to build"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "库存管理系统",
+              "en": "Inventory system"
+            },
+            "output": {
+              "zh": "Agent 规划数据模型和核心流程",
+              "en": "Agent plans data model and core flows"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "需求描述",
+                "en": "Requirements"
+              },
+              "output_label": {
+                "zh": "架构方案",
+                "en": "Architecture plan"
+              },
+              "input": {
+                "zh": "需要追踪仓库库存、入库出库记录、自动预警低库存商品、生成月度报表",
+                "en": "Track warehouse inventory, log stock movements, auto-alert low stock items, generate monthly reports"
+              },
+              "output": {
+                "zh": "数据库：商品表、库存表、出入库记录表；核心模块：库存查询、库存变更、预警规则引擎、报表生成器；技术栈：PostgreSQL + Node.js + React",
+                "en": "Database: products, inventory, transactions; Core modules: query, updates, alert engine, report generator; Stack: PostgreSQL + Node.js + React"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "审批工作流应用",
+              "en": "Approval workflow app"
+            },
+            "output": {
+              "zh": "Agent 设计流程状态和权限",
+              "en": "Agent designs flow states and permissions"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "需求描述",
+                "en": "Requirements"
+              },
+              "output_label": {
+                "zh": "架构方案",
+                "en": "Architecture plan"
+              },
+              "input": {
+                "zh": "员工提交请假、报销、采购申请，经理审批，财务复核，自动通知结果",
+                "en": "Staff submit leave, expense, purchase requests; manager approves; finance reviews; auto-notify results"
+              },
+              "output": {
+                "zh": "工作流引擎：待提交、待审批、已通过、已拒绝四状态；角色权限：员工、经理、财务；通知模块：邮件和站内消息；建议状态机模式",
+                "en": "Workflow engine: pending, review, approved, rejected; Roles: staff, manager, finance; Notifications: email and in-app; Use state machine pattern"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "generate",
+        "widget": "choice",
+        "title": {
+          "zh": "生成代码骨架",
+          "en": "Generate code scaffold"
+        },
+        "instruction": {
+          "zh": "选择要查看的代码部分",
+          "en": "Choose code section to view"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "数据库模式",
+              "en": "Database schema"
+            },
+            "output": {
+              "zh": "Agent 生成表结构和索引",
+              "en": "Agent generates table structure and indexes"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "生成请求",
+                "en": "Generation request"
+              },
+              "output_label": {
+                "zh": "示例代码片段",
+                "en": "Example code snippet"
+              },
+              "input": {
+                "zh": "为库存管理系统生成 PostgreSQL 数据表",
+                "en": "Generate PostgreSQL tables for inventory system"
+              },
+              "output": {
+                "zh": "CREATE TABLE products (id SERIAL PRIMARY KEY, name VARCHAR(200)); CREATE TABLE inventory (product_id INT, quantity INT);",
+                "en": "CREATE TABLE products (id SERIAL PRIMARY KEY, name VARCHAR(200)); CREATE TABLE inventory (product_id INT, quantity INT);"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "API 接口",
+              "en": "API endpoints"
+            },
+            "output": {
+              "zh": "Agent 生成 REST 路由代码",
+              "en": "Agent generates REST route code"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "生成请求",
+                "en": "Generation request"
+              },
+              "output_label": {
+                "zh": "示例代码片段",
+                "en": "Example code snippet"
+              },
+              "input": {
+                "zh": "生成库存查询和更新的 Node.js API",
+                "en": "Generate Node.js API for inventory query and update"
+              },
+              "output": {
+                "zh": "app.get('/api/inventory/:sku', async (req, res) => { const result = await db.query('SELECT * FROM inventory'); res.json(result); });",
+                "en": "app.get('/api/inventory/:sku', async (req, res) => { const result = await db.query('SELECT * FROM inventory'); res.json(result); });"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "review",
+        "widget": "review",
+        "title": {
+          "zh": "检查生成结果",
+          "en": "Review generated output"
+        },
+        "instruction": {
+          "zh": "确认架构和代码是否符合需求",
+          "en": "Confirm architecture and code meet requirements"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "架构合理可用",
+              "en": "Architecture is sound"
+            },
+            "output": {
+              "zh": "可在 Blitzy 平台继续完善",
+              "en": "Continue refining on Blitzy platform"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "需要调整方案",
+              "en": "Need to adjust plan"
+            },
+            "output": {
+              "zh": "修改需求后重新生成",
+              "en": "Revise requirements and regenerate"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例展示了需求到架构和代码骨架的生成过程；实际开发、测试、部署流程需在 Blitzy 平台完成",
+      "en": "Example shows requirements to architecture and code scaffold generation; actual development, testing, and deployment happen on Blitzy platform"
+    },
+    "sources": [
+      {
+        "url": "https://blitzy.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://note.com/masaki_arimoto/n/nde2a6834217e",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

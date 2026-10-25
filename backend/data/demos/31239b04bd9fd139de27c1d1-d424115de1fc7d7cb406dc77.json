@@ -1,0 +1,322 @@
+{
+  "cache_key": "31239b04bd9fd139de27c1d1-d424115de1fc7d7cb406dc77",
+  "product_key": "31239b04bd9fd139de27c1d1",
+  "fingerprint": "d424115de1fc7d7cb406dc77",
+  "product_id": "p_48b28fd84fbe41a8",
+  "product_name": "NeoFleet",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-25T21:42:25.140484+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "车队融资方案设计",
+      "en": "Fleet Financing Design"
+    },
+    "scenario": {
+      "zh": "为出租车队设计融资和管理方案,规划车辆规模和服务结构",
+      "en": "Design financing and management solutions for taxi fleets, planning vehicle scale and service structure"
+    },
+    "steps": [
+      {
+        "id": "fleet_scale",
+        "widget": "choice",
+        "title": {
+          "zh": "选择车队规模",
+          "en": "Choose Fleet Scale"
+        },
+        "instruction": {
+          "zh": "确定初始车队规模和融资需求",
+          "en": "Define initial fleet size and financing needs"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "中型车队(50辆)",
+              "en": "Mid Fleet (50 vehicles)"
+            },
+            "output": {
+              "zh": "适合区域运营的融资结构",
+              "en": "Financing structure suitable for regional operation"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "车队需求清单",
+                "en": "Fleet Requirements"
+              },
+              "output_label": {
+                "zh": "融资方案概要",
+                "en": "Financing Overview"
+              },
+              "input": {
+                "zh": "城市: 内罗毕东区\n车型: 丰田卡罗拉\n数量: 50辆\n用途: 日间出租运营",
+                "en": "City: Nairobi East\nModel: Toyota Corolla\nQuantity: 50 vehicles\nUse: Daytime taxi operation"
+              },
+              "output": {
+                "zh": "资产价值较小,首付比例适中\n月供周期标准,管理服务基础\n适合初次进入车队运营",
+                "en": "Smaller asset value, moderate down payment\nStandard payment term, basic management\nSuitable for first-time fleet operation"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "资产融资",
+                    "en": "Asset Financing"
+                  },
+                  "detail": {
+                    "zh": "分期覆盖车辆采购成本",
+                    "en": "Installment covers vehicle acquisition cost"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "特许经营",
+                    "en": "Franchise Service"
+                  },
+                  "detail": {
+                    "zh": "车队管理,司机调度,维护监督",
+                    "en": "Fleet management, driver dispatch, maintenance oversight"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "运营支持",
+                    "en": "Operations Support"
+                  },
+                  "detail": {
+                    "zh": "追踪系统,收益分析,合规管理",
+                    "en": "Tracking system, revenue analytics, compliance"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "大型车队(200辆)",
+              "en": "Large Fleet (200 vehicles)"
+            },
+            "output": {
+              "zh": "多区域扩展的融资结构",
+              "en": "Financing structure for multi-region expansion"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "车队需求清单",
+                "en": "Fleet Requirements"
+              },
+              "output_label": {
+                "zh": "融资方案概要",
+                "en": "Financing Overview"
+              },
+              "input": {
+                "zh": "覆盖区域: 内罗毕+蒙巴萨\n车型组合: 轿车+SUV\n数量: 200辆\n运营模式: 24小时服务",
+                "en": "Coverage: Nairobi + Mombasa\nMix: Sedans + SUVs\nQuantity: 200 vehicles\nOperation: 24-hour service"
+              },
+              "output": {
+                "zh": "资产价值较大,首付比例更高\n月供周期更长,管理服务升级\n适合成熟运营商扩展",
+                "en": "Larger asset value, higher down payment\nLonger payment term, upgraded management\nSuitable for established operator expansion"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "资产融资",
+                    "en": "Asset Financing"
+                  },
+                  "detail": {
+                    "zh": "分期支持多车型组合采购",
+                    "en": "Installment supports mixed vehicle acquisition"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "高级特许经营",
+                    "en": "Premium Franchise"
+                  },
+                  "detail": {
+                    "zh": "跨区域管理,集中调度中心",
+                    "en": "Multi-region management, centralized dispatch"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "增值服务",
+                    "en": "Value-Added Services"
+                  },
+                  "detail": {
+                    "zh": "司机培训,保险协调,燃油优化",
+                    "en": "Driver training, insurance coordination, fuel optimization"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "growth_path",
+        "widget": "choice",
+        "title": {
+          "zh": "规划增长路径",
+          "en": "Plan Growth Path"
+        },
+        "instruction": {
+          "zh": "设计未来扩展和技术升级方向",
+          "en": "Design future expansion and technology upgrade direction"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "传统车队扩展",
+              "en": "Traditional Fleet Expansion"
+            },
+            "output": {
+              "zh": "继续增加燃油车数量,优化现有运营",
+              "en": "Continue adding fuel vehicles, optimize current operations"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "扩展计划",
+                "en": "Expansion Plan"
+              },
+              "output_label": {
+                "zh": "里程碑目标",
+                "en": "Milestone Targets"
+              },
+              "input": {
+                "zh": "初始阶段: 50辆燃油车\n增长阶段: 逐步扩展至200辆\n成熟阶段: 覆盖多个城市",
+                "en": "Initial phase: 50 fuel vehicles\nGrowth phase: Gradually expand to 200\nMature phase: Cover multiple cities"
+              },
+              "output": {
+                "zh": "近期专注区域密集布局\n中期建立品牌和服务标准\n远期成为区域领先车队",
+                "en": "Near-term focus on regional dense deployment\nMid-term establish brand and service standards\nLong-term become regional leading fleet"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "第一阶段",
+                    "en": "Phase One"
+                  },
+                  "detail": {
+                    "zh": "单城市深耕,建立运营基础",
+                    "en": "Single-city focus, build operational foundation"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "第二阶段",
+                    "en": "Phase Two"
+                  },
+                  "detail": {
+                    "zh": "车辆规模翻倍,进入第二城市",
+                    "en": "Double vehicle count, enter second city"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "第三阶段",
+                    "en": "Phase Three"
+                  },
+                  "detail": {
+                    "zh": "建立区域网络,标准化管理",
+                    "en": "Build regional network, standardize management"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "技术转型准备",
+              "en": "Tech Transformation Prep"
+            },
+            "output": {
+              "zh": "为未来自动驾驶车队做基础设施准备",
+              "en": "Prepare infrastructure for future autonomous fleet"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "转型规划",
+                "en": "Transformation Roadmap"
+              },
+              "output_label": {
+                "zh": "战略阶段",
+                "en": "Strategic Phases"
+              },
+              "input": {
+                "zh": "现阶段: 传统燃油车队\n过渡期: 混合车队试点\n目标: 自动驾驶基础设施",
+                "en": "Current: Traditional fuel fleet\nTransition: Hybrid fleet pilot\nGoal: Autonomous infrastructure"
+              },
+              "output": {
+                "zh": "近期建立数字化管理平台\n中期测试电动和智能车辆\n远期转型为资产服务商",
+                "en": "Near-term build digital management platform\nMid-term test electric and smart vehicles\nLong-term transform into asset provider"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "数字化基础",
+                    "en": "Digital Foundation"
+                  },
+                  "detail": {
+                    "zh": "部署车队管理系统和数据平台",
+                    "en": "Deploy fleet management system and data platform"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "试点项目",
+                    "en": "Pilot Projects"
+                  },
+                  "detail": {
+                    "zh": "引入电动或智能车辆测试",
+                    "en": "Introduce electric or smart vehicles for testing"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "战略转型",
+                    "en": "Strategic Pivot"
+                  },
+                  "detail": {
+                    "zh": "建立自动驾驶资产融资能力",
+                    "en": "Build autonomous vehicle asset financing capability"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例展示了车队规模选择和增长路径规划的虚构场景。实际融资条件、车辆价值、扩展时间表和技术转型可行性需在供应商平台核实。",
+      "en": "Examples show fictional scenarios for fleet scale selection and growth path planning. Actual financing terms, vehicle values, expansion timelines and tech transformation feasibility must be verified on the vendor platform."
+    },
+    "sources": [
+      {
+        "url": "https://neofleet.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://launchbaseafrica.com/2026/10/12/african-startup-deal",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

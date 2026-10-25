@@ -1,0 +1,246 @@
+{
+  "cache_key": "7ec71cff87ded0a7b0b3ae1b-bcb060071559a1abcf1ee07e",
+  "product_key": "7ec71cff87ded0a7b0b3ae1b",
+  "fingerprint": "bcb060071559a1abcf1ee07e",
+  "product_id": "p_cd937bb24dac6aa4",
+  "product_name": "Ocular AI",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-25T21:41:33.871192+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "对话数据集场景示例",
+      "en": "Conversation Dataset Scenario"
+    },
+    "scenario": {
+      "zh": "为AI语音模型准备包含口音、停顿、语调的多通道音频样本",
+      "en": "Prepare multi-channel audio samples with accents, pauses, tone for AI voice models"
+    },
+    "steps": [
+      {
+        "id": "domain",
+        "widget": "choice",
+        "title": {
+          "zh": "选择应用领域",
+          "en": "Select Domain"
+        },
+        "instruction": {
+          "zh": "选择需要对话数据的场景",
+          "en": "Choose conversation scenario"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "医疗问诊",
+              "en": "Medical Consultation"
+            },
+            "output": {
+              "zh": "捕捉患者描述症状时的停顿和语气变化",
+              "en": "Capture pauses and tone shifts as patients describe symptoms"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "虚拟对话片段",
+                "en": "Fictional Dialogue Excerpt"
+              },
+              "output_label": {
+                "zh": "标注的对话特征",
+                "en": "Annotated Conversation Features"
+              },
+              "input": {
+                "zh": "医生:哪里不舒服? 患者:就是…(停顿2秒)胸口有点…闷",
+                "en": "Doctor: What's bothering you? Patient: It's just... (2s pause) my chest feels... tight"
+              },
+              "output": {
+                "zh": "hesitation_pause:2.1s, uncertainty_tone:detected, breath_pattern:shallow",
+                "en": "hesitation_pause:2.1s, uncertainty_tone:detected, breath_pattern:shallow"
+              },
+              "emphasis": {
+                "zh": "停顿2秒",
+                "en": "2s pause"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "客服对话",
+              "en": "Customer Service"
+            },
+            "output": {
+              "zh": "记录客户投诉中的情绪变化和打断",
+              "en": "Record emotion shifts and interruptions in complaints"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "虚拟客服记录",
+                "en": "Fictional Service Record"
+              },
+              "output_label": {
+                "zh": "对话动态标注",
+                "en": "Dialogue Dynamics"
+              },
+              "input": {
+                "zh": "客服:我来帮您查— 客户:等等,我说的是昨天订单!",
+                "en": "Agent: Let me check— Customer: Wait, I mean yesterday's order!"
+              },
+              "output": {
+                "zh": "interruption:0.8s_into_turn, frustration_level:rising, speech_rate:accelerated",
+                "en": "interruption:0.8s_into_turn, frustration_level:rising, speech_rate:accelerated"
+              },
+              "emphasis": {
+                "zh": "等等",
+                "en": "Wait"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "法律咨询",
+              "en": "Legal Consultation"
+            },
+            "output": {
+              "zh": "识别当事人陈述中的犹豫和强调",
+              "en": "Identify hesitation and emphasis in client statements"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "虚拟咨询对话",
+                "en": "Fictional Consultation"
+              },
+              "output_label": {
+                "zh": "语音特征分析",
+                "en": "Speech Feature Analysis"
+              },
+              "input": {
+                "zh": "律师:合同谁签的? 当事人:应该是…我记得是张经理签的",
+                "en": "Lawyer: Who signed it? Client: It should be... I think Manager Zhang signed it"
+              },
+              "output": {
+                "zh": "uncertainty_marker:detected, hedge_words:2, confidence_drop:moderate",
+                "en": "uncertainty_marker:detected, hedge_words:2, confidence_drop:moderate"
+              },
+              "emphasis": {
+                "zh": "应该是",
+                "en": "should be"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "channels",
+        "widget": "choice",
+        "title": {
+          "zh": "多通道配置",
+          "en": "Multi-Channel Setup"
+        },
+        "instruction": {
+          "zh": "选择音频采集方式",
+          "en": "Choose audio capture method"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "独立麦克风",
+              "en": "Separate Microphones"
+            },
+            "output": {
+              "zh": "每个说话人独立音轨,清晰分离重叠语音",
+              "en": "Isolated tracks per speaker, clear overlap separation"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "视听同步",
+              "en": "Audiovisual Sync"
+            },
+            "output": {
+              "zh": "音频与虚拟场景时间戳对齐(需在供应商平台配置)",
+              "en": "Audio aligned with fictional scene timestamps (configured on vendor platform)"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "review",
+        "widget": "review",
+        "title": {
+          "zh": "数据集概览",
+          "en": "Dataset Overview"
+        },
+        "instruction": {
+          "zh": "确认虚拟样本配置",
+          "en": "Confirm fictional sample setup"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "领域",
+              "en": "Domain"
+            },
+            "output": {
+              "zh": "医疗问诊 / 客服对话 / 法律咨询",
+              "en": "Medical / Customer Service / Legal"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "采集方式",
+              "en": "Capture Method"
+            },
+            "output": {
+              "zh": "独立麦克风 / 视听同步",
+              "en": "Separate Mics / AV Sync"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "示例特征",
+              "en": "Example Features"
+            },
+            "output": {
+              "zh": "停顿、语调、打断、犹豫标注",
+              "en": "Pauses, tone, interruptions, hesitation tags"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "展示了多通道对话数据的标注维度;真实数据采集和Converse基准测试需在Ocular平台完成",
+      "en": "Illustrated annotation dimensions for multi-channel dialogue; actual data collection and Converse benchmark testing require Ocular platform access"
+    },
+    "sources": [
+      {
+        "url": "https://www.useocular.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://launchbaseafrica.com/2026/10/12/african-startup-deal",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

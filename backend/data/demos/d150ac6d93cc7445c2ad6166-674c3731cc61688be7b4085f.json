@@ -1,0 +1,218 @@
+{
+  "cache_key": "d150ac6d93cc7445c2ad6166-674c3731cc61688be7b4085f",
+  "product_key": "d150ac6d93cc7445c2ad6166",
+  "fingerprint": "674c3731cc61688be7b4085f",
+  "product_id": "p_544b4fe291036174",
+  "product_name": "Microduck",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-25T21:42:47.475598+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "训练 Microduck 执行新动作",
+      "en": "Train Microduck to perform new tricks"
+    },
+    "scenario": {
+      "zh": "你收到 Microduck 后，想教它执行自定义动作，然后在社区分享",
+      "en": "After receiving your Microduck, you want to teach it custom tricks and share with the community"
+    },
+    "steps": [
+      {
+        "id": "choose_trick",
+        "widget": "choice",
+        "title": {
+          "zh": "选择要训练的动作",
+          "en": "Choose trick to train"
+        },
+        "instruction": {
+          "zh": "选一个你想让 Microduck 学会的动作",
+          "en": "Pick a trick you want Microduck to learn"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "转圈跳跃",
+              "en": "Spin jump"
+            },
+            "output": {
+              "zh": "需要平衡和连续旋转",
+              "en": "Requires balance and continuous rotation"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "动作分解",
+                "en": "Motion breakdown"
+              },
+              "output_label": {
+                "zh": "训练计划",
+                "en": "Training plan"
+              },
+              "input": {
+                "zh": "假设示例：用户希望机器人顺时针旋转 360 度同时跳起",
+                "en": "Fictional example: user wants robot to spin 360° clockwise while jumping"
+              },
+              "output": {
+                "zh": "在仿真环境中先训练重心控制，再逐步增加旋转角度和高度",
+                "en": "First train center-of-gravity control in simulation, then gradually increase rotation angle and height"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "站立稳定",
+                    "en": "Stable stance"
+                  },
+                  "detail": {
+                    "zh": "仿真中调整腿部电机参数直到保持直立 3 秒",
+                    "en": "Adjust leg motor params in simulation until upright for 3 sec"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "旋转测试",
+                    "en": "Rotation test"
+                  },
+                  "detail": {
+                    "zh": "设定躯干旋转 90° 并验证不倾倒",
+                    "en": "Set torso rotation to 90° and verify no tipping"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "跳跃集成",
+                    "en": "Jump integration"
+                  },
+                  "detail": {
+                    "zh": "在旋转序列中插入单次弹跳指令",
+                    "en": "Insert single hop command into rotation sequence"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "敬礼姿势",
+              "en": "Salute pose"
+            },
+            "output": {
+              "zh": "抬起一只前肢到头部高度",
+              "en": "Raise one front limb to head height"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "动作分解",
+                "en": "Motion breakdown"
+              },
+              "output_label": {
+                "zh": "训练计划",
+                "en": "Training plan"
+              },
+              "input": {
+                "zh": "假设示例：用户希望机器人抬起右前肢并保持 2 秒",
+                "en": "Fictional example: user wants robot to raise right front limb and hold for 2 sec"
+              },
+              "output": {
+                "zh": "在仿真环境中调整关节角度范围，然后部署到实体机器人",
+                "en": "Adjust joint angle ranges in simulation, then deploy to physical robot"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "肩部抬升",
+                    "en": "Shoulder lift"
+                  },
+                  "detail": {
+                    "zh": "仿真中将肩关节目标角度设为 120°",
+                    "en": "Set shoulder joint target to 120° in simulation"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "平衡补偿",
+                    "en": "Balance compensation"
+                  },
+                  "detail": {
+                    "zh": "微调后腿电机扭矩以防止前倾",
+                    "en": "Fine-tune rear leg motor torque to prevent tipping forward"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "test_result",
+        "widget": "review",
+        "title": {
+          "zh": "查看训练结果",
+          "en": "Review training result"
+        },
+        "instruction": {
+          "zh": "将仿真模型部署到实体机器人",
+          "en": "Deploy simulation model to physical robot"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "部署到 Microduck",
+              "en": "Deploy to Microduck"
+            },
+            "output": {
+              "zh": "通过配套应用传输模型文件",
+              "en": "Transfer model file via companion app"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "模型参数",
+                "en": "Model parameters"
+              },
+              "output_label": {
+                "zh": "部署说明",
+                "en": "Deployment note"
+              },
+              "input": {
+                "zh": "假设示例：训练完成的动作序列包含 12 个关节角度目标值",
+                "en": "Fictional example: trained motion sequence contains 12 joint angle targets"
+              },
+              "output": {
+                "zh": "需在实体机器人上测试，可能需多次微调以适应真实物理环境",
+                "en": "Requires testing on physical robot; may need multiple adjustments for real-world physics"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "此示例展示了如何在仿真环境中设计动作序列，实际训练和部署需在官方 Microduck 硬件和配套软件中完成",
+      "en": "This example shows how to design motion sequences in simulation; actual training and deployment must be done with official Microduck hardware and companion software"
+    },
+    "sources": [
+      {
+        "url": "https://pollen-robotics.com/microduck/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/10/23/hottest-toy-for-christmas-nvidia-ceo-plays-with-adorable-microduck-robots-20000-sell/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

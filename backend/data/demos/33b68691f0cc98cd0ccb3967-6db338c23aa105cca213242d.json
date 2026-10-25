@@ -1,0 +1,297 @@
+{
+  "cache_key": "33b68691f0cc98cd0ccb3967-6db338c23aa105cca213242d",
+  "product_key": "33b68691f0cc98cd0ccb3967",
+  "fingerprint": "6db338c23aa105cca213242d",
+  "product_id": "86",
+  "product_name": "NVision",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-25T21:43:15.727855+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "量子MRI成像概念演示",
+      "en": "Quantum MRI Imaging Concept Demo"
+    },
+    "scenario": {
+      "zh": "模拟量子传感器如何改进分子级成像，所有数据为虚构示例",
+      "en": "Simulate how quantum sensors improve molecular-level imaging with fictional data"
+    },
+    "steps": [
+      {
+        "id": "imaging_target",
+        "widget": "choice",
+        "title": {
+          "zh": "选择成像目标",
+          "en": "Select Imaging Target"
+        },
+        "instruction": {
+          "zh": "选择一个假设的成像场景",
+          "en": "Choose a hypothetical imaging scenario"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "脑组织微结构",
+              "en": "Brain Microstructure"
+            },
+            "output": {
+              "zh": "检测神经元连接密度变化",
+              "en": "Detect neuronal connectivity density changes"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "传统MRI信号",
+                "en": "Conventional MRI Signal"
+              },
+              "output_label": {
+                "zh": "量子增强信号",
+                "en": "Quantum-Enhanced Signal"
+              },
+              "input": {
+                "zh": "灰质区域：均匀信号强度，空间分辨率3毫米",
+                "en": "Gray matter region: uniform signal intensity, 3mm spatial resolution"
+              },
+              "output": {
+                "zh": "检测到微血管网络，神经束方向性清晰，亚毫米细节可见",
+                "en": "Microvascular network detected, neural tract directionality clear, sub-mm detail visible"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "心肌代谢活动",
+              "en": "Cardiac Metabolism"
+            },
+            "output": {
+              "zh": "追踪能量分子分布",
+              "en": "Track energy molecule distribution"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "常规心脏扫描",
+                "en": "Standard Cardiac Scan"
+              },
+              "output_label": {
+                "zh": "代谢成像结果",
+                "en": "Metabolic Imaging Result"
+              },
+              "input": {
+                "zh": "心室壁厚度正常，收缩功能未见异常",
+                "en": "Ventricular wall thickness normal, contractile function unremarkable"
+              },
+              "output": {
+                "zh": "左心室前壁ATP浓度低于基线，提示早期代谢应激迹象",
+                "en": "Anterior LV wall ATP concentration below baseline, suggesting early metabolic stress"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "detection_depth",
+        "widget": "dial",
+        "title": {
+          "zh": "调整检测灵敏度",
+          "en": "Adjust Detection Sensitivity"
+        },
+        "instruction": {
+          "zh": "设定假想的量子传感器倍率",
+          "en": "Set hypothetical quantum sensor magnification"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "查看理论优势",
+              "en": "View Theoretical Benefit"
+            },
+            "output": {
+              "zh": "更高倍率检测更弱的分子信号",
+              "en": "Higher magnification detects weaker molecular signals"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "传感器配置",
+                "en": "Sensor Configuration"
+              },
+              "output_label": {
+                "zh": "预期效果说明",
+                "en": "Expected Effect Note"
+              },
+              "input": {
+                "zh": "量子自旋探针阵列，氮空位金刚石传感器",
+                "en": "Quantum spin probe array, nitrogen-vacancy diamond sensors"
+              },
+              "output": {
+                "zh": "理论上可捕获单个蛋白质分子的磁共振信号，实际性能需临床验证",
+                "en": "Theoretically captures single-protein MR signals; real performance requires clinical validation"
+              }
+            }
+          }
+        ],
+        "example_data": true,
+        "dial": {
+          "min": 1,
+          "max": 20,
+          "initial": 5,
+          "factor": 2,
+          "unit": {
+            "zh": "倍灵敏度",
+            "en": "× sensitivity"
+          },
+          "result_label": {
+            "zh": "虚构信噪比提升",
+            "en": "Fictional SNR Improvement"
+          }
+        }
+      },
+      {
+        "id": "comparison",
+        "widget": "review",
+        "title": {
+          "zh": "对比成像方法",
+          "en": "Compare Imaging Methods"
+        },
+        "instruction": {
+          "zh": "回顾两种虚构技术的差异",
+          "en": "Review differences between two fictional techniques"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "传统方法",
+              "en": "Conventional Method"
+            },
+            "output": {
+              "zh": "标准氢质子成像",
+              "en": "Standard proton imaging"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "技术特点",
+                "en": "Technical Features"
+              },
+              "output_label": {
+                "zh": "局限性",
+                "en": "Limitations"
+              },
+              "input": {
+                "zh": "使用强磁场和射频脉冲激发氢原子核",
+                "en": "Uses strong magnetic fields and RF pulses to excite hydrogen nuclei"
+              },
+              "output": {
+                "zh": "空间分辨率受物理衍射限制，难以区分亚细胞结构",
+                "en": "Spatial resolution limited by physical diffraction, subcellular structures difficult to distinguish"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "分辨率",
+                    "en": "Resolution"
+                  },
+                  "detail": {
+                    "zh": "毫米级，无法显示单个细胞",
+                    "en": "Millimeter-scale, cannot show individual cells"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "对比度",
+                    "en": "Contrast"
+                  },
+                  "detail": {
+                    "zh": "依赖组织含水量差异",
+                    "en": "Relies on tissue water content differences"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "量子增强方法",
+              "en": "Quantum-Enhanced Method"
+            },
+            "output": {
+              "zh": "利用量子态的超灵敏探测",
+              "en": "Utilizes quantum state hypersensitivity"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "理论机制",
+                "en": "Theoretical Mechanism"
+              },
+              "output_label": {
+                "zh": "潜在优势",
+                "en": "Potential Advantages"
+              },
+              "input": {
+                "zh": "量子传感器可检测极微弱磁场波动，对单分子敏感",
+                "en": "Quantum sensors detect extremely weak magnetic field fluctuations, sensitive to single molecules"
+              },
+              "output": {
+                "zh": "可能实现分子级分辨率，但技术尚处早期研发阶段",
+                "en": "May achieve molecular-level resolution, but technology still in early R&D phase"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "灵敏度",
+                    "en": "Sensitivity"
+                  },
+                  "detail": {
+                    "zh": "理论上提升数十倍，实际待验证",
+                    "en": "Theoretically tens-fold higher, actual pending validation"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "应用场景",
+                    "en": "Use Cases"
+                  },
+                  "detail": {
+                    "zh": "早期病变检测，药物靶点成像",
+                    "en": "Early lesion detection, drug target imaging"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了量子MRI的理论优势，实际临床性能、安全性和监管批准仍需在NVision官网或医学文献中确认",
+      "en": "Demonstrated theoretical advantages of quantum MRI; actual clinical performance, safety and regulatory approval must be confirmed on NVision's site or in medical literature"
+    },
+    "sources": [
+      {
+        "url": "https://www.nvision.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://news.symbiosei.com/_startups_2",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}
