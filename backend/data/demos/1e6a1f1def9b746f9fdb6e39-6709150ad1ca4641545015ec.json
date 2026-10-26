@@ -1,0 +1,258 @@
+{
+  "cache_key": "1e6a1f1def9b746f9fdb6e39-6709150ad1ca4641545015ec",
+  "product_key": "1e6a1f1def9b746f9fdb6e39",
+  "fingerprint": "6709150ad1ca4641545015ec",
+  "product_id": "99",
+  "product_name": "Helical Fusion",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-26T23:16:48.733158+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "核聚变反应堆商业化路径",
+      "en": "Fusion Reactor Commercialization Path"
+    },
+    "scenario": {
+      "zh": "螺旋型核聚变反应堆从实验室到电网的技术与商业决策",
+      "en": "Technical and commercial decisions for helical fusion reactors from lab to grid"
+    },
+    "steps": [
+      {
+        "id": "reactor_config",
+        "widget": "choice",
+        "title": {
+          "zh": "反应堆配置选择",
+          "en": "Reactor Configuration"
+        },
+        "instruction": {
+          "zh": "选择螺旋型反应堆的磁场配置方案",
+          "en": "Choose magnetic confinement approach"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "连续磁场螺旋",
+              "en": "Continuous Helical Field"
+            },
+            "output": {
+              "zh": "等离子体稳定性更高，适合长时运行",
+              "en": "Higher plasma stability for sustained operation"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "技术参数对比",
+                "en": "Technical Comparison"
+              },
+              "output_label": {
+                "zh": "工程权衡",
+                "en": "Engineering Tradeoffs"
+              },
+              "input": {
+                "zh": "连续螺旋磁场 vs 模块化线圈设计",
+                "en": "Continuous helical vs modular coil design"
+              },
+              "output": {
+                "zh": "连续配置：等离子体约束时间更长，但制造复杂度高",
+                "en": "Continuous: longer confinement time, higher manufacturing complexity"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "模块化线圈组",
+              "en": "Modular Coil Assembly"
+            },
+            "output": {
+              "zh": "降低制造难度，便于维护升级",
+              "en": "Simplified manufacturing and maintenance"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "技术参数对比",
+                "en": "Technical Comparison"
+              },
+              "output_label": {
+                "zh": "工程权衡",
+                "en": "Engineering Tradeoffs"
+              },
+              "input": {
+                "zh": "连续螺旋磁场 vs 模块化线圈设计",
+                "en": "Continuous helical vs modular coil design"
+              },
+              "output": {
+                "zh": "模块化：建造周期缩短，但需更精密的磁场控制算法",
+                "en": "Modular: faster construction, requires precise field control algorithms"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "deployment",
+        "widget": "choice",
+        "title": {
+          "zh": "部署场景验证",
+          "en": "Deployment Scenario"
+        },
+        "instruction": {
+          "zh": "确定首个商业化应用场景",
+          "en": "Identify first commercial application"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "数据中心专用电站",
+              "en": "Data Center Dedicated Plant"
+            },
+            "output": {
+              "zh": "AI训练集群的稳定基载电力",
+              "en": "Baseload power for AI training clusters"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "电网接入需求",
+                "en": "Grid Integration Requirements"
+              },
+              "output_label": {
+                "zh": "技术里程碑",
+                "en": "Technical Milestones"
+              },
+              "input": {
+                "zh": "200MW级反应堆供应单一数据中心",
+                "en": "200MW reactor serving single data center"
+              },
+              "output": {
+                "zh": "需完成：等离子体持续燃烧30天、热电转换效率验证、冷却系统测试",
+                "en": "Required: 30-day plasma burn, thermal conversion efficiency validation, cooling system testing"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "等离子体燃烧",
+                    "en": "Plasma Burn"
+                  },
+                  "detail": {
+                    "zh": "连续运行30天，验证长期稳定性",
+                    "en": "30-day continuous operation for stability validation"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "能量转换",
+                    "en": "Energy Conversion"
+                  },
+                  "detail": {
+                    "zh": "热电转换效率达到设计目标",
+                    "en": "Achieve target thermal-to-electric efficiency"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "冷却循环",
+                    "en": "Cooling Loop"
+                  },
+                  "detail": {
+                    "zh": "闭环冷却系统在满负荷下测试",
+                    "en": "Closed-loop cooling tested at full load"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "区域电网试点",
+              "en": "Regional Grid Pilot"
+            },
+            "output": {
+              "zh": "多用户场景的调度与安全验证",
+              "en": "Load balancing and safety in multi-user scenario"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "电网接入需求",
+                "en": "Grid Integration Requirements"
+              },
+              "output_label": {
+                "zh": "技术里程碑",
+                "en": "Technical Milestones"
+              },
+              "input": {
+                "zh": "500MW级反应堆接入区域电网",
+                "en": "500MW reactor connected to regional grid"
+              },
+              "output": {
+                "zh": "需完成：快速启停测试、负荷跟踪能力、电网同步保护",
+                "en": "Required: rapid start-stop testing, load-following capability, grid synchronization protection"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "启停响应",
+                    "en": "Start-Stop Response"
+                  },
+                  "detail": {
+                    "zh": "验证快速启动和安全关停流程",
+                    "en": "Validate rapid startup and safe shutdown procedures"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "负荷跟踪",
+                    "en": "Load Following"
+                  },
+                  "detail": {
+                    "zh": "根据电网需求调整输出功率",
+                    "en": "Adjust output power based on grid demand"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "同步保护",
+                    "en": "Sync Protection"
+                  },
+                  "detail": {
+                    "zh": "电网故障时的自动断开与恢复",
+                    "en": "Automatic disconnect and recovery during grid faults"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例展示了螺旋型反应堆的配置选择与部署场景，未验证Helical Fusion的实际工程进度。访问官网了解真实技术路线图",
+      "en": "Examples illustrated configuration choices and deployment scenarios for helical reactors, without verifying Helical Fusion's actual engineering progress. Visit their site for the real technology roadmap"
+    },
+    "sources": [
+      {
+        "url": "https://www.helicalfusion.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://news.livedoor.com/pr_article/detail/31242015/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

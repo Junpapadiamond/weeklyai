@@ -1,0 +1,202 @@
+{
+  "cache_key": "05d5da2685d0f80d95dd74b6-509f4f7bdd745ab0b481975b",
+  "product_key": "05d5da2685d0f80d95dd74b6",
+  "fingerprint": "509f4f7bdd745ab0b481975b",
+  "product_id": "97",
+  "product_name": "Judgment Labs",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-26T23:16:24.738759+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "代理持续改进示例",
+      "en": "Agent Improvement Demo"
+    },
+    "scenario": {
+      "zh": "探索如何将生产数据转化为代理优化方案",
+      "en": "Explore turning production data into agent optimization"
+    },
+    "steps": [
+      {
+        "id": "data_input",
+        "widget": "choice",
+        "title": {
+          "zh": "选择生产数据类型",
+          "en": "Choose Production Data"
+        },
+        "instruction": {
+          "zh": "选择一个代理交互记录进行分析",
+          "en": "Pick an agent interaction to analyze"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "客户支持对话",
+              "en": "Support Chat"
+            },
+            "output": {
+              "zh": "识别回复不完整的模式",
+              "en": "Pattern of incomplete answers found"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "对话记录",
+                "en": "Chat Log"
+              },
+              "output_label": {
+                "zh": "发现的问题",
+                "en": "Issue Detected"
+              },
+              "input": {
+                "zh": "用户：我的订单什么时候到？\n代理：您的订单正在处理中。\n用户：具体日期呢？\n代理：请查看确认邮件。",
+                "en": "User: When will my order arrive?\nAgent: Your order is being processed.\nUser: What's the exact date?\nAgent: Please check confirmation email."
+              },
+              "output": {
+                "zh": "代理未直接提供预计送达日期，导致用户追问",
+                "en": "Agent failed to provide estimated delivery, causing follow-up"
+              },
+              "emphasis": {
+                "zh": "什么时候到",
+                "en": "When will"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "销售查询日志",
+              "en": "Sales Query Log"
+            },
+            "output": {
+              "zh": "发现定价回答不一致",
+              "en": "Pricing inconsistency detected"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "查询记录",
+                "en": "Query Record"
+              },
+              "output_label": {
+                "zh": "不一致点",
+                "en": "Inconsistency"
+              },
+              "input": {
+                "zh": "会话A：企业版多少钱？回复：每月299美元。\n会话B：企业版定价？回复：联系销售团队。",
+                "en": "Session A: How much is Enterprise? Reply: $299/month.\nSession B: Enterprise pricing? Reply: Contact sales team."
+              },
+              "output": {
+                "zh": "同一产品在不同会话中给出了矛盾答案",
+                "en": "Same product received contradictory answers across sessions"
+              },
+              "emphasis": {
+                "zh": "企业版",
+                "en": "Enterprise"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "improvement",
+        "widget": "choice",
+        "title": {
+          "zh": "生成改进方案",
+          "en": "Generate Improvement"
+        },
+        "instruction": {
+          "zh": "基于数据选择优化方向",
+          "en": "Pick optimization direction from data"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "提示词优化",
+              "en": "Prompt Refinement"
+            },
+            "output": {
+              "zh": "增加具体性指令",
+              "en": "Add specificity instruction"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "当前提示",
+                "en": "Current Prompt"
+              },
+              "output_label": {
+                "zh": "优化后提示",
+                "en": "Refined Prompt"
+              },
+              "input": {
+                "zh": "回答订单相关问题",
+                "en": "Answer order questions"
+              },
+              "output": {
+                "zh": "回答订单问题时必须包含：1)预计送达日期 2)追踪链接 3)联系方式",
+                "en": "When answering order questions include: 1) estimated delivery 2) tracking link 3) contact info"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "知识库补充",
+              "en": "Knowledge Addition"
+            },
+            "output": {
+              "zh": "添加缺失的定价规则",
+              "en": "Add missing pricing rule"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "待补充内容",
+                "en": "Content to Add"
+              },
+              "output_label": {
+                "zh": "知识库条目",
+                "en": "KB Entry"
+              },
+              "input": {
+                "zh": "企业版定价模糊",
+                "en": "Enterprise pricing unclear"
+              },
+              "output": {
+                "zh": "企业版：年付2990美元，月付299美元。超过100用户需联系销售定制方案。",
+                "en": "Enterprise: $2990/year or $299/month. Over 100 users require custom quote from sales."
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了从生产数据识别问题到生成优化方案的流程，实际改进需在Judgment Labs平台执行",
+      "en": "Showed data-to-optimization workflow; real improvements require Judgment Labs platform"
+    },
+    "sources": [
+      {
+        "url": "https://www.judgmentlabs.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.morningstar.com/news/business-wire/20260512621556/judgment-labs-closes-32m-in-seed-and-series-a-funding-to-build-the-continuous-improvement-layer-for-ai-agents",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

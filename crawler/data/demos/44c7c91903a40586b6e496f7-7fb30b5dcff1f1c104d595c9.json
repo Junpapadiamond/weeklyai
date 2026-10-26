@@ -1,0 +1,278 @@
+{
+  "cache_key": "44c7c91903a40586b6e496f7-7fb30b5dcff1f1c104d595c9",
+  "product_key": "44c7c91903a40586b6e496f7",
+  "fingerprint": "7fb30b5dcff1f1c104d595c9",
+  "product_id": "p_3372f6c441720abd",
+  "product_name": "geoSurge",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-26T23:14:29.212519+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "品牌在AI中的呈现分析",
+      "en": "Brand Representation in AI"
+    },
+    "scenario": {
+      "zh": "探索生成式AI如何检索和描述一个虚构公司,识别改进方向",
+      "en": "Explore how generative AI retrieves and describes a fictional company, identify improvement areas"
+    },
+    "steps": [
+      {
+        "id": "query_test",
+        "widget": "choice",
+        "title": {
+          "zh": "测试查询场景",
+          "en": "Test Query Scenario"
+        },
+        "instruction": {
+          "zh": "选择一个虚构查询,观察AI呈现差异",
+          "en": "Choose a fictional query to observe AI representation differences"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "产品推荐查询",
+              "en": "Product Recommendation"
+            },
+            "output": {
+              "zh": "AI提及竞品但未提及该品牌",
+              "en": "AI mentions competitors but not this brand"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "用户查询(虚构)",
+                "en": "User Query (Fictional)"
+              },
+              "output_label": {
+                "zh": "AI回复对比(虚构)",
+                "en": "AI Response Comparison (Fictional)"
+              },
+              "input": {
+                "zh": "推荐适合中小企业的数据分析工具",
+                "en": "Recommend data analytics tools for SMBs"
+              },
+              "output": {
+                "zh": "模型A:提到Tableau和PowerBI\n模型B:提到Looker但未提及本品牌\n本品牌在两个模型中均缺失",
+                "en": "Model A: Mentions Tableau and PowerBI\nModel B: Mentions Looker but not this brand\nBrand absent in both models"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "直接品牌查询",
+              "en": "Direct Brand Query"
+            },
+            "output": {
+              "zh": "描述不完整,缺少核心特性",
+              "en": "Incomplete description, missing core features"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "用户查询(虚构)",
+                "en": "User Query (Fictional)"
+              },
+              "output_label": {
+                "zh": "AI回复对比(虚构)",
+                "en": "AI Response Comparison (Fictional)"
+              },
+              "input": {
+                "zh": "介绍一下DataFlow公司的产品",
+                "en": "Tell me about DataFlow company products"
+              },
+              "output": {
+                "zh": "模型A:仅提及成立时间和总部位置\n模型B:描述为通用分析平台,未提及实时处理特性\n关键差异化功能未被检索",
+                "en": "Model A: Only mentions founding year and headquarters\nModel B: Describes as generic analytics platform, misses real-time processing\nKey differentiators not retrieved"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "content_gap",
+        "widget": "choice",
+        "title": {
+          "zh": "内容缺口识别",
+          "en": "Content Gap Identification"
+        },
+        "instruction": {
+          "zh": "分析哪些信息未被AI模型有效检索",
+          "en": "Analyze which information AI models fail to retrieve effectively"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "产品特性缺失",
+              "en": "Missing Product Features"
+            },
+            "output": {
+              "zh": "核心技术优势在训练语料中表述不足",
+              "en": "Core technical advantages underrepresented in training corpus"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "期望呈现(虚构)",
+                "en": "Desired Representation (Fictional)"
+              },
+              "output_label": {
+                "zh": "实际检索结果(虚构)",
+                "en": "Actual Retrieval Results (Fictional)"
+              },
+              "input": {
+                "zh": "实时流处理引擎\n自动化异常检测\n企业级数据安全",
+                "en": "Real-time stream processing\nAutomated anomaly detection\nEnterprise data security"
+              },
+              "output": {
+                "zh": "三个主要特性均未在AI回复中出现\n竞品的类似特性被频繁提及\n表明信息密度或可检索性不足",
+                "en": "None of three features appear in AI responses\nCompetitor similar features frequently mentioned\nIndicates insufficient information density or retrievability"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "实时处理",
+                    "en": "Real-time Processing"
+                  },
+                  "detail": {
+                    "zh": "在公开内容中仅出现在技术文档深层页面",
+                    "en": "Only appears in deep technical documentation pages"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "异常检测",
+                    "en": "Anomaly Detection"
+                  },
+                  "detail": {
+                    "zh": "描述使用通用术语,缺乏可区分的表述",
+                    "en": "Described using generic terms, lacks distinctive phrasing"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "数据安全",
+                    "en": "Data Security"
+                  },
+                  "detail": {
+                    "zh": "证书信息分散,未形成清晰叙述",
+                    "en": "Certification info scattered, no clear narrative formed"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "用例场景缺失",
+              "en": "Missing Use Case Scenarios"
+            },
+            "output": {
+              "zh": "行业应用实例未被有效关联",
+              "en": "Industry application examples not effectively linked"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "现有内容片段(虚构)",
+                "en": "Existing Content Excerpt (Fictional)"
+              },
+              "output_label": {
+                "zh": "检索分析(虚构)",
+                "en": "Retrieval Analysis (Fictional)"
+              },
+              "input": {
+                "zh": "我们的客户包括金融、零售和制造业领域的企业。这些公司使用我们的平台进行数据分析。",
+                "en": "Our clients include companies in finance, retail and manufacturing. These companies use our platform for data analytics."
+              },
+              "output": {
+                "zh": "行业词汇存在但缺乏具体场景\n竞品页面包含详细案例描述和问题-解决方案对应\n需要增加场景化表述密度",
+                "en": "Industry terms present but lack specific scenarios\nCompetitor pages contain detailed case descriptions and problem-solution mappings\nNeed to increase scenario-based phrasing density"
+              },
+              "emphasis": {
+                "zh": "我们的客户包括金融、零售和制造业领域的企业",
+                "en": "Our clients include companies in finance, retail and manufacturing"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "optimization",
+        "widget": "review",
+        "title": {
+          "zh": "内容优化方向",
+          "en": "Content Optimization Directions"
+        },
+        "instruction": {
+          "zh": "查看针对检索改进的建议方向",
+          "en": "Review suggested directions for retrieval improvement"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "增强特性可检索性",
+              "en": "Enhance Feature Retrievability"
+            },
+            "output": {
+              "zh": "在多个页面用明确语言重复核心差异化特性,增加语义密度",
+              "en": "Repeat core differentiators with clear language across pages to increase semantic density"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "结构化用例叙述",
+              "en": "Structure Use Case Narratives"
+            },
+            "output": {
+              "zh": "创建问题-解决方案格式的行业案例,便于模型建立关联",
+              "en": "Create problem-solution formatted industry cases for better model association"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "优化权威信号",
+              "en": "Optimize Authority Signals"
+            },
+            "output": {
+              "zh": "整合分散的证书、奖项和合作伙伴信息到清晰叙述中",
+              "en": "Consolidate scattered certifications, awards and partnerships into clear narratives"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "此交互展示了虚构品牌的AI呈现分析过程,实际检索结果和优化效果需在geoSurge平台验证",
+      "en": "This interaction demonstrated AI representation analysis for a fictional brand; actual retrieval results and optimization effects require verification on geoSurge platform"
+    },
+    "sources": [
+      {
+        "url": "https://www.geosurge.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.eu-startups.com/2026/10/15-startups-helping-ai-discover-your-company-and-product",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,294 @@
+{
+  "cache_key": "4ec33625f5a41994803be115-0f8741e9c75449bb2ed02518",
+  "product_key": "4ec33625f5a41994803be115",
+  "fingerprint": "0f8741e9c75449bb2ed02518",
+  "product_id": "p_b3ed4c6f28f68d7e",
+  "product_name": "Rootline Robotics",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-26T23:15:20.769142+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "电击除草模块配置",
+      "en": "Electrocution Weeding Module Setup"
+    },
+    "scenario": {
+      "zh": "为自主农用机器人选择电击除草模块参数,演示如何根据作物类型调整电极配置",
+      "en": "Select electrocution weeding module parameters for autonomous farm robots, showing electrode adjustment by crop type"
+    },
+    "steps": [
+      {
+        "id": "crop_type",
+        "widget": "choice",
+        "title": {
+          "zh": "作物类型",
+          "en": "Crop Type"
+        },
+        "instruction": {
+          "zh": "不同作物需要不同电极间距",
+          "en": "Different crops need different electrode spacing"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "草莓",
+              "en": "Strawberries"
+            },
+            "output": {
+              "zh": "浅根系需窄间距",
+              "en": "Shallow roots need narrow spacing"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "地块特征",
+                "en": "Field Characteristics"
+              },
+              "output_label": {
+                "zh": "推荐参数",
+                "en": "Recommended Parameters"
+              },
+              "input": {
+                "zh": "草莓田 行距45厘米 杂草以一年生阔叶为主",
+                "en": "Strawberry field 45cm rows mostly annual broadleaf weeds"
+              },
+              "output": {
+                "zh": "电极间距35毫米 行进速度较快 适合密集种植",
+                "en": "Electrode spacing 35mm faster travel speed suits dense planting"
+              },
+              "emphasis": {
+                "zh": "行距45厘米",
+                "en": "45cm rows"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "蓝莓",
+              "en": "Blueberries"
+            },
+            "output": {
+              "zh": "灌木根系需宽间距",
+              "en": "Shrub roots need wider spacing"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "地块特征",
+                "en": "Field Characteristics"
+              },
+              "output_label": {
+                "zh": "推荐参数",
+                "en": "Recommended Parameters"
+              },
+              "input": {
+                "zh": "蓝莓园 行距120厘米 杂草包含多年生禾本科",
+                "en": "Blueberry orchard 120cm rows includes perennial grasses"
+              },
+              "output": {
+                "zh": "电极间距50毫米 行进速度较慢 避开灌木根系",
+                "en": "Electrode spacing 50mm slower travel speed avoids shrub roots"
+              },
+              "emphasis": {
+                "zh": "行距120厘米",
+                "en": "120cm rows"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "葡萄园",
+              "en": "Vineyard"
+            },
+            "output": {
+              "zh": "藤本植物需精确定位",
+              "en": "Vine plants need precise targeting"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "地块特征",
+                "en": "Field Characteristics"
+              },
+              "output_label": {
+                "zh": "推荐参数",
+                "en": "Recommended Parameters"
+              },
+              "input": {
+                "zh": "葡萄园 行距180厘米 藤蔓基部周围需避让",
+                "en": "Vineyard 180cm rows clearance needed around vine bases"
+              },
+              "output": {
+                "zh": "电极间距40毫米 增强传感器引导 保护主藤",
+                "en": "Electrode spacing 40mm enhanced sensor guidance protects main vines"
+              },
+              "emphasis": {
+                "zh": "行距180厘米",
+                "en": "180cm rows"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "integration",
+        "widget": "choice",
+        "title": {
+          "zh": "集成平台",
+          "en": "Integration Platform"
+        },
+        "instruction": {
+          "zh": "模块可安装到现有机器人",
+          "en": "Module mounts to existing robots"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "Saga平台",
+              "en": "Saga Platform"
+            },
+            "output": {
+              "zh": "已有集成案例",
+              "en": "Existing integration examples"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "安装要点",
+                "en": "Installation Points"
+              },
+              "output_label": {
+                "zh": "核对项",
+                "en": "Checklist Items"
+              },
+              "input": {
+                "zh": "Saga Thorvald机器人 前置挂架",
+                "en": "Saga Thorvald robot front mounting bracket"
+              },
+              "output": {
+                "zh": "确认电力接口 机械固定点 通信协议",
+                "en": "Verify power interface mechanical mounting communication protocol"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "电力连接",
+                    "en": "Power Connection"
+                  },
+                  "detail": {
+                    "zh": "24伏系统接口位于前舱",
+                    "en": "24V system interface at front compartment"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "机械挂载",
+                    "en": "Mechanical Mount"
+                  },
+                  "detail": {
+                    "zh": "标准挂架适配前置工具位",
+                    "en": "Standard bracket fits front tool position"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "数据通信",
+                    "en": "Data Communication"
+                  },
+                  "detail": {
+                    "zh": "CAN总线连接导航系统",
+                    "en": "CAN bus links to navigation system"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "其他平台",
+              "en": "Other Platform"
+            },
+            "output": {
+              "zh": "需确认兼容性",
+              "en": "Compatibility verification needed"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "review",
+        "widget": "review",
+        "title": {
+          "zh": "配置总结",
+          "en": "Configuration Summary"
+        },
+        "instruction": {
+          "zh": "查看虚拟配置示例",
+          "en": "Review fictional configuration example"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "示例方案",
+              "en": "Example Plan"
+            },
+            "output": {
+              "zh": "虚拟场景演示",
+              "en": "Fictional scenario demonstration"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "选定配置",
+                "en": "Selected Configuration"
+              },
+              "output_label": {
+                "zh": "预期特征",
+                "en": "Expected Characteristics"
+              },
+              "input": {
+                "zh": "草莓田场景 电极间距35毫米 Saga平台",
+                "en": "Strawberry scenario 35mm electrode spacing Saga platform"
+              },
+              "output": {
+                "zh": "模块适配浅根作物 避免化学除草剂 实际效果需现场测试验证",
+                "en": "Module suits shallow-root crops avoids chemical herbicides actual results require field testing verification"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了根据作物选择电极参数和集成平台的虚拟流程,实际性能和兼容性需访问制造商网站确认并进行现场部署测试",
+      "en": "Demonstrated fictional workflow for selecting electrode parameters and integration platform by crop type actual performance and compatibility require manufacturer site confirmation and field deployment testing"
+    },
+    "sources": [
+      {
+        "url": "https://rootlinerobotics.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://agfundernews.com/reservoir-farms-expands-to-pacific-northwest-to-accelerate-physical-ai-as-membership-tops-30",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}
