@@ -1,0 +1,171 @@
+{
+  "cache_key": "1e3830fb63935e18f15050d4-3cc7041f5b280dbbe65e0910",
+  "product_key": "1e3830fb63935e18f15050d4",
+  "fingerprint": "3cc7041f5b280dbbe65e0910",
+  "product_id": "95",
+  "product_name": "Profound",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-27T23:04:00.182791+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "AI搜索可见性优化示例",
+      "en": "AI Search Visibility Example"
+    },
+    "scenario": {
+      "zh": "品牌在AI搜索中的呈现方式直接影响用户发现，这里演示如何优化结构化内容以提升AI搜索引擎的理解和推荐效果",
+      "en": "How brands appear in AI search directly affects discovery. This demonstrates optimizing structured content to improve AI search engine understanding and recommendations"
+    },
+    "steps": [
+      {
+        "id": "content_input",
+        "widget": "choice",
+        "title": {
+          "zh": "选择内容类型",
+          "en": "Choose Content Type"
+        },
+        "instruction": {
+          "zh": "AI搜索引擎理解结构化内容的方式不同于传统SEO",
+          "en": "AI search engines understand structured content differently than traditional SEO"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "产品功能说明",
+              "en": "Product Features"
+            },
+            "output": {
+              "zh": "识别关键实体和用户意图",
+              "en": "Identifies key entities and user intent"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "原始内容片段",
+                "en": "Original Content"
+              },
+              "output_label": {
+                "zh": "优化后的结构",
+                "en": "Optimized Structure"
+              },
+              "input": {
+                "zh": "CloudSync企业版提供文件同步、团队协作和版本控制功能，适合中小企业使用",
+                "en": "CloudSync Enterprise offers file sync, team collaboration and version control, suitable for SMBs"
+              },
+              "output": {
+                "zh": "主要功能：实时文件同步 | 团队协作工作区 | 自动版本历史 || 适用场景：远程团队协作、项目文档管理 || 目标用户：50-500人中小企业",
+                "en": "Core Features: Real-time file sync | Team collaboration workspace | Automatic version history || Use Cases: Remote team collaboration, project documentation || Target: SMBs 50-500 employees"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "客户评价内容",
+              "en": "Customer Reviews"
+            },
+            "output": {
+              "zh": "突出具体使用场景和结果",
+              "en": "Highlights specific use cases and outcomes"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "评价原文",
+                "en": "Original Review"
+              },
+              "output_label": {
+                "zh": "结构化提取",
+                "en": "Structured Extract"
+              },
+              "input": {
+                "zh": "我们团队用了三个月，文件查找速度明显提升，现在项目交接也更顺畅了",
+                "en": "Our team used it for three months, file search improved noticeably, and project handoffs are smoother now"
+              },
+              "output": {
+                "zh": "使用时长：三个月 || 改进方面：文件检索效率提升、项目交接流程优化 || 团队规模：多人协作环境",
+                "en": "Duration: Three months || Improvements: File retrieval efficiency, project handoff process || Context: Multi-person collaboration"
+              },
+              "emphasis": {
+                "zh": "文件查找速度明显提升",
+                "en": "file search improved noticeably"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "visibility_check",
+        "widget": "review",
+        "title": {
+          "zh": "可见性要素检查",
+          "en": "Visibility Elements"
+        },
+        "instruction": {
+          "zh": "确认内容包含AI搜索引擎识别的关键要素",
+          "en": "Confirm content includes key elements AI search engines recognize"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "实体明确性",
+              "en": "Entity Clarity"
+            },
+            "output": {
+              "zh": "产品名称、功能类别清晰标注",
+              "en": "Product names and function categories clearly marked"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "用户意图匹配",
+              "en": "Intent Matching"
+            },
+            "output": {
+              "zh": "内容回应具体搜索场景",
+              "en": "Content addresses specific search scenarios"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "结构化标记",
+              "en": "Structured Markup"
+            },
+            "output": {
+              "zh": "关键信息以可解析格式呈现",
+              "en": "Key information in parseable format"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了两种内容类型的结构化优化方式，实际效果需在Profound平台测试不同AI搜索引擎的响应，访问profound.ai了解完整工具",
+      "en": "Demonstrated structured optimization for two content types. Actual performance requires testing AI search engine responses on Profound's platform. Visit profound.ai for full tools"
+    },
+    "sources": [
+      {
+        "url": "https://profound.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://fortune.com/2025/08/12/ai-search-startup-profound-raises-35-million-series-b-sequoia/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

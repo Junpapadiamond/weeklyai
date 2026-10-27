@@ -1,0 +1,197 @@
+{
+  "cache_key": "f77de34c8f75a65b6d621004-db7b0532937a8e36887b700c",
+  "product_key": "f77de34c8f75a65b6d621004",
+  "fingerprint": "db7b0532937a8e36887b700c",
+  "product_id": "101",
+  "product_name": "Vapi",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-27T23:05:04.635645+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "Vapi 语音AI融资动态",
+      "en": "Vapi Voice AI Funding News"
+    },
+    "scenario": {
+      "zh": "探索 Vapi 完成5000万美元B轮融资的背景与影响，了解语音AI领域的投资趋势",
+      "en": "Explore Vapi's $50M Series B funding context and impact, understand voice AI investment trends"
+    },
+    "steps": [
+      {
+        "id": "focus",
+        "widget": "choice",
+        "title": {
+          "zh": "选择分析角度",
+          "en": "Choose Analysis Focus"
+        },
+        "instruction": {
+          "zh": "从不同视角解读这轮融资",
+          "en": "Interpret this funding round from different perspectives"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "投资者视角",
+              "en": "Investor View"
+            },
+            "output": {
+              "zh": "分析Peak XV的投资逻辑",
+              "en": "Analyze Peak XV's investment thesis"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "融资简报片段",
+                "en": "Funding Brief Excerpt"
+              },
+              "output_label": {
+                "zh": "关键洞察",
+                "en": "Key Insights"
+              },
+              "input": {
+                "zh": "Vapi在2026年完成由Peak XV领投的5000万美元B轮融资。Peak XV（原红杉印度）专注AI基础设施投资，此前支持过多个语音技术公司。",
+                "en": "Vapi closed a $50M Series B led by Peak XV in 2026. Peak XV (formerly Sequoia India) focuses on AI infrastructure investments and previously backed multiple voice tech companies."
+              },
+              "output": {
+                "zh": "Peak XV押注语音AI成为下一代交互界面，Vapi的开发者平台模式符合基础设施投资逻辑",
+                "en": "Peak XV bets voice AI will be the next interface; Vapi's developer platform aligns with infrastructure thesis"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "市场竞争格局",
+              "en": "Market Landscape"
+            },
+            "output": {
+              "zh": "对比语音AI赛道的竞争态势",
+              "en": "Compare competitive dynamics in voice AI sector"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "赛道对比维度",
+                "en": "Sector Comparison Dimensions"
+              },
+              "output_label": {
+                "zh": "Vapi定位特点",
+                "en": "Vapi's Positioning"
+              },
+              "input": {
+                "zh": "通用语音助手（消费级产品）\n企业客服自动化（垂直方案）\n开发者语音平台（API基础设施）",
+                "en": "General voice assistants (consumer products)\nEnterprise customer service automation (vertical solutions)\nDeveloper voice platforms (API infrastructure)"
+              },
+              "output": {
+                "zh": "Vapi选择开发者平台路线，提供API让企业快速构建定制语音应用，避开消费市场的高成本",
+                "en": "Vapi pursues developer platform route, offering APIs for rapid custom voice apps, avoiding consumer market costs"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "技术趋势信号",
+              "en": "Tech Trend Signal"
+            },
+            "output": {
+              "zh": "解读融资反映的行业方向",
+              "en": "Interpret industry direction reflected in funding"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "趋势观察问题",
+                "en": "Trend Observation Question"
+              },
+              "output_label": {
+                "zh": "推断结论",
+                "en": "Inferred Conclusion"
+              },
+              "input": {
+                "zh": "为什么2026年语音AI基础设施获得大额融资？与大语言模型的关系是什么？",
+                "en": "Why did voice AI infrastructure receive large funding in 2026? What's the relationship with large language models?"
+              },
+              "output": {
+                "zh": "LLM使对话理解成熟，语音成为自然交互形式。Vapi等平台将语音能力模块化，基础设施时机已到",
+                "en": "LLMs matured conversational understanding; voice became natural I/O. Platforms like Vapi modularized voice capabilities"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "implications",
+        "widget": "review",
+        "title": {
+          "zh": "融资影响推演",
+          "en": "Funding Impact Projections"
+        },
+        "instruction": {
+          "zh": "评估对不同利益方的影响",
+          "en": "Assess impact on different stakeholders"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "对开发者的影响",
+              "en": "Impact on Developers"
+            },
+            "output": {
+              "zh": "更多资源投入SDK和文档，降低语音功能集成成本",
+              "en": "More resources for SDK and docs, lower voice integration costs"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "对企业客户的影响",
+              "en": "Impact on Enterprise Clients"
+            },
+            "output": {
+              "zh": "平台稳定性和合规认证加强，大型企业采购信心提升",
+              "en": "Strengthened platform stability and compliance, boosted enterprise confidence"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "对竞争对手的影响",
+              "en": "Impact on Competitors"
+            },
+            "output": {
+              "zh": "资金优势拉大差距，小型语音平台面临整合压力",
+              "en": "Funding gap widens, smaller voice platforms face consolidation pressure"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "此交互演示了从融资新闻推断投资逻辑、市场定位和行业趋势的分析框架。实际产品评估需访问 Vapi 官网了解技术细节、定价和客户案例",
+      "en": "This interaction demonstrated an analytical framework for inferring investment logic, market positioning, and industry trends from funding news. Actual product evaluation requires visiting Vapi's site for technical details, pricing, and customer cases"
+    },
+    "sources": [
+      {
+        "url": "https://vapi.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://startups.gallery/news",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,241 @@
+{
+  "cache_key": "9b612ac4703e2d848d66e063-58067d99d1d8dad28ba00499",
+  "product_key": "9b612ac4703e2d848d66e063",
+  "fingerprint": "58067d99d1d8dad28ba00499",
+  "product_id": "105",
+  "product_name": "Cowboy Space",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-27T23:06:39.265400+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "太空数据中心运载规划",
+      "en": "Space Data Center Transport"
+    },
+    "scenario": {
+      "zh": "为轨道数据中心设计火箭运载方案，探索太空基础设施概念",
+      "en": "Design rocket transport for orbital data centers, explore space infrastructure concepts"
+    },
+    "steps": [
+      {
+        "id": "payload",
+        "widget": "choice",
+        "title": {
+          "zh": "选择运载模块",
+          "en": "Choose Transport Module"
+        },
+        "instruction": {
+          "zh": "什么类型的数据中心模块需要运送？",
+          "en": "What data center module needs transport?"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "计算服务器机架",
+              "en": "Compute Server Rack"
+            },
+            "output": {
+              "zh": "高密度计算负载，需散热和电力",
+              "en": "High-density compute needing thermal and power"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "需求描述",
+                "en": "Requirement Description"
+              },
+              "output_label": {
+                "zh": "运载方案",
+                "en": "Transport Approach"
+              },
+              "input": {
+                "zh": "标准服务器机架用于AI训练，需要液冷散热系统和太阳能供电",
+                "en": "Standard server rack for AI training, requires liquid cooling and solar power"
+              },
+              "output": {
+                "zh": "火箭需精确轨道插入，配备辐射加固外壳和热管理设备",
+                "en": "Rocket needs precise orbital insertion with radiation shielding and thermal management"
+              },
+              "emphasis": {
+                "zh": "液冷散热系统",
+                "en": "liquid cooling"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "存储阵列",
+              "en": "Storage Array"
+            },
+            "output": {
+              "zh": "大容量存储，优先数据完整性",
+              "en": "High-capacity storage prioritizing data integrity"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "需求描述",
+                "en": "Requirement Description"
+              },
+              "output_label": {
+                "zh": "运载方案",
+                "en": "Transport Approach"
+              },
+              "input": {
+                "zh": "大容量存储阵列用于全球数据备份，需要抗宇宙射线保护",
+                "en": "High-capacity storage array for global backup, needs cosmic ray protection"
+              },
+              "output": {
+                "zh": "火箭需更高轨道能力，配备多重冗余和低功耗设计",
+                "en": "Rocket needs higher orbit capability with multi-level redundancy and low-power design"
+              },
+              "emphasis": {
+                "zh": "抗宇宙射线保护",
+                "en": "cosmic ray protection"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "orbit",
+        "widget": "choice",
+        "title": {
+          "zh": "选择轨道高度",
+          "en": "Select Orbital Altitude"
+        },
+        "instruction": {
+          "zh": "数据中心将部署在哪个轨道？",
+          "en": "Which orbit will host the data center?"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "近地轨道",
+              "en": "Low Earth Orbit"
+            },
+            "output": {
+              "zh": "较低延迟，发射成本较低",
+              "en": "Lower latency, reduced launch cost"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "中地球轨道",
+              "en": "Medium Earth Orbit"
+            },
+            "output": {
+              "zh": "全球覆盖更好，轨道更稳定",
+              "en": "Better global coverage, more stable orbit"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "timeline",
+        "widget": "review",
+        "title": {
+          "zh": "检查开发计划",
+          "en": "Review Development Plan"
+        },
+        "instruction": {
+          "zh": "确认火箭开发和发射规划",
+          "en": "Confirm rocket development and launch planning"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "多年开发周期",
+              "en": "Multi-year Development"
+            },
+            "output": {
+              "zh": "基于融资的长期开发规划",
+              "en": "Long-term plan based on funding raised"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "开发阶段",
+                "en": "Development Phases"
+              },
+              "output_label": {
+                "zh": "预期进展",
+                "en": "Expected Progress"
+              },
+              "input": {
+                "zh": "火箭设计验证，地面测试系统，轨道插入模拟",
+                "en": "Rocket design validation, ground test systems, orbital insertion simulation"
+              },
+              "output": {
+                "zh": "原型开发需要较长周期，随后进行地面测试和首次发射尝试",
+                "en": "Prototype development requires extended timeline, followed by ground tests and initial launch attempt"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "设计验证",
+                    "en": "Design Validation"
+                  },
+                  "detail": {
+                    "zh": "完成推进系统和控制方案",
+                    "en": "Complete propulsion and control approach"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "地面测试",
+                    "en": "Ground Testing"
+                  },
+                  "detail": {
+                    "zh": "静态点火和系统集成验证",
+                    "en": "Static fire and system integration validation"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "发射准备",
+                    "en": "Launch Preparation"
+                  },
+                  "detail": {
+                    "zh": "载荷集成和轨道方案确认",
+                    "en": "Payload integration and orbital plan confirmation"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "探索了太空数据中心火箭的虚拟运载场景；实际能力和时间表需访问供应商网站确认",
+      "en": "Explored fictional transport scenarios for space data centers; actual capabilities and timelines require vendor site confirmation"
+    },
+    "sources": [
+      {
+        "url": "https://www.cowboyspace.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/category/artificial-intelligence/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

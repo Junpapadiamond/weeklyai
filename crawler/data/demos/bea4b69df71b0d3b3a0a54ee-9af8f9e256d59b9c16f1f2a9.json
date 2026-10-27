@@ -1,0 +1,164 @@
+{
+  "cache_key": "bea4b69df71b0d3b3a0a54ee-9af8f9e256d59b9c16f1f2a9",
+  "product_key": "bea4b69df71b0d3b3a0a54ee",
+  "fingerprint": "9af8f9e256d59b9c16f1f2a9",
+  "product_id": "100",
+  "product_name": "MetaComp",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-27T23:04:22.194850+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "MetaComp融资简报",
+      "en": "MetaComp Funding Brief"
+    },
+    "scenario": {
+      "zh": "为投资者准备一份关于MetaComp Pre-A+轮融资的简短分析摘要",
+      "en": "Prepare a brief analysis summary of MetaComp's Pre-A+ funding round for investors"
+    },
+    "steps": [
+      {
+        "id": "focus",
+        "widget": "choice",
+        "title": {
+          "zh": "选择分析重点",
+          "en": "Choose Analysis Focus"
+        },
+        "instruction": {
+          "zh": "从融资新闻中提取哪个角度的要点？",
+          "en": "Which angle should the brief emphasize from the funding news?"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "市场定位与规模",
+              "en": "Market Position & Scale"
+            },
+            "output": {
+              "zh": "突出融资规模在新加坡AI领域的地位",
+              "en": "Highlights funding scale within Singapore's AI landscape"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "融资新闻片段",
+                "en": "Funding News Excerpt"
+              },
+              "output_label": {
+                "zh": "投资者简报要点",
+                "en": "Investor Brief Key Points"
+              },
+              "input": {
+                "zh": "新加坡MetaComp获得3500万美元Pre-A+轮融资，用于扩展Web2.5平台。这是新加坡近期最大单笔AI相关融资。",
+                "en": "Singapore's MetaComp secured US$35M in Pre-A+ funding to expand Web2.5 platform. This marks one of the largest recent AI-related funding rounds in Singapore."
+              },
+              "output": {
+                "zh": "融资规模：3500万美元Pre-A+轮，新加坡近期AI领域最大单笔；战略方向：扩展Web2.5平台技术；市场意义：显示该赛道投资者信心强劲",
+                "en": "Funding scale: US$35M Pre-A+, largest recent AI round in Singapore; Strategic direction: Web2.5 platform expansion; Market significance: Strong investor confidence in this sector"
+              },
+              "emphasis": {
+                "zh": "3500万美元",
+                "en": "US$35M"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "技术方向与应用",
+              "en": "Technology Direction"
+            },
+            "output": {
+              "zh": "聚焦Web2.5平台的创新定位",
+              "en": "Focuses on Web2.5 platform innovation positioning"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "融资新闻片段",
+                "en": "Funding News Excerpt"
+              },
+              "output_label": {
+                "zh": "投资者简报要点",
+                "en": "Investor Brief Key Points"
+              },
+              "input": {
+                "zh": "新加坡MetaComp获得3500万美元Pre-A+轮融资，用于开发创新Web2.5平台，具有显著增长潜力。",
+                "en": "Singapore's MetaComp secured US$35M in Pre-A+ funding to develop innovative Web2.5 platform with significant growth potential."
+              },
+              "output": {
+                "zh": "核心技术：Web2.5平台架构，融合传统与去中心化技术；资金用途：平台技术研发与扩展；增长预期：投资方看好长期潜力",
+                "en": "Core technology: Web2.5 platform architecture bridging traditional and decentralized tech; Fund allocation: Platform R&D and expansion; Growth outlook: Investors confident in long-term potential"
+              },
+              "emphasis": {
+                "zh": "Web2.5平台",
+                "en": "Web2.5 platform"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output",
+        "widget": "review",
+        "title": {
+          "zh": "生成简报格式",
+          "en": "Generate Brief Format"
+        },
+        "instruction": {
+          "zh": "选择最终简报的呈现方式",
+          "en": "Choose how the final brief should be structured"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "执行摘要",
+              "en": "Executive Summary"
+            },
+            "output": {
+              "zh": "三段式结构：交易概况、战略意义、投资启示",
+              "en": "Three-part structure: deal overview, strategic significance, investment implications"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "关键数据清单",
+              "en": "Key Data List"
+            },
+            "output": {
+              "zh": "条目式要点：金额、轮次、用途、地区排名",
+              "en": "Bulleted points: amount, round, use of funds, regional ranking"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了从融资新闻提取投资分析要点的流程；实际产品功能需在官网验证；访问metacomp.ai了解完整平台能力",
+      "en": "Illustrated extracting investment analysis points from funding news; actual product capabilities require verification on official site; visit metacomp.ai for full platform details"
+    },
+    "sources": [
+      {
+        "url": "https://metacomp.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://fintechnews.sg/funding/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}
