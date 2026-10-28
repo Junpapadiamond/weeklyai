@@ -1,0 +1,168 @@
+{
+  "cache_key": "45b6b5a3a03a85fee20258c1-319f896173caacd9a1c4ffac",
+  "product_key": "45b6b5a3a03a85fee20258c1",
+  "fingerprint": "319f896173caacd9a1c4ffac",
+  "product_id": "107",
+  "product_name": "Quantum Motion",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-28T23:11:05.451184+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "量子计算硬件融资分析",
+      "en": "Quantum Computing Funding Analysis"
+    },
+    "scenario": {
+      "zh": "Quantum Motion 完成 $160M C 轮融资，探索欧洲量子计算初创公司融资格局",
+      "en": "Quantum Motion closed $160M Series C; explore European quantum computing startup funding landscape"
+    },
+    "steps": [
+      {
+        "id": "compare_funding",
+        "widget": "choice",
+        "title": {
+          "zh": "选择对比维度",
+          "en": "Select Comparison Dimension"
+        },
+        "instruction": {
+          "zh": "从不同角度分析融资规模",
+          "en": "Analyze funding scale from different angles"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "与欧洲同类公司对比",
+              "en": "Compare with European peers"
+            },
+            "output": {
+              "zh": "展示欧洲量子计算融资排名",
+              "en": "Show European quantum funding ranking"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "融资对比依据",
+                "en": "Funding Comparison Basis"
+              },
+              "output_label": {
+                "zh": "相对位置分析",
+                "en": "Relative Position Analysis"
+              },
+              "input": {
+                "zh": "IQM (芬兰) $320M B轮 / Pasqal (法国) $200M / Quantum Motion (英国) $160M C轮",
+                "en": "IQM (Finland) $320M Series B / Pasqal (France) $200M / Quantum Motion (UK) $160M Series C"
+              },
+              "output": {
+                "zh": "Quantum Motion 位列欧洲第三大量子计算融资，显示英国在硬件领域的竞争力",
+                "en": "Quantum Motion ranks third in European quantum funding, showing UK hardware competitiveness"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "分析融资轮次进展",
+              "en": "Analyze funding round progression"
+            },
+            "output": {
+              "zh": "评估C轮规模的行业意义",
+              "en": "Assess Series C scale industry significance"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "融资阶段特征",
+                "en": "Funding Stage Characteristics"
+              },
+              "output_label": {
+                "zh": "成熟度信号",
+                "en": "Maturity Signal"
+              },
+              "input": {
+                "zh": "C轮 $160M 融资规模超过多数量子初创公司的全部融资总额",
+                "en": "Series C $160M exceeds total lifetime funding of most quantum startups"
+              },
+              "output": {
+                "zh": "表明硬件技术路线验证进入后期阶段，投资者信心增强，接近商业化临界点",
+                "en": "Indicates hardware approach validation in late stage, stronger investor confidence, nearing commercialization threshold"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "assess_impact",
+        "widget": "choice",
+        "title": {
+          "zh": "评估行业影响",
+          "en": "Assess Industry Impact"
+        },
+        "instruction": {
+          "zh": "理解融资对量子计算领域的意义",
+          "en": "Understand funding significance for quantum computing"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "欧洲量子产业地位",
+              "en": "European quantum industry position"
+            },
+            "output": {
+              "zh": "三家头部公司均在欧洲，显示区域优势",
+              "en": "Three top companies all in Europe, showing regional strength"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "行业观察",
+                "en": "Industry Observation"
+              },
+              "output_label": {
+                "zh": "战略含义",
+                "en": "Strategic Implication"
+              },
+              "input": {
+                "zh": "欧洲量子计算初创公司占据全球融资前列，政府支持和研究机构合作推动硬件突破",
+                "en": "European quantum startups lead global funding, government support and research partnerships drive hardware breakthroughs"
+              },
+              "output": {
+                "zh": "欧洲在量子硬件领域建立先发优势，可能影响未来技术标准制定",
+                "en": "Europe establishes early advantage in quantum hardware, may influence future technology standards"
+              },
+              "emphasis": {
+                "zh": "政府支持和研究机构合作",
+                "en": "government support and research partnerships"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "展示了 Quantum Motion 在欧洲量子融资中的位置和C轮规模的行业意义；实际技术细节和商业化时间表需访问官网确认",
+      "en": "Illustrated Quantum Motion's position in European quantum funding and Series C scale significance; actual technical details and commercialization timeline require verification on official site"
+    },
+    "sources": [
+      {
+        "url": "https://quantummotion.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://sifted.eu/articles/quantum-motion-series-c",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

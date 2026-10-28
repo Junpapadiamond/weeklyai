@@ -1,0 +1,280 @@
+{
+  "cache_key": "a19401a08aafca575141a841-97d740ab731f7f3f0923e548",
+  "product_key": "a19401a08aafca575141a841",
+  "fingerprint": "97d740ab731f7f3f0923e548",
+  "product_id": "1139",
+  "product_name": "Fifth Dimension",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-28T23:09:53.351934+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "房地产投资情景模拟",
+      "en": "Real Estate Investment Scenario"
+    },
+    "scenario": {
+      "zh": "用假设数据探索不同市场条件下的投资决策逻辑",
+      "en": "Explore investment decision logic under different market conditions with fictional data"
+    },
+    "steps": [
+      {
+        "id": "market_condition",
+        "widget": "choice",
+        "title": {
+          "zh": "选择市场情景",
+          "en": "Choose Market Scenario"
+        },
+        "instruction": {
+          "zh": "选择一个假设的市场环境",
+          "en": "Select a hypothetical market environment"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "利率上升周期",
+              "en": "Rising Rate Cycle"
+            },
+            "output": {
+              "zh": "融资成本增加压缩收益空间",
+              "en": "Higher financing costs compress returns"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "输入假设",
+                "en": "Input Assumptions"
+              },
+              "output_label": {
+                "zh": "决策建议",
+                "en": "Decision Guidance"
+              },
+              "input": {
+                "zh": "利率较高，租金增长放缓，空置率上升",
+                "en": "Higher rates, slower rent growth, rising vacancy"
+              },
+              "output": {
+                "zh": "优先现金流稳定资产，延迟高杠杆收购",
+                "en": "Prioritize stable cash flow assets, delay high-leverage acquisitions"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "供应过剩区域",
+              "en": "Oversupply Region"
+            },
+            "output": {
+              "zh": "竞争加剧需要差异化定位",
+              "en": "Increased competition requires differentiation"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "输入假设",
+                "en": "Input Assumptions"
+              },
+              "output_label": {
+                "zh": "决策建议",
+                "en": "Decision Guidance"
+              },
+              "input": {
+                "zh": "新增供应大幅增加，需求增长温和，租金承压",
+                "en": "Supply surge, moderate demand growth, rent pressure"
+              },
+              "output": {
+                "zh": "关注改造机会，避免标准化新建项目",
+                "en": "Focus on repositioning, avoid standard new builds"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "asset_evaluation",
+        "widget": "choice",
+        "title": {
+          "zh": "资产筛选维度",
+          "en": "Asset Screening Criteria"
+        },
+        "instruction": {
+          "zh": "选择评估重点",
+          "en": "Select evaluation focus"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "现金流质量",
+              "en": "Cash Flow Quality"
+            },
+            "output": {
+              "zh": "长租约和信用租户提供稳定性",
+              "en": "Long leases and credit tenants provide stability"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "假设租约摘要",
+                "en": "Fictional Lease Summary"
+              },
+              "output_label": {
+                "zh": "质量评分",
+                "en": "Quality Assessment"
+              },
+              "input": {
+                "zh": "租户A：五年租约，科技公司；租户B：两年租约，零售店",
+                "en": "Tenant A: five-year lease, tech firm; Tenant B: two-year lease, retail"
+              },
+              "output": {
+                "zh": "租户A提供更强抗风险能力",
+                "en": "Tenant A offers stronger risk resilience"
+              },
+              "emphasis": {
+                "zh": "租户A：五年租约",
+                "en": "Tenant A: five-year lease"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "增值潜力",
+              "en": "Value-Add Potential"
+            },
+            "output": {
+              "zh": "改造空间创造溢价机会",
+              "en": "Renovation headroom creates premium opportunities"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "假设物业状况",
+                "en": "Fictional Property Condition"
+              },
+              "output_label": {
+                "zh": "潜力分析",
+                "en": "Potential Analysis"
+              },
+              "input": {
+                "zh": "老旧机电系统，低效空间布局，位置优越",
+                "en": "Outdated MEP systems, inefficient layout, prime location"
+              },
+              "output": {
+                "zh": "系统升级可提升租金竞争力",
+                "en": "System upgrades can boost rental competitiveness"
+              },
+              "emphasis": {
+                "zh": "老旧机电系统",
+                "en": "Outdated MEP systems"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "risk_factors",
+        "widget": "choice",
+        "title": {
+          "zh": "识别关键风险",
+          "en": "Identify Key Risks"
+        },
+        "instruction": {
+          "zh": "选择需要重点关注的风险类型",
+          "en": "Select risk type requiring close attention"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "租户集中度",
+              "en": "Tenant Concentration"
+            },
+            "output": {
+              "zh": "单一租户占比过高增加波动性",
+              "en": "High single-tenant share increases volatility"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "假设租户分布",
+                "en": "Fictional Tenant Mix"
+              },
+              "output_label": {
+                "zh": "风险提示",
+                "en": "Risk Alert"
+              },
+              "input": {
+                "zh": "最大租户占收入多数，次大租户占较小份额，其他租户占少量",
+                "en": "Largest tenant majority of income, second tenant smaller share, others minor"
+              },
+              "output": {
+                "zh": "建议分散至单一租户低于总收入一半",
+                "en": "Recommend diversifying to under half of total per tenant"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "主力租户",
+                    "en": "Anchor Tenant"
+                  },
+                  "detail": {
+                    "zh": "续约不确定性直接影响估值",
+                    "en": "Renewal uncertainty directly impacts valuation"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "替代方案",
+                    "en": "Backup Options"
+                  },
+                  "detail": {
+                    "zh": "需提前准备租户储备",
+                    "en": "Require lead time for tenant pipeline"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "资本支出需求",
+              "en": "Capital Expenditure Needs"
+            },
+            "output": {
+              "zh": "延迟维护积累未来成本",
+              "en": "Deferred maintenance accumulates future costs"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "此演示用虚构数据展示决策逻辑，未验证实际平台功能和数据源，需访问官网了解真实系统能力",
+      "en": "This demo uses fictional data to illustrate decision logic without verifying actual platform capabilities or data sources; visit the official site to understand real system features"
+    },
+    "sources": [
+      {
+        "url": "https://www.fifthdimensionai.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://pulse2.com/artificial-intelligence/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

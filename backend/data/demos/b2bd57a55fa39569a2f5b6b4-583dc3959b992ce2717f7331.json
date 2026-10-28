@@ -1,0 +1,239 @@
+{
+  "cache_key": "b2bd57a55fa39569a2f5b6b4-583dc3959b992ce2717f7331",
+  "product_key": "b2bd57a55fa39569a2f5b6b4",
+  "fingerprint": "583dc3959b992ce2717f7331",
+  "product_id": "103",
+  "product_name": "Config",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-28T23:10:44.312787+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "机器人训练数据场景模拟",
+      "en": "Robot Training Data Scenario"
+    },
+    "scenario": {
+      "zh": "演示如何为机器人基础模型准备标注数据，所有示例均为虚构",
+      "en": "Demonstrate how training data is prepared for robotics foundation models; all examples are fictional"
+    },
+    "steps": [
+      {
+        "id": "task_type",
+        "widget": "choice",
+        "title": {
+          "zh": "选择机器人任务类型",
+          "en": "Choose Robot Task Type"
+        },
+        "instruction": {
+          "zh": "不同任务需要不同的数据标注方式",
+          "en": "Different tasks require different annotation approaches"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "物体抓取",
+              "en": "Object Grasping"
+            },
+            "output": {
+              "zh": "标注抓取点和姿态",
+              "en": "Annotate grip points and poses"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "原始传感器数据",
+                "en": "Raw Sensor Data"
+              },
+              "output_label": {
+                "zh": "标注后的训练样本",
+                "en": "Annotated Training Sample"
+              },
+              "input": {
+                "zh": "RGB-D 图像：工作台上的螺丝刀",
+                "en": "RGB-D image: screwdriver on workbench"
+              },
+              "output": {
+                "zh": "已标注最佳抓取位置和三轴旋转角度",
+                "en": "Optimal grip location and 3-axis rotation labeled"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "检测目标",
+                    "en": "Detect Target"
+                  },
+                  "detail": {
+                    "zh": "识别工具边界框",
+                    "en": "Identify tool bounding box"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "标注抓取点",
+                    "en": "Label Grip Point"
+                  },
+                  "detail": {
+                    "zh": "手柄中心坐标",
+                    "en": "Handle center coordinates"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "记录姿态",
+                    "en": "Record Pose"
+                  },
+                  "detail": {
+                    "zh": "手腕旋转参数",
+                    "en": "Wrist rotation parameters"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "路径规划",
+              "en": "Path Planning"
+            },
+            "output": {
+              "zh": "标注避障轨迹",
+              "en": "Annotate collision-free trajectories"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "环境点云数据",
+                "en": "Environment Point Cloud"
+              },
+              "output_label": {
+                "zh": "安全路径轨迹",
+                "en": "Safe Path Trajectory"
+              },
+              "input": {
+                "zh": "仓库场景：货架间有叉车通过",
+                "en": "Warehouse scene: forklift passing between shelves"
+              },
+              "output": {
+                "zh": "已标注绕行路径和速度调整点",
+                "en": "Detour path and speed adjustment points labeled"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "识别障碍",
+                    "en": "Identify Obstacles"
+                  },
+                  "detail": {
+                    "zh": "移动叉车位置",
+                    "en": "Moving forklift position"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "生成候选路径",
+                    "en": "Generate Candidate Paths"
+                  },
+                  "detail": {
+                    "zh": "三条备选轨迹",
+                    "en": "Three alternative trajectories"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "验证安全性",
+                    "en": "Verify Safety"
+                  },
+                  "detail": {
+                    "zh": "确认最小间隙",
+                    "en": "Confirm minimum clearance"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "quality_check",
+        "widget": "review",
+        "title": {
+          "zh": "数据质量检查",
+          "en": "Data Quality Check"
+        },
+        "instruction": {
+          "zh": "审核标注准确性",
+          "en": "Review annotation accuracy"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "接受",
+              "en": "Accept"
+            },
+            "output": {
+              "zh": "数据进入训练集",
+              "en": "Data enters training set"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "标注指标",
+                "en": "Annotation Metrics"
+              },
+              "output_label": {
+                "zh": "质量评估",
+                "en": "Quality Assessment"
+              },
+              "input": {
+                "zh": "标注者一致性、边界框精度、姿态角度误差",
+                "en": "Annotator agreement, bbox precision, pose angle error"
+              },
+              "output": {
+                "zh": "一致性良好，精度达标，误差在可接受范围",
+                "en": "Good agreement, precision adequate, error within tolerance"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "返工",
+              "en": "Rework"
+            },
+            "output": {
+              "zh": "重新标注或调整",
+              "en": "Re-annotate or adjust"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了机器人训练数据的标注流程，实际数据规模和模型性能需在 Config 平台验证，访问其网站了解数据服务详情",
+      "en": "Illustrated robot training data annotation workflow; actual data scale and model performance require verification on Config platform, visit their site for data service details"
+    },
+    "sources": [
+      {
+        "url": "https://config.inc/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/05/11/koreas-biggest-manufacturers-back-config-the-tsmc-of-robot-data/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

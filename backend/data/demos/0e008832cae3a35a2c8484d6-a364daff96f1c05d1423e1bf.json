@@ -1,0 +1,242 @@
+{
+  "cache_key": "0e008832cae3a35a2c8484d6-a364daff96f1c05d1423e1bf",
+  "product_key": "0e008832cae3a35a2c8484d6",
+  "fingerprint": "a364daff96f1c05d1423e1bf",
+  "product_id": "102",
+  "product_name": "Ciridae",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-28T23:10:21.692725+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为制造企业设计AI流程",
+      "en": "Design AI Workflows for Manufacturers"
+    },
+    "scenario": {
+      "zh": "某制造企业希望用AI优化库存补货决策，从采购记录和销售趋势中生成补货建议",
+      "en": "A manufacturer wants AI to optimize inventory replenishment from purchase records and sales trends"
+    },
+    "steps": [
+      {
+        "id": "data_source",
+        "widget": "choice",
+        "title": {
+          "zh": "选择数据来源",
+          "en": "Choose Data Source"
+        },
+        "instruction": {
+          "zh": "企业需要分析哪类业务数据？",
+          "en": "What business data needs analysis?"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "库存与采购记录",
+              "en": "Inventory & Purchase Records"
+            },
+            "output": {
+              "zh": "分析历史采购周期和库存变动",
+              "en": "Analyze historical purchase cycles and stock changes"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "采购记录样本",
+                "en": "Purchase Record Sample"
+              },
+              "output_label": {
+                "zh": "识别的采购模式",
+                "en": "Identified Purchase Pattern"
+              },
+              "input": {
+                "zh": "2024年Q4：钢材采购3次，平均间隔28天，单次15吨；铜线采购5次，平均间隔18天，单次8吨",
+                "en": "Q4 2024: Steel purchased 3 times, avg interval 28 days, 15 tons each; copper wire 5 times, avg interval 18 days, 8 tons each"
+              },
+              "output": {
+                "zh": "钢材需求稳定，建议月度采购；铜线消耗快，建议双周采购并设安全库存预警",
+                "en": "Steel demand stable, suggest monthly orders; copper wire fast-moving, suggest biweekly orders with safety stock alerts"
+              },
+              "emphasis": {
+                "zh": "平均间隔28天",
+                "en": "avg interval 28 days"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "销售与交付数据",
+              "en": "Sales & Delivery Data"
+            },
+            "output": {
+              "zh": "从订单波动预测原料需求",
+              "en": "Forecast material needs from order fluctuations"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "近期订单摘要",
+                "en": "Recent Order Summary"
+              },
+              "output_label": {
+                "zh": "原料需求预测",
+                "en": "Material Demand Forecast"
+              },
+              "input": {
+                "zh": "1月订单：零件A订购120件，零件B订购200件；2月订单：零件A订购180件，零件B订购150件",
+                "en": "Jan orders: Part A 120 units, Part B 200 units; Feb orders: Part A 180 units, Part B 150 units"
+              },
+              "output": {
+                "zh": "零件A需求上升，建议提前采购相关钢材；零件B需求下降，可延后铜线补货",
+                "en": "Part A demand rising, suggest early steel procurement; Part B demand dropping, can defer copper wire restock"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "decision_rule",
+        "widget": "choice",
+        "title": {
+          "zh": "设定决策规则",
+          "en": "Set Decision Rules"
+        },
+        "instruction": {
+          "zh": "AI如何生成补货建议？",
+          "en": "How should AI generate restock suggestions?"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "按库存阈值触发",
+              "en": "Trigger by Stock Threshold"
+            },
+            "output": {
+              "zh": "库存低于设定值时推送采购",
+              "en": "Push purchase when stock falls below threshold"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "阈值配置示例",
+                "en": "Threshold Config Example"
+              },
+              "output_label": {
+                "zh": "触发的补货提醒",
+                "en": "Triggered Restock Alerts"
+              },
+              "input": {
+                "zh": "钢材安全库存20吨，铜线安全库存10吨",
+                "en": "Steel safety stock 20 tons, copper wire safety stock 10 tons"
+              },
+              "output": {
+                "zh": "钢材当前18吨，建议补货至35吨；铜线当前12吨，暂无需补货",
+                "en": "Steel at 18 tons, suggest restock to 35 tons; copper wire at 12 tons, no restock needed"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "钢材",
+                    "en": "Steel"
+                  },
+                  "detail": {
+                    "zh": "当前18吨，低于20吨阈值",
+                    "en": "Current 18 tons, below 20-ton threshold"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "铜线",
+                    "en": "Copper Wire"
+                  },
+                  "detail": {
+                    "zh": "当前12吨，高于10吨阈值",
+                    "en": "Current 12 tons, above 10-ton threshold"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "按订单预测补货",
+              "en": "Restock by Order Forecast"
+            },
+            "output": {
+              "zh": "根据未来订单量提前采购",
+              "en": "Procure in advance based on future orders"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "未来订单预测",
+                "en": "Future Order Forecast"
+              },
+              "output_label": {
+                "zh": "生成的采购计划",
+                "en": "Generated Purchase Plan"
+              },
+              "input": {
+                "zh": "未来30天预计生产零件A 250件、零件B 180件",
+                "en": "Next 30 days: estimated production Part A 250 units, Part B 180 units"
+              },
+              "output": {
+                "zh": "第5天采购钢材20吨供零件A；第12天采购铜线12吨供零件B",
+                "en": "Day 5: purchase 20 tons steel for Part A; Day 12: purchase 12 tons copper wire for Part B"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "第5天",
+                    "en": "Day 5"
+                  },
+                  "detail": {
+                    "zh": "采购钢材20吨",
+                    "en": "Purchase 20 tons steel"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "第12天",
+                    "en": "Day 12"
+                  },
+                  "detail": {
+                    "zh": "采购铜线12吨",
+                    "en": "Purchase 12 tons copper wire"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了从企业数据设计AI补货流程的两个方向，实际部署需在Ciridae平台配置具体系统",
+      "en": "Illustrated two approaches to design AI restock workflows from business data; actual deployment requires configuring the system on Ciridae platform"
+    },
+    "sources": [
+      {
+        "url": "https://www.ciridae.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://pulse2.com/artificial-intelligence/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}
