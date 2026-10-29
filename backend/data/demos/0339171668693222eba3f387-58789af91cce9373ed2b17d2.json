@@ -1,0 +1,244 @@
+{
+  "cache_key": "0339171668693222eba3f387-58789af91cce9373ed2b17d2",
+  "product_key": "0339171668693222eba3f387",
+  "fingerprint": "58789af91cce9373ed2b17d2",
+  "product_id": "p_0cbf47ce8d6e8516",
+  "product_name": "Omnichat",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-29T23:20:34.849175+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "Omnichat AI 对话响应示例",
+      "en": "Omnichat AI Conversation Examples"
+    },
+    "scenario": {
+      "zh": "探索 AI 代理如何在聊天应用内响应客户，使用本地构造的虚构对话演示",
+      "en": "Explore how AI agents respond to customers in chat apps using locally constructed fictional conversations"
+    },
+    "steps": [
+      {
+        "id": "inquiry_type",
+        "widget": "choice",
+        "title": {
+          "zh": "客户咨询场景",
+          "en": "Customer Inquiry Scenario"
+        },
+        "instruction": {
+          "zh": "选择一个虚构的客户消息类型",
+          "en": "Choose a fictional customer message type"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "产品查询",
+              "en": "Product Query"
+            },
+            "output": {
+              "zh": "代理确认可用性并提供选项",
+              "en": "Agent confirms availability and offers options"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "客户消息",
+                "en": "Customer Message"
+              },
+              "output_label": {
+                "zh": "代理回复",
+                "en": "Agent Reply"
+              },
+              "input": {
+                "zh": "蓝色连帽衫还有 M 码吗？",
+                "en": "Do you still have the blue hoodie in M?"
+              },
+              "output": {
+                "zh": "M 码蓝色有货，今日下单明天送达。另有深蓝和灰色可选",
+                "en": "Blue in M is available, order today for tomorrow delivery. Also available in navy and gray"
+              },
+              "emphasis": {
+                "zh": "蓝色连帽衫还有 M 码",
+                "en": "blue hoodie in M"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "订单跟踪",
+              "en": "Order Tracking"
+            },
+            "output": {
+              "zh": "代理提供物流信息",
+              "en": "Agent provides shipment information"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "客户消息",
+                "en": "Customer Message"
+              },
+              "output_label": {
+                "zh": "代理回复",
+                "en": "Agent Reply"
+              },
+              "input": {
+                "zh": "我的包裹到哪里了？",
+                "en": "Where is my package?"
+              },
+              "output": {
+                "zh": "您的订单已发出，预计明天上午送达。快递正在本市转运中",
+                "en": "Your order has shipped, expected tomorrow morning. Courier is in transit within your city"
+              },
+              "emphasis": {
+                "zh": "我的包裹",
+                "en": "my package"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "优惠活动",
+              "en": "Promotion Info"
+            },
+            "output": {
+              "zh": "代理说明当前优惠",
+              "en": "Agent explains current offers"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "客户消息",
+                "en": "Customer Message"
+              },
+              "output_label": {
+                "zh": "代理回复",
+                "en": "Agent Reply"
+              },
+              "input": {
+                "zh": "有什么折扣吗？",
+                "en": "Are there any discounts?"
+              },
+              "output": {
+                "zh": "新会员首单立减，满额享免邮。护肤类目部分商品买二送一",
+                "en": "New members get instant discount on first order, free shipping on qualifying amounts. Selected skincare items buy two get one"
+              },
+              "emphasis": {
+                "zh": "有什么折扣",
+                "en": "any discounts"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "escalation",
+        "widget": "choice",
+        "title": {
+          "zh": "超出范围处理",
+          "en": "Out-of-Scope Handling"
+        },
+        "instruction": {
+          "zh": "当请求需要人工介入时",
+          "en": "When requests need human intervention"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "转人工客服",
+              "en": "Transfer to Human"
+            },
+            "output": {
+              "zh": "代理说明转接原因和等待时间",
+              "en": "Agent explains transfer reason and wait time"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "客户消息",
+                "en": "Customer Message"
+              },
+              "output_label": {
+                "zh": "代理回复",
+                "en": "Agent Reply"
+              },
+              "input": {
+                "zh": "商品有破损需要退货",
+                "en": "Item is damaged need to return"
+              },
+              "output": {
+                "zh": "为您转接退换货专员，预计两分钟内回复。请保留商品照片以便处理",
+                "en": "Connecting you to returns specialist, response within two minutes. Please keep photos of item for processing"
+              },
+              "emphasis": {
+                "zh": "有破损需要退货",
+                "en": "damaged need to return"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "直接处理",
+              "en": "Direct Resolution"
+            },
+            "output": {
+              "zh": "代理完成操作并确认",
+              "en": "Agent completes action and confirms"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "客户消息",
+                "en": "Customer Message"
+              },
+              "output_label": {
+                "zh": "代理回复",
+                "en": "Agent Reply"
+              },
+              "input": {
+                "zh": "想改一下收货地址",
+                "en": "Want to change delivery address"
+              },
+              "output": {
+                "zh": "已更新收货地址，新地址将用于本次配送。如需再次修改请告知",
+                "en": "Delivery address updated, new address will be used for this shipment. Let me know if you need further changes"
+              },
+              "emphasis": {
+                "zh": "改一下收货地址",
+                "en": "change delivery address"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了虚构的 AI 代理对话示例。实际的客户资料整合、多渠道部署和收入归因需在 Omnichat 平台配置",
+      "en": "Demonstrated fictional AI agent conversation examples. Actual customer profile integration, multi-channel deployment and revenue attribution require Omnichat platform setup"
+    },
+    "sources": [
+      {
+        "url": "https://www.omnichat.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://theaiinsider.tech/2026/10/28/omnichat-raises-us10m-series-a-led-by-openspace-capital-to-scale-ai-agent-platform-and-drive-global-expansion",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

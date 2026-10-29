@@ -1,0 +1,194 @@
+{
+  "cache_key": "9f9775556311734139173af6-2abbc1f07aeb066559c732af",
+  "product_key": "9f9775556311734139173af6",
+  "fingerprint": "2abbc1f07aeb066559c732af",
+  "product_id": "p_3e63b05b672db5b1",
+  "product_name": "Dream",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-29T23:19:46.784230+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为建筑项目生成结构精确的设计方案",
+      "en": "Generate structurally precise designs for building projects"
+    },
+    "scenario": {
+      "zh": "提供项目需求，获得符合建筑标准的完整设计方案",
+      "en": "Provide project requirements, receive complete designs meeting building codes"
+    },
+    "steps": [
+      {
+        "id": "requirements",
+        "widget": "choice",
+        "title": {
+          "zh": "定义建筑项目需求",
+          "en": "Define building requirements"
+        },
+        "instruction": {
+          "zh": "选择项目类型并提供基本参数",
+          "en": "Select project type and provide basic parameters"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "三层住宅综合体",
+              "en": "Three-story residential complex"
+            },
+            "output": {
+              "zh": "生成包含结构布局和承重系统的设计",
+              "en": "Generate design with structural layout and load-bearing system"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "项目简要",
+                "en": "Project brief"
+              },
+              "output_label": {
+                "zh": "结构设计方案",
+                "en": "Structural design concept"
+              },
+              "input": {
+                "zh": "德州奥斯汀，3层住宅楼，24个单元，每层8单元，总面积18000平方英尺，钢筋混凝土框架",
+                "en": "Austin TX, 3-story residential building, 24 units, 8 per floor, 18,000 sq ft total, reinforced concrete frame"
+              },
+              "output": {
+                "zh": "中央承重核心墙系统，外围柱网间距20英尺，楼板厚度8英寸，考虑德州抗风荷载要求，预留机电竖井空间",
+                "en": "Central load-bearing core wall system, perimeter column grid at 20-foot spacing, 8-inch floor slab thickness, accounts for Texas wind load requirements, reserved MEP shaft space"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "单层商业零售空间",
+              "en": "Single-story retail space"
+            },
+            "output": {
+              "zh": "生成开放式平面和结构框架方案",
+              "en": "Generate open floor plan with structural framework"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "项目简要",
+                "en": "Project brief"
+              },
+              "output_label": {
+                "zh": "结构设计方案",
+                "en": "Structural design concept"
+              },
+              "input": {
+                "zh": "加州圣何塞，单层零售店，5000平方英尺，大开间无内墙，钢结构框架，抗震设防",
+                "en": "San Jose CA, single-story retail, 5,000 sq ft, large open space without interior walls, steel frame, seismic design"
+              },
+              "output": {
+                "zh": "钢柱网格30英尺跨度，轻质屋面系统，加州地震区特殊抗弯框架，基础考虑土壤液化风险，外墙预留橱窗开口",
+                "en": "Steel column grid with 30-foot spans, lightweight roof system, special moment frame for California seismic zone, foundation accounts for soil liquefaction risk, perimeter walls with storefront openings"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "refinement",
+        "widget": "choice",
+        "title": {
+          "zh": "调整设计细节",
+          "en": "Refine design details"
+        },
+        "instruction": {
+          "zh": "选择需要优化的设计方面",
+          "en": "Select design aspect to optimize"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "优化承重结构",
+              "en": "Optimize load-bearing structure"
+            },
+            "output": {
+              "zh": "调整柱网和材料以提高效率",
+              "en": "Adjust column grid and materials for efficiency"
+            },
+            "when": {
+              "step_id": "requirements",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "扩展机电系统空间",
+              "en": "Expand MEP system space"
+            },
+            "output": {
+              "zh": "增加竖井和管道预留位置",
+              "en": "Add shaft and conduit reserved locations"
+            },
+            "when": {
+              "step_id": "requirements",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "减少结构钢材用量",
+              "en": "Reduce structural steel usage"
+            },
+            "output": {
+              "zh": "优化梁柱尺寸同时保持抗震性能",
+              "en": "Optimize beam and column sizes while maintaining seismic performance"
+            },
+            "when": {
+              "step_id": "requirements",
+              "option_id": "1"
+            }
+          },
+          {
+            "id": "3",
+            "label": {
+              "zh": "增加天窗采光",
+              "en": "Add skylight daylighting"
+            },
+            "output": {
+              "zh": "在屋面框架中集成天窗开口",
+              "en": "Integrate skylight openings in roof framework"
+            },
+            "when": {
+              "step_id": "requirements",
+              "option_id": "1"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "此演示展示了如何为虚构项目生成结构设计概念，实际平台能力需在Dream官网验证，真实项目需在其平台完成",
+      "en": "This demo shows structural design concepts for fictional projects; actual platform capabilities require verification on Dream's site, real projects must be completed on their platform"
+    },
+    "sources": [
+      {
+        "url": "https://www.dreamhq.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/10/29/ex-palantir-execs-launch-dream-with-17m-from-a16z-to-build-ai-world-models-for-construction/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

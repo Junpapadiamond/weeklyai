@@ -1,0 +1,196 @@
+{
+  "cache_key": "5223c79c6ee6c89ecfcf1403-d804666a8a71c1078eb92075",
+  "product_key": "5223c79c6ee6c89ecfcf1403",
+  "fingerprint": "d804666a8a71c1078eb92075",
+  "product_id": "p_d0a56a315354b2e3",
+  "product_name": "Drylab AI",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-29T23:20:59.299262+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "科研数据分析代理",
+      "en": "Research Data Agent"
+    },
+    "scenario": {
+      "zh": "提出科研问题,系统起草分析、选择数据源、运行并解释结果",
+      "en": "Pose research question, system drafts analysis, selects sources, runs and interprets results"
+    },
+    "steps": [
+      {
+        "id": "question",
+        "widget": "choice",
+        "title": {
+          "zh": "提出研究问题",
+          "en": "Pose Research Question"
+        },
+        "instruction": {
+          "zh": "选择一个科研问题示例",
+          "en": "Choose a research question example"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "蛋白质相互作用",
+              "en": "Protein Interaction"
+            },
+            "output": {
+              "zh": "系统起草分析计划并选择数据源",
+              "en": "System drafts plan and selects sources"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "研究问题",
+                "en": "Research Question"
+              },
+              "output_label": {
+                "zh": "分析计划草案",
+                "en": "Draft Analysis Plan"
+              },
+              "input": {
+                "zh": "TP53与哪些蛋白质在细胞凋亡通路中存在直接相互作用?",
+                "en": "Which proteins directly interact with TP53 in apoptosis pathways?"
+              },
+              "output": {
+                "zh": "1)查询STRING数据库获取TP53互作网络 2)筛选凋亡通路相关蛋白 3)验证直接结合证据 4)汇总文献支持",
+                "en": "1) Query STRING database for TP53 network 2) Filter apoptosis-related proteins 3) Verify direct binding evidence 4) Summarize literature support"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "基因表达差异",
+              "en": "Gene Expression"
+            },
+            "output": {
+              "zh": "系统规划统计方法和数据处理",
+              "en": "System plans stats and data handling"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "研究问题",
+                "en": "Research Question"
+              },
+              "output_label": {
+                "zh": "分析计划草案",
+                "en": "Draft Analysis Plan"
+              },
+              "input": {
+                "zh": "比较肺癌样本与正常组织中EGFR通路基因的表达差异",
+                "en": "Compare EGFR pathway gene expression in lung cancer vs normal tissue"
+              },
+              "output": {
+                "zh": "1)提取TCGA肺癌RNA-seq数据 2)标准化表达矩阵 3)差异表达分析(DESeq2) 4)EGFR通路富集检验",
+                "en": "1) Extract TCGA lung cancer RNA-seq 2) Normalize expression matrix 3) Differential expression (DESeq2) 4) EGFR pathway enrichment test"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "result",
+        "widget": "review",
+        "title": {
+          "zh": "审查分析结果",
+          "en": "Review Analysis Results"
+        },
+        "instruction": {
+          "zh": "查看系统运行后的结果解释",
+          "en": "View interpretation after system execution"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "查看结果",
+              "en": "View Results"
+            },
+            "output": {
+              "zh": "验证模型已审计数据流程",
+              "en": "Verification model audited data flow"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "分析输出",
+                "en": "Analysis Output"
+              },
+              "output_label": {
+                "zh": "系统解释",
+                "en": "System Interpretation"
+              },
+              "input": {
+                "zh": "找到12个直接互作蛋白,包含MDM2、BAX、BCL2等已知调控因子",
+                "en": "Found 12 direct interactors including MDM2, BAX, BCL2 and other known regulators"
+              },
+              "output": {
+                "zh": "结果与已知凋亡调控一致;MDM2和BAX为高置信度互作;建议验证PUMA结合位点",
+                "en": "Results align with known apoptosis regulation; MDM2 and BAX high-confidence; suggest validating PUMA binding site"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "MDM2互作",
+                    "en": "MDM2 Interaction"
+                  },
+                  "detail": {
+                    "zh": "泛素连接酶,负调控TP53稳定性,置信度0.998",
+                    "en": "Ubiquitin ligase, negatively regulates TP53 stability, confidence 0.998"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "BAX激活",
+                    "en": "BAX Activation"
+                  },
+                  "detail": {
+                    "zh": "促凋亡蛋白,TP53直接转录激活,置信度0.995",
+                    "en": "Pro-apoptotic protein, directly activated by TP53, confidence 0.995"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "PUMA候选",
+                    "en": "PUMA Candidate"
+                  },
+                  "detail": {
+                    "zh": "文献支持结合,但结构数据缺失,需实验验证",
+                    "en": "Literature supports binding but structural data missing, needs experimental validation"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了问题到分析计划、数据源选择和结果解释的流程;验证模型和错误修复能力需在实际科研数据中测试;访问供应商网站连接800+数据源",
+      "en": "Illustrated question-to-plan, source selection and result interpretation flow; verification model and error-fixing require testing with real research data; visit vendor site to connect 800+ sources"
+    },
+    "sources": [
+      {
+        "url": "https://thedrylab.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://vietcetera.com/en/ho-chi-minh-city-opens-its-doors-to-capital-as-research-still-lacks-a-bridge-to-business",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

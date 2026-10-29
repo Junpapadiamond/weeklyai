@@ -1,0 +1,208 @@
+{
+  "cache_key": "e0a5576bdbc21c45667fbfdf-6ef7eed327e5b0493062270a",
+  "product_key": "e0a5576bdbc21c45667fbfdf",
+  "fingerprint": "6ef7eed327e5b0493062270a",
+  "product_id": "p_b539699320acb1b5",
+  "product_name": "Mintive",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-29T23:19:23.149975+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "企业 AI 代理接入与授权",
+      "en": "Enterprise AI Agent Access & Authorization"
+    },
+    "scenario": {
+      "zh": "为销售团队部署 AI 代理,需要统一管理 CRM 访问权限和 LLM 调用成本",
+      "en": "Deploy AI agents for sales team with unified CRM access control and LLM cost management"
+    },
+    "steps": [
+      {
+        "id": "gateway_setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择首要治理场景",
+          "en": "Select Primary Governance Scenario"
+        },
+        "instruction": {
+          "zh": "从实际业务需求出发配置",
+          "en": "Configure based on actual business needs"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "MCP 云服务授权",
+              "en": "MCP Cloud Service Authorization"
+            },
+            "output": {
+              "zh": "代理可通过身份验证访问 Salesforce,无需共享凭据",
+              "en": "Agents access Salesforce via identity auth without sharing credentials"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "待授权的代理请求",
+                "en": "Agent Authorization Requests"
+              },
+              "output_label": {
+                "zh": "授权配置结果",
+                "en": "Authorization Configuration"
+              },
+              "input": {
+                "zh": "sales-assistant 请求读取 Salesforce 联系人\ndata-sync 请求写入 Google Sheets",
+                "en": "sales-assistant requests Salesforce contact read\ndata-sync requests Google Sheets write"
+              },
+              "output": {
+                "zh": "sales-assistant:已授权 Salesforce 只读\ndata-sync:已授权 Sheets 区域 A1:D100",
+                "en": "sales-assistant: Salesforce read-only granted\ndata-sync: Sheets range A1:D100 granted"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "代理身份",
+                    "en": "Agent Identity"
+                  },
+                  "detail": {
+                    "zh": "每个代理分配独立身份凭证,可随时撤销",
+                    "en": "Each agent gets separate identity, revocable anytime"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "细粒度权限",
+                    "en": "Fine-grained Permissions"
+                  },
+                  "detail": {
+                    "zh": "按资源类型和操作范围限制访问",
+                    "en": "Restrict access by resource type and operation scope"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "LLM 路由与成本控制",
+              "en": "LLM Routing & Cost Control"
+            },
+            "output": {
+              "zh": "简单查询用 GPT-4o-mini,复杂分析用 Claude,月度预算锁定",
+              "en": "Simple queries use GPT-4o-mini, complex analysis uses Claude with monthly budget cap"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "代理调用模式",
+                "en": "Agent Call Patterns"
+              },
+              "output_label": {
+                "zh": "路由策略",
+                "en": "Routing Strategy"
+              },
+              "input": {
+                "zh": "客服代理:每日 800 次简单问答\n分析代理:每周 50 次深度报告",
+                "en": "Support agent: 800 daily simple Q&A\nAnalytics agent: 50 weekly deep reports"
+              },
+              "output": {
+                "zh": "客服→GPT-4o-mini 每月限额 200 美元\n分析→Claude Sonnet 每次最多 8k token",
+                "en": "Support→GPT-4o-mini capped at $200/month\nAnalytics→Claude Sonnet max 8k tokens per call"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "monitoring",
+        "widget": "review",
+        "title": {
+          "zh": "查看代理活动日志",
+          "en": "Review Agent Activity Logs"
+        },
+        "instruction": {
+          "zh": "所有代理操作可追溯审计",
+          "en": "All agent operations are auditable"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "过去 7 天汇总",
+              "en": "Past 7 Days Summary"
+            },
+            "output": {
+              "zh": "识别异常调用模式和成本峰值",
+              "en": "Identify unusual call patterns and cost spikes"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "代理活动记录",
+                "en": "Agent Activity Records"
+              },
+              "output_label": {
+                "zh": "关键发现",
+                "en": "Key Findings"
+              },
+              "input": {
+                "zh": "sales-assistant:周三调用量突增至平时三倍\ndata-sync:持续访问已删除的工作表",
+                "en": "sales-assistant: Wednesday calls tripled usual volume\ndata-sync: repeatedly accessing deleted worksheet"
+              },
+              "output": {
+                "zh": "sales-assistant 需检查触发逻辑\ndata-sync 权限配置需更新",
+                "en": "sales-assistant trigger logic needs review\ndata-sync permission config needs update"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "调用追踪",
+                    "en": "Call Tracing"
+                  },
+                  "detail": {
+                    "zh": "记录每次 API 调用的时间、参数和响应",
+                    "en": "Log timestamp, parameters and response for each API call"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "成本归因",
+                    "en": "Cost Attribution"
+                  },
+                  "detail": {
+                    "zh": "按代理和团队拆分 LLM 使用费用",
+                    "en": "Break down LLM costs by agent and team"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了 MCP 网关授权和 LLM 路由的配置示例;实际部署需在 Mintive 平台连接企业系统并设置具体权限策略",
+      "en": "Illustrated MCP gateway authorization and LLM routing configuration examples; actual deployment requires connecting enterprise systems and setting specific permission policies on Mintive platform"
+    },
+    "sources": [
+      {
+        "url": "https://www.mintive.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/10/29/agent-identity-startup-mintive-lands-cowboy-ventures-coatue-angels-jeff-dean-andrej-karpathy/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}
