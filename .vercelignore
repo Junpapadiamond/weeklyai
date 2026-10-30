@@ -1,5 +1,4 @@
-# Repository-root CLI uploads: only the two deployed apps are needed.
-# Project-level .vercelignore files take precedence when deploying a subdirectory.
+# Shared by both Vercel project roots. Keep app source, logos and backend/data.
 /.agent/
 /.claude/
 /.codex/
@@ -9,12 +8,14 @@
 /frontend/
 /mobile-ios/
 /history/
-/docs/
-/tests/
+docs/
+tests/
+**/__tests__/
 /ops/
 /.github/
 *.md
 *.pdf
+Dockerfile
 env.example
 
 # Local dependencies, build output, credentials and reports.
@@ -23,6 +24,7 @@ node_modules/
 .venv/
 venv/
 __pycache__/
+.pytest_cache/
 *.pyc
 *.tsbuildinfo
 .env

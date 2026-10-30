@@ -27,8 +27,8 @@ does not introduce one just for deployment.
 
 The root `.vercelignore` excludes agent tool copies, audit output, crawler code,
 the legacy frontend, mobile sources and local dependencies from root CLI uploads.
-Each application's own `.vercelignore` takes precedence for subdirectory uploads
-and excludes only development output and documentation. Keep deploying the two
+Both projects use this single root file: project-level ignore files would take
+precedence and could omit these shared exclusions. Keep deploying the two
 existing projects with their respective root directories.
 
 All frontend `public/logos` files, the generated logo manifest, backend data
@@ -37,7 +37,7 @@ MySQL dependency; the Flask API does not use MySQL and no longer installs its
 connector.
 
 On the 2026-10-30 local tracked-file inventory, the root upload selection changed
-from 1,648 files / 48,859,304 bytes to 331 files / 9,330,104 bytes before adding
+from 1,648 files / 48,859,304 bytes to about 9.3 MB before adding
 these configuration files. This is an upload-selection estimate, not a measured
 reduction in a Vercel Function bundle or Git history.
 
