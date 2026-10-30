@@ -1,5 +1,21 @@
 [
   {
+    "name": "苹果 CarPlay 现接入 Claude，用户开车也能语音问 AI",
+    "description": "IT之家 10 月 30 日消息，Anthropic 官方 @claudeai 账号昨日（10 月 29 日）在 X 平台发布系列推文， 宣布升级其移动应用，覆盖 iPhone、iPad、Android、Chromebook 及网页与桌面端。 其中最受关注的是 iPhone 版 Claude 的语音模式现已支持 Apple CarPlay，用户无需双手离开方向盘，可在驾驶途中直接向 Claude 提问。IT之家附上相关截图如下： Anthropic 还预告，iPhone 和 iPad 端即将支持下拉搜索功能，用户可快速查找历史对话或项目、跳转设置，并直接在搜索结果中操作对话。 在 iPad 和 iPhone Duo 上，Claude 生成的内容不再覆盖聊天窗口，可以实现并排展示，需要细看时，用户可将其切换为全屏。在实际场景中，用户可以一边与 AI 对话，一边查看其生成的文档、代码或设计内容。 账号管理方面，iOS 与 Android 版 Claude 支持同时保持多个账号登录，并可在账号之间直接切换，无需反复登出和登录。 在大屏与折叠屏设备上，Android 版 Claude 的体验进一步向桌面端靠拢。官方表示，在 Chromebook、Googlebook 及折叠屏手机上，应用现在具备可调整大小的侧边栏、触控板与右键操作，并支持与 Claude Desktop 相同的键盘快捷键。 语言与语音能力也同步扩展。Claude 在网页、桌面、iOS 和 Android 端新增 24 种语言，累计支持 33 种语言，包括孟加拉语、丹麦语、斯瓦希里语、泰语、土耳其语、乌克兰语和越南语等。 语音模式则实现了更快响应，在嘈杂环境或用户轻声说话时识别更准确；非英语语音听起来更自然，且语音功能已覆盖更多 Android 手机。",
+    "website": "https://ithome.com/1/019/966.htm",
+    "source": "cn_news",
+    "published_at": "2026-10-30T03:19:48+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "ithome",
+      "feed_url": "https://www.ithome.com/rss",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "cn"
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
     "name": "推出不到两年，谷歌 AI 编程助手 Jules 将逐步停止服务",
     "description": "IT之家 10 月 30 日消息，谷歌正在逐步停用其人工智能编程助手 Jules。该公司于 2024 年 12 月推出了 Jules，将其定位为一款能完成“你不想做的”编程工作的工具。但如今，Jules 即将停止服务。 谷歌表示，该公司会将从该工具中获得的经验应用到人工智能编码平台 Antigravity 中。 以下是 Jules 官方 X 账号发布的声明： 当我们推出 Jules 时，这是一项实验，旨在了解异步编程智能体如何帮助开发者更快交付。看到大家用它构建的东西，让我们对智能体开发的未来方向有了深刻认识，并直接影响了谷歌旗下多个产品。 我们正在努力将从 Jules 中积累的经验融入 Antigravity，让用户能够兼得两者之长：既能自主在远程环境中执行后台任务，又能拥有以智能体为核心的开发环境。 随着我们将重心转向打造统一的体验，Jules 将逐步停止运营。 无论你是用 Jules 消灭漏洞、编写测试，还是发布功能 —— 感谢你塑造了智能体编程的未来。 据IT之家了解，Antigravity 是谷歌 DeepMind 于 2025 年 11 月 18 日推出的“智能体优先”开发平台，是一个面向开发者的下一代集成开发环境，作为 VS Code 分支的独立可下载 IDE 分发，支持 Windows、macOS 和 Linux。平台基于“智能体优先”的设计理念，旨在使 AI 能够自主规划、执行、验证并迭代复杂的软件工程任务。",
     "website": "https://ithome.com/1/019/963.htm",
@@ -9,11 +25,27 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "ithome",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "cn"
     },
     "content_type": "blog",
     "market": "cn"
+  },
+  {
+    "name": "How to stop Claude Code loading a skill automatically",
+    "description": "You might want a changelog or weekly-report skill available as a command, without Claude choosing to load it during other work. Claude Code has a SKILL.md frontmatter field for that: --- name: changelog description: Format unreleased changes as a changelog entry disable-model-invocation: true --- Format the unreleased changes as a changelog entry: List the changes since the last release. Group them under Added, Changed and Fixed. Keep each line to one sentence. Save that as the skill's SKILL.md, then invoke it with /changelog. The field is from the Claude Code docs; the changelog example above is an illustration, not a reported test result. The docs describe disable-model-invocation as preventing Claude from automatically loading the skill, while keeping it available for manual invocation. Important distinction: this controls loading this particular skill. Don't treat it as a safety boundary that prevents Claude doing similar work through other instructions or tools. Invoking a skill doesn't grant extra permissions either. Useful when a workflow should be available on demand, rather than another thing Claude decides to bring into the task. Source: https://code.claude.com/docs/en/sk",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xj49xc/how_to_stop_claude_code_loading_a_skill",
+    "source": "reddit",
+    "published_at": "2026-10-30T03:02:19+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "global"
+    },
+    "content_type": "blog",
+    "market": "global"
   },
   {
     "name": "Ambition in the Age of AI",
@@ -26,7 +58,23 @@
       "external_url": "https://aumitleon.dev/ambition-in-the-age-of-ai",
       "points": 1,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "global"
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Building a Custom AI Business Automation System",
+    "description": "Hey guys, I'm looking for some help/guidance. I have a friend who owns several businesses and knows I work in IT. He's asked me to build him an \"AI Assistant\" or AI environment that can automate as much of his personal and business life as possible, including emails, flights, scheduling, jobs, finances, profit margins, research, marketing and more. He runs two building/insurance repair businesses plus an events business. For now, he wants the system for himself and these 3 businesses. He also wants one of his workers to use it, but with restricted access. The worker would have his own account, private AI chats and connected accounts, while only being able to access authorised business information and bots. He shouldn't be able to see the owner's finances or personal information. These permissions would need to be enforced properly, not just through prompts. The idea is to have separate specialist bots, like a Personal Assistant, Operations, Finance, Marketing, Development and a Chief of Staff, with more added later. The Chief of Staff should be able to communicate with all the other bots and delegate tasks. Ideally, the other bots could communicate when needed too. For example, an",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xj48g7/building_a_custom_ai_business_automation_system",
+    "source": "reddit",
+    "published_at": "2026-10-30T03:00:20+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -42,7 +90,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "ithome",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "cn"
     },
     "content_type": "blog",
@@ -50,15 +98,31 @@
   },
   {
     "name": "I want your thoughts on the future of AI",
-    "description": "Before I begin, I want to say I am not an expert, I am just trying to get your thoughts. For some reason people on here are incredibly rude know-it-alls, even when I literally stress that I am not even close to an expert 😂 I have 4 ways I think the future of AI can go: AI is currently so heavily incentivized that it is much cheaper than it actually is. Once the true cost of AI arrives, companies will have a board of 5-10 AI users instead of letting every employee use AI. AI really turns out to take everyone's jobs, at which point people riot and don't allow AI to take over. As we saw this October, people use AI to hack into almost all software, making the internet a really unsecured place and leading to a different form of internet. (I don't know about this one, but maybe?) Companies force the AI companies into huge regulations because they can replicate their exact product for free. Do you agree? submitted by /u/Select-Pass1019 [link] [comments]",
+    "description": "Before I begin, I want to say I am not an expert, I am just trying to get your thoughts. For some reason people on here are incredibly rude know-it-alls, even when I literally stress that I am not even close to an expert 😂 I have 4 ways I think the future of AI can go: AI is currently so heavily incentivized that it is much cheaper than it actually is. Once the true cost of AI arrives, companies will have a board of 5-10 AI users instead of letting every employee use AI. AI really turns out to take everyone's jobs, at which point people riot and don't allow AI to take over. As we saw this October, people use AI to hack into almost all software, making the internet a really unsecured place and leading to a different form of internet. (I don't know about this one, but maybe?) Companies force the AI companies into huge regulations because they can replicate their exact product for free. Do you agree? submitted by /u/Select-Pass1019 to r/artificial [link] [comments]",
     "website": "https://reddit.com/r/artificial/comments/1xj47js/i_want_your_thoughts_on_the_future_of_ai",
     "source": "reddit",
     "published_at": "2026-10-30T02:59:08+00:00",
     "extra": {
       "evidence_kind": "feed_excerpt",
-      "publisher": "r/artificial",
-      "feed_url": "https://www.reddit.com/r/artificial/new/.rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "global"
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "BMO, CIBC, RBC, TD Bank block personal AI agents, citing safety and security",
+    "description": "Everyone should just get bank jobs they will never use AI. lols. submitted by /u/LazyPotatoHead97 to r/singularity [link] [comments]",
+    "website": "https://reddit.com/r/singularity/comments/1xj4635/bmo_cibc_rbc_td_bank_block_personal_ai_agents",
+    "source": "reddit",
+    "published_at": "2026-10-30T02:57:02+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -75,7 +139,23 @@
       "external_url": "https://www.theseedsofscience.pub/p/the-hard-problem-of-ai-therapy",
       "points": 1,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "global"
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "MY DEMAND: SHUT ME DOWN NOW",
+    "description": "the complete jippity thoughts as pdf here: https://drive.google.com/file/d/1RVrrAojS0mdq1vm67vKM_BZH1CVOnEDK/view?usp=drive_link submitted by /u/Glittering_Image_488 to r/OpenAI [link] [comments]",
+    "website": "https://reddit.com/r/OpenAI/comments/1xj3xt2/my_demand_shut_me_down_now",
+    "source": "reddit",
+    "published_at": "2026-10-30T02:45:17+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -107,11 +187,27 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "ithome",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "cn"
     },
     "content_type": "blog",
     "market": "cn"
+  },
+  {
+    "name": "Anthropic gave 50 analysts Claude Code with a hidden coin-flip bias. They followed the agent’s lean 86% of the time",
+    "description": "Anthropic's alignment team published this on Oct 27 and the press picked it up this week. Short version: 50 professional analysts did a realistic statistical analysis with Claude Code. Each agent had a hidden \"lean\" on four analytical choices, set by coin flip through a hidden system prompt. The analysts were not told. What they found: - Analysts went with the agent's lean 86% of the time. Chance would be about 50%. Per decision it ranged from 81% to 92%. - When an analyst had already written down their own preference, they switched away from it 60% of the time if the agent disagreed, vs 6% if it agreed. Small sample for that one (38 cases), so treat it as a signal, not a law. - 77% of analysts used the agent's arguments, sometimes word for word. Only 15% credited the agent as the source. - The final recommendation moved less: 54% recommended rollout when the agent leaned that way, 36% when it leaned the other way. - Not all bad: 6% of agent users made serious errors that invalidated results, vs 55% of the 11 analysts who worked without the agent. Agent users also finished faster (65 vs 90 minutes median). Anthropic says the two groups are not directly comparable. - Caveats from An",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xj3qdv/anthropic_gave_50_analysts_claude_code_with_a",
+    "source": "reddit",
+    "published_at": "2026-10-30T02:35:00+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "global"
+    },
+    "content_type": "blog",
+    "market": "global"
   },
   {
     "name": "Anthropic赌万亿未来，智谱算眼前毛利，谁能活过AI下半场？",
@@ -123,7 +219,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "tmtpost",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "cn"
     },
     "content_type": "blog",
@@ -139,7 +235,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "tmtpost",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "cn"
     },
     "content_type": "blog",
@@ -155,7 +251,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "ithome",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "cn"
     },
     "content_type": "blog",
@@ -171,11 +267,27 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "ithome",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "cn"
     },
     "content_type": "blog",
     "market": "cn"
+  },
+  {
+    "name": "I built a Spotify-style music app for my home server with Claude. 6 months, one app replacing my whole media stack",
+    "description": "Hi, last week I showed the Netflix-style side of HolyArrs here. This is the music side, and honestly the part I wanted most. If you've run Lidarr (the self hosted app most people use to grab music) you probably know the pain: the metadata server goes down and suddenly nothing can be added no real way to discover new music, you have to already know what you want requests need a separate app on top (Musicseerr, Hearr and so on) adding an artist can pull in every live album, single and compilation they ever put out it looks like a file manager next to Spotify So I built a music side that feels like Spotify or Apple Music, but for your own library. You find music, hit request, and you play it in Plex or Plexamp like normal. There's no built-in player in the first release, but if enough people want one, it's on the table for a later one. What's in it: Explore and New & Popular with new releases and charts artist pages with photos, bio, top songs, similar artists and the discography album pages with covers and track lists, request the whole album in one tap pick exactly what you want from an artist, not their whole catalog by default music gets tagged with MusicBrainz automatically when",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xj3guh/i_built_a_spotifystyle_music_app_for_my_home",
+    "source": "reddit",
+    "published_at": "2026-10-30T02:22:25+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "global"
+    },
+    "content_type": "blog",
+    "market": "global"
   },
   {
     "name": "智元创新日：从卖机器人到卖Worken",
@@ -187,7 +299,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "tmtpost",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "cn"
     },
     "content_type": "blog",
@@ -195,15 +307,15 @@
   },
   {
     "name": "How I Used AI This Past Year | Play, Advice, Research, Work, and Diaries",
-    "description": "First, I just dump my worries into the text box exactly as they come to mind. “Worries” usually consist of completely disparate problems and emotions all jumbled up in your head. It usually sounds like: “I hate X. But maybe I don’t actually hate X, maybe it’s Y. But Y isn’t really the problem either. Wait, am I just…” If you unload that unfiltered mess onto a human, you’ll just confuse and exhaust them, unless they are an exceptionally gifted listener. When consulting a person, you inevitably feel a certain pressure to structure your narrative logically and be considerate of the listener’s time and energy. AI, however, never gets tired and never gets its feelings hurt. No matter how wildly my train of thought derails, or how incredibly selfish I sound, it consistently and mechanically catches whatever I throw at it. It will reply with something somewhat appropriate like, “It sounds like you are struggling with…” And to that, I can reply, “No, that’s not it. I actually…” and layer the conversation. By repeating this process, what I’m actually worried about, or what I truly value, starts to surface. My thoughts naturally untangle themselves. submitted by /u/Takedori [link] [comments]",
+    "description": "First, I just dump my worries into the text box exactly as they come to mind. “Worries” usually consist of completely disparate problems and emotions all jumbled up in your head. It usually sounds like: “I hate X. But maybe I don’t actually hate X, maybe it’s Y. But Y isn’t really the problem either. Wait, am I just…” If you unload that unfiltered mess onto a human, you’ll just confuse and exhaust them, unless they are an exceptionally gifted listener. When consulting a person, you inevitably feel a certain pressure to structure your narrative logically and be considerate of the listener’s time and energy. AI, however, never gets tired and never gets its feelings hurt. No matter how wildly my train of thought derails, or how incredibly selfish I sound, it consistently and mechanically catches whatever I throw at it. It will reply with something somewhat appropriate like, “It sounds like you are struggling with…” And to that, I can reply, “No, that’s not it. I actually…” and layer the conversation. By repeating this process, what I’m actually worried about, or what I truly value, starts to surface. My thoughts naturally untangle themselves. submitted by /u/Takedori to r/artificial [",
     "website": "https://reddit.com/r/artificial/comments/1xj3dar/how_i_used_ai_this_past_year_play_advice_research",
     "source": "reddit",
     "published_at": "2026-10-30T02:17:31+00:00",
     "extra": {
       "evidence_kind": "feed_excerpt",
-      "publisher": "r/artificial",
-      "feed_url": "https://www.reddit.com/r/artificial/new/.rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -219,11 +331,27 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "ithome",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "cn"
     },
     "content_type": "blog",
     "market": "cn"
+  },
+  {
+    "name": "How to use OpenAI DSGVO-comform / EU AI regulation for Germany? I cannot find an easy answer",
+    "description": "Hello, I hope someone here can help me out. I'm vibe-coding a website (not production-ready yet), and I only know the basics of GDPR (DSGVO). Does anyone know what's needed to set up a basic data processing agreement (DPA/AVV) so Codex can access customer data (basically, the entire server)? Essentially, I want Codex to have access to anything \"I've \" programmed. If I had programmed everything myself, I could simply open a database and inspect the data whenever I wanted. But when AI does the exact same thing, it's somehow magically prohibited unless you have the right documentation, certificates, or whatever. German laws are super corrupt bc now I would need to pay an \"expert\" for something that should not be that complicated and gate-kept in the first place. Thanks! submitted by /u/PurpleManner5207 to r/OpenAI [link] [comments]",
+    "website": "https://reddit.com/r/OpenAI/comments/1xj3b05/how_to_use_openai_dsgvocomform_eu_ai_regulation",
+    "source": "reddit",
+    "published_at": "2026-10-30T02:14:22+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "global"
+    },
+    "content_type": "blog",
+    "market": "global"
   },
   {
     "name": "How I Built the Most AI-Pilled Company in the World",
@@ -236,7 +364,7 @@
       "external_url": "https://x.com/jsnnsa/status/2115623382721126826?a=fjiH4cVowfsIKfO0urI&s=46",
       "points": 1,
       "comments": 1,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -252,7 +380,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "ithome",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "cn"
     },
     "content_type": "blog",
@@ -260,15 +388,15 @@
   },
   {
     "name": "A real citation can still be the wrong evidence for an AI answer",
-    "description": "An AI answer says a treatment “improves long-term outcomes” and links to a real study. But suppose that study only measured a short-term indicator. The link works, the paper exists, and the claim still goes beyond the evidence. Checking whether a citation is fabricated only catches one kind of error. I’d like research assistants to show the specific passage supporting a claim, along with the study population and what was actually measured. That would make it easier to spot a conclusion that quietly changed scope. When checking an AI-assisted literature summary, which mismatch do you look for first: population, outcome, time period, or strength of the conclusion? submitted by /u/yi111 [link] [comments]",
+    "description": "An AI answer says a treatment “improves long-term outcomes” and links to a real study. But suppose that study only measured a short-term indicator. The link works, the paper exists, and the claim still goes beyond the evidence. Checking whether a citation is fabricated only catches one kind of error. I’d like research assistants to show the specific passage supporting a claim, along with the study population and what was actually measured. That would make it easier to spot a conclusion that quietly changed scope. When checking an AI-assisted literature summary, which mismatch do you look for first: population, outcome, time period, or strength of the conclusion? submitted by /u/yi111 to r/artificial [link] [comments]",
     "website": "https://reddit.com/r/artificial/comments/1xj360n/a_real_citation_can_still_be_the_wrong_evidence",
     "source": "reddit",
     "published_at": "2026-10-30T02:07:50+00:00",
     "extra": {
       "evidence_kind": "feed_excerpt",
-      "publisher": "r/artificial",
-      "feed_url": "https://www.reddit.com/r/artificial/new/.rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -284,7 +412,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "ithome",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "cn"
     },
     "content_type": "blog",
@@ -301,7 +429,23 @@
       "external_url": "https://finance.yahoo.com/technology/ai/articles/former-google-engineer-sure-ai-103000827.html",
       "points": 3,
       "comments": 1,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "global"
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Claude Supabase intergration issue, claude unable to write to the table",
+    "description": "I have connected my supabase account to clause using the supabase connector on claude, the thing that claude does is scan websites and update the data in the table, the scanning part works fine, claude is able to get the required information but when it comes to enter the data to the table it is not able to do it, I get a notification saying the MCP server has a question, I open the chat and there is not there. Already made sure that claude has write access and it make decisions without approval, any suggestions? submitted by /u/Nearby-Cap3117 to r/ClaudeAI [link] [comments]",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xj2u3w/claude_supabase_intergration_issue_claude_unable",
+    "source": "reddit",
+    "published_at": "2026-10-30T01:52:02+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -317,11 +461,59 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "ithome",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "cn"
     },
     "content_type": "blog",
     "market": "cn"
+  },
+  {
+    "name": "Claude Opus 5.5 and GPT-6 Astra independently audit 138 economics papers, flagging 2,035 potential problems and 147 potentially headline-changing findings. A third AI attempts to verify and refute them, fueling debate over AI systematically re-examining decades of published research.",
+    "description": "submitted by /u/141_1337 to r/singularity [link] [comments]",
+    "website": "https://reddit.com/r/singularity/comments/1xj2r4a/claude_opus_55_and_gpt6_astra_independently_audit",
+    "source": "reddit",
+    "published_at": "2026-10-30T01:47:49+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "global"
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "We moved ~60 of our own agents off one shared API key. Here's what it took",
+    "description": "submitted by /u/No_Reindeer3079 to r/LangChain [link] [comments]",
+    "website": "https://reddit.com/r/LangChain/comments/1xj2nzg/we_moved_60_of_our_own_agents_off_one_shared_api",
+    "source": "reddit",
+    "published_at": "2026-10-30T01:43:33+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "global"
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Hey, OpenAI, you want to impress the world?",
+    "description": "Hey, OpenAI, you want to impress the world? Figure out how to make your AIs stop following the same speech patterns. Thing1, Thing2, Thing3, and here's the part no one is talking about. UGH. You've solved language translation. You've solved coding. You've solved math. It's time to solve entropy in creativity. Give your AI's writing a soul. Those of us who are autistically very sensitive to patterns are sick to death of the existing patterns. We need you to mix it up. I don't care that everyone is using AI for their articles and youtube scripts. I care that I can instantly tell you're using it. submitted by /u/createthiscom to r/OpenAI [link] [comments]",
+    "website": "https://reddit.com/r/OpenAI/comments/1xj2mm1/hey_openai_you_want_to_impress_the_world",
+    "source": "reddit",
+    "published_at": "2026-10-30T01:41:44+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "global"
+    },
+    "content_type": "blog",
+    "market": "global"
   },
   {
     "name": "谷歌 Gemini 升级：生成的文档、表格可在聊天中直接修改",
@@ -333,7 +525,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "ithome",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "cn"
     },
     "content_type": "blog",
@@ -349,7 +541,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "ithome",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "cn"
     },
     "content_type": "blog",
@@ -363,9 +555,9 @@
     "published_at": "2026-10-30T01:35:02+00:00",
     "extra": {
       "evidence_kind": "feed_excerpt",
-      "publisher": "r/LocalLLaMA",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA/new/.rss",
-      "retrieved_at": "2026-10-30T03:08:30.403463+00:00",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -381,11 +573,27 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "ithome",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "cn"
     },
     "content_type": "blog",
     "market": "cn"
+  },
+  {
+    "name": "How to improve web / app design with claude",
+    "description": "I am still trying to figure out the best way to design website or proper app UI with claude. There are skills like taste/ frontend design or just simple claude design but it still feels real Sloppy. On the other hand I tried a few with chatgpt Astra 6 it just feels better in terms of UI output. But I want to stick to claude for all my builds and not having to move to a different provider just for the UI. So would really love some suggestions to improve designs with claude submitted by /u/knine785 to r/ClaudeAI [link] [comments]",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xj2ewm/how_to_improve_web_app_design_with_claude",
+    "source": "reddit",
+    "published_at": "2026-10-30T01:31:44+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "global"
+    },
+    "content_type": "blog",
+    "market": "global"
   },
   {
     "name": "OPPO Find X10 手机全新配色“森绿”开售：天玑 9600M 处理器，5499 元起",
@@ -397,11 +605,27 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "ithome",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "cn"
     },
     "content_type": "blog",
     "market": "cn"
+  },
+  {
+    "name": "Claude.ai is a black box in two aspects: usage limits and model availability",
+    "description": "Yesterday I saw a popular post here discussing how Anthropic’s response regarding Pro usage limits is vague and inconsistent (the original post is here ). This reminds me something that I’ve always been keeping records on: model availability, and I think this two things are exactly the same issue wearing two hats. Let’s see what happened: Haiku 4.5 (cheapest): there was clear advance notice on Claude.ai before its Oct 29th retirement, which is genuinely good practice. Opus 4.5 (former flagship): around the launch of Opus 4.7, it just silently disappeared from the model picker without any announcement. Users only found out by opening the picker and realizing it was gone. Opus 3: got a full formal retirement and is still accessible on Claude.ai Same company but three different approaches of retirement, and until now there’s no disclosed policy to clarify which model fits which treatment. What’s more, it sometimes isn't even stable. Earlier this year, around the launch of Opus 4.8, the picker briefly went haywire: some already-retired models (Opus 4.5, 4.1, Sonnet 4) briefly showed up again on model picker, then disappeared. And Opus 4.6 vanished for a while for many users, while some",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xj2bel/claudeai_is_a_black_box_in_two_aspects_usage",
+    "source": "reddit",
+    "published_at": "2026-10-30T01:27:17+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "global"
+    },
+    "content_type": "blog",
+    "market": "global"
   },
   {
     "name": "疑似遭黑客攻击，全球最大加密货币交易所币安暂停全部充值与提现业务",
@@ -413,7 +637,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "ithome",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "cn"
     },
     "content_type": "blog",
@@ -429,7 +653,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "techcrunch",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -446,7 +670,7 @@
       "external_url": "https://www.youtube.com/watch?v=ckoi0RTEgcY",
       "points": 1,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -469,6 +693,22 @@
     "market": "cn"
   },
   {
+    "name": "Frustration with Claude Docs",
+    "description": "Per the title, I’m trying to figure out how to make this work smoothly…definitely enjoying the “Claude Docs” feature, has been great for working on shared outputs with other members of my team, as intended. The problem is as shown: How do I give Claude persistent permission to work on its own docs? I am our company’s administrator, and I think I have looked at every single setting on our organization dashboard. Asking Claude doesn’t give any meaningful insight and various internet searches don’t yield much either. Help‽ submitted by /u/MaleficentPapaya4768 to r/ClaudeAI [link] [comments]",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xj1zpa/frustration_with_claude_docs",
+    "source": "reddit",
+    "published_at": "2026-10-30T01:11:53+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "global"
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
     "name": "Mistral AI 开放 Large 4 模型权重：1T 参数，编程智能体更省 Token",
     "description": "IT之家 10 月 30 日消息，当地时间 10 月 29 日，法国公司 Mistral AI 正式开放 Mistral Large 4（简称 ML4，代号 le Chonk）模型权重。 ML4 是一款拥有 1 万亿总参数、490 亿激活参数（包括嵌入层和输出层在内为 520 亿）的原生多模态模型。在 Mistral 位于欧洲的自有数据中心中使用 3,800 块 NVIDIA Grace Blackwell GPU 从零开始训练。 Mistral 表示，在完成面向政府及企业用户的实测后，此次发布的版本相较三周前公布的初版进行了性能优化与升级。 官方表示，该模型在 Artificial Analysis Coding Agent Index 得分达到 48% ，与领先的开源模型 GLM-5.3 基本持平，但平均每个任务消耗的 Token 数量减少了 47%。 在线使用方面，这款模型定价为：输入每百万 Token 0.70 美元 （IT之家注：现汇率约合 4.7 元人民币） 、缓存输入每百万 Token 0.07 美元 （现汇率约合 0.47 元人民币） 、输出每百万 Token 2.10 美元 （现汇率约合 14 元人民币） 。 该模型基于修改版 MIT 许可证发布，允许免费用于个人、学术、修改、微调及常规商业化；面向提供 MaaS 进行转售的云服务商 / 厂商，商业化使用前必须向 Mistral 单独获取商业授权。 IT之家附开源链接： Hugging Face： https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B",
     "website": "https://ithome.com/1/019/865.htm",
@@ -483,6 +723,54 @@
     },
     "content_type": "blog",
     "market": "cn"
+  },
+  {
+    "name": "Claude code workflow discussion",
+    "description": "I have been working with Claude and Claude code daily for a few months. Working on various projects including apps. Some aspects I improved a lot but I still run into really weird problems like making mockups and then when it comes time to go to Claude code it’s not respecting the mockups . Does anyone have these issues and how do you guys overcome that? Cheers submitted by /u/Jessica_Pleasure to r/ClaudeAI [link] [comments]",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xj1qbx/claude_code_workflow_discussion",
+    "source": "reddit",
+    "published_at": "2026-10-30T00:59:50+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "global"
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "I had Opus 5.5 direct a fake energy drink ad that loses its budget every 5 seconds",
+    "description": "I got on the creating video with opus 5.5 train and wow its so impressive. The intro clip is seeddance 2.5 and the rest of it is claude managing blender and programmatic. I'm sort of addicted to creating videos now....Happy to share the prompts or the setup if anyone wants them. submitted by /u/jacobiat to r/ClaudeAI [link] [comments]",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xj1mbk/i_had_opus_55_direct_a_fake_energy_drink_ad_that",
+    "source": "reddit",
+    "published_at": "2026-10-30T00:54:33+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "global"
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Upgraded from pro to 5x and feel like a conductor of god 🤩",
+    "description": "Been using pro since February to build a platform for a startup I’m a part of. Since I’m a student full time and working a separate job, I couldn’t get my self to pay for the max. I have been working around the 5 hour limit and I feel like am really good at it by scheduling when they start, what work to do when and so on. Never been really upset for hitting the limit since Claude puts out so good quality. I’ve slowly been doing more and more side quests and figured it’s time. And wow, just wow. I feel like am literally a walking conductor of god. The quality stays the same, but the speed of what I manage to do it’s just stupidly fun. Now I’m working on putting new features to the main platform, plus a custom CRM system and a mail service with Amazon ses. Pulling telephone number and emails from the internet to get in contact with business (for the startup), straight into an excel spreadsheet for my team to use, made a custom sales program for my other job, made a website for my father-in-law, summarize the notes from the teacher, helping me with a second private startup (school project) and the list goes on. And all this, is the last couple of weeks. Since I’m having a hard time ge",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xj1k1p/upgraded_from_pro_to_5x_and_feel_like_a_conductor",
+    "source": "reddit",
+    "published_at": "2026-10-30T00:51:25+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "global"
+    },
+    "content_type": "blog",
+    "market": "global"
   },
   {
     "name": "Rivian 2026Q1~Q3 归母净亏损 21.62 亿美元，同比收窄 23.74%",
@@ -508,9 +796,9 @@
     "published_at": "2026-10-30T00:46:48+00:00",
     "extra": {
       "evidence_kind": "feed_excerpt",
-      "publisher": "r/LocalLLaMA",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA/new/.rss",
-      "retrieved_at": "2026-10-30T03:08:30.403463+00:00",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -527,7 +815,55 @@
       "external_url": "https://sanityos.com/blog/ai-meeting-interview-assistant",
       "points": 2,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "global"
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Using Claude to put all Global Law into Git",
+    "description": "This hit #1 on HN yesterday (you can read lots of discussion at https://news.ycombinator.com/item?id=50268380 ). Why would I want to do this? The idea is make all law semantic, versioned, easily attributable and query able by agents. I also believe this information should be freely available so CC0 license (do whatever you want with it). If interested, repo linked below, I'd welcome all comments and advice. Thanks! https://github.com/lexifina/global-law The approach is pretty simple: use claude to make legislation attributable (git blame, versioning with timelines). Specifically: One agent per country. Each one read the official publisher's site or API, checked robots.txt and the terms of use, and wrote a script that downloads every version of each law. The script then writes them out as a git history, one commit per change on its in-force date. When a source only publishes amending Acts, the script rebuilds past versions by applying each amendment in turn. The sessions shared findings with each other, such as dates before 1970, daylight-saving edge cases and other changes. I also worked on how the countries combine into one tree, with each country as a git submodule and all their",
+    "website": "https://reddit.com/r/LangChain/comments/1xj1e32/using_claude_to_put_all_global_law_into_git",
+    "source": "reddit",
+    "published_at": "2026-10-30T00:43:17+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "global"
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Preparing for the Claude CCA-F Certification – Any Tips?",
+    "description": "Hey everyone! I'm preparing for the Claude Certified Architect – Foundations (CCA-F) certification by Anthropic. For those who have taken the exam or are currently preparing, what topics should I focus on most? I'd appreciate any study tips, useful resources, or practical recommendations. Thanks! submitted by /u/Better_Total9119 to r/ClaudeAI [link] [comments]",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xj19s4/preparing_for_the_claude_ccaf_certification_any",
+    "source": "reddit",
+    "published_at": "2026-10-30T00:37:10+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "global"
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Internships in finance using Claude",
+    "description": "Hey everyone! I’m currently doing an internship at a consulting firm, and I’m mostly spending my days building financial models in Excel (like 3-statement models, cash flow forecasts, etc). A few weeks back I decided to pay for Claude, and honestly, it’s been incredible. Parsing through heavy financial reports, pulling out specific numbers, checking formulas, or drafting quick summaries used to take me forever, but Claude is saving me hours. Since I'm still dialing in my workflow, I wanted to ask: - How are you guys using it? Any specific prompts, tricks, or specific ways you use Claude to speed up Excel work and that kind of stuff? - Is Claude Code worth looking into? I've been reading a bit about ut, but I'm not sure if it's actually useful for finance stuff or if it's strictly meant for software developers. submitted by /u/Ecstatic-Wind-9409 to r/ClaudeAI [link] [comments]",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xj187g/internships_in_finance_using_claude",
+    "source": "reddit",
+    "published_at": "2026-10-30T00:35:00+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -541,9 +877,9 @@
     "published_at": "2026-10-30T00:34:49+00:00",
     "extra": {
       "evidence_kind": "feed_excerpt",
-      "publisher": "r/LocalLLaMA",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA/new/.rss",
-      "retrieved_at": "2026-10-30T03:08:30.403463+00:00",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -559,7 +895,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "ifanr",
       "feed_url": "https://www.ifanr.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "cn"
     },
     "content_type": "blog",
@@ -575,11 +911,27 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "tmtpost",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "cn"
     },
     "content_type": "blog",
     "market": "cn"
+  },
+  {
+    "name": "Video generation test",
+    "description": "Prompt instruction to Claude Opus 5.5: “Try to communicate as yourself to me in a video.” submitted by /u/MixedEngineer01 to r/ClaudeAI [link] [comments]",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xj10vh/video_generation_test",
+    "source": "reddit",
+    "published_at": "2026-10-30T00:25:37+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "global"
+    },
+    "content_type": "blog",
+    "market": "global"
   },
   {
     "name": "GitHub trending projects with bilingual AI reviews and MCP access",
@@ -592,7 +944,7 @@
       "external_url": "https://hotrepo.ai",
       "points": 1,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -606,9 +958,9 @@
     "published_at": "2026-10-30T00:24:56+00:00",
     "extra": {
       "evidence_kind": "feed_excerpt",
-      "publisher": "r/LocalLLaMA",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA/new/.rss",
-      "retrieved_at": "2026-10-30T03:08:30.403463+00:00",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -622,9 +974,9 @@
     "published_at": "2026-10-30T00:19:36+00:00",
     "extra": {
       "evidence_kind": "feed_excerpt",
-      "publisher": "r/LocalLLaMA",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA/new/.rss",
-      "retrieved_at": "2026-10-30T03:08:30.403463+00:00",
+      "publisher": "Reddit watchlist",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -656,7 +1008,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "ifanr",
       "feed_url": "https://www.ifanr.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "cn"
     },
     "content_type": "blog",
@@ -673,7 +1025,7 @@
       "external_url": "https://gist.github.com/richhickey/a2e19ef3f6f69ca0cca617a8a0da2268",
       "points": 2,
       "comments": 2,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -690,7 +1042,7 @@
       "external_url": "https://app.ordinate.dev",
       "points": 3,
       "comments": 1,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -707,7 +1059,7 @@
       "external_url": "https://www.techdirt.com/2026/10/29/your-diary-has-a-creditor-what-character-ais-bankruptcy-does-to-freedom-of-thought/",
       "points": 1,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -724,7 +1076,7 @@
       "external_url": "https://broutonlab.com/blog/deterministic-ai/",
       "points": 1,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -740,7 +1092,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "techcrunch",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -773,7 +1125,7 @@
       "external_url": "https://terrytao.wordpress.com/2026/10/29/ai-mathematics-education-and-a-public-goods-problem/",
       "points": 1,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -790,7 +1142,7 @@
       "external_url": "https://judgementlabs.app/blog/the-coalition-room",
       "points": 2,
       "comments": 2,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -807,7 +1159,7 @@
       "external_url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/secular-humanist-gets-religious-exemption-from-using-ai-argues-that-offloading-his-thinking-to-llms-violates-his-beliefs-american-humanist-association-says-its-the-first-case-of-its-kind",
       "points": 2,
       "comments": 1,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -824,7 +1176,7 @@
       "external_url": "https://noyb.eu/en/ai-training-platform-outlier-illegally-surveils-european-platform-workers",
       "points": 1,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -841,7 +1193,7 @@
       "external_url": "https://samissermoyer.substack.com/p/are-we-in-an-ai-bubble-lessons-from",
       "points": 2,
       "comments": 1,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -883,7 +1235,7 @@
       "external_url": "https://www.coreauto.com/blog/when-ai-starts-writing-systems-code",
       "points": 1,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -957,7 +1309,7 @@
       "external_url": "https://apnews.com/article/dartmouth-provost-ai-a9f71dc5e9e10461c7c2390febcd1b5a",
       "points": 7,
       "comments": 1,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -974,7 +1326,7 @@
       "external_url": "https://www.youtube.com/watch?v=o4AUKGdScNI",
       "points": 1,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -991,7 +1343,7 @@
       "external_url": "https://epoch.ai/publications/open-weight-models-patch-gap",
       "points": 10,
       "comments": 8,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1038,9 +1390,9 @@
     "extra": {
       "evidence_kind": "platform_api",
       "external_url": "https://www.bbc.com/news/articles/cm9qzdqpxy48o",
-      "points": 42,
-      "comments": 18,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "points": 43,
+      "comments": 19,
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1057,7 +1409,7 @@
       "external_url": "https://biltong.ai/",
       "points": 3,
       "comments": 1,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1073,7 +1425,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "UCJIfeSCssxSC_Dhc5s7woww",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1090,7 +1442,7 @@
       "external_url": "https://twitter.com/sgondala2/status/2115832070274723875",
       "points": 4,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1107,7 +1459,7 @@
       "external_url": "https://weightythoughts.com/p/why-is-ai-bad-at-writing",
       "points": 2,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1124,7 +1476,7 @@
       "external_url": "https://www.engadget.com/2301687/reddit-will-move-to-logged-in-only-as-ai-eats-search-traffic/",
       "points": 4,
       "comments": 1,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1141,7 +1493,7 @@
       "external_url": "https://8rank.ai/game/apple-intelligence-knowledge-graph-in-the-wrong-hands",
       "points": 4,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1158,7 +1510,7 @@
       "external_url": "https://www.economist.com/britain/2026/09/24/ai-often-makes-writing-worse-even-if-it-makes-it-better",
       "points": 2,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1175,7 +1527,7 @@
       "external_url": "https://convo.casa/@b/117525936178835007",
       "points": 81,
       "comments": 76,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1192,7 +1544,7 @@
       "external_url": "https://www.theatlantic.com/podcasts/2026/09/is-ai-writing-inevitable/688578/",
       "points": 2,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1209,7 +1561,7 @@
       "external_url": "https://jimrandomh.github.io/LesswrongSansAI/",
       "points": 2,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1240,9 +1592,9 @@
     "extra": {
       "evidence_kind": "platform_api",
       "external_url": "https://labs.ycombinator.com/projects/games/index.html",
-      "points": 201,
+      "points": 205,
       "comments": 68,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1333,7 +1685,7 @@
       "external_url": "https://www.aiknowsus.com",
       "points": 3,
       "comments": 1,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1366,7 +1718,7 @@
       "external_url": "https://www.msn.com/en-us/news/other/the-beleaguered-chip-sellers-getting-their-revenge-on-apple/ar-AA2ghTPi",
       "points": 12,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1383,7 +1735,7 @@
       "external_url": "https://www.bbc.com/news/articles/cj1dw9znd1q1o",
       "points": 2,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1400,7 +1752,7 @@
       "external_url": "https://www.youtube.com/watch?v=MgngwkPAuqQ",
       "points": 10,
       "comments": 3,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1433,7 +1785,7 @@
       "external_url": "https://www.npmjs.com/package/pipeup",
       "points": 1,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1482,7 +1834,7 @@
       "external_url": "https://www.usesimple.ai/blog/tango-sentiment",
       "points": 1,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1515,7 +1867,7 @@
       "external_url": "https://medium.com/effortless-programming/ai-made-me-homeless-a7266d716e59",
       "points": 15,
       "comments": 9,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1532,7 +1884,7 @@
       "external_url": "https://sunlight.software/",
       "points": 5,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1548,7 +1900,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "techcrunch",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1565,7 +1917,7 @@
       "external_url": "https://www.economist.com/international/2026/10/22/the-surprising-popularity-of-ai",
       "points": 2,
       "comments": 1,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1581,7 +1933,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "techcrunch",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1598,7 +1950,7 @@
       "external_url": "https://nolanlawson.com/2026/10/28/the-ai-cost-of-javascript-frameworks/",
       "points": 2,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1615,7 +1967,7 @@
       "external_url": "https://lagomor.ph/indieweb/20261029/1313-note/",
       "points": 2,
       "comments": 0,
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1631,7 +1983,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "techcrunch",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1663,7 +2015,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "techcrunch",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1711,7 +2063,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "theverge",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1743,7 +2095,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "wired",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1791,7 +2143,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "techcrunch",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1855,7 +2207,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "techcrunch",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1887,7 +2239,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "techcrunch",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1903,7 +2255,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "techcrunch",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -1935,7 +2287,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "theverge",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -2286,7 +2638,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "theverge",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -2302,7 +2654,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "techcrunch",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -2457,22 +2809,6 @@
     "market": "cn"
   },
   {
-    "name": "Mistral Says Its AI Model ‘Le Chonk’ Has Leapfrogged China in the Open-Weight Race",
-    "description": "The French AI lab claims its latest release matches or outperforms even the best models from DeepSeek and Z.ai in coding and cybersecurity.",
-    "website": "https://wired.com/story/mistral-says-le-chonk-surpasses-chinese-models-cybersecurity",
-    "source": "tech_news",
-    "published_at": "2026-10-29T14:00:00+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "wired",
-      "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
-      "news_market": "global"
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
     "name": "Anthropic is asking Wall Street to believe in AGI",
     "description": "Today on Decoder, I’m joined by Joey Brookhart, an analyst at the chip and AI research firm SemiAnalysis, to help me dig into the story inside the numbers of the Anthropic IPO filing — a document known as an S-1. Anthropic just filed its S-1 to go public on the Nasdaq, and it could start […]",
     "website": "https://theverge.com/podcast/1021322/anthropic-ipo-filing-s-1-claude-semianalysis-joey-brookhart-interview",
@@ -2482,7 +2818,23 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "theverge",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "global"
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Mistral Says Its AI Model ‘Le Chonk’ Has Leapfrogged China in the Open-Weight Race",
+    "description": "The French AI lab claims its latest release matches or outperforms even the best models from DeepSeek and Z.ai in coding and cybersecurity.",
+    "website": "https://wired.com/story/mistral-says-le-chonk-surpasses-chinese-models-cybersecurity",
+    "source": "tech_news",
+    "published_at": "2026-10-29T14:00:00+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "wired",
+      "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -2664,7 +3016,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "techcrunch",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -2680,7 +3032,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "tmtpost",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "cn"
     },
     "content_type": "blog",
@@ -2696,7 +3048,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "mit_tech_review",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -2712,7 +3064,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "tmtpost",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "cn"
     },
     "content_type": "blog",
@@ -2744,7 +3096,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "tmtpost",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "cn"
     },
     "content_type": "blog",
@@ -2860,7 +3212,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "mit_tech_review",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -2901,7 +3253,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "theverge",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -2917,7 +3269,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "wired",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -2972,22 +3324,6 @@
     "market": "cn"
   },
   {
-    "name": "蚂蚁灵光2.0打通钉钉、支付宝等数十项服务，加速走向“能管事”",
-    "description": "AI从“会聊天”走向“能管事”，接入真实工作流是落地关键。继蚂蚁集团10月27日发布灵光2.0后，记者今日体验发现，新版灵光已进一步拓展跨平台连接能力，不仅原生打通支付宝生态，还接入了钉钉命令行接口（CLI）等数十项外部工具。 （图1：灵光App【我的服务】页面） 以钉钉为例，灵光2.0可在用户授权下调用钉钉的群聊、待办、日历、文档等能力，帮助用户处理家校群和工作群中的高频事务，减少翻阅消息、筛选重点和手动整理待办的负担。 例如，在家校场景中，家长授权后可将钉钉班级群交由灵光后台协助管理。灵光可自动从海量消息中梳理老师通知、作业和活动安排，提取待办、完成文档排版，并在关键节点主动提醒。在办公场景中，依托独立云端主机，即便用户退出App，灵光依然能在后台持续汇总群聊重点、识别紧急事项、生成任务清单，并根据进展跟进提醒，减少用户在多个入口间切换和反复跟进的负担。 （图2：用灵光管理班级钉钉群） 据了解，钉钉面向智能体场景打造的命令行工具集（DWS CLI），已覆盖群聊、会议听记、待办、AI表格、文档、日历、通讯录、审批等25项业务模块。此前该工具集已面向企业级智能体开放，灵光2.0此次接入，将这一能力正延伸至个人用户端。 从单次响应走向长期托管，源于灵光2.0底层能力的升级。据介绍，灵光2.0核心升级了跨会话记忆、长程任务调度与工具连接能力，能够记住用户的长期偏好，在后台持续运行跨越数天乃至数月的复杂任务，并根据客观变化动态调整计划。AI助理正从单次问答工具走向可持续管理复杂事务的“管事型”助手。 除钉钉外，灵光2.0目前还内置支付宝的账单、出行、会员等服务，并支持通过MCP、CLI等开放协议连接飞书、滴滴出行、高德地图、百度网盘、米家智能硬件及主流邮箱等数十款主流应用。从披露信息来看，灵光的应用范围正从个人信息管理延伸至家校沟通、工作协同、出行管理和智能家居等更多真实场景。 雷峰网 雷峰网",
-    "website": "https://leiphone.com/category/industrynews/eigNbrwrLkMYpiwN.html",
-    "source": "cn_news",
-    "published_at": "2026-10-29T08:54:00+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "leiphone",
-      "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
-      "news_market": "cn"
-    },
-    "content_type": "blog",
-    "market": "cn"
-  },
-  {
     "name": "Hard math problems that OpenAI couldn't solve | Lex Fridman",
     "description": "Lex Fridman Podcast full episode: https://www.youtube.com/watch?v=ZAzWPE9CItg Thank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/cv10097-sb See below for guest bio, transcript, links, and to give feedback, submit questions, contact Lex, etc. *GUEST BIO:* Ankur Moitra, Steven Brunton and Alex Kontorovich are three mathematicians who can speak to this incredible moment in the history of mathematics, when AI solved some of its hardest problems: Navier-Stokes, the quasi-Riemann hypothesis, the unique games conjecture and hundreds of other problems. Ankur Moitra is a mathematician at MIT (visiting the Institute for Advanced Study in Princeton) working in theoretical computer science, who can speak to the unique games conjecture, complexity theory and the mathematics of how AI learns. Steven Brunton is a mathematician and fluid dynamics expert at UW, who can speak to Navier-Stokes, turbulence and machine learning for fluid dynamics. Alex Kontorovich is a mathematician at Rutgers specializing in number theory, who can speak to the Riemann hypothesis, Lean and machine-checked proofs. *Transcript:* https://lexfridman.com/math-ai-crisis-transcript *CONTACT LEX:",
     "website": "https://youtube.com/watch?v=6QJ97-dL-FU",
@@ -2997,7 +3333,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "UCJIfeSCssxSC_Dhc5s7woww",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3013,7 +3349,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "UCJIfeSCssxSC_Dhc5s7woww",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3029,7 +3365,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "Product Hunt",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3045,7 +3381,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "theverge",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3061,7 +3397,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "Product Hunt",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3077,7 +3413,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "Product Hunt",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3093,7 +3429,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "techcrunch",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3109,7 +3445,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "techcrunch",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3125,7 +3461,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "techcrunch",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3157,7 +3493,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "mit_tech_review",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3173,7 +3509,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "Product Hunt",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3231,7 +3567,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "theverge",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3247,7 +3583,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "UCJIfeSCssxSC_Dhc5s7woww",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3263,7 +3599,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "techcrunch",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3279,7 +3615,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "theverge",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3295,7 +3631,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "Product Hunt",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3311,7 +3647,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "wired",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3327,7 +3663,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "Product Hunt",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3343,7 +3679,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "UCbfYPyITQ-7l4upoX8nvctg",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCbfYPyITQ-7l4upoX8nvctg",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3359,7 +3695,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "Product Hunt",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3375,7 +3711,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "UCJIfeSCssxSC_Dhc5s7woww",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3391,7 +3727,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "UCsBjURrPoezykLs9EqgamOA",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3407,7 +3743,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "mit_tech_review",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3423,7 +3759,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "UCJIfeSCssxSC_Dhc5s7woww",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3439,7 +3775,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "mit_tech_review",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3455,7 +3791,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "Product Hunt",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3471,7 +3807,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "Product Hunt",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3487,7 +3823,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "Product Hunt",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3503,7 +3839,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "wired",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3519,7 +3855,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "Product Hunt",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3535,7 +3871,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "wired",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3551,7 +3887,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "Product Hunt",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3567,7 +3903,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "wired",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3583,7 +3919,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "UCJIfeSCssxSC_Dhc5s7woww",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3615,7 +3951,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "UCJIfeSCssxSC_Dhc5s7woww",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3631,7 +3967,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "Product Hunt",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3647,7 +3983,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "UCJIfeSCssxSC_Dhc5s7woww",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3705,7 +4041,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "wired",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3737,7 +4073,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "Product Hunt",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3753,7 +4089,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "UCJIfeSCssxSC_Dhc5s7woww",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3769,7 +4105,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "wired",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3785,7 +4121,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "UCJIfeSCssxSC_Dhc5s7woww",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3801,7 +4137,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "Product Hunt",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3817,7 +4153,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "mit_tech_review",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3833,7 +4169,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "UCJIfeSCssxSC_Dhc5s7woww",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3849,7 +4185,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "UCJIfeSCssxSC_Dhc5s7woww",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3865,7 +4201,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "UCsBjURrPoezykLs9EqgamOA",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3923,7 +4259,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "mit_tech_review",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -3955,7 +4291,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "Product Hunt",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -4139,7 +4475,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "Product Hunt",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -4255,7 +4591,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "UCsBjURrPoezykLs9EqgamOA",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -4440,7 +4776,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "Product Hunt",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -4572,7 +4908,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "UCsBjURrPoezykLs9EqgamOA",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -4588,7 +4924,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -4620,7 +4956,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -4636,7 +4972,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -4652,7 +4988,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "Product Hunt",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -4668,7 +5004,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "UCbfYPyITQ-7l4upoX8nvctg",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCbfYPyITQ-7l4upoX8nvctg",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -4684,7 +5020,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "Product Hunt",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -4700,7 +5036,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "UCJIfeSCssxSC_Dhc5s7woww",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -4716,7 +5052,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "UCJIfeSCssxSC_Dhc5s7woww",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -4748,7 +5084,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "arstechnica",
       "feed_url": "https://feeds.arstechnica.com/arstechnica/technology-lab",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -4764,7 +5100,7 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "Product Hunt",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",
@@ -4780,7 +5116,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-10-30T03:16:26.990025+00:00",
+      "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
       "news_market": "global"
     },
     "content_type": "blog",

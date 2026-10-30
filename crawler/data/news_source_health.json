@@ -1,64 +1,43 @@
 {
-  "updated_at": "2026-10-30T03:16:26.990025+00:00",
+  "updated_at": "2026-10-30T03:21:03.447189+00:00",
   "sources": {
     "x": {
       "status": "search_fallback",
       "fresh_count": 4,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-30T03:16:26.990025+00:00",
+      "checked_at": "2026-10-30T03:21:03.447189+00:00",
       "stored_count": 4,
       "latest_published_at": "2026-10-20T02:29:26.936000+00:00"
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 19,
-      "errors": [
-        {
-          "endpoint": "r/ClaudeAI",
-          "reason": "HTTP 429"
-        },
-        {
-          "endpoint": "r/singularity",
-          "reason": "HTTP 429"
-        },
-        {
-          "endpoint": "r/MachineLearning",
-          "reason": "HTTP 429"
-        },
-        {
-          "endpoint": "r/LocalLLaMA",
-          "reason": "HTTP 429"
-        },
-        {
-          "endpoint": "r/LangChain",
-          "reason": "HTTP 429"
-        },
-        {
-          "endpoint": "r/OpenAI",
-          "reason": "HTTP 429"
-        }
-      ],
+      "fresh_count": 29,
+      "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-30T03:16:26.990025+00:00",
-      "stored_count": 37,
-      "latest_published_at": "2026-10-30T02:59:08+00:00"
+      "checked_at": "2026-10-30T03:21:03.447189+00:00",
+      "stored_count": 58,
+      "latest_published_at": "2026-10-30T03:02:19+00:00"
     },
     "youtube": {
       "status": "direct",
-      "fresh_count": 27,
+      "fresh_count": 21,
       "errors": [
-        {
-          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
-          "reason": "HTTP 404"
-        },
         {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
           "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
+          "reason": "HTTP 500"
         }
       ],
-      "feeds_ok": 6,
-      "checked_at": "2026-10-30T03:16:26.990025+00:00",
+      "feeds_ok": 5,
+      "checked_at": "2026-10-30T03:21:03.447189+00:00",
       "stored_count": 27,
       "latest_published_at": "2026-10-29T22:09:59+00:00"
     },
@@ -67,7 +46,7 @@
       "fresh_count": 42,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-30T03:16:26.990025+00:00",
+      "checked_at": "2026-10-30T03:21:03.447189+00:00",
       "stored_count": 60,
       "latest_published_at": "2026-10-30T03:00:27+00:00"
     },
@@ -76,7 +55,7 @@
       "fresh_count": 21,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-30T03:16:26.990025+00:00",
+      "checked_at": "2026-10-30T03:21:03.447189+00:00",
       "stored_count": 24,
       "latest_published_at": "2026-10-28T23:47:45+00:00"
     },
@@ -90,13 +69,13 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-10-30T03:16:26.990025+00:00",
+      "checked_at": "2026-10-30T03:21:03.447189+00:00",
       "stored_count": 41,
       "latest_published_at": "2026-10-30T01:20:48+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 54,
+      "fresh_count": 31,
       "errors": [
         {
           "endpoint": "jiqizhixin",
@@ -107,14 +86,22 @@
           "reason": "empty_or_invalid_feed"
         },
         {
+          "endpoint": "leiphone",
+          "reason": "ConnectTimeout"
+        },
+        {
           "endpoint": "huxiu",
           "reason": "ReadTimeout"
+        },
+        {
+          "endpoint": "qbitai",
+          "reason": "ConnectTimeout"
         }
       ],
-      "feeds_ok": 6,
-      "checked_at": "2026-10-30T03:16:26.990025+00:00",
+      "feeds_ok": 4,
+      "checked_at": "2026-10-30T03:21:03.447189+00:00",
       "stored_count": 60,
-      "latest_published_at": "2026-10-30T03:10:29+00:00"
+      "latest_published_at": "2026-10-30T03:19:48+00:00"
     }
   }
 }
