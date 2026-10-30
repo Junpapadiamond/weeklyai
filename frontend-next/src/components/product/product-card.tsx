@@ -61,7 +61,7 @@ export function ProductCard({ product, compact = false, rank, highlighted = fals
       </header>
       <div className="research-product__briefing">
         <p className="research-product__description">{description || t("暂无产品介绍", "Product summary pending")}</p>
-        {whyMatters && whyMatters !== description ? <p className="research-product__why"><span>{t("产品亮点", "WHY LOOK")} / </span>{whyMatters}</p> : null}
+        {whyMatters && whyMatters !== description ? <p className="research-product__why">{whyMatters}</p> : null}
       </div>
       <footer className="research-product__footer">
         <div className="research-product__reference">

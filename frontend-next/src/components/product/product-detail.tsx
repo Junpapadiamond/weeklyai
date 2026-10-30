@@ -33,8 +33,6 @@ export function ProductDetail({ product, related }: { product: Product; related:
   const updated = detailDate(product.news_updated_at);
   const showExample = verified && supportsLiveDemo(product);
   const facts = [
-    { label: t("分类", "Category"), value: category },
-    { label: t("地区", "Region"), value: region },
     { label: t("融资记录", "Reported funding"), value: detailValue(product.funding_total) },
     { label: t("估值记录", "Reported valuation"), value: detailValue(product.valuation) },
     { label: t("收录价格", "Recorded price"), value: detailValue(product.price) },
@@ -80,9 +78,9 @@ export function ProductDetail({ product, related }: { product: Product; related:
         </div>
         {showExample && why ? <section className="profile-insight"><h2 className="profile-kicker"><BookOpen size={16} aria-hidden="true" />{t("为什么值得关注", "Why look closer")}</h2><p>{why}</p></section> : null}
         <aside className="profile-sidebar" aria-label={t("产品资料", "Product facts")}>
-          <section className="profile-facts"><h2>{t("产品档案", "On record")}</h2><dl>
+          {facts.length ? <section className="profile-facts"><h2>{t("产品档案", "On record")}</h2><dl>
             {facts.map(fact => <div key={fact.label}><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}
-          </dl></section>
+          </dl></section> : null}
           <div className="profile-provenance">
             {verified ? <a href={website} target="_blank" rel="noopener noreferrer"><GlobeHemisphereWest size={17} aria-hidden="true" /><span>{new URL(website).hostname}</span><ArrowUpRight size={14} aria-hidden="true" /></a> : null}
             {source ? <a href={source} target="_blank" rel="noopener noreferrer"><BookOpen size={17} aria-hidden="true" /><span>{t("查看原始来源", "Read original source")}</span><ArrowUpRight size={14} aria-hidden="true" /></a> : null}
@@ -92,7 +90,7 @@ export function ProductDetail({ product, related }: { product: Product; related:
       </div>
     </article>
     {related.length ? <section className="profile-related">
-      <div className="profile-section-heading"><div><span className="profile-kicker">{t("继续发现", "Keep exploring")}</span><h2>{t("也看看这些产品", "Other products to explore")}</h2></div><Link className="profile-text-link" href="/search">{t("浏览产品库", "Browse the library")}<ArrowUpRight size={16} aria-hidden="true" /></Link></div>
+      <div className="profile-section-heading"><h2>{t("相关产品", "Related products")}</h2><Link className="profile-text-link" href="/search">{t("浏览产品库", "Browse the library")}<ArrowUpRight size={16} aria-hidden="true" /></Link></div>
       <div className="detail-related__grid">{related.map(item => <ProductCard key={item._id || item.name} product={item} compact />)}</div>
     </section> : null}
   </section>;

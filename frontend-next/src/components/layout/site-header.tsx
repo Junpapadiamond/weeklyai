@@ -61,7 +61,6 @@ export function SiteHeader({ isAppShell = false }: SiteHeaderProps) {
           <HorseMark className="brand-mark" />
           <span className="brand-wordmark">
             <span className="logo-text">{t("黑马雷达", "Darkhorse Radar")}</span>
-            <span className="brand-wordmark__caption">{t("AI 新产品发现", "INDEPENDENT PRODUCT DISCOVERY")}</span>
           </span>
         </Link>
 

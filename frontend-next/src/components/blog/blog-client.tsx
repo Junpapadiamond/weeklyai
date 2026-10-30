@@ -127,6 +127,8 @@ function BlogCard({ item }: { item: BlogPost }) {
   const marketLabel = marketLabels[inferMarket(item)] || (locale === "en-US" ? "Global" : "全球");
   const localizedName = getLocalizedBlogName(item, locale) || item.name;
   const localizedDescription = getLocalizedBlogDescription(item, locale) || item.description;
+  const summary = cleanDescription(localizedDescription, locale);
+  const hasSummary = summary.trim().toLocaleLowerCase() !== localizedName.trim().toLocaleLowerCase();
   const freshness = getFreshnessLabel({
     name: localizedName,
     description: localizedDescription,
@@ -162,7 +164,7 @@ function BlogCard({ item }: { item: BlogPost }) {
           </div>
         </header>
 
-        <p className="research-product__description">{cleanDescription(localizedDescription, locale)}</p>
+        {summary && hasSummary ? <p className="research-product__description">{summary}</p> : null}
 
         <div className="research-news__actions">
           <FavoriteButton blog={item} />
@@ -221,10 +223,6 @@ export function BlogClient({ initialBlogs }: BlogClientProps) {
     [activeSource, marketBlogs]
   );
 
-  const sourceSummary = activeSource
-    ? `${t("来源", "Source")}: ${sourceLabels[activeSource] || activeSource}`
-    : `${t("来源", "Source")}: ${sourceLabels[""]}`;
-  const marketSummary = `${t("区域", "Region")}: ${marketLabels[market] || market}`;
   const emptyStateText =
     market === "cn"
       ? t("暂时没有国内资讯，可以切换到全部地区。", "No China updates yet. Please retry later or switch to global.")
@@ -233,15 +231,13 @@ export function BlogClient({ initialBlogs }: BlogClientProps) {
   return (
     <section className="section blog-page">
       <div className="section-header">
-        <p className="briefing-kicker">{t("行业动态", "THE SIGNAL REPORT / NEWS & SIGNALS")}</p>
         <h1 className="section-title">{t("AI 资讯", "News & Signals")}</h1>
-        <p className="section-desc">{t("看看国内外 AI 圈最近在聊什么。", "China-local and global sources in one feed, with quick market switching.")}</p>
-        <p className="section-micro-note" role="status" aria-live="polite">
-          {marketSummary} · {sourceSummary} · {isLoading ? t("加载中…", "Loading…") : locale === "en-US" ? `Showing ${posts.length} items` : `当前展示 ${posts.length} 条`}
-        </p>
       </div>
 
       <div className="blog-toolbar">
+        <span role="status" aria-live="polite">
+          {isLoading ? t("加载中…", "Loading…") : t(`${posts.length} 条资讯`, `${posts.length} articles`)}
+        </span>
         <label>
           {t("区域", "Market")}
           <select

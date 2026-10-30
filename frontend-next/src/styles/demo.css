@@ -8,7 +8,9 @@
 .demo-budget { display: flex; gap: 12px; flex-shrink: 0; color: var(--primary); border-left: 1px solid var(--border); padding-left: 24px; }
 .demo-budget span { color: var(--text-soft); font-size: 11px; display: block; }
 .demo-budget strong { display: block; font: 25px var(--font-mono); margin: 8px 0; color: var(--text); }
-.demo-budget small { display: block; color: var(--text-muted); font-size: 10px; }
+.demo-budget details { color: var(--text-muted); font-size: 12px; max-width: 28ch; }
+.demo-budget summary { cursor: pointer; min-height: 24px; }
+.demo-budget details p { margin: .5rem 0 0; font-size: 12px; line-height: 1.7; }
 .demo-gallery-tools { display: flex; justify-content: space-between; gap: 20px; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
 .demo-filter-tabs { display: flex; gap: 7px; }
 .demo-filter-tabs button { display: flex; align-items: center; gap: 8px; border: 0; border-radius: 7px; background: transparent; color: var(--text-soft); font-size: 12px; padding: 10px 12px; cursor: pointer; }

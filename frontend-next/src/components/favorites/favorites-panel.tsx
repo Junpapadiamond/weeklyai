@@ -63,9 +63,7 @@ function formatSavedTime(value: string | undefined, locale: "zh-CN" | "en-US") {
 
 function scoreLabel(score: number | undefined, locale: "zh-CN" | "en-US"): string {
   const safe = score || 0;
-  if (safe >= 4) return locale === "en-US" ? `Dark Horse ${safe}/5` : `黑马 ${safe}分`;
-  if (safe >= 2) return locale === "en-US" ? `Rising ${safe}/5` : `潜力股 ${safe} 分`;
-  if (safe > 0) return locale === "en-US" ? `${safe}/5` : `${safe}分`;
+  if (safe > 0) return `${safe}/5`;
   return locale === "en-US" ? "Unrated" : "待评";
 }
 

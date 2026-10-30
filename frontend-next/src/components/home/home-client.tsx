@@ -176,15 +176,9 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
           selectDirection(value);
         }} />
       ) : <section className="hero briefing-hero">
-        <div className="briefing-masthead">
-          <span>THE INDEPENDENT AI PRODUCT BRIEF</span>
-          <span>GLOBAL PERSPECTIVE / EARLY DISCOVERY</span>
-        </div>
         <div className="hero-layout">
           <div className="hero-content">
-            <p className="briefing-kicker"><span className="signal-dot" /> FOR CURIOUS PRODUCT PEOPLE</p>
-            <h1 className="hero-title">Before the hype.<br /><span>Find the dark horse.</span></h1>
-            <p className="hero-subtitle">Find the early AI products worth a closer look. Understand the use case, follow the source, and try it for yourself.</p>
+            <h1 className="hero-title">Discover emerging<br /><span>AI products.</span></h1>
             <div className="briefing-actions">
               <a className="link-btn link-btn--primary" href="#darkhorseSection">Explore the brief <ArrowUpRight size={16} /></a>
               <Link className="briefing-text-link" href="/discover">Surprise me <ArrowUpRight size={15} /></Link>
@@ -192,11 +186,9 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
           </div>
           <aside className="briefing-art" aria-label="Darkhorse Radar brand mark">
             <RadarEmblem />
-            <p>Potential precedes consensus.</p>
           </aside>
         </div>
         <div className="briefing-colophon">
-          <span>EARLY PRODUCTS · LINKED SOURCES · HANDS-ON DEMOS</span>
           <Link href="/content-sources">Our selection method <ArrowUpRight size={14} /></Link>
         </div>
       </section>}
@@ -204,12 +196,8 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
       <section className="section darkhorse-section" id="darkhorseSection">
         <div className="section-header section-header--tight">
           <h2 className="section-title">
-            <span className="briefing-section-number">01</span>
             {isArchive ? t("往期黑马", "The dark horse archive") : t("近期黑马", "On our radar")}
           </h2>
-          <p className="section-desc">
-            {isArchive ? t("近期暂无新收录的黑马，先看看往期产品。收录时间见产品条目。", "No recent discoveries yet. Explore earlier research below, with dates and sources on every record.") : t("从早期产品中筛选，黑马指数 4–5 分。", "Emerging products with a concrete use case and a source you can check.")}
-          </p>
         </div>
 
         <div className="section-utility">
@@ -290,10 +278,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
 
       <section className="section trending-section" id="trendingSection">
         <div className="section-header section-header--tight">
-          <h2 className="section-title"><span className="briefing-section-number">02</span> {t("产品库", "Keep exploring")}</h2>
-          <p className="section-desc">
-            {t("按分类浏览，找适合自己的工具和灵感。", "Find a product that connects to what you are working on.")}
-          </p>
+          <h2 className="section-title">{t("产品库", "Product library")}</h2>
         </div>
 
         <div className="list-controls list-controls--compact">
@@ -392,12 +377,6 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
       <footer className="section home-footer">
         <div className="home-footer__intro">
           <p className="home-footer__eyebrow"><HorseMark className="footer-brand-mark" />{t("黑马雷达", "Darkhorse Radar")}</p>
-          <p className="home-footer__summary">
-            {t(
-              "收录海内外 AI 新产品，帮你找工具、看趋势、积累产品灵感。",
-              "A faster global AI discovery surface for PMs and product teams: scan the notable signals first, then decide what deserves deeper work."
-            )}
-          </p>
         </div>
 
         <div className="home-footer__links">
@@ -413,8 +392,8 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
         </div>
 
         <div className="home-footer__meta">
-          <span>{freshnessLabel}</span>
-          <span>{t("产品信息来自公开资料，详情请查看原始来源。", "Dark horses and rising stars surface first by default.")}</span>
+          <Link href="/content-sources">{t("收录与来源", "Selection & sources")}</Link>
+          <Link href="/support">{t("联系与反馈", "Support")}</Link>
         </div>
       </footer>
 
@@ -430,7 +409,6 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
             <div className="direction-sheet__header">
               <div>
                 <h3>{t("选择分类", "More directions")}</h3>
-                <p>{t("选择想看的产品分类。", "Search and switch the direction filter.")}</p>
               </div>
               <button type="button" className="direction-sheet__close" onClick={() => setIsDirectionSheetOpen(false)}>
                 {t("关闭", "Close")}

@@ -68,9 +68,6 @@ export function ChatPanel({ messages, isLoading, onSend, onMinimize }: ChatPanel
       <div className="chat-panel__body" ref={scrollRef}>
         {!hasMessages ? (
           <div className="chat-welcome">
-            <p className="chat-welcome__text">
-              {t("不知道怎么选？说说你的用途，我来帮你找产品、做比较。", "Ask me about dark horses, funding trends, hardware, and regional product signals.")}
-            </p>
             <ChatSuggestions onSelect={onSend} />
           </div>
         ) : (
@@ -112,9 +109,6 @@ export function ChatPanel({ messages, isLoading, onSend, onMinimize }: ChatPanel
         </button>
       </form>
 
-      <div className="chat-panel__footer">
-        <span className="chat-panel__powered">{t("基于本站收录的产品资料回答", "Answers grounded in the product archive · Perplexity")}</span>
-      </div>
     </div>
   );
 }

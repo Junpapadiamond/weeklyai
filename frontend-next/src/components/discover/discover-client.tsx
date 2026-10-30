@@ -56,16 +56,9 @@ export function DiscoverClient({ initialPage }: DiscoverClientProps) {
   return (
     <section className="section discover-page">
       <div className="section-header">
-        <p className="briefing-kicker">{t("换个方式找产品", "THE SERENDIPITY FILE / DISCOVER")}</p>
         <h1 className="section-title">
           {t("随便看看", "Discover")}
         </h1>
-        <p className="section-desc">
-          {t("每次认识一款新产品。感兴趣就右滑收藏，不感兴趣就左滑跳过。", "Swipe right to save, left to skip. Find an idea worth following in the product archive.")}
-        </p>
-        <p className="section-micro-note">
-          {t("也可以点击下方按钮操作，收藏的产品随时可在收藏夹查看。", "Gesture tips appear on first visit; swipe history resets after 7 days.")}
-        </p>
       </div>
 
       <div className="list-controls discover-page__controls">

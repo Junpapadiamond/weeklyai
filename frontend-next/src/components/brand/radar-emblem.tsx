@@ -16,8 +16,6 @@ export function RadarEmblem() {
         <circle cx="271" cy="59" r="10" stroke="var(--primary)" strokeOpacity=".25" />
       </svg>
       <HorseMark className="radar-emblem__horse" />
-      <span className="radar-emblem__label">LOOK CLOSER.</span>
-      <span className="radar-emblem__coordinate">EARLY SIGNALS</span>
     </div>
   );
 }

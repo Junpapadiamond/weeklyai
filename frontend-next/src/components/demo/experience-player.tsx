@@ -52,7 +52,6 @@ export function ExperiencePlayer({ entry, productName, website, logoUrl, seconda
   return <div className={`experience-shell experience-focus${embedded ? " experience-focus--embedded" : ""}`}>
     <header className="focus-header">
       {embedded ? <h2 className="focus-promise">{spec.headline[lang]}</h2> : <><div className="focus-product"><SmartLogo className="demo-product-logo" name={productName} logoUrl={logoUrl} secondaryLogoUrl={secondaryLogoUrl} website={website} trustPrimaryLogo size={30} /><h3>{productName}</h3></div><p className="focus-promise">{spec.headline[lang]}</p></>}
-      {!embedded ? <p className="focus-boundary">{t("本站独立示例；未运行原厂产品。", "An independent example. The vendor product is not running here.")}</p> : null}
     </header>
     <div className="focus-content">
       <h2 ref={heading} tabIndex={-1}>{step.title[lang]}</h2>

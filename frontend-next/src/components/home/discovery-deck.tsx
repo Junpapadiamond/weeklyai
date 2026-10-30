@@ -42,7 +42,6 @@ const SWIPE_INERTIA_VELOCITY_CAP_TOUCH = 1.9;
 const SWIPE_INERTIA_VELOCITY_CAP_POINTER = 2.15;
 const SWIPE_INERTIA_EXTRA_OFFSET_MAX = 360;
 const SWIPE_INERTIA_DURATION_REDUCTION_MAX = 96;
-const SWIPE_INERTIA_STRONG_THRESHOLD = 0.28;
 
 type DiscoveryDeckProps = {
   products: Product[];
@@ -184,7 +183,6 @@ export default function DiscoveryDeck({ products, onLike, onExhausted }: Discove
   const [swipeExitMs, setSwipeExitMs] = useState(SWIPE_EXIT_MS);
   const [swipeOutDirection, setSwipeOutDirection] = useState<"left" | "right" | null>(null);
   const [lastSwipeAction, setLastSwipeAction] = useState<"left" | "right" | null>(null);
-  const [lastSwipeHadInertia, setLastSwipeHadInertia] = useState(false);
   const [showSwipeEcho, setShowSwipeEcho] = useState(false);
   const [showStreakBurst, setShowStreakBurst] = useState(false);
   const likeStreakRef = useRef(0);
@@ -338,11 +336,9 @@ export default function DiscoveryDeck({ products, onLike, onExhausted }: Discove
         ? SWIPE_OUT_OFFSET_BASE
         : Math.max(SWIPE_OUT_OFFSET_BASE, Math.round(window.innerWidth * 0.92)) + physics.extraOffset;
     const releaseDeltaY = input?.deltaY ?? dragY;
-    const hadInertia = physics.inertiaStrength >= SWIPE_INERTIA_STRONG_THRESHOLD;
     isSwipeOutRef.current = true;
     setSwipeExitMs(physics.exitMs);
     setSwipeOutDirection(direction);
-    setLastSwipeHadInertia(hadInertia);
     setLastSwipeAction(direction);
     setShowSwipeEcho(true);
     if (direction === "right") {
@@ -626,29 +622,20 @@ export default function DiscoveryDeck({ products, onLike, onExhausted }: Discove
   } as const;
   const hintText =
     feedbackDirection === "right"
-      ? t("松手即可收藏", "Keep swiping right and release to save")
+      ? t("松手即可收藏", "Release to save")
       : feedbackDirection === "left"
-        ? t("松手即可跳过", "Keep swiping left and release to skip")
-        : likeStreak >= 2
-          ? locale === "en-US"
-            ? `Streak x${likeStreak}, keep swiping right for dark horses`
-            : `已连续收藏 ${likeStreak} 款`
-          : t("右滑收藏，左滑跳过", "Drag left or right. Swipe right to save, left to skip");
+        ? t("松手即可跳过", "Release to skip")
+        : "";
   const swipeEchoText =
     lastSwipeAction === "right"
-      ? lastSwipeHadInertia
-        ? t("已加入收藏夹", "Inertia right-swipe saved, keep swiping fast")
-        : t("已加入收藏夹", "Saved. Keep swiping right to filter faster")
-      : lastSwipeHadInertia
-        ? t("已跳过，看看下一款", "Inertia left-swipe skipped, continue left for next")
-        : t("已跳过，看看下一款", "Skipped. Continue swiping left for next");
+      ? t("已加入收藏夹", "Saved")
+      : t("已跳过", "Skipped");
 
   return (
     <div className="discover-shell">
       {showSwipeGuide ? (
         <div className="swipe-onboarding" role="dialog" aria-label={t("快速发现手势引导", "Quick discovery gesture guide")}>
-          <p className="swipe-onboarding__title">{t("看到感兴趣的产品，右滑收藏", "Swipe left and right to shortlist dark horses in 30 seconds")}</p>
-          <div className="swipe-onboarding__gestures" aria-hidden="true">
+          <div className="swipe-onboarding__gestures">
             <span className="swipe-onboarding__gesture swipe-onboarding__gesture--left">← {t("左滑跳过", "Swipe left to skip")}</span>
             <span className="swipe-onboarding__gesture swipe-onboarding__gesture--right">{t("右滑收藏", "Swipe right to save")} →</span>
           </div>
@@ -729,7 +716,7 @@ export default function DiscoveryDeck({ products, onLike, onExhausted }: Discove
           <p className="swipe-card-desc">{currentDescription}</p>
 
           {currentHighlight ? (
-            <p className="swipe-card-highlight">{currentWhyMatters ? `${t("产品亮点", "WHY")} · ${currentHighlight}` : `${t("融资情况", "FUNDING")} · ${currentHighlight}`}</p>
+            <p className="swipe-card-highlight">{currentHighlight}</p>
           ) : null}
 
           <div className="swipe-card-meta">
@@ -785,7 +772,7 @@ export default function DiscoveryDeck({ products, onLike, onExhausted }: Discove
           {locale === "en-US" ? `Saved in a row x${likeStreak}` : `连续收藏 x${likeStreak}`}
         </div>
       ) : null}
-      <div className={`swipe-gesture-hint ${feedbackDirection ? `is-${feedbackDirection}` : ""}`}>{hintText}</div>
+      <div className={`swipe-gesture-hint ${feedbackDirection ? `is-${feedbackDirection}` : ""}`} role="status">{hintText}</div>
       <div className="swipe-status">
         {t("已收藏", "Saved")} {liked} · {t("已跳过", "Skipped")} {skipped}
       </div>

@@ -125,10 +125,7 @@ export function SearchClient({ initialState }: SearchClientProps) {
   return (
     <section className="section search-page">
       <div className="section-header">
-        <p className="briefing-kicker">{t("产品库", "THE PRODUCT INDEX / SEARCH THE ARCHIVE")}</p>
         <h1 className="section-title">{t("搜索产品", "Search Products")}</h1>
-        <p className="section-desc">{t("输入产品名称或用途，找你需要的 AI 工具。", "Search the archive by product name or the problem you want to solve.")}</p>
-        <p className="section-micro-note">{t("输入后自动搜索，也可以按软件、硬件筛选。", "Type keywords for instant search and switch software/hardware when needed.")}</p>
       </div>
 
       <form className="search-panel" onSubmit={onSubmit}>
@@ -215,12 +212,6 @@ export function SearchClient({ initialState }: SearchClientProps) {
           >
             {t("下一页", "Next")}
           </button>
-        </div>
-      ) : null}
-
-      {!shouldSearch ? (
-        <div className="empty-state">
-          <p className="empty-state-text">{t("输入关键词开始搜索。", "Enter a keyword to start searching.")}</p>
         </div>
       ) : null}
 

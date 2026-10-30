@@ -165,8 +165,8 @@ export function DemoExplorer({ products }: { products: Product[] }) {
         <h1 className="section-title">{t("交互示例", "Interactive examples")}</h1>
         {phase.kind === "idle" ? <p className="section-desc">
           {t(
-            "选择产品，查看本站根据公开资料制作的独立示例。",
-            "Choose a product to explore an independent example based on public information."
+            "独立示例 · 非原厂输出",
+            "Independent examples · Not vendor output"
           )}
         </p> : null}
       </header>
@@ -256,12 +256,7 @@ export function DemoExplorer({ products }: { products: Product[] }) {
                 : t(`正在打开 ${phase.productName}…`, `Opening ${phase.productName}…`)}
             </strong>
             <span>
-              {phase.building
-                ? t(
-                    `已用 ${elapsed} 秒，完成后可重复查看。`,
-                    `${elapsed}s elapsed. The prepared example can be replayed.`
-                  )
-                : t(`已用 ${elapsed} 秒。`, `${elapsed}s elapsed.`)}
+              {t(`已用 ${elapsed} 秒。`, `${elapsed}s elapsed.`)}
             </span>
             <button
               type="button"
