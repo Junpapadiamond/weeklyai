@@ -142,7 +142,8 @@ def test_x_discards_reply_and_login_fragments_from_search_body():
            'title': 'OpenAI on X: "We released an open-source AI model evaluation toolkit." / X',
            'summary': 'Log inSign up @Someone: unrelated claims about a future model'}
     result = news.search_item('x', row, NOW, 'Tavily')
-    assert result['name'] == 'We released an open-source AI model evaluation toolkit.'
+    assert result['name'] == '@OpenAI · We released an open-source AI model evaluation toolkit.'
     assert result['description'] == result['name']
     assert result['extra']['excerpt_basis'] == 'indexed_post_title'
+    assert news.normalize(result, NOW)['name'] == result['name']
     assert news.rejection_reason(result, NOW) is None

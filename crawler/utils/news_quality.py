@@ -103,7 +103,7 @@ def rejection_reason(item, now):
             return 'unvetted_x_author'
         if len(summary) < 40:
             return 'insufficient_excerpt'
-        text_without_links = re.sub(r'https?://\S+', '', title)
+        text_without_links = re.sub(r'https?://\S+', '', re.sub(r'^@\w+\s*·\s*', '', title))
         if len(title_key(text_without_links)) < 30 or not SUBSTANCE.search(text_without_links):
             return 'no_concrete_signal'
         if not AI.search(text_without_links) and not re.search(

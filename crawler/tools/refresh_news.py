@@ -47,6 +47,7 @@ def clean(value):
 
 def x_post_text(title):
     text = re.split(r'\s+on X:\s*', title, maxsplit=1)[-1]
+    text = re.sub(r'^@\w+\s*·\s*', '', text)
     return re.sub(r'["”]?\s*/\s*X\s*$', '', text).strip(' "“”')
 
 
@@ -104,8 +105,10 @@ def normalize(item, now):
     if source == 'x' and extra.get('evidence_kind') == 'search_excerpt':
         # Search body snippets mix replies, quoted posts and login chrome.
         # The indexed post title is the only attributable excerpt here.
-        name = x_post_text(name)
+        account = urlparse(url).path.split('/')[1]
+        name = f'@{account} · {x_post_text(name)}'
         out['description'] = name
+        extra['author'] = account
         extra['excerpt_basis'] = 'indexed_post_title'
     out.update(name=name[:300], description=clean(out.get('description'))[:1200],
                website=url, source=source, published_at=date.isoformat(), content_type='blog')
