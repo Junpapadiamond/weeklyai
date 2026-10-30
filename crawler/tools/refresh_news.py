@@ -105,7 +105,7 @@ def normalize(item, now):
     if source == 'x' and extra.get('evidence_kind') == 'search_excerpt':
         # Search body snippets mix replies, quoted posts and login chrome.
         # The indexed post title is the only attributable excerpt here.
-        account = urlparse(url).path.split('/')[1]
+        account = urlparse(url).path.lstrip('/').partition('/')[0]
         name = f'@{account} · {x_post_text(name)}'
         out['description'] = name
         extra['author'] = account
