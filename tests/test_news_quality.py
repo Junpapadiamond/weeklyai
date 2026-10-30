@@ -63,6 +63,9 @@ def test_search_excerpt_is_not_verification_of_an_unknown_x_author():
     assert rejection_reason(row, NOW) == 'unvetted_x_author'
     row['website'] = f'https://x.com/AnthropicAI/status/{snowflake}'
     assert rejection_reason(row, NOW) is None
+    row['name'] = "We're humbled by the support and look forward to continue building in Canada."
+    assert rejection_reason(row, NOW) == 'no_concrete_signal'
+    row['name'] = 'Anthropic releases new AI model with public evaluation results'
     row['published_at'] = (NOW - timedelta(days=1)).isoformat()
     assert rejection_reason(row, NOW) == 'publication_date_mismatch'
 

@@ -106,6 +106,11 @@ def rejection_reason(item, now):
         text_without_links = re.sub(r'https?://\S+', '', title)
         if len(title_key(text_without_links)) < 30 or not SUBSTANCE.search(text_without_links):
             return 'no_concrete_signal'
+        if not AI.search(text_without_links) and not re.search(
+                r'\b(?:releas\w*|launch\w*|announc\w*|research\w*|model|api|'
+                r'dataset|benchmark\w*|weights|funding|financing|series [a-z]|valuation)\b',
+                text_without_links, re.I):
+            return 'no_concrete_signal'
         if extra.get('publication_basis') != 'x_snowflake':
             return 'missing_publication_basis'
         try:
