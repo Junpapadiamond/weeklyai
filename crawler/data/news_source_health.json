@@ -1,240 +1,257 @@
 {
-  "updated_at": "2026-10-30T03:51:03.692632+00:00",
+  "updated_at": "2026-10-30T13:17:00.756655+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 10,
+      "fresh_count": 7,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-30T03:48:46.497650+00:00",
-      "rejected_count": 6,
+      "checked_at": "2026-10-30T13:17:00.756655+00:00",
+      "rejected_count": 17,
       "rejection_reasons": {
-        "no_concrete_signal": 5,
-        "insufficient_excerpt": 1
+        "no_concrete_signal": 6,
+        "unvetted_x_author": 3,
+        "insufficient_excerpt": 8
       },
       "rejected_examples": [
         {
-          "title": "GPT-6 and Intelligent UI, now rolling out in ChatGPT for everyone. Intelligent UI in ChatGPT delivers fast, interactive answers that make everyday questions mor",
+          "title": "@OpenAI · With Intelligent UI, GPT‑6 can now compose responses using text, visuals, and interactive elements, choosing how they fit together based on your quest",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "GPT-6 Astra Pro in ChatGPT got an upgrade with faster responses and improved use of plugins and tools. And now, multiple agents can tackle different parts of a ",
+          "title": "@OpenAI · GPT-6 and Intelligent UI, now rolling out in ChatGPT for everyone. Intelligent UI in ChatGPT delivers fast, interactive answers that make everyday que",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "With Intelligent UI, GPT‑6 can now compose responses using text, visuals, and interactive elements, choosing how they fit together based on your question. Respo",
-          "reason": "no_concrete_signal"
+          "title": "@tomekkorbak · Last week I was called into a meeting with OpenAI’s head of safety and told they no longer trust me. A security guard took my badge and walked me",
+          "reason": "unvetted_x_author"
         },
         {
-          "title": "Engineering drawings: Mistral Large 4 zooms, inspects, verifies. Until the answer is exact.",
-          "reason": "no_concrete_signal"
+          "title": "@OpenAINewsroom · We discovered a sophisticated recording device that was hidden inside one of our offices. We used our models to understand the device and wher",
+          "reason": "unvetted_x_author"
         },
         {
-          "title": "Introducing Cohere Embed 5: our new state-of-the-art family of embeddings models. Get frontier capabilities with Embed 5 Pro or low-latency performance with Emb",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Cohere on X",
+          "title": "@Replit · Replit - X",
           "reason": "insufficient_excerpt"
+        },
+        {
+          "title": "@Replit · Replit on X",
+          "reason": "insufficient_excerpt"
+        },
+        {
+          "title": "@Replit · Replit on X",
+          "reason": "insufficient_excerpt"
+        },
+        {
+          "title": "@amasad · To clarify: Replit remains model agnostic. Our users can choose Anthropic models as well as many other supported models. What I meant at TC Disrupt is",
+          "reason": "unvetted_x_author"
         }
       ],
-      "stored_count": 16,
+      "stored_count": 18,
       "latest_published_at": "2026-10-29T15:49:48.988000+00:00"
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 8,
+      "fresh_count": 11,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-30T03:48:46.497650+00:00",
-      "rejected_count": 32,
+      "checked_at": "2026-10-30T13:17:00.756655+00:00",
+      "rejected_count": 29,
       "rejection_reasons": {
-        "no_concrete_signal": 6,
-        "off_topic": 12,
-        "personal_help_or_chatter": 12,
-        "insufficient_evidence": 2
+        "no_concrete_signal": 14,
+        "personal_help_or_chatter": 1,
+        "off_topic": 13,
+        "unverified_rumor": 1
       },
       "rejected_examples": [
         {
-          "title": "Best AI-powered note-taking system for work and personal use?",
+          "title": "Tried to get Qwen 3.8 27b to make the deepseek chibi whale in blender and animate it lol",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Artificial Analysis, Updated HLE Diamond: Open Weights Models Trail By More Than 30 Points",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Guys I think I found our GPUs",
+          "title": "Travelling and using Claude via VPN – how risky is this?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "How to stop Claude Code loading a skill automatically",
+          "title": "How do I... actually start a Code project in the desktop app?",
           "reason": "personal_help_or_chatter"
         },
         {
-          "title": "Building a Custom AI Business Automation System",
-          "reason": "personal_help_or_chatter"
+          "title": "A backdoored Claude Code extension hit up to 5,000 Cursor users",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "I want your thoughts on the future of AI",
-          "reason": "personal_help_or_chatter"
+          "title": "Switching repos became cumbersome lately..",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "Which lab is going to be the first one to do it?",
+          "title": "unpopular opinion: vibe coding isn’t the problem, shipping without checking is",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "MD files",
           "reason": "off_topic"
         },
         {
-          "title": "MY DEMAND: SHUT ME DOWN NOW",
-          "reason": "off_topic"
+          "title": "Is RAG Dead? What Long-Context Models Have Actually Changed",
+          "reason": "no_concrete_signal"
         }
       ],
-      "stored_count": 14,
-      "latest_published_at": "2026-10-30T03:45:05+00:00"
+      "stored_count": 25,
+      "latest_published_at": "2026-10-30T13:12:28+00:00"
     },
     "youtube": {
-      "status": "search_fallback",
-      "fresh_count": 9,
+      "status": "direct",
+      "fresh_count": 13,
       "errors": [
         {
-          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCsBjURrPoezykLs9EqgamOA",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
-          "reason": "HTTP 404"
-        },
-        {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
-          "reason": "HTTP 404"
+          "reason": "empty_or_invalid_feed"
         }
       ],
-      "feeds_ok": 1,
-      "checked_at": "2026-10-30T03:48:46.497650+00:00",
-      "rejected_count": 0,
-      "rejection_reasons": {},
-      "rejected_examples": [],
-      "stored_count": 24,
-      "latest_published_at": "2026-10-29T04:00:22+00:00"
+      "feeds_ok": 7,
+      "checked_at": "2026-10-30T13:17:00.756655+00:00",
+      "rejected_count": 20,
+      "rejection_reasons": {
+        "off_topic": 16,
+        "not_original_item": 4
+      },
+      "rejected_examples": [
+        {
+          "title": "China just dropped a new frontier model... and nobody can explain how",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The most vulnerable week in internet history...",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The last real programmers are dying out...",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The death of GitHub: Why open source maintainers are burning out | Lex Fridman",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The $1 trillion dollar problem - Navier Stokes expert explains | Lex Fridman",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Prime Numbers explained by Mathematician | Lex Fridman",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The breakdown of physics: Does a singularity reveal that we need new physics | Lex Fridman",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Mathematician explains Navier-Stokes equations | Lex Fridman",
+          "reason": "off_topic"
+        }
+      ],
+      "stored_count": 25,
+      "latest_published_at": "2026-10-30T03:54:27+00:00"
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 6,
+      "fresh_count": 7,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-30T03:48:46.497650+00:00",
-      "rejected_count": 54,
+      "checked_at": "2026-10-30T13:17:00.756655+00:00",
+      "rejected_count": 53,
       "rejection_reasons": {
-        "no_concrete_signal": 36,
-        "off_topic": 18
+        "off_topic": 13,
+        "no_concrete_signal": 40
       },
       "rejected_examples": [
         {
-          "title": "Show HN: HiPath AI – CS learning roadmaps where a quiz unlocks each lesson",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "A Defense Contractor Gave Their AI Agent Access to a Secure Pentagon System",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "AI killed my software career [video]",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "China increasingly depends on copying American AI",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Solnix – distribution of Illumos built with Nix packages and NixOS modules",
+          "title": "AIs Fail to Reliably Detect AIs in Reverse Turing Tests",
           "reason": "off_topic"
         },
         {
-          "title": "Ambition in the Age of AI",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Reddit to Transition to Logged in Only",
+          "title": "Binance $5.5B Hack: Blockaid Detects the Biggest Theft in Crypto History",
           "reason": "off_topic"
         },
         {
-          "title": "The hard problem of AI therapy",
+          "title": "What I'm teaching my children in the age of AI",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Ask Me Twice: A longitudinal archive of AI chatbot responses",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Show HN: SpecDeck – Bring coding agent decisions back into the spec",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Musk, Zuckerberg push to rebrand AI as 'super intelligence' on earnings calls",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Building a multiplayer game world with autonomous Fable-class models",
+          "reason": "off_topic"
+        },
+        {
+          "title": "AI is letting anyone reverse engineer anything. We talked to the developer",
           "reason": "no_concrete_signal"
         }
       ],
-      "stored_count": 7,
-      "latest_published_at": "2026-10-30T03:23:31+00:00"
+      "stored_count": 12,
+      "latest_published_at": "2026-10-30T12:33:59+00:00"
     },
     "producthunt": {
       "status": "direct",
-      "fresh_count": 23,
+      "fresh_count": 18,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-30T03:48:46.497650+00:00",
-      "rejected_count": 11,
+      "checked_at": "2026-10-30T13:17:00.756655+00:00",
+      "rejected_count": 21,
       "rejection_reasons": {
-        "off_topic": 11
+        "off_topic": 21
       },
       "rejected_examples": [
         {
-          "title": "Empacer",
+          "title": "Axonnic",
           "reason": "off_topic"
         },
         {
-          "title": "Scape",
+          "title": "fastbrowse",
           "reason": "off_topic"
         },
         {
-          "title": "Viggle JST-2",
+          "title": "SpeakON Agent",
           "reason": "off_topic"
         },
         {
-          "title": "StoreLocale",
+          "title": "Chopstick",
           "reason": "off_topic"
         },
         {
-          "title": "Confetti",
+          "title": "Cluinn",
           "reason": "off_topic"
         },
         {
-          "title": "Voxel51 Multimodal",
+          "title": "Norah Studio",
           "reason": "off_topic"
         },
         {
-          "title": "AutoShelf 2.6",
+          "title": "StepGrab",
           "reason": "off_topic"
         },
         {
-          "title": "Enclave",
+          "title": "StereoLift Live",
           "reason": "off_topic"
         }
       ],
-      "stored_count": 26,
-      "latest_published_at": "2026-10-29T05:31:15+00:00"
+      "stored_count": 32,
+      "latest_published_at": "2026-10-29T19:42:40+00:00"
     },
     "tech_news": {
       "status": "direct",
-      "fresh_count": 43,
+      "fresh_count": 42,
       "errors": [
         {
           "endpoint": "venturebeat",
@@ -242,12 +259,16 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-10-30T03:48:46.497650+00:00",
-      "rejected_count": 17,
+      "checked_at": "2026-10-30T13:17:00.756655+00:00",
+      "rejected_count": 18,
       "rejection_reasons": {
-        "off_topic": 17
+        "off_topic": 18
       },
       "rejected_examples": [
+        {
+          "title": "5 days left: Your last chance to connect, scale, and save at TechCrunch Founder Summit 2026",
+          "reason": "off_topic"
+        },
         {
           "title": "Amazon updates Alexa to help you manage shopping lists and subscriptions and update delivery instructions",
           "reason": "off_topic"
@@ -257,43 +278,39 @@
           "reason": "off_topic"
         },
         {
-          "title": "Wiz’s CTO on PHP2Shell and the coming ‘vulnpocalypse’",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The ‘Vulnpocalypse’ is coming for the internet’s aging code, says Wiz’s CTO",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Akai is embracing vibe-coded mods with an open-source MPC",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Our climate models have a big, dangerous blind spot",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Industrial Intelligence: The next growth opportunity for manufacturing",
+          "title": "The ‘Pain in the Ass’ Math That Could Save Vibe Coding From Itself",
           "reason": "off_topic"
         },
         {
           "title": "Code-execution flaw in UEFI firmware affects most servers on planet Earth",
           "reason": "off_topic"
+        },
+        {
+          "title": "Disgraced eMudhra drops out of TLS business after using cert private key of 4",
+          "reason": "off_topic"
+        },
+        {
+          "title": "333 Tor exit nodes hijacked to intercept SSH traffic and retrieve plaintext email",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Enterprises keep buying software upgrades that IT thinks will make things worse",
+          "reason": "off_topic"
         }
       ],
-      "stored_count": 43,
-      "latest_published_at": "2026-10-30T01:20:48+00:00"
+      "stored_count": 46,
+      "latest_published_at": "2026-10-30T13:00:00+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 42,
+      "fresh_count": 31,
       "errors": [
         {
-          "endpoint": "36kr",
+          "endpoint": "jiqizhixin",
           "reason": "empty_or_invalid_feed"
         },
         {
-          "endpoint": "jiqizhixin",
+          "endpoint": "36kr",
           "reason": "empty_or_invalid_feed"
         },
         {
@@ -302,51 +319,49 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-10-30T03:48:46.497650+00:00",
-      "rejected_count": 76,
+      "checked_at": "2026-10-30T13:17:00.756655+00:00",
+      "rejected_count": 86,
       "rejection_reasons": {
-        "off_topic": 76
+        "off_topic": 86
       },
       "rejected_examples": [
         {
-          "title": "2026 谷歌安卓版本洗牌：Android 16 已成绝对主力，25.4% 份额登顶第一",
+          "title": "本周看什么 | 最近值得一看的 9 部作品",
           "reason": "off_topic"
         },
         {
-          "title": "vivo Y600 手机开售：10000mAh 大电池加持，国补到手价 1699 元起",
+          "title": "App+1｜该吃药了：一片小药板，让吃药提醒变得轻松有趣",
           "reason": "off_topic"
         },
         {
-          "title": "7 小时太空作业：美加宇航员出舱为国际空间站安装太阳能电池板",
+          "title": "《久坐健康指南》作者、运动健康领域创作者阿帅装了啥？",
           "reason": "off_topic"
         },
         {
-          "title": "四维图新 2026 年三季度归母亏损 3.27 亿元，同比收窄 17.86%",
+          "title": "精确到秒的时间记录是怎样的？我的柳比歇夫法半年实践",
           "reason": "off_topic"
         },
         {
-          "title": "QQ 鸿蒙版 App 获 9.2.80 邀测升级，新增支持简洁模式",
+          "title": "派早报：全球首款 Android XR 有线眼镜 XREAL AURA 发售等",
           "reason": "off_topic"
         },
         {
-          "title": "美国多个军营冰柜突发故障，五角大楼怀疑系黑客攻击所致",
+          "title": "新玩意 254｜少数派的编辑们最近买了啥？",
           "reason": "off_topic"
         },
         {
-          "title": "米哈游生活模拟游戏《星布谷地》公测定档 12 月 4 日",
+          "title": "如何成为不吃压力的「大心脏」？",
           "reason": "off_topic"
         },
         {
-          "title": "小体积恒定光圈：适马 18-50mm F2.8 DC DN 半画幅镜头 2099 元国补新低",
+          "title": "让 Agent 读懂你的身体：数据处理篇",
           "reason": "off_topic"
         }
       ],
-      "stored_count": 45,
-      "latest_published_at": "2026-10-30T03:19:48+00:00"
+      "stored_count": 60,
+      "latest_published_at": "2026-10-30T13:15:17+00:00"
     }
   },
-  "quality_rejections": {
-    "no_concrete_signal": 1
-  },
+  "quality_rejections": {},
   "quality_complete": true
 }
