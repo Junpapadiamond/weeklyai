@@ -20,12 +20,14 @@ from urllib.parse import urlparse, urlunparse, parse_qs, parse_qsl, urlencode
 
 import feedparser
 import requests
+from bs4 import BeautifulSoup
 
 CRAWLER = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(CRAWLER))
-from utils.social_sources import load_reddit_subreddits, load_youtube_channel_ids
+from utils.social_sources import load_reddit_subreddits, load_youtube_channel_ids, load_x_accounts
 from utils.tavily_client import parse_date
-from spiders.cn_news_spider import CN_RSS_FEEDS, is_ai_relevant
+from utils.news_quality import POLICY_VERSION, rejection_reason, title_key
+from spiders.cn_news_spider import CN_RSS_FEEDS
 from spiders.tech_news_spider import TechNewsSpider
 
 SOURCES = ('x', 'reddit', 'youtube', 'hackernews', 'producthunt', 'tech_news', 'cn_news')
@@ -41,6 +43,34 @@ USER_AGENT = 'DarkHorseRadar/1.0 (+https://darkhorseradar.com)'
 
 def clean(value):
     return re.sub(r'\s+', ' ', html.unescape(re.sub(r'<[^>]+>', ' ', str(value or '')))).strip()
+
+
+def x_post_text(title):
+    text = re.split(r'\s+on X:\s*', title, maxsplit=1)[-1]
+    return re.sub(r'["”]?\s*/\s*X\s*$', '', text).strip(' "“”')
+
+
+def excerpt(content):
+    soup = BeautifulSoup(str(content or ''), 'html.parser')
+    for tag in soup(['script', 'style']):
+        tag.decompose()
+    text = soup.get_text(' ', strip=True)
+    # RSS navigation and attribution are not the submitted article body.
+    text = re.split(r'\s+submitted by\s+', text, flags=re.I)[0]
+    text = re.sub(r'\s+Discussion\s*\|\s*Link\s*$', '', text)
+    return re.sub(r'\s+', ' ', text).strip()
+
+
+def outbound_urls(content, source):
+    urls = []
+    for a in BeautifulSoup(str(content or ''), 'html.parser').find_all('a', href=True):
+        url = canonical_url(a['href'])
+        host = urlparse(url).hostname or ''
+        if not url or (source == 'reddit' and (host == 'reddit.com' or host.endswith('.reddit.com'))):
+            continue
+        if url not in urls:
+            urls.append(url)
+    return urls[:10]
 
 
 def canonical_url(value):
@@ -62,7 +92,7 @@ def normalize(item, now):
     if not isinstance(item, dict):
         return None
     out = dict(item)
-    extra = dict(out.get('extra') or {})
+    extra = dict(out.get('extra') or {}) if isinstance(out.get('extra', {}), dict) else {}
     date = parse_date(out.get('published_at') or extra.get('published_at'))
     url = canonical_url(out.get('website'))
     name = clean(out.get('name'))
@@ -71,6 +101,12 @@ def normalize(item, now):
         return None
     source = str(out.get('source', '')).lower()
     source = {'twitter': 'x', 'youtube_rss': 'youtube'}.get(source, source)
+    if source == 'x' and extra.get('evidence_kind') == 'search_excerpt':
+        # Search body snippets mix replies, quoted posts and login chrome.
+        # The indexed post title is the only attributable excerpt here.
+        name = x_post_text(name)
+        out['description'] = name
+        extra['excerpt_basis'] = 'indexed_post_title'
     out.update(name=name[:300], description=clean(out.get('description'))[:1200],
                website=url, source=source, published_at=date.isoformat(), content_type='blog')
     # Platforms are global; platform identity does not establish a US location.
@@ -80,19 +116,40 @@ def normalize(item, now):
     return out
 
 
-def merge_news(existing, fresh, now, per_source=60):
+def merge_news(existing, fresh, now, per_source=60, diagnostics=None):
     by_url = {}
+    reasons = Counter()
     for item in fresh + existing:
         item = normalize(item, now)
-        if item:
+        reason = rejection_reason(item, now) if item else 'invalid_record'
+        if reason:
+            reasons[reason] += 1
+        else:
+            item['extra']['quality_policy_version'] = POLICY_VERSION
             # Same article on distinct platforms keeps each discussion entry.
             by_url.setdefault((item['source'], item['website']), item)
     counts = Counter()
     merged = []
+    seen_titles = set()
+    seen_hn_articles = set()
     for item in sorted(by_url.values(), key=lambda x: x['published_at'], reverse=True):
+        # Exact headline syndication is collapsed within media; independent
+        # social discussions keep their separate permalinks. No fuzzy merging
+        # of model versions or distinct claims with similar words.
+        family = 'media' if item['source'] in ('tech_news', 'cn_news') else item['source']
+        key = (family, title_key(item['name']))
+        external = canonical_url(item['extra'].get('external_url')) if item['source'] == 'hackernews' else ''
+        if key in seen_titles or (external and external in seen_hn_articles):
+            reasons['duplicate_headline'] += 1
+            continue
+        seen_titles.add(key)
+        if external:
+            seen_hn_articles.add(external)
         if counts[item['source']] < per_source:
             counts[item['source']] += 1
             merged.append(item)
+    if diagnostics is not None:
+        diagnostics.update(reasons)
     return merged
 
 
@@ -127,12 +184,14 @@ def feed_items(source, url, now, label=''):
         date = datetime(*parsed[:6], tzinfo=timezone.utc) if parsed else None
         title = clean(entry.get('title'))
         content = entry.get('summary') or (entry.get('content') or [{}])[0].get('value', '')
-        summary = clean(content)
-        if not date or date < now - timedelta(days=14) or not is_ai_relevant(title, summary):
+        summary = excerpt(content)
+        if not date or date < now - timedelta(days=14):
             continue
         item = normalize({'name': title, 'description': summary or title,
             'website': entry.get('link'), 'source': source, 'published_at': date.isoformat(),
-            'extra': {'evidence_kind': 'feed_excerpt', 'publisher': label,
+            'extra': {'evidence_kind': 'feed_excerpt', 'publisher': clean(feed.feed.get('title')) or label,
+                      'author': clean(entry.get('author')), 'outbound_urls': outbound_urls(content, source),
+                      'publication_basis': 'feed_published' if entry.get('published_parsed') else 'feed_updated',
                       'feed_url': url, 'retrieved_at': now.isoformat()}}, now)
         if item:
             items.append(item)
@@ -146,7 +205,7 @@ def hn_items(now):
     }).json()
     items = []
     for hit in body.get('hits', []):
-        if not str(hit.get('objectID', '')).isdigit() or not is_ai_relevant(hit.get('title', ''), hit.get('story_text', '')):
+        if not str(hit.get('objectID', '')).isdigit():
             continue
         item = normalize({'name': hit.get('title'), 'description': hit.get('story_text') or hit.get('title'),
             'website': f"https://news.ycombinator.com/item?id={hit['objectID']}",
@@ -183,8 +242,6 @@ def search_item(source, row, now, provider):
         return None
     if not date or not now - timedelta(days=30) <= date <= now:
         return None
-    if not is_ai_relevant(row.get('title', ''), row.get('summary', '')):
-        return None
     return normalize({'name': row.get('title'), 'description': row.get('summary'),
         'website': url, 'source': source, 'published_at': date.isoformat(),
         'extra': {'evidence_kind': 'search_excerpt', 'search_provider': provider,
@@ -192,21 +249,39 @@ def search_item(source, row, now, provider):
 
 
 def search_items(source, now):
-    # Reuse configured discovery search, at most one request per empty platform.
+    # Three bounded X account searches; one search for other empty platforms.
     domains = SEARCH_DOMAINS[source]
     query = 'AI artificial intelligence latest releases ' + ' OR '.join('site:' + d for d in domains)
+    queries = [query]
     if source == 'x':
-        query = 'site:x.com/status AI OpenAI Anthropic new release'
+        accounts = [a for a in load_x_accounts()[:18] if re.fullmatch(r'\w+', a)]
+        # OR-ing many account paths produced empty index results. Keep queries
+        # account-specific, rotate the remaining watchlist on six-hour slots.
+        selected = accounts[:1]
+        rest = accounts[1:]
+        if rest:
+            offset = (now.toordinal() * 4 + now.hour // 6) * 2
+            selected += [rest[(offset + i) % len(rest)] for i in range(min(2, len(rest)))]
+        queries = [f'site:x.com/{account}/status {account}' for account in selected]
     if os.getenv('TAVILY_API_KEY', '').strip():
         from utils.tavily_client import search_articles
-        rows = search_articles(query, 30, 10, now, topic='general', domains=domains)
+        search = lambda q: search_articles(q, 30, 10, now, topic='general', domains=domains)
         provider = 'Tavily'
     elif os.getenv('EXA_API_KEY', '').strip():
         from utils.exa_client import search_articles
-        rows = search_articles(query, 30, 10, now)
+        search = lambda q: search_articles(q, 30, 10, now)
         provider = 'Exa'
     else:
         raise ValueError('search_not_configured')
+    rows = []
+    errors = []
+    for query in queries:
+        try:
+            rows.extend(search(query))
+        except Exception as exc:
+            errors.append(exc)
+    if errors and not rows:
+        raise errors[0]
     return [item for row in rows if (item := search_item(source, row, now, provider))]
 
 
@@ -241,12 +316,16 @@ def run(output_dir=CRAWLER / 'data', sources=SOURCES, now=None):
     baseline = load_json(snapshot, [])
     fresh = []
     previous = load_json(output_dir / 'news_source_health.json', {})
-    report = {'updated_at': now.isoformat(), 'sources': dict(previous.get('sources', {}))}
+    report = {'updated_at': now.isoformat(), 'quality_policy_version': POLICY_VERSION,
+              'sources': dict(previous.get('sources', {}))}
     report['sources'].update({s: {'status': 'pending', 'fresh_count': 0, 'errors': [],
-        'feeds_ok': 0, 'checked_at': now.isoformat()} for s in sources})
+        'feeds_ok': 0, 'checked_at': now.isoformat(), 'rejected_count': 0,
+        'rejection_reasons': {}, 'rejected_examples': []} for s in sources})
 
     def checkpoint():
-        merged = merge_news(baseline, fresh, now)
+        audit = {}
+        merged = merge_news(baseline, fresh, now, diagnostics=audit)
+        report['quality_rejections'] = audit
         atomic_json(snapshot, merged)
         for source, health in report['sources'].items():
             stored = [item for item in merged if item['source'] == source]
@@ -262,7 +341,19 @@ def run(output_dir=CRAWLER / 'data', sources=SOURCES, now=None):
                 source, label = futures[future]
                 health = report['sources'][source]
                 try:
-                    items = future.result()
+                    candidates = future.result()
+                    items = []
+                    for candidate in candidates:
+                        item = normalize(candidate, now)
+                        reason = rejection_reason(item, now) if item else 'invalid_record'
+                        if reason:
+                            health['rejected_count'] += 1
+                            reasons = health['rejection_reasons']
+                            reasons[reason] = reasons.get(reason, 0) + 1
+                            if len(health['rejected_examples']) < 8:
+                                health['rejected_examples'].append({'title': clean(candidate.get('name'))[:160], 'reason': reason})
+                        else:
+                            items.append(item)
                     fresh.extend(items)
                     health['feeds_ok'] += 1
                     health['fresh_count'] = len({i['website'] for i in fresh if i['source'] == source})
@@ -284,10 +375,12 @@ def run(output_dir=CRAWLER / 'data', sources=SOURCES, now=None):
         health = report['sources'][source]
         if not health['fresh_count']:
             health['status'] = 'retained' if health.get('stored_count') else 'unavailable'
+    report['quality_complete'] = True
     merged = checkpoint()
-    summary = ['## News sources', '', '| Source | Status | New | Stored |', '| --- | --- | ---: | ---: |']
+    summary = ['## News sources', '', '| Source | Status | Accepted this run | Stored | Rejected |', '| --- | --- | ---: | ---: | ---: |']
     for source, health in report['sources'].items():
-        summary.append(f"| {source} | {health['status']} | {health['fresh_count']} | {health['stored_count']} |")
+        summary.append(f"| {source} | {health['status']} | {health['fresh_count']} | {health['stored_count']} | {health.get('rejected_count', 0)} |")
+    summary += ['', 'Quality policy: relevance, original permalink, publication date, provenance, community substance, exact-headline deduplication. These checks do not establish factual truth.']
     summary_text = '\n'.join(summary) + '\n'
     (output_dir / 'news_source_health.md').write_text(summary_text, encoding='utf-8')
     print(summary_text)
@@ -312,7 +405,7 @@ def main():
     if set(sources) - set(SOURCES):
         parser.error('Unknown source')
     _, report = run(args.output_dir, sources)
-    return 0 if any(h['fresh_count'] for h in report['sources'].values()) else 1
+    return 0 if any(report['sources'][source]['fresh_count'] for source in sources) else 1
 
 
 if __name__ == '__main__':

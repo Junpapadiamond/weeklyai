@@ -272,7 +272,9 @@ def sync_products(db, products: list, dry_run: bool = False) -> dict:
 def sync_news_snapshot(db, blogs: list, dry_run: bool = False) -> bool:
     """Atomically publish the feed and matching health without changing legacy data."""
     health = load_json(os.path.join(DATA_DIR, 'news_source_health.json'))
-    if not blogs or not isinstance(health, dict) or not health.get('updated_at') or not isinstance(health.get('sources'), dict):
+    if not isinstance(blogs, list) or not isinstance(health, dict) or not health.get('updated_at') or not isinstance(health.get('sources'), dict):
+        return False
+    if not blogs and not (health.get('quality_complete') is True and health.get('quality_policy_version')):
         return False
     if not dry_run:
         db.news_snapshots.update_one({'_id': 'current'}, {'$set': {'items': blogs, 'health': health}}, upsert=True)
@@ -517,9 +519,6 @@ Examples:
 
     if args.blogs_only:
         blogs = load_json(BLOGS_FILE)
-        if not blogs:
-            print("No news to sync; existing collection retained")
-            return
         if not sync_news_snapshot(db, blogs, args.dry_run):
             raise SystemExit('News health missing; existing snapshot retained')
         print(f"News snapshot published: {len(blogs)} items")
@@ -547,12 +546,11 @@ Examples:
     if args.blogs:
         print("\n  Syncing blogs...")
         blogs = load_json(BLOGS_FILE)
-        if blogs:
-            if sync_news_snapshot(db, blogs, args.dry_run):
-                print(f"News snapshot published: {len(blogs)} items")
-            else:
-                stats = sync_blogs(db, blogs, args.dry_run)
-                print_stats("Blogs", stats, args.dry_run)
+        if sync_news_snapshot(db, blogs, args.dry_run):
+            print(f"News snapshot published: {len(blogs)} items")
+        elif blogs:
+            stats = sync_blogs(db, blogs, args.dry_run)
+            print_stats("Blogs", stats, args.dry_run)
         else:
             print("  x No blogs to sync")
 

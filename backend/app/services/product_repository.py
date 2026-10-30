@@ -588,7 +588,9 @@ class ProductRepository:
                 items = candidate['items']
                 if not isinstance(health, dict) or not isinstance(health.get('sources'), dict):
                     continue
-                if not isinstance(items, list) or not items or not all(isinstance(item, dict) and item.get('name') and item.get('website') for item in items):
+                if not isinstance(items, list) or not all(isinstance(item, dict) and item.get('name') and item.get('website') for item in items):
+                    continue
+                if not items and not (health.get('quality_complete') is True and health.get('quality_policy_version')):
                     continue
                 stamp = datetime.fromisoformat(health['updated_at'].replace('Z', '+00:00'))
                 if stamp.tzinfo is None:

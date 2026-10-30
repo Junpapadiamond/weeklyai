@@ -129,19 +129,19 @@ jobs:
             echo "ℹ️ dry_run=true, skipped post-processing pipeline." >> "$GITHUB_STEP_SUMMARY"
           fi
 
-      - name: Run CN news-only signals (RSS + GLM)
+      - name: Run CN news with shared publication quality gates
         if: ${{ env.WF_DRY_RUN != 'true' && env.WF_RUN_NEWS == 'true' }}
         working-directory: crawler
         env:
-          CN_NEWS_HOURS: "96"
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
         run: |
           set -euo pipefail
 
           export CONTENT_YEAR="$(date -u +%Y)"
-          python tools/cn_news_only.py
-          python tools/cn_news_glm.py
+          python tools/refresh_news.py --sources cn_news
 
-          echo "✅ 已执行 cn_news_only + cn_news_glm（中国本土 RSS + Zhipu 搜索增强，未运行 YouTube/X 与 rss_to_products enrich）。" >> "$GITHUB_STEP_SUMMARY"
+          echo "CN news passed the shared source, date, relevance and evidence gates." >> "$GITHUB_STEP_SUMMARY"
 
       - name: Skip CN news-only signals
         if: ${{ env.WF_DRY_RUN == 'true' || env.WF_RUN_NEWS != 'true' }}
@@ -161,6 +161,7 @@ jobs:
           cp -f crawler/data/last_updated.json backend/data/last_updated.json
           if [ -f crawler/data/blogs_news.json ]; then
             cp -f crawler/data/blogs_news.json backend/data/blogs_news.json
+            cp -f crawler/data/news_source_health.json backend/data/news_source_health.json
           fi
 
           rsync -a crawler/data/dark_horses/ backend/data/dark_horses/
@@ -183,11 +184,13 @@ jobs:
 
           add_path "crawler/data/products_featured.json"
           add_path "crawler/data/blogs_news.json"
+          add_path "crawler/data/news_source_health.json"
           add_path "crawler/data/last_updated.json"
           add_path "crawler/data/dark_horses"
           add_path "crawler/data/rising_stars"
           add_path "backend/data/products_featured.json"
           add_path "backend/data/blogs_news.json"
+          add_path "backend/data/news_source_health.json"
           add_path "backend/data/industry_leaders.json"
           add_path "backend/data/last_updated.json"
           add_path "backend/data/dark_horses"

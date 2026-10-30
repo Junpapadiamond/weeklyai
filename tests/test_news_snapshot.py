@@ -66,6 +66,20 @@ def test_empty_refresh_does_not_replace_database_snapshot(snapshot_store):
     assert db.news_snapshots.find_one({'_id': 'current'})['items'] == items
 
 
+def test_completed_quality_rejection_can_clear_news_without_reviving_legacy(snapshot_store):
+    db, path = snapshot_store
+    items, _ = write_snapshot(path, 'old', '2026-10-29T10:00:00Z')
+    sync.sync_news_snapshot(db, items)
+    db.blogs.insert_one({'name': 'legacy', 'website': 'https://legacy.test'})
+    _, health = write_snapshot(path, 'unused', '2026-10-29T12:00:00Z')
+    health.update(quality_complete=True, quality_policy_version=1)
+    (path / 'news_source_health.json').write_text(json.dumps(health), encoding='utf-8')
+    (path / 'blogs_news.json').write_text('[]', encoding='utf-8')
+    assert repo.ProductRepository.load_blogs() == []
+    assert sync.sync_news_snapshot(db, [])
+    assert db.news_snapshots.find_one({'_id': 'current'})['items'] == []
+
+
 def test_mixed_preview_keeps_small_platforms_and_source_query_fetches_all(monkeypatch):
     posts = [{'name': str(i), 'source': 'hackernews', 'website': f'https://example.com/{i}',
               'published_at': '2026-10-29T12:00:00Z'} for i in range(130)]
