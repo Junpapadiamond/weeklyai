@@ -112,8 +112,8 @@ a.website-preview:hover { border-color: var(--primary-border); }
 .research-news__identity { display: grid; grid-template-columns: 44px minmax(0, 1fr); align-items: start; gap: .85rem; }
 .research-news__identity-copy { min-width: 0; }
 .research-news .research-product__logo { width: 44px; height: 44px; }
-.research-news .research-product__title { font-size: 1rem; line-height: 1.65; }
-.research-news .research-product__description { font-size: .86rem; color: var(--text-soft); }
+.research-news .research-product__title { font-size: 1rem; line-height: 1.65; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden; }
+.research-news .research-product__description { font-size: .86rem; color: var(--text-soft); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden; }
 .research-news__actions { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 .research-news__actions .link-btn { border: 0; padding: .5rem 0; color: var(--primary); background: transparent; }
 .favorites-panel__item-head:has(.favorites-panel__logo) { display: grid; grid-template-columns: 36px minmax(0, 1fr) auto; align-items: start; gap: .75rem; }
@@ -170,7 +170,7 @@ a.website-preview:hover { border-color: var(--primary-border); }
 .research-product__actions > .research-product__try { border: 1px solid var(--border); border-radius: 4px; padding-inline: .65rem; color: var(--text); }
 .research-product__actions > .research-product__try:hover { border-color: var(--primary); color: var(--primary); text-decoration: none; }
 .research-product__reference .favorite-btn { width: 36px; height: 36px; }
-.research-news__meta { display: flex; gap: .7rem; align-items: center; }
+.research-news__meta { display: flex; flex-wrap: wrap; gap: .7rem; align-items: center; }
 .research-news__meta::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--primary); flex: none; }
 .source-pill { border-radius: 5px; font-size: .76rem; }
 .discover-page .section-header, .discover-page .discover-page__controls { width: 100%; }

@@ -124,6 +124,7 @@ function BlogCard({ item }: { item: BlogPost }) {
         <p className="research-news__meta">
           {`${marketLabel} · ${sourceLabel} · `}
           <time dateTime={item.published_at} suppressHydrationWarning>{freshness}</time>
+          {item.extra?.evidence_kind === "search_excerpt" ? <span>{t("搜索摘要", "Search excerpt")}</span> : null}
         </p>
 
         <header className="research-news__header">
