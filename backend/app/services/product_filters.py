@@ -822,16 +822,15 @@ def filter_by_source(products: List[Dict], source: str) -> List[Dict]:
         return False
 
     def _matches_domain(product: Dict[str, Any]) -> bool:
-        website = _norm(product.get('website'))
-        source_url = _norm(product.get('source_url'))
-        joined = f"{website} {source_url}"
-
-        if target == 'youtube':
-            return 'youtube.com' in joined or 'youtu.be' in joined
-        if target == 'x':
-            return any(domain in joined for domain in ('x.com', 'twitter.com', 'mobile.twitter.com'))
-        if target == 'reddit':
-            return 'reddit.com' in joined
+        domains = {'youtube': ('youtube.com', 'youtu.be'),
+                   'x': ('x.com', 'twitter.com'), 'reddit': ('reddit.com',)}.get(target, ())
+        for value in (product.get('website'), product.get('source_url')):
+            try:
+                host = (urlparse(_norm(value)).hostname or '').lower()
+            except ValueError:
+                continue
+            if any(host == domain or host.endswith('.' + domain) for domain in domains):
+                return True
         return False
 
     filtered: List[Dict] = []
@@ -846,12 +845,6 @@ def filter_by_source(products: List[Dict], source: str) -> List[Dict]:
 
 def infer_blog_market(blog: Dict[str, Any]) -> str:
     """Infer blog market label: cn/us/global."""
-    source = str(blog.get('source') or '').strip().lower()
-    if source in BLOG_CN_SOURCES:
-        return 'cn'
-    if source in BLOG_US_SOURCES:
-        return 'us'
-
     extra = blog.get('extra')
     if isinstance(extra, dict):
         explicit = str(extra.get('news_market') or '').strip().lower()
@@ -861,6 +854,13 @@ def infer_blog_market(blog: Dict[str, Any]) -> str:
     explicit_market = str(blog.get('market') or '').strip().lower()
     if explicit_market in {'cn', 'us', 'global', 'hybrid'}:
         return 'global' if explicit_market == 'hybrid' else explicit_market
+
+    source = str(blog.get('source') or '').strip().lower()
+    if source in BLOG_CN_SOURCES:
+        return 'cn'
+    if source in BLOG_US_SOURCES:
+        return 'us'
+
 
     region = str(blog.get('region') or '').strip().lower()
     if '🇨🇳' in region or '中国' in region or 'cn' in region:

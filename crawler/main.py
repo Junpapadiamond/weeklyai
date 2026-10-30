@@ -1320,6 +1320,10 @@ Examples:
         print("🔍 候选模式：发现潜在产品并保存到 candidates/")
 
     def run_job():
+        if args.news_only:
+            from tools.refresh_news import run
+            run()
+            return
         manager = CrawlerManager(use_db=not args.no_db)
         try:
             products = manager.run_all_spiders()

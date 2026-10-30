@@ -49,7 +49,7 @@ def parse_date(value):
     return date.replace(tzinfo=timezone.utc) if date.tzinfo is None else date.astimezone(timezone.utc)
 
 
-def search_articles(query, days=14, limit=10, now=None, topic='news'):
+def search_articles(query, days=14, limit=10, now=None, topic='news', domains=None):
     key = os.getenv("TAVILY_API_KEY", "").strip()
     if not key:
         raise TavilyError("TAVILY_API_KEY is missing")
@@ -62,6 +62,7 @@ def search_articles(query, days=14, limit=10, now=None, topic='news'):
             json={"query": query, "topic": topic, "search_depth": "basic", "max_results": limit,
                   "start_date": since.date().isoformat(), "end_date": (now + timedelta(days=1)).date().isoformat(),
                   "include_published_date": True, "filter_by_published_date": topic == 'news',
+                  "include_domains": domains or [],
                   "include_answer": False, "include_raw_content": False, "auto_parameters": False},
             timeout=(5, 25), allow_redirects=False)
         if response.status_code != 200:

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import useSWR from "swr";
-import { getBlogsClient } from "@/lib/api-client";
+import { getBlogsClient, getNewsSourceHealth } from "@/lib/api-client";
 import { formatNewsDate } from "@/lib/news-date";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { FavoriteButton } from "@/components/favorites/favorite-button";
@@ -43,7 +43,7 @@ const SOURCE_LABELS_EN: Record<string, string> = {
   tech_news: "Tech News",
 };
 
-const SOURCE_ORDER = ["cn_news", "cn_news_glm", "hackernews", "reddit", "tech_news", "producthunt", "youtube", "x"] as const;
+const SOURCE_ORDER = ["x", "reddit", "youtube", "hackernews", "producthunt", "tech_news", "cn_news"] as const;
 
 const MARKET_LABELS_ZH: Record<string, string> = {
   hybrid: "全部地区",
@@ -96,25 +96,6 @@ function inferMarket(item: BlogPost): "cn" | "us" | "global" {
   const fromExtra = String(extra.news_market || "").trim().toLowerCase();
   if (fromExtra === "cn" || fromExtra === "us" || fromExtra === "global") return fromExtra as "cn" | "us" | "global";
   return "global";
-}
-
-function buildSourceOptions(data: BlogPost[] | undefined) {
-  const seen = new Set<string>();
-  for (const item of data || []) {
-    const source = String(item.source || "").trim();
-    if (source) seen.add(source);
-  }
-
-  const ordered: string[] = [];
-  for (const source of SOURCE_ORDER) {
-    if (seen.has(source)) ordered.push(source);
-  }
-
-  const rest = [...seen]
-    .filter((source) => !(SOURCE_ORDER as readonly string[]).includes(source))
-    .sort((a, b) => a.localeCompare(b, "en"));
-
-  return ["", ...ordered, ...rest];
 }
 
 function BlogCard({ item }: { item: BlogPost }) {
@@ -203,25 +184,24 @@ export function BlogClient({ initialBlogs }: BlogClientProps) {
     { value: "us", label: marketLabels.us },
   ] as const;
 
-  // A market has its own feed, not merely the few items present in the hybrid
-  // preview. Refresh open pages so a successful daily update becomes visible.
-  const { data: marketBlogs, isLoading, error, mutate } = useSWR(
-    ["blogs", market],
-    ([, selectedMarket]) => getBlogsClient("", 120, selectedMarket),
+  const sourceOptions = market === "cn"
+    ? ["", "cn_news"]
+    : ["", ...SOURCE_ORDER];
+  const activeSource = source;
+  const { data, isLoading, error, mutate } = useSWR(
+    ["blogs", market, source],
+    ([, selectedMarket, selectedSource]) => getBlogsClient(selectedSource, 120, selectedMarket),
     {
-      fallbackData: market === "hybrid" ? initialBlogs : undefined,
+      fallbackData: market === "hybrid" && !source ? initialBlogs : undefined,
       refreshInterval: 120_000,
       dedupingInterval: 60_000,
       revalidateOnFocus: false,
     }
   );
-  const sourceOptions = useMemo(() => buildSourceOptions(marketBlogs), [marketBlogs]);
-
-  const activeSource = source && sourceOptions.includes(source) ? source : "";
-  const posts = useMemo(
-    () => (marketBlogs || []).filter((item) => matchesSource(item, activeSource)),
-    [activeSource, marketBlogs]
-  );
+  const posts = useMemo(() => (data || []).filter((item) => matchesSource(item, source)), [data, source]);
+  const { data: health } = useSWR("news-source-health", getNewsSourceHealth, { refreshInterval: 120_000 });
+  const sourceHealth = source ? health?.sources[source] : undefined;
+  const sourceUnavailable = sourceHealth && (["retained", "unavailable", "pending"].includes(sourceHealth.status) || health?.stale);
 
   const emptyStateText =
     market === "cn"
@@ -272,6 +252,13 @@ export function BlogClient({ initialBlogs }: BlogClientProps) {
           );
         })}
       </div>
+
+      {sourceUnavailable ? (
+        <p role="status" className="section-micro-note">
+          {posts.length ? t("此来源暂未更新，以下为已收录内容。", "This source has not refreshed; showing saved articles.")
+            : t("此来源暂时不可用，请稍后再试。", "This source is temporarily unavailable. Please try later.")}
+        </p>
+      ) : null}
 
       {error ? (
         <div className="error-block" role="alert">

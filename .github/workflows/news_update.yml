@@ -1,0 +1,66 @@
+name: Refresh AI News
+
+on:
+  schedule:
+    - cron: '25 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Serialize with the catalog publisher to avoid two writers replacing snapshots.
+concurrency:
+  group: daily-data-update
+  cancel-in-progress: false
+
+jobs:
+  news:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install news dependencies
+        run: python -m pip install requests feedparser beautifulsoup4 python-dotenv pymongo
+      - name: Collect independent platform feeds
+        id: collect
+        continue-on-error: true
+        timeout-minutes: 4
+        env:
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+        run: python -u crawler/tools/refresh_news.py
+      - name: Publish available results and source health
+        run: |
+          set -euo pipefail
+          cp crawler/data/blogs_news.json backend/data/blogs_news.json
+          cp crawler/data/news_source_health.json backend/data/news_source_health.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add crawler/data/blogs_news.json backend/data/blogs_news.json crawler/data/news_source_health.json backend/data/news_source_health.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore(news): refresh platform feeds and source health'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Sync news to runtime database
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+          MONGO_DB_NAME: ${{ vars.MONGO_DB_NAME || 'weeklyai' }}
+        run: |
+          if [ -n "$MONGO_URI" ]; then python crawler/tools/sync_to_mongodb.py --blogs-only; fi
+      - name: Keep source diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: news-sources-${{ github.run_number }}
+          path: |
+            crawler/data/news_source_health.json
+            crawler/data/news_source_health.md
+      - name: Flag total collection failure
+        if: steps.collect.outcome == 'failure'
+        run: exit 1

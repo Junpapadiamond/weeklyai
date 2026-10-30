@@ -480,6 +480,7 @@ Examples:
 """,
     )
     parser.add_argument("--blogs", action="store_true", help="Also sync blogs_news.json")
+    parser.add_argument("--blogs-only", action="store_true", help="Sync only news, without reading or updating products")
     parser.add_argument("--candidates", action="store_true", help="Also sync candidates")
     parser.add_argument("--demos", action="store_true", help="Also sync interactive demo specs")
     parser.add_argument("--all", "-a", action="store_true", help="Sync everything")
@@ -502,6 +503,14 @@ Examples:
     if args.ensure_indexes:
         ensure_indexes(db, args.dry_run)
         print()
+        return
+
+    if args.blogs_only:
+        blogs = load_json(BLOGS_FILE)
+        if not blogs:
+            print("No news to sync; existing collection retained")
+            return
+        print_stats("Blogs", sync_blogs(db, blogs, args.dry_run), args.dry_run)
         return
 
     if args.clear_old:

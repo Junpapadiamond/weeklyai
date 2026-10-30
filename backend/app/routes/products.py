@@ -1,6 +1,10 @@
 from flask import Blueprint, jsonify, request
 from app.services.product_service import ProductService
 from app.services import product_sorting as sorting
+from app.services import product_repository as repository
+from datetime import datetime, timezone
+import json
+import os
 
 products_bp = Blueprint('products', __name__)
 
@@ -109,7 +113,7 @@ def get_categories():
 def get_blogs_news():
     """获取博客/新闻/讨论内容"""
     try:
-        limit = request.args.get('limit', 20, type=int)
+        limit = min(120, max(1, request.args.get('limit', 20, type=int)))
         source = request.args.get('source', '')
         market = request.args.get('market', '')
 
@@ -129,6 +133,25 @@ def get_blogs_news():
             'data': [],
             'message': str(e)
         }), 500
+
+
+@products_bp.route('/blogs/sources', methods=['GET'])
+def get_news_source_health():
+    try:
+        with open(os.path.join(repository.CRAWLER_DATA_DIR, 'news_source_health.json'), encoding='utf-8') as handle:
+            report = json.load(handle)
+        updated = datetime.fromisoformat(report['updated_at'].replace('Z', '+00:00'))
+        stale = (datetime.now(timezone.utc) - updated).total_seconds() > 24 * 3600
+        sources = {source: {key: health.get(key) for key in
+            ('status', 'fresh_count', 'stored_count', 'latest_published_at')}
+            for source, health in report.get('sources', {}).items()}
+        for source, health in report.get('sources', {}).items():
+            checked = datetime.fromisoformat((health.get('checked_at') or report['updated_at']).replace('Z', '+00:00'))
+            if (datetime.now(timezone.utc) - checked).total_seconds() > 24 * 3600:
+                sources[source]['status'] = 'retained' if health.get('stored_count') else 'unavailable'
+        return jsonify({'data': {'updated_at': report['updated_at'], 'stale': stale, 'sources': sources}})
+    except (OSError, ValueError, KeyError, TypeError):
+        return jsonify({'data': {'updated_at': None, 'stale': True, 'sources': {}}})
 
 
 @products_bp.route('/dark-horses', methods=['GET'])

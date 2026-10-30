@@ -374,17 +374,23 @@ class ProductService:
         blogs = ProductService._load_blogs()
         blogs = filters.filter_blogs_by_market(blogs, market)
 
-        target_market = (market or '').strip().lower()
-        if target_market == 'cn':
-            # 仅中国区按新鲜度优先，保证本土源更新稳定可见。
-            blogs = sorting.sort_by_recency(blogs)
-        else:
-            # 保持 global/hybrid/us 原有热度排序行为不变。
-            blogs = sorting.sort_by_trending(blogs)
-
-        if target_market in {'', 'all', 'hybrid', 'global'}:
-            return ProductService._inject_recent_cn_tail(blogs, limit)
-        return blogs[:limit]
+        # Recent articles first; reserve representation for every available source.
+        blogs = sorting.sort_by_recency(blogs)
+        selected = []
+        seen = set()
+        for item in blogs:
+            source = item.get('source', '')
+            if source not in seen and len(selected) < limit:
+                selected.append(item)
+                seen.add(source)
+        identities = {ProductService._blog_identity(item) for item in selected}
+        for item in blogs:
+            if len(selected) >= limit:
+                break
+            if ProductService._blog_identity(item) not in identities:
+                selected.append(item)
+                identities.add(ProductService._blog_identity(item))
+        return sorting.sort_by_recency(selected)
 
     @staticmethod
     def get_blogs_by_source(source: str, limit: int = 20, market: str = '') -> List[Dict]:
@@ -393,11 +399,7 @@ class ProductService:
         blogs = filters.filter_blogs_by_market(blogs, market)
         filtered = filters.filter_by_source(blogs, source)
 
-        target_market = (market or '').strip().lower()
-        source_name = (source or '').strip().lower()
-        if target_market == 'cn' or source_name in {'cn_news', 'cn_news_glm'}:
-            filtered = sorting.sort_by_recency(filtered)
-        return filtered[:limit]
+        return sorting.sort_by_recency(filtered)[:limit]
 
     @staticmethod
     def get_dark_horse_products(limit: int = 10, min_index: int = 4) -> List[Dict]:

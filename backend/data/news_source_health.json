@@ -1,0 +1,130 @@
+{
+  "updated_at": "2026-10-30T03:10:49.660518+00:00",
+  "sources": {
+    "x": {
+      "status": "search_fallback",
+      "fresh_count": 4,
+      "errors": [],
+      "feeds_ok": 1,
+      "checked_at": "2026-10-30T03:10:49.660518+00:00",
+      "stored_count": 4,
+      "latest_published_at": "2026-10-20T02:29:26.936000+00:00"
+    },
+    "reddit": {
+      "status": "direct",
+      "fresh_count": 18,
+      "errors": [
+        {
+          "endpoint": "r/OpenAI",
+          "reason": "HTTP 429"
+        },
+        {
+          "endpoint": "r/singularity",
+          "reason": "HTTP 429"
+        },
+        {
+          "endpoint": "r/ClaudeAI",
+          "reason": "HTTP 429"
+        },
+        {
+          "endpoint": "r/LangChain",
+          "reason": "HTTP 429"
+        },
+        {
+          "endpoint": "r/MachineLearning",
+          "reason": "HTTP 429"
+        },
+        {
+          "endpoint": "r/artificial",
+          "reason": "HTTP 429"
+        }
+      ],
+      "feeds_ok": 1,
+      "stored_count": 18,
+      "latest_published_at": "2026-10-30T01:35:02+00:00"
+    },
+    "youtube": {
+      "status": "direct",
+      "fresh_count": 10,
+      "errors": [
+        {
+          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
+          "reason": "HTTP 404"
+        }
+      ],
+      "feeds_ok": 2,
+      "stored_count": 10,
+      "latest_published_at": "2026-10-28T21:20:28+00:00"
+    },
+    "hackernews": {
+      "status": "direct",
+      "fresh_count": 42,
+      "errors": [],
+      "feeds_ok": 1,
+      "stored_count": 60,
+      "latest_published_at": "2026-10-30T03:00:27+00:00"
+    },
+    "producthunt": {
+      "status": "direct",
+      "fresh_count": 22,
+      "errors": [],
+      "feeds_ok": 1,
+      "stored_count": 22,
+      "latest_published_at": "2026-10-28T23:47:45+00:00"
+    },
+    "tech_news": {
+      "status": "direct",
+      "fresh_count": 41,
+      "errors": [
+        {
+          "endpoint": "venturebeat",
+          "reason": "HTTP 429"
+        }
+      ],
+      "feeds_ok": 5,
+      "stored_count": 41,
+      "latest_published_at": "2026-10-30T01:20:48+00:00"
+    },
+    "cn_news": {
+      "status": "direct",
+      "fresh_count": 57,
+      "errors": [
+        {
+          "endpoint": "36kr",
+          "reason": "empty_or_invalid_feed"
+        },
+        {
+          "endpoint": "jiqizhixin",
+          "reason": "empty_or_invalid_feed"
+        },
+        {
+          "endpoint": "huxiu",
+          "reason": "ReadTimeout"
+        }
+      ],
+      "feeds_ok": 6,
+      "stored_count": 60,
+      "latest_published_at": "2026-10-30T02:59:27+00:00"
+    }
+  }
+}

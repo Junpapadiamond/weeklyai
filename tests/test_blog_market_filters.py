@@ -40,6 +40,15 @@ def test_filter_blogs_by_market_cn_us_and_hybrid_behaves_as_expected():
     assert unknown_blogs == blogs
 
 
+def test_social_domains_do_not_match_unrelated_hosts_or_query_strings():
+    blogs = [{'website': 'https://phoronix.com/news/test'},
+             {'website': 'https://x.com.evil.test/post'},
+             {'website': 'https://example.com/?url=https://x.com/a'},
+             {'website': 'https://x.com/a/status/123', 'source': 'x'}]
+    assert filters.filter_by_source(blogs, 'x') == [blogs[-1]]
+    assert filters.infer_blog_market({'source': 'reddit', 'market': 'global'}) == 'global'
+
+
 def test_resolve_company_country_does_not_use_discovery_region_fallback():
     product = {
         "name": "Databricks",

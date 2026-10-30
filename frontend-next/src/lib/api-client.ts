@@ -179,6 +179,20 @@ export async function getBlogsClient(source = "", limit = 30, market = "hybrid")
   return getBlogs(source, limit, market);
 }
 
+const newsHealthSchema = z.object({ data: z.object({
+  updated_at: z.string().nullable(),
+  stale: z.boolean(),
+  sources: z.record(z.string(), z.object({
+    status: z.string(), fresh_count: z.number().nullable(), stored_count: z.number().nullable(),
+    latest_published_at: z.string().nullable(),
+  })),
+}) });
+
+export async function getNewsSourceHealth() {
+  const json = await fetchJson("/products/blogs/sources", { cache: "no-store" });
+  return newsHealthSchema.parse(json).data;
+}
+
 export async function searchProductsClient(params: SearchParams) {
   return searchProducts(params);
 }
