@@ -1,0 +1,34 @@
+# Repository-root CLI uploads: only the two deployed apps are needed.
+# Project-level .vercelignore files take precedence when deploying a subdirectory.
+/.agent/
+/.claude/
+/.codex/
+/.codex-artifacts/
+/Claude outputs/
+/crawler/
+/frontend/
+/mobile-ios/
+/history/
+/docs/
+/tests/
+/ops/
+/.github/
+*.md
+*.pdf
+env.example
+
+# Local dependencies, build output, credentials and reports.
+node_modules/
+.next/
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.tsbuildinfo
+.env
+.env.*
+*.log
+coverage/
+artifacts/
+test-results/
+playwright-report/

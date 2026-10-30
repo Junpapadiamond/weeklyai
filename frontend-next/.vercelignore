@@ -1,0 +1,18 @@
+# Keep src, public (including every logo), scripts and build configuration.
+node_modules/
+.next/
+out/
+build/
+.vercel/
+.env
+.env.*
+*.log
+*.tsbuildinfo
+coverage/
+artifacts/
+test-results/
+playwright-report/
+docs/
+**/__tests__/
+*.md
+Dockerfile
