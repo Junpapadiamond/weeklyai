@@ -5,7 +5,7 @@
 import os
 import json
 import hashlib
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from functools import lru_cache
 from typing import List, Dict, Any, Optional
 
@@ -104,6 +104,7 @@ class ProductRepository:
     _cache_filter_module = None
     _cache_duration = 300  # 5分钟缓存
     _cached_blogs = None
+    _cached_news_health = {}
     _blogs_cache_time = None
     _blogs_cache_duration = BLOG_CACHE_SECONDS
     _storage_source = 'snapshot'
@@ -114,6 +115,7 @@ class ProductRepository:
         cls._cached_products = None
         cls._cache_time = None
         cls._cached_blogs = None
+        cls._cached_news_health = {}
         cls._blogs_cache_time = None
 
     @classmethod
@@ -562,6 +564,41 @@ class ProductRepository:
             return []
 
     @classmethod
+    def load_news_snapshot(cls):
+        """Choose the newest complete news publication, never a partial upsert set."""
+        candidates = []
+        try:
+            with open(os.path.join(os.path.dirname(BLOGS_NEWS_FILE), 'news_source_health.json'), encoding='utf-8') as handle:
+                health = json.load(handle)
+            with open(BLOGS_NEWS_FILE, encoding='utf-8') as handle:
+                candidates.append({'items': json.load(handle), 'health': health})
+        except (OSError, ValueError):
+            pass
+        if _mongo_uri_configured():
+            db = get_mongo_db()
+            if db is not None:
+                try:
+                    candidates.append(db.news_snapshots.find_one({'_id': 'current'}, {'_id': 0}))
+                except Exception:
+                    pass
+        valid = []
+        for candidate in candidates:
+            try:
+                health = candidate['health']
+                items = candidate['items']
+                if not isinstance(health, dict) or not isinstance(health.get('sources'), dict):
+                    continue
+                if not isinstance(items, list) or not items or not all(isinstance(item, dict) and item.get('name') and item.get('website') for item in items):
+                    continue
+                stamp = datetime.fromisoformat(health['updated_at'].replace('Z', '+00:00'))
+                if stamp.tzinfo is None:
+                    stamp = stamp.replace(tzinfo=timezone.utc)
+                valid.append((stamp, candidate))
+            except (TypeError, KeyError, ValueError):
+                continue
+        return max(valid, key=lambda pair: pair[0])[1] if valid else None
+
+    @classmethod
     def load_blogs(cls) -> List[Dict]:
         """加载博客/新闻/讨论数据（优先 MongoDB，回退 JSON）。"""
         now = datetime.now()
@@ -571,6 +608,13 @@ class ProductRepository:
             age = (now - cls._blogs_cache_time).total_seconds()
             if age < cls._blogs_cache_duration:
                 return cls._cached_blogs
+
+        snapshot = cls.load_news_snapshot()
+        if snapshot:
+            cls._cached_blogs = snapshot['items']
+            cls._cached_news_health = snapshot['health']
+            cls._blogs_cache_time = now
+            return cls._cached_blogs
 
         blogs: List[Dict] = []
 

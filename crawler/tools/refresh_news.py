@@ -216,7 +216,11 @@ def direct_jobs(now, sources):
         jobs.append(('hackernews', 'Algolia', hn_items, (now,)))
     feeds = []
     if 'reddit' in sources:
-        feeds += [('reddit', f'https://www.reddit.com/r/{sub}/new/.rss', f'r/{sub}') for sub in load_reddit_subreddits()[:15] if re.fullmatch(r'[A-Za-z0-9_]+', sub)]
+        # Reddit exposes a combined subreddit feed. One request avoids a burst
+        # of parallel requests competing for the same platform rate limit.
+        subs = [sub for sub in load_reddit_subreddits()[:15] if re.fullmatch(r'[A-Za-z0-9_]+', sub)]
+        if subs:
+            feeds.append(('reddit', f"https://www.reddit.com/r/{'+'.join(subs)}/new/.rss?limit=50", 'Reddit watchlist'))
     if 'youtube' in sources:
         feeds += [('youtube', f'https://www.youtube.com/feeds/videos.xml?channel_id={cid}', cid) for cid in load_youtube_channel_ids()[:15] if re.fullmatch(r'UC[\w-]+', cid)]
     if 'tech_news' in sources:

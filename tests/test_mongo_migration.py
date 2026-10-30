@@ -304,7 +304,7 @@ class TestBlogLoadingPreference:
         mongo_blogs = [{'title': 'MongoBlog', 'url': 'https://blog.test'}]
 
         with mock.patch.dict(os.environ, {'MONGO_URI': 'mongodb://fake:27017/weeklyai'}):
-            with mock.patch.object(ProductRepository, 'load_blogs_from_mongodb', return_value=mongo_blogs):
+            with mock.patch.object(ProductRepository, 'load_news_snapshot', return_value=None), mock.patch.object(ProductRepository, 'load_blogs_from_mongodb', return_value=mongo_blogs):
                 blogs = ProductRepository.load_blogs()
                 assert any(b.get('title') == 'MongoBlog' for b in blogs)
 

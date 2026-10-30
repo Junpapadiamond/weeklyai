@@ -83,6 +83,13 @@ def test_search_only_runs_for_empty_sources(tmp_path, monkeypatch):
     assert calls == ['x']
 
 
+def test_reddit_watchlist_uses_one_combined_request(monkeypatch):
+    monkeypatch.setattr(news, 'load_reddit_subreddits', lambda: ['LocalLLaMA', 'artificial', '../bad'])
+    jobs = news.direct_jobs(NOW, ('reddit',))
+    assert len(jobs) == 1
+    assert '/r/LocalLLaMA+artificial/new/.rss' in jobs[0][3][1]
+
+
 def test_rss_requires_real_date_and_ai_content(monkeypatch):
     class Response:
         content = b'''<rss version="2.0"><channel><title>Feed</title>

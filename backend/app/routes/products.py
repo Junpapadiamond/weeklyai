@@ -3,8 +3,6 @@ from app.services.product_service import ProductService
 from app.services import product_sorting as sorting
 from app.services import product_repository as repository
 from datetime import datetime, timezone
-import json
-import os
 
 products_bp = Blueprint('products', __name__)
 
@@ -138,8 +136,8 @@ def get_blogs_news():
 @products_bp.route('/blogs/sources', methods=['GET'])
 def get_news_source_health():
     try:
-        with open(os.path.join(repository.CRAWLER_DATA_DIR, 'news_source_health.json'), encoding='utf-8') as handle:
-            report = json.load(handle)
+        repository.ProductRepository.load_blogs()
+        report = repository.ProductRepository._cached_news_health
         updated = datetime.fromisoformat(report['updated_at'].replace('Z', '+00:00'))
         stale = (datetime.now(timezone.utc) - updated).total_seconds() > 24 * 3600
         sources = {source: {key: health.get(key) for key in

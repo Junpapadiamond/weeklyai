@@ -10,4 +10,6 @@
 
 The daily pipeline and dedicated news workflow use the same collector. `news_source_health.json` records direct/search/retained/unavailable states, counts, and sanitized endpoint failures. Public status exposes only state and dates. A retained snapshot is not evidence that the source refreshed successfully.
 
+MongoDB publishes the full feed and health together in `news_snapshots/current`. The API chooses the newest complete database or bundled publication, so old legacy blog upserts cannot hide new platform feeds. Legacy collections remain intact. Reddit uses one combined subreddit RSS request to reduce rate-limit pressure.
+
 Regression checks cover canonical links, missing/future dates, source retention, failed endpoints, indexed evidence and platform-specific queries. Browser checks establish rendering and interactions; first-time user comprehension remains untested.
