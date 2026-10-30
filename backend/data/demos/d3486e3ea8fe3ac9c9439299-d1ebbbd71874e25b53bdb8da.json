@@ -1,0 +1,384 @@
+{
+  "cache_key": "d3486e3ea8fe3ac9c9439299-d1ebbbd71874e25b53bdb8da",
+  "product_key": "d3486e3ea8fe3ac9c9439299",
+  "fingerprint": "d1ebbbd71874e25b53bdb8da",
+  "product_id": "p_d7912bb454eda264",
+  "product_name": "Furientis",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-30T23:01:11.460981+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "防御系统部署规划",
+      "en": "Defense System Deployment Planning"
+    },
+    "scenario": {
+      "zh": "探索如何为不同威胁场景配置 Furientis 拦截系统的理论部署方案",
+      "en": "Explore how to configure theoretical Furientis interceptor deployments for different threat scenarios"
+    },
+    "steps": [
+      {
+        "id": "threat_profile",
+        "widget": "choice",
+        "title": {
+          "zh": "选择防御场景",
+          "en": "Choose Defense Scenario"
+        },
+        "instruction": {
+          "zh": "根据威胁类型配置系统规模",
+          "en": "Configure system scale based on threat type"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "工业区防护",
+              "en": "Industrial Zone Protection"
+            },
+            "output": {
+              "zh": "中密度部署，覆盖关键设施",
+              "en": "Medium-density deployment covering key facilities"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "防御需求",
+                "en": "Defense Requirements"
+              },
+              "output_label": {
+                "zh": "理论配置",
+                "en": "Theoretical Configuration"
+              },
+              "input": {
+                "zh": "化工园区，半径8公里，12个关键目标",
+                "en": "Chemical park, 8km radius, 12 critical targets"
+              },
+              "output": {
+                "zh": "三层防御圈，快速响应网络",
+                "en": "Three-layer defense perimeter, rapid response network"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "外围预警",
+                    "en": "Perimeter Alert"
+                  },
+                  "detail": {
+                    "zh": "远程探测，早期拦截准备",
+                    "en": "Long-range detection, early intercept preparation"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "中层拦截",
+                    "en": "Mid-layer Intercept"
+                  },
+                  "detail": {
+                    "zh": "主要拦截区，多系统协同",
+                    "en": "Primary intercept zone, multi-system coordination"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "末端防御",
+                    "en": "Terminal Defense"
+                  },
+                  "detail": {
+                    "zh": "近距保护，最后防线",
+                    "en": "Close-range protection, final barrier"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "边境前线",
+              "en": "Border Frontline"
+            },
+            "output": {
+              "zh": "高密度部署，机动响应",
+              "en": "High-density deployment, mobile response"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "防御需求",
+                "en": "Defense Requirements"
+              },
+              "output_label": {
+                "zh": "理论配置",
+                "en": "Theoretical Configuration"
+              },
+              "input": {
+                "zh": "前线基地，80公里防线，高频威胁",
+                "en": "Frontline base, 80km defense line, high-frequency threats"
+              },
+              "output": {
+                "zh": "分布式网络，快速重新部署能力",
+                "en": "Distributed network, rapid redeployment capability"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "前沿阵地",
+                    "en": "Forward Positions"
+                  },
+                  "detail": {
+                    "zh": "密集覆盖，饱和拦截",
+                    "en": "Dense coverage, saturation interception"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "机动预备",
+                    "en": "Mobile Reserve"
+                  },
+                  "detail": {
+                    "zh": "快速转移，填补薄弱环节",
+                    "en": "Quick relocation, fill weak points"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "后方补给",
+                    "en": "Rear Supply"
+                  },
+                  "detail": {
+                    "zh": "持续补充，维持作战",
+                    "en": "Continuous resupply, sustain operations"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "production_scale",
+        "widget": "dial",
+        "title": {
+          "zh": "调整生产规模",
+          "en": "Adjust Production Scale"
+        },
+        "instruction": {
+          "zh": "设定理论年产量评估系统可用性",
+          "en": "Set theoretical annual output to assess system availability"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "小规模试产",
+              "en": "Small-scale Trial"
+            },
+            "output": {
+              "zh": "验证设计，积累数据",
+              "en": "Validate design, accumulate data"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "中等规模",
+              "en": "Medium Scale"
+            },
+            "output": {
+              "zh": "平衡产能与需求",
+              "en": "Balance capacity and demand"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "大规模量产",
+              "en": "Large-scale Production"
+            },
+            "output": {
+              "zh": "快速扩展防御网络",
+              "en": "Rapidly expand defense network"
+            }
+          }
+        ],
+        "example_data": true,
+        "dial": {
+          "min": 1,
+          "max": 10,
+          "initial": 3,
+          "factor": 1,
+          "unit": {
+            "zh": "个工厂",
+            "en": "factories"
+          },
+          "result_label": {
+            "zh": "理论年产系统数",
+            "en": "Theoretical annual systems"
+          }
+        }
+      },
+      {
+        "id": "deployment_timeline",
+        "widget": "choice",
+        "title": {
+          "zh": "部署时间线",
+          "en": "Deployment Timeline"
+        },
+        "instruction": {
+          "zh": "规划理论部署阶段",
+          "en": "Plan theoretical deployment phases"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "快速部署",
+              "en": "Rapid Deployment"
+            },
+            "output": {
+              "zh": "应急响应，优先关键区域",
+              "en": "Emergency response, prioritize critical areas"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "部署目标",
+                "en": "Deployment Goal"
+              },
+              "output_label": {
+                "zh": "理论阶段",
+                "en": "Theoretical Phases"
+              },
+              "input": {
+                "zh": "90天内初步防御能力",
+                "en": "Initial defense capability within 90 days"
+              },
+              "output": {
+                "zh": "分阶段建立防御网络",
+                "en": "Establish defense network in phases"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "第一个月",
+                    "en": "Month One"
+                  },
+                  "detail": {
+                    "zh": "核心区域，基础系统上线",
+                    "en": "Core areas, basic systems online"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "第二个月",
+                    "en": "Month Two"
+                  },
+                  "detail": {
+                    "zh": "扩展覆盖，增加拦截密度",
+                    "en": "Expand coverage, increase intercept density"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "第三个月",
+                    "en": "Month Three"
+                  },
+                  "detail": {
+                    "zh": "完善网络，测试协同能力",
+                    "en": "Complete network, test coordination"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "稳健部署",
+              "en": "Steady Deployment"
+            },
+            "output": {
+              "zh": "充分测试，逐步扩展",
+              "en": "Thorough testing, gradual expansion"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "部署目标",
+                "en": "Deployment Goal"
+              },
+              "output_label": {
+                "zh": "理论阶段",
+                "en": "Theoretical Phases"
+              },
+              "input": {
+                "zh": "180天内完整防御体系",
+                "en": "Complete defense system within 180 days"
+              },
+              "output": {
+                "zh": "确保每个阶段可靠性",
+                "en": "Ensure reliability at each phase"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "试点阶段",
+                    "en": "Pilot Phase"
+                  },
+                  "detail": {
+                    "zh": "单点测试，验证性能指标",
+                    "en": "Single-point test, validate performance metrics"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "扩展阶段",
+                    "en": "Expansion Phase"
+                  },
+                  "detail": {
+                    "zh": "多点部署，建立标准流程",
+                    "en": "Multi-point deployment, establish standard procedures"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "完善阶段",
+                    "en": "Completion Phase"
+                  },
+                  "detail": {
+                    "zh": "全面覆盖，优化协同机制",
+                    "en": "Full coverage, optimize coordination mechanisms"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "本演示展示了 Furientis 系统的理论部署规划思路，实际性能、成本和作战效能需访问官方网站验证，真实部署需专业国防机构评估",
+      "en": "This demo illustrates theoretical deployment planning for Furientis systems; actual performance, costs, and operational effectiveness require verification on the official website, and real deployments need professional defense agency assessment"
+    },
+    "sources": [
+      {
+        "url": "https://furientis.com",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://dot.la/la-tech-week-2026-guide-2678063741.html",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

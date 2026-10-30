@@ -1,0 +1,244 @@
+{
+  "cache_key": "9f1c1f09917a8fc4f3454e1d-ee20fca8842a5fe435122486",
+  "product_key": "9f1c1f09917a8fc4f3454e1d",
+  "fingerprint": "ee20fca8842a5fe435122486",
+  "product_id": "p_c351eb34bf482fef",
+  "product_name": "Parallel Systems",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-30T23:00:42.394303+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "Panther 轨道车调度场景",
+      "en": "Panther Rail Vehicle Dispatch Scenario"
+    },
+    "scenario": {
+      "zh": "为一条短途货运线路选择 Panther 车队配置，比较不同运力方案的特点",
+      "en": "Select Panther fleet configuration for a short-haul freight route and compare capacity options"
+    },
+    "steps": [
+      {
+        "id": "route",
+        "widget": "choice",
+        "title": {
+          "zh": "选择运输线路",
+          "en": "Select Transport Route"
+        },
+        "instruction": {
+          "zh": "选择一条短途货运线路",
+          "en": "Choose a short-haul freight route"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "洛杉矶-拉斯维加斯",
+              "en": "Los Angeles-Las Vegas"
+            },
+            "output": {
+              "zh": "270英里线路，高频电商货物",
+              "en": "270-mile route with high-frequency e-commerce freight"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "线路概况",
+                "en": "Route Profile"
+              },
+              "output_label": {
+                "zh": "推荐配置",
+                "en": "Recommended Configuration"
+              },
+              "input": {
+                "zh": "洛杉矶-拉斯维加斯：270英里，日均需求180个集装箱，主要为电商配送中心货物，时效要求当日达",
+                "en": "Los Angeles-Las Vegas: 270 miles, 180 containers daily average, mainly e-commerce distribution center freight, same-day delivery required"
+              },
+              "output": {
+                "zh": "建议6辆Panther车组，每组配3节车厢，电池续航覆盖往返，充电设施设于两端站点，可满足高频调度需求",
+                "en": "Recommend 6 Panther vehicle sets, 3 cars per set, battery range covers round trip, charging at both terminals, supports high-frequency dispatch"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "旧金山-萨克拉门托",
+              "en": "San Francisco-Sacramento"
+            },
+            "output": {
+              "zh": "90英里线路，农产品快运",
+              "en": "90-mile route with agricultural express freight"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "线路概况",
+                "en": "Route Profile"
+              },
+              "output_label": {
+                "zh": "推荐配置",
+                "en": "Recommended Configuration"
+              },
+              "input": {
+                "zh": "旧金山-萨克拉门托：90英里，日均需求80个集装箱，主要为中央谷地农产品快运至港口，冷链要求高",
+                "en": "San Francisco-Sacramento: 90 miles, 80 containers daily average, mainly Central Valley agricultural express to port, high cold-chain requirements"
+              },
+              "output": {
+                "zh": "建议3辆Panther车组，每组配4节车厢含冷藏单元，短距离线路电池优势明显，减少柴油制冷依赖",
+                "en": "Recommend 3 Panther vehicle sets, 4 cars per set with refrigerated units, short distance maximizes battery advantage, reduces diesel refrigeration dependence"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "capacity",
+        "widget": "compare",
+        "title": {
+          "zh": "对比运力方案",
+          "en": "Compare Capacity Plans"
+        },
+        "instruction": {
+          "zh": "选择车队规模进行对比",
+          "en": "Select fleet sizes to compare"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "标准配置",
+              "en": "Standard Configuration"
+            },
+            "output": {
+              "zh": "4辆车组，基础运力",
+              "en": "4 vehicle sets, baseline capacity"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "扩展配置",
+              "en": "Expanded Configuration"
+            },
+            "output": {
+              "zh": "8辆车组，双倍运力",
+              "en": "8 vehicle sets, double capacity"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "灵活配置",
+              "en": "Flexible Configuration"
+            },
+            "output": {
+              "zh": "6辆车组+备用2辆",
+              "en": "6 vehicle sets + 2 spares"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "outcome",
+        "widget": "review",
+        "title": {
+          "zh": "方案总结",
+          "en": "Plan Summary"
+        },
+        "instruction": {
+          "zh": "查看选定方案特点",
+          "en": "Review selected plan characteristics"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "查看总结",
+              "en": "View Summary"
+            },
+            "output": {
+              "zh": "虚拟场景已完成，实际部署需联系 Parallel Systems",
+              "en": "Fictional scenario complete; actual deployment requires contacting Parallel Systems"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "方案要素",
+                "en": "Plan Elements"
+              },
+              "output_label": {
+                "zh": "关键考量",
+                "en": "Key Considerations"
+              },
+              "input": {
+                "zh": "所选线路、车队规模、充电布局",
+                "en": "Selected route, fleet size, charging layout"
+              },
+              "output": {
+                "zh": "此为概念场景，未反映真实工程约束或商业条款",
+                "en": "This is a concept scenario and does not reflect actual engineering constraints or commercial terms"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "自主运行",
+                    "en": "Autonomous Operation"
+                  },
+                  "detail": {
+                    "zh": "Panther车辆设计支持自主调度，实际功能取决于监管与场地条件",
+                    "en": "Panther vehicles designed for autonomous dispatch; actual function depends on regulation and site conditions"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "电池续航",
+                    "en": "Battery Range"
+                  },
+                  "detail": {
+                    "zh": "短途线路电池可行性高，具体里程与负载需工程验证",
+                    "en": "Battery feasibility high for short hauls; specific range and load require engineering validation"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "基础设施",
+                    "en": "Infrastructure"
+                  },
+                  "detail": {
+                    "zh": "需铁路接入授权与充电设施投资，未包含在此示例中",
+                    "en": "Requires rail access authorization and charging infrastructure investment, not included in this example"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了 Panther 车队在虚拟短途线路上的配置选择，未验证实际运营可行性或成本，需访问 moveparallel.com 了解真实部署流程",
+      "en": "Demonstrated Panther fleet configuration choices on a fictional short-haul route; actual operational feasibility and cost unverified; visit moveparallel.com for real deployment process"
+    },
+    "sources": [
+      {
+        "url": "https://www.moveparallel.com",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://dot.la/la-tech-week-2026-guide-2678063741.html",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

@@ -1,17 +1,18 @@
 {
-  "updated_at": "2026-10-30T22:33:27.294670+00:00",
+  "updated_at": "2026-10-30T22:58:32.476320+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 7,
+      "fresh_count": 8,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-30T22:33:27.294670+00:00",
-      "rejected_count": 12,
+      "checked_at": "2026-10-30T22:58:32.476320+00:00",
+      "rejected_count": 9,
       "rejection_reasons": {
-        "no_concrete_signal": 3,
-        "unvetted_x_author": 9
+        "no_concrete_signal": 2,
+        "unvetted_x_author": 6,
+        "insufficient_excerpt": 1
       },
       "rejected_examples": [
         {
@@ -27,27 +28,27 @@
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@Claritysteps · Stability AI, the open-source king, is abandoning ...",
+          "title": "@Jawlahco · مع توجه لتحويل الشركة إلى مطور لأدوات الذكاء الاصطناعي ...",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@rohanpaul_ai · Emad Mostaque (founder of Stability AI) on Navier-Stokes ...",
+          "title": "@keyofgeo · I have great hopes for the SemenTalk algorithm",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@stretchcloud · etty Images spent two years suing Stability AI over scraped ...",
+          "title": "@rohanpaul_ai · Rohan Paul on X",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@rohanpaul_ai · Labor and capital are about to divorce because ...",
-          "reason": "unvetted_x_author"
+          "title": "@huggingface · @natolambert @trillium_labs 🌸🌸🌸",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "@EMostaque · The original stable diffusion had an FID score of 12.63",
+          "title": "@ScaleAILabs · Scale Labs",
           "reason": "unvetted_x_author"
         }
       ],
-      "stored_count": 20,
+      "stored_count": 21,
       "latest_published_at": "2026-10-29T15:49:48.988000+00:00"
     },
     "reddit": {
@@ -55,14 +56,38 @@
       "fresh_count": 12,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-30T22:33:27.294670+00:00",
+      "checked_at": "2026-10-30T22:58:32.476320+00:00",
       "rejected_count": 28,
       "rejection_reasons": {
-        "off_topic": 13,
-        "no_concrete_signal": 12,
-        "personal_help_or_chatter": 3
+        "no_concrete_signal": 14,
+        "off_topic": 12,
+        "personal_help_or_chatter": 2
       },
       "rejected_examples": [
+        {
+          "title": "Apple tracking system: will the watermark show up?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Did anyone actually get an offer from Claude Corps?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Paid Research Survey for conference papers [D]",
+          "reason": "off_topic"
+        },
+        {
+          "title": "What is going on with GPT? My 5-hour limit gets exhausted in 10 minutes on a simple coding task.",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Stop vibecoding a new task tracker every time you add another agent",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Why are Mark Zuckerberg and Meta the most hated pair in the tech world?",
+          "reason": "off_topic"
+        },
         {
           "title": "Intel 1x B65 with xeStrata Flash-Next 4-bit - 60tok/s - What a game changer for single card users",
           "reason": "off_topic"
@@ -70,34 +95,10 @@
         {
           "title": "5h limit is gone!",
           "reason": "off_topic"
-        },
-        {
-          "title": "Claude Cowork vs ChatGPT Work: who actually uses these all day for their job?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "How do you carry video-editing feedback between Claude Code sessions?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Just a little dev tool",
-          "reason": "off_topic"
-        },
-        {
-          "title": "AI changes so fast, any saved knowledge gets outdated",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Finally, got some opus5.5’s thought process.",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Help me please",
-          "reason": "personal_help_or_chatter"
         }
       ],
-      "stored_count": 37,
-      "latest_published_at": "2026-10-30T22:29:02+00:00"
+      "stored_count": 38,
+      "latest_published_at": "2026-10-30T22:39:38+00:00"
     },
     "youtube": {
       "status": "direct",
@@ -109,7 +110,7 @@
         }
       ],
       "feeds_ok": 7,
-      "checked_at": "2026-10-30T22:33:27.294670+00:00",
+      "checked_at": "2026-10-30T22:58:32.476320+00:00",
       "rejected_count": 21,
       "rejection_reasons": {
         "off_topic": 17,
@@ -117,35 +118,35 @@
       },
       "rejected_examples": [
         {
-          "title": "China just dropped a new frontier model... and nobody can explain how",
+          "title": "This is Crazy",
           "reason": "off_topic"
         },
         {
-          "title": "The most vulnerable week in internet history...",
+          "title": "Programming Laws Tier list | TheStandup",
           "reason": "off_topic"
         },
         {
-          "title": "The last real programmers are dying out...",
+          "title": "I CANT DO ON CALL",
+          "reason": "not_original_item"
+        },
+        {
+          "title": "Claude now 3x FASTER",
+          "reason": "not_original_item"
+        },
+        {
+          "title": "There Is No Way This Is Real",
           "reason": "off_topic"
         },
         {
-          "title": "Computation in nature: Slime mold, fruit flies, and turbulence | Lex Fridman",
+          "title": "Programmers vs Dream's Fake Manhunts | TheStandup",
           "reason": "off_topic"
         },
         {
-          "title": "The hardest physics problem in fluid dynamics: Turbulence explained | Lex Fridman",
+          "title": "🚨🚨 Vibe Coding WoW Forever Mods With Esfand🚨🚨",
           "reason": "off_topic"
         },
         {
-          "title": "The death of GitHub: Why open source maintainers are burning out | Lex Fridman",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The $1 trillion dollar problem - Navier Stokes expert explains | Lex Fridman",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Prime Numbers explained by Mathematician | Lex Fridman",
+          "title": "The Real Reason",
           "reason": "off_topic"
         }
       ],
@@ -157,13 +158,37 @@
       "fresh_count": 5,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-30T22:33:27.294670+00:00",
+      "checked_at": "2026-10-30T22:58:32.476320+00:00",
       "rejected_count": 55,
       "rejection_reasons": {
-        "no_concrete_signal": 38,
-        "off_topic": 17
+        "off_topic": 16,
+        "no_concrete_signal": 39
       },
       "rejected_examples": [
+        {
+          "title": "The Thaura Constitution",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Assure – your AI agent says \"done.\" This checks if it's lying",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "AI's Bill Is Due – Intelligence or Brand? – Cold Logic – EP01",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Show HN: Fastbrowse, Browser agent that picks clicks with a System One model",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Defining AI",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Now what? After the AI crash",
+          "reason": "no_concrete_signal"
+        },
         {
           "title": "Google's $500B bloodbath reflects the danger it faces from AI",
           "reason": "no_concrete_signal"
@@ -171,30 +196,6 @@
         {
           "title": "Supersonic airliner in doubt as company shifts to powering AI data centers",
           "reason": "no_concrete_signal"
-        },
-        {
-          "title": "INTC and ORCL to Collab Around Agentic AI on OCI",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Ignore AI and ask for that pay rise",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Show HN: I'm killing AI slop spam with a simple Google script",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Why my AI agents keep lie-ing? How do we trust?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "How much of an environmental menace is AI?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "AiDocEngine – MS Word, Excel, PDF Ingestion and Semantic Chunking for RAG",
-          "reason": "off_topic"
         }
       ],
       "stored_count": 17,
@@ -205,10 +206,10 @@
       "fresh_count": 18,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-30T22:33:27.294670+00:00",
-      "rejected_count": 20,
+      "checked_at": "2026-10-30T22:58:32.476320+00:00",
+      "rejected_count": 19,
       "rejection_reasons": {
-        "off_topic": 20
+        "off_topic": 19
       },
       "rejected_examples": [
         {
@@ -220,15 +221,15 @@
           "reason": "off_topic"
         },
         {
-          "title": "Norah Studio",
-          "reason": "off_topic"
-        },
-        {
           "title": "Nocto",
           "reason": "off_topic"
         },
         {
-          "title": "sitesolide",
+          "title": "Teable Mobile",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Norah Studio",
           "reason": "off_topic"
         },
         {
@@ -236,11 +237,11 @@
           "reason": "off_topic"
         },
         {
-          "title": "Axonnic",
+          "title": "sitesolide",
           "reason": "off_topic"
         },
         {
-          "title": "Teable Mobile",
+          "title": "Axonnic",
           "reason": "off_topic"
         }
       ],
@@ -257,12 +258,24 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-10-30T22:33:27.294670+00:00",
+      "checked_at": "2026-10-30T22:58:32.476320+00:00",
       "rejected_count": 19,
       "rejection_reasons": {
         "off_topic": 19
       },
       "rejected_examples": [
+        {
+          "title": "Google’s first data center satellite is online and writing poetry",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Skip the small talk: Make game-changing connections at TechCrunch Founder Summit with Braindate",
+          "reason": "off_topic"
+        },
+        {
+          "title": "5 days left: Your last chance to connect, scale, and save at TechCrunch Founder Summit 2026",
+          "reason": "off_topic"
+        },
         {
           "title": "Apple Intelligence is finally coming to China with iOS 27.3",
           "reason": "off_topic"
@@ -276,92 +289,76 @@
           "reason": "off_topic"
         },
         {
-          "title": "The Download: GLP-1s and eating disorders, self-aware cities, and forever chemicals",
+          "title": "Code-execution flaw in UEFI firmware affects most servers on planet Earth",
           "reason": "off_topic"
         },
         {
-          "title": "Eating disorders are on the rise. GLP-1s could make things worse.",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Our climate models have a big, dangerous blind spot",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Industrial Intelligence: The next growth opportunity for manufacturing",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Google’s first data center satellite is online and writing poetry",
+          "title": "Disgraced eMudhra drops out of TLS business after using cert private key of 4",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-10-30T21:54:34+00:00"
+      "latest_published_at": "2026-10-30T22:56:13+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 29,
+      "fresh_count": 38,
       "errors": [
-        {
-          "endpoint": "jiqizhixin",
-          "reason": "empty_or_invalid_feed"
-        },
         {
           "endpoint": "36kr",
           "reason": "empty_or_invalid_feed"
         },
         {
-          "endpoint": "huxiu",
-          "reason": "ReadTimeout"
+          "endpoint": "jiqizhixin",
+          "reason": "empty_or_invalid_feed"
         },
         {
-          "endpoint": "leiphone",
+          "endpoint": "huxiu",
           "reason": "ReadTimeout"
         }
       ],
-      "feeds_ok": 5,
-      "checked_at": "2026-10-30T22:33:27.294670+00:00",
-      "rejected_count": 68,
+      "feeds_ok": 6,
+      "checked_at": "2026-10-30T22:58:32.476320+00:00",
+      "rejected_count": 79,
       "rejection_reasons": {
-        "off_topic": 68
+        "off_topic": 79
       },
       "rejected_examples": [
         {
-          "title": "本周看什么 | 最近值得一看的 9 部作品",
+          "title": "红魔 12 Pro+ 体验：水冷加上 RGB 灯，游戏性能全面升级",
           "reason": "off_topic"
         },
         {
-          "title": "App+1｜该吃药了：一片小药板，让吃药提醒变得轻松有趣",
+          "title": "「史上最强」的 iPad mini，为什么还是 60Hz 屏幕？",
           "reason": "off_topic"
         },
         {
-          "title": "《久坐健康指南》作者、运动健康领域创作者阿帅装了啥？",
+          "title": "卓驭发布商用车智能辅助驾驶解决方案「磐行」，一年可以让重卡省下 2-3 万元油钱",
           "reason": "off_topic"
         },
         {
-          "title": "精确到秒的时间记录是怎样的？我的柳比歇夫法半年实践",
+          "title": "CMF Speaker 系列体验：好听的牛奶盒，还能自己做外壳",
           "reason": "off_topic"
         },
         {
-          "title": "派早报：全球首款 Android XR 有线眼镜 XREAL AURA 发售等",
+          "title": "13.98 万元起！小鹏 MONA L05 正式上市，大五座 SUV 市场的卷王来了",
           "reason": "off_topic"
         },
         {
-          "title": "新玩意 254｜少数派的编辑们最近买了啥？",
+          "title": "取消四缸插混，3.0T 六缸回归！全新 AMG GLC 53 售 59.9 万元",
           "reason": "off_topic"
         },
         {
-          "title": "如何成为不吃压力的「大心脏」？",
+          "title": "为什么新模型发布，都要先做一个游戏？",
           "reason": "off_topic"
         },
         {
-          "title": "让 Agent 读懂你的身体：数据处理篇",
+          "title": "7500 元！第一副安卓 XR 眼镜来了，比苹果更轻更好戴",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-10-30T15:51:23+00:00"
+      "latest_published_at": "2026-10-30T22:34:47+00:00"
     }
   },
   "quality_rejections": {},

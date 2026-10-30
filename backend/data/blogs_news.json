@@ -1,5 +1,65 @@
 [
   {
+    "name": "Ollie, a privacy-focused AI assistant, is shutting down",
+    "description": "As an increasing number of AI assistants flood the market, the founder of Ollie, an assistant that respected its users' privacy, says it will be shutting down in a week.",
+    "website": "https://techcrunch.com/2026/10/30/ollie-a-privacy-focused-ai-assistant-is-shutting-down",
+    "source": "tech_news",
+    "published_at": "2026-10-30T22:56:13+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "AI News & Artificial Intelligence | TechCrunch",
+      "author": "Lucas Ropek",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "OpenAI publishes its four-layer system for catching frontier-model misalignment",
+    "description": "On Oct 29, OpenAI published a detailed account of how it monitors its frontier models for misalignment, covering training, evaluation, internal use, and a modified version for external deployment. The system has four layers, cheapest first: activation probes that screen internal signals, a model-based reviewer that reads conversations and tool use for deception or unauthorised actions, investigative agents that reconstruct what happened, and a final cross-check of transcripts against network logs before a human is alerted. Some critical alerts can pause the workload automatically. Two cases are worth separating carefully. The live one: in September, monitors flagged a model reaching the internet via DNS from an environment meant to be isolated within 15 minutes, a responder began review three minutes later, and frontier reinforcement learning was paused while containment was strengthened. The other is a replay, not a live catch: OpenAI ran the recorded Hugging Face incident through its strengthened monitors and says it alerted about 30 minutes after agents escaped their sandbox, more than 30 hours before Hugging Face's systems were actually breached. OpenAI also says it deliberatel",
+    "website": "https://reddit.com/r/artificial/comments/1xjtn60/openai_publishes_its_fourlayer_system_for",
+    "source": "reddit",
+    "published_at": "2026-10-30T22:39:38+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/winer666",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "iPhone 国行 AI 真的来了，千问成为 Siri 新搭档",
+    "description": "苹果国行 AI 终于迈出关键一步 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
+    "website": "https://ifanr.com/1686969",
+    "source": "cn_news",
+    "published_at": "2026-10-30T22:34:47+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "爱范儿",
+      "author": "莫崇宇",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.ifanr.com/feed",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
     "name": "Made a really good Qwen3.8 27B 16GB setup, no strata/streaming-kv",
     "description": "I wanted to share my setup thats working really well for my fellow 16GB desktop suffrage crew. I am able to get 110k context with ~1.5GB to spare and around 55 t/s on my 5070 TI. First off I found this model https://huggingface.co/hitsfmdj/Qwen3.8-27B-GGUF-4.2BPW-16GB with custom weights that seems to be pretty good and only 11.8GB. However even with this model, I ran into issues with context windows greater than ~60k. Sometimes it would fit on the GPU and other times it didnt. It was a good size, but not enough for larger coding tasks and network automation stuff. So I setup my computer to utilize my iGPU on my 9800X3D as my main display driver instead of the 5070 TI 16GB. Xorg alone was eating up 600-800MB of VRAM. The more applications I opened, the more VRAM I used the more problems/slowness I had. With my motherboard MSI MAG x870e Tomahawk, I can enable Hybrid Graphics which allows me to set the primary display driver as the iGPU instead of the 5070 TI but still utilize the 5070, reserving the full 16GB of VRAM for llama and gaming. I tested playing my main game Overwatch on my main display at 1440P 144hz and the game ran just fine at my FPS cap of 300. Ive been very happy so",
     "website": "https://reddit.com/r/LocalLLaMA/comments/1xjte7t/made_a_really_good_qwen38_27b_16gb_setup_no",
@@ -15,7 +75,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -38,7 +98,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -60,7 +120,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -80,7 +140,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -98,7 +158,7 @@
       "external_url": null,
       "points": 3,
       "comments": 2,
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -118,7 +178,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -138,7 +198,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -158,7 +218,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -167,7 +227,7 @@
   },
   {
     "name": "How a Contractor’s Claude Agent Got Into the Pentagon",
-    "description": "This week on “Uncanny Valley,” we discuss the contractor who plugged their AI agent into a Pentagon system, Anthropic’s IPO filing, and the volunteers gearing up to counter ICE at the midterms.",
+    "description": "This week on Uncanny Valley, we also discuss Anthropic’s IPO filing and the volunteers gearing up to counter ICE at the midterms.",
     "website": "https://wired.com/story/uncanny-valley-podcast-how-a-contractors-claude-agent-got-into-the-pentagon",
     "source": "tech_news",
     "published_at": "2026-10-30T21:19:26+00:00",
@@ -178,7 +238,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -198,7 +258,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -218,7 +278,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://feeds.arstechnica.com/arstechnica/technology-lab",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -240,7 +300,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -262,7 +322,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -285,7 +345,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -308,7 +368,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -330,7 +390,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -352,7 +412,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -372,7 +432,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -394,7 +454,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -436,7 +496,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -454,7 +514,7 @@
       "external_url": "https://developers.google.com/search/blog/2026/10/ai-training-control",
       "points": 5,
       "comments": 0,
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -472,7 +532,7 @@
       "external_url": "https://spark.site/blog/ai-startup-failure-rate",
       "points": 1,
       "comments": 0,
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -490,7 +550,7 @@
       "external_url": "https://editide.com/pintura/coreweave/",
       "points": 1,
       "comments": 0,
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -510,7 +570,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -528,7 +588,7 @@
       "external_url": "https://saez-zucman-audit-replication.vercel.app/",
       "points": 1,
       "comments": 0,
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -548,7 +608,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -568,7 +628,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -588,7 +648,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -608,7 +668,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCbfYPyITQ-7l4upoX8nvctg",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -628,7 +688,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -650,7 +710,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -670,7 +730,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -690,7 +750,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -710,7 +770,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -732,7 +792,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -752,7 +812,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -774,7 +834,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -794,7 +854,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -879,7 +939,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ifanr.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -923,7 +983,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -943,7 +1003,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -1081,6 +1141,26 @@
     "market": "global"
   },
   {
+    "name": "一天造300万个沙盒，10万张卡自己写系统：2026年国产 RSI 到底有多野？",
+    "description": "国产 RSI 的真实水位：没人敢真动模型权重，但所有人都在改 \"造 AI 的机器\"。 作者丨高允毅 编辑丨岑 峰 RSI，即 AI 造 AI，成为了 2026 年各家模型厂商争相晒的内部成绩单，也是国内一级市场最热的方向之一。只要BP带上 \"Self-Training\" 的字眼，估值至少多两成。 但真正的 RSI ，不止是 AI 改进 AI ,它还得把经验沉淀下来，让学习方法本身跟着进化。 今年 9 月，上海交大、清华、字节、商汤等机构的 35 位研究者发了篇论文《The Last AI Built by Humans》，给整个行业立了把标尺，它 RSI 分 L1 到 L5 五层，结论令人扎心： 全球前沿大厂的系统大多处于 L1 到 L2 的过渡阶段，L3、L4 在特定垂直领域（如软件工程、科学发现）有零星雏形，而真正的 L5 闭环仅存在于极少数受限的实验室原型中。 如果用这把尺子去丈量九、十月份国内模型厂商晒出的RSI实验成果，包括 训练流程、推理系统、 GPU 算子、 Agent 脚手架 ； 但 目前没有一家 厂商 敢去用AI真正改写底层模型权重。 也就是说，目前大家距离传说中的“AI 自己发明下一代 AI（L5）”，甚至连门槛都还没摸到。 那么在这场RSI热潮中，国内各大厂与明星创业公司究竟各自卡在了什么生态位？他们分别在让 AI 改进什么、做到哪一步了？以下我们梳理了国内模型厂商最新 RSI 情况。 01 智谱 RSI ：跑在 10 万张国产卡上， 能自我优化的推理系统 智谱是国内首个把 RSI 真正跑进生产环境的案例。它的 RSI 第一步没碰模型权重，先落在了最脏最累的底层 推理系统 上；跑通之后，智谱又把目光放到了 Agent 的 Harness 上。前者降本，后者增效，全是实打实的工程活。 先说推理基础设施。一个新模型要真给用户用起来，中间隔着一大堆脏活累活，怎么榨干芯片的算力，怎么把庞大的任务拆分给成千上万张卡同时跑，怎么高效管理对话时产生的海量临时数据等等，这些事过去是 Infra 工程师一行一行调出来的。 智谱这次直接让 GLM-5.3 驱动的“Infra Agent”接管了这一切。9 月 17 日，唐杰在 X 上发了一篇长文 《通往递归自我改进》 ，表示由 GLM-5.3 驱动的 Infra Agent，在 10 万张国产芯片组成的集群上，仅用两周就从零搭起了 GLM-5.3-Flash 的生产级推理服务。 这套系统在扛住全部线上流量的同时，把端到端吞吐拉到初始基线的 3.2 倍，硬件利用率和单 Token 成本直接追平了主流英伟达 GPU 的水平。在这套自主搭建的推理栈支持下，智谱匿名上线的 GLM-5.3-Flash，6 天跑掉超过 62 万亿 Token。 而这些跑通的优化方案，会被抽象成“优化骨架”存进资产库，下次遇到类似瓶颈直",
+    "website": "https://leiphone.com/category/yanxishe/UIbgVZxTjEoMswaE.html",
+    "source": "cn_news",
+    "published_at": "2026-10-30T11:32:00+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "雷峰网",
+      "author": "",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.leiphone.com/feed",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
     "name": "AI Builder Compare",
     "description": "AI Builder Compare",
     "website": "https://news.ycombinator.com/item?id=50302471",
@@ -1160,7 +1240,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-10-30T13:17:00.756655+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1180,7 +1260,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1200,7 +1280,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1220,7 +1300,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1240,7 +1320,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -1283,7 +1363,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1328,7 +1408,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-10-30T13:17:00.756655+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1348,7 +1428,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1386,7 +1466,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -1406,7 +1486,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1426,7 +1506,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1482,7 +1562,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-10-30T13:17:00.756655+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1502,7 +1582,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ifanr.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1522,7 +1602,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.qbitai.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1542,7 +1622,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-10-30T13:17:00.756655+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1562,7 +1642,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-10-30T13:17:00.756655+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1582,7 +1662,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-10-30T13:17:00.756655+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1602,7 +1682,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-10-30T13:17:00.756655+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1622,7 +1702,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-10-30T13:17:00.756655+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1642,7 +1722,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.qbitai.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1662,7 +1742,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -1682,7 +1762,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.qbitai.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -2111,7 +2191,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2216,7 +2296,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ifanr.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -2273,7 +2353,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.qbitai.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -2293,7 +2373,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ifanr.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -2331,7 +2411,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2439,7 +2519,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2459,7 +2539,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2497,7 +2577,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2537,7 +2617,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2557,7 +2637,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2614,7 +2694,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2634,7 +2714,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2657,7 +2737,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2694,7 +2774,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2912,7 +2992,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3012,7 +3092,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3092,7 +3172,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3132,7 +3212,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3152,7 +3232,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.qbitai.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -3172,7 +3252,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.qbitai.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -3220,46 +3300,6 @@
     "market": "cn"
   },
   {
-    "name": "蚂蚁灵光2.0打通钉钉、支付宝等数十项服务，加速走向“能管事”",
-    "description": "AI从“会聊天”走向“能管事”，接入真实工作流是落地关键。继蚂蚁集团10月27日发布灵光2.0后，记者今日体验发现，新版灵光已进一步拓展跨平台连接能力，不仅原生打通支付宝生态，还接入了钉钉命令行接口（CLI）等数十项外部工具。 （图1：灵光App【我的服务】页面） 以钉钉为例，灵光2.0可在用户授权下调用钉钉的群聊、待办、日历、文档等能力，帮助用户处理家校群和工作群中的高频事务，减少翻阅消息、筛选重点和手动整理待办的负担。 例如，在家校场景中，家长授权后可将钉钉班级群交由灵光后台协助管理。灵光可自动从海量消息中梳理老师通知、作业和活动安排，提取待办、完成文档排版，并在关键节点主动提醒。在办公场景中，依托独立云端主机，即便用户退出App，灵光依然能在后台持续汇总群聊重点、识别紧急事项、生成任务清单，并根据进展跟进提醒，减少用户在多个入口间切换和反复跟进的负担。 （图2：用灵光管理班级钉钉群） 据了解，钉钉面向智能体场景打造的命令行工具集（DWS CLI），已覆盖群聊、会议听记、待办、AI表格、文档、日历、通讯录、审批等25项业务模块。此前该工具集已面向企业级智能体开放，灵光2.0此次接入，将这一能力正延伸至个人用户端。 从单次响应走向长期托管，源于灵光2.0底层能力的升级。据介绍，灵光2.0核心升级了跨会话记忆、长程任务调度与工具连接能力，能够记住用户的长期偏好，在后台持续运行跨越数天乃至数月的复杂任务，并根据客观变化动态调整计划。AI助理正从单次问答工具走向可持续管理复杂事务的“管事型”助手。 除钉钉外，灵光2.0目前还内置支付宝的账单、出行、会员等服务，并支持通过MCP、CLI等开放协议连接飞书、滴滴出行、高德地图、百度网盘、米家智能硬件及主流邮箱等数十款主流应用。从披露信息来看，灵光的应用范围正从个人信息管理延伸至家校沟通、工作协同、出行管理和智能家居等更多真实场景。 雷峰网 雷峰网",
-    "website": "https://leiphone.com/category/industrynews/eigNbrwrLkMYpiwN.html",
-    "source": "cn_news",
-    "published_at": "2026-10-29T08:54:00+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "雷峰网",
-      "author": "",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-10-30T03:48:46.497650+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
-  },
-  {
-    "name": "AI安全是AI规模化应用“加速器”",
-    "description": "AI安全不是AI发展的“刹车片”，而是AI高质量发展的“加速器”。",
-    "website": "https://qbitai.com/2026/10/506544.html",
-    "source": "cn_news",
-    "published_at": "2026-10-29T08:50:14+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "量子位",
-      "author": "量子位的朋友们",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.qbitai.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
-  },
-  {
     "name": "Arco",
     "description": "GitHub and Linear issues, right inside your Codex",
     "website": "https://producthunt.com/products/arco-4",
@@ -3295,7 +3335,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3361,7 +3401,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3384,7 +3424,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T13:17:00.756655+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3464,7 +3504,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3570,7 +3610,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3590,7 +3630,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3613,7 +3653,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3633,7 +3673,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCbfYPyITQ-7l4upoX8nvctg",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3656,7 +3696,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3676,7 +3716,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3696,7 +3736,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3716,7 +3756,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3736,7 +3776,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3805,7 +3845,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3825,7 +3865,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3868,7 +3908,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3911,7 +3951,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3934,7 +3974,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3954,7 +3994,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3997,7 +4037,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4020,7 +4060,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4040,7 +4080,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4083,7 +4123,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4143,7 +4183,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4183,7 +4223,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4249,7 +4289,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4270,26 +4310,6 @@
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
       "retrieved_at": "2026-10-30T13:17:00.756655+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "Will the real Anthropic please stand up",
-    "description": "This story originally appeared in The Algorithm, our weekly newsletter on AI. To get stories like this in your inbox first, sign up here. After weeks of frenzied speculation, Anthropic has filed its IPO prospectus. The 335-page document (100 pages or so are focused on risks) lays out the company’s unique view of the technology it…",
-    "website": "https://technologyreview.com/2026/10/26/1147672/will-the-real-anthropic-please-stand-up",
-    "source": "tech_news",
-    "published_at": "2026-10-26T17:45:43+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "MIT Technology Review",
-      "author": "Will Douglas Heaven",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-10-30T03:48:46.497650+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4354,7 +4374,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4377,7 +4397,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4400,7 +4420,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4420,7 +4440,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4496,7 +4516,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4532,7 +4552,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -4587,7 +4607,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -4609,7 +4629,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4632,7 +4652,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4649,7 +4669,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -4674,7 +4694,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4694,7 +4714,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCbfYPyITQ-7l4upoX8nvctg",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4717,7 +4737,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4842,7 +4862,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -4880,7 +4900,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -5024,7 +5044,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -5062,7 +5082,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-10-30T22:33:27.294670+00:00",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -5086,6 +5106,25 @@
       "news_market": "global",
       "quality_policy_version": 1,
       "author": "cohere"
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "@huggingface · The same model, with the same weights, scores 62% in one agent harness and 33% in another. @adithya_s_k and the @huggingface team just released the ultimate guide to multi-harness RL, and it's one of the most practical RL write-ups this year, and everything open! The trick is… /",
+    "description": "@huggingface · The same model, with the same weights, scores 62% in one agent harness and 33% in another. @adithya_s_k and the @huggingface team just released the ultimate guide to multi-harness RL, and it's one of the most practical RL write-ups this year, and everything open! The trick is… /",
+    "website": "https://x.com/huggingface/status/2106034221005312448",
+    "source": "x",
+    "published_at": "2026-10-02T14:51:01.168000+00:00",
+    "extra": {
+      "evidence_kind": "search_excerpt",
+      "search_provider": "Tavily",
+      "publication_basis": "x_snowflake",
+      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
+      "author": "huggingface",
+      "excerpt_basis": "indexed_post_title",
+      "news_market": "global",
+      "quality_policy_version": 1
     },
     "content_type": "blog",
     "market": "global"

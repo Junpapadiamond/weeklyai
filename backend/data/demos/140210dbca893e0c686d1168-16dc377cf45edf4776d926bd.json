@@ -1,0 +1,293 @@
+{
+  "cache_key": "140210dbca893e0c686d1168-16dc377cf45edf4776d926bd",
+  "product_key": "140210dbca893e0c686d1168",
+  "fingerprint": "16dc377cf45edf4776d926bd",
+  "product_id": "p_88993658f9a48385",
+  "product_name": "Warhound",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-30T22:59:45.812950+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "军犬增强方案设计",
+      "en": "War Dog Enhancement Design"
+    },
+    "scenario": {
+      "zh": "为执法或军事任务设计基因优化和装备配置方案",
+      "en": "Design genetic optimization and equipment configuration for law enforcement or military missions"
+    },
+    "steps": [
+      {
+        "id": "mission_profile",
+        "widget": "choice",
+        "title": {
+          "zh": "任务类型",
+          "en": "Mission Type"
+        },
+        "instruction": {
+          "zh": "选择工作犬的主要任务场景",
+          "en": "Select the primary mission scenario for the working dog"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "爆炸物探测",
+              "en": "Explosive Detection"
+            },
+            "output": {
+              "zh": "需要增强嗅觉和长时专注力",
+              "en": "Requires enhanced olfaction and sustained focus"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "任务需求",
+                "en": "Mission Requirements"
+              },
+              "output_label": {
+                "zh": "优化目标",
+                "en": "Optimization Targets"
+              },
+              "input": {
+                "zh": "在机场、边境口岸和军事基地检测隐藏爆炸物,工作时长6-8小时,需在复杂气味环境中保持高灵敏度",
+                "en": "Detect concealed explosives at airports, border crossings and military bases during 6-8 hour shifts while maintaining high sensitivity in complex odor environments"
+              },
+              "output": {
+                "zh": "嗅觉受体基因增强提升痕量化学物检测能力,线粒体优化延长工作耐力,减少遗传性鼻腔疾病风险",
+                "en": "Enhanced olfactory receptor genes for trace chemical detection, mitochondrial optimization for extended endurance, reduced genetic risk of nasal conditions"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "搜救行动",
+              "en": "Search and Rescue"
+            },
+            "output": {
+              "zh": "需要增强体能和环境适应性",
+              "en": "Requires enhanced stamina and environmental adaptation"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "任务需求",
+                "en": "Mission Requirements"
+              },
+              "output_label": {
+                "zh": "优化目标",
+                "en": "Optimization Targets"
+              },
+              "input": {
+                "zh": "在地震废墟、山区或灾害现场搜寻幸存者,需穿越不稳定地形并在极端温度下工作",
+                "en": "Locate survivors in earthquake rubble, mountainous terrain or disaster sites while traversing unstable ground and operating in extreme temperatures"
+              },
+              "output": {
+                "zh": "肌肉生长基因调节增加力量和耐力,温度调节基因改良提升热适应性,骨骼密度优化防止运动损伤",
+                "en": "Muscle growth gene modulation for increased strength and stamina, temperature regulation gene improvements for thermal adaptation, bone density optimization to prevent injury"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "equipment_config",
+        "widget": "choice",
+        "title": {
+          "zh": "智能装备配置",
+          "en": "Smart Equipment Configuration"
+        },
+        "instruction": {
+          "zh": "选择 Anduril 提供的硬件组合",
+          "en": "Select Anduril hardware package"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "基础态势感知套装",
+              "en": "Basic Awareness Package"
+            },
+            "output": {
+              "zh": "实时位置和生理监测",
+              "en": "Real-time location and vital monitoring"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "装备清单",
+                "en": "Equipment List"
+              },
+              "output_label": {
+                "zh": "数据反馈",
+                "en": "Data Output"
+              },
+              "input": {
+                "zh": "防护背心集成 GPS 和心率传感器",
+                "en": "Protective vest with integrated GPS and heart rate sensors"
+              },
+              "output": {
+                "zh": "指挥员接收犬只位置坐标和疲劳预警信号",
+                "en": "Handler receives dog position coordinates and fatigue alerts"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "GPS 追踪器",
+                    "en": "GPS Tracker"
+                  },
+                  "detail": {
+                    "zh": "精确到 3 米范围内的位置数据",
+                    "en": "Location data accurate within 3 meters"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "生理传感器",
+                    "en": "Vital Sensors"
+                  },
+                  "detail": {
+                    "zh": "心率、体温和呼吸频率监测",
+                    "en": "Heart rate, temperature and respiration monitoring"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "高级战场协同套装",
+              "en": "Advanced Combat Coordination"
+            },
+            "output": {
+              "zh": "视觉数据共享和环境映射",
+              "en": "Visual data sharing and environmental mapping"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "装备清单",
+                "en": "Equipment List"
+              },
+              "output_label": {
+                "zh": "数据反馈",
+                "en": "Data Output"
+              },
+              "input": {
+                "zh": "护目镜带摄像头,背心含传感器阵列和通信模块",
+                "en": "Goggles with camera, vest with sensor array and communications module"
+              },
+              "output": {
+                "zh": "指挥员获得犬只视角实时视频和周围威胁标记",
+                "en": "Handler receives real-time video from dog's perspective and threat markers"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "头戴摄像头",
+                    "en": "Head-mounted Camera"
+                  },
+                  "detail": {
+                    "zh": "第一人称视角的战场画面传输",
+                    "en": "First-person battlefield video transmission"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "环境传感器",
+                    "en": "Environmental Sensors"
+                  },
+                  "detail": {
+                    "zh": "化学物质和热源探测数据",
+                    "en": "Chemical agent and heat source detection data"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "通信链路",
+                    "en": "Communications Link"
+                  },
+                  "detail": {
+                    "zh": "与小队无线网络的双向数据同步",
+                    "en": "Two-way data sync with squad mesh network"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "outcome_review",
+        "widget": "review",
+        "title": {
+          "zh": "方案总结",
+          "en": "Configuration Summary"
+        },
+        "instruction": {
+          "zh": "查看完整的增强方案",
+          "en": "Review the complete enhancement plan"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "生成方案文档",
+              "en": "Generate Plan Document"
+            },
+            "output": {
+              "zh": "基因目标和装备规格的结构化说明",
+              "en": "Structured specification of genetic targets and equipment specs"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "设计参数",
+                "en": "Design Parameters"
+              },
+              "output_label": {
+                "zh": "实施路径",
+                "en": "Implementation Path"
+              },
+              "input": {
+                "zh": "已选择的任务类型、基因优化目标和 Anduril 硬件配置",
+                "en": "Selected mission type, genetic optimization targets and Anduril hardware configuration"
+              },
+              "output": {
+                "zh": "此方案需提交给 Warhound 进行可行性评估和培育时间表规划,基因编辑需在繁育阶段实施,装备需根据成犬体型定制",
+                "en": "This plan requires submission to Warhound for feasibility assessment and breeding timeline planning; genetic editing must be implemented during breeding phase, equipment must be custom-fitted to adult dog dimensions"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了任务驱动的基因优化和智能装备选型,实际性能和伦理合规需由 Warhound 团队验证,访问官网提交正式需求",
+      "en": "Illustrated mission-driven genetic optimization and smart equipment selection; actual performance and ethical compliance require verification by Warhound team; visit official site to submit formal requirements"
+    },
+    "sources": [
+      {
+        "url": "https://warhound.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/10/22/ben-lamm-raises-200m-for-warhound-to-engineer-war-dogs-and-arm-them-with-anduril-gear/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,249 @@
+{
+  "cache_key": "985a7f80039de402e10bc517-a9a6d648e9d0b2af5ef362d8",
+  "product_key": "985a7f80039de402e10bc517",
+  "fingerprint": "a9a6d648e9d0b2af5ef362d8",
+  "product_id": "p_00ff74a05c5840f0",
+  "product_name": "Querio",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-30T23:00:13.575797+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "在多个 AI 工具中保持一致答案",
+      "en": "Keep Consistent Answers Across AI Tools"
+    },
+    "scenario": {
+      "zh": "为一个销售指标建立统一定义，使 Claude、ChatGPT 和 Slack 返回相同结果",
+      "en": "Build a unified definition for a sales metric so Claude, ChatGPT, and Slack return the same result"
+    },
+    "steps": [
+      {
+        "id": "metric",
+        "widget": "choice",
+        "title": {
+          "zh": "选择需要统一的指标",
+          "en": "Choose Metric to Unify"
+        },
+        "instruction": {
+          "zh": "哪个指标在不同工具中给出了冲突答案？",
+          "en": "Which metric gives conflicting answers across tools?"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "活跃用户数",
+              "en": "Active Users"
+            },
+            "output": {
+              "zh": "定义 7 日内登录的用户",
+              "en": "Define users who logged in within 7 days"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "当前问题",
+                "en": "Current Problem"
+              },
+              "output_label": {
+                "zh": "统一定义",
+                "en": "Unified Definition"
+              },
+              "input": {
+                "zh": "ChatGPT 说活跃用户是 12,450，Claude 说是 9,803，Slack bot 说是 11,200",
+                "en": "ChatGPT says active users are 12,450, Claude says 9,803, Slack bot says 11,200"
+              },
+              "output": {
+                "zh": "活跃用户：过去 7 天内至少登录一次的注册用户，排除测试账号",
+                "en": "Active users: registered users who logged in at least once in the past 7 days, excluding test accounts"
+              },
+              "emphasis": {
+                "zh": "活跃用户",
+                "en": "active users"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "月经常性收入",
+              "en": "Monthly Recurring Revenue"
+            },
+            "output": {
+              "zh": "明确订阅类型和计算规则",
+              "en": "Clarify subscription types and calculation rules"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "当前问题",
+                "en": "Current Problem"
+              },
+              "output_label": {
+                "zh": "统一定义",
+                "en": "Unified Definition"
+              },
+              "input": {
+                "zh": "三个 AI 助手对 MRR 的计算不一致：€84K、€91K 和 €88K",
+                "en": "Three AI assistants calculate MRR inconsistently: €84K, €91K, and €88K"
+              },
+              "output": {
+                "zh": "MRR：当月所有有效付费订阅的月度标准化金额，年订阅除以 12，不含一次性费用",
+                "en": "MRR: monthly normalized amount of all active paid subscriptions this month, annual divided by 12, excluding one-time fees"
+              },
+              "emphasis": {
+                "zh": "MRR",
+                "en": "MRR"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "review",
+        "widget": "review",
+        "title": {
+          "zh": "数据团队审核变更",
+          "en": "Data Team Reviews Change"
+        },
+        "instruction": {
+          "zh": "在 GitHub 中提交定义，等待审核后发布",
+          "en": "Submit definition in GitHub and wait for review before publishing"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "提交到 GitHub",
+              "en": "Submit to GitHub"
+            },
+            "output": {
+              "zh": "创建 PR，标记数据分析师审核",
+              "en": "Create PR and tag data analysts for review"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "提交内容",
+                "en": "Submission"
+              },
+              "output_label": {
+                "zh": "审核通过后",
+                "en": "After Approval"
+              },
+              "input": {
+                "zh": "metrics/active_users.yml\n定义：过去 7 日登录用户\n数据源：user_events 表\n过滤条件：event_type='login' AND is_test=false",
+                "en": "metrics/active_users.yml\nDefinition: users logged in past 7 days\nData source: user_events table\nFilter: event_type='login' AND is_test=false"
+              },
+              "output": {
+                "zh": "所有 AI 工具现在使用相同的计算逻辑，Claude、ChatGPT 和 Slack 返回一致结果",
+                "en": "All AI tools now use the same calculation logic; Claude, ChatGPT, and Slack return consistent results"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "update",
+        "widget": "choice",
+        "title": {
+          "zh": "自动更新受影响报表",
+          "en": "Auto-Update Affected Reports"
+        },
+        "instruction": {
+          "zh": "定义变更后，哪些报表需要更新？",
+          "en": "After definition changes, which reports need updates?"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "所有引用该指标的报表",
+              "en": "All reports citing this metric"
+            },
+            "output": {
+              "zh": "Agent 自动识别并更新",
+              "en": "Agent automatically identifies and updates"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "待更新报表",
+                "en": "Reports to Update"
+              },
+              "output_label": {
+                "zh": "更新状态",
+                "en": "Update Status"
+              },
+              "input": {
+                "zh": "以下是虚构示例",
+                "en": "Fictional examples below"
+              },
+              "output": {
+                "zh": "Agent 已更新三份报表使用新定义",
+                "en": "Agent updated three reports with new definition"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "每周增长仪表板",
+                    "en": "Weekly Growth Dashboard"
+                  },
+                  "detail": {
+                    "zh": "已更新活跃用户计算",
+                    "en": "Updated active user calculation"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "投资人月报",
+                    "en": "Investor Monthly Report"
+                  },
+                  "detail": {
+                    "zh": "已同步用户指标定义",
+                    "en": "Synced user metric definition"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "产品团队 OKR",
+                    "en": "Product Team OKR"
+                  },
+                  "detail": {
+                    "zh": "已对齐活跃用户标准",
+                    "en": "Aligned active user standard"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例展示了如何通过 GitHub 审核流程统一指标定义，真实数据同步和 AI agent 更新能力需在 Querio 平台验证",
+      "en": "Example showed how to unify metric definitions via GitHub review; real data sync and AI agent updates must be verified on Querio platform"
+    },
+    "sources": [
+      {
+        "url": "https://querio.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.eu-startups.com/2026/10/londons-querio-launches-with-e4-48-million-to-help-companies-and-their-data-teams-tackle-conflicting-answers-across-ai-tools",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

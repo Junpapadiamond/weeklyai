@@ -1,0 +1,198 @@
+{
+  "cache_key": "e4400bbfcf7f0a334f4072f0-540bd582ef17c1e5aed39272",
+  "product_key": "e4400bbfcf7f0a334f4072f0",
+  "fingerprint": "540bd582ef17c1e5aed39272",
+  "product_id": "p_dce67793df7e5dce",
+  "product_name": "GreatAsic",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-30T23:01:52.994271+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "定制芯片架构探索",
+      "en": "Custom Chip Architecture Exploration"
+    },
+    "scenario": {
+      "zh": "为AI推理应用选择ASIC设计方案，比较不同架构的性能功耗特性",
+      "en": "Select ASIC design for AI inference application, comparing performance-power characteristics"
+    },
+    "steps": [
+      {
+        "id": "application",
+        "widget": "choice",
+        "title": {
+          "zh": "应用场景",
+          "en": "Application Scenario"
+        },
+        "instruction": {
+          "zh": "选择需要优化的目标场景",
+          "en": "Choose the target scenario to optimize"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "数据中心推理",
+              "en": "Data-Center Inference"
+            },
+            "output": {
+              "zh": "批量处理，追求吞吐量",
+              "en": "Batch processing, throughput focus"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "技术需求描述",
+                "en": "Technical Requirements"
+              },
+              "output_label": {
+                "zh": "初步架构建议",
+                "en": "Initial Architecture Proposal"
+              },
+              "input": {
+                "zh": "需要支持transformer模型并发推理，延迟要求宽松但吞吐量需求高",
+                "en": "Need to support transformer model concurrent inference, relaxed latency but high throughput demand"
+              },
+              "output": {
+                "zh": "多核矩阵计算单元配合片上高带宽内存，优化数据流水线减少访存瓶颈",
+                "en": "Multi-core matrix units with on-chip high-bandwidth memory, optimize data pipeline to reduce memory bottleneck"
+              },
+              "emphasis": {
+                "zh": "吞吐量需求高",
+                "en": "high throughput demand"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "边缘设备视觉",
+              "en": "Edge Device Vision"
+            },
+            "output": {
+              "zh": "功耗受限，实时响应",
+              "en": "Power-constrained, real-time response"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "技术需求描述",
+                "en": "Technical Requirements"
+              },
+              "output_label": {
+                "zh": "初步架构建议",
+                "en": "Initial Architecture Proposal"
+              },
+              "input": {
+                "zh": "车载环境目标检测，严格功耗限制，需要快速响应",
+                "en": "Vehicle environment object detection, strict power limit, requires fast response"
+              },
+              "output": {
+                "zh": "轻量级推理核心搭配专用卷积加速单元，动态电压频率调节降低平均功耗",
+                "en": "Lightweight inference core with dedicated convolution accelerator, dynamic voltage-frequency scaling reduces average power"
+              },
+              "emphasis": {
+                "zh": "严格功耗限制",
+                "en": "strict power limit"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "汽车域控制器",
+              "en": "Automotive Domain Controller"
+            },
+            "output": {
+              "zh": "安全关键，冗余设计",
+              "en": "Safety-critical, redundant design"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "技术需求描述",
+                "en": "Technical Requirements"
+              },
+              "output_label": {
+                "zh": "初步架构建议",
+                "en": "Initial Architecture Proposal"
+              },
+              "input": {
+                "zh": "传感器融合与决策，需要满足功能安全标准并支持冗余运算",
+                "en": "Sensor fusion and decision-making, must meet functional safety standards with redundant computation"
+              },
+              "output": {
+                "zh": "双核锁步架构提供故障检测，独立安全岛监控关键路径，内建自检机制",
+                "en": "Dual-core lockstep provides fault detection, independent safety island monitors critical paths, built-in self-test"
+              },
+              "emphasis": {
+                "zh": "功能安全标准",
+                "en": "functional safety standards"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "tradeoff",
+        "widget": "compare",
+        "title": {
+          "zh": "设计权衡",
+          "en": "Design Tradeoffs"
+        },
+        "instruction": {
+          "zh": "比较两种实现路径的特性",
+          "en": "Compare characteristics of two implementation paths"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "单片集成",
+              "en": "Monolithic Integration"
+            },
+            "output": {
+              "zh": "紧密耦合，延迟更低",
+              "en": "Tight coupling, lower latency"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "芯粒分解",
+              "en": "Chiplet Disaggregation"
+            },
+            "output": {
+              "zh": "灵活组合，良率优势",
+              "en": "Flexible composition, yield advantage"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了架构选择考量；真实项目需提交完整规格并与设计团队深入对接",
+      "en": "Illustrated architecture selection considerations; real projects require full specs and in-depth engagement with design team"
+    },
+    "sources": [
+      {
+        "url": "https://www.greatasic.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.thesoutheastasiadesk.com/p/where-southeast-asia-can-win-ai-boom-applied-ai-robotics-infrastructure",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}
