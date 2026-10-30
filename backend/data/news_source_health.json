@@ -1,16 +1,16 @@
 {
-  "updated_at": "2026-10-30T03:45:42.298665+00:00",
+  "updated_at": "2026-10-30T03:47:16.954078+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 6,
+      "fresh_count": 11,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-30T03:45:42.298665+00:00",
-      "rejected_count": 3,
+      "checked_at": "2026-10-30T03:47:16.954078+00:00",
+      "rejected_count": 4,
       "rejection_reasons": {
-        "no_concrete_signal": 3
+        "no_concrete_signal": 4
       },
       "rejected_examples": [
         {
@@ -24,20 +24,24 @@
         {
           "title": "With Intelligent UI, GPT‑6 can now compose responses using text, visuals, and interactive elements, choosing how they fit together based on your question. Respo",
           "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Cohere is a Canadian success story being written before our eyes\" - Prime Minister @MarkJCarney",
+          "reason": "no_concrete_signal"
         }
       ],
-      "stored_count": 11,
+      "stored_count": 15,
       "latest_published_at": "2026-10-29T19:10:29.356000+00:00"
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 7,
+      "fresh_count": 8,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-30T03:45:42.298665+00:00",
-      "rejected_count": 33,
+      "checked_at": "2026-10-30T03:47:16.954078+00:00",
+      "rejected_count": 32,
       "rejection_reasons": {
-        "no_concrete_signal": 7,
+        "no_concrete_signal": 6,
         "off_topic": 12,
         "personal_help_or_chatter": 12,
         "insufficient_evidence": 2
@@ -76,23 +80,15 @@
           "reason": "off_topic"
         }
       ],
-      "stored_count": 13,
-      "latest_published_at": "2026-10-30T02:57:02+00:00"
+      "stored_count": 14,
+      "latest_published_at": "2026-10-30T03:45:05+00:00"
     },
     "youtube": {
       "status": "search_fallback",
       "fresh_count": 9,
       "errors": [
         {
-          "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
-          "reason": "HTTP 404"
-        },
-        {
           "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
           "reason": "HTTP 404"
         },
         {
@@ -100,11 +96,19 @@
           "reason": "HTTP 404"
         },
         {
+          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
+          "reason": "HTTP 404"
+        },
+        {
           "endpoint": "UCsBjURrPoezykLs9EqgamOA",
           "reason": "HTTP 404"
         },
         {
-          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
+          "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
           "reason": "HTTP 404"
         },
         {
@@ -112,12 +116,12 @@
           "reason": "HTTP 404"
         },
         {
-          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
+          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
           "reason": "HTTP 404"
         }
       ],
       "feeds_ok": 1,
-      "checked_at": "2026-10-30T03:45:42.298665+00:00",
+      "checked_at": "2026-10-30T03:47:16.954078+00:00",
       "rejected_count": 0,
       "rejection_reasons": {},
       "rejected_examples": [],
@@ -129,13 +133,17 @@
       "fresh_count": 6,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-30T03:45:42.298665+00:00",
+      "checked_at": "2026-10-30T03:47:16.954078+00:00",
       "rejected_count": 54,
       "rejection_reasons": {
-        "no_concrete_signal": 35,
-        "off_topic": 19
+        "no_concrete_signal": 36,
+        "off_topic": 18
       },
       "rejected_examples": [
+        {
+          "title": "Show HN: HiPath AI – CS learning roadmaps where a quiz unlocks each lesson",
+          "reason": "no_concrete_signal"
+        },
         {
           "title": "A Defense Contractor Gave Their AI Agent Access to a Secure Pentagon System",
           "reason": "no_concrete_signal"
@@ -163,10 +171,6 @@
         {
           "title": "The hard problem of AI therapy",
           "reason": "no_concrete_signal"
-        },
-        {
-          "title": "CVE-2026-98432: Linux TCP Use-After-Free Risk and Patch Validation",
-          "reason": "off_topic"
         }
       ],
       "stored_count": 7,
@@ -177,18 +181,22 @@
       "fresh_count": 23,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-30T03:45:42.298665+00:00",
+      "checked_at": "2026-10-30T03:47:16.954078+00:00",
       "rejected_count": 11,
       "rejection_reasons": {
         "off_topic": 11
       },
       "rejected_examples": [
         {
-          "title": "Voxel51 Multimodal",
+          "title": "Confetti",
           "reason": "off_topic"
         },
         {
-          "title": "Confetti",
+          "title": "Viggle JST-2",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Voxel51 Multimodal",
           "reason": "off_topic"
         },
         {
@@ -197,10 +205,6 @@
         },
         {
           "title": "AutoShelf 2.6",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Viggle JST-2",
           "reason": "off_topic"
         },
         {
@@ -229,7 +233,7 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-10-30T03:45:42.298665+00:00",
+      "checked_at": "2026-10-30T03:47:16.954078+00:00",
       "rejected_count": 17,
       "rejection_reasons": {
         "off_topic": 17
@@ -256,15 +260,15 @@
           "reason": "off_topic"
         },
         {
-          "title": "The ‘Pain in the Ass’ Math That Could Save Vibe Coding From Itself",
+          "title": "Code-execution flaw in UEFI firmware affects most servers on planet Earth",
           "reason": "off_topic"
         },
         {
-          "title": "Our climate models have a big, dangerous blind spot",
+          "title": "Disgraced eMudhra drops out of TLS business after using cert private key of 4",
           "reason": "off_topic"
         },
         {
-          "title": "Industrial Intelligence: The next growth opportunity for manufacturing",
+          "title": "333 Tor exit nodes hijacked to intercept SSH traffic and retrieve plaintext email",
           "reason": "off_topic"
         }
       ],
@@ -273,7 +277,7 @@
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 40,
+      "fresh_count": 42,
       "errors": [
         {
           "endpoint": "jiqizhixin",
@@ -289,10 +293,10 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-10-30T03:45:42.298665+00:00",
-      "rejected_count": 78,
+      "checked_at": "2026-10-30T03:47:16.954078+00:00",
+      "rejected_count": 76,
       "rejection_reasons": {
-        "off_topic": 78
+        "off_topic": 76
       },
       "rejected_examples": [
         {
@@ -332,9 +336,6 @@
       "latest_published_at": "2026-10-30T03:19:48+00:00"
     }
   },
-  "quality_rejections": {
-    "no_concrete_signal": 6,
-    "insufficient_excerpt": 1
-  },
+  "quality_rejections": {},
   "quality_complete": true
 }
