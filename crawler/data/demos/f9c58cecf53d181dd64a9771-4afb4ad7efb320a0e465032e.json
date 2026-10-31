@@ -1,0 +1,194 @@
+{
+  "cache_key": "f9c58cecf53d181dd64a9771-4afb4ad7efb320a0e465032e",
+  "product_key": "f9c58cecf53d181dd64a9771",
+  "fingerprint": "4afb4ad7efb320a0e465032e",
+  "product_id": "110",
+  "product_name": "Reliable Robotics",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-31T22:27:05.207483+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "探索自主航空系统概念",
+      "en": "Explore Autonomous Aviation Concepts"
+    },
+    "scenario": {
+      "zh": "了解Reliable Robotics自主飞行技术的潜在应用场景",
+      "en": "Understand potential applications of Reliable Robotics' autonomous flight technology"
+    },
+    "steps": [
+      {
+        "id": "mission_type",
+        "widget": "choice",
+        "title": {
+          "zh": "选择飞行任务类型",
+          "en": "Choose Flight Mission Type"
+        },
+        "instruction": {
+          "zh": "选择一个应用场景",
+          "en": "Select an application scenario"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "货运物流",
+              "en": "Cargo Logistics"
+            },
+            "output": {
+              "zh": "定点配送场景",
+              "en": "Point-to-point delivery scenario"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "任务需求",
+                "en": "Mission Requirements"
+              },
+              "output_label": {
+                "zh": "航线规划",
+                "en": "Route Planning"
+              },
+              "input": {
+                "zh": "从旧金山配送中心向萨克拉门托医疗设施运送15公斤紧急医疗物资，需在2小时内送达",
+                "en": "Transport 15kg urgent medical supplies from San Francisco distribution center to Sacramento medical facility within 2 hours"
+              },
+              "output": {
+                "zh": "直飞航线140公里，飞行时间45分钟，备用降落点3个，自主系统处理所有导航和通信协议",
+                "en": "Direct flight route 140km, flight time 45 minutes, 3 alternate landing sites, autonomous system handles all navigation and communication protocols"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "区域巡查",
+              "en": "Regional Patrol"
+            },
+            "output": {
+              "zh": "监测任务场景",
+              "en": "Monitoring mission scenario"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "巡查区域",
+                "en": "Patrol Area"
+              },
+              "output_label": {
+                "zh": "飞行方案",
+                "en": "Flight Plan"
+              },
+              "input": {
+                "zh": "覆盖中央山谷500平方公里农业区，检查灌溉系统和作物状况，每周执行3次",
+                "en": "Cover 500 square kilometers of Central Valley agricultural area, inspect irrigation systems and crop conditions, execute 3 times weekly"
+              },
+              "output": {
+                "zh": "6小时循环航线，12个检查点，固定高度800米，自主系统调整路径避开临时限飞区和天气系统",
+                "en": "6-hour circular route, 12 checkpoints, fixed altitude 800 meters, autonomous system adjusts path to avoid temporary no-fly zones and weather systems"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "system_config",
+        "widget": "choice",
+        "title": {
+          "zh": "系统配置考量",
+          "en": "System Configuration Considerations"
+        },
+        "instruction": {
+          "zh": "查看技术层面要素",
+          "en": "Review technical layer elements"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "自主导航",
+              "en": "Autonomous Navigation"
+            },
+            "output": {
+              "zh": "路径规划能力",
+              "en": "Path planning capabilities"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "传统驾驶",
+                "en": "Traditional Piloting"
+              },
+              "output_label": {
+                "zh": "自主系统",
+                "en": "Autonomous System"
+              },
+              "input": {
+                "zh": "人工监控空域、手动调整航向、实时决策应对气象变化",
+                "en": "Manual airspace monitoring, manual heading adjustments, real-time decisions for weather changes"
+              },
+              "output": {
+                "zh": "连续空域感知、自动航向优化、预测性天气路径重规划",
+                "en": "Continuous airspace awareness, automatic heading optimization, predictive weather path replanning"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "通信协议",
+              "en": "Communication Protocols"
+            },
+            "output": {
+              "zh": "地空交互方式",
+              "en": "Ground-air interaction methods"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "协议需求",
+                "en": "Protocol Requirements"
+              },
+              "output_label": {
+                "zh": "实现方式",
+                "en": "Implementation Approach"
+              },
+              "input": {
+                "zh": "与空管系统实时通信、传输飞行状态数据、接收改航指令",
+                "en": "Real-time communication with ATC systems, transmit flight status data, receive rerouting instructions"
+              },
+              "output": {
+                "zh": "多冗余数据链路、标准化消息格式、自主解析和执行空管指令无需人工介入",
+                "en": "Multi-redundant data links, standardized message formats, autonomous parsing and execution of ATC instructions without human intervention"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了自主航空的假想应用场景和技术概念，未验证实际系统性能。访问官网了解Reliable Robotics具体技术细节",
+      "en": "Demonstrated hypothetical autonomous aviation scenarios and technical concepts; actual system performance unverified. Visit official site for specific Reliable Robotics technical details"
+    },
+    "sources": [
+      {
+        "url": "https://reliable.co/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://scrum.vc/ja/2026/05/07/scrum-funding-news-20260507/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

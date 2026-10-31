@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-31T21:46:46.738447+00:00",
+  "updated_at": "2026-10-31T22:25:20.451442+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
@@ -7,17 +7,12 @@
       "fresh_count": 18,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-31T21:46:46.738447+00:00",
+      "checked_at": "2026-10-31T22:25:20.451442+00:00",
       "rejected_count": 10,
       "rejection_reasons": {
-        "no_concrete_signal": 7,
-        "insufficient_excerpt": 3
+        "no_concrete_signal": 10
       },
       "rejected_examples": [
-        {
-          "title": "@OpenAI · If you are wondering whether your website is affected, we have packaged a Codex skill to help check. Point your Codex at this repo to guide you throug",
-          "reason": "no_concrete_signal"
-        },
         {
           "title": "@OpenAI · With Intelligent UI, GPT‑6 can now compose responses using text, visuals, and interactive elements, choosing how they fit together based on your quest",
           "reason": "no_concrete_signal"
@@ -27,79 +22,82 @@
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@OpenAIDevs · OpenAI Developers",
-          "reason": "insufficient_excerpt"
+          "title": "@OpenAIDevs · Cool projects our community is cooking with Codex:",
+          "reason": "no_concrete_signal"
         },
         {
           "title": "@OpenAIDevs · Our dot helps @danizeres, @axbehr and @fedesarquis with the recipe and keeps the prep in ChatGPT Space, while GPT-Live-1 talks us through making r",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@OpenAIDevs · OpenAI Developers",
-          "reason": "insufficient_excerpt"
+          "title": "@OpenAIDevs · Learn how to build all of these projects or share yours so others can replicate it: https://t.co/J7mgdmh0Za",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "@OpenAIDevs · OpenAI Developers on X",
-          "reason": "insufficient_excerpt"
+          "title": "@OpenAIDevs · Here’s how our engineers use Codex at OpenAI to dig through our codebase, find what needs attention, and chip away at the maintenance backlog:",
+          "reason": "no_concrete_signal"
         },
         {
           "title": "@AnthropicAI · New on our Frontier Red Team blog: using Claude to formally verify software at large scale. Formal verification can prove that code is free of ce",
           "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@AnthropicAI · New on our Engineering blog: Creating in-house source control. In May, we merged around 2,500 code changes per day. In September, we merged more ",
+          "reason": "no_concrete_signal"
         }
       ],
-      "stored_count": 50,
+      "stored_count": 53,
       "latest_published_at": "2026-10-30T20:15:04.944000+00:00"
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 7,
+      "fresh_count": 6,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-31T21:46:46.738447+00:00",
-      "rejected_count": 33,
+      "checked_at": "2026-10-31T22:25:20.451442+00:00",
+      "rejected_count": 34,
       "rejection_reasons": {
-        "personal_help_or_chatter": 3,
-        "off_topic": 10,
-        "no_concrete_signal": 18,
-        "unverified_rumor": 1,
-        "insufficient_evidence": 1
+        "personal_help_or_chatter": 4,
+        "off_topic": 12,
+        "no_concrete_signal": 17,
+        "unverified_rumor": 1
       },
       "rejected_examples": [
         {
-          "title": "How do I make search with local models feel like ChatGPT / Codex?",
+          "title": "Has anyone used Claude to build an all-in-one dashboard for utility bills, mortgage payments, and personal finances? Is it safe to upload statements?",
           "reason": "personal_help_or_chatter"
         },
         {
-          "title": "What do you think UBI means?",
+          "title": "Dear Sam, My RAM Is None of Your Business.",
           "reason": "off_topic"
         },
         {
-          "title": "Local multimodal indexing in TensorAgent: making documents, images, audio, and video searchable for agents",
+          "title": "We have access to the most powerful AI in history, yet I sometimes have absolutely no idea what to do with it. Is that a lack of imagination?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "I gave my Claude Code agents a pixel-art office so I can watch them turn Linear tickets into PRs",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Descartes' Demon Is Back, and This Time It's Targeting AI",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Claude has absolutely had it with code reviews",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Claude can't update memory if MCP is in use",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "New gynoid, this one explicitly intended as a s*xbot, to be debuted this Nov. 3.",
           "reason": "off_topic"
-        },
-        {
-          "title": "Well, my local AI addiction officially got out of hand tonight.",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "OpenAI is merging Chat and Work in December. Only Instant will be unlimited, and everything else will count toward your Codex limits",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Help",
-          "reason": "personal_help_or_chatter"
-        },
-        {
-          "title": "How many t/s would you live with to run Fable/Carbon/Astra/etc locally? And what cliff?",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Stop thinking about AGI as a precursor of ASI",
-          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-10-31T21:43:47+00:00"
+      "latest_published_at": "2026-10-31T21:53:52+00:00"
     },
     "youtube": {
       "status": "direct",
@@ -111,25 +109,13 @@
         }
       ],
       "feeds_ok": 7,
-      "checked_at": "2026-10-31T21:46:46.738447+00:00",
+      "checked_at": "2026-10-31T22:25:20.451442+00:00",
       "rejected_count": 20,
       "rejection_reasons": {
         "off_topic": 18,
         "not_original_item": 2
       },
       "rejected_examples": [
-        {
-          "title": "China just dropped a new frontier model... and nobody can explain how",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The most vulnerable week in internet history...",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The last real programmers are dying out...",
-          "reason": "off_topic"
-        },
         {
           "title": "This is Crazy",
           "reason": "off_topic"
@@ -149,6 +135,18 @@
         {
           "title": "There Is No Way This Is Real",
           "reason": "off_topic"
+        },
+        {
+          "title": "Programmers vs Dream's Fake Manhunts | TheStandup",
+          "reason": "off_topic"
+        },
+        {
+          "title": "🚨🚨 Vibe Coding WoW Forever Mods With Esfand🚨🚨",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The Real Reason",
+          "reason": "off_topic"
         }
       ],
       "stored_count": 29,
@@ -156,18 +154,26 @@
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 11,
+      "fresh_count": 12,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-31T21:46:46.738447+00:00",
-      "rejected_count": 49,
+      "checked_at": "2026-10-31T22:25:20.451442+00:00",
+      "rejected_count": 48,
       "rejection_reasons": {
         "no_concrete_signal": 38,
         "personal_help_or_chatter": 1,
-        "off_topic": 9,
+        "off_topic": 8,
         "insufficient_evidence": 1
       },
       "rejected_examples": [
+        {
+          "title": "Critical Software is rebuilding itself around AI (200 ppl being layed off)",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "AI text watermarking and quality loss",
+          "reason": "no_concrete_signal"
+        },
         {
           "title": "Will AI take your job? You have more agency than you think",
           "reason": "no_concrete_signal"
@@ -191,25 +197,17 @@
         {
           "title": "Cisco gives engineer unlimited AI tokens to rewrite company's legacy code",
           "reason": "no_concrete_signal"
-        },
-        {
-          "title": "The Limits of AI as an Economic Weapon",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "The Smartest People in AI Believe This Is the World's Most Important Chart",
-          "reason": "no_concrete_signal"
         }
       ],
-      "stored_count": 39,
-      "latest_published_at": "2026-10-31T19:30:14+00:00"
+      "stored_count": 40,
+      "latest_published_at": "2026-10-31T22:01:11+00:00"
     },
     "producthunt": {
       "status": "direct",
       "fresh_count": 15,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-31T21:46:46.738447+00:00",
+      "checked_at": "2026-10-31T22:25:20.451442+00:00",
       "rejected_count": 22,
       "rejection_reasons": {
         "off_topic": 22
@@ -217,10 +215,6 @@
       "rejected_examples": [
         {
           "title": "LumaFold: Screen Light",
-          "reason": "off_topic"
-        },
-        {
-          "title": "CubbyPad",
           "reason": "off_topic"
         },
         {
@@ -232,11 +226,15 @@
           "reason": "off_topic"
         },
         {
+          "title": "Mo",
+          "reason": "off_topic"
+        },
+        {
           "title": "Seqora",
           "reason": "off_topic"
         },
         {
-          "title": "Mo",
+          "title": "CubbyPad",
           "reason": "off_topic"
         },
         {
@@ -261,20 +259,12 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-10-31T21:46:46.738447+00:00",
+      "checked_at": "2026-10-31T22:25:20.451442+00:00",
       "rejected_count": 20,
       "rejection_reasons": {
         "off_topic": 20
       },
       "rejected_examples": [
-        {
-          "title": "Apple Intelligence is finally coming to China with iOS 27.3",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Silicon Valley wants you to invest in miracles",
-          "reason": "off_topic"
-        },
         {
           "title": "4 days left: How TechCrunch Founder Summit helps you make more useful connections to scale",
           "reason": "off_topic"
@@ -292,11 +282,19 @@
           "reason": "off_topic"
         },
         {
-          "title": "Code-execution flaw in UEFI firmware affects most servers on planet Earth",
+          "title": "Apple Intelligence is finally coming to China with iOS 27.3",
           "reason": "off_topic"
         },
         {
-          "title": "Disgraced eMudhra drops out of TLS business after using cert private key of 4",
+          "title": "Silicon Valley wants you to invest in miracles",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The ‘Pain in the Ass’ Math That Could Save Vibe Coding From Itself",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Code-execution flaw in UEFI firmware affects most servers on planet Earth",
           "reason": "off_topic"
         }
       ],
@@ -321,42 +319,42 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-10-31T21:46:46.738447+00:00",
-      "rejected_count": 76,
+      "checked_at": "2026-10-31T22:25:20.451442+00:00",
+      "rejected_count": 75,
       "rejection_reasons": {
-        "off_topic": 76
+        "off_topic": 75
       },
       "rejected_examples": [
         {
-          "title": "本月玩什么｜影之刃零、战争机器：事变日等",
+          "title": "刚刚，国行 Apple 智能官宣，但满血 SiriAI 还得等",
           "reason": "off_topic"
         },
         {
-          "title": "一图流 | 一张图看懂中国版 Apple 智能",
+          "title": "红魔 12 Pro+ 体验：水冷加上 RGB 灯，游戏性能全面升级",
           "reason": "off_topic"
         },
         {
-          "title": "本周看什么 | 最近值得一看的 9 部作品",
+          "title": "「史上最强」的 iPad mini，为什么还是 60Hz 屏幕？",
           "reason": "off_topic"
         },
         {
-          "title": "App+1｜该吃药了：一片小药板，让吃药提醒变得轻松有趣",
+          "title": "卓驭发布商用车智能辅助驾驶解决方案「磐行」，一年可以让重卡省下 2-3 万元油钱",
           "reason": "off_topic"
         },
         {
-          "title": "《久坐健康指南》作者、运动健康领域创作者阿帅装了啥？",
+          "title": "CMF Speaker 系列体验：好听的牛奶盒，还能自己做外壳",
           "reason": "off_topic"
         },
         {
-          "title": "精确到秒的时间记录是怎样的？我的柳比歇夫法半年实践",
+          "title": "13.98 万元起！小鹏 MONA L05 正式上市，大五座 SUV 市场的卷王来了",
           "reason": "off_topic"
         },
         {
-          "title": "派早报：全球首款 Android XR 有线眼镜 XREAL AURA 发售等",
+          "title": "取消四缸插混，3.0T 六缸回归！全新 AMG GLC 53 售 59.9 万元",
           "reason": "off_topic"
         },
         {
-          "title": "新玩意 254｜少数派的编辑们最近买了啥？",
+          "title": "为什么新模型发布，都要先做一个游戏？",
           "reason": "off_topic"
         }
       ],
@@ -365,8 +363,7 @@
     }
   },
   "quality_rejections": {
-    "outside_news_window": 1,
-    "duplicate_headline": 2
+    "duplicate_headline": 1
   },
   "quality_complete": true
 }

@@ -1,0 +1,198 @@
+{
+  "cache_key": "52e53a3213a23b7df4729943-b3887be8d664ae49a3b5ca87",
+  "product_key": "52e53a3213a23b7df4729943",
+  "fingerprint": "b3887be8d664ae49a3b5ca87",
+  "product_id": "114",
+  "product_name": "Nace.AI",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-31T22:27:45.157468+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "企业工作流代理示例",
+      "en": "Enterprise Workflow Agent Example"
+    },
+    "scenario": {
+      "zh": "演示 Nace.AI 代理如何处理一项企业任务的虚构输入和输出",
+      "en": "Demonstrates how a Nace.AI agent might process a fictional enterprise task input and output"
+    },
+    "steps": [
+      {
+        "id": "task_type",
+        "widget": "choice",
+        "title": {
+          "zh": "选择工作流场景",
+          "en": "Choose Workflow Scenario"
+        },
+        "instruction": {
+          "zh": "选择一个企业任务类型",
+          "en": "Select an enterprise task type"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "采购审批路由",
+              "en": "Procurement Routing"
+            },
+            "output": {
+              "zh": "代理分析请求并建议审批路径",
+              "en": "Agent analyzes request and suggests approval path"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "采购请求摘录",
+                "en": "Purchase Request Excerpt"
+              },
+              "output_label": {
+                "zh": "路由建议",
+                "en": "Routing Suggestion"
+              },
+              "input": {
+                "zh": "部门：市场部\n项目：Q2活动\n供应商：创意设计公司\n金额：$18,500\n用途：活动视觉设计和物料制作",
+                "en": "Department: Marketing\nProject: Q2 Campaign\nVendor: Creative Design Co\nAmount: $18,500\nPurpose: Event visuals and materials"
+              },
+              "output": {
+                "zh": "建议路径：市场总监 → 财务经理 → CFO\n理由：超出部门预算阈值，需高级审批\n预计周期：3-5个工作日",
+                "en": "Suggested path: Marketing Director → Finance Manager → CFO\nReason: Exceeds department threshold, requires senior approval\nEstimated cycle: 3-5 business days"
+              },
+              "emphasis": {
+                "zh": "金额：$18,500",
+                "en": "Amount: $18,500"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "客户问题分类",
+              "en": "Customer Issue Triage"
+            },
+            "output": {
+              "zh": "代理识别问题类型并分配团队",
+              "en": "Agent identifies issue type and assigns team"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "客户工单摘录",
+                "en": "Customer Ticket Excerpt"
+              },
+              "output_label": {
+                "zh": "分类结果",
+                "en": "Triage Result"
+              },
+              "input": {
+                "zh": "主题：API调用间歇性失败\n客户等级：企业级\n描述：过去48小时内，/v2/data端点返回504超时，大约每20次请求出现一次",
+                "en": "Subject: API calls intermittently failing\nTier: Enterprise\nDescription: Past 48hrs, /v2/data endpoint returning 504 timeouts about 1 in 20 requests"
+              },
+              "output": {
+                "zh": "分类：技术问题 - 基础设施\n优先级：高（企业客户受影响）\n分配：平台工程团队\n建议行动：立即检查负载均衡器日志",
+                "en": "Category: Technical - Infrastructure\nPriority: High (enterprise customer affected)\nAssigned: Platform Engineering\nSuggested action: Check load balancer logs immediately"
+              },
+              "emphasis": {
+                "zh": "504超时",
+                "en": "504 timeouts"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "合同条款提取",
+              "en": "Contract Term Extraction"
+            },
+            "output": {
+              "zh": "代理识别关键条款和截止日期",
+              "en": "Agent identifies key terms and deadlines"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "合同文本片段",
+                "en": "Contract Text Fragment"
+              },
+              "output_label": {
+                "zh": "提取的条款",
+                "en": "Extracted Terms"
+              },
+              "input": {
+                "zh": "服务协议第8.2条：供应商应在每月最后一个工作日前提交月度报告。未能按时提交将导致当月服务费扣减。协议有效期自2025年3月1日起为期24个月。",
+                "en": "Service Agreement Section 8.2: Vendor shall submit monthly reports by last business day of each month. Failure to submit on time results in service fee reduction. Effective March 1, 2025 for 24 months."
+              },
+              "output": {
+                "zh": "关键条款：\n- 报告截止：每月最后工作日\n- 延迟罚款：当月服务费减少\n- 合同期限：2025-03-01 至 2027-02-28\n- 续约提醒：2027年1月前需决策",
+                "en": "Key terms:\n- Report deadline: Last business day monthly\n- Late penalty: Monthly service fee reduction\n- Contract term: 2025-03-01 to 2027-02-28\n- Renewal reminder: Decision needed before Jan 2027"
+              },
+              "emphasis": {
+                "zh": "每月最后一个工作日",
+                "en": "last business day of each month"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "review_mode",
+        "widget": "choice",
+        "title": {
+          "zh": "专家审核层级",
+          "en": "Expert Review Level"
+        },
+        "instruction": {
+          "zh": "选择审核深度",
+          "en": "Choose review depth"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "自动处理",
+              "en": "Automated Processing"
+            },
+            "output": {
+              "zh": "代理直接执行，无人工介入",
+              "en": "Agent executes directly without human intervention"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "专家验证",
+              "en": "Expert Validation"
+            },
+            "output": {
+              "zh": "专家网络审核代理决策后执行",
+              "en": "Expert network reviews agent decision before execution"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "此演示展示了代理处理企业任务的虚构示例。实际能力、MetaModel技术细节和专家网络运作需在 Nace.AI 官网验证。",
+      "en": "This demo shows fictional examples of agent enterprise task processing. Actual capabilities, MetaModel tech details, and expert network operations must be verified on the Nace.AI website."
+    },
+    "sources": [
+      {
+        "url": "https://nace.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.implicator.ai/nace-ai-raises-21-5-million-seed-round-for-enterprise-ai-agents/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

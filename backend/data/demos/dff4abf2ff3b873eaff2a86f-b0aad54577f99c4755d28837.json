@@ -1,0 +1,305 @@
+{
+  "cache_key": "dff4abf2ff3b873eaff2a86f-b0aad54577f99c4755d28837",
+  "product_key": "dff4abf2ff3b873eaff2a86f",
+  "fingerprint": "b0aad54577f99c4755d28837",
+  "product_id": "119",
+  "product_name": "Kodree",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-31T22:28:43.701680+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "模拟AI平台增长决策",
+      "en": "Simulate AI platform growth decisions"
+    },
+    "scenario": {
+      "zh": "体验类似Kodree的AI平台用户获取策略，探索融资支持的扩张路径",
+      "en": "Experience Kodree-style AI platform user acquisition strategy and funding-backed expansion paths"
+    },
+    "steps": [
+      {
+        "id": "market_entry",
+        "widget": "choice",
+        "title": {
+          "zh": "选择首要市场",
+          "en": "Choose primary market"
+        },
+        "instruction": {
+          "zh": "确定初始用户获取重点",
+          "en": "Determine initial user acquisition focus"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "中东欧深化",
+              "en": "CEE deepening"
+            },
+            "output": {
+              "zh": "本地优势快速扩展",
+              "en": "Local advantage for rapid expansion"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "市场评估摘要",
+                "en": "Market assessment excerpt"
+              },
+              "output_label": {
+                "zh": "行动建议",
+                "en": "Action recommendation"
+              },
+              "input": {
+                "zh": "中东欧地区现有客户网络成熟，竞争压力相对较低，用户信任基础稳固，本地化优势明显",
+                "en": "CEE region has mature client network, relatively lower competitive pressure, solid user trust foundation, clear localization advantage"
+              },
+              "output": {
+                "zh": "通过合作伙伴推荐和社区活动快速获客，利用本地团队优势建立区域主导地位",
+                "en": "Rapidly acquire users through partner referrals and community events, leverage local team advantage to establish regional dominance"
+              },
+              "emphasis": {
+                "zh": "竞争压力相对较低",
+                "en": "relatively lower competitive pressure"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "西欧扩张",
+              "en": "Western Europe expansion"
+            },
+            "output": {
+              "zh": "投入资金抢占市场",
+              "en": "Deploy capital to capture market"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "目标国家列表",
+                "en": "Target country list"
+              },
+              "output_label": {
+                "zh": "启动任务",
+                "en": "Launch tasks"
+              },
+              "input": {
+                "zh": "德国、法国、荷兰",
+                "en": "Germany, France, Netherlands"
+              },
+              "output": {
+                "zh": "建立支付通道，启动多语言支持，测试付费广告渠道",
+                "en": "Establish payment channels, launch multilingual support, test paid ad channels"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "德国",
+                    "en": "Germany"
+                  },
+                  "detail": {
+                    "zh": "技术用户密集，B2B潜力大",
+                    "en": "Dense tech users, strong B2B potential"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "法国",
+                    "en": "France"
+                  },
+                  "detail": {
+                    "zh": "创意产业活跃，SaaS接受度高",
+                    "en": "Active creative industry, high SaaS acceptance"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "荷兰",
+                    "en": "Netherlands"
+                  },
+                  "detail": {
+                    "zh": "英语普及，适合初期测试",
+                    "en": "English widespread, suitable for early testing"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "channel_strategy",
+        "widget": "choice",
+        "title": {
+          "zh": "配置获客渠道",
+          "en": "Configure acquisition channels"
+        },
+        "instruction": {
+          "zh": "设计资金分配方案",
+          "en": "Design funding allocation plan"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "搜索广告为主",
+              "en": "Search ads primary"
+            },
+            "output": {
+              "zh": "高意图流量快速转化",
+              "en": "High-intent traffic for quick conversion"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "分配方案草稿",
+                "en": "Allocation plan draft"
+              },
+              "output_label": {
+                "zh": "预期效果",
+                "en": "Expected effect"
+              },
+              "input": {
+                "zh": "搜索广告占主要预算，社交媒体次之，内容营销和合作伙伴补充",
+                "en": "Search ads take major budget, social media secondary, content marketing and partnerships supplementary"
+              },
+              "output": {
+                "zh": "搜索带来即时转化但成本递增，社交扩大认知，内容建立长期信任",
+                "en": "Search brings immediate conversion but rising cost, social expands awareness, content builds long-term trust"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "合作网络优先",
+              "en": "Partnership network priority"
+            },
+            "output": {
+              "zh": "依靠关系降低获客成本",
+              "en": "Rely on relationships to lower acquisition cost"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "分配方案草稿",
+                "en": "Allocation plan draft"
+              },
+              "output_label": {
+                "zh": "预期效果",
+                "en": "Expected effect"
+              },
+              "input": {
+                "zh": "合作伙伴推荐为核心，内容营销建立权威，社交和搜索辅助",
+                "en": "Partner referrals as core, content marketing establishes authority, social and search assist"
+              },
+              "output": {
+                "zh": "合作伙伴带来预验证用户和高留存，内容吸引自然流量，降低整体获客成本",
+                "en": "Partners bring pre-validated users and high retention, content attracts organic traffic, lowers overall acquisition cost"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "metrics",
+        "widget": "choice",
+        "title": {
+          "zh": "跟踪关键指标",
+          "en": "Track key metrics"
+        },
+        "instruction": {
+          "zh": "选择优化监控重点",
+          "en": "Select optimization monitoring focus"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "提升转化率",
+              "en": "Improve conversion rate"
+            },
+            "output": {
+              "zh": "优化访客到付费路径",
+              "en": "Optimize visitor-to-paid path"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "虚构当前数据",
+                "en": "Fictional current data"
+              },
+              "output_label": {
+                "zh": "优化方向",
+                "en": "Optimization direction"
+              },
+              "input": {
+                "zh": "访客到注册转化较低，注册到付费转化中等",
+                "en": "Visitor-to-signup conversion lower, signup-to-paid conversion moderate"
+              },
+              "output": {
+                "zh": "简化注册流程提升首次转化，优化定价页和试用体验提升付费转化",
+                "en": "Simplify signup flow to lift initial conversion, optimize pricing page and trial experience to lift paid conversion"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "强化留存率",
+              "en": "Strengthen retention rate"
+            },
+            "output": {
+              "zh": "减少用户流失",
+              "en": "Reduce user churn"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "虚构留存观察",
+                "en": "Fictional retention observation"
+              },
+              "output_label": {
+                "zh": "干预措施",
+                "en": "Intervention measures"
+              },
+              "input": {
+                "zh": "第二周使用率下降明显，三个月后留存稳定",
+                "en": "Second-week usage rate drops noticeably, three-month retention stable"
+              },
+              "output": {
+                "zh": "针对第二周关键行为设计引导流程，为长期用户提供进阶功能和案例",
+                "en": "Design onboarding for second-week critical behaviors, provide advanced features and cases for long-term users"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了市场选择、渠道配置和指标监控决策；实际能力需访问Kodree官网确认",
+      "en": "Demonstrated market selection, channel configuration and metrics monitoring decisions; actual capabilities require verification on Kodree site"
+    },
+    "sources": [
+      {
+        "url": "https://kodree.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.vestbee.com/insights/articles/top-cee-funding-rounds-closed-in-march-2026",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

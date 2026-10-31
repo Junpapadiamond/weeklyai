@@ -1,0 +1,186 @@
+{
+  "cache_key": "13a99f53af6a583b3c2156d0-ee6011996567ea77463a4bbe",
+  "product_key": "13a99f53af6a583b3c2156d0",
+  "fingerprint": "ee6011996567ea77463a4bbe",
+  "product_id": "p_5458ad5531edb833",
+  "product_name": "Pixel Systems",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-31T22:26:42.937557+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "验证数字内容真实性",
+      "en": "Verify Digital Content Authenticity"
+    },
+    "scenario": {
+      "zh": "提交可疑的数字材料，获得取证分析结果，判断内容是否为AI生成或被操纵",
+      "en": "Submit suspicious digital material, receive forensic analysis results, and determine if content is AI-generated or manipulated"
+    },
+    "steps": [
+      {
+        "id": "material_type",
+        "widget": "choice",
+        "title": {
+          "zh": "选择待验证的材料",
+          "en": "Select Material to Verify"
+        },
+        "instruction": {
+          "zh": "选择一种需要验证真实性的数字内容",
+          "en": "Choose a type of digital content that needs authenticity verification"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "保险索赔照片",
+              "en": "Insurance Claim Photo"
+            },
+            "output": {
+              "zh": "分析照片是否为AI生成或经过操纵",
+              "en": "Analyze if photo is AI-generated or manipulated"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "提交的索赔照片",
+                "en": "Submitted Claim Photo"
+              },
+              "output_label": {
+                "zh": "取证分析结果",
+                "en": "Forensic Analysis Result"
+              },
+              "input": {
+                "zh": "车辆损坏照片：前保险杠凹陷，左前灯破裂，引擎盖有明显划痕",
+                "en": "Vehicle damage photo: front bumper dented, left headlight cracked, hood with visible scratches"
+              },
+              "output": {
+                "zh": "检测到多处异常：光照不一致，阴影方向冲突，边缘过渡不自然。高置信度判定为AI生成内容",
+                "en": "Multiple anomalies detected: inconsistent lighting, conflicting shadow directions, unnatural edge transitions. High confidence determination of AI-generated content"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "合同扫描文档",
+              "en": "Scanned Contract Document"
+            },
+            "output": {
+              "zh": "检查文档是否被数字篡改",
+              "en": "Check if document has been digitally altered"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "合同文档扫描件",
+                "en": "Contract Document Scan"
+              },
+              "output_label": {
+                "zh": "篡改检测结果",
+                "en": "Tampering Detection Result"
+              },
+              "input": {
+                "zh": "租赁协议第3条：月租金为2,800欧元，租期12个月，押金5,600欧元",
+                "en": "Lease agreement clause 3: Monthly rent 2,800 euros, 12-month term, deposit 5,600 euros"
+              },
+              "output": {
+                "zh": "数字金额区域显示字体不一致，压缩伪影异常，检测到后期修改痕迹。原始金额可能不同",
+                "en": "Digital amount areas show font inconsistencies, abnormal compression artifacts, post-modification traces detected. Original amounts likely different"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "产品评价图片",
+              "en": "Product Review Image"
+            },
+            "output": {
+              "zh": "判断评价配图是否真实",
+              "en": "Determine if review image is authentic"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "用户上传的产品图",
+                "en": "User-Uploaded Product Image"
+              },
+              "output_label": {
+                "zh": "真实性评估",
+                "en": "Authenticity Assessment"
+              },
+              "input": {
+                "zh": "高端耳机产品照：黑色外壳，金属质感，品牌标识清晰可见",
+                "en": "Premium headphone product photo: black casing, metallic texture, brand logo clearly visible"
+              },
+              "output": {
+                "zh": "纹理重复模式异常，反光不符合物理规律，标识细节模糊。判定为AI生成的虚假评价图片",
+                "en": "Abnormal texture repetition patterns, reflections inconsistent with physics, logo details blurred. Determined to be AI-generated fake review image"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "review_finding",
+        "widget": "review",
+        "title": {
+          "zh": "查看检测细节",
+          "en": "Review Detection Details"
+        },
+        "instruction": {
+          "zh": "检查取证分析方法和置信度",
+          "en": "Examine forensic analysis methods and confidence"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "多重取证指标",
+              "en": "Multiple Forensic Indicators"
+            },
+            "output": {
+              "zh": "光照一致性、压缩伪影、边缘分析、纹理模式四项独立方法均标记异常",
+              "en": "Four independent methods flagged anomalies: lighting consistency, compression artifacts, edge analysis, texture patterns"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "置信度评估",
+              "en": "Confidence Assessment"
+            },
+            "output": {
+              "zh": "综合评分显示强烈证据表明内容为AI生成，建议拒绝或要求提供原始材料",
+              "en": "Combined scoring shows strong evidence of AI generation, recommend rejection or request original material"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例展示了取证分析如何识别可疑特征。实际检测准确率需在Pixel Systems平台验证，并需人工审核关键决策",
+      "en": "Example shows how forensic analysis identifies suspicious features. Actual detection accuracy must be verified on Pixel Systems platform, and critical decisions require human review"
+    },
+    "sources": [
+      {
+        "url": "https://pixelsystems.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.eu-startups.com/2026/10/tool-that-identifies-ai-generated-material-helps-pixel-systems-raise-e2-7-million",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

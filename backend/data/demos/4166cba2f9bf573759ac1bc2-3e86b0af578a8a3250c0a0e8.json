@@ -1,0 +1,228 @@
+{
+  "cache_key": "4166cba2f9bf573759ac1bc2-3e86b0af578a8a3250c0a0e8",
+  "product_key": "4166cba2f9bf573759ac1bc2",
+  "fingerprint": "3e86b0af578a8a3250c0a0e8",
+  "product_id": "p_da8425bd08e48652",
+  "product_name": "Matiks",
+  "origin": "pregenerated",
+  "generated_at": "2026-10-31T22:26:18.019887+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "探索脑力游戏对战",
+      "en": "Explore Brain Game Duels"
+    },
+    "scenario": {
+      "zh": "选择游戏类型并体验Matiks竞技玩法示例",
+      "en": "Choose a game type and see example Matiks duel gameplay"
+    },
+    "steps": [
+      {
+        "id": "game_type",
+        "widget": "choice",
+        "title": {
+          "zh": "选择游戏类型",
+          "en": "Choose Game Type"
+        },
+        "instruction": {
+          "zh": "从四类脑力挑战中选一种",
+          "en": "Pick one of four brain challenges"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "数学速算",
+              "en": "Math Sprint"
+            },
+            "output": {
+              "zh": "快速解决算术题",
+              "en": "Solve arithmetic quickly"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "对战题目",
+                "en": "Duel Problems"
+              },
+              "output_label": {
+                "zh": "你的得分",
+                "en": "Your Score"
+              },
+              "input": {
+                "zh": "回合1: 47 + 89 = ?  |  回合2: 156 ÷ 12 = ?  |  回合3: 23 × 8 = ?",
+                "en": "Round 1: 47 + 89 = ?  |  Round 2: 156 ÷ 12 = ?  |  Round 3: 23 × 8 = ?"
+              },
+              "output": {
+                "zh": "3题正确,用时18秒,击败对手",
+                "en": "3 correct, 18 seconds, defeated opponent"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "回合1",
+                    "en": "Round 1"
+                  },
+                  "detail": {
+                    "zh": "答案136,用时4秒",
+                    "en": "Answer 136, 4 seconds"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "回合2",
+                    "en": "Round 2"
+                  },
+                  "detail": {
+                    "zh": "答案13,用时7秒",
+                    "en": "Answer 13, 7 seconds"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "回合3",
+                    "en": "Round 3"
+                  },
+                  "detail": {
+                    "zh": "答案184,用时7秒",
+                    "en": "Answer 184, 7 seconds"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "逻辑推理",
+              "en": "Logic Puzzle"
+            },
+            "output": {
+              "zh": "找出规律完成序列",
+              "en": "Find patterns in sequences"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "对战题目",
+                "en": "Duel Problems"
+              },
+              "output_label": {
+                "zh": "你的得分",
+                "en": "Your Score"
+              },
+              "input": {
+                "zh": "回合1: 2, 6, 12, 20, ?  |  回合2: ○□○□○?  |  回合3: 红蓝绿红蓝?",
+                "en": "Round 1: 2, 6, 12, 20, ?  |  Round 2: ○□○□○?  |  Round 3: Red Blue Green Red Blue ?"
+              },
+              "output": {
+                "zh": "3题正确,用时22秒,平局",
+                "en": "3 correct, 22 seconds, draw"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "回合1",
+                    "en": "Round 1"
+                  },
+                  "detail": {
+                    "zh": "答案30,用时9秒",
+                    "en": "Answer 30, 9 seconds"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "回合2",
+                    "en": "Round 2"
+                  },
+                  "detail": {
+                    "zh": "答案□,用时6秒",
+                    "en": "Answer □, 6 seconds"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "回合3",
+                    "en": "Round 3"
+                  },
+                  "detail": {
+                    "zh": "答案绿,用时7秒",
+                    "en": "Answer Green, 7 seconds"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "review",
+        "widget": "review",
+        "title": {
+          "zh": "查看对战结果",
+          "en": "Review Duel Result"
+        },
+        "instruction": {
+          "zh": "对比你和对手的表现",
+          "en": "Compare your performance"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "查看详情",
+              "en": "View Details"
+            },
+            "output": {
+              "zh": "显示回合对比",
+              "en": "Shows round comparison"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "对战统计",
+                "en": "Duel Stats"
+              },
+              "output_label": {
+                "zh": "结果分析",
+                "en": "Result Analysis"
+              },
+              "input": {
+                "zh": "你: 3题正确,平均7秒  |  对手: 2题正确,平均9秒",
+                "en": "You: 3 correct, avg 7s  |  Opponent: 2 correct, avg 9s"
+              },
+              "output": {
+                "zh": "你速度更快且准确率更高",
+                "en": "You were faster and more accurate"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例展示了Matiks竞技对战的玩法,实际匹配、题库和排名需在matiks.com体验",
+      "en": "Example shows Matiks duel gameplay; actual matchmaking, problem sets, and leaderboards require matiks.com"
+    },
+    "sources": [
+      {
+        "url": "https://matiks.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/10/26/matiks-raises-10m-to-expand-its-math-and-puzzle-gaming-platform",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}
