@@ -165,7 +165,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
     setIsDirectionSheetOpen(false);
   };
 
-  const browseDirections = useMemo(() => collectDirectionOptions(allProducts, locale).slice(0, 6), [allProducts, locale]);
+  const browseDirections = useMemo(() => collectDirectionOptions(allProducts, locale), [allProducts, locale]);
 
   return (
     <div className="home-root" data-vibe="briefing">

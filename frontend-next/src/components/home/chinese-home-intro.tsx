@@ -34,7 +34,6 @@ export function ChineseHomeIntro({ categories, onCategorySelect }: ChineseHomeIn
           <span><strong>产品演示</strong></span>
           <ArrowUpRight size={17} aria-hidden="true" />
         </Link>
-        <Link className="cn-home-shortcuts__about" href="/content-sources">黑马和潜力股怎么选？<ArrowUpRight size={14} aria-hidden="true" /></Link>
       </aside>
     </section>
   );
