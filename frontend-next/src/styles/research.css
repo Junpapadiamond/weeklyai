@@ -283,3 +283,16 @@ a.website-preview:hover { border-color: var(--primary-border); }
   .home-category-panel { padding: .75rem; }
   .home-category-options button { font-size: .85rem; padding-inline: .5rem; }
 }
+
+/* Keep the open menu inside the content edge and clear of mobile navigation. */
+.home-root[data-vibe="briefing"] .home-catalog-toolbar { position: relative; }
+.home-catalog-toolbar .home-category-picker { position: static; }
+.home-catalog-toolbar .home-category-panel { left: auto; right: 0; top: calc(100% - 16px); }
+.home-category-search input:focus-visible { outline: none; box-shadow: none; }
+@media (max-width: 540px) {
+  .home-category-panel, .home-catalog-toolbar .home-category-panel {
+    position: fixed; inset: auto 16px 80px; width: auto; max-width: none;
+    max-height: calc(100dvh - 160px);
+  }
+  .home-category-options { max-height: calc(100dvh - 265px); }
+}
