@@ -1,20 +1,23 @@
 {
-  "updated_at": "2026-10-31T12:54:35.845768+00:00",
+  "updated_at": "2026-10-31T21:46:46.738447+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 17,
+      "fresh_count": 18,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-31T12:54:35.845768+00:00",
-      "rejected_count": 11,
+      "checked_at": "2026-10-31T21:46:46.738447+00:00",
+      "rejected_count": 10,
       "rejection_reasons": {
-        "no_concrete_signal": 3,
-        "insufficient_excerpt": 4,
-        "unvetted_x_author": 4
+        "no_concrete_signal": 7,
+        "insufficient_excerpt": 3
       },
       "rejected_examples": [
+        {
+          "title": "@OpenAI · If you are wondering whether your website is affected, we have packaged a Codex skill to help check. Point your Codex at this repo to guide you throug",
+          "reason": "no_concrete_signal"
+        },
         {
           "title": "@OpenAI · With Intelligent UI, GPT‑6 can now compose responses using text, visuals, and interactive elements, choosing how they fit together based on your quest",
           "reason": "no_concrete_signal"
@@ -24,85 +27,83 @@
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@upstageai · Upstage on X",
+          "title": "@OpenAIDevs · OpenAI Developers",
           "reason": "insufficient_excerpt"
         },
         {
-          "title": "@upstageai · Post - X",
+          "title": "@OpenAIDevs · Our dot helps @danizeres, @axbehr and @fedesarquis with the recipe and keeps the prep in ChatGPT Space, while GPT-Live-1 talks us through making r",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@OpenAIDevs · OpenAI Developers",
           "reason": "insufficient_excerpt"
         },
         {
-          "title": "@minist · 업스테이지가 Solar Mini 4를 공개 한국어 중심의 경량 LLM으로, 기업용 문서 이해·질의응답·에이전트 업무를 겨냥한 최신 Solar 계열 모델 업스테이지는 이전 세대 대비 한국어·영어 이해, 수학·코딩, 장문맥 처리와 지시 이행 성능을 전반적으로 끌어올렸다고 ",
-          "reason": "unvetted_x_author"
+          "title": "@OpenAIDevs · OpenAI Developers on X",
+          "reason": "insufficient_excerpt"
         },
         {
-          "title": "@Chaosai0 · Cline: Upstage's Solar Mini 4 Now Free in Cline 1. Model specifications and benchmark results On October 9 at 11:46 AM PT, Cline announced that Sola",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@NousResearch · Solar Mini 4 from @upstageai is free on Nous Portal for the next two ...",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@cline · Solar Mini 4 is free in Cline. It's a new model from Korean lab ... - X",
-          "reason": "unvetted_x_author"
+          "title": "@AnthropicAI · New on our Frontier Red Team blog: using Claude to formally verify software at large scale. Formal verification can prove that code is free of ce",
+          "reason": "no_concrete_signal"
         }
       ],
-      "stored_count": 39,
+      "stored_count": 50,
       "latest_published_at": "2026-10-30T20:15:04.944000+00:00"
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 13,
+      "fresh_count": 7,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-31T12:54:35.845768+00:00",
-      "rejected_count": 27,
+      "checked_at": "2026-10-31T21:46:46.738447+00:00",
+      "rejected_count": 33,
       "rejection_reasons": {
-        "no_concrete_signal": 14,
-        "off_topic": 11,
-        "personal_help_or_chatter": 2
+        "personal_help_or_chatter": 3,
+        "off_topic": 10,
+        "no_concrete_signal": 18,
+        "unverified_rumor": 1,
+        "insufficient_evidence": 1
       },
       "rejected_examples": [
         {
-          "title": "how do you deal with claude forgetting everything between chats?",
-          "reason": "no_concrete_signal"
+          "title": "How do I make search with local models feel like ChatGPT / Codex?",
+          "reason": "personal_help_or_chatter"
         },
         {
-          "title": "How to connect two Claude Code sessions without copying findings between terminals",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "I just trying implement protection against reverse engineering and hacking, but...",
+          "title": "What do you think UBI means?",
           "reason": "off_topic"
         },
         {
-          "title": "Binance crypto hack: North Korea suspected to be behind biggest-ever heist | CNN Business",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Do you lock down network, secrets or PII for your agents, or do they have access to everything?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Row-Bot 5.3.1 is out",
+          "title": "Local multimodal indexing in TensorAgent: making documents, images, audio, and video searchable for agents",
           "reason": "off_topic"
         },
         {
-          "title": "Row-Bot 5.3.1 is out",
+          "title": "Well, my local AI addiction officially got out of hand tonight.",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "OpenAI is merging Chat and Work in December. Only Instant will be unlimited, and everything else will count toward your Codex limits",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Help",
+          "reason": "personal_help_or_chatter"
+        },
+        {
+          "title": "How many t/s would you live with to run Fable/Carbon/Astra/etc locally? And what cliff?",
           "reason": "off_topic"
         },
         {
-          "title": "I directed Claude Code agents through a 12 chapter cartoon FPS. the free demo is on Steam now",
+          "title": "Stop thinking about AGI as a precursor of ASI",
           "reason": "no_concrete_signal"
         }
       ],
-      "stored_count": 58,
-      "latest_published_at": "2026-10-31T12:37:40+00:00"
+      "stored_count": 60,
+      "latest_published_at": "2026-10-31T21:43:47+00:00"
     },
     "youtube": {
       "status": "direct",
-      "fresh_count": 13,
+      "fresh_count": 12,
       "errors": [
         {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
@@ -110,11 +111,11 @@
         }
       ],
       "feeds_ok": 7,
-      "checked_at": "2026-10-31T12:54:35.845768+00:00",
-      "rejected_count": 21,
+      "checked_at": "2026-10-31T21:46:46.738447+00:00",
+      "rejected_count": 20,
       "rejection_reasons": {
-        "off_topic": 17,
-        "not_original_item": 4
+        "off_topic": 18,
+        "not_original_item": 2
       },
       "rejected_examples": [
         {
@@ -150,66 +151,68 @@
           "reason": "off_topic"
         }
       ],
-      "stored_count": 28,
-      "latest_published_at": "2026-10-31T12:00:08+00:00"
+      "stored_count": 29,
+      "latest_published_at": "2026-10-31T16:00:09+00:00"
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 12,
+      "fresh_count": 11,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-31T12:54:35.845768+00:00",
-      "rejected_count": 48,
+      "checked_at": "2026-10-31T21:46:46.738447+00:00",
+      "rejected_count": 49,
       "rejection_reasons": {
-        "no_concrete_signal": 34,
-        "off_topic": 14
+        "no_concrete_signal": 38,
+        "personal_help_or_chatter": 1,
+        "off_topic": 9,
+        "insufficient_evidence": 1
       },
       "rejected_examples": [
         {
-          "title": "Show HN: NullPrime – do AI models know when they can't know?",
+          "title": "Will AI take your job? You have more agency than you think",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Leo Adds E2E Encryption, Oblivious HTTP, and Verifiable Confidential Computing",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Anthropic's path to the Nasdaq just got a lot bumpier",
+          "title": "People are the hard part of AI",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "What Is Work For? Labor, Politics, and Meaning in the Age of AI",
+          "title": "Free AI",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Entire Insurance industry could be overwhelmed by catastrophic AI event",
+          "title": "Reddit shares plunge as Google's AI search squeezes traffic",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "We Took over ChatGPT Accounts",
+          "title": "Show HN: Read your Character.AI data export in the browser, nothing uploaded",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Estimate and track the environmental footprint of GenAI models at inference",
-          "reason": "off_topic"
+          "title": "Cisco gives engineer unlimited AI tokens to rewrite company's legacy code",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "The supercomputer powering Greece's AI ambitions",
+          "title": "The Limits of AI as an Economic Weapon",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "The Smartest People in AI Believe This Is the World's Most Important Chart",
           "reason": "no_concrete_signal"
         }
       ],
-      "stored_count": 29,
-      "latest_published_at": "2026-10-31T12:16:33+00:00"
+      "stored_count": 39,
+      "latest_published_at": "2026-10-31T19:30:14+00:00"
     },
     "producthunt": {
       "status": "direct",
-      "fresh_count": 16,
+      "fresh_count": 15,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-31T12:54:35.845768+00:00",
-      "rejected_count": 21,
+      "checked_at": "2026-10-31T21:46:46.738447+00:00",
+      "rejected_count": 22,
       "rejection_reasons": {
-        "off_topic": 21
+        "off_topic": 22
       },
       "rejected_examples": [
         {
@@ -217,7 +220,19 @@
           "reason": "off_topic"
         },
         {
+          "title": "CubbyPad",
+          "reason": "off_topic"
+        },
+        {
           "title": "SKI",
+          "reason": "off_topic"
+        },
+        {
+          "title": "AwaitIO",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Seqora",
           "reason": "off_topic"
         },
         {
@@ -225,19 +240,7 @@
           "reason": "off_topic"
         },
         {
-          "title": "CubbyPad",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Secret Key",
-          "reason": "off_topic"
-        },
-        {
           "title": "Hemmed",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Seqora",
           "reason": "off_topic"
         },
         {
@@ -250,7 +253,7 @@
     },
     "tech_news": {
       "status": "direct",
-      "fresh_count": 41,
+      "fresh_count": 40,
       "errors": [
         {
           "endpoint": "venturebeat",
@@ -258,12 +261,24 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-10-31T12:54:35.845768+00:00",
-      "rejected_count": 19,
+      "checked_at": "2026-10-31T21:46:46.738447+00:00",
+      "rejected_count": 20,
       "rejection_reasons": {
-        "off_topic": 19
+        "off_topic": 20
       },
       "rejected_examples": [
+        {
+          "title": "Apple Intelligence is finally coming to China with iOS 27.3",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Silicon Valley wants you to invest in miracles",
+          "reason": "off_topic"
+        },
+        {
+          "title": "4 days left: How TechCrunch Founder Summit helps you make more useful connections to scale",
+          "reason": "off_topic"
+        },
         {
           "title": "Google’s first data center satellite is online and writing poetry",
           "reason": "off_topic"
@@ -277,18 +292,6 @@
           "reason": "off_topic"
         },
         {
-          "title": "Apple Intelligence is finally coming to China with iOS 27.3",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Silicon Valley wants you to invest in miracles",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The ‘Pain in the Ass’ Math That Could Save Vibe Coding From Itself",
-          "reason": "off_topic"
-        },
-        {
           "title": "Code-execution flaw in UEFI firmware affects most servers on planet Earth",
           "reason": "off_topic"
         },
@@ -298,11 +301,11 @@
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-10-31T12:00:00+00:00"
+      "latest_published_at": "2026-10-31T21:41:00+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 26,
+      "fresh_count": 43,
       "errors": [
         {
           "endpoint": "jiqizhixin",
@@ -315,17 +318,13 @@
         {
           "endpoint": "huxiu",
           "reason": "ReadTimeout"
-        },
-        {
-          "endpoint": "leiphone",
-          "reason": "ReadTimeout"
         }
       ],
-      "feeds_ok": 5,
-      "checked_at": "2026-10-31T12:54:35.845768+00:00",
-      "rejected_count": 72,
+      "feeds_ok": 6,
+      "checked_at": "2026-10-31T21:46:46.738447+00:00",
+      "rejected_count": 76,
       "rejection_reasons": {
-        "off_topic": 72
+        "off_topic": 76
       },
       "rejected_examples": [
         {
@@ -362,11 +361,12 @@
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-10-31T12:18:13+00:00"
+      "latest_published_at": "2026-10-31T15:56:00+00:00"
     }
   },
   "quality_rejections": {
-    "duplicate_headline": 1
+    "outside_news_window": 1,
+    "duplicate_headline": 2
   },
   "quality_complete": true
 }
