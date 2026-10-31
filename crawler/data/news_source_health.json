@@ -1,20 +1,23 @@
 {
-  "updated_at": "2026-10-30T22:58:32.476320+00:00",
+  "updated_at": "2026-10-31T06:04:50.271557+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 8,
+      "fresh_count": 14,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-30T22:58:32.476320+00:00",
-      "rejected_count": 9,
+      "checked_at": "2026-10-31T06:04:50.271557+00:00",
+      "rejected_count": 14,
       "rejection_reasons": {
-        "no_concrete_signal": 2,
-        "unvetted_x_author": 6,
-        "insufficient_excerpt": 1
+        "no_concrete_signal": 7,
+        "unvetted_x_author": 7
       },
       "rejected_examples": [
+        {
+          "title": "@OpenAI · With Intelligent UI, GPT‑6 can now compose responses using text, visuals, and interactive elements, choosing how they fit together based on your quest",
+          "reason": "no_concrete_signal"
+        },
         {
           "title": "@OpenAI · GPT-6 and Intelligent UI, now rolling out in ChatGPT for everyone. Intelligent UI in ChatGPT delivers fast, interactive answers that make everyday que",
           "reason": "no_concrete_signal"
@@ -24,192 +27,177 @@
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@OpenAINewsroom · We discovered a sophisticated recording device that was hidden inside one of our offices. We used our models to understand the device and wher",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@Jawlahco · مع توجه لتحويل الشركة إلى مطور لأدوات الذكاء الاصطناعي ...",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@keyofgeo · I have great hopes for the SemenTalk algorithm",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@rohanpaul_ai · Rohan Paul on X",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@huggingface · @natolambert @trillium_labs 🌸🌸🌸",
+          "title": "@GoogleAI · Textbook biology, brought to life right in your browser 🌿 This interactive 5-stage visual atlas built by Argon in @antigravity turns dense textbook ",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@ScaleAILabs · Scale Labs",
+          "title": "@GoogleAI · Simulating the world is crucial on the road to AGI. We’re already exploring real world use cases of Genie 4 with trusted testers across filmmaking, ",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@SakanaAILabs · Sakana AI (@SakanaAILabs) on X",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@graceisford · The agentic scientist from @SakanaAILabs",
+          "reason": "unvetted_x_author"
+        },
+        {
+          "title": "@modal · Modal on X",
           "reason": "unvetted_x_author"
         }
       ],
-      "stored_count": 21,
-      "latest_published_at": "2026-10-29T15:49:48.988000+00:00"
+      "stored_count": 29,
+      "latest_published_at": "2026-10-30T15:12:35.338000+00:00"
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 12,
+      "fresh_count": 7,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-30T22:58:32.476320+00:00",
-      "rejected_count": 28,
+      "checked_at": "2026-10-31T06:04:50.271557+00:00",
+      "rejected_count": 33,
       "rejection_reasons": {
-        "no_concrete_signal": 14,
-        "off_topic": 12,
-        "personal_help_or_chatter": 2
+        "off_topic": 11,
+        "no_concrete_signal": 20,
+        "personal_help_or_chatter": 1,
+        "insufficient_evidence": 1
       },
       "rejected_examples": [
         {
-          "title": "Apple tracking system: will the watermark show up?",
+          "title": "Is it even the correct comparison to compare API costs with subscription costs?",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Where do you go when Claude ultra isn’t enough",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Did anyone actually get an offer from Claude Corps?",
+          "title": "Is UBI unrealistic?",
+          "reason": "off_topic"
+        },
+        {
+          "title": "How often has a coding agent done something you had to undo?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Paid Research Survey for conference papers [D]",
-          "reason": "off_topic"
-        },
-        {
-          "title": "What is going on with GPT? My 5-hour limit gets exhausted in 10 minutes on a simple coding task.",
+          "title": "Sam Altman on RAM",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Stop vibecoding a new task tracker every time you add another agent",
+          "title": "Koboldcpp v1.124 released",
           "reason": "off_topic"
         },
         {
-          "title": "Why are Mark Zuckerberg and Meta the most hated pair in the tech world?",
+          "title": "Koboldcpp v1.124 released",
           "reason": "off_topic"
         },
         {
-          "title": "Intel 1x B65 with xeStrata Flash-Next 4-bit - 60tok/s - What a game changer for single card users",
-          "reason": "off_topic"
-        },
-        {
-          "title": "5h limit is gone!",
-          "reason": "off_topic"
+          "title": "How can I run Claude Code in my mobile",
+          "reason": "personal_help_or_chatter"
         }
       ],
-      "stored_count": 38,
-      "latest_published_at": "2026-10-30T22:39:38+00:00"
+      "stored_count": 45,
+      "latest_published_at": "2026-10-31T05:32:04+00:00"
     },
     "youtube": {
       "status": "direct",
-      "fresh_count": 13,
+      "fresh_count": 3,
       "errors": [
         {
+          "endpoint": "UCsBjURrPoezykLs9EqgamOA",
+          "reason": "HTTP 404"
+        },
+        {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
-          "reason": "empty_or_invalid_feed"
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
+          "reason": "HTTP 404"
         }
       ],
-      "feeds_ok": 7,
-      "checked_at": "2026-10-30T22:58:32.476320+00:00",
-      "rejected_count": 21,
-      "rejection_reasons": {
-        "off_topic": 17,
-        "not_original_item": 4
-      },
-      "rejected_examples": [
-        {
-          "title": "This is Crazy",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Programming Laws Tier list | TheStandup",
-          "reason": "off_topic"
-        },
-        {
-          "title": "I CANT DO ON CALL",
-          "reason": "not_original_item"
-        },
-        {
-          "title": "Claude now 3x FASTER",
-          "reason": "not_original_item"
-        },
-        {
-          "title": "There Is No Way This Is Real",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Programmers vs Dream's Fake Manhunts | TheStandup",
-          "reason": "off_topic"
-        },
-        {
-          "title": "🚨🚨 Vibe Coding WoW Forever Mods With Esfand🚨🚨",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The Real Reason",
-          "reason": "off_topic"
-        }
-      ],
+      "feeds_ok": 1,
+      "checked_at": "2026-10-31T06:04:50.271557+00:00",
+      "rejected_count": 0,
+      "rejection_reasons": {},
+      "rejected_examples": [],
       "stored_count": 26,
       "latest_published_at": "2026-10-30T15:57:16+00:00"
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 5,
+      "fresh_count": 9,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-30T22:58:32.476320+00:00",
-      "rejected_count": 55,
+      "checked_at": "2026-10-31T06:04:50.271557+00:00",
+      "rejected_count": 51,
       "rejection_reasons": {
-        "off_topic": 16,
+        "off_topic": 12,
         "no_concrete_signal": 39
       },
       "rejected_examples": [
         {
-          "title": "The Thaura Constitution",
+          "title": "The Beleaguered Chip Sellers Getting Their Revenge on Apple",
           "reason": "off_topic"
         },
         {
-          "title": "Assure – your AI agent says \"done.\" This checks if it's lying",
+          "title": "Show HN:AI gave me the skills. It didn't give me people",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "AI's Bill Is Due – Intelligence or Brand? – Cold Logic – EP01",
+          "title": "InstanStore – AI drafts products and sales pages for a creator store",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Show HN: Fastbrowse, Browser agent that picks clicks with a System One model",
+          "title": "The biggest names in AI are backing a new way to opt out of scraping",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Free AI Learning Platform",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Lambda.ai Is Down?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Visit Iceland Will Send a Real Knitter to Your Dumb Meeting So You Can Skip It",
           "reason": "off_topic"
         },
         {
-          "title": "Defining AI",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Now what? After the AI crash",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Google's $500B bloodbath reflects the danger it faces from AI",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Supersonic airliner in doubt as company shifts to powering AI data centers",
+          "title": "See how AI search reads a page and fix it in one prompt",
           "reason": "no_concrete_signal"
         }
       ],
-      "stored_count": 17,
-      "latest_published_at": "2026-10-30T21:52:55+00:00"
+      "stored_count": 25,
+      "latest_published_at": "2026-10-31T06:01:40+00:00"
     },
     "producthunt": {
       "status": "direct",
-      "fresh_count": 18,
+      "fresh_count": 17,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-30T22:58:32.476320+00:00",
-      "rejected_count": 19,
+      "checked_at": "2026-10-31T06:04:50.271557+00:00",
+      "rejected_count": 20,
       "rejection_reasons": {
-        "off_topic": 19
+        "off_topic": 20
       },
       "rejected_examples": [
         {
@@ -217,23 +205,19 @@
           "reason": "off_topic"
         },
         {
-          "title": "Canva Brush",
-          "reason": "off_topic"
-        },
-        {
           "title": "Nocto",
           "reason": "off_topic"
         },
         {
-          "title": "Teable Mobile",
+          "title": "Canva Brush",
           "reason": "off_topic"
         },
         {
-          "title": "Norah Studio",
+          "title": "iSurge",
           "reason": "off_topic"
         },
         {
-          "title": "StepGrab",
+          "title": "SpeakON Agent",
           "reason": "off_topic"
         },
         {
@@ -241,7 +225,11 @@
           "reason": "off_topic"
         },
         {
-          "title": "Axonnic",
+          "title": "Norah Studio",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Teable Mobile",
           "reason": "off_topic"
         }
       ],
@@ -258,7 +246,7 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-10-30T22:58:32.476320+00:00",
+      "checked_at": "2026-10-31T06:04:50.271557+00:00",
       "rejected_count": 19,
       "rejection_reasons": {
         "off_topic": 19
@@ -298,11 +286,11 @@
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-10-30T22:56:13+00:00"
+      "latest_published_at": "2026-10-31T01:20:05+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 38,
+      "fresh_count": 31,
       "errors": [
         {
           "endpoint": "36kr",
@@ -318,47 +306,47 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-10-30T22:58:32.476320+00:00",
-      "rejected_count": 79,
+      "checked_at": "2026-10-31T06:04:50.271557+00:00",
+      "rejected_count": 87,
       "rejection_reasons": {
-        "off_topic": 79
+        "off_topic": 87
       },
       "rejected_examples": [
         {
-          "title": "红魔 12 Pro+ 体验：水冷加上 RGB 灯，游戏性能全面升级",
+          "title": "一图流 | 一张图看懂中国版 Apple 智能",
           "reason": "off_topic"
         },
         {
-          "title": "「史上最强」的 iPad mini，为什么还是 60Hz 屏幕？",
+          "title": "本周看什么 | 最近值得一看的 9 部作品",
           "reason": "off_topic"
         },
         {
-          "title": "卓驭发布商用车智能辅助驾驶解决方案「磐行」，一年可以让重卡省下 2-3 万元油钱",
+          "title": "App+1｜该吃药了：一片小药板，让吃药提醒变得轻松有趣",
           "reason": "off_topic"
         },
         {
-          "title": "CMF Speaker 系列体验：好听的牛奶盒，还能自己做外壳",
+          "title": "《久坐健康指南》作者、运动健康领域创作者阿帅装了啥？",
           "reason": "off_topic"
         },
         {
-          "title": "13.98 万元起！小鹏 MONA L05 正式上市，大五座 SUV 市场的卷王来了",
+          "title": "精确到秒的时间记录是怎样的？我的柳比歇夫法半年实践",
           "reason": "off_topic"
         },
         {
-          "title": "取消四缸插混，3.0T 六缸回归！全新 AMG GLC 53 售 59.9 万元",
+          "title": "派早报：全球首款 Android XR 有线眼镜 XREAL AURA 发售等",
           "reason": "off_topic"
         },
         {
-          "title": "为什么新模型发布，都要先做一个游戏？",
+          "title": "新玩意 254｜少数派的编辑们最近买了啥？",
           "reason": "off_topic"
         },
         {
-          "title": "7500 元！第一副安卓 XR 眼镜来了，比苹果更轻更好戴",
+          "title": "如何成为不吃压力的「大心脏」？",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-10-30T22:34:47+00:00"
+      "latest_published_at": "2026-10-31T06:03:46+00:00"
     }
   },
   "quality_rejections": {},
