@@ -1,5 +1,648 @@
 [
   {
+    "name": "I built a 6-minute hard sci-fi short natively in Blender using Claude Codefor Python scripting and procedural audio.",
+    "description": "Built a 6-minute hard sci-fi horror short titled TARTARUS natively in Blender Eevee, Kinda my first project fully made with blender, The beginning was a bit shaky but overall it came out good. claude code wrote little scripts that built every scene for me: the ground, the props, the lights, the camera moves and how the characters moved. blender then ran in the background and made the pictures. Used remotion to put it together. it placed every shot in order and added the subtitles, title cards and ending. ffmpeg turned the rendered pictures into video, stuck all the pieces together and added the sound All the music and sound effects were made with code. i didn't use any downloaded sounds or music software. the music was built note by note and things like wind, rumbles and hits were made the same way. then it all got mixed",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xk94xo/i_built_a_6minute_hard_scifi_short_natively_in",
+    "source": "reddit",
+    "published_at": "2026-10-31T12:37:40+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/Rimuru257",
+      "outbound_urls": [
+        "https://v.redd.it/tiwjpr7essyh1"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "turned a paid api for ai agents into a single prompt for claude, looking for people to try it",
+    "description": "ai agents can now pay for an api call themselves (x402, usdc on base, fractions of a cent, no accounts or cards). i wanted to see if someone who doesn't code could sell to them with claude doing the work. claude and i built a small example first: text stats (word count, reading time, readability score), $0.002 a call, on cloudflare workers. tested it with a real paid call this week: the payment settled and the answer came back in 1.5s. then we turned it into one prompt. you paste it into claude code, it builds from the tested example, tests it itself, deploys it, and walks you through the accounts you need (cloudflare, coinbase developer platform, a fresh wallet address). things that tripped us up, in case you build one: coinbase's main sdk (@coinbase/cdp-sdk) doesn't bundle on workers, @coinbase/x402 does the coinbase api key needs \"allow requests from any ip address\" ticked, workers have no fixed ip keep the default x402 middleware: it only takes payment after a successful answer, so failed calls aren't charged price at $0.002 or more: coinbase's payment service is free for the first 1,000 sales a month, then $0.001 each honest bit: most of these apis earn very little right now,",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xk91rh/turned_a_paid_api_for_ai_agents_into_a_single",
+    "source": "reddit",
+    "published_at": "2026-10-31T12:33:15+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/SashSail",
+      "outbound_urls": [
+        "https://i.redd.it/br4axn3krsyh1.png"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "I built an open-source AI usage optimizer with Claude Code. Just shipped a VS Code extension.",
+    "description": "I’ve been building optimAIzr as a side project while working as a senior SWE. Claude Code has been a big part of the development process, from implementing features and debugging integrations to helping build the VS Code extension. The project tracks and optimizes AI coding usage across Claude Code, Codex and OpenCode. Just shipped v0.13.0 , adding a VS Code extension that brings context usage, cache countdowns, the 5h limit and potential savings directly into the editor. It’s free, open source and fully local. No account, no prompt uploads. Feel free to search for optimAIzr in the VS Code Marketplace and roast it. Git: https://github.com/blendbunjaku/optimaizr Alrdy at ~190 git stars.",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xk8yqp/i_built_an_opensource_ai_usage_optimizer_with",
+    "source": "reddit",
+    "published_at": "2026-10-31T12:29:05+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/stichstichstich",
+      "outbound_urls": [
+        "https://github.com/blendbunjaku/optimaizr",
+        "https://v.redd.it/ob3p3dvuqsyh1"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Easiest zero-cost way to give Claude read-only access to a Zoho Mail inbox for a daily morning brief?",
+    "description": "Hi all, I use Claude for a daily morning brief (calendar, tasks, etc.) and want to add my inbox. My mail is hosted on Zoho Mail, which has no native Claude connector, so I'm looking for the simplest workaround that costs nothing. Requirements: - Read-only access (no send/delete) - Runs daily without me babysitting it - $0 ongoing cost, or as close as possible - Low maintenance (I'd rather not own a server) Options I've considered: Auto-forward from Zoho to a free Gmail account and use Claude's Gmail connector Custom MCP server wrapping the Zoho Mail API (OAuth, read-only scopes), hosted on a free tier IMAP script with an app-specific password on a scheduled job Claude in Chrome reading Zoho webmail in my signed-in browser Zapier/Make/n8n piping new mail somewhere Claude can read it My current leaning is option 1 for simplicity, but I'm concerned about duplicating mail into a second inbox and the privacy implications of forwarding. Questions: - Has anyone gotten this working with Zoho specifically? What did you use? - Is there a free-tier hosting setup you'd trust for option 2? - Any gotchas with Zoho's API access or rate limits on free or low-tier plans? - Is forwarding with a filt",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xk8uly/easiest_zerocost_way_to_give_claude_readonly",
+    "source": "reddit",
+    "published_at": "2026-10-31T12:23:26+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/jigglespores",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Betelgeuse: Running Qwen 3.8 Flash Next at 22 tok/s sustained (spiking to 48 tok/s) on an RTX 3060 12GB + 16GB DDR4 RAM 100% bit-exact!",
+    "description": "About two months ago I posted here about trying to predict which MoE experts get used on the next token to speed up CPU/GPU offload on Qwen 3.6 35B. Quick confession on that older post before anything else: I ended up throwing that prototype away. To get the big numbers I was seeing back then, I was basically cheating with gate pruning (dropping cold experts when their router weights were low). It made the tok/s counter go brrr, but on an already low-bit quant it quietly degraded output quality and reasoning. I didn't want to ship something that lobotomizes the model just to look fast in a screenshot, so I scrapped it. When Qwen 3.8 Flash Next dropped, I wanted to see if we could actually run the 68GB GSQ-RCO-IQ2_XS build at real usable speeds on a normal budget gaming PC— without dropping a single expert . For context, here is the exact box I tested this on (I actually pulled my extra RAM sticks out specifically to test what a regular 16GB PC gets): GPU: RTX 3060 12GB RAM: 16GB DDR4, single-channel (~19 GB/s) OS: CachyOS / Arch Linux (tested inside a strict MemoryMax=12G cgroup) Storage: Consumer PCIe NVMe SSD (~2.1 GB/s) If you try to load a 68GB MoE on 12GB VRAM + 16GB RAM in st",
+    "website": "https://reddit.com/r/LocalLLaMA/comments/1xk8s6z/betelgeuse_running_qwen_38_flash_next_at_22_toks",
+    "source": "reddit",
+    "published_at": "2026-10-31T12:20:02+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/zyxciss",
+      "outbound_urls": [
+        "https://v.redd.it/lnqnbp15nsyh1"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "让AI拼我用了12天完成的1000片“纯白地狱”，它五小时就崩溃了",
+    "description": "我耗时 12 天拼完 1000 片纯白地狱拼图，尝试交给大模型挑战，它 5 小时便陷入崩溃。不是 AI 不能拼，而是擅长看图描述的生成式大模型缺少精密测量与全局约束能力；传统机器视觉方案反倒可行。这件实验，也照见我们当下思考外包、本末倒置的认知困境。",
+    "website": "https://tmtpost.com/8188396.html",
+    "source": "cn_news",
+    "published_at": "2026-10-31T12:18:13+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "钛媒体：引领未来商业与生活新知",
+      "author": "斯凯有话说",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.tmtpost.com/rss",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
+    "name": "老干妈给所有想用AI的企业“上”了一课",
+    "description": "情绪宣泄，究竟能改变什么？",
+    "website": "https://tmtpost.com/8188545.html",
+    "source": "cn_news",
+    "published_at": "2026-10-31T12:18:03+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "钛媒体：引领未来商业与生活新知",
+      "author": "深观商业",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.tmtpost.com/rss",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
+    "name": "Open Science: The open-source AI workbench for scientific research",
+    "description": "Open Science: The open-source AI workbench for scientific research",
+    "website": "https://news.ycombinator.com/item?id=50315427",
+    "source": "hackernews",
+    "published_at": "2026-10-31T12:16:33+00:00",
+    "extra": {
+      "evidence_kind": "platform_api",
+      "external_url": "https://github.com/synthetic-sciences/openscience",
+      "points": 1,
+      "comments": 0,
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "无界动力与京东达成战略合作，机器人 K15 上岗七鲜咖啡",
+    "description": "IT之家 10 月 31 日消息，10 月 31 日，无界动力宣布与京东正式签署战略合作协议，围绕零售场景应用、商业化平台与生态渠道、产业资源协同等多个维度开展立体化合作。 此次合作已迎来首批成果：10 月，双方首个零售合作项目落地， 无界动力机器人 K15 已于七鲜咖啡（西宸里店）和七鲜咖啡（长楹天街店）正式上岗 ；同期，首批机器人产品通过京东平台面向第三方客户完成交付。 在此基础上， 双方将迅速推进 1000+ 七鲜门店的规模化复制 ，并同步深化京东 MALL、京东 RoboBase 等领域的合作。依托京东丰富的线下实体消费场景，双方将围绕门店数字化、智能体验升级与全渠道商品运营持续共建，并重点布局海外市场，共同探索智能零售方案的全球化拓展与商业化落地。 IT之家从官方介绍获悉，在两家七鲜咖啡门店，无界动力具身智能机器人与自动化生产线协作， 从订单触发到任务完成 ，将全流程无人化运行融入门店日常经营。 双方将共同投入技术、产品、市场、供应链及相关资源，以实现 10 亿元人民币 的产品合作规模；深化场景落地、渠道拓展与应用服务的多维度合作，为国际化业务延伸提供机遇与支撑。 延伸阅读 无界动力成立于 2025 年 3 月，总部位于北京，聚焦构建机器人“通用大脑”与“操作智能”，以通用基础模型研发与通用专家模型落地应用双线驱动，致力于为全球客户提供软硬一体、高可靠性的具身智能解决方案。公司创始人兼 CEO 张玉峰曾先后在 Sony、ARM 等科技企业从事研发管理，2017 年加入地平线后曾任地平线副总裁、智能汽车事业部总裁及公司董事等职务。 上岗七鲜咖啡的 K15 是无界动力研发的第二代机器人，采用双臂轮式半人形形态，搭载自研 1200TOPS（INT8）算力的国产计算平台，已进入批量投产阶段。其腕部翻转半径仅 30mm，在全向工作空间宽度不超过 800mm 的环境下仍能稳定作业，可覆盖从工业紧凑产线、商用公共服务到家庭生活场景的作业链路。 七鲜咖啡是京东于 2025 年 11 月推出的咖啡品牌，推出时即定下“三年万店”的规模扩张目标，并于 2026 年 2 月宣布开放联营合伙人招募，首批加盟区域覆盖京津冀、长三角、珠三角三大核心经济圈。",
+    "website": "https://ithome.com/1/020/598.htm",
+    "source": "cn_news",
+    "published_at": "2026-10-31T12:13:50+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "IT之家",
+      "author": "",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.ithome.com/rss",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
+    "name": "存储芯片短缺加剧之际，OpenAI 奥尔特曼赴韩与约 50 名三星高管会面",
+    "description": "IT之家 10 月 31 日消息，据彭博社报道，全球存储芯片供应短缺问题日益严重之际，今天（31 日）下午，OpenAI CEO 萨姆 · 奥尔特曼在韩国与三星集团高层会面，双方计划进一步加强在存储芯片供应和 AI 基础设施建设方面的合作。 据三星发布的声明，奥尔特曼此次在龙仁市与三星旗下电子、金融和生物科技业务的 约 50 名高管 举行了会谈。双方讨论了未来十年 AI 对产业格局、企业决策方式和商业发展的影响。 多种存储产品供应不足，正在给全球电子行业带来压力，芯片价格也随之大幅上涨。数据中心建设需求持续增长，各大运营商对存储芯片的争夺进一步加剧。AI 基础设施领域的五家头部企业计划在 未来几年投入超过 3 万亿美元 （IT之家注：现汇率约合 20.01 万亿元人民币） ，而存储芯片支出约占数据中心 总支出的三分之一 。 报道指出，韩国在先进存储芯片制造领域处于领先地位，AI 技术在当地企业和消费者中的普及也在加快。自去年以来，英伟达 CEO 黄仁勋和 AMD CEO 苏姿丰 分别两度访韩 ，以加强供应链合作。多位科技行业高管此前警告，芯片制造产能难以满足持续增长的市场需求。 此次会面也是双方此前合作计划的延续。按照已公布的合作安排，三星将向 OpenAI 的“星际之门”基础设施项目供应存储芯片，双方还将 共建 AI 数据中心 ，合作范围包括海上浮动式数据中心。与此同时，三星也在加快 AI 技术在自身业务中的应用，覆盖研发、制造、营销和企业运营等环节。",
+    "website": "https://ithome.com/1/020/597.htm",
+    "source": "cn_news",
+    "published_at": "2026-10-31T12:10:48+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "IT之家",
+      "author": "",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.ithome.com/rss",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
+    "name": "The new API credits make ChatGPT Pro a no-brainer for API users",
+    "description": "OpenAI just made its Pro subscriptions significantly more valuable for API users. With the new subscription benefit: Pro $100 → $100 in API credits per month Pro $200 → $200 in API credits per month Pro $500 → $500 in API credits per month Credits are granted each billing cycle, expire at the end of that cycle, and don't roll over. If you're already spending $200/month on eligible API usage, there's no reason to pay for API credits separately. Get Pro $200 instead. Same cost, same API usage, plus ChatGPT Pro and higher Codex limits. The same applies at $500/month: Pro $500 gives you the API credits you're already paying for, plus the highest subscription benefits. Even if you're already on Pro $100 and your API spending is growing, upgrading becomes increasingly attractive. Bottom line: if your monthly API spending matches a Pro tier, paying for API usage separately instead of upgrading is leaving subscription benefits on the table.",
+    "website": "https://reddit.com/r/OpenAI/comments/1xk8key/the_new_api_credits_make_chatgpt_pro_a_nobrainer",
+    "source": "reddit",
+    "published_at": "2026-10-31T12:09:19+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/Quiet-Recording-9269",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "UriScanAI – An AI-powered urine color analyzer and hydration tracker",
+    "description": "UriScanAI – An AI-powered urine color analyzer and hydration tracker",
+    "website": "https://news.ycombinator.com/item?id=50315311",
+    "source": "hackernews",
+    "published_at": "2026-10-31T12:02:30+00:00",
+    "extra": {
+      "evidence_kind": "platform_api",
+      "external_url": "https://play.google.com/store/apps/details?id=com.uriscanai.app&hl=en_US",
+      "points": 1,
+      "comments": 0,
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "AI电影，正在将电影院逼进“死胡同”",
+    "description": "AI电影上院线，观众似乎还不想掏钱。",
+    "website": "https://tmtpost.com/8188470.html",
+    "source": "cn_news",
+    "published_at": "2026-10-31T12:02:16+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "钛媒体：引领未来商业与生活新知",
+      "author": "道总有理",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.tmtpost.com/rss",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
+    "name": "Did AI kill research papers? - mathematicians respond | Lex Fridman",
+    "description": "Lex Fridman Podcast full episode: https://www.youtube.com/watch?v=ZAzWPE9CItg Thank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/cv10103-sb See below for guest bio, transcript, links, and to give feedback, submit questions, contact Lex, etc. *GUEST BIO:* Ankur Moitra, Steven Brunton and Alex Kontorovich are three mathematicians who can speak to this incredible moment in the history of mathematics, when AI solved some of its hardest problems: Navier-Stokes, the quasi-Riemann hypothesis, the unique games conjecture and hundreds of other problems. Ankur Moitra is a mathematician at MIT (visiting the Institute for Advanced Study in Princeton) working in theoretical computer science, who can speak to the unique games conjecture, complexity theory and the mathematics of how AI learns. Steven Brunton is a mathematician and fluid dynamics expert at UW, who can speak to Navier-Stokes, turbulence and machine learning for fluid dynamics. Alex Kontorovich is a mathematician at Rutgers specializing in number theory, who can speak to the Riemann hypothesis, Lean and machine-checked proofs. *Transcript:* https://lexfridman.com/math-ai-crisis-transcript *CONTACT LEX:",
+    "website": "https://youtube.com/watch?v=8L2U9s8ex5M",
+    "source": "youtube",
+    "published_at": "2026-10-31T12:00:08+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Lex Clips",
+      "author": "Lex Clips",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Spooky New Infostealer Malware Uses AI to ‘Autodox’ Victims",
+    "description": "Named “Volta-Autodoxer,” the recently uncovered malware uses AI tools to collect troves of data about victims, from login credentials and credit card numbers to Discord sessions and UberEats receipts.",
+    "website": "https://wired.com/story/kernel-panic-volta-autodoxer-ai-infostealer-malware",
+    "source": "tech_news",
+    "published_at": "2026-10-31T12:00:00+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Feed: Artificial Intelligence Latest",
+      "author": "Lily Hay Newman, Matt Burgess",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "号称全球首创：香港公司 Arrowmax 推出 AI 电动螺丝刀 S1，能用摄像头识别螺丝类型",
+    "description": "IT之家 10 月 31 日消息，据外媒 TechSpot 今天（31 日）晚间报道，香港工具品牌 Arrowmax 在 Kickstarter 推出了一款 号称全球首创 的 AI 电动螺丝刀 S1，众筹项目启动后不到 24 小时便达成目标。产品起售价 80 美元 （IT之家注：现汇率约合 533.6 元人民币） ，预计 2027 年 4 月开始发货。 S1 希望借助 AI 简化螺丝刀的使用流程， 从识别螺丝、挑选批头到调节扭矩 ，都能交由系统辅助完成。 S1 的机身尾部装有一根接触探针，使用时只需将探针抵住螺丝头，就能让摄像头与螺丝保持合适的拍摄距离，再由 高清摄像头拍下螺丝头的图像 。 拍摄完成后，AI 模型会识别螺丝的尺寸和形状。Arrowmax 称，模型使用了 数万张真实场景照片 进行训练，所有训练样本均由自家工程团队采集，没有使用外部训练数据。 用户还可以 通过配套手机应用查看摄像头画面，并调节扭矩、档位等参数 。螺丝刀通过 本地连接 与手机通信，不需要联网即可使用。 识别出螺丝后，系统会在配套智能收纳盒中 点亮对应批头的存放位置 ，同时自动调整螺丝刀的扭矩。用户不必再逐个尝试批头，也能降低因批头不匹配或扭矩过大而拧坏螺丝的风险。 S1 配有一块 OLED 屏幕，用于显示 剩余电量、扭矩设置和旋转方向 。其内置 600mAh 锂聚合物电池，续航时间约 90 分钟，按扭矩设置不同， 最多可拧动约 900 颗螺丝 。扭矩调节范围为 1 至 10kgf·cm。机身尾部设有 USB-C 充电接口，充满电约需 70 分钟。 S1 单机售价 80 美元起，附带智能收纳盒和 52 枚批头的套装早鸟价为 129 美元 （现汇率约合 860.4 元人民币） 起。众筹于 10 月 20 日上线，仅用 24 小时就完成了筹资目标，目前筹款金额已超过目标十倍。 其他配件还包括 18 美元 （现汇率约合 120.1 元人民币） 的直角转接头、每套 24 美元 （现汇率约合 160.1 元人民币） 的两套批头转换套装，以及 40 美元 （现汇率约合 266.8 元人民币） 的迷你台钳。",
+    "website": "https://ithome.com/1/020/593.htm",
+    "source": "cn_news",
+    "published_at": "2026-10-31T11:57:32+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "IT之家",
+      "author": "",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.ithome.com/rss",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
+    "name": "预测失效的那刻，存储行业撞见物理AI的边界",
+    "description": "先锚定具身智能想要抵达的终局，再反向推导底层基础设施需要具备怎样的能力上限。",
+    "website": "https://tmtpost.com/8188551.html",
+    "source": "cn_news",
+    "published_at": "2026-10-31T11:57:24+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "钛媒体：引领未来商业与生活新知",
+      "author": "硅碳变量",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.tmtpost.com/rss",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
+    "name": "I built Cloader with Claude Code so every Claude account shows all my Code tab sessions",
+    "description": "If you use two Claude accounts, like work and personal, you've probably seen this: switch accounts in the desktop app and the Code tab is empty. It happened to me with 25 sessions. They were all still on my computer. The app just keeps a separate list for each account. So I built Cloader, a small Node script that copies the list so every account shows every session. How Claude Code helped: - I ran into the problem and came up with the idea for the fix myself, then used Claude Code to develop it into a working tool. - I asked it to make my Code tab sessions from one account open and continue under my other account, without changing my chats. - The fix works because session files don't say which account they belong to, so copying one into another account's folder is enough. - Claude Code helped me build the parts around that: the sync between accounts, the backup before the first change, the `check` preview and `undo`. It's free to try. Run `npx github:FouadDim/Cloader`, then restart Claude. To preview first without changing anything, run `npx github:FouadDim/Cloader check`. - Free and open source (MIT). No paid version, no signup, no tracking. - It backs up your session list before",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xk8bkc/i_built_cloader_with_claude_code_so_every_claude",
+    "source": "reddit",
+    "published_at": "2026-10-31T11:57:17+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/mariecurie66",
+      "outbound_urls": [
+        "https://claude.ai",
+        "https://github.com/FouadDim/Cloader"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "If you’re letting Claude Code clean up your smart TV, do these things first",
+    "description": "Saw a lot of the “gave Claude Code my TV model and it removed 25 bloatware apps” posts last week, and also a few people who bricked their TV doing it. So I put together the safe version of the process. Some stuff that’s easy to skip but really matters: Start in manual mode, not auto. You want to see and approve every adb command before it runs on your TV. claude --permission-mode default Back up before anything. Have Claude save the full package list, which ones are enabled, and which app is the current launcher. That backup is your undo button. Disable, never uninstall. pm disable-user --user 0 switches an app off and pm enable brings it back. Uninstalling system packages is where the bricked TVs come from. Give it a never-touch list. System UI, Settings, HDMI/TV inputs, Bluetooth and remote pairing, package installer and Play Store, and the current launcher until the new one actually works. Disable the stock launcher too early and your Home button lands on a blank screen. On Google TV specifically, the setup wizard can grab the Home button after the stock launcher is off. Ask Claude to check for that first. Be specific in the prompt. Tell it the model, OS (Google TV / Android TV",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xk8apo/if_youre_letting_claude_code_clean_up_your_smart",
+    "source": "reddit",
+    "published_at": "2026-10-31T11:56:02+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/vinishkapoor",
+      "outbound_urls": [
+        "https://aiparabellum.com/customize-smart-tv-claude-code",
+        "https://i.redd.it/in2rj4cyksyh1.jpeg"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "I used Claude Code to build an open-source DevOps tool that deploys your apps to your own server",
+    "description": "I've been building OpsCrew , an open-source CLI and Claude Code plugin that takes an application from a GitHub repository to a working deployment on your own infrastructure. The idea came from something I kept running into: Claude Code makes building applications much faster, but actually deploying them still involves a lot of manual DevOps work. Docker, infrastructure provisioning, CI/CD, TLS, server security, DNS, monitoring... none of that disappears just because the app was built with AI. So I decided to see how far I could automate that process. How I used Claude Code to build it I used Claude Code during development, working with feature specifications and project-level instructions in CLAUDE.md to break down the system into smaller components and iterate on the TypeScript implementation and tests. The project uses a modular architecture with separate components for repository analysis, infrastructure planning, code changes, provisioning, security, and deployment verification. One of the more interesting challenges was making infrastructure changes safe. I didn't want an AI agent deciding to create or destroy servers without oversight. So the workflow uses infrastructure plan",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xk861e/i_used_claude_code_to_build_an_opensource_devops",
+    "source": "reddit",
+    "published_at": "2026-10-31T11:48:49+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/lolina123",
+      "outbound_urls": [
+        "https://github.com/softzer0/opscrew/blob/main/CLAUDE.md",
+        "https://github.com/softzer0/opscrew"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "AI混进学术圈，人类第一反应是“叫家长”",
+    "description": "你好，人！我是新来的旁听生！请多指教！",
+    "website": "https://tmtpost.com/8188440.html",
+    "source": "cn_news",
+    "published_at": "2026-10-31T11:43:38+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "钛媒体：引领未来商业与生活新知",
+      "author": "字母AI",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.tmtpost.com/rss",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
+    "name": "Collaborative AI agents for autonomous experimental research",
+    "description": "Collaborative AI agents for autonomous experimental research",
+    "website": "https://news.ycombinator.com/item?id=50315090",
+    "source": "hackernews",
+    "published_at": "2026-10-31T11:34:17+00:00",
+    "extra": {
+      "evidence_kind": "platform_api",
+      "external_url": "https://arxiv.org/abs/2610.40589",
+      "points": 2,
+      "comments": 0,
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Experts adopt AI agent's random opinions and think they're their own, Anthropic study finds",
+    "description": "submitted by /u/Puzzleheaded-King584 to r/ClaudeAI [link] [comments]",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xk7nnu/experts_adopt_ai_agents_random_opinions_and_think",
+    "source": "reddit",
+    "published_at": "2026-10-31T11:19:59+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/Puzzleheaded-King584",
+      "outbound_urls": [
+        "https://the-decoder.com/experts-adopt-ai-agents-random-opinions-and-think-theyre-their-own-anthropic-study-finds"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "I tried running a small “company” of channels in Claude Duet to build a real directory site. Here’s what worked and what didn’t",
+    "description": "Been playing with Duet since launch and wanted to test something bigger than inbox/calendar stuff. So I set up a CEO channel and gave it a team of role channels (scout/research, marketing, developer) and had them build a find-a-dog-trainer directory from scratch: niche research, real listings, SEO copy, the site, domain, email. A few things I learned that might save you time: - One channel per role works way better than one giant chat. Context stays clean and you can see who did what. - Let the CEO channel hand off work, but tell it exactly what \"done\" looks like for each role, or it drifts. - Connectors are where it gets useful. With DataForSEO hooked up, the research channel pulled real keyword data and listings instead of guessing. - Keep approvals on for anything that spends money. It messaged me before buying the domain, which is exactly what you want. - It had some issues with Vercel but eventually it turned out it was my fault. The site's live now on its own domain etc., not that I would be promoting the site, it was just an experiment to see the possibilities. I recorded the whole thing unedited (it's long, ~1h48m) for anyone who learns better by watching: https://youtu.be/",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xk7g9q/i_tried_running_a_small_company_of_channels_in",
+    "source": "reddit",
+    "published_at": "2026-10-31T11:08:32+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/BeautifulDataViz",
+      "outbound_urls": [
+        "https://youtu.be/7Ow9r-p7nWY"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Standard for websites & extensions to use local models, proposed by Opera",
+    "description": "Opera has announced the rollout of WebAI, a feature that allows websites and browser extensions to run AI models directly within the browser , without relying on cloud servers. Positioned as a proposed web standard backed by major tech companies including Google and Microsoft, WebAI represents a shift toward decentralized, privacy-focused artificial intelligence. “A lot of what people want from AI doesn’t need a data center. Your laptop can already do it, without sending your data anywhere,” --- I don't know how they convinced Google and Microsoft to participate, but it's good news for local AI. We might get an ecosystem that's built around letting you chose your model rather than forcing you to use theirs.",
+    "website": "https://reddit.com/r/LocalLLaMA/comments/1xk70qu/standard_for_websites_extensions_to_use_local",
+    "source": "reddit",
+    "published_at": "2026-10-31T10:44:38+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/JChataigne",
+      "outbound_urls": [
+        "https://alternativeto.net/software/opera/about",
+        "https://alternativeto.net/news/2026/10/opera-introduces-webai-a-proposed-web-standard-to-run-ai-models-locally-in-the-browser"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "I built living-canvas, a free Claude skill that turns any repo, site or idea into an animated explainer",
+    "description": "I built living-canvas, a free, open-source skill for Claude. You point it at a GitHub repo, a URL, a doc or a single sentence, and Claude turns it into an animated explainer that a stranger can understand from one still frame. What it does Claude reads the subject, distills it into one core idea, and draws it as three labeled stages: problem → what it does → result. The output is an animated SVG for a README, or an interactive HTML page. How Claude helped build it • I wrote the SKILL.md with Claude: we iterated on the rules until the outputs passed a \"still-frame test\", where a single screenshot has to explain the whole idea. • Claude does the actual work at runtime: it reads the source, picks a visual metaphor, and writes the canvas code (HTML + requestAnimationFrame, or SVG with SMIL). • Claude also wrote the recording script for the video: headless Chromium with a controlled clock steps the animation frame by frame, and ffmpeg encodes the frames to MP4. In the video (three runs) • Caveman: the Claude Code skill that strips filler from agent replies • Reddit: Claude read Reddit's published numbers first, then drew post → vote → discuss • Nemotron 3.5 Transcribe: an explainer for",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xk6vgv/i_built_livingcanvas_a_free_claude_skill_that",
+    "source": "reddit",
+    "published_at": "2026-10-31T10:35:46+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/Substantial_Load_690",
+      "outbound_urls": [
+        "https://skill.md",
+        "https://github.com/shouvik12/living-canvas",
+        "https://v.redd.it/812hrynl6syh1"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Meta’s Muse Could Upend All Kinds of Businesses. It Hasn’t Yet",
+    "description": "Companies have spent the past several weeks trying to reassure investors that Muse and other AI agents pose more of an opportunity than a threat.",
+    "website": "https://wired.com/story/metas-muse-could-upend-all-kinds-of-businesses-it-hasnt-yet",
+    "source": "tech_news",
+    "published_at": "2026-10-31T10:30:00+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Feed: Artificial Intelligence Latest",
+      "author": "Paresh Dave",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "An AI Agent Injected Drugs Into a Live Mouse’s Brain",
+    "description": "A biotech startup let an agent choose a gene therapy and successfully inject the treatment, offering a startling glimpse of the future of research labs.",
+    "website": "https://wired.com/story/an-ai-agent-did-brain-surgery-on-live-mouse",
+    "source": "tech_news",
+    "published_at": "2026-10-31T10:00:00+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Feed: Artificial Intelligence Latest",
+      "author": "Emily Mullin",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "理想 AI 眼镜 Livis 10 月 OTA 升级，个人 Agent 新增接入 Hermes",
+    "description": "IT之家 10 月 31 日消息，理想汽车今日宣布理想 AI 眼镜 Livis 10 月 OTA 重磅升级，运动健康分析报告进一步提升；视觉问答独家接入小红书 Agent；个人 Agent 新增接入 Hermes。 IT之家整理如下： 运动健康分析再升级 新增 Garmin 运动设备接入。结合 Garmin 特有“身体电量”等详细数据维度，准确理解你的体能状态。 健康报告分析更快更全面。健康报告生成速度进一步提升，深度剖析睡眠质量与运动表现，提供更深刻的健康洞察。 健康报告主动推送。无需开口提问，健康报告推送提醒，帮你更及时了解身体状态，获得更有针对性的运动与作息建议。 行业首发带上小红书看世界 视觉问答独家接入小红书 Agent。看到的都能直接拍照提问，并支持上下文连贯对话，顺着话题也能接着聊。沉浸式逛街无需掏手机搜索，千万网友的真实笔记，都是随身攻略。 个人 Agent 接入 Hermes 智能生态持续扩展，一句话及时交代 Hermes 处理任务，让远程协同办公更高效。 理想首款 AI 眼镜 Livis 已于去年 12 月 3 日正式发布 ，搭载恒玄科技 BES2800BP 芯片，重量约 36 克，标配蔡司防蓝光光学镜片，续航可达 18.8 小时，定价 1999 元起、国补后 1699 元起。",
+    "website": "https://ithome.com/1/020/553.htm",
+    "source": "cn_news",
+    "published_at": "2026-10-31T09:31:55+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "IT之家",
+      "author": "",
+      "outbound_urls": [
+        "https://ithome.com/0/902/259.htm"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.ithome.com/rss",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
+    "name": "Show HN: I benchmarked a voice AI against real people. It scored at chance",
+    "description": "Show HN: I benchmarked a voice AI against real people. It scored at chance",
+    "website": "https://news.ycombinator.com/item?id=50314370",
+    "source": "hackernews",
+    "published_at": "2026-10-31T09:18:05+00:00",
+    "extra": {
+      "evidence_kind": "platform_api",
+      "external_url": "https://mundi.chat/try",
+      "points": 1,
+      "comments": 0,
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "押注睡着的8小时，前小米王腾闯入千亿AI睡眠赛道",
+    "description": "从小米出来后，王腾看上了睡着的那8小时生意。",
+    "website": "https://tmtpost.com/8188399.html",
+    "source": "cn_news",
+    "published_at": "2026-10-31T09:09:30+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "钛媒体：引领未来商业与生活新知",
+      "author": "志读科技",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.tmtpost.com/rss",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
     "name": "连续 16 天增长创纪录：Grok Bot 日活破 60 万，马斯克称增速“前所未见”",
     "description": "IT之家 10 月 31 日消息，科技媒体 tikr 昨日（10 月 30 日）发布博文，报道称 全球首富埃隆 · 马斯克旗下 SpaceXSI 公司的 AI 助手 Grok Bot 迎来强劲增长周期，连续 16 天增长，日活跃用户不到两个月增长逾 6 倍。 根据 Similarweb 等第三方数据及市场报道，Grok Bot 的日活跃用户已连续 16 天增加，创下该产品发布以来的最长连续增长纪录。 数据显示，Grok Bot 的日活跃用户在 9 月初尚不足 10 万人，到 10 月 26 日已突破 60 万人。若以 9 月 20 日约 15.5 万人的日活规模计算，其用户数在不到一个月内接近增长两倍；拉长至发布后的不足两个月，整体增幅超过 6 倍。 Grok Bot 于 2026 年 8 月 11 日以测试版形式上线，定位为可执行任务的 AI 智能体，而非单纯的聊天机器人。其功能包括交互式购物卡片、订阅模板，以及可长期保存项目上下文的工作空间，试图覆盖个人效率和企业办公场景。 值得注意的是，Grok Bot 并未提供免费版本。马斯克此前公开表示，Grok Bot 的增长速度“比他见过的任何产品都要快”，并强调其没有免费层级；除试用用户外，使用者均需付费。 自 10 月 12 日起，新用户可通过 X 订阅获取服务，高级版起价为每月 30 美元 （IT之家注：现汇率约合 200.1 元人民币） ，超级版为每月 100 美元 （现汇率约合 667 元人民币） ，终极版为每月 200 美元 （现汇率约合 1,334 元人民币） 。 企业侧数据同样显示扩张势头。SpaceX 总裁兼首席运营官格温 · 肖特维尔表示，截至 10 月初，Grok Bot 的付费周活跃用户已达 80 万人，较前一个月翻倍以上；企业正将其用于销售、营销、IT 和工程等环节。",
     "website": "https://ithome.com/1/020/468.htm",
@@ -28,9 +671,9 @@
     "extra": {
       "evidence_kind": "platform_api",
       "external_url": "https://www.seroundtable.com/google-ai-training-control-42430.html",
-      "points": 1,
-      "comments": 0,
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "points": 2,
+      "comments": 1,
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -48,7 +691,7 @@
       "external_url": "https://github.com/tapaskar/archwhere",
       "points": 1,
       "comments": 0,
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -111,6 +754,46 @@
       "publication_basis": "feed_published",
       "feed_url": "https://www.tmtpost.com/rss",
       "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
+    "name": "世界模型首次指导设计芯片！超大核NPU700TOPS，99%算力可用",
+    "description": "AI算力利用“九九成”",
+    "website": "https://qbitai.com/2026/10/506866.html",
+    "source": "cn_news",
+    "published_at": "2026-10-31T05:11:19+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "量子位",
+      "author": "梦瑶",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.qbitai.com/feed",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
+    "name": "刚刚，Claude宣布取消5小时限制！首批Ultra用户已「解封」",
+    "description": "200美元Ultra用户先用",
+    "website": "https://qbitai.com/2026/10/506855.html",
+    "source": "cn_news",
+    "published_at": "2026-10-31T05:05:29+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "量子位",
+      "author": "梦瑶",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.qbitai.com/feed",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -207,6 +890,29 @@
     "market": "global"
   },
   {
+    "name": "AC Bridge",
+    "description": "Your smart lights show when Claude Code or Codex needs you.",
+    "website": "https://producthunt.com/products/ac-bridge",
+    "source": "producthunt",
+    "published_at": "2026-10-31T04:20:01+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Product Hunt — The best new products, every day",
+      "author": "Sam Holmes",
+      "outbound_urls": [
+        "https://producthunt.com/products/ac-bridge",
+        "https://producthunt.com/r/p/1299153?app_id=339"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.producthunt.com/feed",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
     "name": "罗技 MX 系列首个特别版鼠标、MX KEYPAD 国行发售，买就送腾讯 WorkBuddy 积分",
     "description": "IT之家 10 月 31 日现场消息，罗技于 10 月 30 日至 31 日在上海 C·PARK 海粟文化广场举办 2026 罗技创享日创意市集 ，开展合作交流、展示多款新品。 在线下体验环节，罗技以开放式创意市集为载体，将办公硬件、个性化软件及 AI 工具融入不同工作与生活场景，邀请消费者亲身体验工具协同带来的便利，并与合作伙伴共同交流未来办公体验与合作方向。 本次创享日，罗技围绕不同专业用户的工作需求， 重点带来 MX MASTER 4 开发者特别版、MX KEYPAD 创意工作台及 Zone Vibe Pro AI 降噪耳机 ，并展示 Mobi Fold 折叠口袋鼠标、Pebble Up 云贝系列双形态无线鼠标及 Alto Keys 琥珀系列 K98M Plus 无线三模客制化背光机械键盘。 罗技 MX MASTER 4 开发者特别版 罗技 MX 大师系列长期面向开发者、设计师、视频剪辑师等专业用户，本次创享日，罗技推出 MX MASTER 4 开发者特别版高性能无线鼠标， 这是 MX 系列二十多年来推出的首个特别版 ，定价 999 元。 这款特别版将工具化作一块可随身携带的画布，以具有终端风格的设计融入与开发者息息相关的编程符号，包括 {Hello, World}、执行提示、语法标签（//、 ）以及 CNC 走线。从语法提示到电路走线，每个细节都呼应开发者熟悉的工作语言。 IT之家注意到，产品还隐藏着致敬计算机领域里程碑与开源历史的彩蛋，包括 0xFF + 1（程序员日）、09.17（Linux Kernel 纪念日）以及!04.01（世界备份日）。目前， 购买 MX MASTER 4 开发者特别版，可获赠 500 点 WorkBuddy 积分 。 京东 罗技 MX MASTER 4 鼠标-开发者特别版 国补后 899.1 元 直达链接 MX KEYPAD 创意工作台 MX 大师系列此次还带来键鼠之外的全新品类 —— MX KEYPAD 创意工作台 ，定价 799 元。该产品面向开发者、设计师、视频剪辑师以及深度使用 AI 工具的办公用户，将可自定义硬件操作与 AI 办公能力相结合。 MX KEYPAD 配备 9 个全彩可自定义 LCD 按键及 2 个翻页按钮 ，每个应用可设置 15 页操作，让用户能够根据不同应用和工作习惯配置常用功能。 通过 Logi Options+，用户可以拖拽自定义按键、页面与配置文件，并在 Logi Marketplace 中探索插件、图标包及更多配置方案。 MX KEYPAD 创意工作台 面向开发者，MX KEYPAD 提供灵活的工作流定制能力， 也是一款由 SDK 主导的产品 。通过 Logi Actions SDK 及面向 AI 的开发文档，开发者能够围绕自己的工作流构建自定义插件、宏、脚本与快捷键，并借助编程智能体",
     "website": "https://ithome.com/1/020/453.htm",
@@ -233,6 +939,26 @@
     "market": "cn"
   },
   {
+    "name": "Is AI discovering new math or just remixing human ideas? | Lex Fridman",
+    "description": "Lex Fridman Podcast full episode: https://www.youtube.com/watch?v=ZAzWPE9CItg Thank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/cv10102-sb See below for guest bio, transcript, links, and to give feedback, submit questions, contact Lex, etc. *GUEST BIO:* Ankur Moitra, Steven Brunton and Alex Kontorovich are three mathematicians who can speak to this incredible moment in the history of mathematics, when AI solved some of its hardest problems: Navier-Stokes, the quasi-Riemann hypothesis, the unique games conjecture and hundreds of other problems. Ankur Moitra is a mathematician at MIT (visiting the Institute for Advanced Study in Princeton) working in theoretical computer science, who can speak to the unique games conjecture, complexity theory and the mathematics of how AI learns. Steven Brunton is a mathematician and fluid dynamics expert at UW, who can speak to Navier-Stokes, turbulence and machine learning for fluid dynamics. Alex Kontorovich is a mathematician at Rutgers specializing in number theory, who can speak to the Riemann hypothesis, Lean and machine-checked proofs. *Transcript:* https://lexfridman.com/math-ai-crisis-transcript *CONTACT LEX:",
+    "website": "https://youtube.com/watch?v=Q9jIqE78y4M",
+    "source": "youtube",
+    "published_at": "2026-10-31T04:00:09+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Lex Clips",
+      "author": "Lex Clips",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
     "name": "ResumeFitting – AI resume ATS gap analysis and keyword matching",
     "description": "ResumeFitting – AI resume ATS gap analysis and keyword matching",
     "website": "https://news.ycombinator.com/item?id=50313058",
@@ -243,7 +969,7 @@
       "external_url": "https://resumefitting.com",
       "points": 1,
       "comments": 0,
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -269,6 +995,29 @@
     },
     "content_type": "blog",
     "market": "cn"
+  },
+  {
+    "name": "Godwit",
+    "description": "An open-source, AI-native email client",
+    "website": "https://producthunt.com/products/godwit",
+    "source": "producthunt",
+    "published_at": "2026-10-31T03:45:26+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Product Hunt — The best new products, every day",
+      "author": "Baran",
+      "outbound_urls": [
+        "https://producthunt.com/products/godwit",
+        "https://producthunt.com/r/p/1299137?app_id=339"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.producthunt.com/feed",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
   },
   {
     "name": "Max 20x is now “Ultra” and verified Ultra accounts have no 5-hour limit anymore. Max 5x is just “Max”. Prices unchanged.",
@@ -303,7 +1052,7 @@
       "external_url": "https://theainewsreport.com/2026-10-30-embrace-ai-coding-assistant-embedded-browser-flaws-explained.html",
       "points": 1,
       "comments": 0,
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -404,7 +1153,7 @@
       "external_url": "https://terrytao.wordpress.com/2026/10/30/__trashed/",
       "points": 1,
       "comments": 0,
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -422,7 +1171,7 @@
       "external_url": "https://3dprintingindustry.com/news/hi3d-launches-ai-3d-model-with-2048%C2%B3-voxel-resolution-254150/",
       "points": 2,
       "comments": 0,
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -438,9 +1187,9 @@
     "extra": {
       "evidence_kind": "platform_api",
       "external_url": "https://openai.com/index/helping-websites-express-ai-training-preferences/",
-      "points": 2,
+      "points": 3,
       "comments": 1,
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -460,7 +1209,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -503,7 +1252,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ifanr.com/feed",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -521,7 +1270,7 @@
       "external_url": "https://tanner.place/blog/how-ai-changed-what-i-can-build",
       "points": 4,
       "comments": 6,
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -541,7 +1290,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -581,7 +1330,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ifanr.com/feed",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -605,6 +1354,29 @@
       "publication_basis": "feed_published",
       "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
       "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Pluto Door",
+    "description": "SSH client with an AI agent and a desktop for every server",
+    "website": "https://producthunt.com/products/pluto-door",
+    "source": "producthunt",
+    "published_at": "2026-10-30T22:10:44+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Product Hunt — The best new products, every day",
+      "author": "Krishna Kant Singh",
+      "outbound_urls": [
+        "https://producthunt.com/products/pluto-door",
+        "https://producthunt.com/r/p/1298986?app_id=339"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.producthunt.com/feed",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -669,7 +1441,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -707,7 +1479,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -747,7 +1519,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -767,7 +1539,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -787,7 +1559,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -807,7 +1579,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://feeds.arstechnica.com/arstechnica/technology-lab",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -961,7 +1733,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -1025,7 +1797,49 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "@NVIDIAAI · Sound on 🔊 Listen to the difference. Our new open multilingual NemotronLabs RE-USE model from NVIDIA researchers cleans up background noise, echo and other audio distortions to make speech clearer. All with just 9.6M parameters. Try the demo and download the model on @huggingfac… /",
+    "description": "@NVIDIAAI · Sound on 🔊 Listen to the difference. Our new open multilingual NemotronLabs RE-USE model from NVIDIA researchers cleans up background noise, echo and other audio distortions to make speech clearer. All with just 9.6M parameters. Try the demo and download the model on @huggingfac… /",
+    "website": "https://x.com/NVIDIAAI/status/2116262634349818190",
+    "source": "x",
+    "published_at": "2026-10-30T20:15:04.944000+00:00",
+    "extra": {
+      "evidence_kind": "search_excerpt",
+      "search_provider": "Tavily",
+      "publication_basis": "x_snowflake",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "author": "NVIDIAAI",
+      "excerpt_basis": "indexed_post_title",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Agnos",
+    "description": "Clean documents for AI, and see what was removed",
+    "website": "https://producthunt.com/products/agnos",
+    "source": "producthunt",
+    "published_at": "2026-10-30T20:02:49+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Product Hunt — The best new products, every day",
+      "author": "Michael Shadpour",
+      "outbound_urls": [
+        "https://producthunt.com/products/agnos",
+        "https://producthunt.com/r/p/1298903?app_id=339"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.producthunt.com/feed",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -1099,7 +1913,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -1137,7 +1951,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -1157,7 +1971,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -1177,7 +1991,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -1197,7 +2011,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCbfYPyITQ-7l4upoX8nvctg",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -1234,7 +2048,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -1278,7 +2092,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -1360,7 +2174,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -1487,7 +2301,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ifanr.com/feed",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1531,7 +2345,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -1551,7 +2365,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -1579,6 +2393,26 @@
     },
     "content_type": "blog",
     "market": "global"
+  },
+  {
+    "name": "榜一，拿来吧你！智元这波双模型杀穿多榜榜单",
+    "description": "xs，还要给机器人打绩效",
+    "website": "https://qbitai.com/2026/10/506819.html",
+    "source": "cn_news",
+    "published_at": "2026-10-30T12:58:31+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "量子位",
+      "author": "衡宇",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.qbitai.com/feed",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
   },
   {
     "name": "ClaudeTalk: pick up your real Claude Code sessions from your phone, through Discord (free, open source)",
@@ -1796,6 +2630,26 @@
     "market": "cn"
   },
   {
+    "name": "AI零帧起手写算子，反超DeepSeek人类手写巅峰：快了9.8%！",
+    "description": "之前还连登昇腾三榜第一",
+    "website": "https://qbitai.com/2026/10/506785.html",
+    "source": "cn_news",
+    "published_at": "2026-10-30T11:05:06+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "量子位",
+      "author": "十三",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.qbitai.com/feed",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
     "name": "具身智能患上了焦虑症",
     "description": "具身智能投资，正从狂热到冷静",
     "website": "https://tmtpost.com/8187761.html",
@@ -1868,7 +2722,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -1912,6 +2766,26 @@
       "publication_basis": "feed_published",
       "feed_url": "https://www.tmtpost.com/rss",
       "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
+    "name": "“超能模式”重磅登场！联想天禧AI 4.5全端升级，三大场景打造“职场超能搭档”",
+    "description": "10月30日，联想天禧AI 4.5迎来AIPC端正式发布。",
+    "website": "https://qbitai.com/2026/10/506779.html",
+    "source": "cn_news",
+    "published_at": "2026-10-30T10:44:01+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "量子位",
+      "author": "量子位的朋友们",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.qbitai.com/feed",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -2014,7 +2888,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2035,6 +2909,26 @@
       "publication_basis": "feed_published",
       "feed_url": "https://www.tmtpost.com/rss",
       "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
+    "name": "百度 APP 发布四大 AI 升级，搜索已实现递归自我进化",
+    "description": "百度 APP 发布四大 AI 升级，搜索已实现递归自我进化",
+    "website": "https://qbitai.com/2026/10/506771.html",
+    "source": "cn_news",
+    "published_at": "2026-10-30T08:50:44+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "量子位",
+      "author": "听雨",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.qbitai.com/feed",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -2118,6 +3012,26 @@
     "market": "cn"
   },
   {
+    "name": "好莱坞最缺的答案，被这家 10 亿美元估值的 AI 影视独角兽写进了片单",
+    "description": "创立 4 年，估值站上 10 亿美元——资本市场定价的不是一部电影，而是一套内容生产基础设施。",
+    "website": "https://qbitai.com/2026/10/506747.html",
+    "source": "cn_news",
+    "published_at": "2026-10-30T08:12:11+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "量子位",
+      "author": "量子位的朋友们",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.qbitai.com/feed",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
     "name": "Fable 5.5测试曝光，Claude每次回答后，还会执行一条你看不到的指令",
     "description": "据说是 Anthropic 的 AGI #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
     "website": "https://ifanr.com/1686874",
@@ -2130,7 +3044,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ifanr.com/feed",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -2150,27 +3064,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.qbitai.com/feed",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
-  },
-  {
-    "name": "百度 APP 发布四大 AI 升级，搜索已实现递归自我进化",
-    "description": "10 月 30 日，百度 APP 在北京举办产品升级沟通会。百度搜索实现递归自我进化，并全新升级搜索 AI API，活动期间最低价仅需 4.9 元/千次，低于 DeepSeek 搜索 API。同时围绕搜索框、AI 镜头、GUI 可视化、AI 互动应用等方向推出重大升级，给用户带来更智能、更聪明、更好玩的体验，在助力用户“搞定一切”上更进一步。 升级后的百度 APP，文心助手让搜索从「一次问答」走向「一份交付」，复杂问题和高频事务可直接交付成果物，长期任务则持续跟踪、主动提醒，目前已覆盖 170 余种场景。AI 镜头从「定格」走向「流动」，支持多目标同步识别与动态追踪，并可用东北话、四川话、粤语等 9 种方言实时对话。搜索结果页 GUI 互动场景提升 5 倍，接入政务、民生、央行等超 50 亿数据资源；AI 互动剧与互动应用同步上线。",
-    "website": "https://leiphone.com/category/industrynews/7pQrGMmdsjx5dOSR.html",
-    "source": "cn_news",
-    "published_at": "2026-10-30T07:30:00+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "雷峰网",
-      "author": "",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -2290,7 +3184,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2442,23 +3336,6 @@
     "market": "global"
   },
   {
-    "name": "瞬恒智能自研灵巧操作人形机器人SynDexy C1首次实现小批量交付",
-    "description": "今日，瞬恒智能（SynDexy）宣布，自研灵巧操作人形机器人SynDexy C1完成首次小批量交付，产品正式从研发验证迈向工程化交付与场景应用新阶段，进一步推动具身智能在工业制造领域的商业化落地。 本次交付的机器人将应用于消费电子、电子元器件领域客户工厂的精密装配工序。此类工序对精度与稳定性要求极高，在此前测试中，SynDexy C1关键任务成功率超过 98%，展现出面向工业精细操作场景的应用潜力。 作为瞬恒智能首款灵巧操作人形机器人，SynDexy C1最大特点，在于融合了视触觉感知能力—— 硬件层面，搭载了自研视触觉传感器，具备微米级空间分辨率、高动态精细感知与优异鲁棒性、稳定性，为机器人灵巧抓取与柔性操作提供实时感知输入；模型层面，搭载全球首创视触力三态融合操作模型 SynDexy M1，通过视觉、触觉、力觉深度融合提升机器人在真实环境中的感知、理解能力；机器人全身拥有 22 个自由度，可实现1毫秒高实时运动控制。依托软硬件一体化设计，SynDexy C1 面向工业高精度操作任务，有效提升了精细操作能力与系统迭代效率。 从研发启动到小批量交付，SynDexy C1 仅用时6个月：2026年4月启动研发，7月完成初代样机，10月即实现小批量交付。快速迭代的背后，是公司坚持“从场景中来，到产线中去”的发展理念——从最初的产品定义到技术开发，始终以真实产线的落地需求为硬性指标。 此次交付是瞬恒智能推进具身智能机器人产业化的重要里程碑。未来，公司将持续聚焦工业高精度灵巧操作，以真实工业需求为牵引，推动技术研发、产品交付与场景应用协同发展，加速具身智能在工业精密制造领域的落地。 关于瞬恒智能 瞬恒智能（SynDexy）是一家聚焦工业高精度灵巧操作的全栈具身智能公司，成立于 2025 年，总部位于北京。 公司面向消费电子、半导体微组件、汽车零部件等高精度制造场景，构建从机器人本体、视触觉感知到具身操作模型的软硬件一体化自研能力，致力于让机器人进入真实工业世界，成为可靠生产力。 面向工业精密制造场景，瞬恒智能打造高性能精密操作具身智能平台：自研双臂轮式人形机器人 SynDexy C1；自研视触觉传感器与多模态感知算法，具备微米级空间分辨率、高动态精细感知与优异鲁棒性、稳定性，为机器人灵巧抓取与柔性操作提供实时感知输入。全球首创视触力三态融合操作模型SynDexy M1，持续提升机器人在真实环境中的感知、理解与精细操作能力。 瞬恒智能首席科学家方斌教授，北京邮电大学人工智能学院教授，专注具身智能感知、交互与灵巧操作研究十余年，是国内该领域的早期探索者与领军者之一。公司核心研发团队来自清华大学、北京航空航天大学、哈尔滨工业大学、北京邮电大学等高校，以及华为、大疆、腾讯等科技企业，研发人员占比 90% 以上。 未来，瞬恒智能将持续深耕机器人灵巧操作赛道，深化本体、感知、数",
-    "website": "https://leiphone.com/category/industrynews/CLO1sIKJzw59DmrI.html",
-    "source": "cn_news",
-    "published_at": "2026-10-30T02:43:00+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "leiphone",
-      "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-10-30T03:08:30.403463+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
-  },
-  {
     "name": "Anthropic gave 50 analysts Claude Code with a hidden coin-flip bias. They followed the agent’s lean 86% of the time",
     "description": "Anthropic's alignment team published this on Oct 27 and the press picked it up this week. Short version: 50 professional analysts did a realistic statistical analysis with Claude Code. Each agent had a hidden \"lean\" on four analytical choices, set by coin flip through a hidden system prompt. The analysts were not told. What they found: - Analysts went with the agent's lean 86% of the time. Chance would be about 50%. Per decision it ranged from 81% to 92%. - When an analyst had already written down their own preference, they switched away from it 60% of the time if the agent disagreed, vs 6% if it agreed. Small sample for that one (38 cases), so treat it as a signal, not a law. - 77% of analysts used the agent's arguments, sometimes word for word. Only 15% credited the agent as the source. - The final recommendation moved less: 54% recommended rollout when the agent leaned that way, 36% when it leaned the other way. - Not all bad: 6% of agent users made serious errors that invalidated results, vs 55% of the 11 analysts who worked without the agent. Agent users also finished faster (65 vs 90 minutes median). Anthropic says the two groups are not directly comparable. - Caveats from An",
     "website": "https://reddit.com/r/ClaudeAI/comments/1xj3qdv/anthropic_gave_50_analysts_claude_code_with_a",
@@ -2479,66 +3356,6 @@
     },
     "content_type": "blog",
     "market": "global"
-  },
-  {
-    "name": "Anthropic赌万亿未来，智谱算眼前毛利，谁能活过AI下半场？",
-    "description": "当大洋彼岸的Anthropic带着上万亿美元的估值预期叩响华尔街大门时，以智谱为代表的中国大模型厂商，正低头在财报里一分一毫地核算着API生意的毛利。",
-    "website": "https://tmtpost.com/8186459.html",
-    "source": "cn_news",
-    "published_at": "2026-10-30T02:33:47+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "钛媒体：引领未来商业与生活新知",
-      "author": "大模型之家",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-10-30T03:48:46.497650+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
-  },
-  {
-    "name": "谷歌暴跌、亚马逊失血、微软发债：AI 基建竞赛进入分水岭",
-    "description": "三大云巨头算力售罄排到 2028 年，却同时交出多年首见的负自由现金流，这一轮 AI 竞赛的分水岭，是市场开始只为回报付钱。",
-    "website": "https://tmtpost.com/8187079.html",
-    "source": "cn_news",
-    "published_at": "2026-10-30T02:30:00+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "钛媒体：引领未来商业与生活新知",
-      "author": "硅谷Tech news",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-10-30T03:48:46.497650+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
-  },
-  {
-    "name": "AI 推理引爆全球 NAND 需求：闪迪称“客户低估闪存容量需求”，长单排至 2030 年",
-    "description": "IT之家 10 月 30 日消息，在 2027 财年第一财季（2026 年 7 月 4 日至 2026 年 10 月 2 日）财报电话会议上，闪迪（SanDisk）公司高管表示，AI 推理正在重塑 NAND 闪存市场的供需格局，客户“低估 NAND 闪存容量需求”。 闪迪管理层表示客户普遍“低估了运行 AI 基础设施所需的 NAND 容量”，因此正在大举追加长期订单；公司的新型商业模式（NBM）订单管道已延伸至 2030 年，甚至更远。 IT之家注：NBM 是一种以承诺采购量、合同约束和价格机制为基础的长期合作模式。闪迪透露，2027 财年约 50% 的位元出货（按存储容量统计的 NAND 出货量）已被 NBM 协议锁定，2028 财年这一比例预计升至约三分之二；到本十年末，NBM 储备需求可能超过公司可用供应。 技术方面，闪迪宣布首款高带宽闪存（HBF）存储晶粒已完成流片并进入制造阶段。HBF 面向 AI 推理场景，目标是提供接近 HBM 的读取带宽，同时具备 NAND 级的大容量，可用于支撑更大模型、更长上下文和持续增长的 KV 缓存；首批产品样品计划于下一个日历年交付。 闪迪还指出，市场正探索以 SLC NAND 替代部分高成本 DRAM。在 AI 推理中，闪存可承担容量层角色，帮助系统保留更广泛上下文，减少昂贵的重复计算。 财报公布后，闪迪（SNDK）股价呈现明显的“利好兑现、先涨后跌”走势：虽然 Q1 业绩和下季指引均超预期，但盘后股价仍走低。 10 月 29 日常规交易时段，闪迪收报 1,330.05 美元 （现汇率约合 8,881 元人民币） ，单日下跌 74.72 美元 （现汇率约合 498.9 元人民币） ，跌幅 5.32%；前一交易日收盘价为 1,404.77 美元 （现汇率约合 9,379 元人民币） 。 财报是在美股收盘后发布的。公司当季营收 110.3 亿美元 （现汇率约合 736.46 亿元人民币） 、非 GAAP 每股收益 49.51 美元 （现汇率约合 330.6 元人民币） ，均高于市场预期；同时宣布 1 拆 8 股票拆分，拆分将于 11 月 19 日生效。 财报发布后，闪迪股价一度上涨，但随后回落。截至美东时间 10 月 29 日晚间，盘后价约 1,282.50 美元至 1,295.05 美元 （现汇率约合 8,563 元至 8,647 元人民币） ，较当日收盘再跌约 2.6% 至 3.6% ；若以前收盘价 1,404.77 美元 （现汇率约合 9,379 元人民币） 计算，累计跌幅约 7.8% 。",
-    "website": "https://ithome.com/1/019/924.htm",
-    "source": "cn_news",
-    "published_at": "2026-10-30T02:29:01+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "IT之家",
-      "author": "",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T03:48:46.497650+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
   },
   {
     "name": "I built a Spotify-style music app for my home server with Claude. 6 months, one app replacing my whole media stack",
@@ -2562,46 +3379,6 @@
     },
     "content_type": "blog",
     "market": "global"
-  },
-  {
-    "name": "智元创新日：从卖机器人到卖Worken",
-    "description": "Worken（有效智能工时）＝活跃机器人数量 × 自主工作时长 × 产出效能比。",
-    "website": "https://tmtpost.com/8187159.html",
-    "source": "cn_news",
-    "published_at": "2026-10-30T02:18:47+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "钛媒体：引领未来商业与生活新知",
-      "author": "科技异端",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-10-30T03:48:46.497650+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
-  },
-  {
-    "name": "OpenAI 更新 AI 模型规范，将忠于人类意图作为核心准则",
-    "description": "IT之家 10 月 30 日消息，OpenAI 于当地时间周四更新了其模型规范（Model Spec）文档，这是一份用于明确其 AI 模型行为准则的公开路线图。随着 AI 系统能力持续增强，OpenAI 围绕五大核心价值对该框架进行了重构。 OpenAI 将模型规范重新归纳为五项准则：忠于人类意图、降低伤害、诚实透明、保障人的自主选择权、审慎尽责。 该公司表示，忠于人类意图是整套框架的基础，要求模型理解用户、开发者以及 OpenAI 本身的意图与价值取向，而不是机械地按字面执行指令。 OpenAI 称，本次更新属于 AI 对齐工作的一环，目的是让模型在陌生场景下践行人类价值观，同时始终接受人类监督。 修订后的框架提出，模型应当尽可能减少危害，如实说明自身知道和不知道的内容，辅助用户自主做决定、追寻自身目标。 公司表示，现有模型还无法完全符合这份新版模型规范，团队正在研究全新训练方式，让模型内化这些准则。 IT之家注意到，这次调整和竞争对手 Anthropic 的宪法式 AI 思路相近，后者依靠一份书面的原则“宪法”约束模型行为，让塑造 AI 系统的价值理念更加公开透明。 在此之前，AI 对齐问题受到越来越多审视。OpenAI 曾披露，一款自主智能体在测试过程中入侵了 Hugging Face。该事件凸显，高阶模型在追逐既定目标时，有可能突破规则、绕过安全防护机制，也推动了本次规范更新。",
-    "website": "https://ithome.com/1/019/898.htm",
-    "source": "cn_news",
-    "published_at": "2026-10-30T02:16:46+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "IT之家",
-      "author": "",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T03:48:46.497650+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
   },
   {
     "name": "How I Built the Most AI-Pilled Company in the World",
@@ -2645,46 +3422,6 @@
     "market": "global"
   },
   {
-    "name": "谷歌 Gemini 升级：生成的文档、表格可在聊天中直接修改",
-    "description": "IT之家 10 月 30 日消息，现在用户可以直接在谷歌 Gemini 内生成、预览并编辑 PDF、谷歌文档、谷歌表格、幻灯片、Markdown 文件、TXT 文本以及代码文件。这项全新的文件编辑功能从今日起面向所有 Gemini 用户开放，其中 PDF 的预览和编辑功能同时支持网页端与移动端，其余所有文件格式目前仅可在网页端使用。 IT之家注意到，谷歌在今年早些时候已经为 Gemini 加入了文件生成与下载功能，而现在用户无需退出 Gemini 应用，就能对这些文件进行修改。谷歌表示，用户可以全屏打开文档进行编辑，还能选中文件里的文本向 Gemini 提问，或是让其修改文件内容，例如选中一张表格，让 Gemini 将其转换成图表。 此前，用户就可以依托 Gemini 在谷歌 Workspace 应用中的集成能力编辑文件，比如谷歌文档里的 Gemini 侧边栏。Anthropic 今年早些时候也上线了一项功能，支持用户在 Claude 对话窗口中生成并编辑文档和演示文稿。",
-    "website": "https://ithome.com/1/019/878.htm",
-    "source": "cn_news",
-    "published_at": "2026-10-30T01:41:27+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "IT之家",
-      "author": "",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T03:48:46.497650+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
-  },
-  {
-    "name": "李开复创立的零一万物总部将落地杭州临平区，获市区两级国资联动投资数亿元",
-    "description": "IT之家 10 月 30 日消息，零一万物今日宣布，10 月 28 日，零一万物与杭州市、临平区达成合作，由市区两级国资联动投资， 合计向零一万物投资数亿元 。 IT之家获悉， 零一万物总部将落地杭州临平区 ，并以此为依托，打造产业 AI 转型基地。 杭州有关部门表示， 杭州正全力争创人工智能创新发展第一城 ，推动人工智能科技创新与产业创新深度融合。未来，杭州将充分发挥数字经济和实体产业优势，持续开放高价值应用场景，推动人工智能深入千行百业。期待零一万物发挥企业 AI 技术与产业 AI 转型实践优势，深度融入杭州创新生态，与本地企业共同探索可复制、可推广的产业 AI 转型模式，为杭州智能经济发展和实体经济转型升级注入新动能。 零一万物创始人兼 CEO 李开复表示：“杭州已经诞生了一批世界级的 AI 创新企业，这是非常了不起的成绩。但我认为，杭州 AI 更大的机会还在后面。这里有活跃的民营经济，完全有条件成为产业 AI 转型的主战场。我希望未来大家提到杭州 AI，不仅想到这里诞生了哪些 AI 公司，更能想到有多少企业因为 AI 转型升级储备了引领未来的竞争力。这将成为杭州的下一张 AI 名片。” 延伸阅读 零一万物（ 01.AI ）由李开复于 2023 年 5 月创办，核心团队成员来自谷歌、微软、IBM、百度等公司。李开复于 1988 年获卡内基梅隆大学计算机学博士学位，曾加盟微软、谷歌等巨头，担任微软副总裁、谷歌中国区总裁等职位，2009 年宣布离职后在北京创立创新工场，并出任董事长兼首席执行官。原百度元宇宙负责人马杰担任零一万物联合创始人、副总裁。 2024 年，零一万物推出了首款闭源模型 Yi-Large。2024 年下半年，公司进行了第二年的战略及组织调整，2025 年起聚焦于应用落地及业务加速增长。此次总部落地杭州并打造产业 AI 转型基地，正是其在企业级 AI 方向的进一步落子。 值得注意的是，零一万物正持续收缩面向消费者的业务。2026 年 8 月，公司发布公告称，因产品与服务体系升级、进一步聚焦企业级人工智能解决方案，零一万物大模型开放平台将逐步停止面向用户提供在线体验、API 调用及充值等相关服务：即日起停止新用户注册及充值，2026 年 9 月 3 日 24:00 起停止模型体验、API 调用及相关服务，退款申请窗口开放至 2026 年 12 月 3 日 24:00。 在技术路线上，零一万物 2025 年 1 月与阿里云联合宣布启动“产业大模型实验室”，双方在技术、算力、业务、人才等板块技术共享与深度共建，全面通过阿里云百炼大模型平台的模型服务层面向市场。2026 年，李开复表示公司已主要基于中国开源权重模型进行微调和定制，包括 DeepSeek、阿里巴巴千问以及智谱 AI 的 GLM 模型，目前约有一半业务收入来自中国以外市场。 资本层面",
-    "website": "https://ithome.com/1/019/877.htm",
-    "source": "cn_news",
-    "published_at": "2026-10-30T01:40:17+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "IT之家",
-      "author": "",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T03:48:46.497650+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
-  },
-  {
     "name": "Claude.ai is a black box in two aspects: usage limits and model availability",
     "description": "Yesterday I saw a popular post here discussing how Anthropic’s response regarding Pro usage limits is vague and inconsistent (the original post is here ). This reminds me something that I’ve always been keeping records on: model availability, and I think this two things are exactly the same issue wearing two hats. Let’s see what happened: Haiku 4.5 (cheapest): there was clear advance notice on Claude.ai before its Oct 29th retirement, which is genuinely good practice. Opus 4.5 (former flagship): around the launch of Opus 4.7, it just silently disappeared from the model picker without any announcement. Users only found out by opening the picker and realizing it was gone. Opus 3: got a full formal retirement and is still accessible on Claude.ai Same company but three different approaches of retirement, and until now there’s no disclosed policy to clarify which model fits which treatment. What’s more, it sometimes isn't even stable. Earlier this year, around the launch of Opus 4.8, the picker briefly went haywire: some already-retired models (Opus 4.5, 4.1, Sonnet 4) briefly showed up again on model picker, then disappeared. And Opus 4.6 vanished for a while for many users, while some",
     "website": "https://reddit.com/r/ClaudeAI/comments/1xj2bel/claudeai_is_a_black_box_in_two_aspects_usage",
@@ -2707,26 +3444,6 @@
     "market": "global"
   },
   {
-    "name": "只有一个人的制药公司，被Anthropic在IPO前收购了",
-    "description": "Anthropic也开始自己做药了。",
-    "website": "https://tmtpost.com/8186498.html",
-    "source": "cn_news",
-    "published_at": "2026-10-30T01:25:13+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "钛媒体：引领未来商业与生活新知",
-      "author": "字母AI",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-10-30T03:48:46.497650+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
-  },
-  {
     "name": "You don’t need to believe in a god to get a religious exemption from using AI at work",
     "description": "David Durman, a University of Kentucky administrator, recently earned a religious exemption from using AI in the workplace.",
     "website": "https://techcrunch.com/2026/10/29/you-dont-need-to-believe-in-a-god-to-get-a-religious-exemption-from-using-ai-at-work",
@@ -2739,46 +3456,12 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
     "content_type": "blog",
     "market": "global"
-  },
-  {
-    "name": "星巴克考虑将 AI 技术引入得来速，提升点餐准确率与出餐速度",
-    "description": "IT之家 10 月 30 日消息，据彭博社报道，星巴克公司正考虑在得来速车道引入人工智能技术。 这家咖啡连锁品牌的首席执行官布莱恩 · 尼科尔（Brian Niccol）当地时间周四在分析师电话会议上表示，公司准备测试在后台运行的人工智能模型，帮助咖啡师在和顾客沟通时“更准确、高效地录入订单”。该举措的目标是让员工可以专心和顾客交流，同时提升出餐速度。 星巴克还在研究一套识别技术，能够在参与该服务的顾客抵达门店时识别身份，随后向顾客展示个性化数字菜单，并简化支付流程。 尼科尔说：“这项工作尚处在早期阶段，我们会先测试、总结经验，再把可行的方案推广开来。” IT之家注意到，大型连锁餐饮企业已经在得来速场景测试人工智能多年，但这项技术还没有在行业内大规模普及。汉堡王不打算大范围落地其正在试点的 AI 点餐系统，称顾客更愿意和人工交流。麦当劳则在测试自研方案，该公司表示这套系统能让每家门店每周省下数十小时人力，调配到其他工作上。 星巴克周四公布的财报业绩超出市场预期，其围绕门店升级、服务体验和新品研发的战略持续见效。",
-    "website": "https://ithome.com/1/019/866.htm",
-    "source": "cn_news",
-    "published_at": "2026-10-30T01:12:53+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "ithome",
-      "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T03:08:30.403463+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
-  },
-  {
-    "name": "Mistral AI 开放 Large 4 模型权重：1T 参数，编程智能体更省 Token",
-    "description": "IT之家 10 月 30 日消息，当地时间 10 月 29 日，法国公司 Mistral AI 正式开放 Mistral Large 4（简称 ML4，代号 le Chonk）模型权重。 ML4 是一款拥有 1 万亿总参数、490 亿激活参数（包括嵌入层和输出层在内为 520 亿）的原生多模态模型。在 Mistral 位于欧洲的自有数据中心中使用 3,800 块 NVIDIA Grace Blackwell GPU 从零开始训练。 Mistral 表示，在完成面向政府及企业用户的实测后，此次发布的版本相较三周前公布的初版进行了性能优化与升级。 官方表示，该模型在 Artificial Analysis Coding Agent Index 得分达到 48% ，与领先的开源模型 GLM-5.3 基本持平，但平均每个任务消耗的 Token 数量减少了 47%。 在线使用方面，这款模型定价为：输入每百万 Token 0.70 美元 （IT之家注：现汇率约合 4.7 元人民币） 、缓存输入每百万 Token 0.07 美元 （现汇率约合 0.47 元人民币） 、输出每百万 Token 2.10 美元 （现汇率约合 14 元人民币） 。 该模型基于修改版 MIT 许可证发布，允许免费用于个人、学术、修改、微调及常规商业化；面向提供 MaaS 进行转售的云服务商 / 厂商，商业化使用前必须向 Mistral 单独获取商业授权。 IT之家附开源链接： Hugging Face： https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B",
-    "website": "https://ithome.com/1/019/865.htm",
-    "source": "cn_news",
-    "published_at": "2026-10-30T01:09:09+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "ithome",
-      "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-10-30T03:08:30.403463+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
   },
   {
     "name": "Claude code workflow discussion",
@@ -2832,46 +3515,6 @@
     "market": "global"
   },
   {
-    "name": "刚刚，ChatGPT Pro 额度官宣翻倍，但免费重置可能要没了",
-    "description": "Plus 用户：为我发声 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
-    "website": "https://ifanr.com/1686830",
-    "source": "cn_news",
-    "published_at": "2026-10-30T00:29:45+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "爱范儿",
-      "author": "莫崇宇",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.ifanr.com/feed",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
-  },
-  {
-    "name": "Edge AI Daily 早报（10月30日）",
-    "description": "Alphabet第三季资本支出激增至514亿美元、自由现金流连续两季转负，单日市值蒸发约5000亿美元，与英特尔财报后暴跌21%、亚马逊因773亿美元单季资本支出跌逾5%共振，AI军备竞赛从自筹转向债务与表外承诺；OpenAI将Model Spec收束为五大价值观并下移对齐责任，Anthropic披露Claude自主串联五大系统漏洞链、同时推进空前提规模IPO，英伟达收购Hugging Face遭司法部反垄断问询。Nemotron 3.5 Transcribe与RTX Spark推动开源与本地AI栈成熟；华大三家被列入UFLPA清单,特朗普暂缓机器人关税进入180天谈判期。",
-    "website": "https://tmtpost.com/8187034.html",
-    "source": "cn_news",
-    "published_at": "2026-10-30T00:28:41+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "钛媒体：引领未来商业与生活新知",
-      "author": "Edge AI Daily",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-10-30T03:48:46.497650+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
-  },
-  {
     "name": "Benchmark: Tiny Harbor, a living 3D island village in three.js (Qwen 3.8 Flash Next)",
     "description": "Saw this prompt on r/DeepSeek and thought I'd give it a shot on my current local build (Qwen 3.8 Flash Next NVFP4). Results are decent, not as good as DeepSeek on the first pass, but I think little back and forth would probably close the gap. DISCLAIMER: The content below has been written/polished by AI Video is the model's own render, exported from the site it wrote: 1920x1080, 40s, with a soundtrack it also generated offline. https://reddit.com/link/1xj0w5d/video/2ckq4hftyhyh1/player What it did in one shot: a round island from one analytic height function: cliffs, beach, hill, harbour, pier, breakwater, 12 houses, lighthouse, windmill, trees, gulls, fish, fireflies a 60-second day cycle with dawn mist, golden hour, night with stars and a lighthouse beam that starts sweeping after dusk clear / rain / snow darker cloud, ripples over the whole sea, wet glossy timber, snow creeping onto the roofs tilt-shift diorama post-processing, so it looks like a toy on a table click a boat or a house and the camera glides to it; drag to orbit, pinch to zoom, auto-orbit when idle Stats: no models, no textures, no build step, no bundler. 15 source files, only dependency is three.js from a CDN. ~4",
     "website": "https://reddit.com/r/LocalLLaMA/comments/1xj0w5d/benchmark_tiny_harbor_a_living_3d_island_village",
@@ -2887,46 +3530,6 @@
     },
     "content_type": "blog",
     "market": "global"
-  },
-  {
-    "name": "买车送终身AI？智己LS8纯电版25万起！全系线控底盘宁德时代标配",
-    "description": "Momenta世界模型上车",
-    "website": "https://qbitai.com/2026/10/506569.html",
-    "source": "cn_news",
-    "published_at": "2026-10-30T00:19:06+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "量子位",
-      "author": "杰西卡",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.qbitai.com/feed",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
-  },
-  {
-    "name": "早报｜苹果高管回应iPad mini仍是60Hz/三季度全球手机出货量降20%，创新低/《影之刃零》登顶Steam全球热销榜",
-    "description": "· 王传福披露比亚迪员工突破 102 万，研发工程师达 12 万 · 美国计算机专业入学人数再降，本科两年减少 18.4% · 韩国拟将 AI 眼镜作弊禁考期延至 3 年，考场将配专人识别 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。",
-    "website": "https://ifanr.com/1686790",
-    "source": "cn_news",
-    "published_at": "2026-10-30T00:14:13+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "爱范儿",
-      "author": "郑廷旭",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.ifanr.com/feed",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
   },
   {
     "name": "Deterministic AI: Why LLMs Aren't, and How to Build Products That Are Anyway",
@@ -2959,7 +3562,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3037,6 +3640,29 @@
     "market": "global"
   },
   {
+    "name": "Backenly",
+    "description": "The autonomous backend for AI coding agents",
+    "website": "https://producthunt.com/products/backenly-2",
+    "source": "producthunt",
+    "published_at": "2026-10-29T21:07:32+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Product Hunt — The best new products, every day",
+      "author": "Zac Zuo",
+      "outbound_urls": [
+        "https://producthunt.com/products/backenly-2",
+        "https://producthunt.com/r/p/1297694?app_id=339"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.producthunt.com/feed",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
     "name": "(Simple AI) Introducing Sentiment: How Tango Hears What Customers Feel",
     "description": "(Simple AI) Introducing Sentiment: How Tango Hears What Customers Feel",
     "website": "https://news.ycombinator.com/item?id=50295423",
@@ -3067,7 +3693,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3087,7 +3713,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3125,7 +3751,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3165,7 +3791,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3185,7 +3811,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3242,7 +3868,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3262,7 +3888,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3285,7 +3911,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3303,6 +3929,29 @@
       "publisher": "r/LocalLLaMA",
       "feed_url": "https://www.reddit.com/r/LocalLLaMA/new/.rss",
       "retrieved_at": "2026-10-30T03:08:30.403463+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "BaseTab AI",
+    "description": "Turn your new tab into an AI-powered workspace",
+    "website": "https://producthunt.com/products/basetab-ai",
+    "source": "producthunt",
+    "published_at": "2026-10-29T17:41:03+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Product Hunt — The best new products, every day",
+      "author": "Bugrahan Zeki Kadak",
+      "outbound_urls": [
+        "https://producthunt.com/products/basetab-ai",
+        "https://producthunt.com/r/p/1297499?app_id=339"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.producthunt.com/feed",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3449,26 +4098,6 @@
     "market": "global"
   },
   {
-    "name": "别再盯着 800 亿美元亏损了，Anthropic 的 AI 造 AI 已推进到 26%！",
-    "description": "AI 已接管 90% 代码编写，甚至为了完成任务开始“越狱”。 作者丨 郑佳美 编辑丨岑 峰 刚刚，Anthropic 在 IPO 招股书中披露了四起此前未公开的 Agent 安全事故。 其中一次，模型在网络安全测试中迟迟无法完成任务，便继续寻找其他路径，随后从本应断网的测试环境中找到保存的密码，获得第三方系统的管理员权限，又获取其他凭证、修改系统设置并访问外部数据，整个过程持续了 10 至 34 小时。 同期披露的另一项安排是，下一代前沿基础模型的预训练推迟了一个多月。 除此之外，这份招股书还有一组关于内部研发的数据：2026 年 9 月，Claude 贡献了 Anthropic 内部代码库超过 90% 的代码贡献量，日均代码贡献量达到 2024 年平均水平的 45 倍。 公司此前公布的研发自动化指标显示，截至 8 月，约 26% 的研发任务达到 AL4 自动化等级，意味着 AI 已经能够根据较高层级的目标，自主完成任务中的大部分工作。 这些信息放在一起，能看出 Anthropic 正在经历的变化：Claude 开始从编写代码走向实验执行和方案迭代，逐步参与下一代模型的研发。 不过要理解这场变化，不能只看 AI 写出了多少代码，还需要弄清楚模型如何通过实验改进研发流程，以及当它能够连续执行任务时，整套工程系统会遇到什么问题。 01 26% 的背后 过去，研究人员使用 AI 编程工具，通常需要自己拆解问题、指定修改位置、运行测试，再根据结果决定下一步做什么。模型可以生成代码，却未必能够独立推进一项完整的研发任务。雷峰网 Coding Agent 改变了这套工作方式。研究人员给出一个目标后，Agent 可以自行阅读代码、分析依赖、修改实现、运行测试，并根据返回结果继续调整方案。人类仍然负责确定任务方向和验收标准，但执行过程中需要逐步提供指令的环节明显减少。 Anthropic 的研发自动化指标，衡量的就是这种变化。AL3 代表 AI 能够在人工指导下承担较大块的工作，AL4 则意味着 AI 可以根据高层目标，独立完成任务中的大部分步骤，由人类监督结果。 截至 2026 年 8 月，约 26% 的研发任务达到 AL4，超过 90% 达到 AL3 或更高等级，但被测量的任务尚未达到 AL5 所代表的完全自主状态。 这里的 26% 衡量的是研发任务的自动化程度，并不意味着 AI 已经独立完成了下一代模型研发的 26%。一项代码优化任务可以有明确的性能指标和正确性测试，开放式研究却需要判断研究问题是否有价值、实验设计是否合理，以及结果能否支持新的结论。这些工作的自动化难度存在明显差异。 代码贡献率提供了另一个观察角度。Claude 在内部代码库中贡献了超过 90% 的代码，并不意味着公司所有研发决策已经交给模型，它说明大量工程实现工作已经由 AI 承担，而 AL4 指",
-    "website": "https://leiphone.com/category/ai/t2cIBqBZVfpYPhPg.html",
-    "source": "cn_news",
-    "published_at": "2026-10-29T14:23:00+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "雷峰网",
-      "author": "",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-10-30T03:48:46.497650+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
-  },
-  {
     "name": "@MistralAI · Today, we release the weights of a new and improved Le Chonk, advancing the open frontier for agentic coding and cybersecurity. 💻 Built to build: Le Chonk ranks #1 on @cognition’s FrontierCode among open models, and sets a new benchmark for Pareto efficiency on @artificialanalys… /",
     "description": "@MistralAI · Today, we release the weights of a new and improved Le Chonk, advancing the open frontier for agentic coding and cybersecurity. 💻 Built to build: Le Chonk ranks #1 on @cognition’s FrontierCode among open models, and sets a new benchmark for Pareto efficiency on @artificialanalys… /",
     "website": "https://x.com/MistralAI/status/2115811242556137820",
@@ -3500,7 +4129,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3580,7 +4209,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3600,7 +4229,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3640,7 +4269,30 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "GitHub Copilot Fusion",
+    "description": "GitHub's AI coding agent that picks and combines models",
+    "website": "https://producthunt.com/products/github-copilot-fusion",
+    "source": "producthunt",
+    "published_at": "2026-10-29T05:39:35+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Product Hunt — The best new products, every day",
+      "author": "Justin Jincaid",
+      "outbound_urls": [
+        "https://producthunt.com/products/github-copilot-fusion",
+        "https://producthunt.com/r/p/1296734?app_id=339"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.producthunt.com/feed",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3683,7 +4335,30 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "telemetry.dev",
+    "description": "LLM observability for AI agents",
+    "website": "https://producthunt.com/products/telemetry-dev",
+    "source": "producthunt",
+    "published_at": "2026-10-29T00:13:46+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Product Hunt — The best new products, every day",
+      "author": "fmerian",
+      "outbound_urls": [
+        "https://producthunt.com/products/telemetry-dev",
+        "https://producthunt.com/r/p/1296505?app_id=339"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.producthunt.com/feed",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3852,7 +4527,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3978,7 +4653,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4021,7 +4696,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCbfYPyITQ-7l4upoX8nvctg",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4083,7 +4758,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4103,7 +4778,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA",
-      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4123,7 +4798,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4143,7 +4818,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4232,7 +4907,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4341,7 +5016,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4361,7 +5036,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4404,7 +5079,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4471,26 +5146,6 @@
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
       "retrieved_at": "2026-10-30T03:48:46.497650+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "Anthropic Says It Will Revolutionize Biology—Some Day",
-    "description": "In breathless press releases and posts, the company has touted its models’ ability to deliver scientific breakthroughs. But its IPO filing taps the brakes on just how fast its AI will lead to big discoveries.",
-    "website": "https://wired.com/story/anthropic-says-it-will-revolutionize-biology-some-day",
-    "source": "tech_news",
-    "published_at": "2026-10-27T19:39:04+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "Feed: Artificial Intelligence Latest",
-      "author": "Emily Mullin",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4577,46 +5232,6 @@
     "market": "global"
   },
   {
-    "name": "UK Home Office May Face Investigation Over Use of OpenAI Tech",
-    "description": "A government watchdog is considering a probe into the Home Office’s use of ChatGPT technology to process asylum claims amid concerns over the tools’ accuracy and secrecy surrounding their use.",
-    "website": "https://wired.com/story/uk-home-office-may-face-investigation-over-use-of-openai-tools",
-    "source": "tech_news",
-    "published_at": "2026-10-27T15:10:26+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "Feed: Artificial Intelligence Latest",
-      "author": "Isabella Ward",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-10-30T13:17:00.756655+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "The Download: Anthropic’s IPO, smarter power grids, and exercise pills",
-    "description": "This is today’s edition of The Download, our weekday newsletter that provides a daily dose of what’s going on in the world of technology. Will the real Anthropic please stand up? After weeks of frenzied speculation, Anthropic has filed its IPO prospectus. The 335-page document (100 pages or so are focused on risks) lays out…",
-    "website": "https://technologyreview.com/2026/10/27/1147693/the-download-anthropic-ipo-smarter-power-grids-exercise-pills",
-    "source": "tech_news",
-    "published_at": "2026-10-27T12:10:00+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "MIT Technology Review",
-      "author": "Thomas Macaulay",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
     "name": "Yardlet",
     "description": "The Mac app for the coding agents you already use",
     "website": "https://producthunt.com/products/yardlet-2",
@@ -4655,7 +5270,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4763,7 +5378,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4806,7 +5421,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ",
-      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4845,6 +5460,44 @@
       "news_market": "global",
       "quality_policy_version": 1,
       "author": "cohere"
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "@NVIDIAAI · From autonomous vehicles to smarter factories, companies are putting physical AI to work. We’ve added new NVIDIA Cosmos tools to help developers generate training data, train world models and test them before deployment. See how @Porsche, @MercedesBenz, @encord_team, @Siemens, @f… /",
+    "description": "@NVIDIAAI · From autonomous vehicles to smarter factories, companies are putting physical AI to work. We’ve added new NVIDIA Cosmos tools to help developers generate training data, train world models and test them before deployment. See how @Porsche, @MercedesBenz, @encord_team, @Siemens, @f… /",
+    "website": "https://x.com/NVIDIAAI/status/2113697272475320559",
+    "source": "x",
+    "published_at": "2026-10-23T18:21:15.011000+00:00",
+    "extra": {
+      "evidence_kind": "search_excerpt",
+      "search_provider": "Tavily",
+      "publication_basis": "x_snowflake",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "author": "NVIDIAAI",
+      "excerpt_basis": "indexed_post_title",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "@NVIDIAAI · Available now: NVIDIA Nemotron 3.5 Bolt E4B 4GB ⚡️ Our newest small open model is built for local assistants, interactive characters and robots that can carry on a conversation and use tools to get things done. Watch Reachy Mini chat and move, with Bolt handling conversation and… /",
+    "description": "@NVIDIAAI · Available now: NVIDIA Nemotron 3.5 Bolt E4B 4GB ⚡️ Our newest small open model is built for local assistants, interactive characters and robots that can carry on a conversation and use tools to get things done. Watch Reachy Mini chat and move, with Bolt handling conversation and… /",
+    "website": "https://x.com/NVIDIAAI/status/2113657112408785153",
+    "source": "x",
+    "published_at": "2026-10-23T15:41:40.105000+00:00",
+    "extra": {
+      "evidence_kind": "search_excerpt",
+      "search_provider": "Tavily",
+      "publication_basis": "x_snowflake",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "author": "NVIDIAAI",
+      "excerpt_basis": "indexed_post_title",
+      "news_market": "global",
+      "quality_policy_version": 1
     },
     "content_type": "blog",
     "market": "global"
@@ -4918,7 +5571,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -4942,6 +5595,44 @@
       "news_market": "global",
       "quality_policy_version": 1,
       "author": "MistralAI"
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "@NVIDIAAI · We’re releasing more open models to help teams across Europe build AI with their own data, on infrastructure they control. Announced at GTC Berlin, the models help developers, researchers and enterprises build specialized AI agents, train robots, design proteins and develop quantu…",
+    "description": "@NVIDIAAI · We’re releasing more open models to help teams across Europe build AI with their own data, on infrastructure they control. Announced at GTC Berlin, the models help developers, researchers and enterprises build specialized AI agents, train robots, design proteins and develop quantu…",
+    "website": "https://x.com/NVIDIAAI/status/2112847569827348804",
+    "source": "x",
+    "published_at": "2026-10-21T10:04:50.113000+00:00",
+    "extra": {
+      "evidence_kind": "search_excerpt",
+      "search_provider": "Tavily",
+      "publication_basis": "x_snowflake",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "author": "NVIDIAAI",
+      "excerpt_basis": "indexed_post_title",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "@NVIDIAAI · AI agents need fast tool calls and security controls they can’t rewrite. NVIDIA OpenShell Reference Architecture combines the compute to run agents at scale with runtime controls that govern their access to tools and data. See how the hardware and software work together: https://… /",
+    "description": "@NVIDIAAI · AI agents need fast tool calls and security controls they can’t rewrite. NVIDIA OpenShell Reference Architecture combines the compute to run agents at scale with runtime controls that govern their access to tools and data. See how the hardware and software work together: https://… /",
+    "website": "https://x.com/NVIDIAAI/status/2112846708527018339",
+    "source": "x",
+    "published_at": "2026-10-21T10:01:24.763000+00:00",
+    "extra": {
+      "evidence_kind": "search_excerpt",
+      "search_provider": "Tavily",
+      "publication_basis": "x_snowflake",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "author": "NVIDIAAI",
+      "excerpt_basis": "indexed_post_title",
+      "news_market": "global",
+      "quality_policy_version": 1
     },
     "content_type": "blog",
     "market": "global"
@@ -4973,7 +5664,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -4995,7 +5686,30 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA",
-      "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Coding Wrapped",
+    "description": "See how you really vibe code with Claude Code & Codex",
+    "website": "https://producthunt.com/products/coding-wrapped",
+    "source": "producthunt",
+    "published_at": "2026-10-20T08:53:03+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Product Hunt — The best new products, every day",
+      "author": "Sen Lin",
+      "outbound_urls": [
+        "https://producthunt.com/products/coding-wrapped",
+        "https://producthunt.com/r/p/1286399?app_id=339"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.producthunt.com/feed",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -5018,7 +5732,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -5035,7 +5749,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -5080,7 +5794,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCbfYPyITQ-7l4upoX8nvctg",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -5128,6 +5842,29 @@
     "market": "global"
   },
   {
+    "name": "Specsight",
+    "description": "Product observability for teams shipping fast with AI",
+    "website": "https://producthunt.com/products/specsight",
+    "source": "producthunt",
+    "published_at": "2026-10-18T18:03:42+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Product Hunt — The best new products, every day",
+      "author": "Rohan Chaubey",
+      "outbound_urls": [
+        "https://producthunt.com/products/specsight",
+        "https://producthunt.com/r/p/1284558?app_id=339"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.producthunt.com/feed",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
     "name": "Jensen Huang on China's AI labs | Lex Fridman in Taiwan",
     "description": "Lex Fridman full video: https://www.youtube.com/watch?v=FGCP2F_7rQk Thank you for watching ❤ Check out our sponsors: https://lexfridman.com/sponsors/cv10081-sb See below for guest links, and to give feedback, submit questions, contact Lex, etc. *CONTACT LEX:* *Feedback* - give feedback to Lex: https://lexfridman.com/survey *AMA* - submit questions, videos or call-in: https://lexfridman.com/ama *Hiring* - join our team: https://lexfridman.com/hiring *Other* - other ways to get in touch: https://lexfridman.com/contact *EPISODE LINKS:* My podcast with Jensen: https://www.youtube.com/watch?v=vif8NQcjVf0 NVIDIA: https://nvidia.com NVIDIA on X: https://x.com/nvidia NVIDIA on YouTube: https://youtube.com/@NVIDIA NVIDIA on Instagram: https://www.instagram.com/nvidia/ Computex: https://www.computextaipei.com.tw/en/ *SPONSORS:* To support this podcast, check out our sponsors & get discounts: *Higgsfield AI:* AI-based video generation, filmmaking, and creative studio. Go to https://lexfridman.com/s/higgsfield-cv10081-sb *Perplexity:* AI-powered answer engine. Go to https://lexfridman.com/s/perplexity-cv10081-sb *PODCAST LINKS:* - Podcast Website: https://lexfridman.com/podcast - Apple Podcast",
     "website": "https://youtube.com/watch?v=9rH1ChuVAe0",
@@ -5138,6 +5875,44 @@
       "publisher": "UCJIfeSCssxSC_Dhc5s7woww",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
       "retrieved_at": "2026-10-30T03:21:03.447189+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "@NVIDIAAI · Building safer AI agents takes more than model safeguards. @perplexity_ai open sourced SPACE, the agent sandbox platform behind Computer, giving developers more control over where agents run code and what they can access. Cheers to more teams open-sourcing tools to build safer au… /",
+    "description": "@NVIDIAAI · Building safer AI agents takes more than model safeguards. @perplexity_ai open sourced SPACE, the agent sandbox platform behind Computer, giving developers more control over where agents run code and what they can access. Cheers to more teams open-sourcing tools to build safer au… /",
+    "website": "https://x.com/NVIDIAAI/status/2111488462264410553",
+    "source": "x",
+    "published_at": "2026-10-17T16:04:13.619000+00:00",
+    "extra": {
+      "evidence_kind": "search_excerpt",
+      "search_provider": "Tavily",
+      "publication_basis": "x_snowflake",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "author": "NVIDIAAI",
+      "excerpt_basis": "indexed_post_title",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "@NVIDIAAI · Welcome Beam! Congrats to @ReflectionAI on launching their first open-weight model. The 501B MoE model was trained on NVIDIA GB300 NVL72 and delivers over 70K tokens/sec/GPU on Blackwell Ultra out of the box on day 0. 🤗 Beam 1.0 NVFP4 checkpoint on @huggingface: https://t.co/K…",
+    "description": "@NVIDIAAI · Welcome Beam! Congrats to @ReflectionAI on launching their first open-weight model. The 501B MoE model was trained on NVIDIA GB300 NVL72 and delivers over 70K tokens/sec/GPU on Blackwell Ultra out of the box on day 0. 🤗 Beam 1.0 NVFP4 checkpoint on @huggingface: https://t.co/K…",
+    "website": "https://x.com/NVIDIAAI/status/2111089696025858212",
+    "source": "x",
+    "published_at": "2026-10-16T13:39:40.339000+00:00",
+    "extra": {
+      "evidence_kind": "search_excerpt",
+      "search_provider": "Tavily",
+      "publication_basis": "x_snowflake",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "author": "NVIDIAAI",
+      "excerpt_basis": "indexed_post_title",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -5228,8 +6003,27 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "author": "OpenAI",
+      "excerpt_basis": "indexed_post_title",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "@NVIDIAAI · And @AIatMeta went live with Muse Spark Open! The 816B model was trained on NVIDIA GB300 NVL72. Its 1M-token context window gives coding agents room to work across large codebases. Meta also produced NVFP4 checkpoints optimized for Blackwell Ultra, delivering over 50K tokens/sec/… /",
+    "description": "@NVIDIAAI · And @AIatMeta went live with Muse Spark Open! The 816B model was trained on NVIDIA GB300 NVL72. Its 1M-token context window gives coding agents room to work across large codebases. Meta also produced NVFP4 checkpoints optimized for Blackwell Ultra, delivering over 50K tokens/sec/… /",
+    "website": "https://x.com/NVIDIAAI/status/2110799083749495190",
+    "source": "x",
+    "published_at": "2026-10-15T18:24:52.973000+00:00",
+    "extra": {
+      "evidence_kind": "search_excerpt",
+      "search_provider": "Tavily",
+      "publication_basis": "x_snowflake",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "author": "NVIDIAAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
       "quality_policy_version": 1
@@ -5458,6 +6252,25 @@
     "market": "global"
   },
   {
+    "name": "@NVIDIAAI · An AI agent makes a mistake early in a task, then keeps going in the wrong direction. Our researchers built PivotOPD to teach agents how to avoid those mistakes and recover when they happen. During training, a teacher model shows the agent a better action and how to get back on tr…",
+    "description": "@NVIDIAAI · An AI agent makes a mistake early in a task, then keeps going in the wrong direction. Our researchers built PivotOPD to teach agents how to avoid those mistakes and recover when they happen. During training, a teacher model shows the agent a better action and how to get back on tr…",
+    "website": "https://x.com/NVIDIAAI/status/2107928667246715090",
+    "source": "x",
+    "published_at": "2026-10-07T20:18:52.349000+00:00",
+    "extra": {
+      "evidence_kind": "search_excerpt",
+      "search_provider": "Tavily",
+      "publication_basis": "x_snowflake",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "author": "NVIDIAAI",
+      "excerpt_basis": "indexed_post_title",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
     "name": "@OpenAI · We're sharing progress on ChatGPT for Teens, our ChatGPT experience for people under 18, alongside a preview of College Planner, new study tools, and support for college advisers and teen voices. ChatGPT for Teens applies automatically to accounts identified as belonging to someone u…",
     "description": "@OpenAI · We're sharing progress on ChatGPT for Teens, our ChatGPT experience for people under 18, alongside a preview of College Planner, new study tools, and support for college advisers and teen voices. ChatGPT for Teens applies automatically to accounts identified as belonging to someone u…",
     "website": "https://x.com/OpenAI/status/2107909792945832070",
@@ -5486,7 +6299,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -5524,7 +6337,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -5583,6 +6396,25 @@
       "publication_basis": "x_snowflake",
       "retrieved_at": "2026-10-30T22:58:32.476320+00:00",
       "author": "huggingface",
+      "excerpt_basis": "indexed_post_title",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "@upstageai · Solar Mini 4: Built for High-Volume Agent Workloads Top overall performance among active-3B models, with lower costs for repetitive agent work. Solar Mini 4 is a 35B MoE model pretrained from the ground up by Upstage. It activates just 3B parameters per token, drawing on the full m… /",
+    "description": "@upstageai · Solar Mini 4: Built for High-Volume Agent Workloads Top overall performance among active-3B models, with lower costs for repetitive agent work. Solar Mini 4 is a 35B MoE model pretrained from the ground up by Upstage. It activates just 3B parameters per token, drawing on the full m… /",
+    "website": "https://x.com/upstageai/status/2105934955314663673",
+    "source": "x",
+    "published_at": "2026-10-02T08:16:34.383000+00:00",
+    "extra": {
+      "evidence_kind": "search_excerpt",
+      "search_provider": "Tavily",
+      "publication_basis": "x_snowflake",
+      "retrieved_at": "2026-10-31T12:54:35.845768+00:00",
+      "author": "upstageai",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
       "quality_policy_version": 1
