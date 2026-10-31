@@ -3,19 +3,17 @@
 import Link from "next/link";
 import { ProductCard } from "@/components/product/product-card";
 import { HorseMark } from "@/components/brand/horse-mark";
-import { RadarEmblem } from "@/components/brand/radar-emblem";
-import { ChineseHomeIntro } from "@/components/home/chinese-home-intro";
-import { ArrowUpRight, BookmarkSimple, Cpu, MagnifyingGlass, Browser } from "@phosphor-icons/react";
-import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
+import { CategoryPicker } from "@/components/home/category-picker";
+import { HomeIntro } from "@/components/home/chinese-home-intro";
+import { ArrowUpRight, BookmarkSimple } from "@phosphor-icons/react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Product } from "@/types/api";
 import { parseLastUpdatedLabel, type WeeklyTopSort } from "@/lib/api-client";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import { countFavorites, openFavoritesPanel, subscribeFavorites } from "@/lib/favorites";
 import {
   collectDirectionOptions,
-  filterDirectionOptions,
   filterProducts,
-  getDirectionLabel,
   getProductDirections,
   isHardware,
   productKey,
@@ -24,7 +22,6 @@ import {
 
 const PRODUCTS_PER_PAGE = 12;
 const DARK_HORSE_COLLAPSE_LIMIT = 5;
-const POPULAR_DIRECTION_LIMIT = 10;
 const DEFAULT_WEEKLY_TOP_SORT: WeeklyTopSort = "recency";
 
 type HomeClientProps = {
@@ -44,10 +41,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
   const [currentPage, setCurrentPage] = useState(1);
   const [favoritesCount, setFavoritesCount] = useState(0);
   const [showAllDarkHorses, setShowAllDarkHorses] = useState(false);
-  const [isDirectionSheetOpen, setIsDirectionSheetOpen] = useState(false);
-  const [directionQuery, setDirectionQuery] = useState("");
   const listSentinelRef = useRef<HTMLDivElement | null>(null);
-  const deferredDirectionQuery = useDeferredValue(directionQuery);
 
   useEffect(() => {
     const syncCount = () => setFavoritesCount(countFavorites());
@@ -55,28 +49,17 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
     return subscribeFavorites(syncCount);
   }, []);
 
-  useEffect(() => {
-    if (!isDirectionSheetOpen) return;
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setIsDirectionSheetOpen(false);
-      }
-    };
-
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [isDirectionSheetOpen]);
 
   const productPool = useMemo(() => sortProducts(allProducts, sortBy), [allProducts, sortBy]);
 
   const filteredDarkHorses = useMemo(() => {
     return darkHorses.filter((product) => {
+      if (directionFilter !== "all" && !getProductDirections(product).includes(directionFilter)) return false;
       if (contentTypeFilter === "all") return true;
       if (contentTypeFilter === "hardware") return isHardware(product);
       return !isHardware(product);
     });
-  }, [contentTypeFilter, darkHorses]);
+  }, [contentTypeFilter, darkHorses, directionFilter]);
 
   const visibleDarkHorses = useMemo(() => {
     if (showAllDarkHorses) return filteredDarkHorses;
@@ -87,23 +70,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
     return new Set(visibleDarkHorses.map((product) => productKey(product)));
   }, [visibleDarkHorses]);
 
-  const allDirectionOptions = useMemo(() => {
-    const filtered = filterProducts(productPool, {
-      tier: tierFilter,
-      type: contentTypeFilter === "all" ? "all" : contentTypeFilter,
-    });
-    return collectDirectionOptions(filtered, locale);
-  }, [contentTypeFilter, locale, productPool, tierFilter]);
-
-  const popularDirections = useMemo(
-    () => allDirectionOptions.slice(0, POPULAR_DIRECTION_LIMIT),
-    [allDirectionOptions]
-  );
-
-  const filteredDirectionSheetOptions = useMemo(
-    () => filterDirectionOptions(allDirectionOptions, deferredDirectionQuery),
-    [allDirectionOptions, deferredDirectionQuery]
-  );
+  const allDirectionOptions = useMemo(() => collectDirectionOptions(allProducts, locale), [allProducts, locale]);
 
   const activeDirectionFilter =
     directionFilter === "all" || allDirectionOptions.some((option) => option.value === directionFilter)
@@ -157,55 +124,30 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
     [freshnessHoursAgo, locale]
   );
   const isArchive = darkHorses.length > 0 && darkHorses.every(product => product.is_archived);
-  const activeDirectionLabel = activeDirectionFilter === "all" ? t("选择分类", "Choose a direction") : getDirectionLabel(activeDirectionFilter, locale);
 
   const selectDirection = (value: string) => {
     setDirectionFilter(value);
+    setShowAllDarkHorses(false);
     setCurrentPage(1);
-    setIsDirectionSheetOpen(false);
   };
 
-  const browseDirections = useMemo(() => collectDirectionOptions(allProducts, locale), [allProducts, locale]);
 
   return (
     <div className="home-root" data-vibe="briefing">
-      {locale === "zh-CN" ? (
-        <ChineseHomeIntro categories={browseDirections} onCategorySelect={(value) => {
-          setContentTypeFilter("all");
-          setTierFilter("all");
-          selectDirection(value);
-        }} />
-      ) : <section className="hero briefing-hero">
-        <div className="hero-layout">
-          <div className="hero-content">
-            <h1 className="hero-title">Discover emerging<br /><span>AI products.</span></h1>
-            <div className="briefing-actions">
-              <a className="link-btn link-btn--primary" href="#darkhorseSection">Explore the brief <ArrowUpRight size={16} /></a>
-              <Link className="briefing-text-link" href="/discover">Surprise me <ArrowUpRight size={15} /></Link>
-            </div>
-          </div>
-          <aside className="briefing-art" aria-label="Darkhorse Radar brand mark">
-            <RadarEmblem />
-          </aside>
-        </div>
-        <div className="briefing-colophon">
-          <Link href="/content-sources">Our selection method <ArrowUpRight size={14} /></Link>
-        </div>
-      </section>}
+      <HomeIntro />
 
       <section className="section darkhorse-section" id="darkhorseSection">
-        <div className="section-header section-header--tight">
+        <div className="home-catalog-toolbar">
+          <div className="home-catalog-heading">
           <h2 className="section-title">
             {isArchive ? t("往期黑马", "The dark horse archive") : t("近期黑马", "On our radar")}
           </h2>
-        </div>
-
-        <div className="section-utility">
           <div className="section-utility__freshness" aria-live="polite">
             {freshnessLabel}
           </div>
-
+          </div>
           <div className="section-utility__controls">
+            <CategoryPicker options={allDirectionOptions} value={activeDirectionFilter} onChange={selectDirection} />
             <button
               className={`filter-btn ${contentTypeFilter === "all" ? "active" : ""}`}
               aria-pressed={contentTypeFilter === "all"}
@@ -228,7 +170,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
                 setShowAllDarkHorses(false);
               }}
             >
-              <Cpu size={14} /> {t("硬件", "Hardware")}
+              {t("硬件", "Hardware")}
             </button>
             <button
               className={`filter-btn ${contentTypeFilter === "software" ? "active" : ""}`}
@@ -240,7 +182,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
                 setShowAllDarkHorses(false);
               }}
             >
-              <Browser size={14} /> {t("软件", "Software")}
+              {t("软件", "Software")}
             </button>
           </div>
         </div>
@@ -334,13 +276,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
               </select>
             </label>
 
-            <button
-              type="button"
-              className={`tag-btn direction-trigger ${activeDirectionFilter === "all" ? "" : "active"}`}
-              onClick={() => setIsDirectionSheetOpen(true)}
-            >
-              <MagnifyingGlass size={14} /> {activeDirectionLabel}
-            </button>
+            <CategoryPicker options={allDirectionOptions} value={activeDirectionFilter} onChange={selectDirection} />
 
             <button
               className="favorites-toggle"
@@ -397,80 +333,6 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
         </div>
       </footer>
 
-      {isDirectionSheetOpen ? (
-        <div className="direction-sheet">
-          <button
-            type="button"
-            className="direction-sheet__backdrop"
-            aria-label={t("关闭分类筛选", "Close direction filter")}
-            onClick={() => setIsDirectionSheetOpen(false)}
-          />
-          <div className="direction-sheet__panel" role="dialog" aria-modal="true" aria-label={t("产品分类", "Direction filter")}>
-            <div className="direction-sheet__header">
-              <div>
-                <h3>{t("选择分类", "More directions")}</h3>
-              </div>
-              <button type="button" className="direction-sheet__close" onClick={() => setIsDirectionSheetOpen(false)}>
-                {t("关闭", "Close")}
-              </button>
-            </div>
-
-            <div className="direction-sheet__popular">
-              <span>{t("常用分类", "Popular directions")}</span>
-              <div className="direction-sheet__popular-tags">
-                <button
-                  type="button"
-                  className={`tag-btn ${activeDirectionFilter === "all" ? "active" : ""}`}
-                  onClick={() => selectDirection("all")}
-                >
-                  {t("全部分类", "All directions")}
-                </button>
-                {popularDirections.map((option) => (
-                  <button
-                    key={`popular-${option.value}`}
-                    type="button"
-                    className={`tag-btn ${activeDirectionFilter === option.value ? "active" : ""}`}
-                    onClick={() => selectDirection(option.value)}
-                  >
-                    {option.label} ({option.count})
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <label className="direction-sheet__search">
-              <span>{t("搜索分类", "Search directions")}</span>
-              <input
-                type="search"
-                value={directionQuery}
-                onChange={(event) => setDirectionQuery(event.target.value)}
-                placeholder={t("搜索分类，如智能体、医疗、机器人", "Search Agent, Healthcare, Robotics...")}
-                autoComplete="off"
-              />
-            </label>
-
-            <div className="direction-sheet__list">
-              <button
-                type="button"
-                className={`tag-btn ${activeDirectionFilter === "all" ? "active" : ""}`}
-                onClick={() => selectDirection("all")}
-              >
-                {t("全部分类", "All directions")}
-              </button>
-              {filteredDirectionSheetOptions.map((option) => (
-                <button
-                  key={option.value}
-                  type="button"
-                  className={`tag-btn ${activeDirectionFilter === option.value ? "active" : ""}`}
-                  onClick={() => selectDirection(option.value)}
-                >
-                  {option.label} ({option.count})
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      ) : null}
     </div>
   );
 }

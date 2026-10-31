@@ -40,3 +40,12 @@ The v2 contract accepts **1–6 example sections**; its generation prompt prefer
 Bounded bilingual artifact fields allow excerpt, sequence, comparison, list, and text. Validation checks supported fields, safe cited sources, valid dependencies, and literal highlight substrings, and rejects known markup, media/URL, measurement, and execution claims. These checks do not establish factual truth or semantic fit.
 
 Old v2 caches remain readable through a complete-text fallback that preserves the selected label and output. It neither truncates meaning nor invents new media or evidence. Legacy v1 examples use their own schema and focused renderer. Prompt changes do not regenerate or semantically repair either collection.
+
+## Homepage category discovery — 2026-10-31
+
+- Task: scan emerging AI products or narrow the catalog by category in Chinese or English.
+- Input: a product search, category choice, or hardware/software filter.
+- First visible result: compact search and recent product rows; categories open on demand in a searchable text-only menu.
+- Evidence: existing sourced product records and SmartLogo assets; design mock descriptions and logos are never production data.
+- Next action: inspect a product, read its source, save it, or visit its official website.
+- Validation: shared layout for both locales, responsive menu, keyboard dismissal and selection, search and empty state. Browser checks and automated checks do not establish first-time user understanding.
