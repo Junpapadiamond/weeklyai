@@ -1,0 +1,250 @@
+{
+  "cache_key": "2730030d968c558e7c014d99-32d74d6fd26ccf6fd29796b8",
+  "product_key": "2730030d968c558e7c014d99",
+  "fingerprint": "32d74d6fd26ccf6fd29796b8",
+  "product_id": "131",
+  "product_name": "Helix Digital Infrastructure",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-01T22:50:20.886265+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "基础设施规模评估",
+      "en": "Infrastructure Scale Assessment"
+    },
+    "scenario": {
+      "zh": "为假设的AI项目评估不同算力层级对开发周期的潜在影响",
+      "en": "Assess potential impact of different compute tiers on development timeline for a hypothetical AI project"
+    },
+    "steps": [
+      {
+        "id": "project_type",
+        "widget": "choice",
+        "title": {
+          "zh": "项目类型",
+          "en": "Project Type"
+        },
+        "instruction": {
+          "zh": "选择一个假设场景",
+          "en": "Select a hypothetical scenario"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "大语言模型训练",
+              "en": "Large Language Model Training"
+            },
+            "output": {
+              "zh": "需要密集并行算力",
+              "en": "Requires intensive parallel compute"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "项目简述",
+                "en": "Project Brief"
+              },
+              "output_label": {
+                "zh": "关键考量",
+                "en": "Key Considerations"
+              },
+              "input": {
+                "zh": "目标：训练一个通用对话模型，参数规模约500亿，使用多语言文本数据",
+                "en": "Goal: Train a general dialogue model, approximately 50B parameters, using multilingual text data"
+              },
+              "output": {
+                "zh": "算力密度直接影响迭代速度，网络带宽影响多节点协同效率",
+                "en": "Compute density directly affects iteration speed, network bandwidth impacts multi-node coordination efficiency"
+              },
+              "emphasis": {
+                "zh": "参数规模约500亿",
+                "en": "approximately 50B parameters"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "计算机视觉应用",
+              "en": "Computer Vision Application"
+            },
+            "output": {
+              "zh": "侧重推理和微调",
+              "en": "Focus on inference and fine-tuning"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "项目简述",
+                "en": "Project Brief"
+              },
+              "output_label": {
+                "zh": "关键考量",
+                "en": "Key Considerations"
+              },
+              "input": {
+                "zh": "目标：在预训练视觉模型基础上针对工业场景进行适配，处理高分辨率图像",
+                "en": "Goal: Adapt pre-trained vision model for industrial scenarios, processing high-resolution images"
+              },
+              "output": {
+                "zh": "存储吞吐量影响数据加载速度，GPU显存决定批处理大小",
+                "en": "Storage throughput affects data loading speed, GPU memory determines batch size"
+              },
+              "emphasis": {
+                "zh": "高分辨率图像",
+                "en": "high-resolution images"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "tier_comparison",
+        "widget": "compare",
+        "title": {
+          "zh": "层级对比",
+          "en": "Tier Comparison"
+        },
+        "instruction": {
+          "zh": "对比不同基础设施概念",
+          "en": "Compare different infrastructure concepts"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "入门层级",
+              "en": "Entry Tier"
+            },
+            "output": {
+              "zh": "适合概念验证",
+              "en": "Suitable for proof of concept"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "标准层级",
+              "en": "Standard Tier"
+            },
+            "output": {
+              "zh": "平衡性能与扩展性",
+              "en": "Balances performance and scalability"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "企业层级",
+              "en": "Enterprise Tier"
+            },
+            "output": {
+              "zh": "支持大规模并行负载",
+              "en": "Supports large-scale parallel workloads"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "timeline_estimate",
+        "widget": "choice",
+        "title": {
+          "zh": "周期估算",
+          "en": "Timeline Estimate"
+        },
+        "instruction": {
+          "zh": "查看不同配置的假设影响",
+          "en": "View hypothetical impact of different configurations"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "快速迭代优先",
+              "en": "Fast Iteration Priority"
+            },
+            "output": {
+              "zh": "选择高密度算力缩短单轮时间",
+              "en": "Choose high-density compute to shorten per-iteration time"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "优化目标",
+                "en": "Optimization Goal"
+              },
+              "output_label": {
+                "zh": "配置思路",
+                "en": "Configuration Approach"
+              },
+              "input": {
+                "zh": "每日多次模型更新，快速验证假设，保持团队高效协作",
+                "en": "Multiple daily model updates, rapid hypothesis validation, maintain team efficiency"
+              },
+              "output": {
+                "zh": "高密度层级可能缩短单次训练时长，但需权衡成本与实际收益",
+                "en": "High-density tier may shorten single training duration, but must weigh cost against actual benefits"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "成本效率优先",
+              "en": "Cost Efficiency Priority"
+            },
+            "output": {
+              "zh": "选择适度配置降低持续投入",
+              "en": "Choose moderate configuration to reduce ongoing investment"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "优化目标",
+                "en": "Optimization Goal"
+              },
+              "output_label": {
+                "zh": "配置思路",
+                "en": "Configuration Approach"
+              },
+              "input": {
+                "zh": "控制预算，接受较长训练周期，分阶段推进项目里程碑",
+                "en": "Control budget, accept longer training cycles, advance project milestones in phases"
+              },
+              "output": {
+                "zh": "标准层级在成本与周期间取得平衡，适合渐进式开发路径",
+                "en": "Standard tier balances cost and timeline, suitable for incremental development path"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "展示了假设项目中算力层级对开发节奏的潜在影响。实际配置需咨询供应商获取具体方案。",
+      "en": "Illustrated potential impact of compute tiers on development pace in hypothetical projects. Actual configuration requires vendor consultation for specific solutions."
+    },
+    "sources": [
+      {
+        "url": "https://www.helixdi.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://awak.co.jp/articles/ai-news-may-1-2-2026",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

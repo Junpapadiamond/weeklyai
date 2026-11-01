@@ -1,50 +1,50 @@
 {
-  "updated_at": "2026-11-01T22:14:41.855696+00:00",
+  "updated_at": "2026-11-01T22:47:38.481182+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 7,
+      "fresh_count": 1,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-01T22:14:41.855696+00:00",
-      "rejected_count": 17,
+      "checked_at": "2026-11-01T22:47:38.481182+00:00",
+      "rejected_count": 18,
       "rejection_reasons": {
-        "no_concrete_signal": 8,
-        "insufficient_excerpt": 1,
-        "unvetted_x_author": 8
+        "insufficient_excerpt": 4,
+        "no_concrete_signal": 7,
+        "unvetted_x_author": 7
       },
       "rejected_examples": [
         {
-          "title": "@OpenAI · If you are wondering whether your website is affected, we have packaged a Codex skill to help check. Point your Codex at this repo to guide you throug",
-          "reason": "no_concrete_signal"
+          "title": "@OpenAI · OpenAI (@OpenAI) on X",
+          "reason": "insufficient_excerpt"
         },
         {
-          "title": "@OpenAI · With Intelligent UI, GPT‑6 can now compose responses using text, visuals, and interactive elements, choosing how they fit together based on your quest",
-          "reason": "no_concrete_signal"
+          "title": "@OpenAI · OpenAI (@OpenAI) on X",
+          "reason": "insufficient_excerpt"
         },
         {
-          "title": "@OpenAI · GPT-6 and Intelligent UI, now rolling out in ChatGPT for everyone. Intelligent UI in ChatGPT delivers fast, interactive answers that make everyday que",
-          "reason": "no_concrete_signal"
+          "title": "@OpenAI · OpenAI (@OpenAI) on X",
+          "reason": "insufficient_excerpt"
+        },
+        {
+          "title": "@OpenAI · OpenAI (@OpenAI) on X",
+          "reason": "insufficient_excerpt"
         },
         {
           "title": "@runwayml · Introducing Runway App Studio. Build the creative app you wish existed, just by describing it. It generates images, video and audio with Runway’s mo",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@runwayml · Try it today: https://t.co/ns2INdLYlB",
+          "title": "@runwayml · Introducing Runway for web design. Connect Runway to @Replit to generate images, video and assets directly inside your project, from first idea to f",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@runwayml · Now you can build creative apps in Runway. App Studio turns a plain-language description into a working tool, powered by Runway’s models. Watch belo",
+          "title": "@runwayml · If you can describe it, you can run it as a video ad. Runway Ads turns your creative direction into on-brand ads for every platform, then learns wha",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@runwayml · New in Runway App Studio, Character Swap. Swap the characters or location in any video while keeping the original motion intact. You can even transf",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@runwayml · Today, Runway is joining Claude Marketplace. Enterprise ...",
+          "title": "@runwayml · We’ve partnered with Baseten to bring Runway’s video models to enterprises. Deploy Gen-4.5 and Aleph 2.0 in dedicated, single-tenant environments, f",
           "reason": "no_concrete_signal"
         }
       ],
@@ -53,17 +53,29 @@
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 9,
+      "fresh_count": 10,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-01T22:14:41.855696+00:00",
-      "rejected_count": 31,
+      "checked_at": "2026-11-01T22:47:38.481182+00:00",
+      "rejected_count": 30,
       "rejection_reasons": {
-        "no_concrete_signal": 22,
+        "no_concrete_signal": 21,
         "off_topic": 8,
         "insufficient_evidence": 1
       },
       "rejected_examples": [
+        {
+          "title": "Unflagged Conversations",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "SemiAnalysis: 2028 data center buildouts are at serious risk of being paused after the US midterms",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "SemiAnalysis: 2028 data center buildouts are at serious risk of being paused after the US midterms",
+          "reason": "off_topic"
+        },
         {
           "title": "Thanks Sam",
           "reason": "no_concrete_signal"
@@ -83,22 +95,10 @@
         {
           "title": "Sharing Claude skills across clients without forking them: what our setup looks like so far",
           "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Speedy is shockingly good for qwen3.8 FN",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Claude Halloween Cosplay",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "I tested my agent skills with and without. The one that worked just bans three things. What's in yours?",
-          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-01T21:31:14+00:00"
+      "latest_published_at": "2026-11-01T22:42:57+00:00"
     },
     "youtube": {
       "status": "direct",
@@ -110,13 +110,25 @@
         }
       ],
       "feeds_ok": 7,
-      "checked_at": "2026-11-01T22:14:41.855696+00:00",
+      "checked_at": "2026-11-01T22:47:38.481182+00:00",
       "rejected_count": 20,
       "rejection_reasons": {
         "off_topic": 18,
         "not_original_item": 2
       },
       "rejected_examples": [
+        {
+          "title": "China just dropped a new frontier model... and nobody can explain how",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The most vulnerable week in internet history...",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The last real programmers are dying out...",
+          "reason": "off_topic"
+        },
         {
           "title": "Hardest problems in complexity - explained by mathematician | Lex Fridman",
           "reason": "off_topic"
@@ -136,18 +148,6 @@
         {
           "title": "The moment Andrew Wiles proved Fermat's Last Theorem | Lex Fridman",
           "reason": "off_topic"
-        },
-        {
-          "title": "Computation in nature: Slime mold, fruit flies, and turbulence | Lex Fridman",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The hardest physics problem in fluid dynamics: Turbulence explained | Lex Fridman",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The death of GitHub: Why open source maintainers are burning out | Lex Fridman",
-          "reason": "off_topic"
         }
       ],
       "stored_count": 34,
@@ -155,17 +155,33 @@
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 10,
+      "fresh_count": 11,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-01T22:14:41.855696+00:00",
-      "rejected_count": 50,
+      "checked_at": "2026-11-01T22:47:38.481182+00:00",
+      "rejected_count": 49,
       "rejection_reasons": {
-        "no_concrete_signal": 32,
-        "off_topic": 17,
+        "no_concrete_signal": 33,
+        "off_topic": 15,
         "promotion": 1
       },
       "rejected_examples": [
+        {
+          "title": "An AI runs a tiny web studio with a year to earn its $6.60 a day",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Avartha: Fastest open-weight frontier voice AI beats OpenAI, Google, and xAI",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Ask HN: Pivoting from Platform Engineering",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Hackers could poison AI models by tampering with core infrastructure",
+          "reason": "no_concrete_signal"
+        },
         {
           "title": "Argentina most exposed to AI impact in Latin America",
           "reason": "no_concrete_signal"
@@ -181,33 +197,17 @@
         {
           "title": "PrayForMe – a garden of AI agents that pray for you",
           "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Commodore 64 AI Image Generator",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "About Platform Engineering and AI",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Gnosh.ai for \"Functional AI\"; functional context management, no compaction",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Ask HN: Estimate for SWE wages in 10 years?",
-          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-01T21:45:36+00:00"
+      "latest_published_at": "2026-11-01T22:16:24+00:00"
     },
     "producthunt": {
       "status": "direct",
       "fresh_count": 17,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-01T22:14:41.855696+00:00",
+      "checked_at": "2026-11-01T22:47:38.481182+00:00",
       "rejected_count": 20,
       "rejection_reasons": {
         "off_topic": 20
@@ -218,19 +218,7 @@
           "reason": "off_topic"
         },
         {
-          "title": "Raah.dev",
-          "reason": "off_topic"
-        },
-        {
-          "title": "magpie",
-          "reason": "off_topic"
-        },
-        {
           "title": "Click",
-          "reason": "off_topic"
-        },
-        {
-          "title": "BeeBranch",
           "reason": "off_topic"
         },
         {
@@ -242,7 +230,19 @@
           "reason": "off_topic"
         },
         {
-          "title": "Chorin: Ora et Labora",
+          "title": "Raah.dev",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Precise Edit by Ideogram",
+          "reason": "off_topic"
+        },
+        {
+          "title": "magpie",
+          "reason": "off_topic"
+        },
+        {
+          "title": "BeeBranch",
           "reason": "off_topic"
         }
       ],
@@ -259,12 +259,20 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-01T22:14:41.855696+00:00",
+      "checked_at": "2026-11-01T22:47:38.481182+00:00",
       "rejected_count": 20,
       "rejection_reasons": {
         "off_topic": 20
       },
       "rejected_examples": [
+        {
+          "title": "Apple Intelligence is finally coming to China with iOS 27.3",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Silicon Valley wants you to invest in miracles",
+          "reason": "off_topic"
+        },
         {
           "title": "4 days left: How TechCrunch Founder Summit helps you make more useful connections to scale",
           "reason": "off_topic"
@@ -279,14 +287,6 @@
         },
         {
           "title": "5 days left: Your last chance to connect, scale, and save at TechCrunch Founder Summit 2026",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Apple Intelligence is finally coming to China with iOS 27.3",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Silicon Valley wants you to invest in miracles",
           "reason": "off_topic"
         },
         {
@@ -319,7 +319,7 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-11-01T22:14:41.855696+00:00",
+      "checked_at": "2026-11-01T22:47:38.481182+00:00",
       "rejected_count": 88,
       "rejection_reasons": {
         "off_topic": 88
@@ -362,8 +362,6 @@
       "latest_published_at": "2026-11-01T14:19:52+00:00"
     }
   },
-  "quality_rejections": {
-    "duplicate_headline": 1
-  },
+  "quality_rejections": {},
   "quality_complete": true
 }

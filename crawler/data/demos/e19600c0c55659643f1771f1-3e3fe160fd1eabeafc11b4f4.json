@@ -1,0 +1,202 @@
+{
+  "cache_key": "e19600c0c55659643f1771f1-3e3fe160fd1eabeafc11b4f4",
+  "product_key": "e19600c0c55659643f1771f1",
+  "fingerprint": "3e3fe160fd1eabeafc11b4f4",
+  "product_id": "130",
+  "product_name": "Nas.com",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-01T22:51:01.203617+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为独立创业者定制周报",
+      "en": "Curated Newsletter for Solopreneurs"
+    },
+    "scenario": {
+      "zh": "你负责为独立创业者撰写行业周报。提供几条原始新闻素材，生成一份结构化的周报内容框架",
+      "en": "You write an industry newsletter for solopreneurs. Provide raw news items and generate a structured weekly brief"
+    },
+    "steps": [
+      {
+        "id": "source_selection",
+        "widget": "choice",
+        "title": {
+          "zh": "选择信息源类型",
+          "en": "Choose Source Type"
+        },
+        "instruction": {
+          "zh": "你手头有哪类素材？",
+          "en": "What material do you have?"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "融资动态",
+              "en": "Funding News"
+            },
+            "output": {
+              "zh": "识别融资亮点和市场信号",
+              "en": "Identifies funding highlights and market signals"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "原始新闻片段",
+                "en": "Raw News Snippets"
+              },
+              "output_label": {
+                "zh": "提炼要点",
+                "en": "Key Takeaways"
+              },
+              "input": {
+                "zh": "Nas.com获2700万美元融资，专注独狼经济AI工具。TechCrunch、VentureBeat、The Information同日报道。",
+                "en": "Nas.com raised $27M for solopreneur AI tools. Covered by TechCrunch, VentureBeat, and The Information on the same day."
+              },
+              "output": {
+                "zh": "独狼经济赛道热度升温：单日三家主流媒体报道反映投资者对个体创业者工具的强烈兴趣",
+                "en": "Solopreneur sector heating up: same-day coverage from three outlets signals strong investor interest"
+              },
+              "emphasis": {
+                "zh": "同日报道",
+                "en": "same day"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "工具发布",
+              "en": "Tool Launch"
+            },
+            "output": {
+              "zh": "总结新工具价值主张",
+              "en": "Summarizes new tool value proposition"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "产品公告摘录",
+                "en": "Product Announcement"
+              },
+              "output_label": {
+                "zh": "一句话总结",
+                "en": "One-Line Summary"
+              },
+              "input": {
+                "zh": "新平台承诺用AI提升独立创业者生产力，整合内容创作、社群管理和销售工具",
+                "en": "New platform promises AI productivity boost for solopreneurs, integrating content creation, community management, and sales tools"
+              },
+              "output": {
+                "zh": "All-in-one AI工具瞄准独立创业者痛点：一站式解决内容、社群、销售三大场景",
+                "en": "All-in-one AI targets solo pain points: content, community, sales in one place"
+              },
+              "emphasis": {
+                "zh": "AI提升独立创业者生产力",
+                "en": "AI productivity boost for solopreneurs"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "angle_choice",
+        "widget": "choice",
+        "title": {
+          "zh": "确定报道角度",
+          "en": "Choose Reporting Angle"
+        },
+        "instruction": {
+          "zh": "你想突出哪个维度？",
+          "en": "Which dimension to highlight?"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "市场趋势",
+              "en": "Market Trend"
+            },
+            "output": {
+              "zh": "关联更广泛的赛道动向",
+              "en": "Connects to broader sector movement"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "融资事件",
+                "en": "Funding Event"
+              },
+              "output_label": {
+                "zh": "趋势解读",
+                "en": "Trend Analysis"
+              },
+              "input": {
+                "zh": "Nas.com 2700万美元融资",
+                "en": "Nas.com $27M raise"
+              },
+              "output": {
+                "zh": "独狼经济工具融资加速：继去年多家平台获投后，本周又一玩家入场，验证个体创业者市场持续扩张",
+                "en": "Solo economy tool funding accelerates: another player enters after multiple platforms raised last year"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "实用建议",
+              "en": "Practical Tip"
+            },
+            "output": {
+              "zh": "转化为读者行动指南",
+              "en": "Turns into actionable reader guidance"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "工具特性",
+                "en": "Tool Features"
+              },
+              "output_label": {
+                "zh": "读者建议",
+                "en": "Reader Guidance"
+              },
+              "input": {
+                "zh": "AI平台整合内容、社群、销售功能",
+                "en": "AI platform integrates content, community, sales"
+              },
+              "output": {
+                "zh": "独立创业者工具选择提示：优先考虑能减少工具切换的集成方案，节省每日协调成本",
+                "en": "Tool selection tip: prioritize integrated solutions that reduce tool-switching overhead"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了如何将新闻素材重组为周报框架。实际输出质量需在 Nas.com 平台验证。下一步：访问官网测试完整写作功能",
+      "en": "Showed how to reframe news into newsletter structure. Actual output quality requires testing on Nas.com. Next: visit the site to try full features"
+    },
+    "sources": [
+      {
+        "url": "https://nas.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://parsers.substack.com/p/weekly-top-startup-vc-news-of-may",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

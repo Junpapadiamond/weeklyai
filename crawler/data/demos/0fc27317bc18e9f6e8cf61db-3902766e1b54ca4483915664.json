@@ -1,0 +1,207 @@
+{
+  "cache_key": "0fc27317bc18e9f6e8cf61db-3902766e1b54ca4483915664",
+  "product_key": "0fc27317bc18e9f6e8cf61db",
+  "fingerprint": "3902766e1b54ca4483915664",
+  "product_id": "134",
+  "product_name": "Pit",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-01T22:51:36.092071+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "Pit AI 助手交互演示",
+      "en": "Pit AI Assistant Demo"
+    },
+    "scenario": {
+      "zh": "探索 Pit 如何通过 AI 代理完成实际任务",
+      "en": "Explore how Pit uses AI agents to complete real tasks"
+    },
+    "steps": [
+      {
+        "id": "task_choice",
+        "widget": "choice",
+        "title": {
+          "zh": "选择任务场景",
+          "en": "Choose Task Scenario"
+        },
+        "instruction": {
+          "zh": "Pit 可以处理不同类型的任务",
+          "en": "Pit can handle different types of tasks"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "研究总结",
+              "en": "Research Summary"
+            },
+            "output": {
+              "zh": "从多个来源提取关键信息",
+              "en": "Extract key information from multiple sources"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "研究主题",
+                "en": "Research Topic"
+              },
+              "output_label": {
+                "zh": "关键发现",
+                "en": "Key Findings"
+              },
+              "input": {
+                "zh": "欧洲 AI 初创公司融资趋势：2024 年第一季度种子轮融资特征",
+                "en": "European AI startup funding trends: Q1 2024 seed round characteristics"
+              },
+              "output": {
+                "zh": "头部投资者如 a16z 积极参与欧洲早期项目；斯德哥尔摩成为北欧 AI 中心；AI 原生公司更受青睐",
+                "en": "Top investors like a16z actively participate in European early-stage projects; Stockholm emerging as Nordic AI hub; AI-native companies preferred"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "数据处理",
+              "en": "Data Processing"
+            },
+            "output": {
+              "zh": "整理和分析结构化信息",
+              "en": "Organize and analyze structured information"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "原始数据",
+                "en": "Raw Data"
+              },
+              "output_label": {
+                "zh": "处理结果",
+                "en": "Processed Result"
+              },
+              "input": {
+                "zh": "投资方名单：Andreessen Horowitz, OpenAI高管, Anthropic高管, Google高管, Stena家族, Lundin家族",
+                "en": "Investor list: Andreessen Horowitz, OpenAI execs, Anthropic execs, Google execs, Stena family, Lundin family"
+              },
+              "output": {
+                "zh": "按类别分组的投资者概览",
+                "en": "Investor overview grouped by category"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "顶级 VC",
+                    "en": "Top VC"
+                  },
+                  "detail": {
+                    "zh": "Andreessen Horowitz 领投",
+                    "en": "Andreessen Horowitz leading"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "AI 行业高管",
+                    "en": "AI Industry Execs"
+                  },
+                  "detail": {
+                    "zh": "来自 OpenAI、Anthropic、Google",
+                    "en": "From OpenAI, Anthropic, Google"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "欧洲家族投资",
+                    "en": "European Family Investment"
+                  },
+                  "detail": {
+                    "zh": "Stena 和 Lundin 家族",
+                    "en": "Stena and Lundin families"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "内容生成",
+              "en": "Content Generation"
+            },
+            "output": {
+              "zh": "基于输入创建结构化文本",
+              "en": "Create structured text based on input"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "简要说明",
+                "en": "Brief Description"
+              },
+              "output_label": {
+                "zh": "生成内容",
+                "en": "Generated Content"
+              },
+              "input": {
+                "zh": "为 Pit 公司撰写简短介绍：斯德哥尔摩 AI 初创，1600万美元种子轮",
+                "en": "Write a brief intro for Pit: Stockholm AI startup, $16M seed round"
+              },
+              "output": {
+                "zh": "Pit 是斯德哥尔摩的 AI 原生初创公司，完成由 a16z 领投的 1600 万美元种子轮融资，投资方包括多家 AI 巨头高管",
+                "en": "Pit is a Stockholm AI-native startup that closed a $16M seed round led by a16z, backed by executives from major AI companies"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "review_output",
+        "widget": "review",
+        "title": {
+          "zh": "查看示例结果",
+          "en": "Review Example Output"
+        },
+        "instruction": {
+          "zh": "这是基于虚构输入的本地演示",
+          "en": "This is a local demo with fictional input"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "了解已展示内容",
+              "en": "Understand What Was Shown"
+            },
+            "output": {
+              "zh": "虚构示例展示了 AI 代理如何处理任务",
+              "en": "Fictional examples show how AI agents process tasks"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了 Pit AI 代理处理研究、数据和内容任务的虚构示例；实际能力需在 pit.ai 验证",
+      "en": "Demonstrated fictional examples of Pit AI agents handling research, data, and content tasks; verify actual capabilities at pit.ai"
+    },
+    "sources": [
+      {
+        "url": "https://www.pit.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://sifted.eu/articles/a16z-leads-16m-seed-in-voi-cofounders-new-ai-startup-pit",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

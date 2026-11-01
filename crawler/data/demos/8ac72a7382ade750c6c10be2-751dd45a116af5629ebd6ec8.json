@@ -1,0 +1,271 @@
+{
+  "cache_key": "8ac72a7382ade750c6c10be2-751dd45a116af5629ebd6ec8",
+  "product_key": "8ac72a7382ade750c6c10be2",
+  "fingerprint": "751dd45a116af5629ebd6ec8",
+  "product_id": "p_03a4856b318bd395",
+  "product_name": "Decade",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-01T22:48:50.802327+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "探索 AI 财富建议示例",
+      "en": "Explore AI wealth advice example"
+    },
+    "scenario": {
+      "zh": "用虚构场景演示 AI 如何根据目标和风险偏好提供投资方向建议",
+      "en": "Demonstrate how AI suggests investment directions based on fictional goals and risk preferences"
+    },
+    "steps": [
+      {
+        "id": "goal_setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择理财目标",
+          "en": "Choose financial goal"
+        },
+        "instruction": {
+          "zh": "AI 会根据不同目标调整建议重点",
+          "en": "AI adjusts advice focus by goal"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "三年购房首付",
+              "en": "Home down payment in 3 years"
+            },
+            "output": {
+              "zh": "重点关注稳定增长和流动性",
+              "en": "Focus on stable growth and liquidity"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "虚构用户输入",
+                "en": "Fictional user input"
+              },
+              "output_label": {
+                "zh": "虚构 AI 建议方向",
+                "en": "Fictional AI advice direction"
+              },
+              "input": {
+                "zh": "目标:三年内积累购房首付,当前储蓄较少,月收入稳定",
+                "en": "Goal: accumulate down payment in 3 years, limited savings now, stable monthly income"
+              },
+              "output": {
+                "zh": "建议优先配置固定收益类资产,保持较高流动性,逐月定投分散风险",
+                "en": "Recommend prioritizing fixed-income assets, maintain high liquidity, use monthly dollar-cost averaging"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "长期退休储备",
+              "en": "Long-term retirement reserve"
+            },
+            "output": {
+              "zh": "平衡成长潜力与风险控制",
+              "en": "Balance growth potential and risk control"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "虚构用户输入",
+                "en": "Fictional user input"
+              },
+              "output_label": {
+                "zh": "虚构 AI 建议方向",
+                "en": "Fictional AI advice direction"
+              },
+              "input": {
+                "zh": "目标:为退休准备长期资金,投资周期20年以上,可承受中等波动",
+                "en": "Goal: prepare long-term retirement funds, 20+ year horizon, can tolerate moderate volatility"
+              },
+              "output": {
+                "zh": "建议股债混合配置,逐步增加权益类资产比例,定期再平衡降低风险",
+                "en": "Recommend mixed equity-bond allocation, gradually increase equity proportion, regular rebalancing"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "risk_adjust",
+        "widget": "choice",
+        "title": {
+          "zh": "调整风险偏好",
+          "en": "Adjust risk preference"
+        },
+        "instruction": {
+          "zh": "AI 会据此优化资产配置建议",
+          "en": "AI refines asset allocation by this"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "保守型",
+              "en": "Conservative"
+            },
+            "output": {
+              "zh": "增加防御性资产占比",
+              "en": "Increase defensive asset weight"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "虚构风险设定",
+                "en": "Fictional risk setting"
+              },
+              "output_label": {
+                "zh": "虚构配置对比",
+                "en": "Fictional allocation comparison"
+              },
+              "input": {
+                "zh": "风险偏好:保守,希望本金安全优先",
+                "en": "Risk preference: conservative, prioritize capital safety"
+              },
+              "output": {
+                "zh": "固定收益类资产占比提升至较高水平,权益类资产控制在较低比例",
+                "en": "Fixed-income assets raised to higher proportion, equity assets kept at lower level"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "平衡型",
+              "en": "Balanced"
+            },
+            "output": {
+              "zh": "兼顾稳定与增长机会",
+              "en": "Balance stability and growth"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "虚构风险设定",
+                "en": "Fictional risk setting"
+              },
+              "output_label": {
+                "zh": "虚构配置对比",
+                "en": "Fictional allocation comparison"
+              },
+              "input": {
+                "zh": "风险偏好:平衡,接受适度波动换取合理回报",
+                "en": "Risk preference: balanced, accept moderate fluctuation for reasonable returns"
+              },
+              "output": {
+                "zh": "固定收益与权益类资产比例接近,通过多元化分散风险",
+                "en": "Fixed-income and equity assets nearly equal, diversify through multiple categories"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "review_plan",
+        "widget": "review",
+        "title": {
+          "zh": "查看虚构建议摘要",
+          "en": "Review fictional advice summary"
+        },
+        "instruction": {
+          "zh": "这是基于虚构输入的示例,非真实投资建议",
+          "en": "Example based on fictional input, not real investment advice"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "虚构建议摘要",
+              "en": "Fictional advice summary"
+            },
+            "output": {
+              "zh": "演示 AI 如何整合目标与偏好",
+              "en": "Shows how AI integrates goal and preference"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "虚构场景汇总",
+                "en": "Fictional scenario summary"
+              },
+              "output_label": {
+                "zh": "虚构建议要点",
+                "en": "Fictional advice points"
+              },
+              "input": {
+                "zh": "目标与风险偏好已设定,AI 生成配置建议",
+                "en": "Goal and risk preference set, AI generates allocation advice"
+              },
+              "output": {
+                "zh": "虚构建议要点示例",
+                "en": "Fictional advice points example"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "资产配置方向",
+                    "en": "Asset allocation direction"
+                  },
+                  "detail": {
+                    "zh": "根据虚构目标建议资产类别和比例范围",
+                    "en": "Suggest asset categories and proportion ranges by fictional goal"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "定期调整提示",
+                    "en": "Periodic adjustment reminder"
+                  },
+                  "detail": {
+                    "zh": "建议每季度回顾配置,根据市场变化再平衡",
+                    "en": "Recommend quarterly review and rebalancing based on market changes"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "风险监控要点",
+                    "en": "Risk monitoring points"
+                  },
+                  "detail": {
+                    "zh": "关注资产波动和流动性,确保符合目标时间线",
+                    "en": "Monitor asset volatility and liquidity to match goal timeline"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了 AI 如何整合目标和风险生成虚构建议,实际投资需访问 Decade 官网咨询",
+      "en": "Demonstrated how AI integrates goal and risk to generate fictional advice; real investment requires visiting Decade website"
+    },
+    "sources": [
+      {
+        "url": "https://decade.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://news.crunchbase.com/venture/q3-2026-latam-startup-funding-jumps-ai-fintech-mexico",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

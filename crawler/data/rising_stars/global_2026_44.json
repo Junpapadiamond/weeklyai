@@ -386,5 +386,90 @@
         }
       ]
     }
+  },
+  {
+    "name": "Kapital",
+    "website": "https://kapital.inc/",
+    "description": "墨西哥AI驱动的金融服务公司,利用人工智能技术提供智能化金融产品和服务,服务拉美市场",
+    "description_en": "Mexico-based AI-powered financial services company providing intelligent financial products and services leveraging artificial intelligence technology",
+    "category": "finance",
+    "why_matters": "2026年9月完成1.25亿美元C轮融资,估值达16亿美元,由Tru Arrow Partners领投,包含Fasanara Capital提供的高级债务融资。代表墨西哥金融科技与AI结合的创新方向,在拉美金融服务创新领域具有重要地位",
+    "why_matters_en": "Raised $125 million Series C in September 2026 at $1.6 billion valuation, led by Tru Arrow Partners with senior debt facility from Fasanara Capital. Represents innovation direction combining Mexican fintech and AI, holding significant position in Latin American financial services innovation",
+    "latest_news": "2026年9月完成1.25亿美元C轮融资,估值16亿美元",
+    "latest_news_en": "Completed $125 million Series C in September 2026 at $1.6 billion valuation",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal"
+    ],
+    "company_country": "MX",
+    "confidence": 0.85,
+    "source_url": "https://news.crunchbase.com/venture/q3-2026-latam-startup-funding-jumps-ai-fintech-mexico",
+    "funding_total": "$125M",
+    "categories": [
+      "finance"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "LatAm Startup Funding Jumps 26% In Q3 As VCs Begin ‘Rediscovering’ The Region",
+    "website_source": "https://kapital.inc",
+    "discovered_at": "2026-11-01",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261101T223701Z-59df14c5",
+      "search_region": "other",
+      "search_lane": "launch",
+      "website_verification": {
+        "url": "https://kapital.inc/",
+        "title": "Home | KAPITAL",
+        "search_result_url": "https://kapital.inc"
+      },
+      "source_published_at": "2026-10-19T11:00:46+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "Mexico's Kapital, an AI-powered financial services company, raised a $125 million Series C in September at a $1.6 billion valuation. Tru Arrow Partners led the financing, which included a senior debt funding facility provided by Fasanara Capital."
+        }
+      ]
+    }
+  },
+  {
+    "name": "Candidly AI",
+    "website": "https://candidly-ai.com/",
+    "description": "一个用于大规模收集利益相关者反馈的AI工具，帮助组织高效获取和分析反馈意见",
+    "description_en": "An AI tool for gathering stakeholder feedback at scale, helping organizations efficiently collect and analyze feedback",
+    "category": "agent",
+    "why_matters": "针对企业收集利益相关者意见的痛点，提供自动化、规模化的反馈收集方案，被Platform Calgary评选为2026年最具前景的10家创业公司之一",
+    "why_matters_en": "Addresses the pain point of collecting stakeholder feedback at scale, selected as one of Platform Calgary's 10 most promising startups for 2026",
+    "latest_news": "入选Platform Calgary 2026年度Launch Party展示的10家最具前景创业公司",
+    "latest_news_en": "Selected for Platform Calgary's 2026 Launch Party as one of the 10 most promising startups",
+    "dark_horse_index": 2,
+    "criteria_met": [
+      "category_innovation"
+    ],
+    "company_country": "CA",
+    "confidence": 0.85,
+    "source_url": "https://betakit.com/platform-calgary-unveils-10-most-promising-startups-ahead-of-calgary-innovation-week/",
+    "categories": [
+      "agent"
+    ],
+    "region": "Unknown",
+    "source": "claude_rss",
+    "source_title": "Platform Calgary unveils 10 most promising startups ahead of Calgary Innovation Week",
+    "website_source": "https://betakit.com/platform-calgary-unveils-10-most-promising-startups-ahead-of-calgary-innovation-week/",
+    "discovered_at": "2026-11-01",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261101T223701Z-59df14c5",
+      "search_region": "other",
+      "search_lane": "rss",
+      "website_verification": null,
+      "source_published_at": "2026-10-30T21:10:58+00:00",
+      "evidence": [
+        {
+          "criterion": "category_innovation",
+          "quote": "Candidly AI : an AI tool for garnering stakeholder feedback at scale."
+        }
+      ]
+    }
   }
 ]
