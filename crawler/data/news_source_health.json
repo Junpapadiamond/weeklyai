@@ -1,17 +1,18 @@
 {
-  "updated_at": "2026-11-01T18:00:37.251976+00:00",
+  "updated_at": "2026-11-01T22:14:41.855696+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 6,
+      "fresh_count": 7,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-01T18:00:37.251976+00:00",
-      "rejected_count": 22,
+      "checked_at": "2026-11-01T22:14:41.855696+00:00",
+      "rejected_count": 17,
       "rejection_reasons": {
-        "no_concrete_signal": 3,
-        "unvetted_x_author": 19
+        "no_concrete_signal": 8,
+        "insufficient_excerpt": 1,
+        "unvetted_x_author": 8
       },
       "rejected_examples": [
         {
@@ -27,78 +28,77 @@
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@felicis · @60Minutes @runwayml @mercor https://t.co/qiEXt1xFl7",
-          "reason": "unvetted_x_author"
+          "title": "@runwayml · Introducing Runway App Studio. Build the creative app you wish existed, just by describing it. It generates images, video and audio with Runway’s mo",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "@wolfejosh · Lux family co @runwayml x @bot",
-          "reason": "unvetted_x_author"
+          "title": "@runwayml · Try it today: https://t.co/ns2INdLYlB",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "@wolfejosh · More magic shipped from Lux family co @runwayml",
-          "reason": "unvetted_x_author"
+          "title": "@runwayml · Now you can build creative apps in Runway. App Studio turns a plain-language description into a working tool, powered by Runway’s models. Watch belo",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "@MireloAI · Mirelo SFX 2.0 now available on @runwayml",
-          "reason": "unvetted_x_author"
+          "title": "@runwayml · New in Runway App Studio, Character Swap. Swap the characters or location in any video while keeping the original motion intact. You can even transf",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "@NEXUS_TO_NOVA · Not sure you want to commit to a paid AI video plan yet? Fair. Here's 25% off any paid plan on @runwayml. Code: NEXUSTONOVA25 New subscribers o",
-          "reason": "unvetted_x_author"
+          "title": "@runwayml · Today, Runway is joining Claude Marketplace. Enterprise ...",
+          "reason": "no_concrete_signal"
         }
       ],
-      "stored_count": 54,
+      "stored_count": 55,
       "latest_published_at": "2026-10-30T20:15:04.944000+00:00"
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 11,
+      "fresh_count": 9,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-01T18:00:37.251976+00:00",
-      "rejected_count": 29,
+      "checked_at": "2026-11-01T22:14:41.855696+00:00",
+      "rejected_count": 31,
       "rejection_reasons": {
-        "no_concrete_signal": 18,
-        "off_topic": 9,
-        "insufficient_evidence": 1,
-        "personal_help_or_chatter": 1
+        "no_concrete_signal": 22,
+        "off_topic": 8,
+        "insufficient_evidence": 1
       },
       "rejected_examples": [
         {
-          "title": "Email change",
+          "title": "Thanks Sam",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Demis Hassabis says AI data centers should be beautiful and we should take their effect on our physical surroundings seriously",
+          "title": "Best Subreddit for deep discussion on Codex and project management.",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Forget the usual Claude tips. What are the strange things you do that actually help?",
+          "title": "Does previous claude code sessions become available again after re-subscribing?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Tiktoker @ericisresearching discovers AI is being used to race swap people in real incidents for racist viral videos.",
+          "title": "When robots fall in love",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Did Anthropic just replace the 20X plan with 10X?",
+          "title": "Sharing Claude skills across clients without forking them: what our setup looks like so far",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Meet Ava: In-browser local AI avatar with LFM3-Omni and WebGPU",
+          "title": "Speedy is shockingly good for qwen3.8 FN",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Coding is solved* (exclusions apply)",
-          "reason": "off_topic"
+          "title": "Claude Halloween Cosplay",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "I sold a website for $10,000",
+          "title": "I tested my agent skills with and without. The one that worked just bans three things. What's in yours?",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-01T17:37:42+00:00"
+      "latest_published_at": "2026-11-01T21:31:14+00:00"
     },
     "youtube": {
       "status": "direct",
@@ -110,7 +110,7 @@
         }
       ],
       "feeds_ok": 7,
-      "checked_at": "2026-11-01T18:00:37.251976+00:00",
+      "checked_at": "2026-11-01T22:14:41.855696+00:00",
       "rejected_count": 20,
       "rejection_reasons": {
         "off_topic": 18,
@@ -118,102 +118,123 @@
       },
       "rejected_examples": [
         {
-          "title": "This is Crazy",
+          "title": "Hardest problems in complexity - explained by mathematician | Lex Fridman",
           "reason": "off_topic"
         },
         {
-          "title": "Programming Laws Tier list | TheStandup",
+          "title": "How insects fly through turbulence | Lex Fridman",
           "reason": "off_topic"
         },
         {
-          "title": "I CANT DO ON CALL",
-          "reason": "not_original_item"
-        },
-        {
-          "title": "Claude now 3x FASTER",
-          "reason": "not_original_item"
-        },
-        {
-          "title": "There Is No Way This Is Real",
+          "title": "How to solve hard problems - mathematicians explain | Lex Fridman",
           "reason": "off_topic"
         },
         {
-          "title": "Programmers vs Dream's Fake Manhunts | TheStandup",
+          "title": "The Game of Life: Complexity of nature explained by mathematician | Lex Fridman",
           "reason": "off_topic"
         },
         {
-          "title": "🚨🚨 Vibe Coding WoW Forever Mods With Esfand🚨🚨",
+          "title": "The moment Andrew Wiles proved Fermat's Last Theorem | Lex Fridman",
           "reason": "off_topic"
         },
         {
-          "title": "The Real Reason",
+          "title": "Computation in nature: Slime mold, fruit flies, and turbulence | Lex Fridman",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The hardest physics problem in fluid dynamics: Turbulence explained | Lex Fridman",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The death of GitHub: Why open source maintainers are burning out | Lex Fridman",
           "reason": "off_topic"
         }
       ],
-      "stored_count": 33,
-      "latest_published_at": "2026-11-01T00:00:12+00:00"
+      "stored_count": 34,
+      "latest_published_at": "2026-11-01T21:00:09+00:00"
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 8,
+      "fresh_count": 10,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-01T18:00:37.251976+00:00",
-      "rejected_count": 52,
+      "checked_at": "2026-11-01T22:14:41.855696+00:00",
+      "rejected_count": 50,
       "rejection_reasons": {
-        "off_topic": 20,
-        "no_concrete_signal": 32
+        "no_concrete_signal": 32,
+        "off_topic": 17,
+        "promotion": 1
       },
       "rejected_examples": [
         {
-          "title": "Show HN: Natively 3.0 – a local meeting assistant that hides from screen share",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Beyond the Breakthrough: What Comes Next for AI [video] [Peter Norvig]",
+          "title": "Argentina most exposed to AI impact in Latin America",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Show HN: Recento Pro (beta): CleanShot, Paste, AlDente-style tools in one app",
-          "reason": "off_topic"
-        },
-        {
-          "title": "DIY AI Lockpicking Robot: ESP32 and Claude AI Opens Any Lock [video]",
+          "title": "AI delivers 'zero financial payoff' to most companies, Apollo economist says",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "AI Software Clones Are Coming for Big-Name Companies Like Adobe",
+          "title": "Proton's AI manifesto for software engineering",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "DeepSeek Harness Superagent Prototype",
+          "title": "PrayForMe – a garden of AI agents that pray for you",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Measuring AI Impact: What Your \"Velocity Chart\" Cannot Tell the CFO",
+          "title": "Commodore 64 AI Image Generator",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Do AI-Written Resumes (CVs) All Sound the Same?",
+          "title": "About Platform Engineering and AI",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Gnosh.ai for \"Functional AI\"; functional context management, no compaction",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Ask HN: Estimate for SWE wages in 10 years?",
           "reason": "no_concrete_signal"
         }
       ],
-      "stored_count": 54,
-      "latest_published_at": "2026-11-01T17:57:19+00:00"
+      "stored_count": 60,
+      "latest_published_at": "2026-11-01T21:45:36+00:00"
     },
     "producthunt": {
       "status": "direct",
-      "fresh_count": 18,
+      "fresh_count": 17,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-01T18:00:37.251976+00:00",
+      "checked_at": "2026-11-01T22:14:41.855696+00:00",
       "rejected_count": 20,
       "rejection_reasons": {
         "off_topic": 20
       },
       "rejected_examples": [
         {
-          "title": "Precise Edit by Ideogram",
+          "title": "Screen Studio 4.0",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Raah.dev",
+          "reason": "off_topic"
+        },
+        {
+          "title": "magpie",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Click",
+          "reason": "off_topic"
+        },
+        {
+          "title": "BeeBranch",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Yuzu Sync",
           "reason": "off_topic"
         },
         {
@@ -222,26 +243,6 @@
         },
         {
           "title": "Chorin: Ora et Labora",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Raah.dev",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Click",
-          "reason": "off_topic"
-        },
-        {
-          "title": "magpie",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Screen Studio 4.0",
-          "reason": "off_topic"
-        },
-        {
-          "title": "BeeBranch",
           "reason": "off_topic"
         }
       ],
@@ -258,20 +259,12 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-01T18:00:37.251976+00:00",
+      "checked_at": "2026-11-01T22:14:41.855696+00:00",
       "rejected_count": 20,
       "rejection_reasons": {
         "off_topic": 20
       },
       "rejected_examples": [
-        {
-          "title": "Apple Intelligence is finally coming to China with iOS 27.3",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Silicon Valley wants you to invest in miracles",
-          "reason": "off_topic"
-        },
         {
           "title": "4 days left: How TechCrunch Founder Summit helps you make more useful connections to scale",
           "reason": "off_topic"
@@ -289,27 +282,35 @@
           "reason": "off_topic"
         },
         {
-          "title": "The Download: GLP-1s and eating disorders, self-aware cities, and forever chemicals",
+          "title": "Apple Intelligence is finally coming to China with iOS 27.3",
           "reason": "off_topic"
         },
         {
-          "title": "Eating disorders are on the rise. GLP-1s could make things worse.",
+          "title": "Silicon Valley wants you to invest in miracles",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The ‘Pain in the Ass’ Math That Could Save Vibe Coding From Itself",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Code-execution flaw in UEFI firmware affects most servers on planet Earth",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-01T10:30:00+00:00"
+      "latest_published_at": "2026-11-01T21:55:23+00:00"
     },
     "cn_news": {
       "status": "direct",
       "fresh_count": 31,
       "errors": [
         {
-          "endpoint": "36kr",
+          "endpoint": "jiqizhixin",
           "reason": "empty_or_invalid_feed"
         },
         {
-          "endpoint": "jiqizhixin",
+          "endpoint": "36kr",
           "reason": "empty_or_invalid_feed"
         },
         {
@@ -318,42 +319,42 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-11-01T18:00:37.251976+00:00",
+      "checked_at": "2026-11-01T22:14:41.855696+00:00",
       "rejected_count": 88,
       "rejection_reasons": {
         "off_topic": 88
       },
       "rejected_examples": [
         {
-          "title": "三年前布局，今年爆火丨西湖大学成立新中心",
+          "title": "怀旧手记｜夏普 Telios：20 多年前，Handheld PC 中的「少数派」",
           "reason": "off_topic"
         },
         {
-          "title": "Jev新成果，再次引爆开源",
+          "title": "本月玩什么｜影之刃零、战争机器：事变日等",
           "reason": "off_topic"
         },
         {
-          "title": "你的8G iPad里有12G内存！库克走了但他的刀法追着我砍",
+          "title": "一图流 | 一张图看懂中国版 Apple 智能",
           "reason": "off_topic"
         },
         {
-          "title": "刚刚，国行 Apple 智能官宣，但满血 SiriAI 还得等",
+          "title": "本周看什么 | 最近值得一看的 9 部作品",
           "reason": "off_topic"
         },
         {
-          "title": "红魔 12 Pro+ 体验：水冷加上 RGB 灯，游戏性能全面升级",
+          "title": "App+1｜该吃药了：一片小药板，让吃药提醒变得轻松有趣",
           "reason": "off_topic"
         },
         {
-          "title": "「史上最强」的 iPad mini，为什么还是 60Hz 屏幕？",
+          "title": "《久坐健康指南》作者、运动健康领域创作者阿帅装了啥？",
           "reason": "off_topic"
         },
         {
-          "title": "卓驭发布商用车智能辅助驾驶解决方案「磐行」，一年可以让重卡省下 2-3 万元油钱",
+          "title": "精确到秒的时间记录是怎样的？我的柳比歇夫法半年实践",
           "reason": "off_topic"
         },
         {
-          "title": "CMF Speaker 系列体验：好听的牛奶盒，还能自己做外壳",
+          "title": "派早报：全球首款 Android XR 有线眼镜 XREAL AURA 发售等",
           "reason": "off_topic"
         }
       ],
@@ -362,7 +363,7 @@
     }
   },
   "quality_rejections": {
-    "outside_news_window": 3
+    "duplicate_headline": 1
   },
   "quality_complete": true
 }
