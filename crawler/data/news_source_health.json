@@ -1,18 +1,24 @@
 {
-  "updated_at": "2026-10-31T22:25:20.451442+00:00",
+  "updated_at": "2026-11-01T06:34:06.150199+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 18,
+      "fresh_count": 12,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-31T22:25:20.451442+00:00",
-      "rejected_count": 10,
+      "checked_at": "2026-11-01T06:34:06.150199+00:00",
+      "rejected_count": 15,
       "rejection_reasons": {
-        "no_concrete_signal": 10
+        "no_concrete_signal": 8,
+        "unvetted_x_author": 4,
+        "insufficient_excerpt": 3
       },
       "rejected_examples": [
+        {
+          "title": "@OpenAI · If you are wondering whether your website is affected, we have packaged a Codex skill to help check. Point your Codex at this repo to guide you throug",
+          "reason": "no_concrete_signal"
+        },
         {
           "title": "@OpenAI · With Intelligent UI, GPT‑6 can now compose responses using text, visuals, and interactive elements, choosing how they fit together based on your quest",
           "reason": "no_concrete_signal"
@@ -22,199 +28,193 @@
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@OpenAIDevs · Cool projects our community is cooking with Codex:",
+          "title": "@Weeklyvoice · Canada Backs Cohere With Up to $1.6 Billion to Build Its Sovereign AI Future",
+          "reason": "unvetted_x_author"
+        },
+        {
+          "title": "@cohere · We’re expanding our commitment to Canada 🇨🇦 Cohere is advancing plans to invest more than C$4 billion in R&D and AI infrastructure and create over 1,5",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@OpenAIDevs · Our dot helps @danizeres, @axbehr and @fedesarquis with the recipe and keeps the prep in ChatGPT Space, while GPT-Live-1 talks us through making r",
+          "title": "@cohere · Cohere is a Canadian success story being written before ...",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@OpenAIDevs · Learn how to build all of these projects or share yours so others can replicate it: https://t.co/J7mgdmh0Za",
+          "title": "@cohere · Confidential Compute by Cohere, now publicly available",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@OpenAIDevs · Here’s how our engineers use Codex at OpenAI to dig through our codebase, find what needs attention, and chip away at the maintenance backlog:",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@AnthropicAI · New on our Frontier Red Team blog: using Claude to formally verify software at large scale. Formal verification can prove that code is free of ce",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@AnthropicAI · New on our Engineering blog: Creating in-house source control. In May, we merged around 2,500 code changes per day. In September, we merged more ",
-          "reason": "no_concrete_signal"
+          "title": "@Lovable · Lovable on X",
+          "reason": "unvetted_x_author"
         }
       ],
-      "stored_count": 53,
+      "stored_count": 57,
       "latest_published_at": "2026-10-30T20:15:04.944000+00:00"
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 6,
+      "fresh_count": 5,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-31T22:25:20.451442+00:00",
-      "rejected_count": 34,
+      "checked_at": "2026-11-01T06:34:06.150199+00:00",
+      "rejected_count": 35,
       "rejection_reasons": {
-        "personal_help_or_chatter": 4,
-        "off_topic": 12,
-        "no_concrete_signal": 17,
-        "unverified_rumor": 1
+        "no_concrete_signal": 24,
+        "off_topic": 8,
+        "personal_help_or_chatter": 3
       },
       "rejected_examples": [
         {
-          "title": "Has anyone used Claude to build an all-in-one dashboard for utility bills, mortgage payments, and personal finances? Is it safe to upload statements?",
-          "reason": "personal_help_or_chatter"
+          "title": "Every horrible hot take and resulting argument I see about coding with LLMs is some variation of these kinds of people clashing, sometimes we can live in a thou",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "Dear Sam, My RAM Is None of Your Business.",
+          "title": "20x",
           "reason": "off_topic"
         },
         {
-          "title": "We have access to the most powerful AI in history, yet I sometimes have absolutely no idea what to do with it. Is that a lack of imagination?",
+          "title": "OpenAI Raises Less Than Half of $30 Billion Target in Latest Round",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "I gave my Claude Code agents a pixel-art office so I can watch them turn Linear tickets into PRs",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Descartes' Demon Is Back, and This Time It's Targeting AI",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Claude has absolutely had it with code reviews",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Claude can't update memory if MCP is in use",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "New gynoid, this one explicitly intended as a s*xbot, to be debuted this Nov. 3.",
+          "title": "Daylight savings time",
           "reason": "off_topic"
+        },
+        {
+          "title": "They removed the 5 hour limit?",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Rented some server time and wanted to share some learnings from benching using RAM heavier servers with some decent GPU: AMD EPYC and ROME motherboards really *",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "running 2-3 claude code / codex agents on one repo, how do you keep them from stepping on each other",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Damn! How can you even run your company when your own product thinks it's wrong, Sam?",
+          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-10-31T21:53:52+00:00"
+      "latest_published_at": "2026-11-01T05:06:30+00:00"
     },
     "youtube": {
-      "status": "direct",
-      "fresh_count": 12,
+      "status": "search_fallback",
+      "fresh_count": 10,
       "errors": [
         {
+          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
+          "reason": "HTTP 404"
+        },
+        {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
-          "reason": "empty_or_invalid_feed"
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCsBjURrPoezykLs9EqgamOA",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
+          "reason": "HTTP 500"
+        },
+        {
+          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
+          "reason": "HTTP 500"
         }
       ],
-      "feeds_ok": 7,
-      "checked_at": "2026-10-31T22:25:20.451442+00:00",
-      "rejected_count": 20,
-      "rejection_reasons": {
-        "off_topic": 18,
-        "not_original_item": 2
-      },
-      "rejected_examples": [
-        {
-          "title": "This is Crazy",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Programming Laws Tier list | TheStandup",
-          "reason": "off_topic"
-        },
-        {
-          "title": "I CANT DO ON CALL",
-          "reason": "not_original_item"
-        },
-        {
-          "title": "Claude now 3x FASTER",
-          "reason": "not_original_item"
-        },
-        {
-          "title": "There Is No Way This Is Real",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Programmers vs Dream's Fake Manhunts | TheStandup",
-          "reason": "off_topic"
-        },
-        {
-          "title": "🚨🚨 Vibe Coding WoW Forever Mods With Esfand🚨🚨",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The Real Reason",
-          "reason": "off_topic"
-        }
-      ],
-      "stored_count": 29,
+      "feeds_ok": 1,
+      "checked_at": "2026-11-01T06:34:06.150199+00:00",
+      "rejected_count": 0,
+      "rejection_reasons": {},
+      "rejected_examples": [],
+      "stored_count": 32,
       "latest_published_at": "2026-10-31T16:00:09+00:00"
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 12,
+      "fresh_count": 14,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-31T22:25:20.451442+00:00",
-      "rejected_count": 48,
+      "checked_at": "2026-11-01T06:34:06.150199+00:00",
+      "rejected_count": 46,
       "rejection_reasons": {
         "no_concrete_signal": 38,
-        "personal_help_or_chatter": 1,
-        "off_topic": 8,
-        "insufficient_evidence": 1
+        "off_topic": 7,
+        "personal_help_or_chatter": 1
       },
       "rejected_examples": [
         {
-          "title": "Critical Software is rebuilding itself around AI (200 ppl being layed off)",
+          "title": "Who pays for the AI power boom?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "AI text watermarking and quality loss",
+          "title": "Computerized clairvoyance: psychics push back against AI-generated readings",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Will AI take your job? You have more agency than you think",
+          "title": "The AI boom spawns job market for data-center liaisons",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "People are the hard part of AI",
+          "title": "Show HN: What [67] MCP servers do at startup, with the internet cut off",
+          "reason": "off_topic"
+        },
+        {
+          "title": "I recreated subvocal in 9 minutes with one prompt for AirPods Pro 3",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Chinese markets lose trillions as race for AI supremacy with US takes its toll",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Free AI",
+          "title": "AI Made Me Homeless",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Reddit shares plunge as Google's AI search squeezes traffic",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Show HN: Read your Character.AI data export in the browser, nothing uploaded",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Cisco gives engineer unlimited AI tokens to rewrite company's legacy code",
-          "reason": "no_concrete_signal"
+          "title": "Leaking Secrets from Air-Gap Computers by Spelling Radio Signals from RAM (2024)",
+          "reason": "off_topic"
         }
       ],
-      "stored_count": 40,
-      "latest_published_at": "2026-10-31T22:01:11+00:00"
+      "stored_count": 46,
+      "latest_published_at": "2026-11-01T06:11:38+00:00"
     },
     "producthunt": {
       "status": "direct",
       "fresh_count": 15,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-10-31T22:25:20.451442+00:00",
+      "checked_at": "2026-11-01T06:34:06.150199+00:00",
       "rejected_count": 22,
       "rejection_reasons": {
         "off_topic": 22
       },
       "rejected_examples": [
         {
+          "title": "Seqora",
+          "reason": "off_topic"
+        },
+        {
           "title": "LumaFold: Screen Light",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Mo",
           "reason": "off_topic"
         },
         {
@@ -226,15 +226,7 @@
           "reason": "off_topic"
         },
         {
-          "title": "Mo",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Seqora",
-          "reason": "off_topic"
-        },
-        {
-          "title": "CubbyPad",
+          "title": "Knucklebop",
           "reason": "off_topic"
         },
         {
@@ -259,7 +251,7 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-10-31T22:25:20.451442+00:00",
+      "checked_at": "2026-11-01T06:34:06.150199+00:00",
       "rejected_count": 20,
       "rejection_reasons": {
         "off_topic": 20
@@ -290,11 +282,11 @@
           "reason": "off_topic"
         },
         {
-          "title": "The ‘Pain in the Ass’ Math That Could Save Vibe Coding From Itself",
+          "title": "Code-execution flaw in UEFI firmware affects most servers on planet Earth",
           "reason": "off_topic"
         },
         {
-          "title": "Code-execution flaw in UEFI firmware affects most servers on planet Earth",
+          "title": "Disgraced eMudhra drops out of TLS business after using cert private key of 4",
           "reason": "off_topic"
         }
       ],
@@ -303,14 +295,14 @@
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 43,
+      "fresh_count": 34,
       "errors": [
         {
-          "endpoint": "jiqizhixin",
+          "endpoint": "36kr",
           "reason": "empty_or_invalid_feed"
         },
         {
-          "endpoint": "36kr",
+          "endpoint": "jiqizhixin",
           "reason": "empty_or_invalid_feed"
         },
         {
@@ -319,51 +311,51 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-10-31T22:25:20.451442+00:00",
-      "rejected_count": 75,
+      "checked_at": "2026-11-01T06:34:06.150199+00:00",
+      "rejected_count": 84,
       "rejection_reasons": {
-        "off_topic": 75
+        "off_topic": 84
       },
       "rejected_examples": [
         {
-          "title": "刚刚，国行 Apple 智能官宣，但满血 SiriAI 还得等",
+          "title": "本月玩什么｜影之刃零、战争机器：事变日等",
           "reason": "off_topic"
         },
         {
-          "title": "红魔 12 Pro+ 体验：水冷加上 RGB 灯，游戏性能全面升级",
+          "title": "一图流 | 一张图看懂中国版 Apple 智能",
           "reason": "off_topic"
         },
         {
-          "title": "「史上最强」的 iPad mini，为什么还是 60Hz 屏幕？",
+          "title": "本周看什么 | 最近值得一看的 9 部作品",
           "reason": "off_topic"
         },
         {
-          "title": "卓驭发布商用车智能辅助驾驶解决方案「磐行」，一年可以让重卡省下 2-3 万元油钱",
+          "title": "App+1｜该吃药了：一片小药板，让吃药提醒变得轻松有趣",
           "reason": "off_topic"
         },
         {
-          "title": "CMF Speaker 系列体验：好听的牛奶盒，还能自己做外壳",
+          "title": "《久坐健康指南》作者、运动健康领域创作者阿帅装了啥？",
           "reason": "off_topic"
         },
         {
-          "title": "13.98 万元起！小鹏 MONA L05 正式上市，大五座 SUV 市场的卷王来了",
+          "title": "精确到秒的时间记录是怎样的？我的柳比歇夫法半年实践",
           "reason": "off_topic"
         },
         {
-          "title": "取消四缸插混，3.0T 六缸回归！全新 AMG GLC 53 售 59.9 万元",
+          "title": "派早报：全球首款 Android XR 有线眼镜 XREAL AURA 发售等",
           "reason": "off_topic"
         },
         {
-          "title": "为什么新模型发布，都要先做一个游戏？",
+          "title": "新玩意 254｜少数派的编辑们最近买了啥？",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-10-31T15:56:00+00:00"
+      "latest_published_at": "2026-11-01T06:11:02+00:00"
     }
   },
   "quality_rejections": {
-    "duplicate_headline": 1
+    "duplicate_headline": 3
   },
   "quality_complete": true
 }
