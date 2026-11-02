@@ -1,132 +1,149 @@
 {
-  "updated_at": "2026-11-01T22:47:38.481182+00:00",
+  "updated_at": "2026-11-02T06:34:35.336553+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 1,
+      "fresh_count": 16,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-01T22:47:38.481182+00:00",
-      "rejected_count": 18,
+      "checked_at": "2026-11-02T06:34:35.336553+00:00",
+      "rejected_count": 9,
       "rejection_reasons": {
-        "insufficient_excerpt": 4,
-        "no_concrete_signal": 7,
-        "unvetted_x_author": 7
+        "no_concrete_signal": 9
       },
       "rejected_examples": [
         {
-          "title": "@OpenAI · OpenAI (@OpenAI) on X",
-          "reason": "insufficient_excerpt"
-        },
-        {
-          "title": "@OpenAI · OpenAI (@OpenAI) on X",
-          "reason": "insufficient_excerpt"
-        },
-        {
-          "title": "@OpenAI · OpenAI (@OpenAI) on X",
-          "reason": "insufficient_excerpt"
-        },
-        {
-          "title": "@OpenAI · OpenAI (@OpenAI) on X",
-          "reason": "insufficient_excerpt"
-        },
-        {
-          "title": "@runwayml · Introducing Runway App Studio. Build the creative app you wish existed, just by describing it. It generates images, video and audio with Runway’s mo",
+          "title": "@OpenAI · If you are wondering whether your website is affected, we have packaged a Codex skill to help check. Point your Codex at this repo to guide you throug",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@runwayml · Introducing Runway for web design. Connect Runway to @Replit to generate images, video and assets directly inside your project, from first idea to f",
+          "title": "@OpenAI · With Intelligent UI, GPT‑6 can now compose responses using text, visuals, and interactive elements, choosing how they fit together based on your quest",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@runwayml · If you can describe it, you can run it as a video ad. Runway Ads turns your creative direction into on-brand ads for every platform, then learns wha",
+          "title": "@OpenAI · GPT-6 and Intelligent UI, now rolling out in ChatGPT for everyone. Intelligent UI in ChatGPT delivers fast, interactive answers that make everyday que",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@runwayml · We’ve partnered with Baseten to bring Runway’s video models to enterprises. Deploy Gen-4.5 and Aleph 2.0 in dedicated, single-tenant environments, f",
+          "title": "@GoogleDeepMind · Google DeepMind (@GoogleDeepMind) on X",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@GoogleDeepMind · Google DeepMind (@GoogleDeepMind) on X",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@GoogleDeepMind · RT @SpringerNature: Springer Nature and @GoogleDeepMind are partnering to co-design an AI peer review assistant, exploring how AI can help…",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@GoogleDeepMind · SynthID Detector can quickly identify our watermarks in video, audio and images – even after edits, like adding filters. ✂️ You can also use e",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@GoogleDeepMind · Carbon can work through complex tasks for days without getting stuck or taking shortcuts – delivering high-quality, reliable code. Feedback fr",
           "reason": "no_concrete_signal"
         }
       ],
-      "stored_count": 55,
-      "latest_published_at": "2026-10-30T20:15:04.944000+00:00"
+      "stored_count": 60,
+      "latest_published_at": "2026-10-31T13:33:39.604000+00:00"
     },
     "reddit": {
       "status": "direct",
       "fresh_count": 10,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-01T22:47:38.481182+00:00",
+      "checked_at": "2026-11-02T06:34:35.336553+00:00",
       "rejected_count": 30,
       "rejection_reasons": {
-        "no_concrete_signal": 21,
-        "off_topic": 8,
-        "insufficient_evidence": 1
+        "no_concrete_signal": 16,
+        "off_topic": 13,
+        "personal_help_or_chatter": 1
       },
       "rejected_examples": [
         {
-          "title": "Unflagged Conversations",
+          "title": "How do you guys handle AI image/video moderation at scale?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "SemiAnalysis: 2028 data center buildouts are at serious risk of being paused after the US midterms",
+          "title": "Is anyone else getting lots of free resets on the OpenAI subscription?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "SemiAnalysis: 2028 data center buildouts are at serious risk of being paused after the US midterms",
+          "title": "Two Claude accounts, three computers, too many projects. How do you stay organized?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Whats the best open source OCR for batch processing pdfs in 2026?",
           "reason": "off_topic"
         },
         {
-          "title": "Thanks Sam",
-          "reason": "no_concrete_signal"
+          "title": "🥖 LIBERTÉ. ÉGALITÉ. DDR5.",
+          "reason": "off_topic"
         },
         {
-          "title": "Best Subreddit for deep discussion on Codex and project management.",
-          "reason": "no_concrete_signal"
+          "title": "Looking for help creating a professional fresher resume using Claude",
+          "reason": "personal_help_or_chatter"
         },
         {
-          "title": "Does previous claude code sessions become available again after re-subscribing?",
-          "reason": "no_concrete_signal"
+          "title": "The Architectural Ultimatum",
+          "reason": "off_topic"
         },
         {
-          "title": "When robots fall in love",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Sharing Claude skills across clients without forking them: what our setup looks like so far",
-          "reason": "no_concrete_signal"
+          "title": "my ideas about new models",
+          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-01T22:42:57+00:00"
+      "latest_published_at": "2026-11-02T06:08:04+00:00"
     },
     "youtube": {
       "status": "direct",
-      "fresh_count": 12,
+      "fresh_count": 5,
       "errors": [
         {
+          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCsBjURrPoezykLs9EqgamOA",
+          "reason": "HTTP 404"
+        },
+        {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
-          "reason": "empty_or_invalid_feed"
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
+          "reason": "HTTP 404"
         }
       ],
-      "feeds_ok": 7,
-      "checked_at": "2026-11-01T22:47:38.481182+00:00",
-      "rejected_count": 20,
+      "feeds_ok": 1,
+      "checked_at": "2026-11-02T06:34:35.336553+00:00",
+      "rejected_count": 10,
       "rejection_reasons": {
-        "off_topic": 18,
-        "not_original_item": 2
+        "off_topic": 10
       },
       "rejected_examples": [
         {
-          "title": "China just dropped a new frontier model... and nobody can explain how",
+          "title": "Is math invented or discovered? - mathematicians explain | Lex Fridman",
           "reason": "off_topic"
         },
         {
-          "title": "The most vulnerable week in internet history...",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The last real programmers are dying out...",
+          "title": "Why baseball outfielders don't run in a straight line | Lex Fridman",
           "reason": "off_topic"
         },
         {
@@ -148,6 +165,10 @@
         {
           "title": "The moment Andrew Wiles proved Fermat's Last Theorem | Lex Fridman",
           "reason": "off_topic"
+        },
+        {
+          "title": "Computation in nature: Slime mold, fruit flies, and turbulence | Lex Fridman",
+          "reason": "off_topic"
         }
       ],
       "stored_count": 34,
@@ -155,66 +176,75 @@
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 11,
+      "fresh_count": 9,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-01T22:47:38.481182+00:00",
-      "rejected_count": 49,
+      "checked_at": "2026-11-02T06:34:35.336553+00:00",
+      "rejected_count": 51,
       "rejection_reasons": {
-        "no_concrete_signal": 33,
-        "off_topic": 15,
+        "no_concrete_signal": 35,
+        "off_topic": 14,
+        "personal_help_or_chatter": 1,
         "promotion": 1
       },
       "rejected_examples": [
         {
-          "title": "An AI runs a tiny web studio with a year to earn its $6.60 a day",
+          "title": "The Smartest People in AI Believe This Is the Most Important Chart",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Avartha: Fastest open-weight frontier voice AI beats OpenAI, Google, and xAI",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Ask HN: Pivoting from Platform Engineering",
+          "title": "Kairos: Open-source, real-time fraud and risk decisioning",
           "reason": "off_topic"
         },
         {
-          "title": "Hackers could poison AI models by tampering with core infrastructure",
+          "title": "The Bottlenecks for AI-Driven System Design: why Principals are not yet obsolete",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Argentina most exposed to AI impact in Latin America",
+          "title": "Amazon plans to start selling Trainium AI chips outside AWS",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "AI delivers 'zero financial payoff' to most companies, Apollo economist says",
+          "title": "Show HN: AI System Design Primer",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Proton's AI manifesto for software engineering",
+          "title": "Midgarth Quest. Browser-Playable Mmorpg Written by AI",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "PrayForMe – a garden of AI agents that pray for you",
+          "title": "Show HN: Wikihack – HackerTube, but for Wikipedia articles mentioned on HN",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Asking my AI teacher how to spell seventeen",
           "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-01T22:16:24+00:00"
+      "latest_published_at": "2026-11-02T06:28:56+00:00"
     },
     "producthunt": {
       "status": "direct",
       "fresh_count": 17,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-01T22:47:38.481182+00:00",
+      "checked_at": "2026-11-02T06:34:35.336553+00:00",
       "rejected_count": 20,
       "rejection_reasons": {
         "off_topic": 20
       },
       "rejected_examples": [
         {
-          "title": "Screen Studio 4.0",
+          "title": "Embage",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Chorin: Ora et Labora",
+          "reason": "off_topic"
+        },
+        {
+          "title": "BeeBranch",
           "reason": "off_topic"
         },
         {
@@ -226,10 +256,6 @@
           "reason": "off_topic"
         },
         {
-          "title": "Embage",
-          "reason": "off_topic"
-        },
-        {
           "title": "Raah.dev",
           "reason": "off_topic"
         },
@@ -238,11 +264,7 @@
           "reason": "off_topic"
         },
         {
-          "title": "magpie",
-          "reason": "off_topic"
-        },
-        {
-          "title": "BeeBranch",
+          "title": "Screen Studio 4.0",
           "reason": "off_topic"
         }
       ],
@@ -259,7 +281,7 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-01T22:47:38.481182+00:00",
+      "checked_at": "2026-11-02T06:34:35.336553+00:00",
       "rejected_count": 20,
       "rejection_reasons": {
         "off_topic": 20
@@ -303,14 +325,14 @@
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 31,
+      "fresh_count": 36,
       "errors": [
         {
-          "endpoint": "jiqizhixin",
+          "endpoint": "36kr",
           "reason": "empty_or_invalid_feed"
         },
         {
-          "endpoint": "36kr",
+          "endpoint": "jiqizhixin",
           "reason": "empty_or_invalid_feed"
         },
         {
@@ -319,47 +341,47 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-11-01T22:47:38.481182+00:00",
-      "rejected_count": 88,
+      "checked_at": "2026-11-02T06:34:35.336553+00:00",
+      "rejected_count": 82,
       "rejection_reasons": {
-        "off_topic": 88
+        "off_topic": 82
       },
       "rejected_examples": [
         {
-          "title": "怀旧手记｜夏普 Telios：20 多年前，Handheld PC 中的「少数派」",
+          "title": "刚刚，国行 Apple 智能官宣，但满血 SiriAI 还得等",
           "reason": "off_topic"
         },
         {
-          "title": "本月玩什么｜影之刃零、战争机器：事变日等",
+          "title": "红魔 12 Pro+ 体验：水冷加上 RGB 灯，游戏性能全面升级",
           "reason": "off_topic"
         },
         {
-          "title": "一图流 | 一张图看懂中国版 Apple 智能",
+          "title": "「史上最强」的 iPad mini，为什么还是 60Hz 屏幕？",
           "reason": "off_topic"
         },
         {
-          "title": "本周看什么 | 最近值得一看的 9 部作品",
+          "title": "卓驭发布商用车智能辅助驾驶解决方案「磐行」，一年可以让重卡省下 2-3 万元油钱",
           "reason": "off_topic"
         },
         {
-          "title": "App+1｜该吃药了：一片小药板，让吃药提醒变得轻松有趣",
+          "title": "CMF Speaker 系列体验：好听的牛奶盒，还能自己做外壳",
           "reason": "off_topic"
         },
         {
-          "title": "《久坐健康指南》作者、运动健康领域创作者阿帅装了啥？",
+          "title": "13.98 万元起！小鹏 MONA L05 正式上市，大五座 SUV 市场的卷王来了",
           "reason": "off_topic"
         },
         {
-          "title": "精确到秒的时间记录是怎样的？我的柳比歇夫法半年实践",
+          "title": "取消四缸插混，3.0T 六缸回归！全新 AMG GLC 53 售 59.9 万元",
           "reason": "off_topic"
         },
         {
-          "title": "派早报：全球首款 Android XR 有线眼镜 XREAL AURA 发售等",
+          "title": "为什么新模型发布，都要先做一个游戏？",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-01T14:19:52+00:00"
+      "latest_published_at": "2026-11-02T06:11:22+00:00"
     }
   },
   "quality_rejections": {},
