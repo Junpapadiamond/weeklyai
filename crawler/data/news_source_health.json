@@ -1,21 +1,22 @@
 {
-  "updated_at": "2026-11-03T01:36:51.868869+00:00",
+  "updated_at": "2026-11-03T07:04:44.896189+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 14,
+      "fresh_count": 18,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-03T01:36:51.868869+00:00",
-      "rejected_count": 15,
+      "checked_at": "2026-11-03T07:04:44.896189+00:00",
+      "rejected_count": 11,
       "rejection_reasons": {
-        "no_concrete_signal": 6,
-        "unvetted_x_author": 9
+        "no_concrete_signal": 5,
+        "unvetted_x_author": 4,
+        "insufficient_excerpt": 2
       },
       "rejected_examples": [
         {
-          "title": "@OpenAI · If you are wondering whether your website is affected, we have packaged a Codex skill to help check. Point your Codex at this repo to guide you throug",
+          "title": "@OpenAI · With Intelligent UI, GPT‑6 can now compose responses using text, visuals, and interactive elements, choosing how they fit together based on your quest",
           "reason": "no_concrete_signal"
         },
         {
@@ -23,91 +24,102 @@
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@AnthropicAI · New on our Frontier Red Team blog: using Claude to formally verify software at large scale. Formal verification can prove that code is free of ce",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@AnthropicAI · New on our Engineering blog: Creating in-house source control. In May, we merged around 2,500 code changes per day. In September, we merged more ",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@AnthropicAI · Over the last few months, we’ve made significant progress in reducing the effectiveness of distillation attacks against Claude. In this post, we ",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@AnthropicAI · We're expanding our partnership with @USGSA. Under a new OneGov agreement, we are bringing Claude to federal, state, local, tribal, and territori",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@dpoddolphinpro · SpaceXSI, formerly SpaceXAI, formerly xAI, is a subsidiary ...",
+          "title": "@tomekkorbak · Last week I was called into a meeting with OpenAI’s head of safety and told they no longer trust me. A security guard took my badge and walked me",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@danprimack · Dan Primack on X",
+          "title": "@ArtificialAnlys · Mistral has released Mistral Large 4, scoring 38 on the Artificial Analysis Intelligence Index; France is back to having the most intelligent",
           "reason": "unvetted_x_author"
+        },
+        {
+          "title": "@MistralAI · Gmail. Google Sheets. Slack. Salesforce. i.e. the four horsemen of Monday. On AutomationBench, Mistral Large 4 took on 657 business workflows acros",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@MistralAI · Welcome to Mistral, New Material. Let’s bring design to mission-critical AI.",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@arena · Mistral Large 4 by @MistralAI has landed in the Agent Arena top 15 labs! Across +5K real-world agentic sessions, this preview model records a -6.6% net",
+          "reason": "unvetted_x_author"
+        },
+        {
+          "title": "@cohere · Cohere",
+          "reason": "insufficient_excerpt"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-10-31T13:33:39.604000+00:00"
+      "latest_published_at": "2026-11-02T12:16:06.321000+00:00"
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 7,
+      "fresh_count": 16,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-03T01:36:51.868869+00:00",
-      "rejected_count": 33,
+      "checked_at": "2026-11-03T07:04:44.896189+00:00",
+      "rejected_count": 24,
       "rejection_reasons": {
-        "no_concrete_signal": 30,
-        "off_topic": 3
+        "no_concrete_signal": 15,
+        "off_topic": 6,
+        "insufficient_evidence": 1,
+        "personal_help_or_chatter": 1,
+        "unverified_rumor": 1
       },
       "rejected_examples": [
         {
-          "title": "OpenAI’s quarterly commit growth has exploded this year, rising to 2442% by Q4 2026 relative to Q1 2024",
+          "title": "OpenAI L4 offer vs a fresh Google L6 promo: which would you choose?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "OpenAI’s quarterly commit growth has exploded this year, rising to 2442% by Q4 2026 relative to Q1 2024",
+          "title": "NorthCUA :Turbocharging Computer-Use Agents through Experience at Scale",
+          "reason": "off_topic"
+        },
+        {
+          "title": "AI May Find a Multi-niche as Tech Skill Advances While Funding Retreats",
+          "reason": "insufficient_evidence"
+        },
+        {
+          "title": "Anthropic has their new IPO site staged and live: https://ipo.anthropic.com/us/",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Tablet Running Claude",
+          "title": "I have a Lenovo Smart Display 8\" that has been getting pretty dumb lately as it's no linger supported. I keep hearing about AI now being able to hack smart TV's",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Using the entire weekly limit of an ultra plan in less than two hours on purpose, and why you should too.",
+          "title": "RX580(Polaris AMD) on a MAC with near Vulkan performance!",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Holy Refresh Pull!!!!",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "ICLR 2027 reviews discussion [D]",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "I found another niche use case for local LLMs, but need some advice",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Designers, how do you... work?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Apple Intelligence is finally coming to China in December, powered by Alibaba's Qwen instead of ChatGPT",
+          "title": "Marvell inks record-breaking $115B AI deal",
           "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-03T00:28:42+00:00"
+      "latest_published_at": "2026-11-03T06:55:26+00:00"
     },
     "youtube": {
-      "status": "direct",
-      "fresh_count": 2,
+      "status": "search_fallback",
+      "fresh_count": 10,
       "errors": [
+        {
+          "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
+          "reason": "HTTP 404"
+        },
         {
           "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
           "reason": "HTTP 404"
         },
         {
-          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
+          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
           "reason": "HTTP 404"
         },
         {
@@ -115,72 +127,68 @@
           "reason": "HTTP 404"
         },
         {
-          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
-          "reason": "HTTP 500"
-        },
-        {
-          "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
+          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
           "reason": "HTTP 404"
         },
         {
           "endpoint": "UCsBjURrPoezykLs9EqgamOA",
-          "reason": "HTTP 500"
+          "reason": "HTTP 404"
         },
         {
-          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
+          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
           "reason": "HTTP 404"
         }
       ],
       "feeds_ok": 1,
-      "checked_at": "2026-11-03T01:36:51.868869+00:00",
+      "checked_at": "2026-11-03T07:04:44.896189+00:00",
       "rejected_count": 0,
       "rejection_reasons": {},
       "rejected_examples": [],
-      "stored_count": 36,
+      "stored_count": 39,
       "latest_published_at": "2026-11-02T17:02:16+00:00"
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 15,
+      "fresh_count": 8,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-03T01:36:51.868869+00:00",
-      "rejected_count": 45,
+      "checked_at": "2026-11-03T07:04:44.896189+00:00",
+      "rejected_count": 52,
       "rejection_reasons": {
-        "no_concrete_signal": 32,
-        "off_topic": 13
+        "no_concrete_signal": 38,
+        "off_topic": 14
       },
       "rejected_examples": [
         {
-          "title": "Anthropic warns that it's close to RSI capability",
+          "title": "AI Arbitrator",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "OpenAI hires former US Army secretary as military seeks to expand AI use",
+          "title": "Show HN: Privato - smart, scoped and temporary data access for personal agents",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "OpenAI considers rebranding data centers to 'AI compute campuses\"",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Claudbar: An AI side panel for Firefox",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Show HN: Mealumo – log a meal's calories and macros from a photo (iOS)",
+          "title": "Exstill: The frontier model's co-processor",
           "reason": "off_topic"
         },
         {
-          "title": "Ask HN: Are Tenstorrent cards better than Nvidia?",
+          "title": "Verify, Then Vote: Overturning Wrong Majorities in Multi-Agent LLMs",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Goldman restricts traders and bankers from using some AI tools",
+          "title": "Show HN: Trifecta Checker – a pre-flight safety check for AI agents",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Faulty AI face recognition is wrongly accusing alarming numbers of shoplifting",
+          "title": "Ask HN: Any tool to remove AI Watermark from image?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "How AI is creating a lopsided US economy",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Y Combinator's Garry Tan uses AI agents so much",
           "reason": "no_concrete_signal"
         }
       ],
@@ -192,14 +200,14 @@
       "fresh_count": 20,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-03T01:36:51.868869+00:00",
+      "checked_at": "2026-11-03T07:04:44.896189+00:00",
       "rejected_count": 16,
       "rejection_reasons": {
         "off_topic": 16
       },
       "rejected_examples": [
         {
-          "title": "Self-Growing Websites by Greta.sh",
+          "title": "Help",
           "reason": "off_topic"
         },
         {
@@ -207,7 +215,11 @@
           "reason": "off_topic"
         },
         {
-          "title": "Help",
+          "title": "Display 1.0",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Self-Growing Websites by Greta.sh",
           "reason": "off_topic"
         },
         {
@@ -215,7 +227,7 @@
           "reason": "off_topic"
         },
         {
-          "title": "Display 1.0",
+          "title": "Yuzu Sync",
           "reason": "off_topic"
         },
         {
@@ -223,11 +235,7 @@
           "reason": "off_topic"
         },
         {
-          "title": "Yuzu Sync",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Screen Studio 4.0",
+          "title": "Click",
           "reason": "off_topic"
         }
       ],
@@ -244,7 +252,7 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-03T01:36:51.868869+00:00",
+      "checked_at": "2026-11-03T07:04:44.896189+00:00",
       "rejected_count": 15,
       "rejection_reasons": {
         "off_topic": 15
@@ -284,11 +292,11 @@
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-03T00:35:52+00:00"
+      "latest_published_at": "2026-11-03T04:18:47+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 55,
+      "fresh_count": 47,
       "errors": [
         {
           "endpoint": "jiqizhixin",
@@ -304,18 +312,14 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-11-03T01:36:51.868869+00:00",
-      "rejected_count": 65,
+      "checked_at": "2026-11-03T07:04:44.896189+00:00",
+      "rejected_count": 70,
       "rejection_reasons": {
-        "off_topic": 65
+        "off_topic": 70
       },
       "rejected_examples": [
         {
-          "title": "从“能调用”到“敢托付”：仪电智算云 Token 工厂的三重可信",
-          "reason": "off_topic"
-        },
-        {
-          "title": "三年前布局，今年爆火丨西湖大学成立新中心",
+          "title": "Disc Image Studio：你想不想在光盘上「画」点什么？",
           "reason": "off_topic"
         },
         {
@@ -341,10 +345,14 @@
         {
           "title": "本月玩什么｜影之刃零、战争机器：事变日等",
           "reason": "off_topic"
+        },
+        {
+          "title": "一图流 | 一张图看懂中国版 Apple 智能",
+          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-03T01:30:09+00:00"
+      "latest_published_at": "2026-11-03T06:57:24+00:00"
     }
   },
   "quality_rejections": {},
