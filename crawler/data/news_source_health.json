@@ -1,20 +1,24 @@
 {
-  "updated_at": "2026-11-03T07:04:44.896189+00:00",
+  "updated_at": "2026-11-03T19:42:17.011280+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 18,
+      "fresh_count": 7,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-03T07:04:44.896189+00:00",
-      "rejected_count": 11,
+      "checked_at": "2026-11-03T19:42:17.011280+00:00",
+      "rejected_count": 21,
       "rejection_reasons": {
-        "no_concrete_signal": 5,
-        "unvetted_x_author": 4,
-        "insufficient_excerpt": 2
+        "no_concrete_signal": 12,
+        "unvetted_x_author": 3,
+        "insufficient_excerpt": 6
       },
       "rejected_examples": [
+        {
+          "title": "@OpenAI · If you are wondering whether your website is affected, we have packaged a Codex skill to help check. Point your Codex at this repo to guide you throug",
+          "reason": "no_concrete_signal"
+        },
         {
           "title": "@OpenAI · With Intelligent UI, GPT‑6 can now compose responses using text, visuals, and interactive elements, choosing how they fit together based on your quest",
           "reason": "no_concrete_signal"
@@ -28,23 +32,19 @@
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@ArtificialAnlys · Mistral has released Mistral Large 4, scoring 38 on the Artificial Analysis Intelligence Index; France is back to having the most intelligent",
+          "title": "@OpenAINewsroom · We discovered a sophisticated recording device that was hidden inside one of our offices. We used our models to understand the device and wher",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@MistralAI · Gmail. Google Sheets. Slack. Salesforce. i.e. the four horsemen of Monday. On AutomationBench, Mistral Large 4 took on 657 business workflows acros",
+          "title": "@Replit · Replit - X",
+          "reason": "insufficient_excerpt"
+        },
+        {
+          "title": "@Replit · You create it. Help your next users discover it. TikTok ...",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@MistralAI · Welcome to Mistral, New Material. Let’s bring design to mission-critical AI.",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@arena · Mistral Large 4 by @MistralAI has landed in the Agent Arena top 15 labs! Across +5K real-world agentic sessions, this preview model records a -6.6% net",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@cohere · Cohere",
+          "title": "@Replit · Replit on X",
           "reason": "insufficient_excerpt"
         }
       ],
@@ -53,198 +53,204 @@
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 16,
+      "fresh_count": 12,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-03T07:04:44.896189+00:00",
-      "rejected_count": 24,
+      "checked_at": "2026-11-03T19:42:17.011280+00:00",
+      "rejected_count": 28,
       "rejection_reasons": {
-        "no_concrete_signal": 15,
-        "off_topic": 6,
-        "insufficient_evidence": 1,
-        "personal_help_or_chatter": 1,
-        "unverified_rumor": 1
+        "no_concrete_signal": 19,
+        "off_topic": 8,
+        "personal_help_or_chatter": 1
       },
       "rejected_examples": [
         {
-          "title": "OpenAI L4 offer vs a fresh Google L6 promo: which would you choose?",
+          "title": "Connecting claude to socials",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "NorthCUA :Turbocharging Computer-Use Agents through Experience at Scale",
+          "title": "What do people with normal hardware : 32GB ram 16GB VRAM run?",
           "reason": "off_topic"
         },
         {
-          "title": "AI May Find a Multi-niche as Tech Skill Advances While Funding Retreats",
-          "reason": "insufficient_evidence"
-        },
-        {
-          "title": "Anthropic has their new IPO site staged and live: https://ipo.anthropic.com/us/",
+          "title": "Anthropic Blocking Reverse Engineer Anything",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "I have a Lenovo Smart Display 8\" that has been getting pretty dumb lately as it's no linger supported. I keep hearing about AI now being able to hack smart TV's",
+          "title": "Chat GPT vs. Claude (for those with ADHD)",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "RX580(Polaris AMD) on a MAC with near Vulkan performance!",
+          "title": "Collaborating on spreadsheets with Claude",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Claude making me use Firefox and Opera",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "What’s the smallest AI use that saves you the most time? Not the impressive stuff, the boring daily thing.",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "What does the weekly limit grey bar mean",
           "reason": "off_topic"
-        },
-        {
-          "title": "Holy Refresh Pull!!!!",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Marvell inks record-breaking $115B AI deal",
-          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-03T06:55:26+00:00"
+      "latest_published_at": "2026-11-03T19:27:15+00:00"
     },
     "youtube": {
-      "status": "search_fallback",
+      "status": "direct",
       "fresh_count": 10,
       "errors": [
         {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCsBjURrPoezykLs9EqgamOA",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
-          "reason": "HTTP 404"
+          "reason": "empty_or_invalid_feed"
         }
       ],
-      "feeds_ok": 1,
-      "checked_at": "2026-11-03T07:04:44.896189+00:00",
-      "rejected_count": 0,
-      "rejection_reasons": {},
-      "rejected_examples": [],
-      "stored_count": 39,
-      "latest_published_at": "2026-11-02T17:02:16+00:00"
+      "feeds_ok": 7,
+      "checked_at": "2026-11-03T19:42:17.011280+00:00",
+      "rejected_count": 20,
+      "rejection_reasons": {
+        "off_topic": 18,
+        "not_original_item": 2
+      },
+      "rejected_examples": [
+        {
+          "title": "China just dropped a new frontier model... and nobody can explain how",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The most vulnerable week in internet history...",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The last real programmers are dying out...",
+          "reason": "off_topic"
+        },
+        {
+          "title": "This is Crazy",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Programming Laws Tier list | TheStandup",
+          "reason": "off_topic"
+        },
+        {
+          "title": "I CANT DO ON CALL",
+          "reason": "not_original_item"
+        },
+        {
+          "title": "Claude now 3x FASTER",
+          "reason": "not_original_item"
+        },
+        {
+          "title": "There Is No Way This Is Real",
+          "reason": "off_topic"
+        }
+      ],
+      "stored_count": 41,
+      "latest_published_at": "2026-11-03T17:00:15+00:00"
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 8,
+      "fresh_count": 11,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-03T07:04:44.896189+00:00",
-      "rejected_count": 52,
+      "checked_at": "2026-11-03T19:42:17.011280+00:00",
+      "rejected_count": 49,
       "rejection_reasons": {
-        "no_concrete_signal": 38,
+        "no_concrete_signal": 35,
         "off_topic": 14
       },
       "rejected_examples": [
         {
-          "title": "AI Arbitrator",
+          "title": "Three Points on AI Safety",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Show HN: Privato - smart, scoped and temporary data access for personal agents",
+          "title": "Show HN: Recto: A desktop app where you can design with AI, edit with your mouse",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Exstill: The frontier model's co-processor",
+          "title": "Show HN: Confetti – Start designing hardware with plain English prompts",
           "reason": "off_topic"
         },
         {
-          "title": "Verify, Then Vote: Overturning Wrong Majorities in Multi-Agent LLMs",
+          "title": "AI tool can predict cancer survival by a single patient selfie",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Show HN: Trifecta Checker – a pre-flight safety check for AI agents",
+          "title": "An easy way to try local AI with braindead-local-intelligence",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Ask HN: Any tool to remove AI Watermark from image?",
+          "title": "AI Could Do My First Job. Not My Last",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "How AI is creating a lopsided US economy",
-          "reason": "no_concrete_signal"
+          "title": "UK pair aim to complete most complex board game",
+          "reason": "off_topic"
         },
         {
-          "title": "Y Combinator's Garry Tan uses AI agents so much",
+          "title": "Composing fraud rules faster with classical ML and AI-assisted review",
           "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-03T00:48:49+00:00"
+      "latest_published_at": "2026-11-03T18:59:49+00:00"
     },
     "producthunt": {
       "status": "direct",
-      "fresh_count": 20,
+      "fresh_count": 18,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-03T07:04:44.896189+00:00",
+      "checked_at": "2026-11-03T19:42:17.011280+00:00",
       "rejected_count": 16,
       "rejection_reasons": {
         "off_topic": 16
       },
       "rejected_examples": [
         {
-          "title": "Help",
+          "title": "Beaquaro Studio",
           "reason": "off_topic"
         },
         {
-          "title": "Widgeteer",
+          "title": "Hookdeck Inspect",
           "reason": "off_topic"
         },
         {
-          "title": "Display 1.0",
+          "title": "Calendarly",
           "reason": "off_topic"
         },
         {
-          "title": "Self-Growing Websites by Greta.sh",
+          "title": "Remote Gaze",
           "reason": "off_topic"
         },
         {
-          "title": "Agent Inbox",
+          "title": "LidCommit",
           "reason": "off_topic"
         },
         {
-          "title": "Yuzu Sync",
+          "title": "HoldTalk",
           "reason": "off_topic"
         },
         {
-          "title": "Embage",
+          "title": "SUN Web & API",
           "reason": "off_topic"
         },
         {
-          "title": "Click",
+          "title": "One Roof",
           "reason": "off_topic"
         }
       ],
-      "stored_count": 59,
-      "latest_published_at": "2026-11-02T00:24:06+00:00"
+      "stored_count": 60,
+      "latest_published_at": "2026-11-03T06:48:10+00:00"
     },
     "tech_news": {
       "status": "direct",
-      "fresh_count": 43,
+      "fresh_count": 42,
       "errors": [
         {
           "endpoint": "venturebeat",
@@ -252,12 +258,20 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-03T07:04:44.896189+00:00",
-      "rejected_count": 15,
+      "checked_at": "2026-11-03T19:42:17.011280+00:00",
+      "rejected_count": 16,
       "rejection_reasons": {
-        "off_topic": 15
+        "off_topic": 16
       },
       "rejected_examples": [
+        {
+          "title": "The TechCrunch Founder Summit agenda is only half the reason to be in Boston on Nov. 4",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Tomorrow: TechCrunch Founder Summit takes over Boston and when pass rates increase",
+          "reason": "off_topic"
+        },
         {
           "title": "Web host Squarespace lays off 19% of its employees",
           "reason": "off_topic"
@@ -267,36 +281,28 @@
           "reason": "off_topic"
         },
         {
-          "title": "4 days left: How TechCrunch Founder Summit helps you make more useful connections to scale",
+          "title": "Apple’s latest watchOS beta includes its new always-on Audio Intelligence features",
           "reason": "off_topic"
         },
         {
-          "title": "Apple Intelligence is finally coming to China with iOS 27.3",
+          "title": "Indie games are missing launch dates because Steam is backed up",
           "reason": "off_topic"
         },
         {
-          "title": "The ‘Pain in the Ass’ Math That Could Save Vibe Coding From Itself",
+          "title": "Midterm elections 2026: all the news",
           "reason": "off_topic"
         },
         {
-          "title": "The Download: GLP-1s and eating disorders, self-aware cities, and forever chemicals",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Eating disorders are on the rise. GLP-1s could make things worse.",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Our climate models have a big, dangerous blind spot",
+          "title": "UEFI bootkit infected fully patched Windows machines. Is Microsoft to blame?",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-03T04:18:47+00:00"
+      "latest_published_at": "2026-11-03T19:34:43+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 47,
+      "fresh_count": 32,
       "errors": [
         {
           "endpoint": "jiqizhixin",
@@ -309,15 +315,23 @@
         {
           "endpoint": "huxiu",
           "reason": "ReadTimeout"
+        },
+        {
+          "endpoint": "leiphone",
+          "reason": "ReadTimeout"
         }
       ],
-      "feeds_ok": 6,
-      "checked_at": "2026-11-03T07:04:44.896189+00:00",
-      "rejected_count": 70,
+      "feeds_ok": 5,
+      "checked_at": "2026-11-03T19:42:17.011280+00:00",
+      "rejected_count": 63,
       "rejection_reasons": {
-        "off_topic": 70
+        "off_topic": 63
       },
       "rejected_examples": [
+        {
+          "title": "一眼的熟悉，满眼的惊喜：新款 iPad mini 首发体验",
+          "reason": "off_topic"
+        },
         {
           "title": "Disc Image Studio：你想不想在光盘上「画」点什么？",
           "reason": "off_topic"
@@ -345,14 +359,10 @@
         {
           "title": "本月玩什么｜影之刃零、战争机器：事变日等",
           "reason": "off_topic"
-        },
-        {
-          "title": "一图流 | 一张图看懂中国版 Apple 智能",
-          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-03T06:57:24+00:00"
+      "latest_published_at": "2026-11-03T19:39:29+00:00"
     }
   },
   "quality_rejections": {},
