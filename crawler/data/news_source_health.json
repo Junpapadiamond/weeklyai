@@ -1,17 +1,17 @@
 {
-  "updated_at": "2026-11-02T21:51:18.060011+00:00",
+  "updated_at": "2026-11-03T01:36:51.868869+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 21,
+      "fresh_count": 14,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-02T21:51:18.060011+00:00",
-      "rejected_count": 9,
+      "checked_at": "2026-11-03T01:36:51.868869+00:00",
+      "rejected_count": 15,
       "rejection_reasons": {
-        "no_concrete_signal": 7,
-        "insufficient_excerpt": 2
+        "no_concrete_signal": 6,
+        "unvetted_x_author": 9
       },
       "rejected_examples": [
         {
@@ -19,32 +19,32 @@
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@OpenAI · With Intelligent UI, GPT‑6 can now compose responses using text, visuals, and interactive elements, choosing how they fit together based on your quest",
-          "reason": "no_concrete_signal"
-        },
-        {
           "title": "@OpenAI · GPT-6 and Intelligent UI, now rolling out in ChatGPT for everyone. Intelligent UI in ChatGPT delivers fast, interactive answers that make everyday que",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@NVIDIAAI · Telcos need AI agents that understand their networks. We provide the full stack to turn open models into specialized agents while keeping operators ",
+          "title": "@AnthropicAI · New on our Frontier Red Team blog: using Claude to formally verify software at large scale. Formal verification can prove that code is free of ce",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@NVIDIAAI · AI agents need to know your business to be useful. At GTC Berlin, we’re adding NVIDIA Agent Knowledge Foundation to NVIDIA Agent Toolkit. It helps a",
+          "title": "@AnthropicAI · New on our Engineering blog: Creating in-house source control. In May, we merged around 2,500 code changes per day. In September, we merged more ",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@OpenAIDevs · In Codex and ChatGPT Work, access is available on Pro 500, eligible usage-based Enterprise, and credit-based Edu plans. Enterprise admins must ena",
+          "title": "@AnthropicAI · Over the last few months, we’ve made significant progress in reducing the effectiveness of distillation attacks against Claude. In this post, we ",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@OpenAIDevs · Sites is now generally available for Enterprise, with US and EU data residency for new Sites in eligible workspaces. Build team apps with database",
+          "title": "@AnthropicAI · We're expanding our partnership with @USGSA. Under a new OneGov agreement, we are bringing Claude to federal, state, local, tribal, and territori",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@OpenAIDevs · OpenAI Developers",
-          "reason": "insufficient_excerpt"
+          "title": "@dpoddolphinpro · SpaceXSI, formerly SpaceXAI, formerly xAI, is a subsidiary ...",
+          "reason": "unvetted_x_author"
+        },
+        {
+          "title": "@danprimack · Dan Primack on X",
+          "reason": "unvetted_x_author"
         }
       ],
       "stored_count": 60,
@@ -52,174 +52,152 @@
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 10,
+      "fresh_count": 7,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-02T21:51:18.060011+00:00",
-      "rejected_count": 30,
+      "checked_at": "2026-11-03T01:36:51.868869+00:00",
+      "rejected_count": 33,
       "rejection_reasons": {
-        "no_concrete_signal": 20,
-        "insufficient_evidence": 1,
-        "off_topic": 9
+        "no_concrete_signal": 30,
+        "off_topic": 3
       },
       "rejected_examples": [
         {
-          "title": "Asking my AI teacher how to spell seventeen",
+          "title": "OpenAI’s quarterly commit growth has exploded this year, rising to 2442% by Q4 2026 relative to Q1 2024",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Is there still a point to fine-tuning local LLMs?",
+          "title": "OpenAI’s quarterly commit growth has exploded this year, rising to 2442% by Q4 2026 relative to Q1 2024",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "I mapped the AI debt. We’re not betting against The House. We are The House, the loan, and the gambler. Interactive map of AI debt in Link.",
+          "title": "Tablet Running Claude",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Should I switch from cowork to code?",
+          "title": "Using the entire weekly limit of an ultra plan in less than two hours on purpose, and why you should too.",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Claude kosten?",
+          "title": "ICLR 2027 reviews discussion [D]",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "I built zeroshot to let you orchestrate your own graph meta-harness",
-          "reason": "insufficient_evidence"
-        },
-        {
-          "title": "Inconsistencies in Unsloth's LiveCodeBench Results",
+          "title": "I found another niche use case for local LLMs, but need some advice",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "How to tell if a voice recording is AI-generated",
+          "title": "Designers, how do you... work?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Apple Intelligence is finally coming to China in December, powered by Alibaba's Qwen instead of ChatGPT",
           "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-02T21:25:39+00:00"
+      "latest_published_at": "2026-11-03T00:28:42+00:00"
     },
     "youtube": {
       "status": "direct",
-      "fresh_count": 12,
+      "fresh_count": 2,
       "errors": [
         {
+          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
+          "reason": "HTTP 500"
+        },
+        {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
-          "reason": "empty_or_invalid_feed"
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCsBjURrPoezykLs9EqgamOA",
+          "reason": "HTTP 500"
+        },
+        {
+          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
+          "reason": "HTTP 404"
         }
       ],
-      "feeds_ok": 7,
-      "checked_at": "2026-11-02T21:51:18.060011+00:00",
-      "rejected_count": 19,
-      "rejection_reasons": {
-        "off_topic": 17,
-        "not_original_item": 2
-      },
-      "rejected_examples": [
-        {
-          "title": "Do numbers exist? - mathematician explains | Lex Fridman",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The Physics of Warp Drives: Faster-than-light space travel | Lex Fridman",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Is math invented or discovered? - mathematicians explain | Lex Fridman",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Why baseball outfielders don't run in a straight line | Lex Fridman",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Hardest problems in complexity - explained by mathematician | Lex Fridman",
-          "reason": "off_topic"
-        },
-        {
-          "title": "How insects fly through turbulence | Lex Fridman",
-          "reason": "off_topic"
-        },
-        {
-          "title": "How to solve hard problems - mathematicians explain | Lex Fridman",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The Game of Life: Complexity of nature explained by mathematician | Lex Fridman",
-          "reason": "off_topic"
-        }
-      ],
+      "feeds_ok": 1,
+      "checked_at": "2026-11-03T01:36:51.868869+00:00",
+      "rejected_count": 0,
+      "rejection_reasons": {},
+      "rejected_examples": [],
       "stored_count": 36,
       "latest_published_at": "2026-11-02T17:02:16+00:00"
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 16,
+      "fresh_count": 15,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-02T21:51:18.060011+00:00",
-      "rejected_count": 44,
+      "checked_at": "2026-11-03T01:36:51.868869+00:00",
+      "rejected_count": 45,
       "rejection_reasons": {
-        "off_topic": 9,
-        "no_concrete_signal": 34,
-        "personal_help_or_chatter": 1
+        "no_concrete_signal": 32,
+        "off_topic": 13
       },
       "rejected_examples": [
         {
-          "title": "A step-by-step guide for how to kill the line-by-line code review",
+          "title": "Anthropic warns that it's close to RSI capability",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "OpenAI hires former US Army secretary as military seeks to expand AI use",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "OpenAI considers rebranding data centers to 'AI compute campuses\"",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Claudbar: An AI side panel for Firefox",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Show HN: Mealumo – log a meal's calories and macros from a photo (iOS)",
           "reason": "off_topic"
         },
         {
-          "title": "AI × Hiring",
+          "title": "Ask HN: Are Tenstorrent cards better than Nvidia?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Lyngvi – A Hardened Sandbox for AI",
+          "title": "Goldman restricts traders and bankers from using some AI tools",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Ask HN: Does anyone enjoy work anymore?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Oracle taps investors for $20B to finance AI expansion",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "LifeVal: Measuring AI progress on the tasks that matter in everyday life",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Hercules Founder Brendan Falk on the AI Opportunity",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Marvell doubles down on AI boom with costly $115B Lumentum deal",
+          "title": "Faulty AI face recognition is wrongly accusing alarming numbers of shoplifting",
           "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-02T21:01:01+00:00"
+      "latest_published_at": "2026-11-03T00:48:49+00:00"
     },
     "producthunt": {
       "status": "direct",
-      "fresh_count": 17,
+      "fresh_count": 20,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-02T21:51:18.060011+00:00",
-      "rejected_count": 18,
+      "checked_at": "2026-11-03T01:36:51.868869+00:00",
+      "rejected_count": 16,
       "rejection_reasons": {
-        "off_topic": 18
+        "off_topic": 16
       },
       "rejected_examples": [
-        {
-          "title": "Agent Inbox",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Display 1.0",
-          "reason": "off_topic"
-        },
         {
           "title": "Self-Growing Websites by Greta.sh",
           "reason": "off_topic"
@@ -233,15 +211,23 @@
           "reason": "off_topic"
         },
         {
-          "title": "CutCat",
+          "title": "Agent Inbox",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Display 1.0",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Embage",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Yuzu Sync",
           "reason": "off_topic"
         },
         {
           "title": "Screen Studio 4.0",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Chorin: Ora et Labora",
           "reason": "off_topic"
         }
       ],
@@ -258,7 +244,7 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-02T21:51:18.060011+00:00",
+      "checked_at": "2026-11-03T01:36:51.868869+00:00",
       "rejected_count": 15,
       "rejection_reasons": {
         "off_topic": 15
@@ -285,24 +271,24 @@
           "reason": "off_topic"
         },
         {
-          "title": "Code-execution flaw in UEFI firmware affects most servers on planet Earth",
+          "title": "The Download: GLP-1s and eating disorders, self-aware cities, and forever chemicals",
           "reason": "off_topic"
         },
         {
-          "title": "Disgraced eMudhra drops out of TLS business after using cert private key of 4",
+          "title": "Eating disorders are on the rise. GLP-1s could make things worse.",
           "reason": "off_topic"
         },
         {
-          "title": "333 Tor exit nodes hijacked to intercept SSH traffic and retrieve plaintext email",
+          "title": "Our climate models have a big, dangerous blind spot",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-02T19:19:17+00:00"
+      "latest_published_at": "2026-11-03T00:35:52+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 50,
+      "fresh_count": 55,
       "errors": [
         {
           "endpoint": "jiqizhixin",
@@ -318,12 +304,24 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-11-02T21:51:18.060011+00:00",
-      "rejected_count": 69,
+      "checked_at": "2026-11-03T01:36:51.868869+00:00",
+      "rejected_count": 65,
       "rejection_reasons": {
-        "off_topic": 69
+        "off_topic": 65
       },
       "rejected_examples": [
+        {
+          "title": "从“能调用”到“敢托付”：仪电智算云 Token 工厂的三重可信",
+          "reason": "off_topic"
+        },
+        {
+          "title": "三年前布局，今年爆火丨西湖大学成立新中心",
+          "reason": "off_topic"
+        },
+        {
+          "title": "派早报：猛玛推出探境 3 直播相机、美团发布 LongCat-2.5 模型等",
+          "reason": "off_topic"
+        },
         {
           "title": "派评 | 近期值得关注的 App",
           "reason": "off_topic"
@@ -343,26 +341,12 @@
         {
           "title": "本月玩什么｜影之刃零、战争机器：事变日等",
           "reason": "off_topic"
-        },
-        {
-          "title": "一图流 | 一张图看懂中国版 Apple 智能",
-          "reason": "off_topic"
-        },
-        {
-          "title": "本周看什么 | 最近值得一看的 9 部作品",
-          "reason": "off_topic"
-        },
-        {
-          "title": "App+1｜该吃药了：一片小药板，让吃药提醒变得轻松有趣",
-          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-02T15:40:02+00:00"
+      "latest_published_at": "2026-11-03T01:30:09+00:00"
     }
   },
-  "quality_rejections": {
-    "duplicate_headline": 3
-  },
+  "quality_rejections": {},
   "quality_complete": true
 }

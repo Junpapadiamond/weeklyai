@@ -1,0 +1,255 @@
+{
+  "cache_key": "122b7926e075e5732fd9ad76-351e3169a7448f39a477180a",
+  "product_key": "122b7926e075e5732fd9ad76",
+  "fingerprint": "351e3169a7448f39a477180a",
+  "product_id": "p_dda4a85d03ddc076",
+  "product_name": "Trajectory",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-03T01:37:56.446382+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "让专业模型从反馈中持续学习",
+      "en": "Make specialized models learn from feedback"
+    },
+    "scenario": {
+      "zh": "律所用Trajectory训练模型审查保密协议，通过标注反馈让模型学会识别风险条款",
+      "en": "A law firm uses Trajectory to train a model to review NDAs, teaching it to flag risky clauses through labeled feedback"
+    },
+    "steps": [
+      {
+        "id": "task",
+        "widget": "choice",
+        "title": {
+          "zh": "选择训练任务",
+          "en": "Choose training task"
+        },
+        "instruction": {
+          "zh": "从实际工作场景选择模型需要改进的能力",
+          "en": "Pick a capability the model needs to improve from your work"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "审查保密协议",
+              "en": "Review NDAs"
+            },
+            "output": {
+              "zh": "模型学习识别不对等条款",
+              "en": "Model learns to flag unbalanced terms"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "协议片段",
+                "en": "Agreement excerpt"
+              },
+              "output_label": {
+                "zh": "初始模型回复",
+                "en": "Initial model response"
+              },
+              "input": {
+                "zh": "第8条：接收方应无限期保密所有披露信息，即使协议终止后仍需遵守",
+                "en": "Section 8: Recipient shall keep all disclosed information confidential indefinitely, even after agreement termination"
+              },
+              "output": {
+                "zh": "这是标准保密条款",
+                "en": "This is a standard confidentiality clause"
+              },
+              "emphasis": {
+                "zh": "无限期保密所有披露信息",
+                "en": "keep all disclosed information confidential indefinitely"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "评估初创公司估值",
+              "en": "Evaluate startup valuations"
+            },
+            "output": {
+              "zh": "模型学习质疑不合理假设",
+              "en": "Model learns to question unrealistic assumptions"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "财务预测",
+                "en": "Financial projection"
+              },
+              "output_label": {
+                "zh": "初始模型回复",
+                "en": "Initial model response"
+              },
+              "input": {
+                "zh": "Q3营收120万，预计明年同期达到1800万，基于计划扩张到6个新市场",
+                "en": "Q3 revenue $1.2M, projecting $18M same quarter next year based on planned expansion into 6 new markets"
+              },
+              "output": {
+                "zh": "增长计划看起来积极进取",
+                "en": "Growth plan appears ambitious"
+              },
+              "emphasis": {
+                "zh": "明年同期达到1800万",
+                "en": "projecting $18M same quarter next year"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "feedback",
+        "widget": "choice",
+        "title": {
+          "zh": "标注专业判断",
+          "en": "Label expert judgment"
+        },
+        "instruction": {
+          "zh": "用你的领域知识纠正模型的回复",
+          "en": "Correct the model's response with your domain knowledge"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "标注风险点",
+              "en": "Flag the risk"
+            },
+            "output": {
+              "zh": "平台记录专家纠正",
+              "en": "Platform records expert correction"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "模型回复",
+                "en": "Model said"
+              },
+              "output_label": {
+                "zh": "你的标注",
+                "en": "Your label"
+              },
+              "input": {
+                "zh": "这是标准保密条款",
+                "en": "This is a standard confidentiality clause"
+              },
+              "output": {
+                "zh": "危险：无限期义务对接收方不公平，应限制在2-5年内",
+                "en": "Risky: indefinite obligation unfair to recipient, should cap at 2-5 years"
+              }
+            },
+            "when": {
+              "step_id": "task",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "标注缺失质疑",
+              "en": "Flag missing skepticism"
+            },
+            "output": {
+              "zh": "平台记录专家纠正",
+              "en": "Platform records expert correction"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "模型回复",
+                "en": "Model said"
+              },
+              "output_label": {
+                "zh": "你的标注",
+                "en": "Your label"
+              },
+              "input": {
+                "zh": "增长计划看起来积极进取",
+                "en": "Growth plan appears ambitious"
+              },
+              "output": {
+                "zh": "需质疑：15倍增长依赖同时执行6个市场，单个失败将拖累整体",
+                "en": "Should question: 15x growth depends on 6 simultaneous launches, single failure drags overall"
+              }
+            },
+            "when": {
+              "step_id": "task",
+              "option_id": "1"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "retrain",
+        "widget": "review",
+        "title": {
+          "zh": "平台自动重训",
+          "en": "Platform retrains automatically"
+        },
+        "instruction": {
+          "zh": "Trajectory收集标注后在后台重训模型",
+          "en": "Trajectory collects labels and retrains the model in the background"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "重训完成",
+              "en": "Retraining complete"
+            },
+            "output": {
+              "zh": "改进后的模型现在更接近专家判断",
+              "en": "Improved model now closer to expert judgment"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "重训前",
+                "en": "Before retraining"
+              },
+              "output_label": {
+                "zh": "重训后",
+                "en": "After retraining"
+              },
+              "input": {
+                "zh": "这是标准保密条款",
+                "en": "This is a standard confidentiality clause"
+              },
+              "output": {
+                "zh": "注意：无限期保密义务可能对接收方不利，建议协商合理期限",
+                "en": "Caution: indefinite confidentiality may disadvantage recipient, consider negotiating reasonable term"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例展示了标注-重训循环如何让模型学习专业判断。实际训练质量、所需反馈数量和改进幅度需在Trajectory平台验证",
+      "en": "Example shows how label-retrain loops teach models expert judgment. Actual training quality, feedback volume needed, and improvement magnitude must be verified on the Trajectory platform"
+    },
+    "sources": [
+      {
+        "url": "https://www.trajectory.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/11/02/trajectory-raises-45m-to-make-ai-model-training-accessible-to-nontechnical-experts/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,268 @@
+{
+  "cache_key": "5b6c952c6a9125b1decbd1be-511e4f43fd673948995b39ed",
+  "product_key": "5b6c952c6a9125b1decbd1be",
+  "fingerprint": "511e4f43fd673948995b39ed",
+  "product_id": "146",
+  "product_name": "Qutwo",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-03T01:39:42.297108+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "探索 Qutwo 数据分析概念",
+      "en": "Explore Qutwo Data Analysis Concepts"
+    },
+    "scenario": {
+      "zh": "用虚构示例演示复杂数据分析思路，实际平台能力需在官网验证",
+      "en": "Demonstrate complex data analysis approach with fictional examples; verify platform capabilities on vendor site"
+    },
+    "steps": [
+      {
+        "id": "scenario_type",
+        "widget": "choice",
+        "title": {
+          "zh": "选择分析场景",
+          "en": "Choose Analysis Scenario"
+        },
+        "instruction": {
+          "zh": "选择一个虚构业务场景",
+          "en": "Pick a fictional business scenario"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "供应链瓶颈",
+              "en": "Supply Chain Bottleneck"
+            },
+            "output": {
+              "zh": "识别物流延迟的根本原因",
+              "en": "Identify root cause of logistics delays"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "物流数据片段",
+                "en": "Logistics Data Excerpt"
+              },
+              "output_label": {
+                "zh": "发现的模式",
+                "en": "Pattern Found"
+              },
+              "input": {
+                "zh": "仓库A日处理1200件，延迟占比偏高；仓库B日处理950件，延迟较少；路线X平均用时较长",
+                "en": "Warehouse A processes 1200 daily with higher delays; Warehouse B processes 950 with fewer delays; Route X takes longer on average"
+              },
+              "output": {
+                "zh": "仓库A延迟与路线X拥堵时段相关",
+                "en": "Warehouse A delays correlate with Route X congestion periods"
+              },
+              "emphasis": {
+                "zh": "延迟占比偏高",
+                "en": "higher delays"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "客户流失预测",
+              "en": "Customer Churn Prediction"
+            },
+            "output": {
+              "zh": "从行为数据中找出流失信号",
+              "en": "Find churn signals from behavior data"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "客户行为对比",
+                "en": "Customer Behavior Comparison"
+              },
+              "output_label": {
+                "zh": "关键差异",
+                "en": "Key Difference"
+              },
+              "input": {
+                "zh": "活跃客户月均登录15次，流失客户降至3次；活跃客户功能使用多样，流失客户集中单一功能",
+                "en": "Active customers log in 15 times monthly, churned drop to 3; active use diverse features, churned focus on single feature"
+              },
+              "output": {
+                "zh": "登录频率下降和功能使用单一化是流失前兆",
+                "en": "Declining login frequency and feature narrowing precede churn"
+              },
+              "emphasis": {
+                "zh": "降至3次",
+                "en": "drop to 3"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "产品组合优化",
+              "en": "Product Mix Optimization"
+            },
+            "output": {
+              "zh": "找出最佳产品搭配策略",
+              "en": "Find optimal product bundling strategy"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "销售记录",
+                "en": "Sales Records"
+              },
+              "output_label": {
+                "zh": "组合洞察",
+                "en": "Bundle Insights"
+              },
+              "input": {
+                "zh": "分析近期订单中的产品共现模式",
+                "en": "Analyze product co-occurrence in recent orders"
+              },
+              "output": {
+                "zh": "识别的高价值组合（虚构示例）",
+                "en": "Identified high-value bundles (fictional example)"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "组合A",
+                    "en": "Bundle A"
+                  },
+                  "detail": {
+                    "zh": "产品X与产品Y同购频次明显",
+                    "en": "Product X and Y co-purchased frequently"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "组合B",
+                    "en": "Bundle B"
+                  },
+                  "detail": {
+                    "zh": "产品Z单独购买后易追加产品W",
+                    "en": "Product Z purchases often followed by W"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "组合C",
+                    "en": "Bundle C"
+                  },
+                  "detail": {
+                    "zh": "三件套组合显示更高留存",
+                    "en": "Three-item combo shows better retention"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "complexity",
+        "widget": "choice",
+        "title": {
+          "zh": "选择分析复杂度",
+          "en": "Choose Analysis Complexity"
+        },
+        "instruction": {
+          "zh": "决定探索的层次",
+          "en": "Decide exploration level"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "单变量趋势",
+              "en": "Single Variable Trend"
+            },
+            "output": {
+              "zh": "观察单一指标的时间变化",
+              "en": "Observe single metric over time"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "数据请求",
+                "en": "Data Request"
+              },
+              "output_label": {
+                "zh": "趋势描述",
+                "en": "Trend Description"
+              },
+              "input": {
+                "zh": "显示过去三个月的日均订单量",
+                "en": "Show daily order volume for past three months"
+              },
+              "output": {
+                "zh": "订单量在第二个月中旬出现峰值后回落至稳定水平",
+                "en": "Order volume peaked mid-second month then stabilized"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "多变量关联",
+              "en": "Multi-Variable Correlation"
+            },
+            "output": {
+              "zh": "探索多个因素之间的联系",
+              "en": "Explore connections between multiple factors"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "分析目标",
+                "en": "Analysis Goal"
+              },
+              "output_label": {
+                "zh": "发现关联",
+                "en": "Correlation Found"
+              },
+              "input": {
+                "zh": "研究区域气温、促销活动、库存水平三者对销量的影响",
+                "en": "Study how regional temperature, promotions, and inventory levels affect sales"
+              },
+              "output": {
+                "zh": "气温上升与特定品类销量正相关，但库存不足时促销效果减弱",
+                "en": "Temperature rise positively correlates with certain category sales, but low inventory weakens promotion impact"
+              },
+              "emphasis": {
+                "zh": "库存水平",
+                "en": "inventory levels"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了用虚构数据探索场景选择和复杂度层次，实际量子计算能力和平台功能需访问 https://qutwo.com/ 确认",
+      "en": "Illustrated exploring scenario choices and complexity levels with fictional data; verify actual quantum computing capabilities and platform features at https://qutwo.com/"
+    },
+    "sources": [
+      {
+        "url": "https://qutwo.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://sifted.eu/articles/qutwo-hugging-face-legora-funding-round",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

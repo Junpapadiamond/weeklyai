@@ -1,0 +1,224 @@
+{
+  "cache_key": "44a6479074e6d9795a4a4983-17ec9c8932408edaa34de0d2",
+  "product_key": "44a6479074e6d9795a4a4983",
+  "fingerprint": "17ec9c8932408edaa34de0d2",
+  "product_id": "144",
+  "product_name": "eleQtron",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-03T01:38:18.299528+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "探索量子计算硬件应用场景",
+      "en": "Explore Quantum Computing Hardware Scenarios"
+    },
+    "scenario": {
+      "zh": "选择研究领域，了解 eleQtron 量子硬件的潜在应用方向",
+      "en": "Choose a research area to understand eleQtron quantum hardware's potential applications"
+    },
+    "steps": [
+      {
+        "id": "field",
+        "widget": "choice",
+        "title": {
+          "zh": "应用领域",
+          "en": "Application Field"
+        },
+        "instruction": {
+          "zh": "选择一个研究方向",
+          "en": "Select a research direction"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "药物研发",
+              "en": "Drug Discovery"
+            },
+            "output": {
+              "zh": "模拟分子结构与反应路径",
+              "en": "Simulate molecular structures and reaction pathways"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "计算任务",
+                "en": "Computing Task"
+              },
+              "output_label": {
+                "zh": "量子优势场景",
+                "en": "Quantum Advantage Scenario"
+              },
+              "input": {
+                "zh": "蛋白质折叠模拟（300个氨基酸）",
+                "en": "Protein folding simulation (300 amino acids)"
+              },
+              "output": {
+                "zh": "量子硬件可探索指数级构象空间，传统方法需数周",
+                "en": "Quantum hardware explores exponential conformational space; classical methods need weeks"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "材料科学",
+              "en": "Materials Science"
+            },
+            "output": {
+              "zh": "计算新材料的电子特性",
+              "en": "Calculate electronic properties of novel materials"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "研究目标",
+                "en": "Research Goal"
+              },
+              "output_label": {
+                "zh": "硬件需求",
+                "en": "Hardware Requirement"
+              },
+              "input": {
+                "zh": "高温超导体能带结构",
+                "en": "High-temperature superconductor band structure"
+              },
+              "output": {
+                "zh": "需要相干时间长的量子比特来保持量子态演化精度",
+                "en": "Requires long-coherence qubits to maintain quantum state evolution accuracy"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "密码学",
+              "en": "Cryptography"
+            },
+            "output": {
+              "zh": "测试后量子加密算法",
+              "en": "Test post-quantum encryption algorithms"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "安全场景",
+                "en": "Security Scenario"
+              },
+              "output_label": {
+                "zh": "硬件能力需求",
+                "en": "Hardware Capability Needed"
+              },
+              "input": {
+                "zh": "2048位RSA密钥分解",
+                "en": "2048-bit RSA key factorization"
+              },
+              "output": {
+                "zh": "需要容错量子计算机，当前硬件处于NISQ阶段",
+                "en": "Requires fault-tolerant quantum computer; current hardware at NISQ stage"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "stage",
+        "widget": "choice",
+        "title": {
+          "zh": "技术阶段",
+          "en": "Technology Stage"
+        },
+        "instruction": {
+          "zh": "了解硬件发展现状",
+          "en": "Understand hardware development status"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "当前能力",
+              "en": "Current Capability"
+            },
+            "output": {
+              "zh": "NISQ时代的原型验证",
+              "en": "NISQ-era prototype validation"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "硬件规格（示例）",
+                "en": "Hardware Spec (Example)"
+              },
+              "output_label": {
+                "zh": "适用任务",
+                "en": "Suitable Tasks"
+              },
+              "input": {
+                "zh": "50量子比特，相干时间100微秒",
+                "en": "50 qubits, coherence time 100μs"
+              },
+              "output": {
+                "zh": "变分量子算法、小规模优化问题、量子化学基准测试",
+                "en": "Variational quantum algorithms, small-scale optimization, quantum chemistry benchmarks"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "未来路线",
+              "en": "Future Roadmap"
+            },
+            "output": {
+              "zh": "扩展至容错计算",
+              "en": "Scale to fault-tolerant computing"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "目标里程碑",
+                "en": "Target Milestone"
+              },
+              "output_label": {
+                "zh": "技术挑战",
+                "en": "Technical Challenges"
+              },
+              "input": {
+                "zh": "1000+逻辑量子比特系统",
+                "en": "1000+ logical qubit system"
+              },
+              "output": {
+                "zh": "需要解决量子纠错、低温工程、控制电路集成等关键问题",
+                "en": "Requires solving quantum error correction, cryogenic engineering, control circuit integration"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了量子硬件的应用概念和技术阶段，具体性能参数需访问 eleQtron 官网验证",
+      "en": "Illustrated quantum hardware application concepts and technology stages; verify actual performance specs at eleQtron's site"
+    },
+    "sources": [
+      {
+        "url": "https://eleqtron.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://tech.eu",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

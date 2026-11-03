@@ -1,0 +1,234 @@
+{
+  "cache_key": "cc1a0203ca4eef2769589257-26f46dec150ab35d6bf3e620",
+  "product_key": "cc1a0203ca4eef2769589257",
+  "fingerprint": "26f46dec150ab35d6bf3e620",
+  "product_id": "154",
+  "product_name": "Rogo",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-03T01:40:13.762949+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "金融机构智能代理平台",
+      "en": "Agentic AI for Finance"
+    },
+    "scenario": {
+      "zh": "探索 Agent AI 如何协助金融机构处理复杂分析任务，从文档提取洞察到生成结构化报告",
+      "en": "Explore how Agent AI assists financial institutions with complex analysis, from extracting insights to generating structured reports"
+    },
+    "steps": [
+      {
+        "id": "analysis_type",
+        "widget": "choice",
+        "title": {
+          "zh": "选择分析场景",
+          "en": "Choose Analysis"
+        },
+        "instruction": {
+          "zh": "Agent 从文档提取信息并生成结构化输出",
+          "en": "Agent extracts information and generates structured output"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "监管文件摘要",
+              "en": "Regulatory Summary"
+            },
+            "output": {
+              "zh": "提取关键条款和合规要点",
+              "en": "Extract key terms and compliance points"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "文件节选（虚构）",
+                "en": "Document Excerpt (fictional)"
+              },
+              "output_label": {
+                "zh": "结构化摘要",
+                "en": "Structured Summary"
+              },
+              "input": {
+                "zh": "第12条规定：交易对手方信用风险敞口需每日重新计算，使用标准化方法评估抵押品价值，并在T+1日内向监管机构报送",
+                "en": "Section 12: Counterparty credit exposure must be recalculated daily using standardized collateral valuation and reported to regulators within T+1"
+              },
+              "output": {
+                "zh": "关键义务：每日重估｜方法：标准化估值｜时限：T+1报送｜适用：所有交易对手",
+                "en": "Key obligation: Daily revaluation | Method: Standardized valuation | Deadline: T+1 reporting | Scope: All counterparties"
+              },
+              "emphasis": {
+                "zh": "每日重新计算",
+                "en": "recalculated daily"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "财报数据提取",
+              "en": "Earnings Data Extraction"
+            },
+            "output": {
+              "zh": "将非结构化文本转为可比数据点",
+              "en": "Convert unstructured text to comparable data"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "财报节选（虚构）",
+                "en": "Earnings Text (fictional)"
+              },
+              "output_label": {
+                "zh": "提取指标对比",
+                "en": "Extracted Metrics"
+              },
+              "input": {
+                "zh": "Q4营收同比增长，净息差环比收窄15个基点，不良贷款率维持在行业中位水平",
+                "en": "Q4 revenue grew year-over-year, net interest margin narrowed quarter-over-quarter by 15bps, NPL ratio remains at industry median"
+              },
+              "output": {
+                "zh": "营收趋势：同比上升｜净息差：环比收窄15bps｜资产质量：行业中位｜整体：稳健增长",
+                "en": "Revenue: YoY increase | NIM: QoQ -15bps | Asset quality: Industry median | Overall: Stable growth"
+              },
+              "emphasis": {
+                "zh": "环比收窄15个基点",
+                "en": "narrowed quarter-over-quarter by 15bps"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "output_format",
+        "widget": "choice",
+        "title": {
+          "zh": "确定交付格式",
+          "en": "Set Deliverable Format"
+        },
+        "instruction": {
+          "zh": "Agent 按指定结构组织分析结果",
+          "en": "Agent organizes findings in specified structure"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "风险清单",
+              "en": "Risk Checklist"
+            },
+            "output": {
+              "zh": "生成可操作的风险项列表",
+              "en": "Generate actionable risk items"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "分析范围",
+                "en": "Analysis Scope"
+              },
+              "output_label": {
+                "zh": "风险项（虚构）",
+                "en": "Risk Items (fictional)"
+              },
+              "input": {
+                "zh": "基于三份信贷协议和最新监管通知",
+                "en": "Based on three credit agreements and recent regulatory notice"
+              },
+              "output": {
+                "zh": "流动性：需额外抵押品｜合规：报送时限缩短｜交易对手：集中度偏高｜操作：系统升级待完成",
+                "en": "Liquidity: Additional collateral needed | Compliance: Reporting deadline shortened | Counterparty: Concentration elevated | Operational: System upgrade pending"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "流动性风险",
+                    "en": "Liquidity Risk"
+                  },
+                  "detail": {
+                    "zh": "抵押品缺口需在下周补足",
+                    "en": "Collateral gap to be filled next week"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "合规时限",
+                    "en": "Compliance Deadline"
+                  },
+                  "detail": {
+                    "zh": "新报送要求三个工作日内生效",
+                    "en": "New reporting requirement effective in 3 days"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "集中度",
+                    "en": "Concentration"
+                  },
+                  "detail": {
+                    "zh": "单一交易对手敞口超过内部限额",
+                    "en": "Single counterparty exposure above internal limit"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "执行备忘录",
+              "en": "Executive Memo"
+            },
+            "output": {
+              "zh": "综合多份文件为简明建议",
+              "en": "Synthesize documents into brief recommendations"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "输入文档",
+                "en": "Input Documents"
+              },
+              "output_label": {
+                "zh": "备忘录（虚构）",
+                "en": "Memo (fictional)"
+              },
+              "input": {
+                "zh": "市场报告3份、内部头寸快照、监管问询函",
+                "en": "3 market reports, internal position snapshot, regulator inquiry"
+              },
+              "output": {
+                "zh": "建议：削减高波动资产敞口｜依据：VaR已接近限额且监管关注流动性｜时间表：本月内完成｜需协调：交易台和风控部门",
+                "en": "Recommendation: Reduce high-volatility exposure | Rationale: VaR near limit and regulator focused on liquidity | Timeline: Complete this month | Coordination: Trading desk and risk"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例展示了 Agent 如何将金融文档转为结构化分析，实际产品能力需在 Rogo 平台验证，包括多文档协同和实时数据整合",
+      "en": "Examples show how Agent converts financial documents into structured analysis; actual capabilities including multi-document coordination and real-time data integration must be verified on Rogo platform"
+    },
+    "sources": [
+      {
+        "url": "https://rogo.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.thisweekinfintech.com/p/rogo-s-160m-bet-on-agentic-ai-twif-5-2",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}
