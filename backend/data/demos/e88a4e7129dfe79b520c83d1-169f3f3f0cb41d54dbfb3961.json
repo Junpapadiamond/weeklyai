@@ -1,0 +1,206 @@
+{
+  "cache_key": "e88a4e7129dfe79b520c83d1-169f3f3f0cb41d54dbfb3961",
+  "product_key": "e88a4e7129dfe79b520c83d1",
+  "fingerprint": "169f3f3f0cb41d54dbfb3961",
+  "product_id": "p_461508b765d627ae",
+  "product_name": "Fal",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-04T00:01:42.335374+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "托管开源AI模型推理",
+      "en": "Host open-source AI inference"
+    },
+    "scenario": {
+      "zh": "开发者提供模型需求，获得托管推理端点",
+      "en": "Developer provides model requirements, receives hosted inference endpoint"
+    },
+    "steps": [
+      {
+        "id": "model_choice",
+        "widget": "choice",
+        "title": {
+          "zh": "选择推理模型",
+          "en": "Choose inference model"
+        },
+        "instruction": {
+          "zh": "选择要部署的AI能力",
+          "en": "Select AI capability to deploy"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "图像生成",
+              "en": "Image generation"
+            },
+            "output": {
+              "zh": "准备FLUX模型端点",
+              "en": "Prepare FLUX model endpoint"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "文本提示",
+                "en": "Text prompt"
+              },
+              "output_label": {
+                "zh": "部署规格",
+                "en": "Deployment spec"
+              },
+              "input": {
+                "zh": "宁静的山间湖泊，清晨薄雾",
+                "en": "serene mountain lake at dawn with mist"
+              },
+              "output": {
+                "zh": "FLUX模型 / 按调用计费 / GPU自动扩展",
+                "en": "FLUX model / pay per call / auto-scaling GPU"
+              },
+              "emphasis": {
+                "zh": "山间湖泊",
+                "en": "mountain lake"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "视频生成",
+              "en": "Video generation"
+            },
+            "output": {
+              "zh": "准备Mochi模型端点",
+              "en": "Prepare Mochi model endpoint"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "场景描述",
+                "en": "Scene description"
+              },
+              "output_label": {
+                "zh": "部署规格",
+                "en": "Deployment spec"
+              },
+              "input": {
+                "zh": "镜头横摇拍摄繁忙的街市",
+                "en": "camera pans across bustling street market"
+              },
+              "output": {
+                "zh": "Mochi模型 / 短视频生成 / 资源按需分配",
+                "en": "Mochi model / short video gen / on-demand resources"
+              },
+              "emphasis": {
+                "zh": "繁忙的街市",
+                "en": "bustling street market"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "音频转录",
+              "en": "Audio transcription"
+            },
+            "output": {
+              "zh": "准备Whisper端点",
+              "en": "Prepare Whisper endpoint"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "音频文件",
+                "en": "Audio file"
+              },
+              "output_label": {
+                "zh": "部署规格",
+                "en": "Deployment spec"
+              },
+              "input": {
+                "zh": "播客访谈录音，时长28分钟",
+                "en": "podcast interview recording, 28 minutes long"
+              },
+              "output": {
+                "zh": "Whisper模型 / 批量处理 / 按时长计费",
+                "en": "Whisper model / batch processing / duration-based billing"
+              },
+              "emphasis": {
+                "zh": "播客访谈",
+                "en": "podcast interview"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "integration",
+        "widget": "review",
+        "title": {
+          "zh": "集成到应用",
+          "en": "Integrate into app"
+        },
+        "instruction": {
+          "zh": "通过API调用托管端点",
+          "en": "Call hosted endpoint via API"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "查看集成方式",
+              "en": "View integration method"
+            },
+            "output": {
+              "zh": "API密钥和端点准备就绪",
+              "en": "API key and endpoint ready"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "示例请求代码",
+                "en": "Example request code"
+              },
+              "output_label": {
+                "zh": "预期响应格式",
+                "en": "Expected response format"
+              },
+              "input": {
+                "zh": "发送POST请求到模型端点，附带认证密钥和提示词参数",
+                "en": "send POST request to model endpoint with auth key and prompt parameter"
+              },
+              "output": {
+                "zh": "返回结果包含生成内容路径和推理时长信息",
+                "en": "response contains generated content path and inference duration info"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了模型选择和端点集成流程，实际性能需在Fal平台测试，访问fal.ai创建账户",
+      "en": "Illustrated model selection and endpoint integration; actual performance requires testing on Fal platform; visit fal.ai to create account"
+    },
+    "sources": [
+      {
+        "url": "https://fal.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/11/03/ai-inference-startup-fal-doubles-its-valuation-to-16b-as-demand-surges/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

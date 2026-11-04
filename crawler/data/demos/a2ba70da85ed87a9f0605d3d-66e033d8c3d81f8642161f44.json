@@ -1,0 +1,224 @@
+{
+  "cache_key": "a2ba70da85ed87a9f0605d3d-66e033d8c3d81f8642161f44",
+  "product_key": "a2ba70da85ed87a9f0605d3d",
+  "fingerprint": "66e033d8c3d81f8642161f44",
+  "product_id": "157",
+  "product_name": "VAST Data",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-04T00:03:56.672318+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "AI 数据平台架构选型",
+      "en": "AI Data Platform Architecture"
+    },
+    "scenario": {
+      "zh": "为 AI 训练工作负载选择存储架构，评估不同场景下的数据访问模式和扩展需求",
+      "en": "Choose storage architecture for AI training workloads by evaluating data access patterns and scale needs"
+    },
+    "steps": [
+      {
+        "id": "workload",
+        "widget": "choice",
+        "title": {
+          "zh": "选择 AI 工作负载类型",
+          "en": "Choose AI Workload Type"
+        },
+        "instruction": {
+          "zh": "根据训练任务特点选择数据访问模式",
+          "en": "Select data access pattern based on training task"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "大规模语言模型训练",
+              "en": "Large Language Model Training"
+            },
+            "output": {
+              "zh": "需要持续高吞吐顺序读取",
+              "en": "Requires sustained high-throughput sequential reads"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "训练配置",
+                "en": "Training Config"
+              },
+              "output_label": {
+                "zh": "存储需求评估",
+                "en": "Storage Requirements"
+              },
+              "input": {
+                "zh": "模型：1750亿参数\n数据集：2TB 文本语料\n批次大小：512 样本\nGPU 集群：256 张 A100",
+                "en": "Model: 175B parameters\nDataset: 2TB text corpus\nBatch size: 512 samples\nGPU cluster: 256 A100s"
+              },
+              "output": {
+                "zh": "顺序读取带宽：关键瓶颈\n随机访问：极少\n并发流数：高\n推荐：统一命名空间 + 分层缓存",
+                "en": "Sequential read bandwidth: critical bottleneck\nRandom access: minimal\nConcurrent streams: high\nRecommended: unified namespace + tiered cache"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "计算机视觉训练",
+              "en": "Computer Vision Training"
+            },
+            "output": {
+              "zh": "小文件随机读取为主",
+              "en": "Dominated by small-file random reads"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "训练配置",
+                "en": "Training Config"
+              },
+              "output_label": {
+                "zh": "存储需求评估",
+                "en": "Storage Requirements"
+              },
+              "input": {
+                "zh": "模型：图像分类 ResNet-50\n数据集：500万张图片（平均 200KB）\n批次大小：2048 图片\nGPU 集群：64 张 V100",
+                "en": "Model: Image classification ResNet-50\nDataset: 5M images (avg 200KB)\nBatch size: 2048 images\nGPU cluster: 64 V100s"
+              },
+              "output": {
+                "zh": "随机 IOPS：关键指标\n元数据操作：频繁\n数据增强：需要低延迟\n推荐：全闪存 + 元数据加速",
+                "en": "Random IOPS: critical metric\nMetadata ops: frequent\nData augmentation: needs low latency\nRecommended: all-flash + metadata acceleration"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "多模态模型训练",
+              "en": "Multimodal Model Training"
+            },
+            "output": {
+              "zh": "混合访问模式和多数据源",
+              "en": "Mixed access patterns and multiple data sources"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "训练配置",
+                "en": "Training Config"
+              },
+              "output_label": {
+                "zh": "存储需求评估",
+                "en": "Storage Requirements"
+              },
+              "input": {
+                "zh": "模型：视觉-语言模型\n数据集：文本 500GB + 图片 3TB + 视频 8TB\n批次大小：混合批次\nGPU 集群：128 张 H100",
+                "en": "Model: Vision-language model\nDataset: text 500GB + images 3TB + video 8TB\nBatch size: mixed batches\nGPU cluster: 128 H100s"
+              },
+              "output": {
+                "zh": "访问模式：高度混合\n数据类型：异构\nI/O 模式：不可预测峰值\n推荐：统一存储 + 智能预取",
+                "en": "Access pattern: highly mixed\nData types: heterogeneous\nI/O pattern: unpredictable spikes\nRecommended: unified storage + intelligent prefetch"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "scale",
+        "widget": "choice",
+        "title": {
+          "zh": "评估扩展路径",
+          "en": "Evaluate Scaling Path"
+        },
+        "instruction": {
+          "zh": "根据未来增长预期选择架构方向",
+          "en": "Choose architecture direction based on growth projections"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "3 个月内快速扩展",
+              "en": "Rapid Scale in 3 Months"
+            },
+            "output": {
+              "zh": "需要无中断横向扩展能力",
+              "en": "Requires non-disruptive horizontal scaling"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "当前与目标配置",
+                "en": "Current vs Target Config"
+              },
+              "output_label": {
+                "zh": "架构建议",
+                "en": "Architecture Recommendation"
+              },
+              "input": {
+                "zh": "当前：20 个节点，1PB 容量，300GB/s 带宽\n目标：80 个节点，5PB 容量，1.2TB/s 带宽\n约束：训练任务不能中断，需要保持命名空间一致性",
+                "en": "Current: 20 nodes, 1PB capacity, 300GB/s bandwidth\nTarget: 80 nodes, 5PB capacity, 1.2TB/s bandwidth\nConstraint: training cannot be interrupted, namespace consistency required"
+              },
+              "output": {
+                "zh": "采用分布式架构，支持在线添加节点；使用全局命名空间避免数据迁移；配置自动负载均衡；预留扩展端口和网络容量；制定分阶段扩展计划",
+                "en": "Use distributed architecture supporting online node addition; deploy global namespace to avoid data migration; configure automatic load balancing; reserve expansion ports and network capacity; plan phased scaling"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "稳定规模长期运行",
+              "en": "Stable Scale Long-term"
+            },
+            "output": {
+              "zh": "优化单集群性能和效率",
+              "en": "Optimize single-cluster performance and efficiency"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "配置要求",
+                "en": "Configuration Needs"
+              },
+              "output_label": {
+                "zh": "架构建议",
+                "en": "Architecture Recommendation"
+              },
+              "input": {
+                "zh": "预期规模：40 个节点，2.5PB 容量\n工作负载：稳定的训练任务流\n优先级：能效比和运维简化\n预算：中等",
+                "en": "Expected scale: 40 nodes, 2.5PB capacity\nWorkload: steady training job stream\nPriority: efficiency and ops simplicity\nBudget: moderate"
+              },
+              "output": {
+                "zh": "选择集成度高的平台减少组件数；使用智能缓存降低能耗；配置自动化运维工具；优化冷热数据分层；建立容量监控体系",
+                "en": "Choose highly integrated platform to reduce components; use intelligent caching to lower power; configure automated ops tools; optimize hot-cold data tiering; establish capacity monitoring"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例展示了针对不同 AI 工作负载的存储架构评估思路。实际性能和扩展能力需在 VAST Data 平台上验证，建议访问官网了解具体产品规格",
+      "en": "Examples illustrated storage architecture evaluation for different AI workloads. Actual performance and scaling capabilities must be verified on the VAST Data platform; visit their site for product specifications"
+    },
+    "sources": [
+      {
+        "url": "https://www.vastdata.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://blog.tryresearchly.com/articles/die-50-besten-ai-startups-laut-forbes-2025",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

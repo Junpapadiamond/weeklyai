@@ -1,0 +1,207 @@
+{
+  "cache_key": "c7af6d842251b201820df889-7dc05dbcf218234dc3c94a59",
+  "product_key": "c7af6d842251b201820df889",
+  "fingerprint": "7dc05dbcf218234dc3c94a59",
+  "product_id": "149",
+  "product_name": "Checkout.com",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-04T00:02:51.840384+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "跨境支付路由优化",
+      "en": "Cross-Border Payment Routing"
+    },
+    "scenario": {
+      "zh": "商家提供交易参数，平台选择最优支付通道并预估结算成本",
+      "en": "Merchant provides transaction parameters; platform selects optimal payment channel and estimates settlement cost"
+    },
+    "steps": [
+      {
+        "id": "transaction",
+        "widget": "choice",
+        "title": {
+          "zh": "交易场景",
+          "en": "Transaction Scenario"
+        },
+        "instruction": {
+          "zh": "选择一笔待处理的跨境交易",
+          "en": "Choose a cross-border transaction to process"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "欧洲高频小额",
+              "en": "EU High-Volume Micro"
+            },
+            "output": {
+              "zh": "推荐本地卡网络，结算周期缩短",
+              "en": "Local card network recommended, faster settlement"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "交易参数",
+                "en": "Transaction Parameters"
+              },
+              "output_label": {
+                "zh": "路由建议",
+                "en": "Routing Recommendation"
+              },
+              "input": {
+                "zh": "金额: 12欧元\n地区: 德国柏林\n卡类型: Visa借记卡\n商户类型: 数字订阅",
+                "en": "Amount: €12\nRegion: Berlin, Germany\nCard: Visa Debit\nMerchant: Digital Subscription"
+              },
+              "output": {
+                "zh": "通道: SEPA即时\n预计费率: 交易额较低比例\n结算: 当日到账\n拒付风险: 极低",
+                "en": "Channel: SEPA Instant\nEstimated Fee: Lower percentage\nSettlement: Same day\nChargeback Risk: Very low"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "亚太大额B2B",
+              "en": "APAC Large B2B"
+            },
+            "output": {
+              "zh": "多币种通道并行，外汇成本透明",
+              "en": "Multi-currency channels in parallel, FX cost transparent"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "交易参数",
+                "en": "Transaction Parameters"
+              },
+              "output_label": {
+                "zh": "路由建议",
+                "en": "Routing Recommendation"
+              },
+              "input": {
+                "zh": "金额: 45000美元\n地区: 新加坡到日本\n结算货币: 日元\n商户类型: 软件授权",
+                "en": "Amount: $45,000\nRegion: Singapore to Japan\nSettlement: JPY\nMerchant: Software License"
+              },
+              "output": {
+                "zh": "通道: 企业电汇+本地清算\n汇率锁定: 实时市场价\n结算: T+2工作日\n合规检查: 自动完成",
+                "en": "Channel: Wire + Local Clearing\nFX Lock: Real-time market\nSettlement: T+2 business days\nCompliance: Auto-cleared"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "optimize",
+        "widget": "choice",
+        "title": {
+          "zh": "风控策略",
+          "en": "Risk Strategy"
+        },
+        "instruction": {
+          "zh": "调整本次交易的风控级别",
+          "en": "Adjust risk control level for this transaction"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "标准验证",
+              "en": "Standard Verification"
+            },
+            "output": {
+              "zh": "3DS认证，常规反欺诈规则",
+              "en": "3DS auth, standard fraud rules"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "检测项",
+                "en": "Detection Items"
+              },
+              "output_label": {
+                "zh": "验证结果（虚构）",
+                "en": "Verification Result (Fictional)"
+              },
+              "input": {
+                "zh": "持卡人地址匹配\n设备指纹历史\nIP地理位置\n交易时段模式",
+                "en": "Cardholder address match\nDevice fingerprint history\nIP geolocation\nTransaction time pattern"
+              },
+              "output": {
+                "zh": "所有检测项通过，交易放行",
+                "en": "All checks passed, transaction approved"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "地址验证",
+                    "en": "Address Check"
+                  },
+                  "detail": {
+                    "zh": "账单地址与发卡行记录一致",
+                    "en": "Billing address matches issuer record"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "设备信任",
+                    "en": "Device Trust"
+                  },
+                  "detail": {
+                    "zh": "该设备过往30天无异常",
+                    "en": "Device clean over past 30 days"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "行为模式",
+                    "en": "Behavior Pattern"
+                  },
+                  "detail": {
+                    "zh": "消费时段符合用户常规习惯",
+                    "en": "Spending time aligns with user habits"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "强化审核",
+              "en": "Enhanced Review"
+            },
+            "output": {
+              "zh": "人工复核队列，24小时内处理",
+              "en": "Manual review queue, processed within 24h"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了两种虚构交易的路由选择与风控逻辑；实际费率、结算速度和风险评分需在Checkout.com平台测试",
+      "en": "Illustrated routing selection and risk logic for two fictional transactions; actual fees, settlement speed, and risk scores require testing on Checkout.com platform"
+    },
+    "sources": [
+      {
+        "url": "https://www.checkout.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.mexc.com/learn/article/the-most-valuable-unicorns-in-2026-revealed-spacex-overtakes-openai-with-a-1-25t-valuation/1",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

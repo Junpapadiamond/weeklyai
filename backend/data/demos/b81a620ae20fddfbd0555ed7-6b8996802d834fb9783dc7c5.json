@@ -1,0 +1,307 @@
+{
+  "cache_key": "b81a620ae20fddfbd0555ed7-6b8996802d834fb9783dc7c5",
+  "product_key": "b81a620ae20fddfbd0555ed7",
+  "fingerprint": "6b8996802d834fb9783dc7c5",
+  "product_id": "155",
+  "product_name": "Quantware",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-04T00:03:22.428330+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "量子处理器设计参数",
+      "en": "Quantum Processor Design Parameters"
+    },
+    "scenario": {
+      "zh": "探索量子处理器的架构选择如何影响不同计算场景的设计方案",
+      "en": "Explore how quantum processor architecture choices affect design solutions for different computing scenarios"
+    },
+    "steps": [
+      {
+        "id": "architecture",
+        "widget": "choice",
+        "title": {
+          "zh": "选择处理器架构类型",
+          "en": "Choose Processor Architecture"
+        },
+        "instruction": {
+          "zh": "不同架构适用于不同的量子算法需求",
+          "en": "Different architectures suit different quantum algorithm needs"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "超导量子比特",
+              "en": "Superconducting Qubits"
+            },
+            "output": {
+              "zh": "高连接性，适合需要复杂门操作的算法",
+              "en": "High connectivity, suited for complex gate operations"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "架构规格",
+                "en": "Architecture Specs"
+              },
+              "output_label": {
+                "zh": "设计权衡",
+                "en": "Design Tradeoffs"
+              },
+              "input": {
+                "zh": "相干时间 100微秒，门操作 20纳秒，二维网格布局",
+                "en": "Coherence 100μs, gate ops 20ns, 2D grid layout"
+              },
+              "output": {
+                "zh": "需要极低温环境，但门速度快，错误率可接近容错阈值",
+                "en": "Requires cryogenic cooling, but fast gates approach fault-tolerance threshold"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "拓扑保护",
+              "en": "Topological Protection"
+            },
+            "output": {
+              "zh": "内建错误保护，减少纠错开销",
+              "en": "Built-in error protection reduces correction overhead"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "架构规格",
+                "en": "Architecture Specs"
+              },
+              "output_label": {
+                "zh": "设计权衡",
+                "en": "Design Tradeoffs"
+              },
+              "input": {
+                "zh": "理论错误率低于标准量子比特两个数量级，编码开销较大",
+                "en": "Error rate two orders lower than standard qubits, larger encoding overhead"
+              },
+              "output": {
+                "zh": "物理实现难度高，但一旦成熟可大幅简化纠错层",
+                "en": "Physically challenging to implement, but simplifies error correction once mature"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "scale",
+        "widget": "dial",
+        "title": {
+          "zh": "设定量子比特规模",
+          "en": "Set Qubit Scale"
+        },
+        "instruction": {
+          "zh": "工业化生产需要平衡性能与良率",
+          "en": "Industrial production balances performance with yield"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "查看制造约束",
+              "en": "View Manufacturing Constraints"
+            },
+            "output": {
+              "zh": "规模越大，跨芯片相干性要求越严格",
+              "en": "Larger scale demands tighter cross-chip coherence requirements"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "当前规模",
+                "en": "Current Scale"
+              },
+              "output_label": {
+                "zh": "关键约束",
+                "en": "Key Constraints"
+              },
+              "input": {
+                "zh": "50量子比特配置，需要25个耦合器",
+                "en": "50-qubit configuration requires 25 couplers"
+              },
+              "output": {
+                "zh": "每增加10比特，校准时间增加约一倍，良率下降",
+                "en": "Each 10-qubit increase roughly doubles calibration time, reduces yield"
+              }
+            }
+          }
+        ],
+        "example_data": true,
+        "dial": {
+          "min": 10,
+          "max": 100,
+          "initial": 50,
+          "factor": 5,
+          "unit": {
+            "zh": "量子比特",
+            "en": "qubits"
+          },
+          "result_label": {
+            "zh": "制造复杂度",
+            "en": "Manufacturing Complexity"
+          }
+        }
+      },
+      {
+        "id": "application",
+        "widget": "choice",
+        "title": {
+          "zh": "验证应用场景",
+          "en": "Verify Application Scenario"
+        },
+        "instruction": {
+          "zh": "不同算法对处理器特性的需求不同",
+          "en": "Different algorithms require different processor characteristics"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "量子化学模拟",
+              "en": "Quantum Chemistry Simulation"
+            },
+            "output": {
+              "zh": "需要深度电路和精确的多体态制备",
+              "en": "Requires deep circuits and precise many-body state preparation"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "算法需求",
+                "en": "Algorithm Requirements"
+              },
+              "output_label": {
+                "zh": "硬件适配",
+                "en": "Hardware Mapping"
+              },
+              "input": {
+                "zh": "分子基态计算需要变分量子本征求解器",
+                "en": "Molecular ground state requires variational quantum eigensolver"
+              },
+              "output": {
+                "zh": "需要至少80层门深度，相干时间必须支持完整电路执行",
+                "en": "Requires minimum 80-gate depth, coherence must support full circuit execution"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "态制备",
+                    "en": "State Preparation"
+                  },
+                  "detail": {
+                    "zh": "初始化分子轨道占据态",
+                    "en": "Initialize molecular orbital occupancy"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "哈密顿演化",
+                    "en": "Hamiltonian Evolution"
+                  },
+                  "detail": {
+                    "zh": "模拟电子-电子相互作用",
+                    "en": "Simulate electron-electron interactions"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "能量测量",
+                    "en": "Energy Measurement"
+                  },
+                  "detail": {
+                    "zh": "读出期望值估计基态能量",
+                    "en": "Read expectation values for ground state energy"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "优化问题求解",
+              "en": "Optimization Problem Solving"
+            },
+            "output": {
+              "zh": "浅层电路但需要多次迭代",
+              "en": "Shallow circuits but requires many iterations"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "算法需求",
+                "en": "Algorithm Requirements"
+              },
+              "output_label": {
+                "zh": "硬件适配",
+                "en": "Hardware Mapping"
+              },
+              "input": {
+                "zh": "组合优化问题使用量子近似优化算法",
+                "en": "Combinatorial optimization uses quantum approximate optimization algorithm"
+              },
+              "output": {
+                "zh": "每次迭代门深度较浅，但需要快速经典-量子交互循环",
+                "en": "Shallow gate depth per iteration, but needs fast classical-quantum feedback loop"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "参数化电路",
+                    "en": "Parameterized Circuit"
+                  },
+                  "detail": {
+                    "zh": "准备叠加态并应用混合器",
+                    "en": "Prepare superposition and apply mixer"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "测量与优化",
+                    "en": "Measure and Optimize"
+                  },
+                  "detail": {
+                    "zh": "经典优化器更新参数",
+                    "en": "Classical optimizer updates parameters"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了量子处理器设计的架构权衡和规模挑战。真实性能需在QuantWare实际硬件上测试。访问官网了解工业化生产进展。",
+      "en": "Illustrated quantum processor architecture tradeoffs and scaling challenges. Real performance requires testing on actual QuantWare hardware. Visit their site for industrial production updates."
+    },
+    "sources": [
+      {
+        "url": "https://quantware.com",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://sifted.eu/articles/intel-quantware-178m-series-b",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,237 @@
+{
+  "cache_key": "ef2af787c023899139c7b7a7-a91419e1f9b51ffbead84c3f",
+  "product_key": "ef2af787c023899139c7b7a7",
+  "fingerprint": "a91419e1f9b51ffbead84c3f",
+  "product_id": "140",
+  "product_name": "SageOx",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-04T00:02:27.543050+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "探索人机协同编码",
+      "en": "Explore Human-AI Coding"
+    },
+    "scenario": {
+      "zh": "你想了解开发者与 AI 代理如何分工协作。通过虚构示例演示可能的工作模式",
+      "en": "You want to understand how developers and AI agents divide work. Demonstrate possible workflows through fictional examples"
+    },
+    "steps": [
+      {
+        "id": "collab_mode",
+        "widget": "choice",
+        "title": {
+          "zh": "选择协作任务",
+          "en": "Choose Collaboration Task"
+        },
+        "instruction": {
+          "zh": "AI 代理可以协助什么类型的工作？",
+          "en": "What type of work could an AI agent assist with?"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "代码审查建议",
+              "en": "Code Review Suggestions"
+            },
+            "output": {
+              "zh": "代理指出潜在问题并提出改进思路",
+              "en": "Agent identifies potential issues and suggests improvements"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "提交的代码片段",
+                "en": "Submitted Code Snippet"
+              },
+              "output_label": {
+                "zh": "代理反馈",
+                "en": "Agent Feedback"
+              },
+              "input": {
+                "zh": "async function fetchUser(id) { const data = await fetch('/api/user?id='+id); return data.json(); }",
+                "en": "async function fetchUser(id) { const data = await fetch('/api/user?id='+id); return data.json(); }"
+              },
+              "output": {
+                "zh": "考虑参数化查询防止注入，添加错误处理捕获网络异常，校验 id 参数类型",
+                "en": "Consider parameterized queries to prevent injection, add error handling for network failures, validate id parameter type"
+              },
+              "emphasis": {
+                "zh": "'/api/user?id='+id",
+                "en": "'/api/user?id='+id"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "测试用例生成",
+              "en": "Test Case Generation"
+            },
+            "output": {
+              "zh": "代理为现有函数生成测试场景",
+              "en": "Agent generates test scenarios for existing function"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "函数签名",
+                "en": "Function Signature"
+              },
+              "output_label": {
+                "zh": "建议测试场景",
+                "en": "Suggested Test Scenarios"
+              },
+              "input": {
+                "zh": "validateEmail(email: string): boolean",
+                "en": "validateEmail(email: string): boolean"
+              },
+              "output": {
+                "zh": "标准格式、缺少 @ 符号、空输入、特殊字符处理",
+                "en": "Standard format, missing @ symbol, empty input, special character handling"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "标准格式",
+                    "en": "Standard format"
+                  },
+                  "detail": {
+                    "zh": "user@example.com 应返回真",
+                    "en": "user@example.com should return true"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "缺少 @ 符号",
+                    "en": "Missing @ symbol"
+                  },
+                  "detail": {
+                    "zh": "userexample.com 应返回假",
+                    "en": "userexample.com should return false"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "空输入",
+                    "en": "Empty input"
+                  },
+                  "detail": {
+                    "zh": "空字符串应返回假",
+                    "en": "Empty string should return false"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "接口设计草案",
+              "en": "Interface Design Draft"
+            },
+            "output": {
+              "zh": "代理提供初步接口供人类决策",
+              "en": "Agent provides initial interface for human decision"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "需求描述",
+                "en": "Requirement Description"
+              },
+              "output_label": {
+                "zh": "接口草案",
+                "en": "Interface Draft"
+              },
+              "input": {
+                "zh": "需要一个缓存服务，支持设置过期时间和手动清除",
+                "en": "Need a cache service supporting expiration and manual clearing"
+              },
+              "output": {
+                "zh": "interface CacheService { set(key: string, value: any, ttl?: number): void; get(key: string): any; clear(key: string): void; }",
+                "en": "interface CacheService { set(key: string, value: any, ttl?: number): void; get(key: string): any; clear(key: string): void; }"
+              },
+              "emphasis": {
+                "zh": "过期时间和手动清除",
+                "en": "expiration and manual clearing"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "human_role",
+        "widget": "choice",
+        "title": {
+          "zh": "人类开发者重点",
+          "en": "Developer Focus Area"
+        },
+        "instruction": {
+          "zh": "你会优先检查什么方面？",
+          "en": "What would you prioritize reviewing?"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "业务逻辑正确性",
+              "en": "Business Logic Accuracy"
+            },
+            "output": {
+              "zh": "确认代理方案符合实际业务规则",
+              "en": "Verify agent solution matches actual business rules"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "安全与合规",
+              "en": "Security and Compliance"
+            },
+            "output": {
+              "zh": "检查代理代码是否存在安全隐患",
+              "en": "Check agent code for security vulnerabilities"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "可维护性",
+              "en": "Maintainability"
+            },
+            "output": {
+              "zh": "评估代理代码是否易于团队理解",
+              "en": "Assess if agent code is understandable for team"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了虚构的协作场景和审查重点。SageOx 的实际功能、集成方式和工作流需访问官网了解",
+      "en": "Demonstrated fictional collaboration scenarios and review priorities. Actual SageOx capabilities, integrations and workflows require visiting their official site"
+    },
+    "sources": [
+      {
+        "url": "https://sageox.ai",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.geekwire.com/2026/seattles-sageox-lands-15m-to-help-humans-and-ai-agents-work-in-lockstep/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

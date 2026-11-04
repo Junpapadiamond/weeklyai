@@ -1,22 +1,21 @@
 {
-  "updated_at": "2026-11-03T19:42:17.011280+00:00",
+  "updated_at": "2026-11-04T00:00:20.644794+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 7,
+      "fresh_count": 9,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-03T19:42:17.011280+00:00",
-      "rejected_count": 21,
+      "checked_at": "2026-11-04T00:00:20.644794+00:00",
+      "rejected_count": 17,
       "rejection_reasons": {
-        "no_concrete_signal": 12,
-        "unvetted_x_author": 3,
-        "insufficient_excerpt": 6
+        "no_concrete_signal": 7,
+        "unvetted_x_author": 10
       },
       "rejected_examples": [
         {
-          "title": "@OpenAI · If you are wondering whether your website is affected, we have packaged a Codex skill to help check. Point your Codex at this repo to guide you throug",
+          "title": "@OpenAI · GPT-6 and Intelligent UI, now rolling out in ChatGPT for everyone. Intelligent UI in ChatGPT delivers fast, interactive answers that make everyday que",
           "reason": "no_concrete_signal"
         },
         {
@@ -24,28 +23,28 @@
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@OpenAI · GPT-6 and Intelligent UI, now rolling out in ChatGPT for everyone. Intelligent UI in ChatGPT delivers fast, interactive answers that make everyday que",
-          "reason": "no_concrete_signal"
-        },
-        {
           "title": "@tomekkorbak · Last week I was called into a meeting with OpenAI’s head of safety and told they no longer trust me. A security guard took my badge and walked me",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@OpenAINewsroom · We discovered a sophisticated recording device that was hidden inside one of our offices. We used our models to understand the device and wher",
+          "title": "@EMostaque · The original stable diffusion had an FID score of 12.63 - X",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@Replit · Replit - X",
-          "reason": "insufficient_excerpt"
+          "title": "@EMostaque · Tbh thought this was the backup business model at stability ai but ...",
+          "reason": "unvetted_x_author"
         },
         {
-          "title": "@Replit · You create it. Help your next users discover it. TikTok ...",
-          "reason": "no_concrete_signal"
+          "title": "@Teknium · Hermes Agent v0.22.0 is now live! The highlights: A much smoother easier to use onboarding - you don't even need to hook up a provider to get started",
+          "reason": "unvetted_x_author"
         },
         {
-          "title": "@Replit · Replit on X",
-          "reason": "insufficient_excerpt"
+          "title": "@rohanpaul_ai · Emad Mostaque (founder of Stability AI) on Navier-Stokes proof ... - X",
+          "reason": "unvetted_x_author"
+        },
+        {
+          "title": "@theinformation · Two years ago, a Sean Parker–led investing ...",
+          "reason": "unvetted_x_author"
         }
       ],
       "stored_count": 60,
@@ -53,187 +52,187 @@
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 12,
+      "fresh_count": 13,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-03T19:42:17.011280+00:00",
-      "rejected_count": 28,
+      "checked_at": "2026-11-04T00:00:20.644794+00:00",
+      "rejected_count": 27,
       "rejection_reasons": {
-        "no_concrete_signal": 19,
-        "off_topic": 8,
-        "personal_help_or_chatter": 1
+        "no_concrete_signal": 15,
+        "off_topic": 10,
+        "personal_help_or_chatter": 1,
+        "insufficient_evidence": 1
       },
       "rejected_examples": [
         {
-          "title": "Connecting claude to socials",
+          "title": "Loyalty means NOTHING to OpenAI and they just proved it.",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "What do people with normal hardware : 32GB ram 16GB VRAM run?",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Anthropic Blocking Reverse Engineer Anything",
+          "title": "I've been using Claude Code at work without approval, and I'm terrified I'll lose my job.",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Chat GPT vs. Claude (for those with ADHD)",
+          "title": "We hit 40.000 Unique Visitors A Month!",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Collaborating on spreadsheets with Claude",
+          "title": "AI editing the past",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Claude making me use Firefox and Opera",
+          "title": "Claude Code Opus 5.5 context window become 400k instead of 1M?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "What’s the smallest AI use that saves you the most time? Not the impressive stuff, the boring daily thing.",
+          "title": "Genuinely curious about the chance of a public Fable 5.5",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "What does the weekly limit grey bar mean",
+          "title": "If AI Doesn't Understand Because It Predicts Patterns, What Makes You Different?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Are we in the first stages of RSI?",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-03T19:27:15+00:00"
+      "latest_published_at": "2026-11-03T23:09:38+00:00"
     },
     "youtube": {
       "status": "direct",
-      "fresh_count": 10,
+      "fresh_count": 7,
       "errors": [
+        {
+          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
+          "reason": "HTTP 500"
+        },
+        {
+          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
+          "reason": "HTTP 500"
+        },
         {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
           "reason": "empty_or_invalid_feed"
         }
       ],
-      "feeds_ok": 7,
-      "checked_at": "2026-11-03T19:42:17.011280+00:00",
-      "rejected_count": 20,
+      "feeds_ok": 3,
+      "checked_at": "2026-11-04T00:00:20.644794+00:00",
+      "rejected_count": 13,
       "rejection_reasons": {
-        "off_topic": 18,
-        "not_original_item": 2
+        "off_topic": 13
       },
       "rejected_examples": [
         {
-          "title": "China just dropped a new frontier model... and nobody can explain how",
+          "title": "Infinity explained: It broke mathematics | Lex Fridman",
           "reason": "off_topic"
         },
         {
-          "title": "The most vulnerable week in internet history...",
+          "title": "Optimal dating strategy - mathematician explains | Lex Fridman",
           "reason": "off_topic"
         },
         {
-          "title": "The last real programmers are dying out...",
+          "title": "Do numbers exist? - mathematician explains | Lex Fridman",
           "reason": "off_topic"
         },
         {
-          "title": "This is Crazy",
+          "title": "The Physics of Warp Drives: Faster-than-light space travel | Lex Fridman",
           "reason": "off_topic"
         },
         {
-          "title": "Programming Laws Tier list | TheStandup",
+          "title": "Is math invented or discovered? - mathematicians explain | Lex Fridman",
           "reason": "off_topic"
         },
         {
-          "title": "I CANT DO ON CALL",
-          "reason": "not_original_item"
+          "title": "Why baseball outfielders don't run in a straight line | Lex Fridman",
+          "reason": "off_topic"
         },
         {
-          "title": "Claude now 3x FASTER",
-          "reason": "not_original_item"
+          "title": "Hardest problems in complexity - explained by mathematician | Lex Fridman",
+          "reason": "off_topic"
         },
         {
-          "title": "There Is No Way This Is Real",
+          "title": "How insects fly through turbulence | Lex Fridman",
           "reason": "off_topic"
         }
       ],
-      "stored_count": 41,
-      "latest_published_at": "2026-11-03T17:00:15+00:00"
+      "stored_count": 42,
+      "latest_published_at": "2026-11-03T21:00:09+00:00"
     },
     "hackernews": {
       "status": "direct",
       "fresh_count": 11,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-03T19:42:17.011280+00:00",
+      "checked_at": "2026-11-04T00:00:20.644794+00:00",
       "rejected_count": 49,
       "rejection_reasons": {
-        "no_concrete_signal": 35,
-        "off_topic": 14
+        "no_concrete_signal": 34,
+        "off_topic": 15
       },
       "rejected_examples": [
         {
-          "title": "Three Points on AI Safety",
+          "title": "AI 'godfather' Hinton: humans might have been better off without AI",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Show HN: Recto: A desktop app where you can design with AI, edit with your mouse",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Show HN: Confetti – Start designing hardware with plain English prompts",
+          "title": "Online reviews favor e-bikes sold online. Bike-shop e-bikes barely get reviewed",
           "reason": "off_topic"
         },
         {
-          "title": "AI tool can predict cancer survival by a single patient selfie",
+          "title": "Adamanteum: A local, MIT knowledge atlas your notes and any AI can both read",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "An easy way to try local AI with braindead-local-intelligence",
+          "title": "Free AI for Everyone",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "AI Could Do My First Job. Not My Last",
+          "title": "AI Replaces Tools,Not Worldviews:Why True Artistic Expression Won't Be Displaced",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "UK pair aim to complete most complex board game",
+          "title": "Nvidia is happy to take your money whether you're using open or closed models",
           "reason": "off_topic"
         },
         {
-          "title": "Composing fraud rules faster with classical ML and AI-assisted review",
+          "title": "0-click account takeover in Better Auth",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Apple opens Siri AI to every app, and lets developers teach it skills",
           "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-03T18:59:49+00:00"
+      "latest_published_at": "2026-11-03T23:45:40+00:00"
     },
     "producthunt": {
       "status": "direct",
-      "fresh_count": 18,
+      "fresh_count": 17,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-03T19:42:17.011280+00:00",
-      "rejected_count": 16,
+      "checked_at": "2026-11-04T00:00:20.644794+00:00",
+      "rejected_count": 17,
       "rejection_reasons": {
-        "off_topic": 16
+        "off_topic": 17
       },
       "rejected_examples": [
-        {
-          "title": "Beaquaro Studio",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Hookdeck Inspect",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Calendarly",
-          "reason": "off_topic"
-        },
         {
           "title": "Remote Gaze",
           "reason": "off_topic"
         },
         {
-          "title": "LidCommit",
-          "reason": "off_topic"
-        },
-        {
-          "title": "HoldTalk",
+          "title": "One Roof",
           "reason": "off_topic"
         },
         {
@@ -241,7 +240,23 @@
           "reason": "off_topic"
         },
         {
-          "title": "One Roof",
+          "title": "Corvo",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Prism",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Beaquaro Studio",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Akema",
+          "reason": "off_topic"
+        },
+        {
+          "title": "People Search by Context.dev",
           "reason": "off_topic"
         }
       ],
@@ -250,7 +265,7 @@
     },
     "tech_news": {
       "status": "direct",
-      "fresh_count": 42,
+      "fresh_count": 40,
       "errors": [
         {
           "endpoint": "venturebeat",
@@ -258,26 +273,14 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-03T19:42:17.011280+00:00",
-      "rejected_count": 16,
+      "checked_at": "2026-11-04T00:00:20.644794+00:00",
+      "rejected_count": 17,
       "rejection_reasons": {
-        "off_topic": 16
+        "off_topic": 17
       },
       "rejected_examples": [
         {
-          "title": "The TechCrunch Founder Summit agenda is only half the reason to be in Boston on Nov. 4",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Tomorrow: TechCrunch Founder Summit takes over Boston and when pass rates increase",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Web host Squarespace lays off 19% of its employees",
-          "reason": "off_topic"
-        },
-        {
-          "title": "2 days till TechCrunch Founder Summit: Boston founders don’t need a Silicon Valley address to build something big",
+          "title": "Those Jeff Bezos hair transplant photos are very fake",
           "reason": "off_topic"
         },
         {
@@ -293,16 +296,28 @@
           "reason": "off_topic"
         },
         {
-          "title": "UEFI bootkit infected fully patched Windows machines. Is Microsoft to blame?",
+          "title": "Data centers are turning to old jet engines as the wait for power grows",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Hiding inside Palantir’s skyrocketing quarter is a foreboding signal",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The TechCrunch Founder Summit agenda is only half the reason to be in Boston on Nov. 4",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Tomorrow: TechCrunch Founder Summit takes over Boston and when pass rates increase",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-03T19:34:43+00:00"
+      "latest_published_at": "2026-11-03T23:37:45+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 32,
+      "fresh_count": 52,
       "errors": [
         {
           "endpoint": "jiqizhixin",
@@ -315,56 +330,55 @@
         {
           "endpoint": "huxiu",
           "reason": "ReadTimeout"
-        },
-        {
-          "endpoint": "leiphone",
-          "reason": "ReadTimeout"
         }
       ],
-      "feeds_ok": 5,
-      "checked_at": "2026-11-03T19:42:17.011280+00:00",
+      "feeds_ok": 6,
+      "checked_at": "2026-11-04T00:00:20.644794+00:00",
       "rejected_count": 63,
       "rejection_reasons": {
-        "off_topic": 63
+        "off_topic": 62,
+        "promotion": 1
       },
       "rejected_examples": [
         {
-          "title": "一眼的熟悉，满眼的惊喜：新款 iPad mini 首发体验",
+          "title": "比亚迪仰望品牌海外首秀定档 11 月 6 日，超豪华行政旗舰轿车鼎曜同步亮相",
           "reason": "off_topic"
         },
         {
-          "title": "Disc Image Studio：你想不想在光盘上「画」点什么？",
+          "title": "微软承认 10 月更新再次破坏 Excel 复制粘贴，已重发补丁修复",
           "reason": "off_topic"
         },
         {
-          "title": "派早报：猛玛推出探境 3 直播相机、美团发布 LongCat-2.5 模型等",
+          "title": "微软推出 Xbox Series X-BITE 特别版主机：塞进 1.5 米长鳄鱼造型外壳，全球仅此一台抽奖送",
+          "reason": "promotion"
+        },
+        {
+          "title": "甲骨文联合创始人拉里 · 埃里森过去一年财富缩水 1590 亿美元，个人身家几乎减半",
           "reason": "off_topic"
         },
         {
-          "title": "派评 | 近期值得关注的 App",
+          "title": "育碧被曝有意收购微软 Xbox 旗下《耻辱》《死亡循环》开发商 Arkane Lyon",
           "reason": "off_topic"
         },
         {
-          "title": "TDS REVIEW｜Apple AirPods 5 半入耳降噪真无线耳机体验",
+          "title": "苹果 iPadOS 27.3 首个开发者预览版相机应用新增 Siri 入口：视觉智能触手可及",
           "reason": "off_topic"
         },
         {
-          "title": "Xnip 十周年：长截图的新生，也是新的起点",
+          "title": "微软 329 元 Xbox Nano 迷你手柄今日开售：隐藏功能曝光，支持 Wi-Fi 直连云游戏平台",
           "reason": "off_topic"
         },
         {
-          "title": "怀旧手记｜夏普 Telios：20 多年前，Handheld PC 中的「少数派」",
-          "reason": "off_topic"
-        },
-        {
-          "title": "本月玩什么｜影之刃零、战争机器：事变日等",
+          "title": "AMD 苏姿丰官宣 EPYC Venice 处理器已赚钱出货，首批 OEM 整机第四财季上市",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-03T19:39:29+00:00"
+      "latest_published_at": "2026-11-03T23:21:17+00:00"
     }
   },
-  "quality_rejections": {},
+  "quality_rejections": {
+    "duplicate_headline": 1
+  },
   "quality_complete": true
 }
