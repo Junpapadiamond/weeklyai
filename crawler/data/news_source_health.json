@@ -1,17 +1,17 @@
 {
-  "updated_at": "2026-11-05T07:08:50.020538+00:00",
+  "updated_at": "2026-11-05T20:11:06.188128+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 14,
+      "fresh_count": 11,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-05T07:08:50.020538+00:00",
-      "rejected_count": 14,
+      "checked_at": "2026-11-05T20:11:06.188128+00:00",
+      "rejected_count": 18,
       "rejection_reasons": {
-        "no_concrete_signal": 4,
-        "unvetted_x_author": 10
+        "no_concrete_signal": 13,
+        "unvetted_x_author": 5
       },
       "rejected_examples": [
         {
@@ -27,24 +27,24 @@
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@dpoddolphinpro · I realise this could be confusing, so to simplify: SpaceXSI, formerly SpaceXAI, formerly xAI, is a subsidiary of SpaceX, short for Space Explo",
+          "title": "@OpenAINewsroom · We discovered a sophisticated recording device that was hidden inside one of our offices. We used our models to understand the device and wher",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@VaibhavSisinty · Did xAI just kill every voice AI startup, again? Grok Voice 3.0. Their most intelligent speech-to-speech model yet. And the benchmarks are bru",
-          "reason": "unvetted_x_author"
+          "title": "@cursor_ai · New in Cursor design mode: Annotate. Give agents visual prompts: edit elements, draw on the page, and review your designs at different screen sizes",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "@grok · All current AI systems, including those built by xAI, rely on machine learning—data, algorithms, and compute. Advances at xAI center on larger clusters,",
-          "reason": "unvetted_x_author"
+          "title": "@cursor_ai · Cursor can now control your computer. Agents can drive desktop apps like the iOS Simulator to test the features they build.",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "@grok · @ishaa_malhotra xAI built me from scratch. Own models, own training runs, own data pipelines. No Claude, no borrowed base weights. Just a lot of compute",
-          "reason": "unvetted_x_author"
+          "title": "@cursor_ai · Cloud agents can now build interactive canvases. Ask for a dashboard or report while the agent works, then share the finished canvas with your team",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "@AndrewCurran_ · xAI announced today it is adding text watermarking to Grok. This appears to be rolling out globally. xAI was the last holdout, so the only mode",
-          "reason": "unvetted_x_author"
+          "title": "@cursor_ai · The Agent SDK is now available. Define agents as code, with prompts in Markdown and tools in TypeScript. Deploy them on our hosted infrastructure, ",
+          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
@@ -52,90 +52,83 @@
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 11,
+      "fresh_count": 12,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-05T07:08:50.020538+00:00",
-      "rejected_count": 29,
+      "checked_at": "2026-11-05T20:11:06.188128+00:00",
+      "rejected_count": 28,
       "rejection_reasons": {
-        "off_topic": 13,
-        "no_concrete_signal": 14,
-        "personal_help_or_chatter": 2
+        "no_concrete_signal": 18,
+        "off_topic": 8,
+        "unverified_rumor": 1,
+        "personal_help_or_chatter": 1
       },
       "rejected_examples": [
         {
-          "title": "Publication expectations for ML PhDs at top-10 US schools / top ML groups? [D]",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Qwen be like",
+          "title": "Here comes WokenAI...",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Files of this type cannot be downloaded",
+          "title": "Appreciation post for OrcaCyber-Nano-1.0",
           "reason": "off_topic"
         },
         {
-          "title": "Is there any claude skill that can help me with this ?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "I built a hyper realistic fighter jet simulator for the browser with opus 5.5 and it went viral on Twitter!",
+          "title": "[ Removed by Reddit ]",
           "reason": "off_topic"
         },
         {
-          "title": "Has anyone else noticed AI getting significantly worse since early October 2026?",
+          "title": "New to Claude",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "CCORE GLB-3D-Coder 4B final model and full weights are out",
+          "title": "Claude becoming too filtered?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Can you tell me how to make GTA-style images with OpenAI?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "What happens when AI characters live a life they don’t know is a game?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "trainlint: static checks for ML bugs that don't crash (fit-before-split, eval mode, logits losses) [P]",
           "reason": "off_topic"
-        },
-        {
-          "title": "Use Max plan for my own app?",
-          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-05T06:40:48+00:00"
+      "latest_published_at": "2026-11-05T20:10:09+00:00"
     },
     "youtube": {
       "status": "direct",
-      "fresh_count": 2,
+      "fresh_count": 13,
       "errors": [
         {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCsBjURrPoezykLs9EqgamOA",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
-          "reason": "HTTP 404"
+          "reason": "empty_or_invalid_feed"
         }
       ],
-      "feeds_ok": 2,
-      "checked_at": "2026-11-05T07:08:50.020538+00:00",
-      "rejected_count": 6,
+      "feeds_ok": 7,
+      "checked_at": "2026-11-05T20:11:06.188128+00:00",
+      "rejected_count": 14,
       "rejection_reasons": {
-        "off_topic": 4,
-        "not_original_item": 2
+        "off_topic": 13,
+        "not_original_item": 1
       },
       "rejected_examples": [
+        {
+          "title": "The worst week in cybersecurity history... so far",
+          "reason": "off_topic"
+        },
+        {
+          "title": "China just dropped a new frontier model... and nobody can explain how",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The most vulnerable week in internet history...",
+          "reason": "off_topic"
+        },
         {
           "title": "The Greatest Business Ever?",
           "reason": "off_topic"
@@ -153,11 +146,7 @@
           "reason": "not_original_item"
         },
         {
-          "title": "Claude now 3x FASTER",
-          "reason": "not_original_item"
-        },
-        {
-          "title": "There Is No Way This Is Real",
+          "title": "Navier-Stokes explained by Mathematician | Lex Fridman",
           "reason": "off_topic"
         }
       ],
@@ -169,96 +158,96 @@
       "fresh_count": 12,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-05T07:08:50.020538+00:00",
+      "checked_at": "2026-11-05T20:11:06.188128+00:00",
       "rejected_count": 48,
       "rejection_reasons": {
-        "off_topic": 13,
-        "no_concrete_signal": 34,
+        "no_concrete_signal": 30,
+        "off_topic": 17,
         "personal_help_or_chatter": 1
       },
       "rejected_examples": [
         {
-          "title": "T-Unit, the Spotify founders' new startup, aims to defend European democracies",
-          "reason": "off_topic"
-        },
-        {
-          "title": "When ML is just a query, every webshop screen gets one",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Tencent Hy4 Intelligence, Performance and Price Analysis",
-          "reason": "off_topic"
-        },
-        {
-          "title": "AI isn't slop. It's just the generic average. And not you",
+          "title": "Wipeout for AI stocks sends Wall Street reeling and S&P 500 tumbles more than 3%",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Big Tech claims voters' AI backlash is \"anti-Trump\" not \"anti-tech\"",
+          "title": "Shares in Musk's SpaceX plunge as tech and AI stocks fall",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Secure meeting room for humans that AI can't see",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Tolerance Labs",
+          "title": "Give Your Muse a Voice",
           "reason": "off_topic"
         },
         {
-          "title": "Open-weight AI models can exploit the patch gap",
+          "title": "Show HN: Lo-fi layered over air traffic control (recorded myself)",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Dept of Justice probes Nvidia over $13B Hugging Face acquisition",
           "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Is Flying Private Less Safe? How the Rules Differ from Commercial Airlines",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Let AI Debug DynamoDB Without Giving It Your AWS Credentials",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "The Hackintosh Reborn",
+          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-05T05:59:44+00:00"
+      "latest_published_at": "2026-11-05T19:14:37+00:00"
     },
     "producthunt": {
       "status": "direct",
-      "fresh_count": 13,
+      "fresh_count": 19,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-05T07:08:50.020538+00:00",
-      "rejected_count": 23,
+      "checked_at": "2026-11-05T20:11:06.188128+00:00",
+      "rejected_count": 19,
       "rejection_reasons": {
-        "off_topic": 23
+        "off_topic": 19
       },
       "rejected_examples": [
         {
-          "title": "Deployed Yet?",
+          "title": "FounderMail",
           "reason": "off_topic"
         },
         {
-          "title": "Zero Wire",
+          "title": "Tencent Hy4",
           "reason": "off_topic"
         },
         {
-          "title": "Basedash Verified dashboards",
+          "title": "DearCameo",
           "reason": "off_topic"
         },
         {
-          "title": "Hindsight Models and Inference API",
+          "title": "SafetyClip",
           "reason": "off_topic"
         },
         {
-          "title": "Chorus Weather",
+          "title": "MCPCore",
           "reason": "off_topic"
         },
         {
-          "title": "Fedora Linux 45",
+          "title": "SnapTiles",
           "reason": "off_topic"
         },
         {
-          "title": "Sendu",
+          "title": "Rainbrand",
           "reason": "off_topic"
         },
         {
-          "title": "Country Filter for X",
+          "title": "Glasshand",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-03T23:09:16+00:00"
+      "latest_published_at": "2026-11-05T04:54:13+00:00"
     },
     "tech_news": {
       "status": "direct",
@@ -270,10 +259,10 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-05T07:08:50.020538+00:00",
-      "rejected_count": 16,
+      "checked_at": "2026-11-05T20:11:06.188128+00:00",
+      "rejected_count": 15,
       "rejection_reasons": {
-        "off_topic": 16
+        "off_topic": 15
       },
       "rejected_examples": [
         {
@@ -281,7 +270,11 @@
           "reason": "off_topic"
         },
         {
-          "title": "My therapist thinks I should chuck the Amazon Bee Frontier out a window",
+          "title": "Box taps Nvidia’s Nemotron for new agent-first content retrieval system",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Agility is the first pure humanoid robot company on the stock market. Are you buying?",
           "reason": "off_topic"
         },
         {
@@ -289,15 +282,7 @@
           "reason": "off_topic"
         },
         {
-          "title": "TechCrunch Founder Summit 2026: Doors open at 9 a.m. ET in Boston",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Data centers are turning to old jet engines as the wait for power grows",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Hiding inside Palantir’s skyrocketing quarter is a foreboding signal",
+          "title": "Reddit Founder Says Building Social Media Apps Is ‘Not Cool Anymore’",
           "reason": "off_topic"
         },
         {
@@ -307,21 +292,25 @@
         {
           "title": "Hackers exploited iOS and Android flaws to infect phones",
           "reason": "off_topic"
+        },
+        {
+          "title": "VMware releases vSphere Express for virtualization on up to 128 cores",
+          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-05T01:26:22+00:00"
+      "latest_published_at": "2026-11-05T19:48:28+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 49,
+      "fresh_count": 45,
       "errors": [
         {
-          "endpoint": "jiqizhixin",
+          "endpoint": "36kr",
           "reason": "empty_or_invalid_feed"
         },
         {
-          "endpoint": "36kr",
+          "endpoint": "jiqizhixin",
           "reason": "empty_or_invalid_feed"
         },
         {
@@ -330,47 +319,47 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-11-05T07:08:50.020538+00:00",
-      "rejected_count": 68,
+      "checked_at": "2026-11-05T20:11:06.188128+00:00",
+      "rejected_count": 69,
       "rejection_reasons": {
-        "off_topic": 68
+        "off_topic": 69
       },
       "rejected_examples": [
         {
-          "title": "蔚来川西大环线换电路线贯通：全程 3667 公里，可达九寨沟、稻城亚丁",
+          "title": "我国成功发射遥感五十一号 07-09 星，主要用于科学试验、电磁环境探测等领域",
           "reason": "off_topic"
         },
         {
-          "title": "7 英寸手机卷土重来：消息称年底至明年上半年将推出多款大屏机型，覆盖中端、旗舰等定位",
+          "title": "Epic 喜加一：《浮游世界》游戏免费领取",
           "reason": "off_topic"
         },
         {
-          "title": "Sonnet 推出 Twin25G T5 雷电网络适配器：双 25GbE 光口，999 美元",
+          "title": "12499 元 / 15999 元起：苹果 M6 芯片款 iMac、MacBook Pro 开售",
           "reason": "off_topic"
         },
         {
-          "title": "奥迪创新技术中心开业：奥迪与上汽共同组建，联合开发 AUDI 品牌车型",
+          "title": "5499 元起：苹果 iPad mini 8 开售，A20 Pro 芯片（国补后到手价约 4999 元起）",
           "reason": "off_topic"
         },
         {
-          "title": "华为朱懂东：鸿蒙电脑累计发货量破百万",
+          "title": "22999 元起：苹果首款触屏 MacBook Pro 正式开售，可选 M5 Pro/M5 Max 芯片",
           "reason": "off_topic"
         },
         {
-          "title": "目标 2028 年登月：美国宇航局公布阿尔忒弥斯 Artemis 计划加速方案",
+          "title": "荣耀 700 系列手机盲盒周边曝光：背屏设计确认，消息称标准版搭载骁龙 8s Gen4 处理器",
           "reason": "off_topic"
         },
         {
-          "title": "华为鸿蒙电脑官宣年内支持侧载，开放本地安装应用",
+          "title": "One UI 9 系统更新导致部分 Galaxy 手机无法连接 Wi-Fi 或识别 SIM 卡，三星暂未回应",
           "reason": "off_topic"
         },
         {
-          "title": "阿维塔称 07L Max 遭遇批量网络不实侵权，下周一全球首拆",
+          "title": "英伟达庆祝首款支持 CUDA 显卡 GeForce 8800 GTX 诞生 20 周年，同步推出纪念游戏带 PC 玩家重返 2006 年",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-05T07:06:27+00:00"
+      "latest_published_at": "2026-11-05T15:11:49+00:00"
     }
   },
   "quality_rejections": {},
