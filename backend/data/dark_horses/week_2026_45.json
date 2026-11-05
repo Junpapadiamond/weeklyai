@@ -100,5 +100,50 @@
         }
       ]
     }
+  },
+  {
+    "name": "Conductor",
+    "website": "https://www.conductor.build/",
+    "description": "AI编码平台,允许用户通过在并行工作空间部署多个代理来启动软件项目,代理来自Anthropic和OpenAI等主要实验室",
+    "description_en": "AI coding platform allowing users to spin up software projects by deploying multiple agents from major labs like Anthropic and OpenAI into parallel workspaces",
+    "category": "coding",
+    "why_matters": "创新的代理团队协作模式让软件工程师可以在分隔的项目部分上并行工作,成立仅一年多即被Meta收购,将与Meta的超级智能实验室团队合作开发下一代界面",
+    "why_matters_en": "Innovative agentic team collaboration model enabling software engineers to work on compartmentalized project parts in parallel, acquired by Meta just over a year after founding to work with Meta Superintelligence Labs team on next-generation interfaces",
+    "latest_news": "2026年11月被Meta收购,创始人Charlie Holtz表示将与Meta首席AI官Alexandr Wang和产品负责人Nat Friedman合作,计划2027年初推出新产品",
+    "latest_news_en": "Acquired by Meta in November 2026, with founder Charlie Holtz announcing plans to work with Meta's Chief AI Officer Alexandr Wang and Head of Product Nat Friedman, teasing something new by early 2027",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "founder_background",
+      "category_innovation"
+    ],
+    "company_country": "US",
+    "confidence": 0.9,
+    "source_url": "https://techcrunch.com/2026/11/04/meta-acquires-ai-coding-startup-conductor/",
+    "categories": [
+      "coding"
+    ],
+    "region": "Unknown",
+    "source": "claude_rss",
+    "source_title": "Meta acquires AI coding startup Conductor",
+    "website_source": "https://techcrunch.com/2026/11/04/meta-acquires-ai-coding-startup-conductor/",
+    "discovered_at": "2026-11-05",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261105T001127Z-899a8694",
+      "search_region": "us",
+      "search_lane": "rss",
+      "website_verification": null,
+      "source_published_at": "2026-11-04T21:10:56+00:00",
+      "evidence": [
+        {
+          "criterion": "founder_background",
+          "quote": "On X, Holtz also noted that he was looking forward to working with Alexandr Wang, Meta's chief AI officer, and Nat Friedman, head of product at the company's Superintelligence Labs. 'They've been on an absolute tear, and I'm convinced MSL has the highest talent density of all the labs,' he added."
+        },
+        {
+          "criterion": "category_innovation",
+          "quote": "Conductor, founded in 2024, only launched its core product just last summer. The company's agentic teams, which can be deployed in the cloud, locally, or via a user's phone, are designed to help software engineers work on separate, compartmentalized parts of a project in concert."
+        }
+      ]
+    }
   }
 ]

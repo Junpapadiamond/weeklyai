@@ -1,0 +1,286 @@
+{
+  "cache_key": "d465a4b51b5f93ae21a7c3c4-2a4ec019789651a71951743b",
+  "product_key": "d465a4b51b5f93ae21a7c3c4",
+  "fingerprint": "2a4ec019789651a71951743b",
+  "product_id": "163",
+  "product_name": "NexGen Cloud",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-05T00:23:33.254141+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "主权 AI 算力部署规划",
+      "en": "Sovereign AI Compute Planning"
+    },
+    "scenario": {
+      "zh": "为欧洲 AI 项目选择合规的主权算力方案，探索数据主权与性能的平衡",
+      "en": "Choose compliant sovereign compute for European AI projects, balancing data sovereignty and performance"
+    },
+    "steps": [
+      {
+        "id": "region",
+        "widget": "choice",
+        "title": {
+          "zh": "选择主权要求",
+          "en": "Choose Sovereignty Need"
+        },
+        "instruction": {
+          "zh": "根据项目的数据合规需求选择部署区域",
+          "en": "Select deployment region based on data compliance"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "欧盟严格合规",
+              "en": "EU Strict Compliance"
+            },
+            "output": {
+              "zh": "数据全程留在欧盟境内，满足 GDPR 最高标准",
+              "en": "Data stays within EU borders, meets highest GDPR standards"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "项目需求",
+                "en": "Project Needs"
+              },
+              "output_label": {
+                "zh": "基础设施特征",
+                "en": "Infrastructure Features"
+              },
+              "input": {
+                "zh": "医疗 AI 模型训练，处理患者隐私数据，要求欧盟境内计算",
+                "en": "Healthcare AI training with patient data, requires EU-only compute"
+              },
+              "output": {
+                "zh": "英国或欧陆数据中心，本地存储与计算，符合主权 AI 定义",
+                "en": "UK or EU datacenter, local storage and compute, sovereign AI compliant"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "全球混合部署",
+              "en": "Global Hybrid Deploy"
+            },
+            "output": {
+              "zh": "核心数据主权保护，非敏感任务可用全球节点",
+              "en": "Core data sovereignty protected, non-sensitive tasks use global nodes"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "项目需求",
+                "en": "Project Needs"
+              },
+              "output_label": {
+                "zh": "基础设施特征",
+                "en": "Infrastructure Features"
+              },
+              "input": {
+                "zh": "金融风控模型，客户数据需欧盟合规，测试环境可灵活",
+                "en": "Financial risk model, customer data needs EU compliance, test env flexible"
+              },
+              "output": {
+                "zh": "生产在欧洲主权节点，开发测试可用成本优化区域",
+                "en": "Production on EU sovereign nodes, dev/test on cost-optimized regions"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "scale",
+        "widget": "choice",
+        "title": {
+          "zh": "估算算力规模",
+          "en": "Estimate Compute Scale"
+        },
+        "instruction": {
+          "zh": "根据模型训练或推理需求选择资源层级",
+          "en": "Choose resource tier based on training or inference needs"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "初创实验阶段",
+              "en": "Startup Experiment"
+            },
+            "output": {
+              "zh": "小规模 GPU 集群，快速原型验证",
+              "en": "Small GPU cluster for rapid prototyping"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "典型场景",
+                "en": "Typical Scenario"
+              },
+              "output_label": {
+                "zh": "配置建议",
+                "en": "Config Suggestion"
+              },
+              "input": {
+                "zh": "计算机视觉模型微调，数据集约 50GB",
+                "en": "CV model fine-tuning, ~50GB dataset"
+              },
+              "output": {
+                "zh": "4-8 张高性能 GPU，预估数周训练周期",
+                "en": "4-8 high-performance GPUs, estimated weeks training"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "算力需求",
+                    "en": "Compute Need"
+                  },
+                  "detail": {
+                    "zh": "多卡并行训练，支持分布式框架",
+                    "en": "Multi-GPU parallel, distributed framework support"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "存储需求",
+                    "en": "Storage Need"
+                  },
+                  "detail": {
+                    "zh": "高速本地存储，数据预处理缓存",
+                    "en": "Fast local storage, preprocessing cache"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "企业生产级",
+              "en": "Enterprise Production"
+            },
+            "output": {
+              "zh": "大规模集群，持续训练与推理服务",
+              "en": "Large cluster for continuous training and inference"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "典型场景",
+                "en": "Typical Scenario"
+              },
+              "output_label": {
+                "zh": "配置建议",
+                "en": "Config Suggestion"
+              },
+              "input": {
+                "zh": "大语言模型持续预训练，PB 级语料库",
+                "en": "LLM continuous pretraining, petabyte corpus"
+              },
+              "output": {
+                "zh": "数十至上百张 GPU，支持长期扩展与弹性",
+                "en": "Dozens to hundreds of GPUs, long-term scaling and elasticity"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "算力需求",
+                    "en": "Compute Need"
+                  },
+                  "detail": {
+                    "zh": "高密度集群，低延迟互联网络",
+                    "en": "High-density cluster, low-latency interconnect"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "可靠性",
+                    "en": "Reliability"
+                  },
+                  "detail": {
+                    "zh": "冗余设计，故障自动恢复机制",
+                    "en": "Redundancy design, auto-recovery on failure"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "review",
+        "widget": "review",
+        "title": {
+          "zh": "方案总结",
+          "en": "Solution Summary"
+        },
+        "instruction": {
+          "zh": "确认主权 AI 基础设施配置要点",
+          "en": "Confirm sovereign AI infrastructure key points"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "数据主权",
+              "en": "Data Sovereignty"
+            },
+            "output": {
+              "zh": "计算与存储位于选定合规区域",
+              "en": "Compute and storage in selected compliant region"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "资源规模",
+              "en": "Resource Scale"
+            },
+            "output": {
+              "zh": "匹配训练或推理工作负载需求",
+              "en": "Match training or inference workload requirements"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "下一步行动",
+              "en": "Next Action"
+            },
+            "output": {
+              "zh": "访问 NexGen Cloud 获取具体配置方案与定价",
+              "en": "Visit NexGen Cloud for detailed config and pricing"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了主权 AI 算力的区域与规模选择逻辑；实际性能、合规认证和成本需在官网确认",
+      "en": "Illustrated sovereign AI compute region and scale selection; actual performance, compliance certs and costs confirmed on vendor site"
+    },
+    "sources": [
+      {
+        "url": "https://www.nexgencloud.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.nexgencloud.com/news/nexgen-cloud-secures-45-million-in-series-a-funding-to-expand-sovereign-ai-infrastructure-in-europe",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

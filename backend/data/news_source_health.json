@@ -1,51 +1,51 @@
 {
-  "updated_at": "2026-11-04T19:57:22.913071+00:00",
+  "updated_at": "2026-11-05T00:19:58.648169+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 14,
+      "fresh_count": 15,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-04T19:57:22.913071+00:00",
-      "rejected_count": 12,
+      "checked_at": "2026-11-05T00:19:58.648169+00:00",
+      "rejected_count": 13,
       "rejection_reasons": {
-        "no_concrete_signal": 5,
-        "insufficient_excerpt": 5,
-        "unvetted_x_author": 2
+        "insufficient_excerpt": 7,
+        "unvetted_x_author": 1,
+        "no_concrete_signal": 5
       },
       "rejected_examples": [
         {
-          "title": "@OpenAI · These are early steps, and we’re looking for engineers, engineering firms, and software partners to help shape what comes next. https://t.co/WrqdW2Iwa",
+          "title": "@OpenAI · OpenAI (@OpenAI) on X",
+          "reason": "insufficient_excerpt"
+        },
+        {
+          "title": "@OpenAI · OpenAI (@OpenAI) on X",
+          "reason": "insufficient_excerpt"
+        },
+        {
+          "title": "@OpenAI · OpenAI (@OpenAI) on X",
+          "reason": "insufficient_excerpt"
+        },
+        {
+          "title": "@OpenAI · OpenAI (@OpenAI) on X",
+          "reason": "insufficient_excerpt"
+        },
+        {
+          "title": "@OpenAI · OpenAI (@OpenAI) on X",
+          "reason": "insufficient_excerpt"
+        },
+        {
+          "title": "@OpenAI · https://t.co/edRBkXdUAN",
+          "reason": "insufficient_excerpt"
+        },
+        {
+          "title": "@OracleNYSE · $NOW OpenAI OpenAI and ServiceNow expand partnership across enterprise workflows- OpenAI",
+          "reason": "unvetted_x_author"
+        },
+        {
+          "title": "@OpenAIDevs · In Codex and ChatGPT Work, access is available on Pro 500, eligible usage-based Enterprise, and credit-based Edu plans. Enterprise admins must ena",
           "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@OpenAI · With Intelligent UI, GPT‑6 can now compose responses using text, visuals, and interactive elements, choosing how they fit together based on your quest",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@OpenAI · GPT-6 and Intelligent UI, now rolling out in ChatGPT for everyone. Intelligent UI in ChatGPT delivers fast, interactive answers that make everyday que",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@upstageai · Upstage",
-          "reason": "insufficient_excerpt"
-        },
-        {
-          "title": "@upstageai · Upstage",
-          "reason": "insufficient_excerpt"
-        },
-        {
-          "title": "@upstageai · Upstage",
-          "reason": "insufficient_excerpt"
-        },
-        {
-          "title": "@upstageai · Upstage",
-          "reason": "insufficient_excerpt"
-        },
-        {
-          "title": "@upstageai · Post",
-          "reason": "insufficient_excerpt"
         }
       ],
       "stored_count": 60,
@@ -53,99 +53,95 @@
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 12,
+      "fresh_count": 11,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-04T19:57:22.913071+00:00",
-      "rejected_count": 28,
+      "checked_at": "2026-11-05T00:19:58.648169+00:00",
+      "rejected_count": 29,
       "rejection_reasons": {
-        "off_topic": 14,
-        "no_concrete_signal": 14
+        "off_topic": 13,
+        "no_concrete_signal": 14,
+        "personal_help_or_chatter": 2
       },
       "rejected_examples": [
         {
-          "title": "Octoverse: Commits, pushes, reach new highs in 2026 as developers build with agents",
+          "title": "63% of planned/under construction data centers in the US are in states with governors who have promised to ban or pause new data centers.",
           "reason": "off_topic"
         },
         {
-          "title": "would scientists survive AGI/ASI",
+          "title": "Best Upgrade for 32gb RAM + 12gb VRAM PC?",
           "reason": "off_topic"
         },
         {
-          "title": "Custom engine epidemic: an idea on how anyone could benefit (or how to gently stop it)",
-          "reason": "off_topic"
-        },
-        {
-          "title": "What do you guys do all day with these AI models",
+          "title": "Claude chat vs. Claude Code in the desktop app: what's the real difference?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Is Claude Duet really included in Max? It’s burning through my cloud credit!",
+          "title": "I consecrated 2GB of sacred USB-A to Sam",
+          "reason": "off_topic"
+        },
+        {
+          "title": "What are you looking forward to in Qwen 4?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "indirectly related to singularity - why do people want to stop aging?",
-          "reason": "off_topic"
+          "title": "27B vs Flash next",
+          "reason": "personal_help_or_chatter"
         },
         {
-          "title": "RTX 3090 stuck at PCIe x8 in an x16 slot. Tried everything, card or board?",
-          "reason": "off_topic"
+          "title": "Claude webbrowsing",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "tried a small model on payout fraud review in kill bill",
+          "title": "Feeding dual Tesla v100's with NVMe gen 5 ssd's: Viable or a waste of money?",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-04T19:47:09+00:00"
+      "latest_published_at": "2026-11-05T00:11:12+00:00"
     },
     "youtube": {
-      "status": "direct",
-      "fresh_count": 14,
+      "status": "search_fallback",
+      "fresh_count": 9,
       "errors": [
         {
+          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
+          "reason": "HTTP 404"
+        },
+        {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
-          "reason": "empty_or_invalid_feed"
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCsBjURrPoezykLs9EqgamOA",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
+          "reason": "HTTP 500"
         }
       ],
-      "feeds_ok": 7,
-      "checked_at": "2026-11-04T19:57:22.913071+00:00",
-      "rejected_count": 16,
+      "feeds_ok": 2,
+      "checked_at": "2026-11-05T00:19:58.648169+00:00",
+      "rejected_count": 1,
       "rejection_reasons": {
-        "off_topic": 14,
-        "not_original_item": 2
+        "off_topic": 1
       },
       "rejected_examples": [
         {
-          "title": "This is Crazy",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Programming Laws Tier list | TheStandup",
-          "reason": "off_topic"
-        },
-        {
-          "title": "I CANT DO ON CALL",
-          "reason": "not_original_item"
-        },
-        {
-          "title": "Claude now 3x FASTER",
-          "reason": "not_original_item"
-        },
-        {
-          "title": "There Is No Way This Is Real",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The worst week in cybersecurity history... so far",
-          "reason": "off_topic"
-        },
-        {
-          "title": "China just dropped a new frontier model... and nobody can explain how",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The most vulnerable week in internet history...",
+          "title": "Google's New Genie 4 Is the Beginning of Synthetic Reality!",
           "reason": "off_topic"
         }
       ],
@@ -154,82 +150,74 @@
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 9,
+      "fresh_count": 14,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-04T19:57:22.913071+00:00",
-      "rejected_count": 51,
+      "checked_at": "2026-11-05T00:19:58.648169+00:00",
+      "rejected_count": 46,
       "rejection_reasons": {
         "no_concrete_signal": 33,
-        "off_topic": 17,
+        "off_topic": 12,
         "personal_help_or_chatter": 1
       },
       "rejected_examples": [
         {
-          "title": "Qualcomm Cloud AI 100 Ultra – 150W AI Accelerator Card with 128GB at 548GB/s",
+          "title": "Show HN: Cinnamon – safer AI agent for household, private and shared context",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Show HN: MAVO – Ukrainian air alerts by distance to Poland, with analytics",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Should cities restrict new AI data centers? The case for each side, with sources",
+          "title": "You'll need nerves of steel to work with AI agents",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Show HN: Jinna, Company Brain& AI agents that run a one-person business with you",
+          "title": "Show HN: BrowserForge – AI agents use your real browser, you approve the clicks",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "I asked AI (Claude Opus 4.8) to review my MRI",
+          "title": "TikTok Cinema: Inside AI Microdramas",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Show HN: Fount – Verifiably private AI for your spreadsheets and documents",
+          "title": "Yassamin Ansari: Top of the Democratic agenda on day 1 pause on advanced AI dev",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "AI Agent Platform",
+          "title": "AI poisoning: are we using AI, or is AI using us?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "CRM and Software factory for solo engineer to help small businesses",
+          "title": "AI triggers PCB shortage for PC makers as order books full until 2030, costs 12x",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "YouTuber discovers aircraft noise trick that can geolocate videos to within 100M",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-04T18:30:59+00:00"
+      "latest_published_at": "2026-11-05T00:09:05+00:00"
     },
     "producthunt": {
       "status": "direct",
-      "fresh_count": 16,
+      "fresh_count": 15,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-04T19:57:22.913071+00:00",
+      "checked_at": "2026-11-05T00:19:58.648169+00:00",
       "rejected_count": 21,
       "rejection_reasons": {
         "off_topic": 21
       },
       "rejected_examples": [
         {
-          "title": "Mellow Kids",
-          "reason": "off_topic"
-        },
-        {
           "title": "Virelo",
           "reason": "off_topic"
         },
         {
-          "title": "Hira",
+          "title": "Sonari",
           "reason": "off_topic"
         },
         {
-          "title": "Country Filter for X",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Resum",
+          "title": "Hindsight Models and Inference API",
           "reason": "off_topic"
         },
         {
@@ -241,7 +229,15 @@
           "reason": "off_topic"
         },
         {
-          "title": "Zero Wire",
+          "title": "Eyecon",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Country Filter for X",
+          "reason": "off_topic"
+        },
+        {
+          "title": "TellPip",
           "reason": "off_topic"
         }
       ],
@@ -250,7 +246,7 @@
     },
     "tech_news": {
       "status": "direct",
-      "fresh_count": 41,
+      "fresh_count": 43,
       "errors": [
         {
           "endpoint": "venturebeat",
@@ -258,20 +254,12 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-04T19:57:22.913071+00:00",
-      "rejected_count": 16,
+      "checked_at": "2026-11-05T00:19:58.648169+00:00",
+      "rejected_count": 15,
       "rejection_reasons": {
-        "off_topic": 16
+        "off_topic": 15
       },
       "rejected_examples": [
-        {
-          "title": "My therapist thinks I should chuck the Amazon Bee Frontier out a window",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Those Jeff Bezos hair transplant photos are very fake",
-          "reason": "off_topic"
-        },
         {
           "title": "TechCrunch Founder Summit 2026: Doors open at 9 a.m. ET in Boston",
           "reason": "off_topic"
@@ -285,84 +273,96 @@
           "reason": "off_topic"
         },
         {
-          "title": "The TechCrunch Founder Summit agenda is only half the reason to be in Boston on November 4",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Tomorrow: TechCrunch Founder Summit takes over Boston and when pass rates increase",
-          "reason": "off_topic"
-        },
-        {
           "title": "The Results Are In: Voters Hate Data Centers",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Hackers exploited iOS and Android flaws to infect phones",
+          "reason": "off_topic"
+        },
+        {
+          "title": "VMware releases vSphere Express for virtualization on up to 128 cores",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Binance says hackers who stole billions in crypto spent months planning heist",
+          "reason": "off_topic"
+        },
+        {
+          "title": "UEFI bootkit infected fully patched Windows machines. Is Microsoft to blame?",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-04T19:30:04+00:00"
+      "latest_published_at": "2026-11-04T23:13:14+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 42,
+      "fresh_count": 30,
       "errors": [
+        {
+          "endpoint": "jiqizhixin",
+          "reason": "empty_or_invalid_feed"
+        },
         {
           "endpoint": "36kr",
           "reason": "empty_or_invalid_feed"
         },
         {
-          "endpoint": "jiqizhixin",
-          "reason": "empty_or_invalid_feed"
+          "endpoint": "leiphone",
+          "reason": "HTTP 502"
         },
         {
           "endpoint": "huxiu",
           "reason": "ReadTimeout"
         }
       ],
-      "feeds_ok": 6,
-      "checked_at": "2026-11-04T19:57:22.913071+00:00",
-      "rejected_count": 77,
+      "feeds_ok": 5,
+      "checked_at": "2026-11-05T00:19:58.648169+00:00",
+      "rejected_count": 69,
       "rejection_reasons": {
-        "off_topic": 77
+        "off_topic": 69
       },
       "rejected_examples": [
         {
-          "title": "华为小艺 Work 率先上线 openPangu-2.1-Pro 模型，主打“鸿蒙任务增强”",
+          "title": "微诗：从诗入画、且唱且行，这款免费 app 把诗装进手机",
           "reason": "off_topic"
         },
         {
-          "title": "微信鸿蒙版 App 推 8.0.23.34 正式版更新，更多用户灰度合并发图功能",
+          "title": "国行 Apple 智能上手：这些功能已经准备好",
           "reason": "off_topic"
         },
         {
-          "title": "华硕正式带来 ROG XG Station 3 显卡坞：提供 GC-HPWR 接口，支持雷电 5",
+          "title": "派早报：Apple 智能国行版开放测试、拓竹发布 H3C 3D 打印机等",
           "reason": "off_topic"
         },
         {
-          "title": "法国血液中心确认受 11 月 2 日黑客升温攻击波及，幸无实际影响",
+          "title": "一眼的熟悉，满眼的惊喜：新款 iPad mini 首发体验",
           "reason": "off_topic"
         },
         {
-          "title": "真 · 互通：国行 Apple 智能创作内容、问询结果会同步至千问 App",
+          "title": "Disc Image Studio：你想不想在光盘上「画」点什么？",
           "reason": "off_topic"
         },
         {
-          "title": "英伟达发布 Game Ready 621.14 驱动：优化《魔兽世界：永恒》，修复视频黑屏问题",
+          "title": "派早报：猛玛推出探境 3 直播相机、美团发布 LongCat-2.5 模型等",
           "reason": "off_topic"
         },
         {
-          "title": "华为 MatePad Mini 小平板获 HarmonyOS 7.0.0.111 SP16 升级，互助通信共享功能下放",
+          "title": "派评 | 近期值得关注的 App",
           "reason": "off_topic"
         },
         {
-          "title": "高通史上最大 5G 交易：联合 SpaceX 建设星链移动全美国 5G 网络",
+          "title": "TDS REVIEW｜Apple AirPods 5 半入耳降噪真无线耳机体验",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-04T17:30:04+00:00"
+      "latest_published_at": "2026-11-05T00:15:59+00:00"
     }
   },
   "quality_rejections": {
-    "duplicate_headline": 2
+    "duplicate_headline": 1
   },
   "quality_complete": true
 }

@@ -1,0 +1,186 @@
+{
+  "cache_key": "8914fbabf2f831cccf058469-8006669cbf2db9da71fe38da",
+  "product_key": "8914fbabf2f831cccf058469",
+  "fingerprint": "8006669cbf2db9da71fe38da",
+  "product_id": "159",
+  "product_name": "Fireworks AI",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-05T00:22:36.810837+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "开源模型推理服务",
+      "en": "Open Source Model Inference"
+    },
+    "scenario": {
+      "zh": "为内容平台选择合适的开源模型，部署文本分类API",
+      "en": "Select and deploy an open source model for content moderation API"
+    },
+    "steps": [
+      {
+        "id": "model_select",
+        "widget": "choice",
+        "title": {
+          "zh": "选择推理任务",
+          "en": "Choose Inference Task"
+        },
+        "instruction": {
+          "zh": "选择你要部署的模型类型",
+          "en": "Select the model type to deploy"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "文本分类",
+              "en": "Text Classification"
+            },
+            "output": {
+              "zh": "使用Llama模型分析评论情感",
+              "en": "Analyze comment sentiment with Llama"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "用户评论",
+                "en": "User Comment"
+              },
+              "output_label": {
+                "zh": "分类结果",
+                "en": "Classification"
+              },
+              "input": {
+                "zh": "这个功能用起来很流畅，但偶尔会卡顿，希望能优化一下性能。",
+                "en": "This feature works smoothly but occasionally lags, hope performance improves."
+              },
+              "output": {
+                "zh": "情感：中性偏正，主题：产品反馈，建议类型：性能优化",
+                "en": "Sentiment: Neutral-Positive, Topic: Product Feedback, Suggestion: Performance"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "代码生成",
+              "en": "Code Generation"
+            },
+            "output": {
+              "zh": "用CodeLlama生成函数实现",
+              "en": "Generate function with CodeLlama"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "需求描述",
+                "en": "Requirements"
+              },
+              "output_label": {
+                "zh": "生成代码",
+                "en": "Generated Code"
+              },
+              "input": {
+                "zh": "编写Python函数用正则验证邮箱格式",
+                "en": "Write a Python function to validate email format using regex"
+              },
+              "output": {
+                "zh": "def validate_email(email):\n  return bool(re.match(r'^[\\w.-]+@[\\w.-]+\\.\\w+$', email))",
+                "en": "def validate_email(email):\n  return bool(re.match(r'^[\\w.-]+@[\\w.-]+\\.\\w+$', email))"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "文本摘要",
+              "en": "Text Summarization"
+            },
+            "output": {
+              "zh": "用Mistral模型提取要点",
+              "en": "Extract key points with Mistral"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "原始文档",
+                "en": "Original Document"
+              },
+              "output_label": {
+                "zh": "摘要",
+                "en": "Summary"
+              },
+              "input": {
+                "zh": "季度报告显示平台活跃用户增长，移动端为主。广告收入同比提升，但创作者留存率下降，需改进激励。推荐算法升级后用户停留时长增加。",
+                "en": "Quarterly report shows platform user growth, primarily mobile. Ad revenue increased, but creator retention dropped, requiring better incentives. Algorithm upgrade extended session time."
+              },
+              "output": {
+                "zh": "用户增长强劲，收入提升，但创作者流失需解决，算法优化提升参与度",
+                "en": "Strong user growth and revenue, but creator churn needs attention, algorithm improves engagement"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "deployment",
+        "widget": "review",
+        "title": {
+          "zh": "部署配置",
+          "en": "Deployment Setup"
+        },
+        "instruction": {
+          "zh": "确认API端点设置",
+          "en": "Review API endpoint settings"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "标准推理",
+              "en": "Standard Inference"
+            },
+            "output": {
+              "zh": "单次请求响应模式",
+              "en": "Single request-response mode"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "流式输出",
+              "en": "Streaming Output"
+            },
+            "output": {
+              "zh": "实时返回生成内容",
+              "en": "Real-time content generation"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了开源模型推理场景，实际部署需在Fireworks平台配置API密钥和计费",
+      "en": "Illustrated open source model inference scenarios, actual deployment requires API keys and billing setup on Fireworks platform"
+    },
+    "sources": [
+      {
+        "url": "https://fireworks.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/01/19/here-are-the-49-us-ai-startups-that-have-raised-100m-or-more-in-2025/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

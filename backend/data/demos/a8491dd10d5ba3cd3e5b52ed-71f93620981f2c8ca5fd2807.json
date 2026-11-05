@@ -1,0 +1,333 @@
+{
+  "cache_key": "a8491dd10d5ba3cd3e5b52ed-71f93620981f2c8ca5fd2807",
+  "product_key": "a8491dd10d5ba3cd3e5b52ed",
+  "fingerprint": "71f93620981f2c8ca5fd2807",
+  "product_id": "158",
+  "product_name": "SynapX",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-05T00:22:01.199539+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "机器人自我进化能力演示",
+      "en": "Robot Self-Evolution Demo"
+    },
+    "scenario": {
+      "zh": "探索机器人如何从单一任务中学习，并将能力迁移到相关场景",
+      "en": "Explore how robots learn from a single task and transfer skills to related scenarios"
+    },
+    "steps": [
+      {
+        "id": "initial_task",
+        "widget": "choice",
+        "title": {
+          "zh": "初始训练任务",
+          "en": "Initial Training Task"
+        },
+        "instruction": {
+          "zh": "选择机器人首次学习的操作",
+          "en": "Choose the robot's first learned operation"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "抓取圆柱物体",
+              "en": "Grasp Cylinder"
+            },
+            "output": {
+              "zh": "机器人学会识别圆柱形状和抓取力度",
+              "en": "Robot learns cylinder shape recognition and grip force"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "训练目标",
+                "en": "Training Goal"
+              },
+              "output_label": {
+                "zh": "获得能力",
+                "en": "Acquired Skills"
+              },
+              "input": {
+                "zh": "稳定抓起桌面上的水瓶",
+                "en": "Stably grasp water bottle on table"
+              },
+              "output": {
+                "zh": "形状识别、力度控制、手眼协调",
+                "en": "Shape recognition, force control, hand-eye coordination"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "视觉感知",
+                    "en": "Visual Perception"
+                  },
+                  "detail": {
+                    "zh": "识别圆柱轮廓和表面纹理",
+                    "en": "Identify cylinder contour and surface texture"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "抓取策略",
+                    "en": "Grasp Strategy"
+                  },
+                  "detail": {
+                    "zh": "调整手指位置和施加压力",
+                    "en": "Adjust finger position and apply pressure"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "动作执行",
+                    "en": "Motion Execution"
+                  },
+                  "detail": {
+                    "zh": "平稳移动至目标并提起",
+                    "en": "Move smoothly to target and lift"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "堆叠方块",
+              "en": "Stack Blocks"
+            },
+            "output": {
+              "zh": "机器人掌握对齐和平衡判断",
+              "en": "Robot masters alignment and balance judgment"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "训练目标",
+                "en": "Training Goal"
+              },
+              "output_label": {
+                "zh": "获得能力",
+                "en": "Acquired Skills"
+              },
+              "input": {
+                "zh": "将三个木块垂直堆叠",
+                "en": "Stack three wooden blocks vertically"
+              },
+              "output": {
+                "zh": "精确定位、平衡感知、顺序规划",
+                "en": "Precise positioning, balance sensing, sequence planning"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "空间推理",
+                    "en": "Spatial Reasoning"
+                  },
+                  "detail": {
+                    "zh": "计算重心和稳定接触面",
+                    "en": "Calculate center of mass and stable contact"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "放置控制",
+                    "en": "Placement Control"
+                  },
+                  "detail": {
+                    "zh": "缓慢释放并确认稳定性",
+                    "en": "Release slowly and confirm stability"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "transfer_scenario",
+        "widget": "choice",
+        "title": {
+          "zh": "迁移测试场景",
+          "en": "Transfer Test Scenario"
+        },
+        "instruction": {
+          "zh": "观察已学技能如何应用到新任务",
+          "en": "Observe how learned skills apply to new tasks"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "抓取玻璃杯",
+              "en": "Grasp Glass Cup"
+            },
+            "output": {
+              "zh": "复用圆柱识别，调整力度避免破损",
+              "en": "Reuse cylinder recognition, adjust force to prevent damage"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "迁移依据",
+                "en": "Transfer Basis"
+              },
+              "output_label": {
+                "zh": "适应策略",
+                "en": "Adaptation Strategy"
+              },
+              "input": {
+                "zh": "已知圆柱抓取的手指配置",
+                "en": "Known finger configuration for cylinders"
+              },
+              "output": {
+                "zh": "检测材质脆性，减小握力至安全范围",
+                "en": "Detect material brittleness, reduce grip to safe range"
+              }
+            },
+            "when": {
+              "step_id": "initial_task",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "组装零件",
+              "en": "Assemble Parts"
+            },
+            "output": {
+              "zh": "运用对齐能力，增加旋转和插入动作",
+              "en": "Apply alignment skills, add rotation and insertion"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "迁移依据",
+                "en": "Transfer Basis"
+              },
+              "output_label": {
+                "zh": "适应策略",
+                "en": "Adaptation Strategy"
+              },
+              "input": {
+                "zh": "已知对齐两个表面的定位方法",
+                "en": "Known method to align two surfaces"
+              },
+              "output": {
+                "zh": "扩展至轴孔配合，增加触觉反馈判断",
+                "en": "Extend to shaft-hole fit, add tactile feedback"
+              }
+            },
+            "when": {
+              "step_id": "initial_task",
+              "option_id": "1"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "evolution_outcome",
+        "widget": "review",
+        "title": {
+          "zh": "进化成果",
+          "en": "Evolution Outcome"
+        },
+        "instruction": {
+          "zh": "总结机器人的学习路径",
+          "en": "Summarize the robot's learning path"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "能力图谱",
+              "en": "Capability Map"
+            },
+            "output": {
+              "zh": "从单一任务衍生出多场景适应性",
+              "en": "Single task evolves into multi-scenario adaptability"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "初始输入",
+                "en": "Initial Input"
+              },
+              "output_label": {
+                "zh": "迁移结果",
+                "en": "Transfer Results"
+              },
+              "input": {
+                "zh": "一次人工示教的抓取动作",
+                "en": "One human-demonstrated grasp action"
+              },
+              "output": {
+                "zh": "可应用于不同形状、材质和环境的操作",
+                "en": "Operations applicable to varied shapes, materials, contexts"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "形状泛化",
+                    "en": "Shape Generalization"
+                  },
+                  "detail": {
+                    "zh": "圆柱知识迁移到圆锥、球体",
+                    "en": "Cylinder knowledge transfers to cones, spheres"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "材质适应",
+                    "en": "Material Adaptation"
+                  },
+                  "detail": {
+                    "zh": "从刚性物体延伸至柔性和易碎品",
+                    "en": "Extend from rigid to flexible and fragile items"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "任务组合",
+                    "en": "Task Composition"
+                  },
+                  "detail": {
+                    "zh": "基础动作串联成复杂工作流",
+                    "en": "Basic actions chain into complex workflows"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了概念层面的技能迁移逻辑；真实机器人训练需在 SynapX 平台测试",
+      "en": "Demonstrated conceptual skill transfer logic; real robot training requires testing on SynapX platform"
+    },
+    "sources": [
+      {
+        "url": "https://synapx.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://36kr.jp/492998/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

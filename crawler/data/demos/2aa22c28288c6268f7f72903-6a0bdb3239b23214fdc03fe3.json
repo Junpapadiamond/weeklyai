@@ -1,0 +1,266 @@
+{
+  "cache_key": "2aa22c28288c6268f7f72903-6a0bdb3239b23214fdc03fe3",
+  "product_key": "2aa22c28288c6268f7f72903",
+  "fingerprint": "6a0bdb3239b23214fdc03fe3",
+  "product_id": "160",
+  "product_name": "7AI",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-05T00:23:03.367835+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "企业安全威胁AI代理演示",
+      "en": "Enterprise Security AI Agent Demo"
+    },
+    "scenario": {
+      "zh": "演示网络安全AI代理如何分析威胁并生成响应建议",
+      "en": "Demo how cybersecurity AI agents analyze threats and generate response recommendations"
+    },
+    "steps": [
+      {
+        "id": "threat_input",
+        "widget": "choice",
+        "title": {
+          "zh": "选择安全事件类型",
+          "en": "Choose Security Event Type"
+        },
+        "instruction": {
+          "zh": "AI代理将分析事件并建议措施",
+          "en": "AI agent will analyze event and suggest actions"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "异常登录活动",
+              "en": "Anomalous Login Activity"
+            },
+            "output": {
+              "zh": "检测到潜在账户入侵迹象",
+              "en": "Detected potential account compromise indicators"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "安全日志片段",
+                "en": "Security Log Excerpt"
+              },
+              "output_label": {
+                "zh": "威胁评估",
+                "en": "Threat Assessment"
+              },
+              "input": {
+                "zh": "用户admin_chen于03:42从IP 185.220.101.45登录失败5次，随后03:47成功登录，地理位置莫斯科",
+                "en": "User admin_chen failed login 5 times at 03:42 from IP 185.220.101.45, then succeeded at 03:47, geolocation Moscow"
+              },
+              "output": {
+                "zh": "中等风险：异常地理位置+多次失败后成功。建议立即重置密码、启用MFA、审查近期操作日志",
+                "en": "Medium risk: Unusual geolocation + success after failures. Recommend immediate password reset, enable MFA, audit recent activity"
+              },
+              "emphasis": {
+                "zh": "莫斯科",
+                "en": "Moscow"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "可疑文件传输",
+              "en": "Suspicious File Transfer"
+            },
+            "output": {
+              "zh": "发现数据外泄风险模式",
+              "en": "Identified data exfiltration risk pattern"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "网络流量记录",
+                "en": "Network Traffic Record"
+              },
+              "output_label": {
+                "zh": "风险分析",
+                "en": "Risk Analysis"
+              },
+              "input": {
+                "zh": "员工zhang_li工作站于22:15向外部服务器61.3.88.202传输3.2GB加密压缩文件，持续18分钟",
+                "en": "Employee zhang_li workstation transferred 3.2GB encrypted archive to external server 61.3.88.202 at 22:15, duration 18 minutes"
+              },
+              "output": {
+                "zh": "高风险：非工作时间大量数据传输至未知外部IP。建议隔离工作站、联系员工确认、检查文件内容合法性",
+                "en": "High risk: Large data transfer to unknown external IP during off-hours. Recommend isolate workstation, contact employee, verify file content legitimacy"
+              },
+              "emphasis": {
+                "zh": "3.2GB加密压缩文件",
+                "en": "3.2GB encrypted archive"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "response_plan",
+        "widget": "choice",
+        "title": {
+          "zh": "生成响应方案",
+          "en": "Generate Response Plan"
+        },
+        "instruction": {
+          "zh": "基于威胁级别制定处置步骤",
+          "en": "Create remediation steps based on threat level"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "自动化遏制",
+              "en": "Automated Containment"
+            },
+            "output": {
+              "zh": "立即执行的隔离措施",
+              "en": "Immediate isolation measures"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "检测到的威胁",
+                "en": "Detected Threat"
+              },
+              "output_label": {
+                "zh": "遏制步骤",
+                "en": "Containment Steps"
+              },
+              "input": {
+                "zh": "中等风险：admin_chen账户异常登录",
+                "en": "Medium risk: admin_chen account anomalous login"
+              },
+              "output": {
+                "zh": "自动遏制流程已规划",
+                "en": "Automated containment workflow planned"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "禁用账户",
+                    "en": "Disable Account"
+                  },
+                  "detail": {
+                    "zh": "暂停admin_chen所有访问权限",
+                    "en": "Suspend all admin_chen access privileges"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "会话终止",
+                    "en": "Terminate Sessions"
+                  },
+                  "detail": {
+                    "zh": "强制登出该账户所有活动连接",
+                    "en": "Force logout all active connections for account"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "通知响应团队",
+                    "en": "Notify Response Team"
+                  },
+                  "detail": {
+                    "zh": "发送警报至安全运营中心",
+                    "en": "Send alert to security operations center"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "人工审查流程",
+              "en": "Manual Review Workflow"
+            },
+            "output": {
+              "zh": "需要安全团队判断的步骤",
+              "en": "Steps requiring security team judgment"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "检测到的威胁",
+                "en": "Detected Threat"
+              },
+              "output_label": {
+                "zh": "审查任务",
+                "en": "Review Tasks"
+              },
+              "input": {
+                "zh": "高风险：zhang_li工作站可疑文件传输",
+                "en": "High risk: zhang_li workstation suspicious file transfer"
+              },
+              "output": {
+                "zh": "人工审查任务已生成",
+                "en": "Manual review tasks generated"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "取证采集",
+                    "en": "Forensic Collection"
+                  },
+                  "detail": {
+                    "zh": "保存工作站内存镜像和网络日志",
+                    "en": "Preserve workstation memory image and network logs"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "员工访谈",
+                    "en": "Employee Interview"
+                  },
+                  "detail": {
+                    "zh": "确认传输文件的业务正当性",
+                    "en": "Verify business legitimacy of transferred files"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "影响评估",
+                    "en": "Impact Assessment"
+                  },
+                  "detail": {
+                    "zh": "分析可能泄露的数据敏感度",
+                    "en": "Analyze sensitivity of potentially exposed data"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了AI代理分析安全日志并生成响应建议的过程。实际产品需在7AI平台部署和配置。",
+      "en": "Demonstrated AI agent analyzing security logs and generating response recommendations. Actual product requires deployment and configuration on 7AI platform."
+    },
+    "sources": [
+      {
+        "url": "https://7ai.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/01/19/here-are-the-49-us-ai-startups-that-have-raised-100m-or-more-in-2025/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}
