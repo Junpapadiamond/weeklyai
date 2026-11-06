@@ -1,23 +1,20 @@
 {
-  "updated_at": "2026-11-06T07:08:25.513039+00:00",
+  "updated_at": "2026-11-06T19:36:48.023585+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 8,
+      "fresh_count": 9,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-06T07:08:25.513039+00:00",
-      "rejected_count": 20,
+      "checked_at": "2026-11-06T19:36:48.023585+00:00",
+      "rejected_count": 18,
       "rejection_reasons": {
-        "no_concrete_signal": 6,
-        "unvetted_x_author": 14
+        "unvetted_x_author": 9,
+        "no_concrete_signal": 5,
+        "insufficient_excerpt": 4
       },
       "rejected_examples": [
-        {
-          "title": "@OpenAI · GPT-6 and Intelligent UI, now rolling out in ChatGPT for everyone. Intelligent UI in ChatGPT delivers fast, interactive answers that make everyday que",
-          "reason": "no_concrete_signal"
-        },
         {
           "title": "@tomekkorbak · Last week I was called into a meeting with OpenAI’s head of safety and told they no longer trust me. A security guard took my badge and walked me",
           "reason": "unvetted_x_author"
@@ -27,23 +24,27 @@
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@huggingface · Our open-source ML Intern is now available as a Slack bot you can install in your own workspace! Evaluate models, build datasets, and fine-tune m",
+          "title": "@SakanaAILabs · Sakana AI won 1st place in the company category at the “Recursive Self Improvement in Mathematics” Hack (OpenMath 2026), held with @stephen_wolf",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@every · Before @huggingface became an AI platform, it was a chatbot company with a retention problem. People tried the chatbot, but they weren’t sticking aroun",
+          "title": "@RobertTLange · Had tons of fun last week at the @SakanaAILabs symposium 🗼 Blog: https://t.co/rtbSGQ90Yz I first met Jürgen in Vienna at ICML 2024. We had just ",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@reflection_ai · We teamed up with @huggingface to give away $20,000 to anyone who's building with Beam 🤗 Use Beam for any project - make a demo or a dataset, b",
+          "title": "@hardmaru · New paper from the team at Sakana AI: Recursive Self-Improvement through Multi-Agent Self-Supervision (MASS) How do we keep improving AI when the ta",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@huggingface · Come and build models, datasets, and spaces on the hub, to win $20k in cash and credits!",
+          "title": "@SakanaAILabs · Sakana AI Dinner Meetup #NeurIPS2026 🐟️ Signup → https://t.co/U5PURuLFkA We are excited to host a dinner meetup in Sydney on Monday, December 7t",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@huggingface · Evaluating robot models in the real world is hard, but solvable. That's why we're a founding partner of RoboColosseum 🤗 100+ real robots, 140+ in",
+          "title": "@hardmaru · Last week in Tokyo, we hosted the Sakana AI Symposium with our Chief Scientific Advisor, Jürgen Schmidhuber. Eight years ago, @SchmidhuberAI and I w",
+          "reason": "unvetted_x_author"
+        },
+        {
+          "title": "@SakanaAILabs · The Agentic Scientist: Orchestrating Coding Agents for Automated Scientific (Co-)Discovery Blog: https://t.co/7aVDvZd6m2 GitHub: https://t.co/JC",
           "reason": "no_concrete_signal"
         }
       ],
@@ -52,196 +53,204 @@
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 10,
+      "fresh_count": 16,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-06T07:08:25.513039+00:00",
-      "rejected_count": 30,
+      "checked_at": "2026-11-06T19:36:48.023585+00:00",
+      "rejected_count": 24,
       "rejection_reasons": {
-        "off_topic": 11,
-        "no_concrete_signal": 19
+        "no_concrete_signal": 14,
+        "personal_help_or_chatter": 3,
+        "off_topic": 7
       },
       "rejected_examples": [
         {
-          "title": "Was there ever an explanation for that creepy Opus 5.0 glitch a few months ago?",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Xinhua News Agency introduces two UBtech U1s as news anchors",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Project to be not visible when I login to another device",
-          "reason": "off_topic"
-        },
-        {
-          "title": "A discussion with ChatGPT",
+          "title": "Claude refused to remove MY OWN company logo for \"copyright\"... then removed it anyway when I asked for a blue background",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Docker SBX native macOS app",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Can anyone tell me what does /impeccable skill do?",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Why do people hate ai data centers?",
+          "title": "Any Open Src Ai Img Gen? NO ETHICS",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "What a private AI chat can and can't hide",
+          "title": "Help question about subscriptions?",
+          "reason": "personal_help_or_chatter"
+        },
+        {
+          "title": "Tried the weight editing thing from the MIT post: Some cool applications, but nothing crazy",
+          "reason": "off_topic"
+        },
+        {
+          "title": "What if humanity creates an autonomous machine civilization simply by giving AI a task that outlives us?",
           "reason": "no_concrete_signal"
+        },
+        {
+          "title": "iv been using a feature on this oss tool agav and wondered if there is a clean way to also steer a langgraph agent mid-run without interrupt() at every step ?",
+          "reason": "off_topic"
+        },
+        {
+          "title": "68% of Americans support an AI pause and a ban on superintelligence",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "ICLR reviewer rubric[D]",
+          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-06T06:57:05+00:00"
+      "latest_published_at": "2026-11-06T19:33:56+00:00"
     },
     "youtube": {
-      "status": "search_fallback",
-      "fresh_count": 10,
+      "status": "direct",
+      "fresh_count": 14,
       "errors": [
         {
-          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
-          "reason": "HTTP 404"
-        },
-        {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCsBjURrPoezykLs9EqgamOA",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
-          "reason": "HTTP 404"
+          "reason": "empty_or_invalid_feed"
         }
       ],
-      "feeds_ok": 1,
-      "checked_at": "2026-11-06T07:08:25.513039+00:00",
-      "rejected_count": 0,
-      "rejection_reasons": {},
-      "rejected_examples": [],
-      "stored_count": 50,
-      "latest_published_at": "2026-11-04T13:00:12+00:00"
+      "feeds_ok": 7,
+      "checked_at": "2026-11-06T19:36:48.023585+00:00",
+      "rejected_count": 15,
+      "rejection_reasons": {
+        "off_topic": 15
+      },
+      "rejected_examples": [
+        {
+          "title": "well this is bad",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The Greatest Business Ever?",
+          "reason": "off_topic"
+        },
+        {
+          "title": "This is Crazy",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Programming Laws Tier list | TheStandup",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Navier-Stokes explained by Mathematician | Lex Fridman",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Infinity explained: It broke mathematics | Lex Fridman",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Optimal dating strategy - mathematician explains | Lex Fridman",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Do numbers exist? - mathematician explains | Lex Fridman",
+          "reason": "off_topic"
+        }
+      ],
+      "stored_count": 51,
+      "latest_published_at": "2026-11-06T07:27:02+00:00"
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 5,
+      "fresh_count": 13,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-06T07:08:25.513039+00:00",
-      "rejected_count": 55,
+      "checked_at": "2026-11-06T19:36:48.023585+00:00",
+      "rejected_count": 47,
       "rejection_reasons": {
-        "no_concrete_signal": 36,
-        "off_topic": 18,
+        "off_topic": 15,
+        "no_concrete_signal": 31,
         "personal_help_or_chatter": 1
       },
       "rejected_examples": [
         {
-          "title": "AI Bicep Heart",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "I use AI to draft software docs",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "OpenAI is quietly renaming data centers 'compute campuses'",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Fractal patterns reveal hidden limits to AI predictability",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Show HN: Mantis – AI agents browse 36% faster than with Playwright MCP",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Delaware plan would let AI agents run businesses",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "AI is changing mathematics – but not how you think",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Canadian hybrid-electric aircraft could reduce northern Ontario medevac times",
+          "title": "Firecracker VM Escape: PwnEscape Part 2",
           "reason": "off_topic"
+        },
+        {
+          "title": "Nodecode",
+          "reason": "off_topic"
+        },
+        {
+          "title": "A new protocol and software suite for AIs",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "AI Could Do My First Job. Not My Last",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "So Should We Slow Down AI?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "AI Made Me Look Foolish. Then I Learned",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Auria Chain – SDK for AI agents to pay AI agents over HTTP (x402)",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "CLI proxy that reduces LLM token consumption by 60-90% on dev commands",
+          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-06T05:52:54+00:00"
+      "latest_published_at": "2026-11-06T19:08:44+00:00"
     },
     "producthunt": {
       "status": "direct",
-      "fresh_count": 20,
+      "fresh_count": 11,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-06T07:08:25.513039+00:00",
-      "rejected_count": 19,
+      "checked_at": "2026-11-06T19:36:48.023585+00:00",
+      "rejected_count": 24,
       "rejection_reasons": {
-        "off_topic": 19
+        "off_topic": 24
       },
       "rejected_examples": [
         {
-          "title": "MCPCore",
+          "title": "Cursor Craft",
           "reason": "off_topic"
         },
         {
-          "title": "Rainbrand",
+          "title": "Magic Wonders",
           "reason": "off_topic"
         },
         {
-          "title": "Paws",
+          "title": "Native Tasks for Obsidian",
           "reason": "off_topic"
         },
         {
-          "title": "Keel",
+          "title": "pwned.coffee",
           "reason": "off_topic"
         },
         {
-          "title": "Nock",
+          "title": "PostMyPace",
           "reason": "off_topic"
         },
         {
-          "title": "Tao Browser",
+          "title": "Openroster",
           "reason": "off_topic"
         },
         {
-          "title": "DearCameo",
+          "title": "Shipnoted",
           "reason": "off_topic"
         },
         {
-          "title": "TextKit",
+          "title": "Moatly",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-05T04:54:13+00:00"
+      "latest_published_at": "2026-11-05T23:40:34+00:00"
     },
     "tech_news": {
       "status": "direct",
-      "fresh_count": 44,
+      "fresh_count": 40,
       "errors": [
         {
           "endpoint": "venturebeat",
@@ -249,26 +258,18 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-06T07:08:25.513039+00:00",
-      "rejected_count": 13,
+      "checked_at": "2026-11-06T19:36:48.023585+00:00",
+      "rejected_count": 17,
       "rejection_reasons": {
-        "off_topic": 13
+        "off_topic": 17
       },
       "rejected_examples": [
         {
-          "title": "Box taps Nvidia’s Nemotron for new agent-first content retrieval system",
+          "title": "How Akai and Moog are embracing vibe-coded mods",
           "reason": "off_topic"
         },
         {
-          "title": "Agility is the first pure humanoid robot company on the stock market. Are you buying?",
-          "reason": "off_topic"
-        },
-        {
-          "title": "After the midterms, a bigger clash over data centers could be coming",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Reddit Founder Says Building Social Media Apps Is ‘Not Cool Anymore’",
+          "title": "Protesters break into Microsoft data center site in Amsterdam",
           "reason": "off_topic"
         },
         {
@@ -286,14 +287,22 @@
         {
           "title": "Binance says hackers who stole billions in crypto spent months planning heist",
           "reason": "off_topic"
+        },
+        {
+          "title": "UEFI bootkit infected fully patched Windows machines. Is Microsoft to blame?",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Code-execution flaw in UEFI firmware affects most servers on planet Earth",
+          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-06T06:28:32+00:00"
+      "latest_published_at": "2026-11-06T18:44:38+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 43,
+      "fresh_count": 46,
       "errors": [
         {
           "endpoint": "jiqizhixin",
@@ -309,47 +318,47 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-11-06T07:08:25.513039+00:00",
-      "rejected_count": 76,
+      "checked_at": "2026-11-06T19:36:48.023585+00:00",
+      "rejected_count": 68,
       "rejection_reasons": {
-        "off_topic": 76
+        "off_topic": 68
       },
       "rejected_examples": [
         {
-          "title": "国防部回应“攻击-21”隐身无人机首次在四川舰成功起降：中国军队新域新质作战力量建设取得的重要阶段性成果",
+          "title": "今日立冬：倏忽秋又尽，今朝恰立冬",
           "reason": "off_topic"
         },
         {
-          "title": "一汽-大众纯电轿车 ID. AURA L5 将于 11 月 16 日开启盲订，有望年内上市",
+          "title": "华为 MatePad Edge 获鸿蒙 7.0.0.111SP16 升级：预置融合开发引擎，支持电脑模式运行 Linux 环境",
           "reason": "off_topic"
         },
         {
-          "title": "荣耀预告：MagicOS 11 新版本今日率先向 Magic V6 等机型推送",
+          "title": "不法分子冒名发送虚假短信谎称车辆涉气囊召回，上汽通用官方发布声明提醒车主提高警惕",
           "reason": "off_topic"
         },
         {
-          "title": "刹车踏板支架断裂风波一个月后，鸿蒙智行尊界汽车官方微博重启 V800 车型宣传",
+          "title": "R 星谈《GTA6》开放世界设计：弱化地图图标引导，鼓励玩家自然发现事件",
           "reason": "off_topic"
         },
         {
-          "title": "微软 Win11 27H2 前瞻：改善 64 位应用性能、更换系统默认壁纸",
+          "title": "《鸣潮》3.8 版本将为索尼 PS5 Pro 带来 PSSR，PC 端开放“资源分类下载”及“资源清理”功能",
           "reason": "off_topic"
         },
         {
-          "title": "汽车历史首次的突破！消息称比亚迪仰望 U9X 超跑创造 503.17km/h 全新极速世界纪录",
+          "title": "微信鸿蒙版 App 发布 8.0.23.35 邀测升级，灰度聊天消息长按问小微等功能",
           "reason": "off_topic"
         },
         {
-          "title": "Win11 工具集 PowerToys 加速“去 Web 化”：微软押注 WinUI 3，已有 17 款工具迁移",
+          "title": "欧盟委员会称 TikTok 通过推荐算法制造信息茧房，要求整改“推荐”页面",
           "reason": "off_topic"
         },
         {
-          "title": "6899 元起，华为擎云 HM650/g 商用办公鸿蒙台式电脑 12 月 1 日开售",
+          "title": "2026 年中国金鸡百花电影节开幕短片《完美婚礼》首播，使用华为 Mate 90 系列拍摄",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-06T06:58:55+00:00"
+      "latest_published_at": "2026-11-06T15:13:11+00:00"
     }
   },
   "quality_rejections": {},
