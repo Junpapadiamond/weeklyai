@@ -1,0 +1,258 @@
+{
+  "cache_key": "b6e06aee738194ee4cf5da2b-f3d67df966b9c33787f37ae0",
+  "product_key": "b6e06aee738194ee4cf5da2b",
+  "fingerprint": "f3d67df966b9c33787f37ae0",
+  "product_id": "164",
+  "product_name": "Comfi",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-06T00:08:45.292378+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "流水自动分类",
+      "en": "Auto-sort your spending"
+    },
+    "scenario": {
+      "zh": "你粘贴原始消费流水，系统按类别归类并给出月度小结示例。",
+      "en": "You paste raw spending lines; it groups them by category with an example note."
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "流水归类示例",
+          "en": "Grouping sample"
+        },
+        "instruction": {
+          "zh": "选一批示例流水，查看归类结果。",
+          "en": "Pick a sample batch to see how lines get grouped."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "日常消费",
+              "en": "Daily spend"
+            },
+            "output": {
+              "zh": "按商户类型逐条归类",
+              "en": "Tags each line by merchant type"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "原始流水",
+                "en": "Raw entries"
+              },
+              "output_label": {
+                "zh": "分类结果",
+                "en": "Categorized"
+              },
+              "input": {
+                "zh": "星巴克 ¥38；滴滴 ¥52；京东 ¥260（示例）",
+                "en": "Starbucks 38; Didi 52; JD 260 (example)"
+              },
+              "output": {
+                "zh": "按类别归类并附一句月度小结（示例）",
+                "en": "Grouped by category with an example monthly note"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "星巴克 ¥38",
+                    "en": "Starbucks 38"
+                  },
+                  "detail": {
+                    "zh": "归为\"餐饮\"",
+                    "en": "Tagged \"Dining\""
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "滴滴 ¥52",
+                    "en": "Didi 52"
+                  },
+                  "detail": {
+                    "zh": "归为\"交通\"",
+                    "en": "Tagged \"Transport\""
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "京东 ¥260",
+                    "en": "JD 260"
+                  },
+                  "detail": {
+                    "zh": "归为\"购物\"",
+                    "en": "Tagged \"Shopping\""
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "订阅与账单",
+              "en": "Subs and bills"
+            },
+            "output": {
+              "zh": "识别重复与订阅类支出",
+              "en": "Spots recurring and subscription spend"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "原始流水",
+                "en": "Raw entries"
+              },
+              "output_label": {
+                "zh": "分类结果",
+                "en": "Categorized"
+              },
+              "input": {
+                "zh": "Netflix ¥68；健身房 ¥199；水电 ¥320（示例）",
+                "en": "Netflix 68; Gym 199; Utilities 320 (example)"
+              },
+              "output": {
+                "zh": "标出固定支出并提示重复项（示例）",
+                "en": "Flags fixed costs and notes repeats (example)"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "Netflix ¥68",
+                    "en": "Netflix 68"
+                  },
+                  "detail": {
+                    "zh": "标记为\"订阅\"",
+                    "en": "Marked \"Subscription\""
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "健身房 ¥199",
+                    "en": "Gym 199"
+                  },
+                  "detail": {
+                    "zh": "标记为\"订阅\"",
+                    "en": "Marked \"Subscription\""
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "水电 ¥320",
+                    "en": "Utilities 320"
+                  },
+                  "detail": {
+                    "zh": "标记为\"账单\"",
+                    "en": "Marked \"Bill\""
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "learn",
+        "widget": "choice",
+        "title": {
+          "zh": "修正后自学习",
+          "en": "Learns from a fix"
+        },
+        "instruction": {
+          "zh": "选一个修正，看系统如何记住规则（示例）。",
+          "en": "Pick a correction to see the remembered rule (example)."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "改为可报销",
+              "en": "Mark billable"
+            },
+            "output": {
+              "zh": "下次自动标记同类商户",
+              "en": "Flags similar merchants next time"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "一次修正",
+                "en": "One correction"
+              },
+              "output_label": {
+                "zh": "生成规则",
+                "en": "New rule"
+              },
+              "input": {
+                "zh": "把\"星巴克 ¥38\"从餐饮改为可报销差旅（示例）",
+                "en": "Move \"Starbucks 38\" from Dining to billable travel (example)"
+              },
+              "output": {
+                "zh": "示例规则：该商户后续默认标记为可报销",
+                "en": "Example rule: tag this merchant as billable by default"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "合并重复订阅",
+              "en": "Merge duplicates"
+            },
+            "output": {
+              "zh": "把同名订阅归为一条",
+              "en": "Groups same-name subscriptions"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "一次修正",
+                "en": "One correction"
+              },
+              "output_label": {
+                "zh": "生成规则",
+                "en": "New rule"
+              },
+              "input": {
+                "zh": "\"Netflix ¥68\"出现两次，标记为重复（示例）",
+                "en": "\"Netflix 68\" appears twice, mark as duplicate (example)"
+              },
+              "output": {
+                "zh": "示例规则：重复商户合并为单条订阅",
+                "en": "Example rule: merge duplicate merchant into one"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例演示归类与自学习；真实准确度未验证，可在 Comfi 官网体验。",
+      "en": "Examples show grouping and learning; real accuracy unverified, try on Comfi's site."
+    },
+    "sources": [
+      {
+        "url": "https://comfi.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techstartups.com/2026/04/27/top-startup-and-tech-funding-news-april-27-2025/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

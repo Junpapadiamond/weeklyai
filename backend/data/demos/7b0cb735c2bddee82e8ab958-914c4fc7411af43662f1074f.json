@@ -1,0 +1,226 @@
+{
+  "cache_key": "7b0cb735c2bddee82e8ab958-914c4fc7411af43662f1074f",
+  "product_key": "7b0cb735c2bddee82e8ab958",
+  "fingerprint": "914c4fc7411af43662f1074f",
+  "product_id": "171",
+  "product_name": "Scout AI",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-06T00:09:22.100636+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "Scout AI 军用车辆训练概念",
+      "en": "Scout AI Military Vehicle Training Concept"
+    },
+    "scenario": {
+      "zh": "探索 Scout AI 如何训练 AI 模型操作自主军用 ATV 执行战场任务",
+      "en": "Explore how Scout AI trains AI models to operate autonomous military ATVs for battlefield missions"
+    },
+    "steps": [
+      {
+        "id": "mission_type",
+        "widget": "choice",
+        "title": {
+          "zh": "选择任务场景",
+          "en": "Choose Mission Scenario"
+        },
+        "instruction": {
+          "zh": "查看不同战场任务的训练重点",
+          "en": "See training focus for different battlefield missions"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "侦察巡逻",
+              "en": "Reconnaissance Patrol"
+            },
+            "output": {
+              "zh": "训练模型识别威胁并规划安全路线",
+              "en": "Train model to identify threats and plan safe routes"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "训练数据输入",
+                "en": "Training Data Input"
+              },
+              "output_label": {
+                "zh": "模型决策输出",
+                "en": "Model Decision Output"
+              },
+              "input": {
+                "zh": "模拟沙漠地形，包含掩体、岩石区域和开阔地带",
+                "en": "Simulated desert terrain with bunkers, rocky areas and open ground"
+              },
+              "output": {
+                "zh": "选择岩石区域作为掩护路线，避开开阔暴露区",
+                "en": "Select rocky area as covered route, avoid exposed open ground"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "地形扫描",
+                    "en": "Terrain Scan"
+                  },
+                  "detail": {
+                    "zh": "识别可通行路径和障碍物",
+                    "en": "Identify passable paths and obstacles"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "威胁评估",
+                    "en": "Threat Assessment"
+                  },
+                  "detail": {
+                    "zh": "分析暴露风险区域",
+                    "en": "Analyze exposure risk zones"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "路径规划",
+                    "en": "Path Planning"
+                  },
+                  "detail": {
+                    "zh": "生成最优隐蔽路线",
+                    "en": "Generate optimal concealed route"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "物资运输",
+              "en": "Supply Transport"
+            },
+            "output": {
+              "zh": "训练载重平衡和崎岖地形导航",
+              "en": "Train load balancing and rough terrain navigation"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "训练场景对比",
+                "en": "Training Scenario Comparison"
+              },
+              "output_label": {
+                "zh": "性能差异",
+                "en": "Performance Difference"
+              },
+              "input": {
+                "zh": "平坦道路与山地崎岖路段，均载重补给",
+                "en": "Flat road versus mountain rugged section, both carrying supplies"
+              },
+              "output": {
+                "zh": "山地路段需降低速度并调整悬挂以保持稳定",
+                "en": "Mountain section requires reduced speed and suspension adjustment for stability"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "training_method",
+        "widget": "choice",
+        "title": {
+          "zh": "训练方式",
+          "en": "Training Method"
+        },
+        "instruction": {
+          "zh": "了解 AI 模型如何学习操作技能",
+          "en": "Understand how AI models learn operational skills"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "模拟环境训练",
+              "en": "Simulated Environment"
+            },
+            "output": {
+              "zh": "虚拟场景中快速迭代学习",
+              "en": "Rapid iterative learning in virtual scenarios"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "模拟参数",
+                "en": "Simulation Parameters"
+              },
+              "output_label": {
+                "zh": "训练进展",
+                "en": "Training Progress"
+              },
+              "input": {
+                "zh": "虚拟加州沙漠基地，包含坡度、沙地和岩石障碍",
+                "en": "Virtual California desert base with slopes, sand and rock obstacles"
+              },
+              "output": {
+                "zh": "完成多次虚拟试运行，碰撞率显著降低",
+                "en": "Completed multiple virtual runs, collision rate significantly reduced"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "实地测试训练",
+              "en": "Field Testing"
+            },
+            "output": {
+              "zh": "真实军事基地环境验证",
+              "en": "Real military base environment validation"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "测试场景",
+                "en": "Test Scenario"
+              },
+              "output_label": {
+                "zh": "模型反应",
+                "en": "Model Response"
+              },
+              "input": {
+                "zh": "ATV 在基地遇到沙尘，能见度下降",
+                "en": "ATV encounters sandstorm at base, visibility drops"
+              },
+              "output": {
+                "zh": "自动切换到激光雷达导航，降低速度继续前进",
+                "en": "Automatically switch to LiDAR navigation, reduce speed and continue forward"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示展示了 Scout AI 训练自主军用车辆的概念性场景；实际性能和作战部署需在 scout.ai 查看官方信息",
+      "en": "Demo showed conceptual scenarios for Scout AI autonomous military vehicle training; actual performance and operational deployment require official information at scout.ai"
+    },
+    "sources": [
+      {
+        "url": "https://scout.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/04/29/coby-adcocks-scout-ai-raises-100-million-to-train-models-for-war-we-visited-its-bootcamp/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

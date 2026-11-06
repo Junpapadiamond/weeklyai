@@ -1,17 +1,17 @@
 {
-  "updated_at": "2026-11-05T20:11:06.188128+00:00",
+  "updated_at": "2026-11-06T00:05:32.497166+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 11,
+      "fresh_count": 8,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-05T20:11:06.188128+00:00",
-      "rejected_count": 18,
+      "checked_at": "2026-11-06T00:05:32.497166+00:00",
+      "rejected_count": 20,
       "rejection_reasons": {
-        "no_concrete_signal": 13,
-        "unvetted_x_author": 5
+        "no_concrete_signal": 9,
+        "unvetted_x_author": 11
       },
       "rejected_examples": [
         {
@@ -31,90 +31,113 @@
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@cursor_ai · New in Cursor design mode: Annotate. Give agents visual prompts: edit elements, draw on the page, and review your designs at different screen sizes",
+          "title": "@runwayml · Introducing Runway App Studio. Build the creative app you wish existed, just by describing it. It generates images, video and audio with Runway’s mo",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@cursor_ai · Cursor can now control your computer. Agents can drive desktop apps like the iOS Simulator to test the features they build.",
+          "title": "@runwayml · Introducing Runway for web design. Connect Runway to @Replit to generate images, video and assets directly inside your project, from first idea to f",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@cursor_ai · Cloud agents can now build interactive canvases. Ask for a dashboard or report while the agent works, then share the finished canvas with your team",
+          "title": "@runwayml · We’ve partnered with Baseten to bring Runway’s video models to enterprises. Deploy Gen-4.5 and Aleph 2.0 in dedicated, single-tenant environments, f",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@cursor_ai · The Agent SDK is now available. Define agents as code, with prompts in Markdown and tools in TypeScript. Deploy them on our hosted infrastructure, ",
+          "title": "@runwayml · If you can describe it, you can run it as a video ad. Runway Ads turns your creative direction into on-brand ads for every platform, then learns wha",
           "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-03T18:56:45.705000+00:00"
+      "latest_published_at": "2026-11-05T17:09:13.798000+00:00"
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 12,
+      "fresh_count": 13,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-05T20:11:06.188128+00:00",
-      "rejected_count": 28,
+      "checked_at": "2026-11-06T00:05:32.497166+00:00",
+      "rejected_count": 27,
       "rejection_reasons": {
-        "no_concrete_signal": 18,
-        "off_topic": 8,
+        "off_topic": 12,
+        "no_concrete_signal": 13,
         "unverified_rumor": 1,
         "personal_help_or_chatter": 1
       },
       "rejected_examples": [
         {
-          "title": "Here comes WokenAI...",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Appreciation post for OrcaCyber-Nano-1.0",
+          "title": "Data Center Siting and Community Opposition",
           "reason": "off_topic"
         },
         {
-          "title": "[ Removed by Reddit ]",
+          "title": "Will giving Claude instructions to be succinct result in Claude omitting important info?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "The Mythology of Unconscious AI",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "This makes zero sense ... supply and demand doesn't work like this ... especially with all of the AI stock valuations crashing out rn ... any guesses as to what",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "How do you use Claude efficiently with other models?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Anyone else disappointed with the GIF functionality?",
           "reason": "off_topic"
         },
         {
-          "title": "New to Claude",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Claude becoming too filtered?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Can you tell me how to make GTA-style images with OpenAI?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "What happens when AI characters live a life they don’t know is a game?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "trainlint: static checks for ML bugs that don't crash (fit-before-split, eval mode, logits losses) [P]",
+          "title": "Anyone knows anything about this Quantized K3.1m Worth it?",
           "reason": "off_topic"
+        },
+        {
+          "title": "Is the AI market correction about technology, politics, or both?",
+          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-05T20:10:09+00:00"
+      "latest_published_at": "2026-11-05T23:39:57+00:00"
     },
     "youtube": {
       "status": "direct",
-      "fresh_count": 13,
+      "fresh_count": 1,
       "errors": [
         {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
-          "reason": "empty_or_invalid_feed"
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
+          "reason": "HTTP 500"
+        },
+        {
+          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
+          "reason": "HTTP 404"
         }
       ],
-      "feeds_ok": 7,
-      "checked_at": "2026-11-05T20:11:06.188128+00:00",
-      "rejected_count": 14,
+      "feeds_ok": 1,
+      "checked_at": "2026-11-06T00:05:32.497166+00:00",
+      "rejected_count": 3,
       "rejection_reasons": {
-        "off_topic": 13,
-        "not_original_item": 1
+        "off_topic": 3
       },
       "rejected_examples": [
         {
@@ -128,26 +151,6 @@
         {
           "title": "The most vulnerable week in internet history...",
           "reason": "off_topic"
-        },
-        {
-          "title": "The Greatest Business Ever?",
-          "reason": "off_topic"
-        },
-        {
-          "title": "This is Crazy",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Programming Laws Tier list | TheStandup",
-          "reason": "off_topic"
-        },
-        {
-          "title": "I CANT DO ON CALL",
-          "reason": "not_original_item"
-        },
-        {
-          "title": "Navier-Stokes explained by Mathematician | Lex Fridman",
-          "reason": "off_topic"
         }
       ],
       "stored_count": 50,
@@ -155,66 +158,78 @@
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 12,
+      "fresh_count": 10,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-05T20:11:06.188128+00:00",
-      "rejected_count": 48,
+      "checked_at": "2026-11-06T00:05:32.497166+00:00",
+      "rejected_count": 50,
       "rejection_reasons": {
-        "no_concrete_signal": 30,
         "off_topic": 17,
+        "no_concrete_signal": 32,
         "personal_help_or_chatter": 1
       },
       "rejected_examples": [
         {
-          "title": "Wipeout for AI stocks sends Wall Street reeling and S&P 500 tumbles more than 3%",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Shares in Musk's SpaceX plunge as tech and AI stocks fall",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Give Your Muse a Voice",
+          "title": "Inkling 2 Small",
           "reason": "off_topic"
         },
         {
-          "title": "Show HN: Lo-fi layered over air traffic control (recorded myself)",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Dept of Justice probes Nvidia over $13B Hugging Face acquisition",
+          "title": "Show HN: Lab Canary – Rating AI labs on whether their staff can speak up",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Is Flying Private Less Safe? How the Rules Differ from Commercial Airlines",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Let AI Debug DynamoDB Without Giving It Your AWS Credentials",
+          "title": "Cuban: Facebook knowingly runs AI deepfake scam ads; docs say $16B fraud revenue",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "The Hackintosh Reborn",
+          "title": "Show HN: Open-world text adventure played through AI agents",
+          "reason": "personal_help_or_chatter"
+        },
+        {
+          "title": "Mid-Air Encounter: F-16 Rams Plane Near Mar-a-Lago [video]",
           "reason": "off_topic"
+        },
+        {
+          "title": "The Sweet Spot: How One Brain and Thousands of Micro-Adapters Could Save Open AI",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Post-AI Computer Science",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "What the F**k Has AI Done?",
+          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-05T19:14:37+00:00"
+      "latest_published_at": "2026-11-05T22:31:32+00:00"
     },
     "producthunt": {
       "status": "direct",
       "fresh_count": 19,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-05T20:11:06.188128+00:00",
-      "rejected_count": 19,
+      "checked_at": "2026-11-06T00:05:32.497166+00:00",
+      "rejected_count": 20,
       "rejection_reasons": {
-        "off_topic": 19
+        "off_topic": 20
       },
       "rejected_examples": [
         {
+          "title": "Paws",
+          "reason": "off_topic"
+        },
+        {
           "title": "FounderMail",
+          "reason": "off_topic"
+        },
+        {
+          "title": "TextKit",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Tao Browser",
           "reason": "off_topic"
         },
         {
@@ -222,27 +237,15 @@
           "reason": "off_topic"
         },
         {
-          "title": "DearCameo",
-          "reason": "off_topic"
-        },
-        {
-          "title": "SafetyClip",
-          "reason": "off_topic"
-        },
-        {
-          "title": "MCPCore",
-          "reason": "off_topic"
-        },
-        {
-          "title": "SnapTiles",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Rainbrand",
+          "title": "Nock",
           "reason": "off_topic"
         },
         {
           "title": "Glasshand",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Rainbrand",
           "reason": "off_topic"
         }
       ],
@@ -251,7 +254,7 @@
     },
     "tech_news": {
       "status": "direct",
-      "fresh_count": 42,
+      "fresh_count": 44,
       "errors": [
         {
           "endpoint": "venturebeat",
@@ -259,16 +262,12 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-05T20:11:06.188128+00:00",
-      "rejected_count": 15,
+      "checked_at": "2026-11-06T00:05:32.497166+00:00",
+      "rejected_count": 12,
       "rejection_reasons": {
-        "off_topic": 15
+        "off_topic": 12
       },
       "rejected_examples": [
-        {
-          "title": "17 better ways Elon Musk could have wasted $446 million",
-          "reason": "off_topic"
-        },
         {
           "title": "Box taps Nvidia’s Nemotron for new agent-first content retrieval system",
           "reason": "off_topic"
@@ -282,35 +281,39 @@
           "reason": "off_topic"
         },
         {
-          "title": "Reddit Founder Says Building Social Media Apps Is ‘Not Cool Anymore’",
+          "title": "A new bill could change how the US builds energy infrastructure",
           "reason": "off_topic"
         },
         {
-          "title": "The Results Are In: Voters Hate Data Centers",
+          "title": "Roundtables: Inside the Quest for Cognitive Immortality",
+          "reason": "off_topic"
+        },
+        {
+          "title": "What’s next for US energy policy after the midterm elections?",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Reddit Founder Says Building Social Media Apps Is ‘Not Cool Anymore’",
           "reason": "off_topic"
         },
         {
           "title": "Hackers exploited iOS and Android flaws to infect phones",
           "reason": "off_topic"
-        },
-        {
-          "title": "VMware releases vSphere Express for virtualization on up to 128 cores",
-          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-05T19:48:28+00:00"
+      "latest_published_at": "2026-11-05T22:40:55+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 45,
+      "fresh_count": 48,
       "errors": [
         {
-          "endpoint": "36kr",
+          "endpoint": "jiqizhixin",
           "reason": "empty_or_invalid_feed"
         },
         {
-          "endpoint": "jiqizhixin",
+          "endpoint": "36kr",
           "reason": "empty_or_invalid_feed"
         },
         {
@@ -319,49 +322,51 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-11-05T20:11:06.188128+00:00",
-      "rejected_count": 69,
+      "checked_at": "2026-11-06T00:05:32.497166+00:00",
+      "rejected_count": 67,
       "rejection_reasons": {
-        "off_topic": 69
+        "off_topic": 67
       },
       "rejected_examples": [
         {
-          "title": "我国成功发射遥感五十一号 07-09 星，主要用于科学试验、电磁环境探测等领域",
+          "title": "全球超 320 万青少年洞察：2025 年 24.9% 过去一周每天中高强度运动不足 60 分钟",
           "reason": "off_topic"
         },
         {
-          "title": "Epic 喜加一：《浮游世界》游戏免费领取",
+          "title": "微软 Office 365 A1 退役：2028 年起取消 100TB 教育版基础存储，免费 A0 学生版不含 Teams 与邮箱",
           "reason": "off_topic"
         },
         {
-          "title": "12499 元 / 15999 元起：苹果 M6 芯片款 iMac、MacBook Pro 开售",
+          "title": "IT早报 1106：华为鸿蒙终端用户数本月将突破 1 亿大关；奥迪研发高管抨击速成车；华为鸿蒙电脑官宣年内支持侧载；2027 年放假安排出炉...",
           "reason": "off_topic"
         },
         {
-          "title": "5499 元起：苹果 iPad mini 8 开售，A20 Pro 芯片（国补后到手价约 4999 元起）",
+          "title": "前 G2《英雄联盟》主教练 Perkz 千字长文引爆舆论，数小时内被解雇",
           "reason": "off_topic"
         },
         {
-          "title": "22999 元起：苹果首款触屏 MacBook Pro 正式开售，可选 M5 Pro/M5 Max 芯片",
+          "title": "苹果推出升级版“全球旅行转换器套件”：299 元，兼容 70W 和 140W 电源适配器",
           "reason": "off_topic"
         },
         {
-          "title": "荣耀 700 系列手机盲盒周边曝光：背屏设计确认，消息称标准版搭载骁龙 8s Gen4 处理器",
+          "title": "苹果首款智能家居中枢 HomeView 确认配备 8GB 内存",
           "reason": "off_topic"
         },
         {
-          "title": "One UI 9 系统更新导致部分 Galaxy 手机无法连接 Wi-Fi 或识别 SIM 卡，三星暂未回应",
+          "title": "海盗船 2026 财年前三季度报归母净利润 1907 万美元，同比扭亏为盈",
           "reason": "off_topic"
         },
         {
-          "title": "英伟达庆祝首款支持 CUDA 显卡 GeForce 8800 GTX 诞生 20 周年，同步推出纪念游戏带 PC 玩家重返 2006 年",
+          "title": "微软 Xbox 云游戏支持手机变身虚拟手柄：支持 iOS 和安卓，无需下载应用",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-05T15:11:49+00:00"
+      "latest_published_at": "2026-11-06T00:00:05+00:00"
     }
   },
-  "quality_rejections": {},
+  "quality_rejections": {
+    "duplicate_headline": 1
+  },
   "quality_complete": true
 }

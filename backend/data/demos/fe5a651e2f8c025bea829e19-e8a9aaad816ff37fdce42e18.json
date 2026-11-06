@@ -1,0 +1,301 @@
+{
+  "cache_key": "fe5a651e2f8c025bea829e19-e8a9aaad816ff37fdce42e18",
+  "product_key": "fe5a651e2f8c025bea829e19",
+  "fingerprint": "e8a9aaad816ff37fdce42e18",
+  "product_id": "p_816c55bdb64aa19e",
+  "product_name": "Discovered Materials",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-06T00:07:01.066939+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "探索材料发现思路",
+      "en": "Explore Material Discovery Approach"
+    },
+    "scenario": {
+      "zh": "通过虚构案例了解从性能目标到结构方向的推导,实际研发在供应商平台进行",
+      "en": "Understand through fictional examples how performance targets lead to structural directions; actual R&D on vendor platform"
+    },
+    "steps": [
+      {
+        "id": "target",
+        "widget": "choice",
+        "title": {
+          "zh": "设定目标特性",
+          "en": "Set Target Properties"
+        },
+        "instruction": {
+          "zh": "选择一个虚构的材料需求",
+          "en": "Choose a fictional material requirement"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "低介电互连层",
+              "en": "Low-k Interconnect Layer"
+            },
+            "output": {
+              "zh": "寻找减少信号延迟的绝缘材料",
+              "en": "Seek insulating material reducing signal delay"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "目标要求",
+                "en": "Target Requirements"
+              },
+              "output_label": {
+                "zh": "方向建议",
+                "en": "Direction Suggestion"
+              },
+              "input": {
+                "zh": "介电常数需低于常规二氧化硅,耐高温,与现有工艺兼容",
+                "en": "Dielectric constant below conventional silicon dioxide, heat-resistant, process-compatible"
+              },
+              "output": {
+                "zh": "探索多孔硅基结构或有机硅骨架,关注低配位拓扑",
+                "en": "Explore porous silicon-based structures or organosilicon frameworks, focus on low-coordination topology"
+              },
+              "emphasis": {
+                "zh": "介电常数需低于常规二氧化硅",
+                "en": "Dielectric constant below conventional silicon dioxide"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "高导热封装",
+              "en": "High Thermal Conductivity Package"
+            },
+            "output": {
+              "zh": "寻找快速散热的绝缘材料",
+              "en": "Seek insulating material for rapid heat dissipation"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "目标要求",
+                "en": "Target Requirements"
+              },
+              "output_label": {
+                "zh": "方向建议",
+                "en": "Direction Suggestion"
+              },
+              "input": {
+                "zh": "导热能力远超常规陶瓷,电绝缘,机械稳定",
+                "en": "Thermal conductivity far exceeding conventional ceramics, electrically insulating, mechanically stable"
+              },
+              "output": {
+                "zh": "考虑氮化硼复合体系或碳基晶格,优先高声子传输路径",
+                "en": "Consider boron nitride composite systems or carbon-based lattices, prioritize high phonon transport paths"
+              },
+              "emphasis": {
+                "zh": "导热能力远超常规陶瓷",
+                "en": "Thermal conductivity far exceeding conventional ceramics"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "structure",
+        "widget": "choice",
+        "title": {
+          "zh": "查看候选结构",
+          "en": "View Candidate Structures"
+        },
+        "instruction": {
+          "zh": "虚构的结构方向示例",
+          "en": "Fictional structural direction examples"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "立方骨架方案",
+              "en": "Cubic Framework Proposal"
+            },
+            "output": {
+              "zh": "对称性高,理论上各向同性",
+              "en": "High symmetry, theoretically isotropic"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "结构描述",
+                "en": "Structure Description"
+              },
+              "output_label": {
+                "zh": "虚构特征",
+                "en": "Fictional Characteristics"
+              },
+              "input": {
+                "zh": "硅碳氧三元骨架,立方对称,内部孔道",
+                "en": "Silicon-carbon-oxygen framework, cubic symmetry, internal channels"
+              },
+              "output": {
+                "zh": "理论计算显示目标范围内特性,合成路径待验证",
+                "en": "Theoretical calculations show properties in target range, synthesis path to be verified"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "对称类型",
+                    "en": "Symmetry Type"
+                  },
+                  "detail": {
+                    "zh": "立方晶系,高对称空间群",
+                    "en": "Cubic crystal system, high-symmetry space group"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "孔隙特征",
+                    "en": "Porosity Feature"
+                  },
+                  "detail": {
+                    "zh": "均匀分布纳米孔",
+                    "en": "Uniformly distributed nanopores"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "稳定性",
+                    "en": "Stability"
+                  },
+                  "detail": {
+                    "zh": "模拟显示热力学稳定,需实验确认",
+                    "en": "Simulations show thermodynamic stability, needs experimental confirmation"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "层状杂化方案",
+              "en": "Layered Hybrid Proposal"
+            },
+            "output": {
+              "zh": "各向异性明显,加工方向性强",
+              "en": "Strong anisotropy, directional processing"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "结构描述",
+                "en": "Structure Description"
+              },
+              "output_label": {
+                "zh": "虚构特征",
+                "en": "Fictional Characteristics"
+              },
+              "input": {
+                "zh": "有机无机交替层,六方排列,层间弱相互作用",
+                "en": "Alternating organic-inorganic layers, hexagonal arrangement, weak interlayer interactions"
+              },
+              "output": {
+                "zh": "面内特性优异但层间性能需改进,制备工艺较复杂",
+                "en": "Excellent in-plane properties but interlayer performance needs improvement, complex fabrication"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "层间距",
+                    "en": "Interlayer Spacing"
+                  },
+                  "detail": {
+                    "zh": "约一纳米量级",
+                    "en": "Approximately nanometer scale"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "组成",
+                    "en": "Composition"
+                  },
+                  "detail": {
+                    "zh": "硅氧骨架配有机侧链",
+                    "en": "Siloxane backbone with organic side chains"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "next",
+        "widget": "review",
+        "title": {
+          "zh": "下一步考量",
+          "en": "Next Step Considerations"
+        },
+        "instruction": {
+          "zh": "虚构案例结束,实际工作在真实平台",
+          "en": "Fictional example ends; actual work on real platform"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "查看后续路径",
+              "en": "View Follow-up Path"
+            },
+            "output": {
+              "zh": "从理论到实验的必要环节",
+              "en": "Necessary steps from theory to experiment"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "当前阶段",
+                "en": "Current Stage"
+              },
+              "output_label": {
+                "zh": "真实环境操作",
+                "en": "Real-environment Operations"
+              },
+              "input": {
+                "zh": "已有虚构的结构方向和理论预测",
+                "en": "Have fictional structural directions and theoretical predictions"
+              },
+              "output": {
+                "zh": "需在真实平台完成合成路线设计、实验验证、性能测试和工业化评估",
+                "en": "Need to complete synthesis route design, experimental validation, performance testing and industrialization assessment on real platform"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例展示了从需求到结构思路的推导,所有结构和预测为虚构,实际材料发现和验证需访问供应商平台与研究团队协作",
+      "en": "Examples illustrated derivation from requirements to structural concepts; all structures and predictions are fictional; actual material discovery and validation require visiting vendor platform to collaborate with research team"
+    },
+    "sources": [
+      {
+        "url": "https://discoveredmaterials.com",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/11/05/a-yc-startup-is-putting-1m-behind-five-unsolved-materials-science-problems-for-ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

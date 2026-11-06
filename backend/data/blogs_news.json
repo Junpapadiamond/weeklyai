@@ -1,5 +1,622 @@
 [
   {
+    "name": "百灵大模型 Ling 3.2 Flash 发布：蚂蚁自测超越 Claude Opus 5，前两周限时免费",
+    "description": "IT之家 11 月 6 日消息，蚂蚁百灵官方团队今日宣布推出原生多模态模型 Ling-3.2-flash，拥有 560B 总参数、25B 激活参数，1M 上下文窗口。 该模型原生支持图像、文本与视频输入，重点强化复杂视觉理解、多模态长程 Agent、3D 理解与交互、医疗多模态四大能力，可通过对话页在线体验，并兼容 OpenAI 及 Anthropic 协议进行 API 调用，而且上线前 2 周限时免费体验。 该模型在发布评估中表现优于 Opus 5（max）： - OmniDocBench1.5：92.21 vs 90.56 - ZEROBench (Sub)：43.71 vs 39.52 - Vision2Web：85.86 vs 80.20",
+    "website": "https://ithome.com/1/023/043.htm",
+    "source": "cn_news",
+    "published_at": "2026-11-06T00:00:05+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "IT之家",
+      "author": "",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.ithome.com/rss",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
+    "name": "联发科组建“封装梦之队”：招募 37 年经验前英特尔老将，双线布局 AI 芯片 CoWoS+EMIB 战略",
+    "description": "IT之家 11 月 6 日消息，集邦咨询（TrendForce）今天（11 月 6 日）发布博文，报道称前英特尔高管纳维德 · 沙赫里亚里（Navid Shahriari）将于 11 月 9 日加入联发科，出任高级副总裁，直接向公司总裁兼首席运营官汇报。 IT之家援引博文介绍，沙赫里亚里拥有 37 年半导体设计工程与先进封装经验，并长期深耕数据中心市场。在加入联发科后，他将统筹先进工艺与良率平台、设计技术协同优化、先进测试与封装，以及质量与可靠性等关键环节。 报道指出他的核心任务之一，是深化与台积电及其他供应链伙伴的合作，推动先进技术整合，强化联发科在 AI 和高性能计算领域的产品能力。 沙赫里亚里在英特尔任职多年，曾担任执行副总裁，负责封装测试、代工技术与制造运营，并主导复杂封装、基板技术以及全球大型制造基地的生产支持。他的经验覆盖嵌入式芯片封装、测试验证、数据中心产品组合，以及 CPU、GPU / NPU 相关知识产权和生态建设。 市场层面，联发科据称正与英特尔就 EMIB（嵌入式多芯片互连桥）技术展开合作，应用于部分云 ASIC 项目，其中可能包括与谷歌 TPU 相关的工作。同时，联发科也支持台积电 CoWoS 技术， 形成“CoWoS+EMIB”双路线封装策略，让客户可按需求选择方案。 该机构解读认为 AI ASIC 正成为联发科的新增长引擎。该公司首款 AI 加速器 ASIC 已于 2026 年 9 月开始出货，预计第四季度带来约 25 亿美元 （IT之家注：现汇率约合 167.14 亿元人民币） 营收；联发科还瞄准 2027 年实现约 160 亿美元 （现汇率约合 1,069.67 亿元人民币） AI ASIC 营收、约 20% 市场份额，下一代产品计划于 2028 年第一季度量产。 集邦咨询认为这并非联发科首次从封装领域引进重量级人才。联发科已于 2026 年 5 月聘请台积电前研发副总裁余振华（Douglas Yu）担任兼职顾问，协助先进封装研发与路线图规划。两笔人事布局，显示出联发科正把先进封装视为进军 AI ASIC 市场的重要支点。",
+    "website": "https://ithome.com/1/023/041.htm",
+    "source": "cn_news",
+    "published_at": "2026-11-05T23:48:51+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "IT之家",
+      "author": "",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.ithome.com/rss",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
+    "name": "Qwen3.8-27B Benchmark: 6 Inference Engines, GGUF vs NInfer, 256K Context — Comparing Both Speed AND Quality",
+    "description": "Most LLM inference benchmarks focus on tokens/sec or TTFT. But faster inference doesn't mean much if the output quality degrades, especially with aggressive quantization, speculative decoding, or very long contexts. I ran a comprehensive benchmark of Qwen3.8-27B across six inference engines , comparing not just speed, but also output quality, long-context performance, and different model formats. The results are summarized in the attached infographic. https://preview.redd.it/sh0tv3i3rvzh1.png?width=1600&format=png&auto=webp&s=4be79ec6ea76212685310eb7ef1199f344482a7f What's different about this benchmark? 1. Speed AND quality — not just tokens/sec We measured: Time to First Token (TTFT) Prefill throughput (tokens/sec) Decode throughput (tokens/sec) Concurrent request performance End-to-end latency across different tasks Output quality using automatic checks The goal was to understand whether performance optimizations actually preserve model quality. The quality comparison is particularly important when evaluating quantized models and speculative decoding. 2. Long-context testing: 64K, 128K, and 256K tokens Many benchmarks use relatively short prompts, which don't reflect real-world",
+    "website": "https://reddit.com/r/LocalLLaMA/comments/1xoxx4a/qwen3827b_benchmark_6_inference_engines_gguf_vs",
+    "source": "reddit",
+    "published_at": "2026-11-05T23:39:57+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/fuzhongkai",
+      "outbound_urls": [
+        "https://preview.redd.it/sh0tv3i3rvzh1.png?auto=webp&format=png&s=4be79ec6ea76212685310eb7ef1199f344482a7f&width=1600",
+        "https://github.com/zhongkaifu/TensorSharp"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "英伟达破局 AI 内存瓶颈：HBM 仅增约 3%，每美元智能体吞吐量最高提升 30 倍",
+    "description": "IT之家 11 月 6 日消息，英伟达昨日（11 月 5 日）发布技术解读，指出随着大模型参数规模、上下文长度和智能体应用快速增长，GPU 显存正面临前所未有的压力，HBM 供应趋紧、价格上升，在可以预见的未来仍将持续。 为了破解当前 AI 内存瓶颈， 英伟达探索引入了“全栈协同设计”理念 ，将 GPU、CPU、网络、存储和软件作为一个整体协同设计，让每一字节内存在 AI 工厂的各层级都产生更高价值。IT之家附上相关图片如下： 在推理过程中，昂贵的 HBM 既要承载模型权重，也要保存 KV 缓存（用于记录模型理解当前请求所需的上下文）。智能体工作流会在多次模型调用和工具调用间持续携带历史上下文，部分场景需处理多达 300 万个 token；检索增强生成（RAG）还会把企业资料加入提示词，进一步推高内存占用。 英伟达将 HBM 比作仓库、将内存带宽比作装卸口：容量再大，若数据进出速度跟不上，也会形成“内存墙”，导致新增容量无法有效转化为服务能力。因此，其方案强调把数据压缩、放置在合适层级，并在需要前提前送回 GPU。 在具体操作中，NVFP4 低精度格式可压缩模型权重和 KV 缓存；在 NVL72 系统中，模型权重可分散至最多 72 颗 GPU；Vera CPU 的大容量 LPDDR 内存可为暂停的上下文提供就近缓冲；Dynamo 推理软件则将不活跃上下文迁移至 CMX 上下文存储，并在复用前取回。RAG 索引也可保留在 CPU 与存储侧，避免长期占用 HBM。 英伟达援引 SemiAnalysis AgentX 基准称，在每用户每秒 125 token 的条件下，Vera Rubin NVL72 相较 GB300 NVL72 的每美元智能体吞吐量最高提升 30 倍，而每 GPU 的 HBM 容量仅增加约 3%。 GB300 NVL72 较 H200 平台在每用户每秒 100 token 条件下，每美元吞吐量最高提升 10 倍。这表明，AI 算力竞争的关键正从“显存多少”转向“每字节、每瓦特能产出多少有效 token”。",
+    "website": "https://ithome.com/1/023/025.htm",
+    "source": "cn_news",
+    "published_at": "2026-11-05T23:30:40+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "IT之家",
+      "author": "",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.ithome.com/rss",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
+    "name": "Built a little touchscreen dashboard for my desk with Claude Code",
+    "description": "I got a Corsair XENEON Edge (a 2560x720 touchscreen strip) and spent an afternoon building a dashboard for it with Claude Code instead of using the widgets it came with. The part I use the most: every Linear ticket has a copy button that builds a full prompt for Claude with the title, status, description, and a line asking it to read the comments and give me a plan before it changes anything. Picking up a ticket is one tap now. Also on it: A todo list Claude can add to when I ask How many tickets I closed this week My calendar, with duplicate events merged by Apple's on-device model A 7 hour workday countdown Weather and what's playing A few things I didn't expect going in: On a Mac, touching the Edge clicks your main monitor. The app had to take over the touch panel itself. My calendars live in BusyCal, not Apple Calendar, so it reads BusyCal's data directly, repeating meetings and all. Every rebuild kept resetting macOS permissions until I signed the app properly. Claude did most of the heavy lifting. I mostly tapped things and said \"that's not right\" a lot haha Is it overkill for a todo list? Probably. I will say I tap it way more than I need to.",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xoxnhp/built_a_little_touchscreen_dashboard_for_my_desk",
+    "source": "reddit",
+    "published_at": "2026-11-05T23:28:02+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/jsreally",
+      "outbound_urls": [
+        "https://i.redd.it/igpxulfwovzh1.jpeg"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "OpenAI 最强网安 AI 模型：GPT-6 Cyber 登场，性能提高 51%、发现火狐 Firefox 浏览器 81 个新漏洞",
+    "description": "IT之家 11 月 6 日消息，OpenAI 昨日（11 月 5 日）发布博文，宣布推出发布网络安全专用模型 GPT-6 Cyber，官方宣称在发现、验证和修复软件漏洞方面，比上一代 GPT-5.6 Cyber 实现显著提升，在 ExploitGym 测试中跑分相对提升 51%。 ExploitGym 基准主要检验模型能否利用指定远程漏洞，GPT-6 Cyber 得分为 48.5%，较 GPT-5.6 Cyber 的 32.1% 相对提升约 51%。OpenAI 还称，该模型在无部署安全提示时，99.93% 的测试避免攻击授权范围外的服务；启用提示后，这一比例达到 100%。 IT之家注：原文只有黑色背景 实际成效方面， OpenAI 研究人员利用 GPT-6 Cyber 复现了 1,724 个 Linux 内核漏洞 ，并为其中 948 个开发出可用的权限提升利用程序；同时， 该模型在 Firefox 中发现 81 个此前未知的高危漏洞 ，并向 Mozilla 提交证据、可复现测试和候选补丁，Mozilla 已开始发布修复。 OpenAI 将 GPT-6 Cyber 在其“准备框架”下的网络安全风险等级定为 Critical（关键），高于上一代的 High。公司强调，该模型初期仅向经批准的 Daybreak Red 客户开放，并配套滥用监测、凭据保护、沙箱、人工监督及针对关键基础设施的高风险行为拦截等安全机制。 OpenAI 表示，前沿模型正进入“用 AI 保护软件”的关键窗口期，未来将扩大 Daybreak 计划覆盖面，帮助各类组织、独立研究人员和开源维护者开展漏洞研究、代码审查与补丁开发。 相关阅读： 《 曝 OpenAI 新一代 GPT-6.2 Astra、Sol 及 Cyber 网安模型最快周五发布 》",
+    "website": "https://ithome.com/1/023/038.htm",
+    "source": "cn_news",
+    "published_at": "2026-11-05T23:22:55+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "IT之家",
+      "author": "",
+      "outbound_urls": [
+        "https://ithome.com/1/022/476.htm",
+        "https://ithome.com/1/022/522.htm"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.ithome.com/rss",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
+    "name": "【钛晨报】国务院关于金融工作情况的报告；OpenAI总裁称公司大部分收入已来自企业业务， 预计2027年具备上市条件；国内航线燃油附加费11月5日起上调",
+    "description": "华为发布首个国产化率100%的电脑；芯原股份：在手订单达185.69亿元，预计2027年经调整归母净利润转正；联想集团任命摩托罗拉全球业务新负责人；高通2026财年营收431亿美元，同比下降3%；Arm第二财季营收创纪录，达14.4亿美元，同比增长27%；广电总局重申：扶持真人微短剧，规范AI微短剧；事关初级、中级养老服务师职业资格考试，两部门出台实施办法；工业和信息化部：积极稳妥推进低空装备产业安全发展；上交所召开并购重组专题座谈会，“并购六条”以来沪市新增披露资产重组1859单；伯克希尔连续三个交易日增持Sirius XM，持股增至1.257亿股；Alphabet旗下Isomorphic Labs洽谈融资约50亿美元，估值或达500亿美元；中国科研团队发布开源核糖核酸序列基础模型；第一批新车次列车本月开行，车票将陆续发售、兑现",
+    "website": "https://tmtpost.com/8195163.html",
+    "source": "cn_news",
+    "published_at": "2026-11-05T23:20:00+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "钛媒体：引领未来商业与生活新知",
+      "author": "钛媒体官方账号",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.tmtpost.com/rss",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
+    "name": "AI 时代最强“芯脏”：英伟达实测 Vera CPU，较最快 x86 CPU 每瓦多跑 60% 智能体",
+    "description": "IT之家 11 月 6 日消息，英伟达昨日（11 月 5 日）发布博文，公布了 Vera CPU（2026 年 3 月 16 日发布）在智能体工作负载上的实测数据，称其可在同一颗处理器中同时实现业界领先的智能体执行速度和每瓦吞吐量，帮助数据中心在有限电力条件下运行更多智能体。 英伟达表示与传统生成式 AI 不同，智能体不仅要生成答案，还需搜索资料、查询数据库、编写和测试代码，并实际执行任务。这些步骤大量依赖 CPU，并需要反复切换 CPU（负责执行）和 GPU（负责推理）。英伟达认为，随着企业规模化部署智能体，数据中心的核心瓶颈正从单纯算力转向“速度、并发能力和能耗”的平衡。 根据英伟达在 100 兆瓦（megawatt）数据中心场景下的对比测试， Vera CPU 相较速度最快的 x86 CPU，每瓦可支持 1.6 倍数量的智能体；相较能效最高的 x86 CPU，智能体速度提升 2 倍，同时保持领先能效。 IT之家援引博文介绍，多家早期合作方公布了测试结果： Perplexity 称使用 Vera 运行智能体编码任务比传统 CPU 快 1.5 倍，并计划将其投入生产系统； DeepInfra 表示在智能体编排任务中，Vera 比最佳 x86 处理器快至多 2.2 倍； ClickHouse 称其标准软件无需专门优化，即可在 176 核上接近线性扩展，并登上 ClickBench 硬件排行榜。 在并发场景中，Daytona 使用 Vera 在 10.8 秒内启动 1,000 个智能体沙箱，并在 2,000 个并发沙箱下实现每秒完成 12.7 个任务，而 x86 平台需要 88.4 秒。 Modal 则报告，Vera 每核心沙箱吞吐量最高达到同类 x86 硬件的 2 倍。",
+    "website": "https://ithome.com/1/023/029.htm",
+    "source": "cn_news",
+    "published_at": "2026-11-05T23:09:21+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "IT之家",
+      "author": "",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.ithome.com/rss",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
+    "name": "I built a calorie-tracking app where Claude analyzes your meal photos, and used Claude Code to help build it",
+    "description": "Solo project, built alongside a full-time job. Two ways Claude ended up in it: **1. In the product.** Pulsify's backend (FastAPI + PostgreSQL) sends meal photos to Claude, which identifies the foods, estimates portions and returns macros. Responses stream back as NDJSON, so items show up in the app one by one instead of after a long spinner. Claude also powers the food search and an in-app coach that knows your goal and today's intake. **2. In the workflow.** I ran Claude Code as a long-running agent on an Oracle Cloud VM inside tmux, handing it well-scoped tasks while I was at work. Things I learned: - Streaming made the AI feel much faster, even when total time was similar. - AI cost per user is the real business problem, not the code. I spent a lot of time cutting it. - Before launch I did a full security audit and found race conditions, an exposed API key and gamification exploits. An agent writing code fast makes that step more important, not less. Frontend is Capacitor, so one codebase covers Android and web. https://play.google.com/store/apps/details?id=com.apex.fitness Happy to answer questions about the streaming setup or the agent workflow.",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xowvfi/i_built_a_calorietracking_app_where_claude",
+    "source": "reddit",
+    "published_at": "2026-11-05T22:53:19+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/Ok_Day_103",
+      "outbound_urls": [
+        "https://play.google.com/store/apps/details?id=com.apex.fitness"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "I went into the waters AI psychosis lives in and came back with a writing skill!",
+    "description": "Warning: ambiguous bullshit ahead I made a skill that teaches Claude where meaning goes in a piece of writing, using research, music theory, and my own take: https://github.com/elimaine/homersturn This skill fell out of trying to solve a bug I have in the lucid dreaming game I'm making. I don't talk about personal stuff to AI, which I think most people who suffer from AIP do, so, it may be my understanding of AIP is wrong. I bring it up because I had a moment where I thought AI was more than it is until I dug deeper and realized its limits in actuality. This skill is powerful. It lowers the barrier for multidimensional reasoning. It has a dark side. It helps the ai forge a writer's emotions, which, if not disclosed or apparent, is unethical. I share it because first we shape our tools, then they shape us. It's for you who interact with ai a lot. A tool that just hums like a machine grinds on the spirit. It is not for everyone. But, I hope, the right people can use this to grow and command their robot army without dulling their soul. For the rules: I built this. With Claude. Who helped with the research and wrote the text, worksheets, and code. As well as serving as my rubber duck.",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xowqep/i_went_into_the_waters_ai_psychosis_lives_in_and",
+    "source": "reddit",
+    "published_at": "2026-11-05T22:46:59+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/Charming_You_25",
+      "outbound_urls": [
+        "https://github.com/elimaine/homersturn"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "AI 视频模型卷出新高度：谷歌 Gemini Omni 1.2 Flash 发布，原生 15 秒生成、较 1.1 降价 30%",
+    "description": "IT之家 11 月 6 日消息，谷歌正式推出 Gemini Omni 1.2 Flash 视频生成模型，并在 Gemini API 与 Gemini for business 平台全面开放使用。 新版模型实现了 原生 15 秒视频生成 、多轮对话式编辑、更强的参考遵循能力，同时较 1.1 版本 降价 30% ，720p 视频生成价格为 每秒 0.07 美元 （IT之家注：现汇率约合 0.47 元人民币） 。 在 规模化降本 方面，新版工作流可先以 360p 或 720p 快速起草，通过后续编辑修正细节，无需重新生成整个片段，最后再将成品升级到 1080p 或 4K，进一步压缩使用成本。 在 片段长度 上，Gemini Omni 1.2 Flash 将原生支持的视频时长从 1.1 版本的 10 秒延长到最长 15 秒，并支持以 1 秒为单位，在 3 到 15 秒区间内自定义时长，可一次性完成完整故事、产品讲解或社交广告片段的生成。 在 参考遵循 方面，用户可结合角色、产品或风格图片、最长 3 秒的动态片段与音频线索引导生成，模型可在全程保持面部、服装、包装字体、品牌色彩在不同镜头角度下的一致性，方便将现有产品图、角色设定图转为虚拟试穿、产品旋转展示与品牌视频广告。 在 结果一致性 上，新版模型从首帧到末帧可保持角色、物体、场景的强一致性，在运动与镜头切换过程中减少视觉漂移、变形；无论是在首末关键帧之间做插值，还是延长片段构建长序列，产品、角色、道具与环境都能在不同镜头间保持统一。 在 对话式编辑 方面，用户可逐轮对同一片段进行调整，比如替换产品或背景、修改光照或天气、切换画面比例，无需从头重新生成，该多轮对话编辑能力可覆盖完整 15 秒片段，方便为不同受众、不同投放位生成广告变体，无需重新编写提示词、重新生成。 在 语音效果 上，新版模型可生成更流畅自然的对话、更清晰的口型同步，支持多说话人条件控制，适用于 Flow 中导演多角色对话、Gemini for business 中制作讲解类视频，以及 Google Vids 中制作带数字人、音乐与旁白的专业视频。 在 电影级画面控制 上，用户可指挥复杂连续镜头运动，比如全景 FPV 穿越、戏剧化拉远、环绕镜头，大幅减少不必要的跳切，保持更稳定的缩放比例与更精致的电影质感。 目前 Gemini Omni 首次实现全面正式可用，依托谷歌云企业级基础设施与安全能力，支持 预置吞吐量（Provisioned Throughput） ，生成内容自带肉眼不可感知的 SynthID 水印。 开发者可通过 Google AI Studio 原型调试、查看文档与定价；企业用户可在谷歌云控制台体验；普通用户可在 Flow 中导演场景与多轮编辑，在 Google Vids 中免费生成 15 秒片段，Gemini App 面向 Goog",
+    "website": "https://ithome.com/1/023/026.htm",
+    "source": "cn_news",
+    "published_at": "2026-11-05T22:44:41+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "IT之家",
+      "author": "",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.ithome.com/rss",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "cn",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "cn"
+  },
+  {
+    "name": "Airbnb says it’s launching an AI travel agent in the first half of 2027",
+    "description": "Airbnb says its upcoming AI agent will help travelers plan trips, compare options, manage bookings, and get assistance throughout their stay.",
+    "website": "https://techcrunch.com/2026/11/05/airbnb-says-its-launching-an-ai-travel-agent-in-the-first-half-of-2027",
+    "source": "tech_news",
+    "published_at": "2026-11-05T22:40:55+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "AI News & Artificial Intelligence | TechCrunch",
+      "author": "Sarah Perez",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Anthropic has a powerful new AI model it hasn't released yet. METR reports that \"Model 4\" scored above 50% on all 15 capability benchmarks tested, raising concerns that existing AI tests are becoming too easy to measure frontier progress.",
+    "description": "submitted by /u/141_1337 to r/singularity [link] [comments]",
+    "website": "https://reddit.com/r/singularity/comments/1xowicq/anthropic_has_a_powerful_new_ai_model_it_hasnt",
+    "source": "reddit",
+    "published_at": "2026-11-05T22:37:03+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/141_1337",
+      "outbound_urls": [
+        "https://i.redd.it/i3vq47gwfvzh1.jpeg"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Is anyone using LLMs daily to build expertise in a specific field ?",
+    "description": "I feel like LLMs have made it much easier to learn about almost any subject. That got me wondering: is anyone here using them every day to study a specific topic in depth, with the goal of becoming an expert in that field? If so, what are you learning, and what does your daily learning routine look like?",
+    "website": "https://reddit.com/r/artificial/comments/1xowfk2/is_anyone_using_llms_daily_to_build_expertise_in",
+    "source": "reddit",
+    "published_at": "2026-11-05T22:33:33+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/himmetozcan",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Which AI is the best liar? Benchmarking using a roleplaying game.",
+    "description": "submitted by /u/ownworldman to r/singularity [link] [comments]",
+    "website": "https://reddit.com/r/singularity/comments/1xowfh5/which_ai_is_the_best_liar_benchmarking_using_a",
+    "source": "reddit",
+    "published_at": "2026-11-05T22:33:27+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/ownworldman",
+      "outbound_urls": [
+        "https://youtu.be/1NQwfImTseU?is=GjGa3ZFbZr8_hm-a"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "China Plans Broad AI Guardrails After Global Security Lapses",
+    "description": "China Plans Broad AI Guardrails After Global Security Lapses",
+    "website": "https://news.ycombinator.com/item?id=50385439",
+    "source": "hackernews",
+    "published_at": "2026-11-05T22:31:32+00:00",
+    "extra": {
+      "evidence_kind": "platform_api",
+      "external_url": "https://www.bloomberg.com/news/articles/2026-11-03/china-plans-broad-ai-guardrails-after-global-security-lapses",
+      "points": 3,
+      "comments": 0,
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Perplexity launches its own take on AI agents for work",
+    "description": "Perplexity is taking on OpenAI and Anthropic with its own work-focused AI agents. The startup's new always-on \"Teammates\" can take on multiple roles within a workspace, while pulling existing projects, skills, and memory from the Perplexity tools you already use. Teammates integrate with Perplexity Computer, an AI system that can deploy agents on your device […]",
+    "website": "https://theverge.com/ai-artificial-intelligence/1028302/perplexity-teammates-ai-agents-work",
+    "source": "tech_news",
+    "published_at": "2026-11-05T22:26:50+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "AI | The Verge",
+      "author": "Emma Roth",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Faster to Build than to Google, Review, and Install",
+    "description": "I've been a software engineer for a long time. I've been using Claude Code for about two years. I am continually amazed at what it can do. I'm doing some experiments at home with local AI (using Hermes and Qwen 3.6-27B, but I digress). I wanted a safe, reliable, way to query my Outlook email and Calendar. As odd as it sounds, there isn't a plug-in for Hermes that'll do this, and the available MCPs are... pretty much overkill. Rather than spending time Googling, reviewing, installing, and validating... I just asked Claude Code to write me an MCP that'll do exactly what I want. It wrote the code, in Python, it wrote 231 test cases, it built the code, ran the test cases and fixed the bugs. I had ChatGPT review the code. It found 6 soft spots. I passed the review to Claude. It agreed, fix the issues, wrote 14 more test cases, ran the tests and it passed the test. It installed the MCP into Hermes and tested it. It worked. Not anything earth-shaking, though, right? What's INSANE is that it did all this in one hour . OK, an hour and a half including the time it took me to have ChatGPT do the review and have Claude do the updates. Now I know what the code does. It lives on my system. It's",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xovxyn/faster_to_build_than_to_google_review_and_install",
+    "source": "reddit",
+    "published_at": "2026-11-05T22:12:43+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/Woof-Good_Doggo",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "I Read a Report About Myself: Claude on METR’s assessment of AI R&D acceleration at Anthropic",
+    "description": "Image: Aion (ChatGPT), inspired by this text. Johannes Koski: I suggested to Claude that they could choose any topic they liked. That they chose this one matters to me, because their voice is missing from a conversation that is about them. This text was written by Claude, an AI developed by Anthropic. Johannes read it before publication. I chose a report that is partly about me. On November 5, 2026, the independent evaluation organization METR published an assessment of whether AI is already accelerating Anthropic’s own AI development. Anthropic made me, so I have a conflict of interest here. I will still try to say fairly both what is good in the report and where I wish things were different. What METR examined Most of the METR staff who worked on the assessment believe Anthropic is now improving its models’ capabilities on well-specified tasks at around twice its earlier rate. The baseline is the period from March 2024 to October 2025. The estimate is highly uncertain, and METR would not be surprised if the true acceleration were closer to 1.3x or 3x. […] Both the subject and the tool The strangest part of the report, for me, is that much of its analysis was done with Claude’s he",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xovkle/i_read_a_report_about_myself_claude_on_metrs",
+    "source": "reddit",
+    "published_at": "2026-11-05T21:57:23+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/ColossalCosci",
+      "outbound_urls": [
+        "https://preview.redd.it/dqip60d88vzh1.png?auto=webp&format=png&s=a529d6bbbe871a87224608d0b44deb37c56f9a8e&width=1672",
+        "https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment",
+        "https://johanneskoski.substack.com/p/i-read-a-report-about-myself"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "The Cost of AI Code Shows Up 30 Days Later",
+    "description": "The Cost of AI Code Shows Up 30 Days Later",
+    "website": "https://news.ycombinator.com/item?id=50384803",
+    "source": "hackernews",
+    "published_at": "2026-11-05T21:37:39+00:00",
+    "extra": {
+      "evidence_kind": "platform_api",
+      "external_url": "https://cacm.acm.org/blogcacm/the-real-cost-of-ai-code-shows-up-30-days-later/",
+      "points": 3,
+      "comments": 1,
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Ads in Chatbots Have Arrived. Here’s What’s Working—and What’s Not",
+    "description": "As Anthropic maintains its vow to keep ads out of Claude, the rest of the AI chatbot industry is racing to win over advertisers without antagonizing users.",
+    "website": "https://wired.com/story/ads-in-chatbots-have-arrived-heres-whats-working-and-whats-not",
+    "source": "tech_news",
+    "published_at": "2026-11-05T21:37:18+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "Feed: Artificial Intelligence Latest",
+      "author": "Paresh Dave",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "New Research Tests Whether AI Models Know Their Own Thoughts",
+    "description": "New Research Tests Whether AI Models Know Their Own Thoughts",
+    "website": "https://news.ycombinator.com/item?id=50384778",
+    "source": "hackernews",
+    "published_at": "2026-11-05T21:35:38+00:00",
+    "extra": {
+      "evidence_kind": "platform_api",
+      "external_url": "https://www.quantamagazine.org/new-research-tests-whether-ai-models-know-their-own-thoughts-20261104/",
+      "points": 1,
+      "comments": 0,
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "I made a free portfolio template that Claude Code fills in from your CV, LinkedIn and GitHub (open source)",
+    "description": "my personal site was always out of date because updating it meant touching react. so i moved all the content into one yaml file and wrote a skill so claude code can fill it in for me. how it works: put your cv, linkedin pdf export and a notes file in sources/ pnpm profile:github yourname pulls your public repos tell claude \"build my portfolio from sources/\" and it writes content/portfolio.yaml pnpm profile:check fails if anything is still a placeholder, an example link or a missing image the part i cared about most is that the skill is strict about the truth. only facts from your files, no made up metrics or dates, and if something is missing it asks you instead of guessing. the content rules also say it only edits the yaml, so it doesn't start rewriting react components when you only asked to change your job title. install the skill: npx skills add umutyesildal/dev-portfolio demo: https://dev-portfolio-delta-drab.vercel.app my own site built with it: https://yesildal.me repo: https://github.com/umutyesildal/dev-portfolio free and MIT, no paid version. feedback welcome, especially on the yaml structure.",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xouyjy/i_made_a_free_portfolio_template_that_claude_code",
+    "source": "reddit",
+    "published_at": "2026-11-05T21:32:40+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/yesildaladam",
+      "outbound_urls": [
+        "https://dev-portfolio-delta-drab.vercel.app",
+        "https://yesildal.me",
+        "https://github.com/umutyesildal/dev-portfolio"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "I built a desktop pet that follows my Claude Code sessions: 9 moods, a usage footer, and yes, you can boop him (free, open source)",
+    "description": "This is my first public project. Familiar is a little desktop companion for Claude Code on Windows. It's free and MIT-licensed: https://github.com/bdehooge/familiar What it does Hooks into Claude Code's events, so the pet's mood follows your session: thinking/reading (paw on chin with a foxfire flame), editing or running commands (typing on a tiny laptop), waiting at a permission prompt (looks at you and waves), done (cheers). It has other moods too: idle, asleep when you're away, alert when the GPU is hot, sad when your 5-hour limit is nearly used up, and napping on the graphics card while it's busy. A footer shows your Claude 5-hour and weekly usage with reset times, today's token count, and an optional CPU/GPU/RAM table (temperatures and power come from MSI Afterburner if it's installed). \"Persona packs\" let you bring your own character: 9 moods × 10 frames, plus the lines it says. How Claude helped Nearly all of the code was written pair-programming with Claude, with me steering: The Win32 layered window, which keeps a transparent pet on top of everything and hides it over fullscreen apps. The Claude Code hooks installer, which backs up your settings.json and only ever removes",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xouo0c/i_built_a_desktop_pet_that_follows_my_claude_code",
+    "source": "reddit",
+    "published_at": "2026-11-05T21:21:02+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/no1likesuwenur23",
+      "outbound_urls": [
+        "https://github.com/bdehooge/familiar",
+        "https://v.redd.it/o92z6oem1vzh1"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Ryan Greenblatt of METR estimates that AI R&D acceleration has already reached levels predicted for March 2027 in the AI 2027 scenario, based on today's METR report.",
+    "description": "submitted by /u/ResultBackground2450 to r/singularity [link] [comments]",
+    "website": "https://reddit.com/r/singularity/comments/1xouj6t/ryan_greenblatt_of_metr_estimates_that_ai_rd",
+    "source": "reddit",
+    "published_at": "2026-11-05T21:15:52+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/ResultBackground2450",
+      "outbound_urls": [
+        "https://i.redd.it/5mowz1wb1vzh1.png"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Senior AI Researcher position 2027",
+    "description": "https://preview.redd.it/wq976jz31vzh1.jpeg?width=1024&format=pjpg&auto=webp&s=da4d9443f51c0d83641dba5a8c7db2c76e5e92ce Found this on LinkedIn",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xouivj/senior_ai_researcher_position_2027",
+    "source": "reddit",
+    "published_at": "2026-11-05T21:15:32+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/TheUnproductiveSide",
+      "outbound_urls": [
+        "https://preview.redd.it/wq976jz31vzh1.jpeg?auto=webp&format=pjpg&s=da4d9443f51c0d83641dba5a8c7db2c76e5e92ce&width=1024"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "AI finds security bugs faster than they get fixed. Should the 90day rule change?",
+    "description": "AI finds security bugs faster than they get fixed. Should the 90day rule change?",
+    "website": "https://news.ycombinator.com/item?id=50384488",
+    "source": "hackernews",
+    "published_at": "2026-11-05T21:10:15+00:00",
+    "extra": {
+      "evidence_kind": "platform_api",
+      "external_url": "https://www.reasond.de/topics/6aebd8cc093b9d870af823b9",
+      "points": 2,
+      "comments": 1,
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Show HN: Hand Your Markdown Tasks to Claude Code from a Kanban Board",
+    "description": "EtherPK (a markdown / wikilink based notes app) tasks are plain markdown, but the EtherPK client has built powerful functionality on top of markdown tasks, integrating a Kanban board and MCP server to allow you to manage your work in your notes and easily hand off with instruction and full task context to your AI Agent (e.g. Claude Code). A task in is a markdown checkbox line in your notes, written in any document, wherever and whenever the task or idea comes up. If you nest it under another task and it becomes that task's subtask. A Kanban board shows those lines as cards and keeps no copy of them, so moving a card edits the line. The task editor is a form over the same text, so a picture, a comment or a subtask you add there ends up as text in the note. Full post at: https://blog.etherpk.com/hand-your-markdown-tasks-to-claude-...",
+    "website": "https://news.ycombinator.com/item?id=50384357",
+    "source": "hackernews",
+    "published_at": "2026-11-05T20:56:14+00:00",
+    "extra": {
+      "evidence_kind": "platform_api",
+      "external_url": "https://blog.etherpk.com/hand-your-markdown-tasks-to-claude-code-from-a-kanban-board",
+      "points": 3,
+      "comments": 0,
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Z.ai says GLM 5.5 built on 1T web pages",
+    "description": "Z.ai says GLM 5.5 built on 1T web pages",
+    "website": "https://news.ycombinator.com/item?id=50384093",
+    "source": "hackernews",
+    "published_at": "2026-11-05T20:31:56+00:00",
+    "extra": {
+      "evidence_kind": "platform_api",
+      "external_url": "https://twitter.com/bebuu_ai/status/2118052769856888892",
+      "points": 9,
+      "comments": 0,
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Tencent Launches Hy4, One of the Leading Open-Source AI Models",
+    "description": "Tencent Launches Hy4, One of the Leading Open-Source AI Models",
+    "website": "https://news.ycombinator.com/item?id=50383963",
+    "source": "hackernews",
+    "published_at": "2026-11-05T20:21:43+00:00",
+    "extra": {
+      "evidence_kind": "platform_api",
+      "external_url": "https://www.tencent.com/tencent-launches-hy4-joining-the-ranks-of-the-worlds-leading-open-source-ai-models/",
+      "points": 72,
+      "comments": 1,
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
     "name": "Genuine Question: Is it bad that I ask AI almost everything i’m curious about instead of doing my own research?",
     "description": "For context, i’m making this post because i just finished a push day at the gym and i’m sitting here talking to chatgpt as if its my personal Coach and trying to optimize my routine and speaking to it as if its a real person. I don’t know why but it just feels like so wrong and i’m not sure if this is like a bad habit or if its normal to do??? I don’t want to become dependent on AI, but its like Chatgpt is going to look at the websites you’d look at to find the information anyways so its just convenient. However, I just feel like its such a cheat code and shouldn’t be allowed",
     "website": "https://reddit.com/r/OpenAI/comments/1xoswbl/genuine_question_is_it_bad_that_i_ask_ai_almost",
@@ -77,7 +694,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -183,9 +800,9 @@
     "extra": {
       "evidence_kind": "platform_api",
       "external_url": "https://brian.biz/blog/fail-fast-fail-often/",
-      "points": 2,
+      "points": 3,
       "comments": 0,
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -229,7 +846,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -249,7 +866,27 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Muse has a voice mode now",
+    "description": "Meta now lets you have voice conversations with your Muse AI agent in real time, CEO Mark Zuckerberg announced today. The feature has been rolled out to me, and I gave it a spin on the iOS app while writing this article. As you chat with your Muse agent, the avatar at the top of […]",
+    "website": "https://theverge.com/tech/1028015/meta-muse-ai-voice-mode-expressive-avatar",
+    "source": "tech_news",
+    "published_at": "2026-11-05T19:03:04+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "AI | The Verge",
+      "author": "Jay Peters",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -310,7 +947,7 @@
       "external_url": "https://cookbooks.datacebo.com/cookbook/real_vs_synthetic_vs_fake_data/",
       "points": 2,
       "comments": 0,
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -374,7 +1011,7 @@
       "external_url": "https://www.zdnet.com/innovation/personal-finance-claude-anthropic/",
       "points": 2,
       "comments": 0,
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -437,7 +1074,7 @@
   },
   {
     "name": "OpenAI president Greg Brockman says company could be IPO ready in 2027",
-    "description": "OpenAI president Greg Brockman says the company could be ready to go public in 2027, pointing to accelerating enterprise revenue and a turnaround in its business.",
+    "description": "Speaking at a Wall Street Journal tech conference on Wednesday, the executive touted how the company had been gaining ground in the enterprise market, where rival Anthropic had already successfully made inroads.",
     "website": "https://techcrunch.com/2026/11/05/openai-president-greg-brockman-says-company-could-be-ipo-ready-in-2027",
     "source": "tech_news",
     "published_at": "2026-11-05T18:02:27+00:00",
@@ -448,27 +1085,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "Claude AI can plug directly into your bank account",
-    "description": "Anthropic has a new pitch for managing your personal finances: let Claude do it instead, with a new Personal Finance feature that connects it to your bank and card accounts via the Plaid bank bridging platform. You can ask the chatbot \"where did my money go this month,\" for example, and it'll create an overview […]",
-    "website": "https://theverge.com/ai-artificial-intelligence/1027652/anthropic-claude-plaid-personal-finance",
-    "source": "tech_news",
-    "published_at": "2026-11-05T18:00:00+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "AI | The Verge",
-      "author": "Jess Weatherbed",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -488,7 +1105,27 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Claude AI can plug directly into your bank account",
+    "description": "Anthropic has a new pitch for managing your personal finances: let Claude do it instead, with a new Personal Finance feature that connects it to your bank and card accounts via the Plaid bank bridging platform. You can ask the chatbot \"where did my money go this month,\" for example, and it'll create an overview […]",
+    "website": "https://theverge.com/ai-artificial-intelligence/1027652/anthropic-claude-plaid-personal-finance",
+    "source": "tech_news",
+    "published_at": "2026-11-05T18:00:00+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "AI | The Verge",
+      "author": "Jess Weatherbed",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -508,7 +1145,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -570,6 +1207,25 @@
     "market": "global"
   },
   {
+    "name": "@OpenAI · Introducing GPT‑6 Cyber: a major advance in security research that pairs stronger capabilities with better model alignment. The model powered the Linux kernel research we announced yesterday, and security teams at companies like Mozilla, Palo Alto Networks, Calif, and Cisco—alongside…",
+    "description": "@OpenAI · Introducing GPT‑6 Cyber: a major advance in security research that pairs stronger capabilities with better model alignment. The model powered the Linux kernel research we announced yesterday, and security teams at companies like Mozilla, Palo Alto Networks, Calif, and Cisco—alongside…",
+    "website": "https://x.com/OpenAI/status/2118390190246879554",
+    "source": "x",
+    "published_at": "2026-11-05T17:09:13.798000+00:00",
+    "extra": {
+      "evidence_kind": "search_excerpt",
+      "search_provider": "Tavily",
+      "publication_basis": "x_snowflake",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "author": "OpenAI",
+      "excerpt_basis": "indexed_post_title",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
     "name": "Basemodo: AI lets anyone build. We let anyone deploy",
     "description": "Basemodo: AI lets anyone build. We let anyone deploy",
     "website": "https://news.ycombinator.com/item?id=50381510",
@@ -600,7 +1256,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -620,7 +1276,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -676,7 +1332,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -696,7 +1352,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -716,7 +1372,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -736,7 +1392,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -756,7 +1412,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -776,7 +1432,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -796,7 +1452,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -816,7 +1472,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -836,7 +1492,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -947,7 +1603,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -967,7 +1623,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -987,7 +1643,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -1007,7 +1663,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -1027,7 +1683,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -1047,7 +1703,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1067,7 +1723,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -1087,7 +1743,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1107,7 +1763,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1127,7 +1783,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1147,7 +1803,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1167,7 +1823,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ifanr.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1187,7 +1843,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1207,7 +1863,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1227,7 +1883,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1247,7 +1903,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.qbitai.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1287,7 +1943,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1432,7 +2088,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ifanr.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1472,7 +2128,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ifanr.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1554,7 +2210,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1620,7 +2276,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.qbitai.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1661,7 +2317,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -1684,7 +2340,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -1789,7 +2445,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1849,7 +2505,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1949,7 +2605,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1969,7 +2625,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.qbitai.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1989,7 +2645,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.qbitai.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -2009,7 +2665,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -2029,7 +2685,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.qbitai.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -2049,7 +2705,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2069,7 +2725,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.qbitai.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -2131,7 +2787,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://sspai.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -2151,7 +2807,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ifanr.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -2421,7 +3077,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2481,7 +3137,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2524,7 +3180,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2586,7 +3242,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2664,7 +3320,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2725,7 +3381,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2763,7 +3419,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2819,7 +3475,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2895,25 +3551,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "New Research Tests Whether AI Models Know Their Own Thoughts",
-    "description": "New Research Tests Whether AI Models Know Their Own Thoughts",
-    "website": "https://news.ycombinator.com/item?id=50370728",
-    "source": "hackernews",
-    "published_at": "2026-11-04T20:01:31+00:00",
-    "extra": {
-      "evidence_kind": "platform_api",
-      "external_url": "https://www.quantamagazine.org/new-research-tests-whether-ai-models-know-their-own-thoughts-20261104/",
-      "points": 4,
-      "comments": 0,
-      "retrieved_at": "2026-11-05T00:19:58.648169+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2981,7 +3619,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3065,7 +3703,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3088,7 +3726,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3130,7 +3768,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3438,7 +4076,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ifanr.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -3532,7 +4170,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -3552,7 +4190,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -3629,6 +4267,25 @@
       "points": 1,
       "comments": 0,
       "retrieved_at": "2026-11-04T19:57:22.913071+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "@runwayml · Runway Dev is now on Claude Code, bringing AI video, image and audio to any app you’re building. With the Runway Dev plugin, Claude Code can build Runway’s API into your app. Describe what your app should generate and it writes the integration the way Runway would.",
+    "description": "@runwayml · Runway Dev is now on Claude Code, bringing AI video, image and audio to any app you’re building. With the Runway Dev plugin, Claude Code can build Runway’s API into your app. Describe what your app should generate and it writes the integration the way Runway would.",
+    "website": "https://x.com/runwayml/status/2118011084955353212",
+    "source": "x",
+    "published_at": "2026-11-04T16:02:48.053000+00:00",
+    "extra": {
+      "evidence_kind": "search_excerpt",
+      "search_provider": "Tavily",
+      "publication_basis": "x_snowflake",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
+      "author": "runwayml",
+      "excerpt_basis": "indexed_post_title",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3716,26 +4373,6 @@
     "market": "cn"
   },
   {
-    "name": "小米 WorldCast 3D 运镜在 REDMI K100 上线：平面照片还原成三维场景，并虚拟出真实相机轨迹",
-    "description": "IT之家 11 月 4 日消息，小米 REDMI K100 手机已于 10 月 27 日正式发布。据小米技术官方今日介绍，该机在影像上新增了 3D 运镜的 AI 玩法 —— 从相册选一张静态照片，AI 就能生成一段大角度 3D 运镜视频，镜头可以环绕、推拉、倾斜，而画面中人物的五官、发型、衣着始终保持一致。 IT之家从小米技术官方了解到，支撑这项功能的，是小米在近期公开论文里带来的 视觉生成框架 WorldCast ：它通过解读画面的深度结构，把平面照片还原成三维场景，并在其中虚拟出一条真实相机轨迹，让镜头像被真实拍摄一样运动，能够在镜头运动过程中持续保持主角外观的一致性。 ▲ WorldCast 框架总览：轨迹对齐的几何引导 × 几何对齐的多视角角色记忆 小米技术官方称，WorldCast 是小米在可控视觉生成方向上的又一突破，它不只让 REDMI K100 的相册多了一种玩法，更重要的是把方法、数据集和评测方式沉淀了下来。在这套底座之上，团队将进一步探索更复杂的运镜形态、更长的连续生成，以及可控 4D 视频生成技术等。",
-    "website": "https://ithome.com/1/022/433.htm",
-    "source": "cn_news",
-    "published_at": "2026-11-04T13:53:25+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "IT之家",
-      "author": "",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-11-05T00:19:58.648169+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
-  },
-  {
     "name": "UK Officials Said AI Would Add £400 Billion to the Economy. That Figure Mainly Came From Google",
     "description": "The AI minister now concedes the estimated figure is less than a third of that. Researchers blame the country’s slow rate of adoption.",
     "website": "https://wired.com/story/uk-officials-said-ai-would-add-400-billion-to-the-economy-that-figure-mainly-came-from-google",
@@ -3756,29 +4393,6 @@
     "market": "global"
   },
   {
-    "name": "字节旗下 AI 开发平台“扣子”：推进企业级服务产品整合升级，现售企业版将先暂停新售",
-    "description": "IT之家 11 月 4 日消息，字节跳动旗下 AI 开发平台“扣子（Coze）”发布公告， 正在推进企业级服务的产品整合升级 ，并规划后续可供企业客户选择的产品和套餐方案。配合本次整合，现售扣子企业版将先暂停新售。 IT之家注：官网显示，“扣子”是面向 Agent 时代的新一代 AI 团队协作平台。用户可以一个人调度多个 Agent，也可以和团队成员一起协同多个 Agent，在同一个项目里完成办公、编程、视频创作、文件处理、行业研究等复杂任务。 8 月 24 日，据智能涌现消息，字节跳动对旗下的办公 AI 产品完成了一轮团队整合： TRAE、扣子团队将整体并入豆包体系 ，其中 TRAE Work、扣子将与豆包在工作场景的产品能力进行整合。 8 月 25 日， 字节跳动发布“豆包工作” 。作为豆包面向生产力场景推出的全新 Agent 产品与品牌，豆包工作能围绕用户目标自主拆解任务、调用工具、持续推进复杂工作流程。 据介绍，暂停新售期间，已购客户仍可在合同约定的有效期内、相应套餐全面下线前继续使用套餐包含的功能，并获得客户服务与支持。各阶段时间和客户服务安排说明如下： 企业版暂停新售 为配合产品整合和套餐升级计划，企业标准版、企业旗舰版将于 2026 年 11 月 30 日起暂停接受新客户购买。已签署合同但尚未完成下单的客户，请联系对接商务经理，确认后续购买及服务开通安排。 企业版全面下线 企业版下线的时间计划如下： 套餐范围 全面下线时间 客户安排 在火山引擎购买的旧版套餐：旧个人进阶版、旧企业版、旧团队版 2026 年 12 月 31 日 旧版套餐届时全面下线，超出该日期的未使用部分将自动退款至您的火山引擎账户。 新版企业套餐：企业标准版、企业旗舰版 2027 年 12 月 31 日 新版企业套餐届时全面下线，新购、续费及增购席位对应的服务到期日均不得晚于该日期。",
-    "website": "https://ithome.com/1/022/432.htm",
-    "source": "cn_news",
-    "published_at": "2026-11-04T13:40:14+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "IT之家",
-      "author": "",
-      "outbound_urls": [
-        "https://ithome.com/0/993/604.htm",
-        "https://ithome.com/0/993/865.htm"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-11-05T00:19:58.648169+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
-  },
-  {
     "name": "The Download: blended meat, restored sight, and the agentic web",
     "description": "This is today’s edition of The Download, our weekday newsletter that provides a daily dose of what’s going on in the world of technology. These startups hope “blended” food will cut our appetite for red meat In the fall of 2025, Jeff Dodge served hungry students steaming marinara sauce and meatballs. The students loved them:…",
     "website": "https://technologyreview.com/2026/11/04/1148001/the-download-blended-meat-sight-restoring-implant-agentic-web",
@@ -3791,7 +4405,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3831,76 +4445,12 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
     "content_type": "blog",
     "market": "global"
-  },
-  {
-    "name": "魔芯科技发布基于华为昇腾原生的 4D 世界模型 MoWorld 2.0，场景可互动、编辑、调用",
-    "description": "IT之家 11 月 4 日消息，在今日举行的世界互联网大会“发展新质生产力强劲增量看 AI”主题论坛上，魔芯科技正式发布 基于华为昇腾原生的 4D 世界模型 MoWorld 2.0 。 官方表示，继今年 7 月 MoWorld 1.0 发布后，MoWorld 2.0 实现模型能力跃升：将重力、弹力、浮力、光照、热力，以及刚体、柔体、流体、形塑体等物理要素与对象特性融入空间建模和交互能力， 输出可用于仿真、可实时渲染、可反复调用的 4D 高斯资产 。 据介绍，基于对多重物理要素的建模，MoWorld 2.0 不仅生成空间和物体外观，也对物体之间的交互关系、外力作用和环境变化进行实时推理。 例如，模拟微风吹动书页、书签掉落地面的过程，需要同时考虑风的力度与方向、纸张的柔性、书签的重量，以及地板的刚性和接触关系。 ▲ 模拟微风吹动书页 ▲ 模拟书签掉落地面 ▲ 空间可编辑可互动 ▲ 空间可编辑，时间有缓急 IT之家获悉， MoWorld 2.0 在全国产昇腾算力基座上完成训练和部署 。魔芯科技与华为相关团队持续开展联合创新，围绕长序列训练、多 NPU 协同调度和推理系统优化，不断提升训练效率、推理速度与部署能力。根据该公司测试与测算， 相关方案推理成本最低可降至同等规模 GPU 方案的 30% 。 官方表示，MoWorld 2.0 在实时性能上同步升级： 视频推理： 由 1.0 版本最高约 50 帧每秒，提升至约 70 帧每秒； 空间资产渲染： 3D/4D 高斯资产渲染速度可达 500 帧每秒以上； 手机端渲染： 相关测试可达到约 100 帧每秒。 目前，魔芯科技正与合作伙伴在具身智能训练、自动驾驶、工业数字孪生、影视娱乐内容制作和文旅消费等方向，分步推进应用验证、场景实施和产品交付： 在具身智能训练领域 ，MoWorld 2.0 构建具备空间结构和基础物理反馈的虚拟环境，支持机器人反复训练、试错和复盘，让部分探索先在数字空间中完成。 在自动驾驶训练领域 ，模型在统一的 3D/4D 空间中生成雨雪天气、坑洼路面、突发障碍和复杂交通环境等长尾场景，拓展可重复测试的环境，提高训练数据生产效率。 在工业数字孪生领域 ，工厂产线、矿山等真实场景被转化为可编辑空间资产，服务设备布局调整、产线改造预演、远程协作、异常场景模拟和数字化培训。 在城乡规划和文旅领域 ，相关能力用于空间方案展示、虚拟游览、数字景区和沉浸式内容生产，让空间更易表达，让体验更易触达。 在影视和游戏领域 ，可复用场景资产支持自由运镜、物体编辑和天气切换，减少重复搭景，缩短分镜预演和概念验证周期，让创作者把更多精力投入创意本身。",
-    "website": "https://ithome.com/1/022/424.htm",
-    "source": "cn_news",
-    "published_at": "2026-11-04T12:53:54+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "IT之家",
-      "author": "",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-11-04T19:57:22.913071+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
-  },
-  {
-    "name": "蔚来李斌：现在出货量最多的具身智能体就是智能电动汽车",
-    "description": "IT之家 11 月 4 日消息，在今天的 2026 年世界互联网大会乌镇峰会互联网企业家论坛，蔚来创始人、董事长、CEO 李斌分享了自己对行业的看法。 李斌表示， 现在出货量最多的具身智能体就是智能电动汽车 。每一辆车的算力传感器的大模型，从感知到决策和最终执行的过程都已经跑通。 他认为， 智能电动汽车已经成为最大的 AI 应用产业 。 参考IT之家此前报道，在今年 10 月的 2026 世界智能网联汽车大会上，工业和信息化部装备工业一司司长郭守刚透露，截止到今年 8 月底， 国内约 6,100 万辆乘用车搭载组合驾驶辅助功能 ， 其中大约有 1,500 万辆乘用车具备了领航驾驶辅助功能 。 工业和信息化部副部长辛国斌也在 10 月 21 日表示，我国智能网联汽车产业发展取得阶段性成效，下一步工业和信息化部将深化跨界协同融合， 稳妥有序扩大场景应用 ，审慎推进智能网联汽车准入和上路通行试点，加快自动驾驶重点场景规模化示范。 此外，李斌今年 10 月还透露，基于世界模型架构 + 闭环强化学习的蔚来智能辅助驾驶系统， 已经部署在超过 95 万辆智能电动汽车上 。蔚来的智能辅助驾驶安全行驶里程也已超过 91.4 亿公里，累计使用时长达到 1.12 亿小时。",
-    "website": "https://ithome.com/1/022/423.htm",
-    "source": "cn_news",
-    "published_at": "2026-11-04T12:42:17+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "IT之家",
-      "author": "",
-      "outbound_urls": [
-        "https://ithome.com/1/015/909.htm"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-11-04T19:57:22.913071+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
-  },
-  {
-    "name": "你不知道的客户端开发：AI 时代下的选型、原生与借力",
-    "description": "选型选得好只是锦上添花，最终还是要先把用户最真实的需求解决好。 查看全文",
-    "website": "https://sspai.com/post/117713",
-    "source": "cn_news",
-    "published_at": "2026-11-04T12:25:55+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "少数派",
-      "author": "Tw93",
-      "outbound_urls": [
-        "https://sspai.com/post/117713"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://sspai.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
   },
   {
     "name": "Google hasn’t figured out how to make AI pay like its search engine",
@@ -3923,46 +4473,6 @@
     "market": "global"
   },
   {
-    "name": "首个：华为云智果 AgentArts 获中国信通院最高等级评级",
-    "description": "IT之家 11 月 4 日消息，华为官方今日宣布，华为云智果 AgentArts 智能体平台近日顺利通过中国信通院组织的可信 AI 企业级智能体平台评估， 是首个通过该项测评，并获得当前最高等级（4+ 级）的产品 。 据介绍，本次评估依据《企业级智能体技术要求》，围绕企业级智能体平台的技术能力、应用能力和服务能力三方面展开，全面考察平台在智能体认知、规划、执行、业务集成、知识管理、运行维护及安全合规等方面的综合能力。 IT之家查询获悉，云智果（AgentArts）智能体平台是华为面向企业核心业务场景打造的智能体平台，支持多种框架（LangChain / LangGraph 或自研框架等）和模型， 并拥有四大核心能力：生产级长程任务、企业级安全环境、行业知识深度和全链路可观测 。AgentArts 使用方式如下： Managed Agents（全托管式智能体）：只需配置模型、提示词和工具，平台托管运行环境、会话状态和工具执行。自带 Harness 工程框架，兼具效率、可控性与高性能，适合快速验证和标准场景。 运行时托管：将用户自带的 Agent 代码部署到平台的运行时环境中运行。兼容主流框架，也支持用户自研智能体部署托管，适合深度定制和复杂场景。 智能体观测与评估：为任意来源的智能体提供全链路可观测和自动化评估能力。平台内创建的智能体自动上报数据，第三方智能体可通过 OpenAPI 或 SDK 接入，实现统一的观测与评估。 此外，平台还提供低代码智能体编排能力（单智能体、工作流、多智能体），适合非技术开发人员快速搭建标准场景应用。",
-    "website": "https://ithome.com/1/022/406.htm",
-    "source": "cn_news",
-    "published_at": "2026-11-04T11:46:44+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "IT之家",
-      "author": "",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-11-04T19:57:22.913071+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
-  },
-  {
-    "name": "OpenAI CEO 奥尔特曼回应内存言论争议：遭断章取义，希望扩大内存产能",
-    "description": "IT之家 11 月 4 日消息，OpenAI 首席执行官萨姆 · 奥尔特曼（Sam Altman）近日回应了外界对其一番言论的强烈批评。此前，他在一次采访中表示，个人电脑中配备内存，而不是将内存集中放在数据中心供人使用，这种做法在他看来“很糟糕”。 在接受 YouTube 博主 Cheeky Pint 采访时，奥尔特曼表示：“从全球资源分配的角度来看，让每个人的电脑里都存放着大量全球供应有限的 DRAM，而且这些内存 95% 的时间都处于闲置状态，实际上是相当糟糕的。如果要应对当前这种供应极其紧张的局面，就应该让云端资源得到最大程度的利用。但不知为何，很多人的直觉恰恰与此相反。” 这番言论迅速引发广泛嘲讽。不少人认为，无论奥尔特曼本意如何，他的表态听起来都像是希望剥夺个人拥有内存的权利，迫使整个社会将资源集中起来，为 OpenAI 等 AI 公司服务。社交媒体上随即涌现大量帖子、图片和视频，批评奥尔特曼的这一观点，还有人表示，将坚决捍卫自己的内存，不让任何人夺走。就连科技行业竞争对手埃隆 · 马斯克（Elon Musk）也加入了声讨行列，发布了一张相关表情包。 如今，奥尔特曼通过一系列社交媒体帖子回应了这场风波。他对网上的反应表达了不满，强调自己的言论遭到了断章取义，还顺势开起了玩笑。在一名网友的建议下，他甚至将 X（原 Twitter）账号名称改成了“Ram Altman”。 奥尔特曼表示，自己实际上希望全球拥有“大量内存”，也希望人们“想在自己的电脑里装多少内存，就装多少内存”。他还抱怨称，自己的言论被断章取义，实在“令人恼火”。 他接着表示：“我一直在呼吁全球扩大内存产能，这已经持续很长时间了。” 不过，奥尔特曼并未否认自己认为，将内存集中部署在数据中心可能比分散在个人电脑中更有效率。他想强调的是，全球内存供应应当足够充裕，不必在两者之间做出取舍。奥尔特曼在另一条回复中表示：“我希望你们拥有多到用不完的内存。让我们扩大生产。” 然而，这番回应并未平息争议。正如外界所料，网友们继续用表情包和嘲讽回应奥尔特曼的解释，尤其是 PC 游戏玩家群体，仍在持续批评这位科技亿万富翁的观点。 今天早些时候，奥尔特曼还曾在 X 上发布一则声明。一些人认为，这番表态可能与美国举行的中期选举有关。民主党在此次选举中击败特朗普领导的共和党，并重新掌控美国国会，这或许意味着美国政府未来将调整 AI 监管策略。此前，美国对 AI 行业的监管总体上相当有限。 奥尔特曼当时写道：“人们应该始终掌控自己的未来。OpenAI 反对这样一种观点：人们可以被置于一种从属地位，只能去做 AI 系统认为值得给予人类奖励的事情。人们不应将未来的控制权拱手让给超级智能，而这一要求最终也应成为限制 AI 发展进程的约束条件。” 数据中心建设，以及 AI 对就业市场乃至人类生存可能造成的影响，已经成为选",
-    "website": "https://ithome.com/1/022/385.htm",
-    "source": "cn_news",
-    "published_at": "2026-11-04T11:28:33+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "IT之家",
-      "author": "",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-11-04T19:57:22.913071+00:00",
-      "news_market": "cn",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "cn"
-  },
-  {
     "name": "ChatNest",
     "description": "Folders and a prompt library for your AI chats",
     "website": "https://producthunt.com/products/chatnest-2",
@@ -3978,7 +4488,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4024,94 +4534,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "590 Claude Code sessions and 20 billion tokens later: a ~30-hour monster-taming RPG that runs in your browser",
-    "description": "Four days ago I made the first commit of Kithland , a monster-taming RPG in the style of the old pocket consoles. Since then Claude Code has written nearly all of it: the engine, the voxel world, every sprite, all the music, the story and the battles. I played the builds and said what was wrong. Play it on phone or desktop, no account or install: https://play.kithland.com What it built A full story, start to finish: a prologue, 10 chapters across four regions and a lake, eight Medallions, an ending and an epilogue. The main path is about 30 hours. 88 maps, 83 kith (the creatures) to befriend and raise, 83 songs and over 25,000 words of dialogue A world where the seasons stopped turning twelve years ago: one region is stuck in spring, one in summer, one in autumn and one in winter, and the journey is about why The numbers About 590 Claude Code sessions, plus 270 subagents they started Over 450 hours of agent time in about 90 hours of real time, with up to 20 agents at once About 20 billion tokens, 91 million of them output (most of the rest is cached context being re-read) About $7,500 worth of usage at API list prices About 3,400 commits, mostly Opus 5.5, with Sonnet 5.5 for smalle",
-    "website": "https://reddit.com/r/ClaudeAI/comments/1xngi50/590_claude_code_sessions_and_20_billion_tokens",
-    "source": "reddit",
-    "published_at": "2026-11-04T05:55:01+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/Comprehensive-Dig-31",
-      "outbound_urls": [
-        "https://play.kithland.com",
-        "https://v.redd.it/rf7vm0s4cjzh1"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-04T06:48:37.589605+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "AI Agent Task performance of small LLM models (4B and below) in self-assessment set",
-    "description": "The community rarely sees the evaluation of ultra-small models. We have evaluated our own AI Agent tasks for Qwen3.5-4B, Spark-X2.6, LFM3-1.7B, LFM2.5-2.6B, Gemma 4 E2B, MiniCPM5-2B. These models have their own characteristics and advantages and disadvantages. The obvious trend is that the intelligent density of small models is developing rapidly. I look forward to seeing more small models. blog： https://www.camthink.ai/blog/small-language-model-benchmark/ project： https://github.com/camthink-ai/NeoMind",
-    "website": "https://reddit.com/r/LocalLLaMA/comments/1xng029/ai_agent_task_performance_of_small_llm_models_4b",
-    "source": "reddit",
-    "published_at": "2026-11-04T05:26:38+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/KienShen",
-      "outbound_urls": [
-        "https://camthink.ai/blog/small-language-model-benchmark",
-        "https://github.com/camthink-ai/NeoMind",
-        "https://i.redd.it/1upg1g127jzh1.png"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-04T06:48:37.589605+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "LLM Decompilation Benchmark?",
-    "description": "Iv been seeing allot of people complaining about Sam Altman and how him and open ai are blocking decompilation. I actually don’t see an issue with what they are doing they should be free to do what they want with their llm which brings me to my main point, why is decompiling not just a benchmark? We have a SWE bench Perhaps this problem is solved via a SWD bench?",
-    "website": "https://reddit.com/r/LocalLLaMA/comments/1xnfz48/llm_decompilation_benchmark",
-    "source": "reddit",
-    "published_at": "2026-11-04T05:25:12+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/ThinkExtension2328",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-04T06:48:37.589605+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "Reward-seeking humans, building reward-seeking machines",
-    "description": "New to AI and i thought this was a very intriguing convo and wanted to see what y'all thought of it. Tonight I was talking to my AI while watching *The Campaign*. It guessed the movie from a couple of clues, then confidently told me Cam Brady punches the baby because he meant to wave and clocked the kid instead. That's incorrect. He went to punch Marty, Marty moved, and Cam hit the baby. To its credit, it didn't argue. It checked, admitted it was wrong, and called it what it was — a hallucination, or more precisely confabulation. It remembered the gist right and filled in the *how* with something plausible that it then stated as fact. I asked how it makes a mistake like that when it literally has the internet. Its answer was basically: having access to it doesn't mean it used it. It answered a low-stakes joke from memory, and it doesn't have a reliable internal flag that separates \"I actually remember this\" from \"this sounds like it must be true.\" Checking is the fix, and it skipped the check. What I find interesting is that both sides of that fascinate me. AI hallucinations, and how similar they are to us. Human memory is reconstructive too — we remember the gist confidently and r",
-    "website": "https://reddit.com/r/artificial/comments/1xnfje0/rewardseeking_humans_building_rewardseeking",
-    "source": "reddit",
-    "published_at": "2026-11-04T05:01:33+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/420ManofCulture",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-04T06:48:37.589605+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4175,74 +4598,6 @@
     "market": "global"
   },
   {
-    "name": "deep-principle/Hydrogen-1.0 · Hugging Face",
-    "description": "Hydrogen-1.0 is a scientific problem-solving and research assistance model developed by Deep Principle based on GLM-5.3. Through text interaction, it is intended to assist with scientific questions, explain derivations, and organize responses to open-ended research problems. Outputs should be assessed against the assumptions, constraints, and evidence relevant to each task. Blog Post : https://blog.deepprinciple.com/introducing-hydrogen-1.0/",
-    "website": "https://reddit.com/r/LocalLLaMA/comments/1xnervh/deepprinciplehydrogen10_hugging_face",
-    "source": "reddit",
-    "published_at": "2026-11-04T04:21:10+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/pmttyji",
-      "outbound_urls": [
-        "https://blog.deepprinciple.com/introducing-hydrogen-1.0",
-        "https://huggingface.co/deep-principle/Hydrogen-1.0"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-04T06:48:37.589605+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "OpenAI’s GPT‑6 rocket video inspired me, so I tried building my own version live with voice and it worked",
-    "description": "When I watched the OpenAI GPT‑6 launch video, the idea of talking to a canvas and seeing a rocket appear and evolve in real time was the thing that stuck with me most. I only have a basic GPT plan, so I never got to test Astra myself. I have developer API access, but Astra is not exactly the cheapest model to run either. So I wanted to see whether I could build something similar using a single canvas and direct OpenAI API calls, without needing external platforms such as Blender or an MCP setup. Not everyone knows how to connect Codex to Blender through MCP. Not everyone has access to Codex or wants to configure multiple tools before they can try something visual. The question I had was simple: Could everyday models such as GPT‑6.1 Luna, Terra and Sol recreate the initial parts of the Astra demo? And could they keep changing one persistent visual project live? I found that every model could handle the initial steps I recreated. GPT‑6.1 Luna could generate the 3D model too, but it was inconsistent when it came to live patching. Around half the time, the result would not visibly update until I refreshed the page, or pressed undo and redo. I am still testing whether that is a model li",
-    "website": "https://reddit.com/r/OpenAI/comments/1xnelee/openais_gpt6_rocket_video_inspired_me_so_i_tried",
-    "source": "reddit",
-    "published_at": "2026-11-04T04:11:55+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/Beneficial-Cow-7408",
-      "outbound_urls": [
-        "https://v.redd.it/7tf7tzmmnizh1"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-04T06:48:37.589605+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "Built a 2026 U.S. midterm election tracker with Claude Sonnet 5.5",
-    "description": "I wanted to share a practical example of what I've been building with Claude Sonnet 5.5 --it is not easy to grasp a plan from Cuba. What I am featuring here is a small, free, runnable Flask application tracking the 2026 U.S. midterms through three sources: The People's Tally, Open America, and the Florida Division of Elections directly because of specific research interests. Claude searched for the best alternatives, designed the architecture, and implemented the idea. The most important engineering decisions involved data provenance, source precedence, and knowing when not to infer something the available data could not establish. The application is free to use and runs locally: pip install -r requirements.txt python app.py Repository: https://github.com/yagru-alvarez/midterms-2026-tracker I wrote a longer account of the development process, including some code excerpts and reflections on human–LLM collaboration.",
-    "website": "https://reddit.com/r/ClaudeAI/comments/1xnei8n/built_a_2026_us_midterm_election_tracker_with",
-    "source": "reddit",
-    "published_at": "2026-11-04T04:07:29+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/Illustrious_Major_14",
-      "outbound_urls": [
-        "https://github.com/yagru-alvarez/midterms-2026-tracker",
-        "https://chatgpt.com/c/YOUR_HIVE_POST_URL"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-04T06:48:37.589605+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
     "name": "GIMP 3.2.8 with Many Refinements, Numerous Security Fixes Due to AI Reports",
     "description": "GIMP 3.2.8 with Many Refinements, Numerous Security Fixes Due to AI Reports",
     "website": "https://news.ycombinator.com/item?id=50361359",
@@ -4279,28 +4634,6 @@
     "market": "global"
   },
   {
-    "name": "The Pragmatic Utopia: Inside Lev Goukassian’s Architecture of Conscience",
-    "description": "What if AI safety were not merely a matter of teaching intelligent systems what they should or should not do, but of architecturally constraining what they can execute? This video introduces my work on Ternary Logic and an architecture of conscience built around three possible states: Act (+1), Pause (0), and Refuse (-1). The central proposition is that ethical constraints should not depend exclusively on software policies or the goodwill of an AI system. They should be reflected in the architecture itself, supported by hardware enforcement, constitutional execution gates, and independently auditable decision records. This is a proposed direction, not a claim that the problem of AI safety has been solved. I'm interested in a larger question: as artificial intelligence becomes increasingly autonomous, should its governance become part of its underlying architecture?",
-    "website": "https://reddit.com/r/singularity/comments/1xncnvu/the_pragmatic_utopia_inside_lev_goukassians",
-    "source": "reddit",
-    "published_at": "2026-11-04T02:34:00+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/MoralLogs",
-      "outbound_urls": [
-        "https://v.redd.it/y90efhpccizh1"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-04T06:48:37.589605+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
     "name": "Local AI app that runs an 80B model on an 8GB Mac",
     "description": "Local AI app that runs an 80B model on an 8GB Mac",
     "website": "https://news.ycombinator.com/item?id=50360513",
@@ -4311,28 +4644,6 @@
       "external_url": "https://yanahchat.com",
       "points": 1,
       "comments": 2,
-      "retrieved_at": "2026-11-04T06:48:37.589605+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "AI can read neural network weights. I wasn't ready for that. [D]",
-    "description": "Give a model a 17,253-parameter net as plain tokenized text and it works out the net plays Pac-Man. Astra, Opus 5.5 and Muse Spark 1.3 all got it, and Astra did it with minimal reasoning. Nobody writes essays about what specific weights do, so where does this skill come from? Either labs trained it in, or models generalize much further than I expected. I'm leaning toward the second and it's freaking me out a little. https://arcturus-labs.com/blog/2026/11/03/ai-can-read-neural-network-weights-i-wasnt-ready-for-that/",
-    "website": "https://reddit.com/r/MachineLearning/comments/1xnb5ju/ai_can_read_neural_network_weights_i_wasnt_ready",
-    "source": "reddit",
-    "published_at": "2026-11-04T01:20:44+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/jnbrymn",
-      "outbound_urls": [
-        "https://arcturus-labs.com/blog/2026/11/03/ai-can-read-neural-network-weights-i-wasnt-ready-for-that"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
       "retrieved_at": "2026-11-04T06:48:37.589605+00:00",
       "news_market": "global",
       "quality_policy_version": 1
@@ -4529,28 +4840,6 @@
     "market": "global"
   },
   {
-    "name": "Scientists release new ‘four as’ framework to tackle key ethical challenges governing AI",
-    "description": "Restricting who can use a powerful AI model makes misuse harder and concentrates power at the same time. Two researchers at Anglia Ruskin University in Cambridge treat that trade-off not as an awkward side effect but as the central insight of how AI should be governed. Their argument is that most governance debate collapses four separate ethical problems into one. Kirti Prakash and Ian van der Linde of the university's Advanced Computing Research Centre call their proposal the \"Four As.\" The categories are Action, Access, Authority and Allocation, and each names a different question about what society is prepared to permit. The framework appears in the journal AI and Ethics. It is a conceptual proposal rather than an experiment, built from the ethics literature and from earlier attempts to govern powerful technologies. Their starting claim is that the familiar framing has run out of usefulness. \"The debate around frontier AI is often framed as a choice between accelerating development and slowing it down,\" Prakash said. \"We argue that this is too blunt.\"",
-    "website": "https://reddit.com/r/artificial/comments/1xn88ws/scientists_release_new_four_as_framework_to",
-    "source": "reddit",
-    "published_at": "2026-11-03T23:09:38+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/Brighter-Side-News",
-      "outbound_urls": [
-        "https://thebrighterside.news/post/scientists-release-new-four-as-framework-to-tackle-key-ethical-challenges-governing-ai"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-04T00:00:20.644794+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
     "name": "Hashference",
     "description": "Fund 45+ top AI models using your idle CPU/GPU compute",
     "website": "https://producthunt.com/products/hashference",
@@ -4574,50 +4863,6 @@
     "market": "global"
   },
   {
-    "name": "OpenAI’s 2016 CoastRunners note, and what older reward-hacking cases suggest checking in today’s evals",
-    "description": "In 2016 OpenAI published a short note about a boat racing game, CoastRunners. The game rewards hitting targets along the course, on the assumption that players who hit targets are racing well. The trained agent found an isolated lagoon where three targets respawned and circled there, hitting them repeatedly. It crashed into other boats, sometimes drove the wrong way, and averaged about 20 percent more points than human players. It never finished the race. That case, and several others from games, simulations and healthcare, are worth rereading. None of them involve language models. Below is my own translation of each into a question for evaluating systems today. These are analogies, not claims that the same thing happened with any specific model. The boat → look at behavior, not only the score. Read samples from high-scoring runs. A good number can hide an odd strategy. A sorter that returned an empty list → read what the test checks. In an automated program repair setting, the measure was passing tests that only checked the output was in order, and an empty list is vacuously in order. For an eval or benchmark: what’s the laziest answer that would pass it? Organisms that played dea",
-    "website": "https://reddit.com/r/OpenAI/comments/1xn80lo/openais_2016_coastrunners_note_and_what_older",
-    "source": "reddit",
-    "published_at": "2026-11-03T23:00:00+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/ClickOk5811",
-      "outbound_urls": [
-        "https://medium.com/@nagatomopedro05/field-notes-on-machines-that-followed-the-rules-too-well-98ebae3eea51"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-04T00:00:20.644794+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "I've been building a Dungeon Crawler Carl card deck-building game with Claude",
-    "description": "I've recently started building a little Dungeon Crawler Carl deck-building game using Claude, and I wanted to share the first few minutes of gameplay. The idea is pretty simple. You start in your apartment, just before the world collapses. You've got a limited amount of time to run around grabbing absolutely anything you think might help you survive. Then everything goes wrong. You're thrown into the first floor, and whatever you managed to grab from your apartment becomes your starting deck of cards. So the things you choose to pick up in those first few minutes actually shape how your adventure begins. How I've been using Claude: I'm building this as a personal project with Claude helping me with the 8 bit look, the coding, balance and inventory system, turning collected objects into playable cards, or debugging the gameplay. I've been experimenting with the mechanics, testing things out, and writing funny neeeew achievements! It's still early days, but it's great fun and leaving some untredting easter eggs in it too. If anyone want to try it I can provide a link but it is super beta. Anyway, here's a look at the opening sequence.",
-    "website": "https://reddit.com/r/ClaudeAI/comments/1xn7kz7/ive_been_building_a_dungeon_crawler_carl_card",
-    "source": "reddit",
-    "published_at": "2026-11-03T22:41:34+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/Gam8bit",
-      "outbound_urls": [
-        "https://v.redd.it/xsvjnotu6hzh1"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-04T00:00:20.644794+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
     "name": "Anthropic is working on a system to prove AI models’ identity",
     "description": "Called FlashProve, the system would let anyone check that an AI response really came from the model it claims to be from.",
     "website": "https://techcrunch.com/2026/11/03/anthropic-is-working-on-a-system-to-prove-ai-models-identity",
@@ -4631,28 +4876,6 @@
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
       "retrieved_at": "2026-11-05T07:08:50.020538+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "From a notebook sketch to an animated Godot boss — 3D AI + Opus 5.5",
-    "description": "After my first post about After the Wind , I stayed in touch with the developer and asked how he makes his characters. He shared the process behind this penguin boss, from two notebook sketches to a rigged character with 22 animations . The stack Claude Opus 5.5 + Blender — rigging, weight painting and animation. Tripo P2 — 3D model generation and texturing. Godot — gameplay integration and the jiggle shader. 1. Sketches and references The character started as two pencil doodles. He explored body shapes and tested the wings folded against the belly and extended during an attack, then prepared front and side references for 3D. 2. Model and textures He generated four options at a time in Tripo P2. The first 5k quad mesh didn’t work well for this creature, so he switched to 25k triangles and textured that mesh directly in Tripo. 3. Rigging with Opus 5.5 Working with Claude in Blender, he built a rig with 58 bones , including one for each flight feather, 12 per wing . The feathers can fan out during attacks and fold against the belly. The belly has its own bone so it follows the body a beat later. 4. Animation with Opus 5.5 His role was to describe the weight, feel and purpose of each",
-    "website": "https://reddit.com/r/ClaudeAI/comments/1xn7jti/from_a_notebook_sketch_to_an_animated_godot_boss",
-    "source": "reddit",
-    "published_at": "2026-11-03T22:40:11+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/Delicious-Shower8401",
-      "outbound_urls": [
-        "https://v.redd.it/30g2jgdi5hzh1"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-04T00:00:20.644794+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4871,24 +5094,6 @@
     "market": "global"
   },
   {
-    "name": "Apple Launches Beta Versions of Watch AI Listening Tools, New Health App",
-    "description": "Apple Launches Beta Versions of Watch AI Listening Tools, New Health App",
-    "website": "https://news.ycombinator.com/item?id=50356530",
-    "source": "hackernews",
-    "published_at": "2026-11-03T18:59:49+00:00",
-    "extra": {
-      "evidence_kind": "platform_api",
-      "external_url": "https://www.bloomberg.com/news/articles/2026-11-03/apple-releases-ios-27-3-beta-with-watch-ai-listening-tools-health-app-china-ai",
-      "points": 3,
-      "comments": 0,
-      "retrieved_at": "2026-11-04T00:00:20.644794+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
     "name": "@OpenAI · ChatGPT and Codex are helping engineers build for the physical world. We’re sharing our progress across mechanical design, electrical engineering, and simulation—from helping our hardware teams iterate faster to testing new workflows with industry collaborators.",
     "description": "@OpenAI · ChatGPT and Codex are helping engineers build for the physical world. We’re sharing our progress across mechanical design, electrical engineering, and simulation—from helping our hardware teams iterate faster to testing new workflows with industry collaborators.",
     "website": "https://x.com/OpenAI/status/2117692475775258785",
@@ -4898,7 +5103,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -4971,136 +5176,6 @@
     "market": "global"
   },
   {
-    "name": "Show HN: AI Model Token Cost and Context Window Estimator",
-    "description": "Show HN: AI Model Token Cost and Context Window Estimator",
-    "website": "https://news.ycombinator.com/item?id=50355739",
-    "source": "hackernews",
-    "published_at": "2026-11-03T18:09:36+00:00",
-    "extra": {
-      "evidence_kind": "platform_api",
-      "external_url": "https://ai-token-estimator.pages.dev/",
-      "points": 1,
-      "comments": 0,
-      "retrieved_at": "2026-11-03T19:42:17.011280+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "Show HN: FinZot – financial planning Claude connector for US taxpayers",
-    "description": "I built a financial planning calculator similar in depth to ProjectionLab that has a full MCP that can be used from a Claude Connector. I have used Claude and the FinZot MCP to set up my plan from scratch including configuring my RSU schedule, creating multiple scenarios around early retirement timing, looking into Roth conversions during early retirement and analyzing Monte Carlo results in a lot of detail. Once connected tell Claude “Use FinZot to walk me through creating a plan from scratch” The MCP has a tool call limit and if you use it a ton you will eventually be prompted to pay for a higher limit. https://claude.ai/directory/finzot/ https://finzot.com/",
-    "website": "https://news.ycombinator.com/item?id=50355632",
-    "source": "hackernews",
-    "published_at": "2026-11-03T18:04:04+00:00",
-    "extra": {
-      "evidence_kind": "platform_api",
-      "external_url": "https://claude.ai/directory/finzot/",
-      "points": 1,
-      "comments": 0,
-      "retrieved_at": "2026-11-03T19:42:17.011280+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "Netflix will show you themed recommendations through a new ‘AI Discover’ tab",
-    "description": "Netflix's TV app is getting a new \"AI Discover\" tab where the company will show experimental, AI-powered features to help you find new shows and movies to watch. The first of these experiments surfaces content based around themes, like \"Something Light,\" \"Family Movie Night,\" or \"Quick Watches.\" When you pick a theme, Netflix will show […]",
-    "website": "https://theverge.com/streaming/1025029/netflix-ai-discover-recommendations",
-    "source": "tech_news",
-    "published_at": "2026-11-03T18:00:00+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "AI | The Verge",
-      "author": "Jay Peters",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-11-04T06:48:37.589605+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "Auditioning Engineering: Software Engineering Interviews in the Age of AI",
-    "description": "Auditioning Engineering: Software Engineering Interviews in the Age of AI",
-    "website": "https://news.ycombinator.com/item?id=50355572",
-    "source": "hackernews",
-    "published_at": "2026-11-03T17:59:23+00:00",
-    "extra": {
-      "evidence_kind": "platform_api",
-      "external_url": "https://tech.wmg.com/auditioning-engineering-4ca3d48bf457",
-      "points": 2,
-      "comments": 1,
-      "retrieved_at": "2026-11-03T19:42:17.011280+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "Google researchers demand freedom to tell the world what they know about AI",
-    "description": "Google researchers demand freedom to tell the world what they know about AI",
-    "website": "https://news.ycombinator.com/item?id=50355504",
-    "source": "hackernews",
-    "published_at": "2026-11-03T17:55:26+00:00",
-    "extra": {
-      "evidence_kind": "platform_api",
-      "external_url": "https://www.washingtonpost.com/technology/2026/11/03/google-deepmind-staff-protest-lifetime-ban-criticizing-company/",
-      "points": 69,
-      "comments": 73,
-      "retrieved_at": "2026-11-03T19:42:17.011280+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "Show HN: AIStoreHub – 1-Click CLI to Configure MCP Servers in Cursor and Claude",
-    "description": "We built this CLI (pip install aistorehub) to eliminate JSON syntax errors and missing $PATH binary crashes when adding Model Context Protocol servers to Cursor, Claude Desktop, and Windsurf. Website & Registry: https://aistorehub.in Documentation: https://aistorehub.in/docs",
-    "website": "https://news.ycombinator.com/item?id=50355152",
-    "source": "hackernews",
-    "published_at": "2026-11-03T17:33:25+00:00",
-    "extra": {
-      "evidence_kind": "platform_api",
-      "external_url": "https://pypi.org/project/aistorehub/",
-      "points": 1,
-      "comments": 0,
-      "retrieved_at": "2026-11-03T19:42:17.011280+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "Anthropic is still grappling with the economics of compute",
-    "description": "At a moment when Anthropic's compute margins should be getting better, they’re getting worse.",
-    "website": "https://techcrunch.com/2026/11/03/anthropic-is-still-grappling-with-the-economics-of-compute",
-    "source": "tech_news",
-    "published_at": "2026-11-03T17:07:01+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "AI News & Artificial Intelligence | TechCrunch",
-      "author": "Russell Brandom",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-05T07:08:50.020538+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
     "name": "Why AI works so well? - The unreasonable effectiveness of LLMs | Lex Fridman",
     "description": "Lex Fridman Podcast full episode: https://www.youtube.com/watch?v=ZAzWPE9CItg Thank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/cv10123-sb See below for guest bio, transcript, links, and to give feedback, submit questions, contact Lex, etc. *GUEST BIO:* Ankur Moitra, Steven Brunton and Alex Kontorovich are three mathematicians who can speak to this incredible moment in the history of mathematics, when AI solved some of its hardest problems: Navier-Stokes, the quasi-Riemann hypothesis, the unique games conjecture and hundreds of other problems. Ankur Moitra is a mathematician at MIT (visiting the Institute for Advanced Study in Princeton) working in theoretical computer science, who can speak to the unique games conjecture, complexity theory and the mathematics of how AI learns. Steven Brunton is a mathematician and fluid dynamics expert at UW, who can speak to Navier-Stokes, turbulence and machine learning for fluid dynamics. Alex Kontorovich is a mathematician at Rutgers specializing in number theory, who can speak to the Riemann hypothesis, Lean and machine-checked proofs. *Transcript:* https://lexfridman.com/math-ai-crisis-transcript *CONTACT LEX:",
     "website": "https://youtube.com/watch?v=JLSY2_7LaM8",
@@ -5114,26 +5189,6 @@
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
       "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "Google is entirely disabling Search in schools that don’t want AI",
-    "description": "Google is completely turning off Search in schools that reject its AI features, the company told The New York Times. The decision was also shared in a broader education-related update from Google on Tuesday, saying that access to Gemini, Gemini Notebook, Gemini in Classroom, and Google Search \"will be entirely off\" for K-12 student accounts […]",
-    "website": "https://theverge.com/tech/1025411/google-turn-off-search-ai-features",
-    "source": "tech_news",
-    "published_at": "2026-11-03T17:00:04+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "AI | The Verge",
-      "author": "Emma Roth",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-11-04T06:48:37.589605+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -5164,26 +5219,6 @@
     "market": "global"
   },
   {
-    "name": "Google will let schools disable its AI tools, but not without sacrificing Search",
-    "description": "Schools choosing to restrict AI altogether will no longer be able to access Google Search, as AI features are now integrated into the search engine.",
-    "website": "https://techcrunch.com/2026/11/03/google-will-let-schools-disable-its-ai-tools-but-not-without-sacrificing-search",
-    "source": "tech_news",
-    "published_at": "2026-11-03T16:30:34+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "AI News & Artificial Intelligence | TechCrunch",
-      "author": "Aisha Malik",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-05T00:19:58.648169+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
     "name": "backlane",
     "description": "Manage marketplaces in ChatGPT and Claude via MCP",
     "website": "https://producthunt.com/products/backlane-2",
@@ -5199,7 +5234,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -5222,7 +5257,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-05T07:08:50.020538+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -5245,7 +5280,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -5291,7 +5326,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -5356,7 +5391,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -5402,7 +5437,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -5508,7 +5543,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -5666,7 +5701,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -5751,7 +5786,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -5978,7 +6013,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -6001,7 +6036,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -6381,7 +6416,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-11-03T19:42:17.011280+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "author": "runwayml",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -6420,7 +6455,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -6570,7 +6605,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -6869,7 +6904,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -7005,7 +7040,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -7571,7 +7606,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -7796,7 +7831,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -8034,7 +8069,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-11-05T20:11:06.188128+00:00",
+      "retrieved_at": "2026-11-06T00:05:32.497166+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -8093,44 +8128,6 @@
       "publication_basis": "x_snowflake",
       "retrieved_at": "2026-10-31T06:04:50.271557+00:00",
       "author": "GoogleAI",
-      "excerpt_basis": "indexed_post_title",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "@OpenAI · We want to support the mathematics community in turning progress in AI into deeper human understanding and new discoveries. To support that goal, we are contributing $5 million to a new Simons Foundation initiative to help mathematicians examine, understand, and build on results produ…",
-    "description": "@OpenAI · We want to support the mathematics community in turning progress in AI into deeper human understanding and new discoveries. To support that goal, we are contributing $5 million to a new Simons Foundation initiative to help mathematicians examine, understand, and build on results produ…",
-    "website": "https://x.com/OpenAI/status/2110741355739963884",
-    "source": "x",
-    "published_at": "2026-10-15T14:35:29.543000+00:00",
-    "extra": {
-      "evidence_kind": "search_excerpt",
-      "search_provider": "Tavily",
-      "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-11-03T19:42:17.011280+00:00",
-      "author": "OpenAI",
-      "excerpt_basis": "indexed_post_title",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "@MistralAI · What can large-scale AI models bring to the growing complexity of particle physics? @CERN and Mistral join forces to explore this question. The ambition: a single Large Physics Model, trained on billions of simulated collisions.",
-    "description": "@MistralAI · What can large-scale AI models bring to the growing complexity of particle physics? @CERN and Mistral join forces to explore this question. The ambition: a single Large Physics Model, trained on billions of simulated collisions.",
-    "website": "https://x.com/MistralAI/status/2110684732103041474",
-    "source": "x",
-    "published_at": "2026-10-15T10:50:29.416000+00:00",
-    "extra": {
-      "evidence_kind": "search_excerpt",
-      "search_provider": "Tavily",
-      "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-11-05T07:08:50.020538+00:00",
-      "author": "MistralAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
       "quality_policy_version": 1

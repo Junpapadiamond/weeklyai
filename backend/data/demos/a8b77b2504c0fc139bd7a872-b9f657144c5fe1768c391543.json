@@ -1,0 +1,234 @@
+{
+  "cache_key": "a8b77b2504c0fc139bd7a872-b9f657144c5fe1768c391543",
+  "product_key": "a8b77b2504c0fc139bd7a872",
+  "fingerprint": "b9f657144c5fe1768c391543",
+  "product_id": "166",
+  "product_name": "Hebbia",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-06T00:10:30.800529+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "文档问答示例",
+      "en": "Document Q&A demo"
+    },
+    "scenario": {
+      "zh": "你提交文档和问题，平台返回带来源的答案；以下为虚构示例。",
+      "en": "You give docs and a question; it returns cited answers. Examples are fictional."
+    },
+    "steps": [
+      {
+        "id": "setup",
+        "widget": "choice",
+        "title": {
+          "zh": "查什么",
+          "en": "What to extract"
+        },
+        "instruction": {
+          "zh": "选一类文档，看提取出的答案",
+          "en": "Pick a document type, see the extracted answer"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "合同条款",
+              "en": "Contract clause"
+            },
+            "output": {
+              "zh": "从长合同中定位关键条款",
+              "en": "Locate a key clause in a long contract"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "合同片段(示例)",
+                "en": "Contract excerpt (sample)"
+              },
+              "output_label": {
+                "zh": "提取的答案",
+                "en": "Extracted answer"
+              },
+              "input": {
+                "zh": "示例：'若任一方延迟交付超过三十日，另一方可终止本协议。'",
+                "en": "Sample: 'If either party delays delivery beyond thirty days, the other may terminate this agreement.'"
+              },
+              "output": {
+                "zh": "终止触发：交付延迟超过三十日",
+                "en": "Termination trigger: delivery delay beyond thirty days"
+              },
+              "emphasis": {
+                "zh": "延迟交付超过三十日",
+                "en": "delays delivery beyond thirty days"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "财报数据",
+              "en": "Filing figure"
+            },
+            "output": {
+              "zh": "从财报中定位指标来源",
+              "en": "Locate a metric and its source in a filing"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "财报片段(示例)",
+                "en": "Filing excerpt (sample)"
+              },
+              "output_label": {
+                "zh": "提取的答案",
+                "en": "Extracted answer"
+              },
+              "input": {
+                "zh": "示例：'本财年公司营收较上年实现增长，主要来自订阅业务。'",
+                "en": "Sample: 'This fiscal year revenue grew over the prior year, driven by subscriptions.'"
+              },
+              "output": {
+                "zh": "营收同比增长，来源：订阅业务",
+                "en": "Revenue grew year over year; source: subscriptions"
+              },
+              "emphasis": {
+                "zh": "主要来自订阅业务",
+                "en": "driven by subscriptions"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "review",
+        "widget": "choice",
+        "title": {
+          "zh": "怎么看结果",
+          "en": "How to review"
+        },
+        "instruction": {
+          "zh": "选一种呈现，查看跨文档的答案",
+          "en": "Pick a view of answers across documents"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "单条带引用",
+              "en": "Single cited answer"
+            },
+            "output": {
+              "zh": "一个答案配来源片段",
+              "en": "One answer with its source snippet"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "问题(示例)",
+                "en": "Question (sample)"
+              },
+              "output_label": {
+                "zh": "带来源的答案",
+                "en": "Cited answer"
+              },
+              "input": {
+                "zh": "示例问题：'续约通知期是多久？'",
+                "en": "Sample question: 'What is the renewal notice period?'"
+              },
+              "output": {
+                "zh": "答案：续约前须提前六十日通知（示例来源）",
+                "en": "Answer: notice sixty days before renewal (sample source)"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "多文档清单",
+              "en": "Cross-doc list"
+            },
+            "output": {
+              "zh": "同一问题在多份文件的答案",
+              "en": "Same question answered across files"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "问题(示例)",
+                "en": "Question (sample)"
+              },
+              "output_label": {
+                "zh": "各文件答案",
+                "en": "Answers per file"
+              },
+              "input": {
+                "zh": "示例问题：'管辖法律是哪一州？'",
+                "en": "Sample question: 'Which state governs?'"
+              },
+              "output": {
+                "zh": "三份合同的管辖条款对比（示例）",
+                "en": "Governing-law clause across three contracts (sample)"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "合同A(示例)",
+                    "en": "Contract A (sample)"
+                  },
+                  "detail": {
+                    "zh": "管辖法律：特拉华州",
+                    "en": "Governing law: Delaware"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "合同B(示例)",
+                    "en": "Contract B (sample)"
+                  },
+                  "detail": {
+                    "zh": "管辖法律：纽约州",
+                    "en": "Governing law: New York"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "合同C(示例)",
+                    "en": "Contract C (sample)"
+                  },
+                  "detail": {
+                    "zh": "未约定，需人工核对",
+                    "en": "Not specified; needs manual check"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例展示从文档提取带引用的答案；准确性未验证，可在Hebbia官网体验。",
+      "en": "Shows cited answers from docs; accuracy unverified. Try it on Hebbia's site."
+    },
+    "sources": [
+      {
+        "url": "https://www.hebbia.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://unicornscreener.vc/blog/7-rising-ai-startups-positioned-for-unicorn-status-by-2026",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}
