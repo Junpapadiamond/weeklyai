@@ -20,7 +20,7 @@ export function ProductLiveDemo({ product, autoOpen = false, compact = false, em
   const [phase, setPhase] = useState<"checking" | "generating">("checking");
   const [elapsed, setElapsed] = useState(0);
   const panelId = useId();
-  const id = product._id || product.name;
+  const id = product._id || product.id || product.name;
   const prepared = useRef(onPrepared);
   useEffect(() => { prepared.current = onPrepared; }, [onPrepared]);
   useEffect(() => {
@@ -55,7 +55,7 @@ export function ProductLiveDemo({ product, autoOpen = false, compact = false, em
     {!compact ? <div className={"demo-invitation " + (open ? "demo-invitation--open" : "")}><div><h2>{t("产品示例", "Product example")}</h2>{!open ? <p>{t("独立示例 · 非原厂输出", "Independent example · Not vendor output")}</p> : null}</div><button type="button" className="demo-launch" aria-expanded={open} aria-controls={panelId} onClick={() => setOpen(v => !v)}>{open ? t("收起", "Close example") : t("查看示例", "View example")}</button></div> : null}
     {open ? <div id={panelId} aria-busy={busy}>
       {busy ? <div className="experience-loading" role="status"><span className="demo-status-dot" /><h3>{phase === "checking" ? t("正在打开示例", "Opening the example") : t("正在准备示例", "Preparing an example")}</h3><p>{phase === "checking" ? t("正在查找已有示例。", "Checking for a prepared example.") : elapsed >= 45 ? t("比平常慢一些，完成后会自动打开。", "This is taking longer than usual. The example will open here when ready.") : t("首次准备可能需要一到两分钟。", "A new example can take a minute or two.")}</p><small>{t(`已等待 ${elapsed} 秒`, `${elapsed}s elapsed`)}</small>{phase === "generating" ? <Link href="/demo?filter=ready">{t("先看已有示例", "Browse prepared examples")} ↗</Link> : null}<div className="experience-loading-track" /></div> : null}
-      {!busy && data?.experience ? <ExperiencePlayer key={data.experience.cache_key} entry={data.experience} embedded={embedded} productName={product.name} website={product.website} {...resolveProductLogoSources(product)} /> : null}
+      {!busy && data?.experience ? <ExperiencePlayer productId={product._id || product.id} key={data.experience.cache_key} entry={data.experience} embedded={embedded} productName={product.name} website={product.website} {...resolveProductLogoSources(product)} /> : null}
       {!busy && error ? <div className="experience-loading" role="status"><h3>{t(...errorCopy)}</h3><p>{checkResult ? t("重新检查只读取结果，不会重复生成或扣除额度。", "Checking reads the result without starting or charging for another generation.") : t("可以先查看已有演示。生成失败后，本次额度会退回。", "Prepared experiences remain free to replay. Failed generations refund your personal credit.")}</p><div className="experience-actions"><Link href="/demo?filter=ready">{t("查看已有演示", "Browse ready experiences")} ↗</Link>{!limit && error !== "NOT_CONFIGURED" ? <button type="button" onClick={() => { setCheckOnly(checkResult); setAttempt(v => v + 1); }}>{checkResult ? t("重新检查", "Check again") : t("重新生成", "Generate again")}</button> : null}</div></div> : null}
       {data?.quota && !data.experience ? <p className="experience-quota-note">{t("今日剩余生成次数：", "New generations remaining today: ")}<strong>{data.quota.remaining} / {data.quota.limit}</strong> · {t("已有演示不扣额度", "Cached experiences are free")}</p> : null}
     </div> : null}

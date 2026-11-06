@@ -1,5 +1,7 @@
 "use client";
 
+import dynamic from "next/dynamic";
+import { reviewedIds } from "./reviewed/ids";
 import { useId, useRef, useState } from "react";
 import { ArrowRight, ArrowUpRight, Check, Download, ArrowCounterClockwise, Columns } from "@phosphor-icons/react";
 import { useSiteLocale } from "@/components/layout/locale-provider";
@@ -13,8 +15,24 @@ import { downloadDemoText, itemNotes, type ItemDraft } from "@/lib/demo-notes";
 import { ExamplePlan } from "./example-plan";
 import { PresetComparison } from "./preset-comparison";
 
+const ReviewedPlayer = dynamic(() => import("./reviewed/reviewed-player"));
+
+type PlayerProps = { entry: ExperienceEntry; productId?: string; productName: string; website?: string; logoUrl?: string; secondaryLogoUrl?: string; embedded?: boolean };
+
+export function ExperiencePlayer(props: PlayerProps) {
+  const { productId, entry } = props;
+  if (productId && reviewedIds.has(String(productId)) && isTextPlan(entry.spec)) {
+    return <ReviewedPlayer key={productId} {...props} productId={String(productId)} />;
+  }
+  return <PresetPlayer {...props} />;
+}
+
+function isTextPlan(spec: ExperienceEntry["spec"]) {
+  return spec.steps.length > 1 && spec.steps.every(part => !part.app_kind && !part.dial && part.options.every(option => !option.artifact));
+}
+
 /** Prepared presets are visible immediately, never recorded as completed user tasks. */
-export function ExperiencePlayer({ entry, productName, website, logoUrl, secondaryLogoUrl, embedded = false }: { entry: ExperienceEntry; productName: string; website?: string; logoUrl?: string; secondaryLogoUrl?: string; embedded?: boolean }) {
+function PresetPlayer({ entry, productName, website, logoUrl, secondaryLogoUrl, embedded = false }: PlayerProps) {
   const { locale, t } = useSiteLocale();
   const lang = locale === "en-US" ? "en" : "zh";
   const { spec } = entry;
@@ -24,7 +42,7 @@ export function ExperiencePlayer({ entry, productName, website, logoUrl, seconda
   const [revision, setRevision] = useState(0);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [included, setIncluded] = useState<string[]>([]);
-  const canBuildPlan = spec.steps.length > 1 && spec.steps.every(part => !part.app_kind && !part.dial && part.options.every(option => !option.artifact));
+  const canBuildPlan = isTextPlan(spec);
   const [drafts, setDrafts] = useState<Record<string, ItemDraft>>({});
   const [comparing, setComparing] = useState(false);
   const id = useId();

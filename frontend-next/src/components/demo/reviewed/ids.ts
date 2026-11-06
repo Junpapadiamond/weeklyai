@@ -1,0 +1,21 @@
+/** Stable product IDs in the November 2026 text-only cache audit. */
+export const reviewedIds = new Set([
+  "1056", "788", "771", "12",
+  "793", "p_bf3a5bc707e82f13", "p_5112981b460c193a", "p_d8e903f15095c832",
+  "p_6593d2e4daf31cb8", "p_092376f16efde3bb", "p_f1235aa42ae2b834", "p_5624c882190ab1b8",
+  "p_2874b8371f74cb4e", "p_e3c3120213a52416", "3", "7",
+  "p_04dd7e17d62fdfe3", "p_351670ea439517fa", "173", "36",
+  "p_8c739175143f5fc7", "p_26d7ea8ef443ce8a", "p_f9d850fa4bd23a23", "766",
+  "513", "p_afbcdbb77cfb30ac", "p_39ad18810d7dfdbc", "161",
+  "748", "298", "p_d22b01f389ff1fa2", "p_4cf4af5293850191",
+  "131", "801", "p_bd97057d7bb7aa84", "25",
+  "p_7215e78c493d200d", "p_83ab91df1654988d", "p_19b739473d2823ba", "p_98b5f813dc2c0fff",
+  "2", "p_6ad50cb4bf699fc0", "p_7e044d9cd8bafe63", "19",
+  "p_0ae0feabf51fd8c0", "770", "p_136bb9316567279c", "733",
+  "p_906edfdc6b6d7b36", "p_a206b05fac257d83", "p_c5d2b2652ee1cd28", "p_e5735f993bbbf47c",
+  "1088", "p_3fec3b3edcde9e7e", "p_924278a0941d8eae", "792",
+  "p_6cecf733c79e56d9", "p_3b2c605d428162a9", "p_fd51b435bff0cf5c", "p_66b854195d23626c",
+  "110", "p_50ad83c1a36ba17a", "613", "p_8cbeb8707136b534",
+  "p_ca2f35d3c66d098d", "11", "p_1f3483df513b3f78", "p_80f4c5ac1f3f7f2b",
+  "10", "p_975b2754c31cd744", "p_10349dcd577a3c99", "737",
+]);

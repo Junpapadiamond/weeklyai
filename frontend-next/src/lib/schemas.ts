@@ -1,5 +1,12 @@
 import { z } from "zod";
 
+/** Correct two documented identity collisions while older catalog records are still served. */
+export function reviewedWebsite(id: string, website?: string) {
+  if (id === "766" && /^https?:\/\/(www\.)?fini\.ai\/?$/i.test(website ?? "")) return "https://www.usefini.com/";
+  if (id === "p_bd97057d7bb7aa84" && /^https?:\/\/(www\.)?instinctdogtraining\.com\/?$/i.test(website ?? "")) return "https://instinct.com/";
+  return website;
+}
+
 const stringOrNumberToNumber = z.union([z.number(), z.string()]).transform((value) => {
   if (typeof value === "number") return value;
   const parsed = Number(value);
@@ -57,6 +64,7 @@ export const ProductSchema = z
   })
   .transform((product) => ({
     ...product,
+    website: reviewedWebsite(String(product._id ?? product.id), product.website),
     _id: product._id !== undefined ? String(product._id) : undefined,
     id: product.id !== undefined ? String(product.id) : undefined,
   }));
