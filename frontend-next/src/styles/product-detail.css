@@ -28,7 +28,7 @@
 .profile-sidebar { grid-area: facts; }
 .profile-main, .profile-sidebar { min-width: 0; }
 .profile-kicker { display: inline-flex; align-items: center; gap: .5rem; color: var(--text-muted); font-size: .77rem; font-weight: 500; line-height: 1.6; }
-.profile-insight { grid-area: insight; min-width: 0; padding: 1.35rem 1.4rem; border-left: 2px solid var(--primary); background: color-mix(in oklab, var(--primary) 5%, var(--bg)); }
+.profile-insight { grid-area: insight; min-width: 0; padding: 1rem 0; border-top: 2px solid var(--primary); }
 .profile-insight h2 { margin: 0; }
 .profile-insight .profile-kicker { color: var(--primary); }
 .profile-insight p { margin: .85rem 0 0; font-size: .91rem; line-height: 1.95; color: var(--text); overflow-wrap: anywhere; }
@@ -57,34 +57,24 @@
 .profile-example-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .6rem; margin-bottom: .9rem; }
 .profile-example-heading > span:last-child { font-size: .75rem; color: var(--text-muted); }
 .profile-example-heading button { border: 0; padding: .5rem; background: transparent; color: var(--text-soft); font: inherit; font-size: .8rem; min-height: 44px; cursor: pointer; }
-.profile-example .experience-focus { max-width: none; margin: 0; border: 1px solid var(--border); border-radius: 10px; box-shadow: none; overflow: hidden; }
-.profile-example .focus-header, .profile-example .focus-content, .profile-example .focus-footer { width: 100%; padding-inline: 1.5rem; }
+.profile-example .experience-focus { max-width: none; margin: 0; border: 0; border-top: 2px solid var(--text); border-radius: 0; box-shadow: none; overflow: visible; background: transparent; }
+.profile-example .focus-header, .profile-example .focus-content, .profile-example .focus-footer { width: 100%; padding-inline: 0; }
 .profile-example .focus-header { padding-top: 1.25rem; padding-bottom: 1rem; }
 .profile-example .focus-promise { margin: 0 0 .5rem; color: var(--text); font-size: 1.2rem; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; }
 .profile-example .focus-boundary { font-size: .76rem; }
-.profile-example .focus-content { padding-top: 1.15rem; }
+.profile-example .focus-content { padding-top: .5rem; border-top: 0; }
 .profile-example .focus-content > h2 { margin: 0 0 .9rem; color: var(--text-soft); font-size: .9rem; font-weight: 500; letter-spacing: 0; }
-.profile-example .experience-artifact__input, .profile-example .experience-artifact__result { padding: 1rem 1.1rem; background: var(--bg); }
-.profile-example .experience-artifact__connector { padding-left: 1.1rem; background: var(--bg); }
-.profile-example .experience-artifact__result { padding-top: .5rem; }
 .profile-example .experience-artifact__text { font-size: .94rem; line-height: 1.85; }
 .profile-example .experience-artifact__label { font-size: .76rem; margin-bottom: .5rem; }
 .profile-example .experience-artifact__items { margin-top: 1rem; }
 .profile-example .experience-artifact__items li { padding-block: .8rem; }
 .profile-example .experience-artifact__items h4 { font-size: .86rem; }
 .profile-example .experience-artifact__items p { font-size: .82rem; }
-@media (min-width: 1100px) {
-  .profile-example .experience-artifact { display: grid; grid-template-columns: minmax(0, .9fr) 24px minmax(0, 1.1fr); align-items: stretch; }
-  .profile-example .experience-artifact__disclosure { grid-column: 1 / -1; }
-  .profile-example .experience-artifact__input, .profile-example .experience-artifact__result { border: 1px solid var(--border); border-radius: 6px; padding: 1rem; }
-  .profile-example .experience-artifact__connector { height: auto; padding: 0; justify-content: center; border: 0; background: transparent; }
-  .profile-example .experience-artifact__connector svg { transform: rotate(-90deg); }
-}
 .profile-example .focus-choices { margin: 1.25rem 0; }
 .profile-example .focus-choices button { padding: .65rem .9rem; font-size: .82rem; }
 .profile-example .focus-details { margin-top: 1rem; padding-block: .85rem; font-size: .84rem; }
 .profile-example .focus-details summary { min-height: 32px; }
-.profile-example .focus-footer { padding-block: 1rem; }
+.profile-example .focus-footer { padding-block: 1rem; background: transparent; }
 .profile-example .focus-footer a { font-size: .82rem; min-height: 32px; }
 .profile-example .product-demo { margin: 0; border: 0; border-radius: 10px; }
 .profile-example-empty { padding: 1.4rem 1.5rem; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
@@ -107,7 +97,7 @@
   .profile-layout { grid-template-columns: minmax(0, 1.6fr) minmax(230px, 1fr); gap: 1.5rem; }
   .profile-hero { gap: 1rem 1.5rem; }
   .profile-actions { max-width: 240px; }
-  .profile-insight { padding: 1rem; }
+  .profile-insight { padding: 1rem 0; }
 }
 @media (max-width: 760px) {
   .product-profile { padding-top: .8rem; }
@@ -120,11 +110,10 @@
   .profile-actions { max-width: none; justify-content: flex-start; gap: .6rem; }
   .profile-actions .profile-text-link { flex-basis: auto; justify-content: flex-start; min-height: 44px; }
   .profile-layout { grid-template-columns: minmax(0, 1fr); grid-template-areas: "main" "facts"; gap: 1.5rem; padding-top: 1.5rem; }
-  .profile-layout--insight { grid-template-areas: "insight" "main" "facts"; grid-template-rows: auto; }
+  .profile-layout--insight { grid-template-areas: "main" "insight" "facts"; grid-template-rows: auto; }
   .profile-sidebar { border-top: 1px solid var(--border); padding-top: 1.5rem; }
-  .profile-example .focus-header, .profile-example .focus-content, .profile-example .focus-footer { padding-inline: 1rem; }
+  .profile-example .focus-header, .profile-example .focus-content, .profile-example .focus-footer { padding-inline: 0; }
   .profile-example-empty { padding: 1.2rem 1rem; }
-  .profile-example .experience-artifact__input, .profile-example .experience-artifact__result { padding-inline: .9rem; }
   .profile-section-heading { align-items: flex-start; }
   .profile-related { margin-top: 2rem; }
 }

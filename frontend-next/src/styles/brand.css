@@ -14,7 +14,7 @@
 .theme-toggle { border-color: transparent; }
 .theme-toggle:hover, .nav-favorites:hover, .chat-trigger:hover { transform: none; background: var(--bg-elevated); }
 .locale-switcher { border-color: var(--border); }
-.locale-switcher__btn { min-width: 30px; font-size: .65rem; height: 30px; }
+.locale-switcher__btn { white-space: nowrap; min-width: 30px; font-size: .65rem; height: 30px; }
 .locale-switcher__btn.active { color: var(--text); background: var(--bg-elevated); }
 .chat-trigger { color: var(--text-soft); border-color: var(--border); font: 500 .76rem var(--font-body), sans-serif; }
 .chat-trigger__icon { color: var(--text); }
@@ -60,7 +60,7 @@ button:active:not(:disabled), a.link-btn:active { transform: translateY(1px); }
   .nav-ai .chat-trigger { width: 30px; min-width: 30px; height: 32px; padding: 0; justify-content: center; border: 0; }
   .nav-ai .chat-trigger > span:last-child, .navbar .nav-favorites { display: none; }
   .theme-toggle { width: 30px; height: 32px; }
-  .locale-switcher__btn { min-width: 27px; height: 28px; }
+  .locale-switcher__btn { min-width: 27px; height: 28px; padding-inline: .25rem; }
   .navbar .mobile-tabbar { grid-template-columns: repeat(5, minmax(0, 1fr)); left: 0; right: 0; bottom: 0; width: 100%; border: 0; border-top: 1px solid var(--border); border-radius: 0; padding-bottom: calc(.4rem + var(--wa-safe-bottom)); background: var(--bg); box-shadow: none; }
   .mobile-tabbar__link, .mobile-tabbar__button { border-radius: 4px; }
   .mobile-tabbar__link.active { background: transparent; color: var(--primary); }

@@ -66,9 +66,13 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
     return filteredDarkHorses.slice(0, DARK_HORSE_COLLAPSE_LIMIT);
   }, [filteredDarkHorses, showAllDarkHorses]);
 
+  const spotlight = darkHorses[0];
+  const spotlightInHero = contentTypeFilter === "all" && directionFilter === "all";
+  const catalogPicks = useMemo(() => spotlightInHero ? visibleDarkHorses.slice(1) : visibleDarkHorses, [spotlightInHero, visibleDarkHorses]);
+
   const visibleDarkHorseKeys = useMemo(() => {
-    return new Set(visibleDarkHorses.map((product) => productKey(product)));
-  }, [visibleDarkHorses]);
+    return new Set(catalogPicks.map((product) => productKey(product)));
+  }, [catalogPicks]);
 
   const allDirectionOptions = useMemo(() => collectDirectionOptions(allProducts, locale), [allProducts, locale]);
 
@@ -134,7 +138,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
 
   return (
     <div className="home-root" data-vibe="briefing">
-      <HomeIntro />
+      <HomeIntro product={spotlight} archived={isArchive} />
 
       <section className="section darkhorse-section" id="darkhorseSection">
         <div className="home-catalog-toolbar">
@@ -187,23 +191,23 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
           </div>
         </div>
 
-        {visibleDarkHorses.length ? (
+        {catalogPicks.length ? (
           <div className="darkhorse-spotlight-grid">
-            {visibleDarkHorses.map((product, index) => (
+            {catalogPicks.map((product, index) => (
               <ProductCard
                 key={product._id || product.name}
                 product={product}
                 featured
                 favoritable
-                rank={index + 1}
+                rank={index + (spotlightInHero ? 2 : 1)}
               />
             ))}
           </div>
-        ) : (
+        ) : !visibleDarkHorses.length ? (
           <div className="empty-state">
             <p className="empty-state-text">{t("这个分类暂时没有黑马产品，换个分类看看。", "No dark horse products found for this filter.")}</p>
           </div>
-        )}
+        ) : null}
 
         {filteredDarkHorses.length > DARK_HORSE_COLLAPSE_LIMIT ? (
           <div className="darkhorse-expand-row">

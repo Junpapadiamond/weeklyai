@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useRef, useState } from "react";
+import { useId, useState } from "react";
 import { ArrowRight, ArrowUpRight, Check, Download, ArrowCounterClockwise } from "@phosphor-icons/react";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import { availableExperienceOptions, type ExperienceEntry } from "@/lib/demo-experience";
@@ -19,7 +19,7 @@ export function ExperiencePlayer({ entry, productName, website, logoUrl, seconda
   const [choices, setChoices] = useState(() => defaultExperienceChoices(spec));
   const [dials, setDials] = useState<Record<string, number>>({});
   const [revision, setRevision] = useState(0);
-  const heading = useRef<HTMLHeadingElement>(null);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const id = useId();
   const step = spec.steps[index];
   const options = availableExperienceOptions(step, choices);
@@ -30,9 +30,12 @@ export function ExperiencePlayer({ entry, productName, website, logoUrl, seconda
   const dependency = spec.steps.find(s => s.id === dependencyId);
 
   function choose(stepId: string, optionId: string) {
+    if (choices[stepId] === optionId) return;
+    setHasInteracted(true);
     setChoices(old => selectExperienceChoice(spec, old, stepId, optionId));
   }
   function move(next: number) {
+    setHasInteracted(true);
     setIndex(next);
   }
   function download() {
@@ -54,25 +57,29 @@ export function ExperiencePlayer({ entry, productName, website, logoUrl, seconda
       {embedded ? <h2 className="focus-promise">{spec.headline[lang]}</h2> : <><div className="focus-product"><SmartLogo className="demo-product-logo" name={productName} logoUrl={logoUrl} secondaryLogoUrl={secondaryLogoUrl} website={website} trustPrimaryLogo size={30} /><h3>{productName}</h3></div><p className="focus-promise">{spec.headline[lang]}</p></>}
     </header>
     <div className="focus-content">
-      <h2 ref={heading} tabIndex={-1}>{step.title[lang]}</h2>
+      {spec.steps.length > 1 ? (
+        <div className="focus-part-control">
+          <label htmlFor={id + "-part"}>{t("体验环节", "Explore a part")}</label>
+          <select id={id + "-part"} value={index} onChange={event => move(Number(event.target.value))}>
+            {spec.steps.map((part, partIndex) => <option key={part.id} value={partIndex}>{part.title[lang]}</option>)}
+          </select>
+        </div>
+      ) : <h2>{step.title[lang]}</h2>}
       {dependency ? <div className="focus-context-control"><label htmlFor={id + "-context"}>{dependency.title[lang]}</label><select id={id + "-context"} value={choices[dependency.id]} onChange={e => choose(dependency.id, e.target.value)}>
         {availableExperienceOptions(dependency, choices).map(o => <option key={o.id} value={o.id}>{o.label[lang]}</option>)}
       </select></div> : null}
+      {options.length > 1 ? <fieldset className="focus-choices"><legend>{t("选择示例", "Choose an example")}</legend><div>
+        {options.map(option => <button key={option.id} type="button" aria-pressed={selected?.id === option.id} onClick={() => choose(step.id, option.id)}>
+          {selected?.id === option.id ? <Check size={16} aria-hidden="true" /> : <ArrowRight size={16} aria-hidden="true" />}<span>{option.label[lang]}</span>
+        </button>)}
+      </div></fieldset> : null}
       <div className="focus-result">
-        {step.widget === "app" && step.app_kind ? <section className="focus-local-app"><p className="demo-eyebrow">{t("本地示例应用 · 非原厂界面", "LOCAL SAMPLE APP · NOT THE VENDOR INTERFACE")}</p><DemoAppPreview key={revision + step.id} spec={exampleSpec(step.app_kind, lang === "en")} en={lang === "en"} /><p className="focus-app-guidance" aria-live="polite">{selected?.output[lang]}</p></section> : <ExperienceArtifact artifact={artifact} lang={lang} />}
+        {step.widget === "app" && step.app_kind ? <section className="focus-local-app"><p className="demo-eyebrow">{t("本地示例应用 · 非原厂界面", "LOCAL SAMPLE APP · NOT THE VENDOR INTERFACE")}</p><DemoAppPreview key={revision + step.id} spec={exampleSpec(step.app_kind, lang === "en")} en={lang === "en"} /><p className="focus-app-guidance" aria-live="polite"><span key={selected?.output[lang]} className={hasInteracted ? "demo-changed-copy" : undefined}>{selected?.output[lang]}</span></p></section> : <ExperienceArtifact artifact={artifact} lang={lang} animateChange={hasInteracted} />}
       </div>
       {step.dial ? <section className="experience-dial"><label htmlFor={id + "-dial"}>{step.dial.unit[lang]}<strong>{dialValue}</strong></label>
         <input id={id + "-dial"} type="range" min={step.dial.min} max={step.dial.max} value={dialValue} onChange={e => setDials(old => ({ ...old, [step.id]: Number(e.target.value) }))} />
         <div aria-live="polite">{step.dial.result_label[lang]}<strong>{dialValue * step.dial.factor}</strong></div>
         <small>{t("示例算式，非真实测算：", "Illustrative arithmetic, not a real estimate: ")}{dialValue} × {step.dial.factor} = {dialValue * step.dial.factor}</small></section> : null}
-      {options.length > 1 ? <fieldset className="focus-choices"><legend>{t("切换示例", "Compare prepared examples")}</legend><div>
-        {options.map(option => <button key={option.id} type="button" aria-pressed={selected?.id === option.id} onClick={() => choose(step.id, option.id)}>
-          {selected?.id === option.id ? <Check size={16} aria-hidden="true" /> : <ArrowRight size={16} aria-hidden="true" />}<span>{option.label[lang]}</span>
-        </button>)}
-      </div></fieldset> : null}
-      {spec.steps.length > 1 ? <div className="focus-part-control"><label htmlFor={id + "-part"}>{t("其他部分", "Other parts")}</label><select id={id + "-part"} value={index} onChange={e => move(Number(e.target.value))}>
-        {spec.steps.map((s, i) => <option key={s.id} value={i}>{s.title[lang]}</option>)}
-      </select></div> : null}
       <details className="focus-details"><summary>{t("示例说明与来源", "About this example & sources")}</summary>
         <p>{step.instruction[lang]}</p><p>{spec.scenario[lang]}</p>
         {spec.product_context ? <><p>{spec.product_context.job[lang]}</p><dl><dt>{t("输入", "Input")}</dt><dd>{spec.product_context.input[lang]}</dd><dt>{t("厂商描述的输出", "Vendor-described output")}</dt><dd>{spec.product_context.output[lang]}</dd></dl></> : null}

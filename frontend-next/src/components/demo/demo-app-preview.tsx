@@ -49,12 +49,11 @@ function FocusTimer({ spec, en }: PreviewProps) {
     </div>
     <div className="demo-clock" style={{ "--demo-progress": `${(1 - seconds / (duration * 60)) * 100}%` } as CSSProperties}>
       <div className="demo-clock-inner">
-        <span className="demo-clock-label">{running ? (en ? "IN YOUR OWN TIME" : "专注正在发生") : (en ? "A FRESH START" : "从这一刻开始")}</span>
         <span className="demo-clock-digits" role="timer" aria-label={en ? "Time remaining" : "剩余时间"}>
           {String(Math.floor(seconds / 60)).padStart(2, "0")}<span>:</span>{String(seconds % 60).padStart(2, "0")}
         </span>
-        <span className="demo-clock-caption">{seconds === 0 ? (en ? "Well done. Take a breath." : "完成了，休息一下吧。")
-          : (en ? "One thing at a time." : "一次，只做一件事。")}</span>
+        <span className="demo-clock-caption" role="status">{seconds === 0 ? (en ? "Session complete" : "专注结束")
+          : running ? (en ? "Running" : "计时中") : seconds < duration * 60 ? (en ? "Paused" : "已暂停") : null}</span>
       </div>
     </div>
     <div className="demo-app-actions">
@@ -89,7 +88,7 @@ function TaskList({ spec, en }: PreviewProps) {
     </ul>
     {tasks.length === 0 ? <p className="demo-app-empty">{en ? "A clear page. Add your first small step." : "清单空了。添加你想完成的第一件小事吧。"}</p> : null}
     <form className="demo-task-form" onSubmit={add}>
-      <label htmlFor={id}>{en ? "What is your next small step?" : "下一件想做的小事"}</label>
+      <label htmlFor={id}>{en ? "New task" : "新任务"}</label>
       <div><input id={id} value={draft} maxLength={80} onChange={event => setDraft(event.target.value)} placeholder={en ? "e.g. Try an AI product" : "例如：试用一个 AI 产品"} required />
         <button className="demo-app-primary" disabled={!draft.trim() || tasks.length >= 30}>{en ? "Add" : "添加"}</button></div>
       {tasks.length >= 30 ? <p role="status">{en ? "This demo holds up to 30 tasks." : "这个演示最多保留 30 个任务。"}</p> : null}
@@ -135,9 +134,7 @@ function Expenses({ en }: PreviewProps) {
 
 export function DemoAppPreview({ spec, en }: PreviewProps) {
   return <div className="demo-mini-app" data-accent={spec.accent}>
-    <div className="demo-mini-brand"><span className="demo-mini-mark" aria-hidden="true" />{spec.kind === "timer" ? "little focus" : spec.kind === "tasks" ? "small steps" : "daily ledger"}<span className="demo-mini-edition">01 / PERSONAL SPACE</span></div>
-    <header className="demo-mini-header"><h4>{spec.title}</h4><p>{spec.description}</p></header>
+    <header className="demo-mini-header"><h4>{spec.title}</h4>{spec.description ? <p>{spec.description}</p> : null}</header>
     {spec.kind === "timer" ? <FocusTimer spec={spec} en={en} /> : spec.kind === "tasks" ? <TaskList spec={spec} en={en} /> : <Expenses spec={spec} en={en} />}
-    <footer className="demo-mini-footer">{en ? "Made to be tried. Go ahead, click something." : "这是一个可以操作的小作品。动手试试。"}</footer>
   </div>;
 }
