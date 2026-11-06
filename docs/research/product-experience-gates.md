@@ -49,3 +49,9 @@ Old v2 caches remain readable through a complete-text fallback that preserves th
 - Evidence: existing sourced product records and SmartLogo assets; design mock descriptions and logos are never production data.
 - Next action: inspect a product, read its source, save it, or visit its official website.
 - Validation: shared layout for both locales, responsive menu, keyboard dismissal and selection, search and empty state. Browser checks and automated checks do not establish first-time user understanding.
+
+## Homepage featured products — 2026-11-05
+
+A PM opens the homepage or filters the featured products to find one product worth investigating. The first card should show the real product identity, what it does, and a visible route to its details on a 390 × 844 phone. The catalog supplies the description, score, and editorial rationale. Keep the supporting source directly accessible and the longer rationale available on demand. A visitor can open Details, save the product, follow its source, or continue to the available demo or website.
+
+Browser checks against the live catalog showed the English lead card at 317 px tall on a 390 × 844 viewport, down from 500 px for the same product. Details ended at y=643, above the navigation at y=784. The Chinese dark-theme check, keyboard disclosure, saved-state persistence, category filter, search and detail navigation also passed. These checks measure layout and behavior; first-time visitor comprehension still needs a human session.

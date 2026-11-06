@@ -1,0 +1,99 @@
+/* The featured list shares a dividing line with its toolbar. */
+.home-root[data-vibe="briefing"] .darkhorse-section > .darkhorse-spotlight-grid { border-top: 0; }
+.radar-product {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.4fr) auto;
+  grid-template-areas: "identity body save";
+  align-items: start;
+  gap: 1rem clamp(1rem, 3vw, 3rem);
+  padding: 1.35rem clamp(1rem, 2.4vw, 2.25rem);
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+.radar-product--lead {
+  margin-top: .85rem;
+  padding-block: clamp(1.4rem, 2.5vw, 2.4rem);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--primary);
+  border-radius: 4px 4px 10px 10px;
+  background: var(--surface-tint);
+}
+.radar-product__identity { grid-area: identity; min-width: 0; }
+.radar-product h3 { margin: 0; font-size: 1.12rem; line-height: 1.25; }
+.radar-product--lead h3 { font-size: clamp(1.45rem, 2.2vw, 2rem); letter-spacing: -.035em; }
+.radar-product h3 a {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  width: fit-content;
+  max-width: 100%;
+  color: inherit;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.radar-product h3 a:hover { text-decoration: underline; text-underline-offset: .15em; }
+.radar-product .research-product__logo { width: 40px; height: 40px; }
+.radar-product--lead .research-product__logo { width: 52px; height: 52px; }
+.radar-product__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .15rem .75rem;
+  margin: .65rem 0 0;
+  font-size: .78rem;
+  line-height: 1.5;
+  color: var(--text-soft);
+}
+.radar-product__meta span + span { border-inline-start: 1px solid var(--border); padding-inline-start: .75rem; }
+.radar-product > .favorite-btn { grid-area: save; width: 44px; height: 44px; border-radius: 50%; box-shadow: none; }
+.radar-product > .favorite-btn svg { width: 18px; height: 18px; }
+.radar-product__body { grid-area: body; min-width: 0; }
+.radar-product__summary { margin: 0; max-width: 68ch; font-size: .98rem; line-height: 1.55; overflow-wrap: anywhere; }
+.radar-product--lead .radar-product__summary { max-width: 56ch; font-size: clamp(1.06rem, 1.5vw, 1.35rem); }
+.radar-product__actions, .radar-product__links { display: flex; align-items: center; flex-wrap: wrap; gap: .25rem 1rem; }
+.radar-product__actions { margin-top: .6rem; }
+.radar-product__actions a, .radar-product__links a, .radar-product__notes summary {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  min-height: 44px;
+  font-size: .85rem;
+  color: var(--text-soft);
+  text-decoration: none;
+}
+.radar-product .radar-product__details { font-weight: 600; color: var(--text); }
+.radar-product--lead .radar-product__details {
+  padding-inline: 1rem;
+  border-radius: 6px;
+  background: var(--text);
+  color: var(--bg);
+}
+.radar-product__actions a:hover, .radar-product__links a:hover, .radar-product__notes summary:hover { text-decoration: underline; text-underline-offset: 3px; }
+.radar-product__notes summary { width: fit-content; cursor: pointer; list-style: none; }
+.radar-product__notes summary::-webkit-details-marker { display: none; }
+.radar-product__notes[open] summary svg { transform: rotate(180deg); }
+.radar-product__notes p { margin: 0; max-width: 70ch; color: var(--text-soft); font-size: .91rem; line-height: 1.65; overflow-wrap: anywhere; }
+.radar-product__links { margin-top: .25rem; }
+.radar-product__links > span { color: var(--text-muted); font-size: .78rem; }
+.radar-product :is(a, summary, button):focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+
+@media (min-width: 701px) {
+  .radar-product:not(.radar-product--lead) .radar-product__actions { float: inline-start; margin: 0 1rem 0 0; }
+  .radar-product:not(.radar-product--lead) .radar-product__notes { margin-top: .5rem; }
+  .radar-product__notes > :is(p, div) { clear: both; }
+}
+@media (max-width: 700px) {
+  .radar-product {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "identity save" "body body";
+    gap: .65rem .5rem;
+    padding: 1rem .25rem;
+  }
+  .radar-product--lead { padding: 1rem; }
+  .radar-product__identity { grid-column: 1 / -1; }
+  .radar-product h3 { margin-inline-end: calc(44px + .5rem); }
+  .radar-product__meta { margin-top: .5rem; column-gap: .45rem; }
+  .radar-product__meta span + span { padding-inline-start: .45rem; }
+  .radar-product--lead .research-product__logo { width: 44px; height: 44px; }
+  .radar-product--lead h3 { font-size: 1.4rem; }
+  .radar-product__actions { margin-top: .5rem; }
+}

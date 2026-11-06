@@ -14,6 +14,7 @@ import "../styles/chat.css";
 import "../styles/briefing.css";
 import "../styles/demo.css";
 import "../styles/research.css";
+import "../styles/featured-products.css";
 import "../styles/brand.css";
 import "../styles/chinese.css";
 

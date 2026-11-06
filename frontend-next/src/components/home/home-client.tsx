@@ -193,7 +193,7 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
               <ProductCard
                 key={product._id || product.name}
                 product={product}
-                highlighted={index === 0}
+                featured
                 favoritable
                 rank={index + 1}
               />
