@@ -121,11 +121,14 @@ function BlogCard({ item }: { item: BlogPost }) {
   return (
     <article className="research-news">
       <div className="research-news__content">
-        <p className="research-news__meta">
-          {`${marketLabel} · ${sourceLabel} · `}
-          <time dateTime={item.published_at} suppressHydrationWarning>{freshness}</time>
-          {item.extra?.evidence_kind === "search_excerpt" ? <span>{t("搜索摘要", "Search excerpt")}</span> : null}
-        </p>
+        <div className="research-news__meta">
+          <time className="news-dateline" dateTime={item.published_at}>{publishedLabel}</time>
+          <div>
+            {`${marketLabel} · ${sourceLabel} · `}
+            <time dateTime={item.published_at} suppressHydrationWarning>{freshness}</time>
+            {item.extra?.evidence_kind === "search_excerpt" ? <span>{t("搜索摘要", "Search excerpt")}</span> : null}
+          </div>
+        </div>
 
         <header className="research-news__header">
           <div className="research-news__identity">
@@ -140,8 +143,7 @@ function BlogCard({ item }: { item: BlogPost }) {
               size={44}
             />
             <div className="research-news__identity-copy">
-              <h3 className="research-product__title">{localizedName}</h3>
-              <p className="research-product__date">{publishedLabel}</p>
+              <h3 className="research-product__title">{hasWebsite ? <a href={website} target="_blank" rel="noopener noreferrer" onClick={(event) => handleExternalAnchorClick(event, website)}>{localizedName}</a> : localizedName}</h3>
             </div>
           </div>
         </header>
@@ -211,31 +213,32 @@ export function BlogClient({ initialBlogs }: BlogClientProps) {
 
   return (
     <section className="section blog-page">
-      <div className="section-header">
+      <header className="news-masthead">
         <h1 className="section-title">{t("AI 资讯", "News & Signals")}</h1>
-      </div>
 
-      <div className="blog-toolbar">
-        <span role="status" aria-live="polite">
-          {isLoading ? t("加载中…", "Loading…") : t(`${posts.length} 条资讯`, `${posts.length} articles`)}
-        </span>
-        <label>
-          {t("区域", "Market")}
-          <select
-            value={market}
-            onChange={(event) => {
-              setMarket(event.target.value as MarketValue);
-              setSource("");
-            }}
-          >
-            {marketOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
+        <div className="blog-toolbar">
+          <span role="status" aria-live="polite">
+            {isLoading ? t("加载中…", "Loading…") : t(`${posts.length} 条资讯`, `${posts.length} articles`)}
+          </span>
+          <label>
+            {t("区域", "Market")}
+            <select
+              value={market}
+              onChange={(event) => {
+                setMarket(event.target.value as MarketValue);
+                setSource("");
+              }}
+            >
+              {marketOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+
+      </header>
 
       <div className="source-pills" role="group" aria-label={t("资讯来源筛选", "News source filters")}>
         {sourceOptions.map((option) => {

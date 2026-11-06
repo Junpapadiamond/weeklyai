@@ -24,7 +24,7 @@ export default function ErrorPage({ error, retry }: ErrorPageProps) {
   const appShell = isAppShell();
 
   return (
-    <section className="section">
+    <section className="section recovery-page">
       <div className="error-block" role="alert">
         <div className="error-code">
           <Warning size={16} />

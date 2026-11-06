@@ -1,3 +1,4 @@
+import { RadarEmblem } from "@/components/brand/radar-emblem";
 import Link from "next/link";
 import { pickLocaleText } from "@/lib/locale";
 import { getRequestLocale } from "@/lib/locale-server";
@@ -5,7 +6,8 @@ import { getRequestLocale } from "@/lib/locale-server";
 export default async function NotFound() {
   const locale = await getRequestLocale();
   return (
-    <section className="section">
+    <section className="section recovery-page">
+      <RadarEmblem />
       <div className="section-header">
         <h1 className="section-title">{pickLocaleText(locale, { zh: "页面未找到", en: "Page not found" })}</h1>
         <p className="section-desc">

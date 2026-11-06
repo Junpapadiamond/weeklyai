@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Download, MagnifyingGlass, Trash, X } from "@phosphor-icons/react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { FavoriteButton } from "@/components/favorites/favorite-button";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { useSiteLocale } from "@/components/layout/locale-provider";
@@ -81,6 +81,8 @@ export function FavoritesPanel() {
     blogs: [],
   });
   const [legacyOnlyCount, setLegacyOnlyCount] = useState(0);
+  const panelRef = useRef<HTMLElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [activeKind, setActiveKind] = useState<FavoriteKind>("product");
   const [productDirectionFilter, setProductDirectionFilter] = useState("all");
@@ -115,13 +117,30 @@ export function FavoritesPanel() {
 
   useEffect(() => {
     if (!isOpen) return;
+    const opener = document.activeElement;
+    closeRef.current?.focus({ preventScroll: true });
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setIsOpen(false);
+        return;
+      }
+      if (event.key !== "Tab" || !panelRef.current) return;
+      const controls = panelRef.current.querySelectorAll<HTMLElement>("button:not(:disabled), a[href], input:not(:disabled)");
+      const first = controls[0];
+      const last = controls[controls.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
       }
     };
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      if (opener instanceof HTMLElement && opener.isConnected) opener.focus({ preventScroll: true });
+    };
   }, [isOpen]);
 
   const productDirectionOptions = useMemo(
@@ -247,10 +266,10 @@ export function FavoritesPanel() {
         aria-hidden={!isOpen}
         onClick={() => setIsOpen(false)}
       />
-      <aside className={`favorites-panel ${isOpen ? "is-open" : ""}`} aria-hidden={!isOpen} inert={!isOpen}>
+      <aside ref={panelRef} role="dialog" aria-modal={isOpen} aria-labelledby="saved-panel-title" className={`favorites-panel ${isOpen ? "is-open" : ""}`} aria-hidden={!isOpen} inert={!isOpen}>
         <header className="favorites-panel__header">
           <div>
-            <h2>{t("收藏夹", "Favorites")}</h2>
+            <h2 id="saved-panel-title">{t("收藏夹", "Favorites")}</h2>
             <p>
               {t("共", "Total")} {totalCount} {t("条", "items")}
             </p>
@@ -263,10 +282,10 @@ export function FavoritesPanel() {
             <button type="button" className="favorites-panel__ghost-btn" onClick={clearActiveFavorites}>
               <Trash size={14} /> {t("清空全部", "Clear all")}
             </button>
-            <button className="favorites-panel__close" type="button" aria-label={t("关闭收藏夹", "Close favorites")} onClick={() => setIsOpen(false)}>
-              <X size={16} />
-            </button>
           </div>
+          <button ref={closeRef} className="favorites-panel__close" type="button" aria-label={t("关闭收藏夹", "Close favorites")} onClick={() => setIsOpen(false)}>
+            <X size={16} />
+          </button>
         </header>
 
         <div className="favorites-panel__tabs">
@@ -358,7 +377,7 @@ export function FavoritesPanel() {
                     </div>
 
                     <div className="favorites-panel__item-actions">
-                      <Link href={`/product/${detailId}`} className="link-btn link-btn--card link-btn--card-primary">
+                      <Link href={`/product/${detailId}`} onNavigate={() => setIsOpen(false)} className="link-btn link-btn--card link-btn--card-primary">
                         {t("查看详情", "Details")}
                       </Link>
                       {hasWebsite ? (

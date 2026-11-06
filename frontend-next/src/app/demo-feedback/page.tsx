@@ -16,7 +16,7 @@ export default async function DemoFeedbackPage() {
   const t = (zh: string, en: string) => pickLocaleText(locale, { zh, en });
 
   return (
-    <section className="section">
+    <section className="section reading-page">
       <div className="section-header">
         <h1 className="section-title">{t("演示纠错与下架", "Demo corrections and removal")}</h1>
         <p className="section-desc">
@@ -31,7 +31,7 @@ export default async function DemoFeedbackPage() {
         <div className="detail-block">
           <h2 className="detail-block__title">{t("联系方式", "How to reach us")}</h2>
           <p className="detail-block__content">
-            support@darkhorseradar.com
+            <a href="mailto:support@darkhorseradar.com">support@darkhorseradar.com</a>
             <br />
             {t(
               "请附上演示链接，并说明哪一处不准确。",

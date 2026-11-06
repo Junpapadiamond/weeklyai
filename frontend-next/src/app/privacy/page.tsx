@@ -6,7 +6,7 @@ export default async function PrivacyPage() {
   const t = (zh: string, en: string) => pickLocaleText(locale, { zh, en });
 
   return (
-    <section className="section">
+    <section className="section reading-page">
       <div className="section-header">
         <h1 className="section-title">{t("隐私政策（摘要）", "Privacy Policy (Summary)")}</h1>
         <p className="section-desc">
@@ -37,7 +37,7 @@ export default async function PrivacyPage() {
 
         <div className="detail-block">
           <h2 className="detail-block__title">{t("联系我们", "Contact")}</h2>
-          <p className="detail-block__content">support@darkhorseradar.com</p>
+          <p className="detail-block__content"><a href="mailto:support@darkhorseradar.com">support@darkhorseradar.com</a></p>
         </div>
       </article>
     </section>

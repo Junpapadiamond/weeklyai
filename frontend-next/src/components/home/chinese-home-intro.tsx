@@ -1,3 +1,4 @@
+import { RadarEmblem } from "@/components/brand/radar-emblem";
 import Form from "next/form";
 import { MagnifyingGlass } from "@phosphor-icons/react";
 import { useSiteLocale } from "@/components/layout/locale-provider";
@@ -6,6 +7,7 @@ export function HomeIntro() {
   const { t } = useSiteLocale();
   return (
     <section className="home-discovery-intro" aria-labelledby="home-heading">
+      <RadarEmblem />
       <h1 id="home-heading">{t("发现 AI 新产品", "Discover AI products")}</h1>
       <Form action="/search" className="home-discovery-search" role="search" aria-label={t("搜索产品", "Search products")}>
         <MagnifyingGlass size={20} aria-hidden="true" />

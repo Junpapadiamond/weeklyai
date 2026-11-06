@@ -45,7 +45,7 @@ export function DemoGallery({ initialFilter = "all" }: { initialFilter?: "all" |
   </div></section>;
   const tabs = [{ id: "all", name: t("全部产品", "All products"), count: catalog?.catalog_total }, { id: "ready", name: t("已有演示", "Ready to play"), count: catalog?.ready_count }, { id: "dark", name: t("黑马产品", "Dark horses"), count: catalog?.dark_count }];
   return <section className="demo-gallery">
-    <Link className="demo-back-gallery" href="/demo/examples">{t("更多演示示例", "More interactive examples")} ↗</Link>
+
     <header className="demo-gallery-header">
       <div><h1>{t("产品演示", "Product demos")}</h1><p>{t("独立示例 · 非原厂输出", "Independent examples · Not vendor output")}</p></div>
       <div className="demo-budget"><Gauge size={17} /><div>
@@ -53,6 +53,7 @@ export function DemoGallery({ initialFilter = "all" }: { initialFilter?: "all" |
         <strong>{catalog?.quota ? catalog.quota.remaining + " / " + catalog.quota.limit : "—"}</strong>
         <details><summary>{t("额度说明", "Credit details")}</summary><p>{t("首次生成使用 1 次额度；已有演示不计次数。每日北京时间 08:00 重置。", "New examples use 1 credit; prepared examples are free. Resets at 00:00 UTC.")}</p></details>
       </div></div>
+      <Link className="demo-back-gallery" href="/demo/examples">{t("更多演示示例", "More interactive examples")} ↗</Link>
     </header>
     <div className="demo-gallery-tools"><div className="demo-filter-tabs" aria-label={t("演示筛选", "Filter experiences")}>{tabs.map(tab => <button key={tab.id} type="button" aria-pressed={filter === tab.id} onClick={() => { setFilter(tab.id); setPage(1); }}>{tab.name}<span>{tab.count ?? "—"}</span></button>)}</div><label className="demo-search"><MagnifyingGlass size={16} /><input ref={searchInput} aria-label={t("搜索演示产品", "Search demo products")} placeholder={t("搜索产品、类别或国家", "Search products, categories, countries")} value={query} onChange={event => { setQuery(event.target.value); setPage(1); }} /></label></div>
     {catalog && !catalog.generation_available ? <p className="demo-availability" role="status">{t("暂时无法生成新演示，可查看已有演示。", "New examples are unavailable. Prepared examples remain available.")}</p> : null}

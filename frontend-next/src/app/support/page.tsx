@@ -6,7 +6,7 @@ export default async function SupportPage() {
   const t = (zh: string, en: string) => pickLocaleText(locale, { zh, en });
 
   return (
-    <section className="section">
+    <section className="section reading-page">
       <div className="section-header">
         <h1 className="section-title">{t("支持与反馈", "Support")}</h1>
         <p className="section-desc">
@@ -17,7 +17,7 @@ export default async function SupportPage() {
       <article className="detail-card">
         <div className="detail-block">
           <h2 className="detail-block__title">{t("联系邮箱", "Contact email")}</h2>
-          <p className="detail-block__content">support@darkhorseradar.com</p>
+          <p className="detail-block__content"><a href="mailto:support@darkhorseradar.com">support@darkhorseradar.com</a></p>
         </div>
         <div className="detail-block">
           <h2 className="detail-block__title">{t("工作时间", "Support window")}</h2>

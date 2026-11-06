@@ -55,20 +55,21 @@ export function DiscoverClient({ initialPage }: DiscoverClientProps) {
 
   return (
     <section className="section discover-page">
-      <div className="section-header">
+      <header className="discover-masthead">
         <h1 className="section-title">
           {t("随便看看", "Discover")}
         </h1>
-      </div>
 
-      <div className="list-controls discover-page__controls">
-        <button className="favorites-toggle" type="button" aria-label={t("打开收藏夹", "Open favorites")} onClick={() => openFavoritesPanel("product")}>
-          <BookmarkSimple size={17} aria-hidden="true" /> {favoritesCount}
-        </button>
-        <Link className="link-btn" href="/">
-          <House size={14} /> {t("返回首页", "Back to home")}
-        </Link>
-      </div>
+        <div className="list-controls discover-page__controls">
+          <button className="favorites-toggle" type="button" aria-label={t("打开收藏夹", "Open favorites")} onClick={() => openFavoritesPanel("product")}>
+            <BookmarkSimple size={17} aria-hidden="true" /> {favoritesCount}
+          </button>
+          <Link className="link-btn" href="/">
+            <House size={14} /> {t("返回首页", "Back to home")}
+          </Link>
+        </div>
+
+      </header>
 
       {batch.data.length ? (
         <DiscoveryDeck key={`discover-${batch.pagination.offset}`} products={batch.data} onLike={addFavorite}

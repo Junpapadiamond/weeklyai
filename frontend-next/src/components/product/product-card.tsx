@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useId, useState } from "react";
 import { ArrowRight, CaretDown } from "@phosphor-icons/react";
 import type { Product } from "@/types/api";
 import { supportsLiveDemo } from "@/lib/live-demo";
@@ -26,6 +27,8 @@ type ProductCardProps = {
 /** One product briefing for the home, search and related-product surfaces. */
 export function ProductCard({ product, compact = false, rank, featured = false, favoritable = true }: ProductCardProps) {
   const { locale, t } = useSiteLocale();
+  const notesId = useId();
+  const [notesOpen, setNotesOpen] = useState(false);
   const detailUrl = `/product/${encodeURIComponent(product._id || product.name)}`;
   const website = normalizeWebsite(product.website);
   const hasWebsite = isValidWebsite(website) && !product.needs_verification;
@@ -51,14 +54,14 @@ export function ProductCard({ product, compact = false, rank, featured = false, 
       website={product.website}
       sourceUrl={product.source_url}
       trustPrimaryLogo
-      size={compact ? 44 : 56}
+      size={44}
       loading={rank !== undefined && rank <= 3 ? "eager" : "lazy"}
     />
   );
   const favorite = favoritable ? <FavoriteButton product={product} /> : null;
   const sourceLink = product.source_url && isValidWebsite(product.source_url) ? (
-    <a href={product.source_url} target="_blank" rel="noopener noreferrer">
-      {t("查看来源", "Read source")} <span aria-hidden="true">↗</span>
+    <a className="radar-product__source" href={product.source_url} onClick={(event) => handleExternalAnchorClick(event, event.currentTarget.href)} target="_blank" rel="noopener noreferrer">
+      {t("来源", "Source")} <span aria-hidden="true">↗</span>
     </a>
   ) : null;
   const secondaryLinks = (
@@ -74,59 +77,34 @@ export function ProductCard({ product, compact = false, rank, featured = false, 
   const scoreText = <>{t("黑马指数", "Discovery score")} {scoreLabel}</>;
   const date = recordedDate ? <time dateTime={recordedDate}>{recordedDate}</time> : null;
 
-  if (featured) {
-    return (
-      <article className={rank === 1 ? "radar-product radar-product--lead" : "radar-product"}>
-        <header className="radar-product__identity">
-          <h3><Link href={detailUrl}>{logo}<span>{product.name}</span></Link></h3>
-          <p className="radar-product__meta"><span>{category}</span><span>{region}</span><span>{scoreText}</span></p>
-        </header>
-        {favorite}
-        <div className="radar-product__body">
-          <p className="radar-product__summary">{summary}</p>
-          <div className="radar-product__actions">
-            <Link href={detailUrl} className="radar-product__details">{t("查看详情", "Details")} <ArrowRight size={16} aria-hidden="true" /></Link>
-            {sourceLink}
-          </div>
-          <details className="radar-product__notes">
-            <summary>{t("产品笔记与链接", "Notes & links")} <CaretDown size={14} aria-hidden="true" /></summary>
-            {rationale ? <p>{rationale}</p> : null}
-            <div className="radar-product__links">
-              {secondaryLinks}
-              {date ? <span>{t("收录于 ", "Added ")}{date}</span> : null}
-            </div>
-          </details>
-        </div>
-      </article>
-    );
-  }
+  const layout = compact ? "radar-product--compact" : featured && rank === 1 ? "radar-product--lead" : "";
 
   return (
-    <article className={`research-product${compact ? " research-product--compact" : ""}`}>
-      <header className={`research-product__identity${rank !== undefined ? " research-product__identity--ranked" : ""}`}>
-        {rank !== undefined ? <span className="research-product__rank" aria-label={`${t("排名", "Rank")} ${rank}`}>{String(rank).padStart(2, "0")}</span> : null}
-        {logo}
-        <div className="research-product__identity-copy">
-          <h3 className="research-product__title"><Link href={detailUrl}>{product.name}</Link></h3>
-          <p className="research-product__category">{category}</p>
-          <p className="research-product__meta">{region}<span aria-hidden="true"> · </span>{scoreText}</p>
-          {date ? <p className="research-product__date">{t("收录于 ", "")}{date}</p> : null}
-        </div>
+    <article className={`radar-product ${layout}`.trim()}>
+      <header className="radar-product__identity">
+        <h3><Link href={detailUrl}>{logo}<span>{product.name}</span></Link></h3>
+        <p className="radar-product__meta">
+          {!featured && rank !== undefined ? <span aria-label={`${t("排名", "Rank")} ${rank}`}>#{rank}</span> : null}
+          <span>{category}</span><span>{region}</span><span>{scoreText}</span>
+          {date}
+        </p>
       </header>
-      <div className="research-product__briefing">
-        <p className="research-product__description">{summary}</p>
-        {rationale ? <p className="research-product__why">{rationale}</p> : null}
+      <p className="radar-product__summary">{summary}</p>
+      <div className="radar-product__actions">
+        <Link href={detailUrl} className="radar-product__details">{t("详情", "Details")} <ArrowRight size={14} aria-hidden="true" /></Link>
+        {sourceLink}
+        <button type="button" className="radar-product__toggle" aria-expanded={notesOpen} aria-controls={notesId}
+          onClick={() => setNotesOpen(open => !open)}>
+          {t("笔记", "Notes")} <CaretDown size={13} aria-hidden="true" />
+        </button>
+        {favorite}
       </div>
-      <footer className="research-product__footer">
-        <div className="research-product__reference">
-          {sourceLink}
-          {favorite}
-        </div>
-        <div className="research-product__actions">
-          <Link href={detailUrl}>{t("查看详情", "Details")}</Link>
+      <div id={notesId} className="radar-product__notes" hidden={!notesOpen}>
+        {rationale ? <p>{rationale}</p> : null}
+        <div className="radar-product__links">
           {secondaryLinks}
         </div>
-      </footer>
+      </div>
     </article>
   );
 }

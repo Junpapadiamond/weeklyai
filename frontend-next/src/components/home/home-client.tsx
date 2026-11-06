@@ -219,75 +219,74 @@ export function HomeClient({ darkHorses, allProducts, freshnessHoursAgo }: HomeC
       </section>
 
       <section className="section trending-section" id="trendingSection">
-        <div className="section-header section-header--tight">
+        <header className="library-masthead">
           <h2 className="section-title">{t("产品库", "Product library")}</h2>
-        </div>
-
-        <div className="list-controls list-controls--compact">
-          <div className="tier-tabs">
-            <button
-              className={`tier-tab ${tierFilter === "all" ? "active" : ""}`}
-              aria-pressed={tierFilter === "all"}
-              type="button"
-              onClick={() => {
-                setTierFilter("all");
-                setCurrentPage(1);
-              }}
-            >
-              {t("全部", "All")}
-            </button>
-            <button
-              className={`tier-tab ${tierFilter === "darkhorse" ? "active" : ""}`}
-              aria-pressed={tierFilter === "darkhorse"}
-              type="button"
-              onClick={() => {
-                setTierFilter("darkhorse");
-                setCurrentPage(1);
-              }}
-            >
-              {t("黑马", "Dark Horses")}
-            </button>
-            <button
-              className={`tier-tab ${tierFilter === "rising" ? "active" : ""}`}
-              aria-pressed={tierFilter === "rising"}
-              type="button"
-              onClick={() => {
-                setTierFilter("rising");
-                setCurrentPage(1);
-              }}
-            >
-              {t("潜力股", "Rising Stars")}
-            </button>
-          </div>
-
-          <div className="controls-right">
-            <label>
-              {t("排序", "Sort")}
-              <select
-                value={sortBy}
-                onChange={(event) => {
-                  setSortBy(event.target.value as typeof sortBy);
+          <div className="list-controls list-controls--compact">
+            <div className="tier-tabs">
+              <button
+                className={`tier-tab ${tierFilter === "all" ? "active" : ""}`}
+                aria-pressed={tierFilter === "all"}
+                type="button"
+                onClick={() => {
+                  setTierFilter("all");
                   setCurrentPage(1);
                 }}
               >
-                <option value="composite">{t("综合排序", "Discovery score")}</option>
-                <option value="trending">{t("热度", "Trending")}</option>
-                <option value="recency">{t("最新收录", "Recently discovered")}</option>
-              </select>
-            </label>
+                {t("全部", "All")}
+              </button>
+              <button
+                className={`tier-tab ${tierFilter === "darkhorse" ? "active" : ""}`}
+                aria-pressed={tierFilter === "darkhorse"}
+                type="button"
+                onClick={() => {
+                  setTierFilter("darkhorse");
+                  setCurrentPage(1);
+                }}
+              >
+                {t("黑马", "Dark Horses")}
+              </button>
+              <button
+                className={`tier-tab ${tierFilter === "rising" ? "active" : ""}`}
+                aria-pressed={tierFilter === "rising"}
+                type="button"
+                onClick={() => {
+                  setTierFilter("rising");
+                  setCurrentPage(1);
+                }}
+              >
+                {t("潜力股", "Rising Stars")}
+              </button>
+            </div>
 
-            <CategoryPicker options={allDirectionOptions} value={activeDirectionFilter} onChange={selectDirection} />
+            <div className="controls-right">
+              <label>
+                {t("排序", "Sort")}
+                <select
+                  value={sortBy}
+                  onChange={(event) => {
+                    setSortBy(event.target.value as typeof sortBy);
+                    setCurrentPage(1);
+                  }}
+                >
+                  <option value="composite">{t("综合排序", "Discovery score")}</option>
+                  <option value="trending">{t("热度", "Trending")}</option>
+                  <option value="recency">{t("最新收录", "Recently discovered")}</option>
+                </select>
+              </label>
 
-            <button
-              className="favorites-toggle"
-              type="button"
-              aria-label={t("打开收藏夹", "Open favorites")}
-              onClick={() => openFavoritesPanel("product")}
-            >
-              <BookmarkSimple size={16} /> {favoritesCount}
-            </button>
+              <CategoryPicker options={allDirectionOptions} value={activeDirectionFilter} onChange={selectDirection} />
+
+              <button
+                className="favorites-toggle"
+                type="button"
+                aria-label={t("打开收藏夹", "Open favorites")}
+                onClick={() => openFavoritesPanel("product")}
+              >
+                <BookmarkSimple size={16} /> {favoritesCount}
+              </button>
+            </div>
           </div>
-        </div>
+        </header>
 
         {visibleProducts.length ? (
           <div className="darkhorse-spotlight-grid picks-grid">

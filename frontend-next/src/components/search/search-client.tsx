@@ -124,28 +124,28 @@ export function SearchClient({ initialState }: SearchClientProps) {
 
   return (
     <section className="section search-page">
-      <div className="section-header">
+      <header className="search-masthead">
         <h1 className="section-title">{t("搜索产品", "Search Products")}</h1>
-      </div>
 
-      <form className="search-panel" onSubmit={onSubmit}>
-        <label className="search-panel__label" htmlFor="product-search-query">{t("搜索关键词", "Search keywords")}</label>
-        <input
-          id="product-search-query"
-          type="search"
-          value={q}
-          onChange={(event) => setQ(event.target.value)}
-          placeholder={t("搜产品名或用途，如编程、视频、智能眼镜", "Enter keywords, e.g. agent, hardware, funding...")}
-          aria-label={t("搜索关键词", "Search keywords")}
-          autoComplete="off"
-        />
-        <div className="search-panel__actions">
-          <button type="button" onClick={clearSearch} disabled={!q.trim() && !submittedQ}>
-            {t("清空", "Clear")}
-          </button>
-          <button type="submit">{t("搜索", "Search")}</button>
-        </div>
-      </form>
+        <form className="search-panel" onSubmit={onSubmit}>
+          <label className="search-panel__label" htmlFor="product-search-query">{t("搜索关键词", "Search keywords")}</label>
+          <input
+            id="product-search-query"
+            type="search"
+            value={q}
+            onChange={(event) => setQ(event.target.value)}
+            placeholder={t("搜产品名或用途，如编程、视频、智能眼镜", "Enter keywords, e.g. agent, hardware, funding...")}
+            aria-label={t("搜索关键词", "Search keywords")}
+            autoComplete="off"
+          />
+          <div className="search-panel__actions">
+            <button type="button" onClick={clearSearch} disabled={!q.trim() && !submittedQ}>
+              {t("清空", "Clear")}
+            </button>
+            <button type="submit">{t("搜索", "Search")}</button>
+          </div>
+        </form>
+      </header>
 
       <div className="search-toolbar search-toolbar--minimal">
         <label className="search-toolbar__item">

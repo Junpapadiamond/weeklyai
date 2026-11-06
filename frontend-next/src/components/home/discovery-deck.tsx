@@ -330,23 +330,25 @@ export default function DiscoveryDeck({ products, onLike, onExhausted }: Discove
       dismissSwipeGuide();
     }
     const current = stack[0];
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const physics = resolveSwipePhysics(input);
+    const exitMs = reducedMotion ? 0 : physics.exitMs;
     const exitOffset =
       typeof window === "undefined"
         ? SWIPE_OUT_OFFSET_BASE
         : Math.max(SWIPE_OUT_OFFSET_BASE, Math.round(window.innerWidth * 0.92)) + physics.extraOffset;
     const releaseDeltaY = input?.deltaY ?? dragY;
     isSwipeOutRef.current = true;
-    setSwipeExitMs(physics.exitMs);
+    setSwipeExitMs(exitMs);
     setSwipeOutDirection(direction);
     setLastSwipeAction(direction);
-    setShowSwipeEcho(true);
+    setShowSwipeEcho(!reducedMotion);
     if (direction === "right") {
       setLiked((value) => value + 1);
       const nextStreak = likeStreakRef.current + 1;
       likeStreakRef.current = nextStreak;
       setLikeStreak(nextStreak);
-      if (nextStreak >= 2) {
+      if (!reducedMotion && nextStreak >= 2) {
         if (streakBurstTimerRef.current) {
           clearTimeout(streakBurstTimerRef.current);
         }
@@ -368,8 +370,8 @@ export default function DiscoveryDeck({ products, onLike, onExhausted }: Discove
       }
     }
     setIsDragging(false);
-    setDragX(direction === "right" ? exitOffset : -exitOffset);
-    setDragY(releaseDeltaY * (0.32 + physics.inertiaStrength * 0.08));
+    setDragX(reducedMotion ? 0 : (direction === "right" ? exitOffset : -exitOffset));
+    setDragY(reducedMotion ? 0 : releaseDeltaY * (0.32 + physics.inertiaStrength * 0.08));
 
     if (swipeEchoTimerRef.current) {
       clearTimeout(swipeEchoTimerRef.current);
@@ -400,7 +402,7 @@ export default function DiscoveryDeck({ products, onLike, onExhausted }: Discove
       activeGestureInput.current = null;
       setGestureInputType(null);
       swipeTimerRef.current = null;
-    }, physics.exitMs);
+    }, exitMs);
   }
 
   function beginDrag(clientX: number, clientY: number, inputType: "pointer" | "touch") {

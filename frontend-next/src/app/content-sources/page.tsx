@@ -6,7 +6,7 @@ export default async function ContentSourcesPage() {
   const t = (zh: string, en: string) => pickLocaleText(locale, { zh, en });
 
   return (
-    <section className="section">
+    <section className="section reading-page">
       <div className="section-header">
         <h1 className="section-title">{t("收录与来源说明", "Content Sources")}</h1>
         <p className="section-desc">

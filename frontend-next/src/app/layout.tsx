@@ -17,6 +17,7 @@ import "../styles/research.css";
 import "../styles/featured-products.css";
 import "../styles/brand.css";
 import "../styles/chinese.css";
+import "../styles/editorial.css";
 
 const displayFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
