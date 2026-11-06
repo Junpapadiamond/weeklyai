@@ -4,9 +4,11 @@ const copy = (max: number) => z.object({ zh: z.string().trim().min(1).max(max), 
 export const ExperienceArtifactSchema = z.object({
   kind: z.enum(["excerpt", "sequence", "comparison", "list", "text"]),
   input_label: copy(40), output_label: copy(40), input: copy(220), output: copy(220),
+  input_format: z.literal("code").optional(),
   emphasis: copy(100).optional(),
   items: z.array(z.object({ label: copy(60), detail: copy(160) })).min(2).max(4).optional(),
 }).superRefine((value, ctx) => {
+  if (value.input_format && value.kind !== "excerpt") ctx.addIssue({ code: "custom", message: "Code format requires an excerpt" });
   if (value.emphasis && (["zh", "en"] as const).some(lang => !value.input[lang].includes(value.emphasis![lang])))
     ctx.addIssue({ code: "custom", message: "Artifact emphasis must appear in both input languages" });
   if (value.items && value.kind !== "sequence" && value.kind !== "list")

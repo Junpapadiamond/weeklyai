@@ -83,6 +83,10 @@ def _artifact(value, path="artifact"):
     result = {"kind": value["kind"]}
     for field, maximum in (("input_label", 40), ("output_label", 40), ("input", 220), ("output", 220)):
         result[field] = _copy(value.get(field), maximum, f"{path}.{field}")
+    if "input_format" in value:
+        if value["kind"] != "excerpt" or value["input_format"] != "code":
+            raise ValueError("Code format requires an excerpt")
+        result["input_format"] = "code"
     if "emphasis" in value:
         emphasis = _copy(value["emphasis"], 100, f"{path}.emphasis")
         if any(emphasis[locale] not in result["input"][locale] for locale in ("zh", "en")):
@@ -96,7 +100,7 @@ def _artifact(value, path="artifact"):
         result["items"] = [{"label": _copy(item.get("label"), 60, f"{path}.items[{i}].label"),
                             "detail": _copy(item.get("detail"), 160, f"{path}.items[{i}].detail")}
                            for i, item in enumerate(items)]
-    copies = [copy for field, copy in result.items() if field not in {"kind", "items"}]
+    copies = [copy for field, copy in result.items() if field not in {"kind", "items", "input_format"}]
     copies.extend(copy for item in result.get("items", []) for copy in item.values())
     if any(ARTIFACT_UNSAFE_COPY.search(text) for copy in copies for text in copy.values()):
         raise ValueError("Artifact text cannot contain URLs, markup, measured claims or completed vendor execution")

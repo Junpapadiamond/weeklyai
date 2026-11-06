@@ -217,3 +217,22 @@ def test_compact_artifact_round_trip_keeps_localized_highlight_and_items(legacy_
     result = service.generate_spec(PRODUCT)
     assert result["steps"] == complete_spec["steps"]
     assert completion.call_count == 1
+
+def test_code_excerpt_is_inert_and_keeps_existing_safety_rules(legacy_spec, artifact):
+    artifact.update(input_format="code", input=bilingual("const x = 1;", "const x = 1;"))
+    artifact.pop("emphasis", None)
+    spec = with_artifacts(legacy_spec, artifact)
+    assert validate_experience(spec)["steps"][0]["options"][0]["artifact"]["input_format"] == "code"
+    for field, value in (("input_format", "html"), ("kind", "text"), ("input", bilingual("<script>", "<script>"))):
+        broken = copy.deepcopy(spec)
+        broken["steps"][0]["options"][0]["artifact"][field] = value
+        with pytest.raises(ValueError):
+            validate_experience(broken)
+
+
+def test_new_structured_outputs_need_entries_but_old_records_remain_readable(legacy_spec, artifact):
+    artifact["kind"] = "sequence"
+    spec = with_artifacts(legacy_spec, artifact)
+    parsed = validate_experience(spec)
+    with pytest.raises(ValueError, match="inspectable items"):
+        service._validate_generated_artifacts(parsed)

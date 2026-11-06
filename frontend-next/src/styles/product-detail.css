@@ -66,17 +66,13 @@
 .profile-example .focus-content > h2 { margin: 0 0 .9rem; color: var(--text-soft); font-size: .9rem; font-weight: 500; letter-spacing: 0; }
 .profile-example .experience-artifact__text { font-size: .94rem; line-height: 1.85; }
 .profile-example .experience-artifact__label { font-size: .76rem; margin-bottom: .5rem; }
-.profile-example .experience-artifact__items { margin-top: 1rem; }
-.profile-example .experience-artifact__items li { padding-block: .8rem; }
-.profile-example .experience-artifact__items h4 { font-size: .86rem; }
-.profile-example .experience-artifact__items p { font-size: .82rem; }
 .profile-example .focus-choices { margin: 1.25rem 0; }
 .profile-example .focus-choices button { padding: .65rem .9rem; font-size: .82rem; }
 .profile-example .focus-details { margin-top: 1rem; padding-block: .85rem; font-size: .84rem; }
 .profile-example .focus-details summary { min-height: 32px; }
 .profile-example .focus-footer { padding-block: 1rem; background: transparent; }
 .profile-example .focus-footer a { font-size: .82rem; min-height: 32px; }
-.profile-example .product-demo { margin: 0; border: 0; border-radius: 10px; }
+.profile-example .product-demo { margin: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
 .profile-example-empty { padding: 1.4rem 1.5rem; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
 .profile-example-empty h2 { margin: 0; font-size: 1.15rem; line-height: 1.5; }
 .profile-example-empty p { margin: .75rem 0 0; color: var(--text-soft); font-size: .86rem; line-height: 1.85; }

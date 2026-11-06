@@ -4,7 +4,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import { ExperienceArtifact } from "../../components/demo/experience-artifact";
 import { availableExperienceOptions, ExperienceArtifactSchema, ExperienceSchema, type Experience } from "../demo-experience";
-import { artifactInputParts, defaultExperienceChoices, experienceArtifact, initialExperienceIndex, selectExperienceChoice } from "../demo-presentation";
+import { artifactInputParts, defaultExperienceChoices, experienceArtifact, initialExperienceIndex, isCodeExcerpt, selectExperienceChoice } from "../demo-presentation";
 
 const copy = (text: string) => ({ zh: text, en: text });
 const artifact = () => ({
@@ -189,7 +189,7 @@ describe("artifact contract and safe highlighting", () => {
 
   it("renders actual mark text and escapes supplied markup instead of executing it", () => {
     const view = ExperienceArtifactSchema.parse({ ...artifact(), input: copy("Before <script>alert(1)</script> after"), emphasis: copy("<script>alert(1)</script>") });
-    const html = renderToStaticMarkup(createElement(ExperienceArtifact, { artifact: view, lang: "en" }));
+    const html = renderToStaticMarkup(createElement(ExperienceArtifact, { artifact: view, lang: "en", draft: {}, onEdit: vi.fn() }));
     expect(html).toContain("<mark>&lt;script&gt;alert(1)&lt;/script&gt;</mark>");
     expect(html).not.toContain("<script>");
     expect(html).toContain("Fictional example · Not vendor output");
@@ -204,11 +204,44 @@ describe("artifact contract and safe highlighting", () => {
         { label: copy("Existing first item"), detail: copy("First prepared detail") },
         { label: copy("Existing second item"), detail: copy("Second prepared detail") },
       ] });
-      const html = renderToStaticMarkup(createElement(ExperienceArtifact, { artifact: view, lang: "en" }));
-      expect(html).toContain(kind === "sequence" ? '<ol class="experience-artifact__items">' : '<ul class="experience-artifact__items">');
+      const html = renderToStaticMarkup(createElement(ExperienceArtifact, { artifact: view, lang: "en", draft: {}, onEdit: vi.fn() }));
+      expect(html).toContain(kind === "sequence" ? '<ol class="experience-artifact__items"' : '<ul class="experience-artifact__items"');
       expect(html).toContain("Existing first item");
-      expect(html).toContain("Second prepared detail");
+      expect(html).toContain("Existing second item");
+      expect(html).toContain("First prepared detail");
       expect(html).not.toContain("<mark>");
+    }
+  });
+});
+
+describe("artifact-specific presentation", () => {
+  it("reads current and historic code samples without treating a discussion of code as a program", () => {
+    const snippet = { ...artifact(), input: copy("const [tasks, setTasks] = useState([]);") };
+    expect(isCodeExcerpt(snippet, "en")).toBe(true);
+    expect(isCodeExcerpt({ ...snippet, input: copy("app.post('/api/tasks', handler)") }, "zh")).toBe(true);
+    const plain = { ...artifact(), input: copy("send POST request to model endpoint with auth key") };
+    expect(isCodeExcerpt(plain, "en")).toBe(false);
+    expect(isCodeExcerpt({ ...plain, input_format: "code" }, "en")).toBe(true);
+    expect(ExperienceArtifactSchema.safeParse({ ...plain, input_format: "html" }).success).toBe(false);
+    expect(ExperienceArtifactSchema.safeParse({ ...plain, kind: "text", input_format: "code" }).success).toBe(false);
+  });
+
+  it("renders every stored branch in both languages, including older options without an artifact", () => {
+    for (const raw of [...cached.map(entry => entry.spec), ...profiles]) {
+      const spec = ExperienceSchema.parse(raw);
+      for (const step of spec.steps) {
+        for (const opt of step.options) {
+          const view = experienceArtifact(spec, step, opt);
+          for (const lang of ["en", "zh"] as const) {
+            const html = renderToStaticMarkup(createElement(ExperienceArtifact, {
+              artifact: view, lang, draft: {}, onEdit: vi.fn(), hideInput: view.input[lang] === opt.label[lang],
+            }));
+            expect(html).toContain("experience-artifact__result");
+            if (view.items?.length) expect(html).toContain("artifact-index__tools");
+            if (isCodeExcerpt(view, lang)) expect(html).toContain("<code>");
+          }
+        }
+      }
     }
   });
 });

@@ -292,10 +292,16 @@
 .focus-promise { margin: 15px 0 9px; font-size: 18px; line-height: 1.6; color: var(--text-soft); }
 .focus-boundary { margin: 0; color: var(--text-muted); font-size: 13px; line-height: 1.65; }
 .focus-content { padding-top: 24px; padding-bottom: 12px; border-top: 1px solid var(--border); }
-.focus-part-control { display: flex; align-items: center; gap: .75rem; margin: 0 0 1rem; min-width: 0; font-size: 13px; color: var(--text-muted); }
-.focus-part-control select, .focus-context-control select { min-width: 0; max-width: 100%; border: 1px solid var(--border); border-radius: 6px; padding: 9px 30px 9px 10px; background: var(--surface); color: var(--text-soft); font: inherit; }
-.focus-part-control select { flex: 0 1 auto; min-height: 44px; font-weight: 600; color: var(--text); }
-.focus-part-control label { flex: none; }
+.focus-step-nav { scroll-margin-top: 100px; display: flex; flex-wrap: wrap; gap: .15rem .9rem; border-bottom: 1px solid var(--border); margin: 0 0 1rem; }
+.focus-step-nav__picker { display: none; }
+@media (max-width: 679px) {
+  .focus-step-nav--many > button { display: none; }
+  .focus-step-nav__picker { width: 100%; display: flex; align-items: center; gap: .6rem; min-width: 0; padding-block: .35rem; color: var(--text-soft); font-size: .82rem; }
+  .focus-step-nav__picker select { flex: 1; min-width: 0; max-width: 100%; min-height: 44px; font: inherit; font-weight: 600; color: var(--text); border: 1px solid var(--border); border-radius: 4px; background: var(--surface); padding: .4rem; }
+}
+.focus-step-nav button { padding: .55rem .1rem; min-height: 44px; border: 0; border-bottom: 2px solid transparent; background: transparent; font: inherit; font-size: .9rem; color: var(--text-muted); cursor: pointer; text-align: start; overflow-wrap: anywhere; }
+.focus-step-nav button[aria-pressed="true"] { color: var(--text); border-bottom-color: var(--primary); font-weight: 650; }
+.focus-context-control select { min-width: 0; max-width: 100%; border: 1px solid var(--border); border-radius: 6px; padding: 9px 30px 9px 10px; background: var(--surface); color: var(--text-soft); font: inherit; }
 .focus-content > h2 { margin: 0 0 22px; font-size: clamp(22px, 2.5vw, 28px); font-weight: 650; letter-spacing: -.65px; line-height: 1.45; scroll-margin-top: 150px; overflow-wrap: anywhere; }
 .focus-context-control { display: flex; gap: 15px; align-items: center; margin: 0 0 22px; font-size: 13px; color: var(--text-soft); }
 .focus-context-control select { flex: 1; }
@@ -306,6 +312,9 @@
 .focus-choices button { display: flex; align-items: center; gap: 9px; min-height: 44px; padding: 11px 16px; border: 1px solid transparent; border-radius: 5px; background: var(--surface-soft); color: var(--text-soft); font-size: 14px; line-height: 1.5; cursor: pointer; text-align: left; }
 .focus-choices button svg { flex-shrink: 0; }
 .focus-choices button[aria-pressed=true] { background: var(--text); border-color: var(--text); color: var(--surface); }
+.focus-choices .focus-compare { margin-inline-start: auto; border: 1px solid var(--border); background: transparent; color: var(--text-soft); }
+.focus-choices .focus-compare[aria-pressed="true"] { border-color: var(--primary); background: var(--surface-soft); color: var(--text); }
+@media (max-width: 679px) { .focus-choices .focus-compare { margin-inline-start: 0; } }
 .focus-details { margin-top: 26px; border-top: 1px solid var(--border); padding: 18px 0; color: var(--text-soft); font-size: 14px; line-height: 1.85; }
 .focus-details > summary { cursor: pointer; width: fit-content; font-size: 13px; }
 .focus-details p { max-width: 65ch; margin: 15px 0; }
@@ -332,7 +341,6 @@
   .focus-promise { font-size: 16px; }
   .focus-content { padding-top: 18px; }
   .focus-content > h2 { margin-bottom: 14px; }
-  .focus-part-control { gap: .5rem; }
   .focus-context-control { align-items: stretch; flex-direction: column; gap: 7px; margin-bottom: 14px; }
   .focus-choices > div { display: flex; }
   .focus-choices button { max-width: 100%; }

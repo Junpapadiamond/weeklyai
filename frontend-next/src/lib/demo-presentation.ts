@@ -62,3 +62,11 @@ export function artifactInputParts(text: string, emphasis?: string): { text: str
     { text: text.slice(index + emphasis.length), emphasized: false },
   ].filter(part => part.text.length > 0);
 }
+
+/** Older stored excerpts lack a format. Match source syntax, never a product name or a code-related topic. */
+export function isCodeExcerpt(artifact: ExperienceArtifactData, lang: "zh" | "en"): boolean {
+  if (artifact.kind !== "excerpt") return false;
+  if (artifact.input_format === "code") return true;
+  const source = artifact.input[lang].trimStart();
+  return /^(?:(?:const|let|var)\s+[^\n;]{1,90}=|(?:import\s+.+\s+from\s+["']|from\s+[\w.]+\s+import\s+)|(?:async\s+)?(?:function\s+\w+\s*\(|def\s+\w+\s*\()|(?:app|router)\.(?:get|post|put|patch|delete)\s*\(|(?:fetch|print|console\.log)\s*\(|curl\s+-|SELECT\s+[\w.* ,]+\s+FROM\s+\w+)/i.test(source);
+}
