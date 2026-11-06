@@ -1,0 +1,313 @@
+{
+  "cache_key": "a4c21dccf77c1b8009a70798-ecbdc5d85e669caaec13eaaa",
+  "product_key": "a4c21dccf77c1b8009a70798",
+  "fingerprint": "ecbdc5d85e669caaec13eaaa",
+  "product_id": "p_16ab841852cd830c",
+  "product_name": "Clutch Security",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-06T23:48:49.091984+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "AI 智能体访问控制",
+      "en": "AI Agent Access Control"
+    },
+    "scenario": {
+      "zh": "为企业系统中的 AI 智能体设置访问权限和操作边界",
+      "en": "Set access permissions and operational boundaries for AI agents in enterprise systems"
+    },
+    "steps": [
+      {
+        "id": "agent_type",
+        "widget": "choice",
+        "title": {
+          "zh": "选择智能体角色",
+          "en": "Choose Agent Role"
+        },
+        "instruction": {
+          "zh": "确定需要管理权限的智能体类型",
+          "en": "Identify the agent type to manage"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "客服助手",
+              "en": "Support Assistant"
+            },
+            "output": {
+              "zh": "限制为客户工单和历史记录访问",
+              "en": "Restrict to ticket and history access"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "权限请求",
+                "en": "Permission Request"
+              },
+              "output_label": {
+                "zh": "建议策略",
+                "en": "Recommended Policy"
+              },
+              "input": {
+                "zh": "客服智能体需要访问所有客户数据库和支付历史",
+                "en": "Support agent needs access to all customer database and payment history"
+              },
+              "output": {
+                "zh": "仅允许读取已分配工单的客户信息，禁止访问支付数据",
+                "en": "Allow read-only access to assigned tickets, block payment data"
+              },
+              "emphasis": {
+                "zh": "所有客户数据库和支付历史",
+                "en": "all customer database and payment history"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "允许访问",
+                    "en": "Allowed Access"
+                  },
+                  "detail": {
+                    "zh": "当前工单、客户联系方式",
+                    "en": "Current tickets, customer contacts"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "禁止访问",
+                    "en": "Blocked Access"
+                  },
+                  "detail": {
+                    "zh": "支付方式、账户余额、其他客户工单",
+                    "en": "Payment methods, account balance, other tickets"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "代码分析智能体",
+              "en": "Code Analysis Agent"
+            },
+            "output": {
+              "zh": "访问代码库但隔离系统密钥",
+              "en": "Code repository access with secrets isolated"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "权限请求",
+                "en": "Permission Request"
+              },
+              "output_label": {
+                "zh": "建议策略",
+                "en": "Recommended Policy"
+              },
+              "input": {
+                "zh": "代码分析智能体请求读取所有代码、配置文件和部署密钥",
+                "en": "Code agent requests read access to all code, configs and deployment keys"
+              },
+              "output": {
+                "zh": "允许代码读取，完全阻止密钥、环境变量和部署配置",
+                "en": "Allow code read, completely block keys, env vars and deploy configs"
+              },
+              "emphasis": {
+                "zh": "所有代码、配置文件和部署密钥",
+                "en": "all code, configs and deployment keys"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "允许访问",
+                    "en": "Allowed Access"
+                  },
+                  "detail": {
+                    "zh": "源代码、注释、公开文档",
+                    "en": "Source code, comments, public docs"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "完全隔离",
+                    "en": "Completely Isolated"
+                  },
+                  "detail": {
+                    "zh": "API 密钥、数据库凭证、部署参数",
+                    "en": "API keys, DB credentials, deploy params"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "boundaries",
+        "widget": "choice",
+        "title": {
+          "zh": "设置操作边界",
+          "en": "Set Operational Boundaries"
+        },
+        "instruction": {
+          "zh": "定义智能体可以执行的具体操作",
+          "en": "Define what actions the agent can perform"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "只读模式",
+              "en": "Read-Only Mode"
+            },
+            "output": {
+              "zh": "智能体只能查询，不能修改或删除",
+              "en": "Agent can query only, no modifications or deletions"
+            },
+            "when": {
+              "step_id": "agent_type",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "受限写入",
+              "en": "Limited Write"
+            },
+            "output": {
+              "zh": "智能体可以创建评论和标签，但不能更改工单状态",
+              "en": "Agent can add comments and tags, cannot change ticket status"
+            },
+            "when": {
+              "step_id": "agent_type",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "代码审查权限",
+              "en": "Review Permissions"
+            },
+            "output": {
+              "zh": "可以评论代码，但不能推送或合并",
+              "en": "Can comment on code, cannot push or merge"
+            },
+            "when": {
+              "step_id": "agent_type",
+              "option_id": "1"
+            }
+          },
+          {
+            "id": "3",
+            "label": {
+              "zh": "审计隔离",
+              "en": "Audit Isolation"
+            },
+            "output": {
+              "zh": "所有操作被记录，敏感操作需人工批准",
+              "en": "All actions logged, sensitive ops require human approval"
+            },
+            "when": {
+              "step_id": "agent_type",
+              "option_id": "1"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "monitoring",
+        "widget": "review",
+        "title": {
+          "zh": "检查访问日志",
+          "en": "Review Access Logs"
+        },
+        "instruction": {
+          "zh": "查看智能体的实际行为记录",
+          "en": "Inspect recorded agent behavior"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "查看会话活动",
+              "en": "View Session Activity"
+            },
+            "output": {
+              "zh": "虚构日志显示访问模式和异常事件",
+              "en": "Fictional logs show access patterns and anomalies"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "记录示例（虚构）",
+                "en": "Log Sample (fictional)"
+              },
+              "output_label": {
+                "zh": "风险评估",
+                "en": "Risk Assessment"
+              },
+              "input": {
+                "zh": "14:32 - 客服智能体读取工单 #4521；15:18 - 尝试访问销售部工单",
+                "en": "14:32 - Support agent read ticket #4521; 15:18 - Attempted access to sales ticket"
+              },
+              "output": {
+                "zh": "首次正常，第二次超出范围已拒绝，风险低",
+                "en": "First normal, second out-of-scope denied, risk low"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "正常操作",
+                    "en": "Normal Operations"
+                  },
+                  "detail": {
+                    "zh": "访问已分配的工单",
+                    "en": "Accessed assigned tickets"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "被拦截",
+                    "en": "Blocked"
+                  },
+                  "detail": {
+                    "zh": "跨部门访问尝试",
+                    "en": "Cross-department access attempt"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "此示例演示了智能体权限管理的核心概念：按角色限制访问、定义操作边界和监控异常行为。实际的执行效果和与企业系统的集成需要在 Clutch Security 平台上验证",
+      "en": "This example demonstrates core agent access management: role-based restriction, operational boundaries, and anomaly monitoring. Actual enforcement and enterprise system integration require verification on the Clutch Security platform"
+    },
+    "sources": [
+      {
+        "url": "https://www.clutch.security/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/11/05/palo-alto-networks-in-talks-to-buy-ai-agent-security-startup-clutch-for-500m/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

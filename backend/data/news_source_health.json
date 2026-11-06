@@ -1,18 +1,17 @@
 {
-  "updated_at": "2026-11-06T19:36:48.023585+00:00",
+  "updated_at": "2026-11-06T23:47:33.528967+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 9,
+      "fresh_count": 12,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-06T19:36:48.023585+00:00",
-      "rejected_count": 18,
+      "checked_at": "2026-11-06T23:47:33.528967+00:00",
+      "rejected_count": 16,
       "rejection_reasons": {
-        "unvetted_x_author": 9,
-        "no_concrete_signal": 5,
-        "insufficient_excerpt": 4
+        "unvetted_x_author": 12,
+        "no_concrete_signal": 4
       },
       "rejected_examples": [
         {
@@ -24,6 +23,10 @@
           "reason": "unvetted_x_author"
         },
         {
+          "title": "@modal · We worked with @SakanaAILabs to optimize their Sakana Namazu API down to the kernel level: → Selective NVFP4 quantization (23k+ experts) → DFlash draft",
+          "reason": "unvetted_x_author"
+        },
+        {
           "title": "@SakanaAILabs · Sakana AI won 1st place in the company category at the “Recursive Self Improvement in Mathematics” Hack (OpenMath 2026), held with @stephen_wolf",
           "reason": "no_concrete_signal"
         },
@@ -32,20 +35,16 @@
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@hardmaru · New paper from the team at Sakana AI: Recursive Self-Improvement through Multi-Agent Self-Supervision (MASS) How do we keep improving AI when the ta",
+          "title": "@Stefania_druga · More to come on this work led by @ciaran_regan_ but glad to see @dair_ai picked up our paper @SakanaAILabs for discussion",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@SakanaAILabs · Sakana AI Dinner Meetup #NeurIPS2026 🐟️ Signup → https://t.co/U5PURuLFkA We are excited to host a dinner meetup in Sydney on Monday, December 7t",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@hardmaru · Last week in Tokyo, we hosted the Sakana AI Symposium with our Chief Scientific Advisor, Jürgen Schmidhuber. Eight years ago, @SchmidhuberAI and I w",
+          "title": "@DavidBennett__ · Great to meet @hardmaru at @SakanaAILabs’s symposium. A privilege to hear @SchmidhuberAI’s talk on world models. ai& shares a strong belief wi",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@SakanaAILabs · The Agentic Scientist: Orchestrating Coding Agents for Automated Scientific (Co-)Discovery Blog: https://t.co/7aVDvZd6m2 GitHub: https://t.co/JC",
-          "reason": "no_concrete_signal"
+          "title": "@graceisford · The agentic scientist from @SakanaAILabs - amazing to see the pace of progress in AI from the first AI scientist launch ⚡️",
+          "reason": "unvetted_x_author"
         }
       ],
       "stored_count": 60,
@@ -53,177 +52,157 @@
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 16,
+      "fresh_count": 11,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-06T19:36:48.023585+00:00",
-      "rejected_count": 24,
+      "checked_at": "2026-11-06T23:47:33.528967+00:00",
+      "rejected_count": 29,
       "rejection_reasons": {
-        "no_concrete_signal": 14,
-        "personal_help_or_chatter": 3,
-        "off_topic": 7
+        "off_topic": 11,
+        "no_concrete_signal": 16,
+        "personal_help_or_chatter": 2
       },
       "rejected_examples": [
         {
-          "title": "Claude refused to remove MY OWN company logo for \"copyright\"... then removed it anyway when I asked for a blue background",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Any Open Src Ai Img Gen? NO ETHICS",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Help question about subscriptions?",
-          "reason": "personal_help_or_chatter"
-        },
-        {
-          "title": "Tried the weight editing thing from the MIT post: Some cool applications, but nothing crazy",
+          "title": "Wilson's Survival Guide for October 30-November 6, 2026 now available!",
           "reason": "off_topic"
         },
         {
-          "title": "What if humanity creates an autonomous machine civilization simply by giving AI a task that outlives us?",
+          "title": "Any tools for managing long-term memory beyond the context window?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "iv been using a feature on this oss tool agav and wondered if there is a clean way to also steer a langgraph agent mid-run without interrupt() at every step ?",
+          "title": "Fertility rate.",
           "reason": "off_topic"
         },
         {
-          "title": "68% of Americans support an AI pause and a ban on superintelligence",
+          "title": "Unsloth v3.1 QFN IQ4_XS fails tool calls very frequently",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "ICLR reviewer rubric[D]",
+          "title": "Will we get free credits again?",
           "reason": "off_topic"
+        },
+        {
+          "title": "Claude just added cashflow bank connector that’s read only and it’s FREE!!! You don’t need to pay for era context anymore thank god",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "The Anti-AI Crowd piled on me when answering a critical question",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "why are people so obsessed with humanity continuing?",
+          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-06T19:33:56+00:00"
+      "latest_published_at": "2026-11-06T23:43:35+00:00"
     },
     "youtube": {
-      "status": "direct",
-      "fresh_count": 14,
+      "status": "search_fallback",
+      "fresh_count": 9,
       "errors": [
         {
+          "endpoint": "UCsBjURrPoezykLs9EqgamOA",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
+          "reason": "HTTP 404"
+        },
+        {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
-          "reason": "empty_or_invalid_feed"
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
+          "reason": "HTTP 500"
+        },
+        {
+          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
+          "reason": "HTTP 404"
         }
       ],
-      "feeds_ok": 7,
-      "checked_at": "2026-11-06T19:36:48.023585+00:00",
-      "rejected_count": 15,
-      "rejection_reasons": {
-        "off_topic": 15
-      },
-      "rejected_examples": [
-        {
-          "title": "well this is bad",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The Greatest Business Ever?",
-          "reason": "off_topic"
-        },
-        {
-          "title": "This is Crazy",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Programming Laws Tier list | TheStandup",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Navier-Stokes explained by Mathematician | Lex Fridman",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Infinity explained: It broke mathematics | Lex Fridman",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Optimal dating strategy - mathematician explains | Lex Fridman",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Do numbers exist? - mathematician explains | Lex Fridman",
-          "reason": "off_topic"
-        }
-      ],
-      "stored_count": 51,
+      "feeds_ok": 1,
+      "checked_at": "2026-11-06T23:47:33.528967+00:00",
+      "rejected_count": 0,
+      "rejection_reasons": {},
+      "rejected_examples": [],
+      "stored_count": 60,
       "latest_published_at": "2026-11-06T07:27:02+00:00"
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 13,
+      "fresh_count": 17,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-06T19:36:48.023585+00:00",
-      "rejected_count": 47,
+      "checked_at": "2026-11-06T23:47:33.528967+00:00",
+      "rejected_count": 43,
       "rejection_reasons": {
-        "off_topic": 15,
-        "no_concrete_signal": 31,
-        "personal_help_or_chatter": 1
+        "no_concrete_signal": 34,
+        "off_topic": 9
       },
       "rejected_examples": [
         {
-          "title": "Firecracker VM Escape: PwnEscape Part 2",
+          "title": "Show HN: Cinnamon – a household AI agent with shared context and memories",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "ECB considers review of bank data center lending on AI risk",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Live now: attacking P vs. NP using only AI, written out in real time",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Show HN: I asked HN about AI agentic setups, here are 750 of the comments mapped",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Inkling 2 Small: 17A-594B trained in 68 hours on 12T tokens, beating Muse Spark",
           "reason": "off_topic"
         },
         {
-          "title": "Nodecode",
+          "title": "DeepFinance: Can AI diligence a $100M deal?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Importance of Harness, Context and Model co-design",
           "reason": "off_topic"
         },
         {
-          "title": "A new protocol and software suite for AIs",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "AI Could Do My First Job. Not My Last",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "So Should We Slow Down AI?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "AI Made Me Look Foolish. Then I Learned",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Auria Chain – SDK for AI agents to pay AI agents over HTTP (x402)",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "CLI proxy that reduces LLM token consumption by 60-90% on dev commands",
-          "reason": "no_concrete_signal"
+          "title": "Expecting rapid progress but not towards general superintelligence",
+          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-06T19:08:44+00:00"
+      "latest_published_at": "2026-11-06T23:46:51+00:00"
     },
     "producthunt": {
       "status": "direct",
-      "fresh_count": 11,
+      "fresh_count": 12,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-06T19:36:48.023585+00:00",
-      "rejected_count": 24,
+      "checked_at": "2026-11-06T23:47:33.528967+00:00",
+      "rejected_count": 23,
       "rejection_reasons": {
-        "off_topic": 24
+        "off_topic": 23
       },
       "rejected_examples": [
-        {
-          "title": "Cursor Craft",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Magic Wonders",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Native Tasks for Obsidian",
-          "reason": "off_topic"
-        },
         {
           "title": "pwned.coffee",
           "reason": "off_topic"
@@ -237,20 +216,32 @@
           "reason": "off_topic"
         },
         {
-          "title": "Shipnoted",
+          "title": "Textwhisk",
           "reason": "off_topic"
         },
         {
-          "title": "Moatly",
+          "title": "axel.md",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Releasebeam",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Native Tasks for Obsidian",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Winq",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-05T23:40:34+00:00"
+      "latest_published_at": "2026-11-06T02:44:33+00:00"
     },
     "tech_news": {
       "status": "direct",
-      "fresh_count": 40,
+      "fresh_count": 41,
       "errors": [
         {
           "endpoint": "venturebeat",
@@ -258,12 +249,32 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-06T19:36:48.023585+00:00",
+      "checked_at": "2026-11-06T23:47:33.528967+00:00",
       "rejected_count": 17,
       "rejection_reasons": {
         "off_topic": 17
       },
       "rejected_examples": [
+        {
+          "title": "After blocking Muse, Amazon now lets users text Alexa to help them shop",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Underdog shows off a 32MB speech model in new demo",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Physicl raises $10M to make the digital world real enough for robots",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Box taps Nvidia’s Nemotron for new agent-first content retrieval system",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Reddit Founder Says Building Social Media Apps Is ‘Not Cool Anymore’",
+          "reason": "off_topic"
+        },
         {
           "title": "How Akai and Moog are embracing vibe-coded mods",
           "reason": "off_topic"
@@ -273,36 +284,16 @@
           "reason": "off_topic"
         },
         {
-          "title": "Meet *sshole, the vulnerability that lets hackers SSH into Linux devices",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Hackers exploited iOS and Android flaws to infect phones",
-          "reason": "off_topic"
-        },
-        {
-          "title": "VMware releases vSphere Express for virtualization on up to 128 cores",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Binance says hackers who stole billions in crypto spent months planning heist",
-          "reason": "off_topic"
-        },
-        {
-          "title": "UEFI bootkit infected fully patched Windows machines. Is Microsoft to blame?",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Code-execution flaw in UEFI firmware affects most servers on planet Earth",
+          "title": "I watched a humanoid robot clean my apartment. It felt like a taste of the future.",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-06T18:44:38+00:00"
+      "latest_published_at": "2026-11-06T23:46:18+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 46,
+      "fresh_count": 50,
       "errors": [
         {
           "endpoint": "jiqizhixin",
@@ -318,12 +309,24 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-11-06T19:36:48.023585+00:00",
-      "rejected_count": 68,
+      "checked_at": "2026-11-06T23:47:33.528967+00:00",
+      "rejected_count": 64,
       "rejection_reasons": {
-        "off_topic": 68
+        "off_topic": 64
       },
       "rejected_examples": [
+        {
+          "title": "三星电子 DX 部门员工抗议奖金分配不公，要求现金补偿及管理层道歉",
+          "reason": "off_topic"
+        },
+        {
+          "title": "文远知行创始人韩旭：希望四、五年内能坐上 Robotaxi 从广州直达香港",
+          "reason": "off_topic"
+        },
+        {
+          "title": "微软发布 Win11 多预览版：改进 Windows Hello 登录体验",
+          "reason": "off_topic"
+        },
         {
           "title": "今日立冬：倏忽秋又尽，今朝恰立冬",
           "reason": "off_topic"
@@ -343,24 +346,14 @@
         {
           "title": "《鸣潮》3.8 版本将为索尼 PS5 Pro 带来 PSSR，PC 端开放“资源分类下载”及“资源清理”功能",
           "reason": "off_topic"
-        },
-        {
-          "title": "微信鸿蒙版 App 发布 8.0.23.35 邀测升级，灰度聊天消息长按问小微等功能",
-          "reason": "off_topic"
-        },
-        {
-          "title": "欧盟委员会称 TikTok 通过推荐算法制造信息茧房，要求整改“推荐”页面",
-          "reason": "off_topic"
-        },
-        {
-          "title": "2026 年中国金鸡百花电影节开幕短片《完美婚礼》首播，使用华为 Mate 90 系列拍摄",
-          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-06T15:13:11+00:00"
+      "latest_published_at": "2026-11-06T23:40:22+00:00"
     }
   },
-  "quality_rejections": {},
+  "quality_rejections": {
+    "duplicate_headline": 1
+  },
   "quality_complete": true
 }

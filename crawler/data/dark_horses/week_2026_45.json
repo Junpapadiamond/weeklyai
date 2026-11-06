@@ -195,5 +195,97 @@
         }
       ]
     }
+  },
+  {
+    "name": "Physicl",
+    "website": "https://www.physicl.ai/",
+    "description": "为机器人和世界模型设计师提供高保真物理模拟和合成数据生成平台，通过3D环境和资产库帮助解决机器人训练中的边界情况问题。",
+    "description_en": "High-fidelity physics simulation and synthetic data generation platform for robot builders and world model designers, addressing training challenges through 3D environments and asset libraries.",
+    "category": "hardware",
+    "why_matters": "填补AI在理解、交互和操纵空间及物体方面的能力空白，通过将非结构化真实信息转化为高保真物理表示来改进物理AI模型的有效性。",
+    "why_matters_en": "Addresses a critical gap in AI's ability to understand, interact with, and manipulate space and objects by transforming unstructured real-world information into high-fidelity physical representations with correct geometry, materials, and physics.",
+    "latest_news": "筹得由Inovia Capital领导的1000万美元种子轮融资，发布了包含10,000个3D环境和100,000个资产的Studio产品，已获得世界模型构建者SpAItial作为早期客户。",
+    "latest_news_en": "Raised $10 million in seed funding led by Inovia Capital; launched Studio product featuring 10,000 3D environments and 100,000 assets; secured early customer adoption from world model builder SpAItial.",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "founder_background"
+    ],
+    "company_country": "unknown",
+    "confidence": 0.85,
+    "source_url": "https://techcrunch.com/2026/11/06/physicl-raises-10m-to-make-the-digital-world-real-enough-for-robots/",
+    "funding_total": "$10 million",
+    "categories": [
+      "hardware"
+    ],
+    "region": "Unknown",
+    "source": "claude_rss",
+    "source_title": "Physicl raises $10M to make the digital world real enough for robots",
+    "website_source": "https://techcrunch.com/2026/11/06/physicl-raises-10m-to-make-the-digital-world-real-enough-for-robots/",
+    "discovered_at": "2026-11-06",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261106T234010Z-b8b1cc63",
+      "search_region": "us",
+      "search_lane": "rss",
+      "website_verification": null,
+      "source_published_at": "2026-11-06T13:00:00+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "has raised $10 million in seed funding led by Inovia Capital"
+        },
+        {
+          "criterion": "founder_background",
+          "quote": "Founder and CEO de Vigan spent the last decade building nfinite, which made it easy for brands and retailers to create 3D models of their goods and display them online"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Clutch Security",
+    "website": "https://www.clutch.security/",
+    "description": "保护 AI 智能体访问企业系统的安全初创公司,管理 AI 智能体对公司系统的访问权限",
+    "description_en": "A startup that secures AI agents' access to company systems, managing how AI agents interact with company infrastructure",
+    "category": "agent",
+    "why_matters": "在 AI 驱动的网络攻击增加的背景下,Clutch 专注于新兴的 AI 智能体安全领域,年收入接近 1000 万美元,被 Palo Alto Networks 以 5 亿美元现金收购,估值达到年收入的 50 倍,显示市场对 AI 智能体安全解决方案的强劲需求",
+    "why_matters_en": "In a market increasingly focused on securing software against AI-driven cyberattacks, Clutch addresses the emerging field of AI agent security with nearly $10M ARR, attracting a $500M cash acquisition offer from Palo Alto Networks at 50x ARR, demonstrating strong market demand for AI agent access management solutions",
+    "latest_news": "Palo Alto Networks 正在洽谈以 5 亿美元现金加里程碑式付款收购 Clutch Security",
+    "latest_news_en": "Palo Alto Networks is in talks to acquire Clutch Security for $500 million in cash plus additional milestone-based payouts",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "growth_anomaly"
+    ],
+    "company_country": "US",
+    "confidence": 0.95,
+    "source_url": "https://techcrunch.com/2026/11/05/palo-alto-networks-in-talks-to-buy-ai-agent-security-startup-clutch-for-500m/",
+    "funding_total": "$20M",
+    "categories": [
+      "agent"
+    ],
+    "region": "Unknown",
+    "source": "claude_rss",
+    "source_title": "Palo Alto Networks in talks to buy AI agent security startup Clutch for $500M",
+    "website_source": "https://techcrunch.com/2026/11/05/palo-alto-networks-in-talks-to-buy-ai-agent-security-startup-clutch-for-500m/",
+    "discovered_at": "2026-11-06",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261106T234010Z-b8b1cc63",
+      "search_region": "us",
+      "search_lane": "rss",
+      "website_verification": null,
+      "source_published_at": "2026-11-06T06:28:32+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "Three-year-old Clutch was last valued at $85 million when it raised a $20 million Series A round in January 2025, led by Lightspeed and SignalFire"
+        },
+        {
+          "criterion": "growth_anomaly",
+          "quote": "The startup is currently approaching $10 million in annual recurring revenue (ARR). That means the acquisition, if completed, would value Clutch at about 50 times its ARR"
+        }
+      ]
+    }
   }
 ]
