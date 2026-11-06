@@ -26,13 +26,15 @@ export function CategoryPicker({ options, value, onChange }: {
   const choose = (next: string) => {
     onChange(next);
     close(true);
-    setQuery("");
   };
   return (
     <details ref={details} className="home-category-picker"
       onKeyDown={event => { if (event.key === "Escape") { event.preventDefault(); close(true); } }}
       onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) close(); }}
-      onToggle={event => { if (event.currentTarget.open) { setQuery(""); event.currentTarget.querySelector("input")?.focus(); } }}>
+      onToggle={event => {
+        if (event.currentTarget.open) event.currentTarget.querySelector("input")?.focus();
+        else setQuery("");
+      }}>
       <summary aria-controls={id}>
         <span>{active?.label ?? t("全部分类", "All categories")}</span>
         <CaretDown size={16} aria-hidden="true" />
