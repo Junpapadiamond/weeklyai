@@ -1,0 +1,266 @@
+{
+  "cache_key": "add6ad0ee87537b11d648958-dcbee5e16ea2f8d4e4785282",
+  "product_key": "add6ad0ee87537b11d648958",
+  "fingerprint": "dcbee5e16ea2f8d4e4785282",
+  "product_id": "p_37eed01228f0e1e2",
+  "product_name": "Conductor",
+  "origin": "ai",
+  "generated_at": "2026-11-06T04:43:09.503387+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "多代理并行编码演示",
+      "en": "Multi-Agent Parallel Coding Demo"
+    },
+    "scenario": {
+      "zh": "展示如何用多个AI代理在隔离工作区并行构建软件项目的不同模块",
+      "en": "Shows how multiple AI agents build different modules of a software project in parallel isolated workspaces"
+    },
+    "steps": [
+      {
+        "id": "project_split",
+        "widget": "choice",
+        "title": {
+          "zh": "选择项目类型",
+          "en": "Choose Project Type"
+        },
+        "instruction": {
+          "zh": "选一个要拆分成模块的项目",
+          "en": "Pick a project to split into modules"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "待办事项应用",
+              "en": "Todo App"
+            },
+            "output": {
+              "zh": "前端、API、数据库三个独立工作区",
+              "en": "Three workspaces: frontend, API, database"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "项目需求",
+                "en": "Project Requirements"
+              },
+              "output_label": {
+                "zh": "工作区分配",
+                "en": "Workspace Assignment"
+              },
+              "input": {
+                "zh": "用户可添加任务、标记完成、按优先级过滤,需要React前端和REST API",
+                "en": "Users add tasks, mark complete, filter by priority; needs React frontend and REST API"
+              },
+              "output": {
+                "zh": "工作区A处理React组件和状态,工作区B构建Express端点,工作区C设计PostgreSQL表结构",
+                "en": "Workspace A handles React components and state, Workspace B builds Express endpoints, Workspace C designs PostgreSQL schema"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "工作区A",
+                    "en": "Workspace A"
+                  },
+                  "detail": {
+                    "zh": "TaskList组件、过滤逻辑、API调用",
+                    "en": "TaskList component, filter logic, API calls"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "工作区B",
+                    "en": "Workspace B"
+                  },
+                  "detail": {
+                    "zh": "POST /tasks、GET /tasks、PATCH路由",
+                    "en": "POST /tasks, GET /tasks, PATCH routes"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "工作区C",
+                    "en": "Workspace C"
+                  },
+                  "detail": {
+                    "zh": "tasks表、索引、迁移脚本",
+                    "en": "tasks table, indexes, migration scripts"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "电商结账流程",
+              "en": "E-commerce Checkout"
+            },
+            "output": {
+              "zh": "支付、库存、通知四个工作区",
+              "en": "Four workspaces: payment, inventory, notifications"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "功能需求",
+                "en": "Feature Requirements"
+              },
+              "output_label": {
+                "zh": "并行任务",
+                "en": "Parallel Tasks"
+              },
+              "input": {
+                "zh": "集成Stripe支付、实时库存检查、订单确认邮件、购物车持久化",
+                "en": "Integrate Stripe payment, real-time inventory check, order confirmation emails, cart persistence"
+              },
+              "output": {
+                "zh": "工作区A集成Stripe SDK,工作区B编写库存锁定逻辑,工作区C配置邮件模板,工作区D实现Redis会话",
+                "en": "Workspace A integrates Stripe SDK, Workspace B writes inventory locking logic, Workspace C configures email templates, Workspace D implements Redis sessions"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "工作区A",
+                    "en": "Workspace A"
+                  },
+                  "detail": {
+                    "zh": "PaymentIntent创建、webhook处理",
+                    "en": "PaymentIntent creation, webhook handling"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "工作区B",
+                    "en": "Workspace B"
+                  },
+                  "detail": {
+                    "zh": "库存原子更新、超卖防护",
+                    "en": "Atomic inventory updates, oversell protection"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "工作区C",
+                    "en": "Workspace C"
+                  },
+                  "detail": {
+                    "zh": "SendGrid集成、HTML邮件模板",
+                    "en": "SendGrid integration, HTML email templates"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "review_output",
+        "widget": "review",
+        "title": {
+          "zh": "检查代理输出",
+          "en": "Review Agent Output"
+        },
+        "instruction": {
+          "zh": "查看各工作区生成的代码示例",
+          "en": "View code samples from each workspace"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "前端代码",
+              "en": "Frontend Code"
+            },
+            "output": {
+              "zh": "React组件包含状态管理和API调用",
+              "en": "React component with state management and API calls"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "工作区A输出",
+                "en": "Workspace A Output"
+              },
+              "output_label": {
+                "zh": "代码特征",
+                "en": "Code Features"
+              },
+              "input": {
+                "zh": "const [tasks, setTasks] = useState([]); fetch('/api/tasks').then(r => r.json()).then(setTasks);",
+                "en": "const [tasks, setTasks] = useState([]); fetch('/api/tasks').then(r => r.json()).then(setTasks);"
+              },
+              "output": {
+                "zh": "使用钩子管理状态,异步获取任务列表",
+                "en": "Uses hooks for state, fetches tasks async"
+              },
+              "emphasis": {
+                "zh": "useState",
+                "en": "useState"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "API端点",
+              "en": "API Endpoints"
+            },
+            "output": {
+              "zh": "Express路由处理任务的增删改查",
+              "en": "Express routes handle task CRUD operations"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "工作区B输出",
+                "en": "Workspace B Output"
+              },
+              "output_label": {
+                "zh": "端点功能",
+                "en": "Endpoint Functions"
+              },
+              "input": {
+                "zh": "app.post('/api/tasks', async (req, res) => { const result = await db.query('INSERT INTO tasks VALUES ($1)', [title]); });",
+                "en": "app.post('/api/tasks', async (req, res) => { const result = await db.query('INSERT INTO tasks VALUES ($1)', [title]); });"
+              },
+              "output": {
+                "zh": "参数化查询防止注入,返回新建任务对象",
+                "en": "Parameterized query prevents injection, returns created task"
+              },
+              "emphasis": {
+                "zh": "$1",
+                "en": "$1"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了三个隔离工作区生成的前端和后端代码示例,实际代理协作、代码集成和项目完整性需在Conductor平台验证",
+      "en": "Showed frontend and backend code samples from three isolated workspaces; actual agent collaboration, code integration and project completeness require verification on Conductor platform"
+    },
+    "sources": [
+      {
+        "url": "https://www.conductor.build/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/11/04/meta-acquires-ai-coding-startup-conductor/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

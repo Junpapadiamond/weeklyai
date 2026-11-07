@@ -1,0 +1,275 @@
+{
+  "cache_key": "00637cc4daa078596f71a636-c9040e21cebbce7e2c0a1226",
+  "product_key": "00637cc4daa078596f71a636",
+  "fingerprint": "c9040e21cebbce7e2c0a1226",
+  "product_id": "172",
+  "product_name": "Groove Quantum",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-07T22:41:55.575266+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "量子芯片制造规模评估",
+      "en": "Quantum Chip Scale Assessment"
+    },
+    "scenario": {
+      "zh": "评估 Groove Quantum 量子芯片的工业制造就绪程度和扩展路径",
+      "en": "Assess Groove Quantum's quantum chip readiness for industrial manufacturing and scale-up path"
+    },
+    "steps": [
+      {
+        "id": "scale_target",
+        "widget": "choice",
+        "title": {
+          "zh": "选择扩展目标",
+          "en": "Choose Scale Target"
+        },
+        "instruction": {
+          "zh": "选择量子处理器的目标规模",
+          "en": "Select target scale for quantum processor"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "中等规模（50-100量子比特）",
+              "en": "Mid-scale (50-100 qubits)"
+            },
+            "output": {
+              "zh": "适合近期应用验证",
+              "en": "Suitable for near-term application validation"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "当前原型",
+                "en": "Current Prototype"
+              },
+              "output_label": {
+                "zh": "中等规模目标",
+                "en": "Mid-scale Target"
+              },
+              "input": {
+                "zh": "20量子比特芯片，实验室环境，单批次生产，手工组装工艺",
+                "en": "20-qubit chip, lab environment, single-batch production, manual assembly process"
+              },
+              "output": {
+                "zh": "80量子比特芯片，受控洁净室，小批量生产线，半自动化封装",
+                "en": "80-qubit chip, controlled cleanroom, small-batch line, semi-automated packaging"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "工业规模（100+量子比特）",
+              "en": "Industrial Scale (100+ qubits)"
+            },
+            "output": {
+              "zh": "需要完整制造基础设施",
+              "en": "Requires full manufacturing infrastructure"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "当前原型",
+                "en": "Current Prototype"
+              },
+              "output_label": {
+                "zh": "工业规模目标",
+                "en": "Industrial Target"
+              },
+              "input": {
+                "zh": "20量子比特芯片，实验室环境，单批次生产，手工组装工艺",
+                "en": "20-qubit chip, lab environment, single-batch production, manual assembly process"
+              },
+              "output": {
+                "zh": "200量子比特芯片，III级洁净室，连续生产线，全自动化测试",
+                "en": "200-qubit chip, Class III cleanroom, continuous line, fully automated testing"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "bottleneck",
+        "widget": "choice",
+        "title": {
+          "zh": "识别制造瓶颈",
+          "en": "Identify Manufacturing Bottleneck"
+        },
+        "instruction": {
+          "zh": "选择需要优先解决的制约因素",
+          "en": "Select constraint requiring priority attention"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "量子比特互连密度",
+              "en": "Qubit Interconnect Density"
+            },
+            "output": {
+              "zh": "布线复杂度随规模急剧上升",
+              "en": "Wiring complexity rises sharply with scale"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "设计限制",
+                "en": "Design Constraints"
+              },
+              "output_label": {
+                "zh": "所需突破",
+                "en": "Required Breakthroughs"
+              },
+              "input": {
+                "zh": "当前20量子比特芯片使用二维平面互连，信号串扰可控",
+                "en": "Current 20-qubit chip uses 2D planar interconnects, crosstalk manageable"
+              },
+              "output": {
+                "zh": "80量子比特需要三维布线或新型拓扑结构以减少物理交叉",
+                "en": "80 qubits require 3D wiring or novel topology to reduce physical crossings"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "互连架构",
+                    "en": "Interconnect Architecture"
+                  },
+                  "detail": {
+                    "zh": "从平面到立体堆叠",
+                    "en": "From planar to 3D stacking"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "信号隔离",
+                    "en": "Signal Isolation"
+                  },
+                  "detail": {
+                    "zh": "屏蔽技术和材料选择",
+                    "en": "Shielding techniques and material selection"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "低温封装工艺",
+              "en": "Cryogenic Packaging"
+            },
+            "output": {
+              "zh": "极低温环境下的可靠性挑战",
+              "en": "Reliability challenges at extreme low temperatures"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "funding_use",
+        "widget": "choice",
+        "title": {
+          "zh": "资金分配策略",
+          "en": "Funding Allocation"
+        },
+        "instruction": {
+          "zh": "评估€16M种子轮的使用优先级",
+          "en": "Assess priority use of €16M seed round"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "设备采购为主",
+              "en": "Equipment-focused"
+            },
+            "output": {
+              "zh": "快速建立生产能力",
+              "en": "Rapidly establish production capacity"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "投资类别",
+                "en": "Investment Categories"
+              },
+              "output_label": {
+                "zh": "预期产出",
+                "en": "Expected Outcomes"
+              },
+              "input": {
+                "zh": "€16M种子轮资金可用于设备、人员和设施",
+                "en": "€16M seed funding available for equipment, personnel, and facilities"
+              },
+              "output": {
+                "zh": "洁净室设备和测试仪器支持小批量生产",
+                "en": "Cleanroom equipment and test instruments enable small-batch production"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "洁净室升级",
+                    "en": "Cleanroom Upgrade"
+                  },
+                  "detail": {
+                    "zh": "从实验室到受控环境",
+                    "en": "From lab to controlled environment"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "自动化测试",
+                    "en": "Automated Testing"
+                  },
+                  "detail": {
+                    "zh": "减少人工测试周期",
+                    "en": "Reduce manual testing cycles"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "研发与设备平衡",
+              "en": "R&D and Equipment Balance"
+            },
+            "output": {
+              "zh": "同步推进芯片设计和制造",
+              "en": "Advance chip design and manufacturing in parallel"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "展示了量子芯片从实验室到工业制造的扩展路径和关键瓶颈。实际制造能力和时间表需在 Groove Quantum 官网确认。",
+      "en": "Illustrated scale-up path and key bottlenecks from lab to industrial quantum chip manufacturing. Actual capabilities and timeline must be confirmed on Groove Quantum's site."
+    },
+    "sources": [
+      {
+        "url": "https://groovequantum.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://sifted.eu/articles/groove-quantum-16m-seed",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

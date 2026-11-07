@@ -1,0 +1,238 @@
+{
+  "cache_key": "9fef90f7171f3db004706374-69a7f5edb21ea169535471ac",
+  "product_key": "9fef90f7171f3db004706374",
+  "fingerprint": "69a7f5edb21ea169535471ac",
+  "product_id": "170",
+  "product_name": "Firestorm Labs",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-07T22:41:28.844639+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "前线无人机工厂部署",
+      "en": "Field Drone Factory Deploy"
+    },
+    "scenario": {
+      "zh": "演示集装箱工厂在战术环境下的选址和产能配置，实际系统由供应商操作",
+      "en": "Demo container factory site selection and capacity setup in tactical settings; real system operated by vendor"
+    },
+    "steps": [
+      {
+        "id": "site",
+        "widget": "choice",
+        "title": {
+          "zh": "部署选址",
+          "en": "Site Selection"
+        },
+        "instruction": {
+          "zh": "选择一个战术部署场景",
+          "en": "Choose a tactical deployment scenario"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "前线补给站",
+              "en": "Forward Supply Hub"
+            },
+            "output": {
+              "zh": "靠近作战区域，快速响应",
+              "en": "Near combat zone, rapid response"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "任务需求",
+                "en": "Mission Requirements"
+              },
+              "output_label": {
+                "zh": "选址评估",
+                "en": "Site Assessment"
+              },
+              "input": {
+                "zh": "距前线25公里，需每日补充侦察无人机60架，现有电力和防护设施",
+                "en": "25km from frontline, need 60 recon drones daily, existing power and protection"
+              },
+              "output": {
+                "zh": "建议部署一个标准集装箱单元，利用现有电网，预计日产能55-70架",
+                "en": "Recommend one standard container unit, use existing grid, estimated 55-70 drones per day"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "后方基地",
+              "en": "Rear Staging Base"
+            },
+            "output": {
+              "zh": "更安全位置，规模化生产",
+              "en": "Safer location, scaled production"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "任务需求",
+                "en": "Mission Requirements"
+              },
+              "output_label": {
+                "zh": "选址评估",
+                "en": "Site Assessment"
+              },
+              "input": {
+                "zh": "距前线80公里，需储备攻击无人机200架用于未来行动，安全等级高",
+                "en": "80km from frontline, stockpile 200 attack drones for future ops, high security"
+              },
+              "output": {
+                "zh": "建议部署三个集装箱单元并联，配备独立发电，预计七日完成储备目标",
+                "en": "Recommend three parallel containers, independent generators, seven days to target stockpile"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "config",
+        "widget": "choice",
+        "title": {
+          "zh": "产能配置",
+          "en": "Capacity Config"
+        },
+        "instruction": {
+          "zh": "根据任务调整生产参数",
+          "en": "Adjust production parameters for mission"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "侦察优先",
+              "en": "Recon Priority"
+            },
+            "output": {
+              "zh": "小型无人机，高产量",
+              "en": "Small drones, high volume"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "生产配置",
+                "en": "Production Config"
+              },
+              "output_label": {
+                "zh": "预期输出",
+                "en": "Expected Output"
+              },
+              "input": {
+                "zh": "侦察型，续航45分钟，载重500克，日产60架",
+                "en": "Recon type, 45min flight, 500g payload, 60 per day"
+              },
+              "output": {
+                "zh": "工作站分配：组装四条线，测试两工位，质检一工位",
+                "en": "Workstation allocation: four assembly lines, two test stations, one QC station"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "组装线",
+                    "en": "Assembly Lines"
+                  },
+                  "detail": {
+                    "zh": "四条线并行，机体和电子模块同步",
+                    "en": "Four parallel lines, airframe and electronics concurrent"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "测试工位",
+                    "en": "Test Stations"
+                  },
+                  "detail": {
+                    "zh": "两工位轮转，飞控和通信验证",
+                    "en": "Two rotating stations, flight control and comms validation"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "攻击优先",
+              "en": "Strike Priority"
+            },
+            "output": {
+              "zh": "载荷更大，产量较低",
+              "en": "Larger payload, lower volume"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "生产配置",
+                "en": "Production Config"
+              },
+              "output_label": {
+                "zh": "预期输出",
+                "en": "Expected Output"
+              },
+              "input": {
+                "zh": "攻击型，续航30分钟，载重3公斤，日产20架",
+                "en": "Strike type, 30min flight, 3kg payload, 20 per day"
+              },
+              "output": {
+                "zh": "工作站分配：组装两条线，武器挂载专用工位，测试一工位",
+                "en": "Workstation allocation: two assembly lines, dedicated weapon mounting, one test station"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "组装线",
+                    "en": "Assembly Lines"
+                  },
+                  "detail": {
+                    "zh": "两条线串行，机体强化和载荷集成",
+                    "en": "Two serial lines, reinforced airframe and payload integration"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "挂载工位",
+                    "en": "Mounting Station"
+                  },
+                  "detail": {
+                    "zh": "专用工位，武器接口和保险装置校验",
+                    "en": "Dedicated station, weapon interface and safety device check"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了选址评估和产能配置的决策逻辑，未展示实际设备操作或生产过程，真实部署需在供应商支持下完成",
+      "en": "Illustrated site assessment and capacity config logic; did not show actual equipment operation or production process; real deployment requires vendor support"
+    },
+    "sources": [
+      {
+        "url": "https://www.shadypets.com/firestorm-labs",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/04/29/firestorm-labs-raises-82m-to-take-drone-factories-into-the-field/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

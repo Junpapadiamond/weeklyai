@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-07T22:10:05.879553+00:00",
+  "updated_at": "2026-11-07T22:39:35.764718+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
@@ -7,7 +7,7 @@
       "fresh_count": 13,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-07T22:10:05.879553+00:00",
+      "checked_at": "2026-11-07T22:39:35.764718+00:00",
       "rejected_count": 16,
       "rejection_reasons": {
         "unvetted_x_author": 9,
@@ -52,17 +52,37 @@
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 18,
+      "fresh_count": 19,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-07T22:10:05.879553+00:00",
-      "rejected_count": 22,
+      "checked_at": "2026-11-07T22:39:35.764718+00:00",
+      "rejected_count": 21,
       "rejection_reasons": {
         "no_concrete_signal": 14,
-        "off_topic": 6,
+        "off_topic": 5,
         "personal_help_or_chatter": 2
       },
       "rejected_examples": [
+        {
+          "title": "If a misaligned ASI wanted to maximize its computational resources, would destroying humanity really be the most rational option?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Open trash - now with Ads!",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "How Claude talks and what to do about it — a short essay",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "The Stylome bot is useless spam and should be removed",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "What does it actually mean to “learn how to use AI”?",
+          "reason": "no_concrete_signal"
+        },
         {
           "title": "Can ChatGPT autonomously manage Gmail or Messenger using its memory?",
           "reason": "no_concrete_signal"
@@ -74,30 +94,10 @@
         {
           "title": "Current state of Prompt Engineering",
           "reason": "off_topic"
-        },
-        {
-          "title": "Skills Auditor Prompts",
-          "reason": "off_topic"
-        },
-        {
-          "title": "I made an advaned image editor",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Got a Unique Recruiting Email Today",
-          "reason": "off_topic"
-        },
-        {
-          "title": "He said Google’s AI was conscious. But what was it doing to his mind?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Arguing with non-believers",
-          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-07T21:54:10+00:00"
+      "latest_published_at": "2026-11-07T22:21:47+00:00"
     },
     "youtube": {
       "status": "direct",
@@ -109,7 +109,7 @@
         }
       ],
       "feeds_ok": 7,
-      "checked_at": "2026-11-07T22:10:05.879553+00:00",
+      "checked_at": "2026-11-07T22:39:35.764718+00:00",
       "rejected_count": 15,
       "rejection_reasons": {
         "off_topic": 15
@@ -156,13 +156,21 @@
       "fresh_count": 14,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-07T22:10:05.879553+00:00",
+      "checked_at": "2026-11-07T22:39:35.764718+00:00",
       "rejected_count": 46,
       "rejection_reasons": {
-        "off_topic": 20,
-        "no_concrete_signal": 26
+        "no_concrete_signal": 25,
+        "off_topic": 21
       },
       "rejected_examples": [
+        {
+          "title": "Dragon Ball AI",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Smart Glasses for the Blind",
+          "reason": "off_topic"
+        },
         {
           "title": "Cursed Napster",
           "reason": "off_topic"
@@ -186,14 +194,6 @@
         {
           "title": "Real-time context lifted RCA accuracy up to 50% and reduced token cost to 1/10th",
           "reason": "off_topic"
-        },
-        {
-          "title": "Show HN: Conductor sold to Meta. Agents rebuilt the app in 3 days for $170 (MIT)",
-          "reason": "off_topic"
-        },
-        {
-          "title": "HERV AI – Spatial intelligence platform",
-          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
@@ -201,13 +201,13 @@
     },
     "producthunt": {
       "status": "direct",
-      "fresh_count": 16,
+      "fresh_count": 15,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-07T22:10:05.879553+00:00",
-      "rejected_count": 20,
+      "checked_at": "2026-11-07T22:39:35.764718+00:00",
+      "rejected_count": 21,
       "rejection_reasons": {
-        "off_topic": 20
+        "off_topic": 21
       },
       "rejected_examples": [
         {
@@ -223,7 +223,7 @@
           "reason": "off_topic"
         },
         {
-          "title": "Exa Monitors v2",
+          "title": "Muse Realtime Avatar",
           "reason": "off_topic"
         },
         {
@@ -235,11 +235,11 @@
           "reason": "off_topic"
         },
         {
-          "title": "Muse Realtime Avatar",
+          "title": "Exa Monitors v2",
           "reason": "off_topic"
         },
         {
-          "title": "seam",
+          "title": "Dino Kids",
           "reason": "off_topic"
         }
       ],
@@ -256,7 +256,7 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-07T22:10:05.879553+00:00",
+      "checked_at": "2026-11-07T22:39:35.764718+00:00",
       "rejected_count": 16,
       "rejection_reasons": {
         "off_topic": 16
@@ -283,15 +283,15 @@
           "reason": "off_topic"
         },
         {
+          "title": "Reddit Founder Says Building Social Media Apps Is ‘Not Cool Anymore’",
+          "reason": "off_topic"
+        },
+        {
           "title": "Meet *sshole, the vulnerability that lets hackers SSH into Linux devices",
           "reason": "off_topic"
         },
         {
           "title": "Hackers exploited iOS and Android flaws to infect phones",
-          "reason": "off_topic"
-        },
-        {
-          "title": "VMware releases vSphere Express for virtualization on up to 128 cores",
           "reason": "off_topic"
         }
       ],
@@ -316,42 +316,42 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-11-07T22:10:05.879553+00:00",
+      "checked_at": "2026-11-07T22:39:35.764718+00:00",
       "rejected_count": 72,
       "rejection_reasons": {
         "off_topic": 72
       },
       "rejected_examples": [
         {
-          "title": "最贵比亚迪来了！仰望鼎曜亮相中东，「山河鼎韵」限量版定金 30 万元",
+          "title": "AGENTS.MD，危险危险危险！！！",
           "reason": "off_topic"
         },
         {
-          "title": "早报｜触屏MacBook Pro开卖即缺货/仰望U9 Xtreme突破503kph/博世吴永桥：汽车不该拿来订咖啡机票",
+          "title": "Jeff Dean李飞飞最新对谈：全是RSI非共识",
           "reason": "off_topic"
         },
         {
-          "title": "503.17km/h！比亚迪仰望 U9X 再次刷新全球最速，量产车首次突破 5 字头",
+          "title": "A\\三大内部模型曝光！领先Opus5.5三个月，RSI缩短80%实验时间",
           "reason": "off_topic"
         },
         {
-          "title": "10 月最值得关注的 17 个产品｜明日产品 WATCHLIST",
+          "title": "为什么每个 Personal Agent 背后，都必须配备一台“云电脑”？",
           "reason": "off_topic"
         },
         {
-          "title": "13 万买 5 米大轿车！比亚迪海豹 07 上市，首搭云辇-M 磁流变悬架",
+          "title": "一个 05 后的个人数码编年史",
           "reason": "off_topic"
         },
         {
-          "title": "MacBook Pro 能触屏了，但这只是它最小的升级｜附选购指南",
+          "title": "本周看什么 | 最近值得一看的 9 部作品",
           "reason": "off_topic"
         },
         {
-          "title": "23.98 万元起！智己 LS8 NEO 正式上市，转向刹车全面线控",
+          "title": "iPhone 变强了，但我没有",
           "reason": "off_topic"
         },
         {
-          "title": "你记忆里的那台两座小车回来了！smart #2 上市，9.99 万元起",
+          "title": "开启 Mac 的下一世代：MacBook Pro (PROLED XDR) 首发体验",
           "reason": "off_topic"
         }
       ],

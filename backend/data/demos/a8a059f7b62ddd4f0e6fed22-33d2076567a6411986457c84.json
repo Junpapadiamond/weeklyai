@@ -1,0 +1,397 @@
+{
+  "cache_key": "a8a059f7b62ddd4f0e6fed22-33d2076567a6411986457c84",
+  "product_key": "a8a059f7b62ddd4f0e6fed22",
+  "fingerprint": "33d2076567a6411986457c84",
+  "product_id": "182",
+  "product_name": "Tier IV",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-07T22:43:10.808774+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "自动驾驶系统架构选型",
+      "en": "Autonomous System Architecture"
+    },
+    "scenario": {
+      "zh": "为物流园区配置L4级自动驾驶方案，根据运营场景确定传感器配置与计算平台",
+      "en": "Configure L4 autonomous driving for logistics park based on operational scenarios"
+    },
+    "steps": [
+      {
+        "id": "scenario",
+        "widget": "choice",
+        "title": {
+          "zh": "运营场景",
+          "en": "Operating Scenario"
+        },
+        "instruction": {
+          "zh": "选择部署环境类型",
+          "en": "Select deployment environment"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "封闭园区低速",
+              "en": "Closed Low-Speed"
+            },
+            "output": {
+              "zh": "5-20km/h园区内配送",
+              "en": "5-20km/h intra-park delivery"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "场地条件",
+                "en": "Site Conditions"
+              },
+              "output_label": {
+                "zh": "推荐配置",
+                "en": "Recommended Setup"
+              },
+              "input": {
+                "zh": "3km²围栏区域，固定路线，装卸点12处",
+                "en": "3km² fenced area, fixed routes, 12 loading points"
+              },
+              "output": {
+                "zh": "基础传感器组：双目相机适配已知环境，降低硬件成本",
+                "en": "Basic sensor set: stereo cameras suit known environment, reduce hardware cost"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "路线特征",
+                    "en": "Route Profile"
+                  },
+                  "detail": {
+                    "zh": "预设路径，静态障碍物已标注",
+                    "en": "Preset paths, static obstacles mapped"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "感知需求",
+                    "en": "Sensing Needs"
+                  },
+                  "detail": {
+                    "zh": "人员检测、叉车避让",
+                    "en": "Pedestrian detection, forklift avoidance"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "计算平台",
+                    "en": "Compute Platform"
+                  },
+                  "detail": {
+                    "zh": "边缘单元处理局部决策",
+                    "en": "Edge units for local decisions"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "开放道路混行",
+              "en": "Mixed Open Road"
+            },
+            "output": {
+              "zh": "40-60km/h公共路段通行",
+              "en": "40-60km/h public road operation"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "场地条件",
+                "en": "Site Conditions"
+              },
+              "output_label": {
+                "zh": "推荐配置",
+                "en": "Recommended Setup"
+              },
+              "input": {
+                "zh": "跨市区12km路段，含红绿灯路口8个，与社会车辆混行",
+                "en": "12km cross-city route, 8 signaled intersections, mixed traffic"
+              },
+              "output": {
+                "zh": "增强传感器组：激光雷达应对动态交通，多传感器融合提升可靠性",
+                "en": "Enhanced sensors: LiDAR for dynamic traffic, multi-sensor fusion for reliability"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "路线特征",
+                    "en": "Route Profile"
+                  },
+                  "detail": {
+                    "zh": "动态路况，需实时规划",
+                    "en": "Dynamic conditions, real-time planning"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "感知需求",
+                    "en": "Sensing Needs"
+                  },
+                  "detail": {
+                    "zh": "全向扫描、信号灯识别、行人预测",
+                    "en": "Omnidirectional scan, signal recognition, pedestrian prediction"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "计算平台",
+                    "en": "Compute Platform"
+                  },
+                  "detail": {
+                    "zh": "车载高性能单元实时融合数据",
+                    "en": "Onboard high-performance unit for real-time fusion"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "tech_stack",
+        "widget": "choice",
+        "title": {
+          "zh": "技术栈组成",
+          "en": "Technology Stack"
+        },
+        "instruction": {
+          "zh": "查看方案中的关键模块",
+          "en": "Review key modules in solution"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "感知与定位",
+              "en": "Perception & Localization"
+            },
+            "output": {
+              "zh": "传感器数据融合与定位",
+              "en": "Sensor fusion and positioning"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "输入数据流",
+                "en": "Input Data Streams"
+              },
+              "output_label": {
+                "zh": "处理结果",
+                "en": "Processing Output"
+              },
+              "input": {
+                "zh": "激光雷达点云、摄像头图像、IMU姿态、GPS信号",
+                "en": "LiDAR point cloud, camera images, IMU pose, GPS signal"
+              },
+              "output": {
+                "zh": "厘米级定位精度，障碍物分类与跟踪，可行驶区域提取",
+                "en": "Centimeter positioning, obstacle classification and tracking, drivable area extraction"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "传感器时间同步",
+                    "en": "Sensor Time Sync"
+                  },
+                  "detail": {
+                    "zh": "各传感器数据对齐到统一时间戳",
+                    "en": "Align sensor data to unified timestamp"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "目标检测与融合",
+                    "en": "Object Detection & Fusion"
+                  },
+                  "detail": {
+                    "zh": "视觉与雷达结果关联，生成目标列表",
+                    "en": "Correlate vision and LiDAR, generate object list"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "地图匹配定位",
+                    "en": "Map Matching Localization"
+                  },
+                  "detail": {
+                    "zh": "实时点云与高精地图对比",
+                    "en": "Real-time point cloud vs HD map"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "规划与控制",
+              "en": "Planning & Control"
+            },
+            "output": {
+              "zh": "路径生成与执行",
+              "en": "Path generation and execution"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "决策输入",
+                "en": "Decision Inputs"
+              },
+              "output_label": {
+                "zh": "输出指令",
+                "en": "Output Commands"
+              },
+              "input": {
+                "zh": "任务目标点、实时障碍物位置、车辆当前状态",
+                "en": "Task waypoint, real-time obstacle positions, vehicle state"
+              },
+              "output": {
+                "zh": "转向角度指令、加速度控制、制动时序",
+                "en": "Steering angle, acceleration control, brake timing"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "全局路径规划",
+                    "en": "Global Path Planning"
+                  },
+                  "detail": {
+                    "zh": "基于地图生成起点到终点轨迹",
+                    "en": "Generate origin-to-destination trajectory from map"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "局部避障规划",
+                    "en": "Local Obstacle Avoidance"
+                  },
+                  "detail": {
+                    "zh": "动态调整轨迹避开移动障碍物",
+                    "en": "Dynamically adjust trajectory to avoid moving obstacles"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "车辆控制执行",
+                    "en": "Vehicle Control Execution"
+                  },
+                  "detail": {
+                    "zh": "将轨迹转为底层执行器指令",
+                    "en": "Convert trajectory to actuator commands"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "integration",
+        "widget": "review",
+        "title": {
+          "zh": "系统集成确认",
+          "en": "System Integration Review"
+        },
+        "instruction": {
+          "zh": "核对技术组件与运营需求的匹配情况",
+          "en": "Verify component-requirement alignment"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "封闭园区方案",
+              "en": "Closed Park Solution"
+            },
+            "output": {
+              "zh": "基础配置满足低速固定路线需求，成本可控",
+              "en": "Basic setup meets low-speed fixed-route needs, cost-effective"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "需求与配置",
+                "en": "Requirements vs Setup"
+              },
+              "output_label": {
+                "zh": "匹配评估",
+                "en": "Match Assessment"
+              },
+              "input": {
+                "zh": "运营需求：园区内5-20km/h、固定路线；技术配置：双目相机、边缘计算单元、预设路径地图",
+                "en": "Operations: 5-20km/h park, fixed routes; Tech: stereo cameras, edge compute, preset path map"
+              },
+              "output": {
+                "zh": "传感器组满足已知环境感知，计算平台处理负荷适中，地图维护简单",
+                "en": "Sensor set suits known environment, compute load moderate, map maintenance simple"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "开放道路方案",
+              "en": "Open Road Solution"
+            },
+            "output": {
+              "zh": "增强配置应对混行交通，可靠性较高",
+              "en": "Enhanced setup handles mixed traffic, higher reliability"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "需求与配置",
+                "en": "Requirements vs Setup"
+              },
+              "output_label": {
+                "zh": "匹配评估",
+                "en": "Match Assessment"
+              },
+              "input": {
+                "zh": "运营需求：40-60km/h公共路段、动态交通；技术配置：激光雷达、多传感器融合、车载高性能计算",
+                "en": "Operations: 40-60km/h public road, dynamic traffic; Tech: LiDAR, multi-sensor fusion, onboard high-performance compute"
+              },
+              "output": {
+                "zh": "激光雷达提供全向扫描，融合算法提升决策鲁棒性，高性能单元保证实时响应",
+                "en": "LiDAR provides omnidirectional scan, fusion improves decision robustness, high-performance unit ensures real-time response"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例展示了场景驱动的架构选型逻辑，实际部署需在Tier IV官网获取详细技术参数与集成方案",
+      "en": "Example shows scenario-driven architecture selection logic; actual deployment requires detailed specs and integration plans from Tier IV site"
+    },
+    "sources": [
+      {
+        "url": "https://tier4.jp/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcreate.balubo.jp/articles/10000861",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

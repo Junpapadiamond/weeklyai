@@ -1,0 +1,271 @@
+{
+  "cache_key": "3424f17031c5c651f3b4decc-cd286342507b8c620f4cf5bb",
+  "product_key": "3424f17031c5c651f3b4decc",
+  "fingerprint": "cd286342507b8c620f4cf5bb",
+  "product_id": "p_e69a0d8b9da69414",
+  "product_name": "Physicl",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-07T22:41:02.448449+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "机器人抓取场景模拟",
+      "en": "Robot Grasping Scenario Simulation"
+    },
+    "scenario": {
+      "zh": "为仓库机器人设计不规则物体抓取训练场景，生成合成数据用于边界情况测试",
+      "en": "Design irregular object grasping training scenarios for warehouse robots, generating synthetic data for edge case testing"
+    },
+    "steps": [
+      {
+        "id": "object_setup",
+        "widget": "choice",
+        "title": {
+          "zh": "选择测试物体类型",
+          "en": "Choose Test Object Type"
+        },
+        "instruction": {
+          "zh": "选择一种边界情况物体进行模拟",
+          "en": "Select an edge case object for simulation"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "柔性包装袋",
+              "en": "Flexible Packaging"
+            },
+            "output": {
+              "zh": "模拟变形材料的物理特性",
+              "en": "Simulate deformable material physics"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "物体参数",
+                "en": "Object Parameters"
+              },
+              "output_label": {
+                "zh": "物理配置",
+                "en": "Physics Configuration"
+              },
+              "input": {
+                "zh": "塑料快递袋：500g，充气膨胀，不规则形状，表面光滑",
+                "en": "Plastic courier bag: 500g, air-filled, irregular shape, smooth surface"
+              },
+              "output": {
+                "zh": "布料动力学：柔性网格128节点，摩擦系数0.3，内压0.8kPa，碰撞检测启用",
+                "en": "Cloth dynamics: flexible mesh 128 nodes, friction 0.3, internal pressure 0.8kPa, collision detection enabled"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "透明玻璃瓶",
+              "en": "Transparent Glass Bottle"
+            },
+            "output": {
+              "zh": "配置视觉识别难点场景",
+              "en": "Configure vision recognition challenge scenario"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "物体参数",
+                "en": "Object Parameters"
+              },
+              "output_label": {
+                "zh": "物理配置",
+                "en": "Physics Configuration"
+              },
+              "input": {
+                "zh": "空玻璃水瓶：200g，高折射率，反光表面，圆柱体",
+                "en": "Empty glass water bottle: 200g, high refraction, reflective surface, cylindrical"
+              },
+              "output": {
+                "zh": "光学设置：折射率1.52，镜面反射强度0.85，几何体刚性，质心偏移补偿",
+                "en": "Optical setup: refraction 1.52, specular reflection 0.85, rigid geometry, center-of-mass offset compensation"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "grasp_strategy",
+        "widget": "choice",
+        "title": {
+          "zh": "配置抓取策略",
+          "en": "Configure Grasp Strategy"
+        },
+        "instruction": {
+          "zh": "为所选物体设计抓取方案",
+          "en": "Design grasp approach for selected object"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "双指夹持",
+              "en": "Two-Finger Pinch"
+            },
+            "output": {
+              "zh": "测试多组接触点变化",
+              "en": "Test multiple contact point variations"
+            },
+            "when": {
+              "step_id": "object_setup",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "吸盘抓取",
+              "en": "Suction Grasp"
+            },
+            "output": {
+              "zh": "测试多组吸附面角度",
+              "en": "Test multiple suction surface angles"
+            },
+            "when": {
+              "step_id": "object_setup",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "侧壁夹持",
+              "en": "Side Wall Grip"
+            },
+            "output": {
+              "zh": "测试多组力分布模式",
+              "en": "Test multiple force distribution patterns"
+            },
+            "when": {
+              "step_id": "object_setup",
+              "option_id": "1"
+            }
+          },
+          {
+            "id": "3",
+            "label": {
+              "zh": "顶部抓取",
+              "en": "Top Grasp"
+            },
+            "output": {
+              "zh": "测试多组稳定性条件",
+              "en": "Test multiple stability conditions"
+            },
+            "when": {
+              "step_id": "object_setup",
+              "option_id": "1"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "result_review",
+        "widget": "review",
+        "title": {
+          "zh": "查看模拟结果",
+          "en": "Review Simulation Results"
+        },
+        "instruction": {
+          "zh": "检查虚构训练数据示例",
+          "en": "Inspect fictional training data examples"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "失败案例分析",
+              "en": "Failure Case Analysis"
+            },
+            "output": {
+              "zh": "展示标注的虚构物理参数和接触力变化",
+              "en": "Show annotated fictional physics parameters and contact force changes"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "失败模式",
+                "en": "Failure Modes"
+              },
+              "output_label": {
+                "zh": "物理诊断",
+                "en": "Physics Diagnosis"
+              },
+              "input": {
+                "zh": "虚构模拟中识别的边界情况",
+                "en": "Edge cases identified in fictional simulation"
+              },
+              "output": {
+                "zh": "每个案例的接触力学解释",
+                "en": "Contact mechanics explanation for each case"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "夹持力不足",
+                    "en": "Insufficient Grip Force"
+                  },
+                  "detail": {
+                    "zh": "摩擦力低于重力分量，接触面积覆盖较少目标表面",
+                    "en": "Friction below gravity component, contact area covers less target surface"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "物体变形逃逸",
+                    "en": "Object Deformation Escape"
+                  },
+                  "detail": {
+                    "zh": "柔性材料在压力下产生局部凹陷，质心偏移导致力矩失衡",
+                    "en": "Flexible material creates local indent under pressure, mass center shift causes torque imbalance"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "视觉定位偏差",
+                    "en": "Vision Localization Error"
+                  },
+                  "detail": {
+                    "zh": "透明表面导致深度估计误差，夹爪未对准实际轮廓",
+                    "en": "Transparent surface causes depth estimation error, gripper misaligned with actual contour"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "本地示例展示了为特定物体类型配置物理参数和查看虚构训练数据的流程。实际3D环境构建、高保真物理计算和可用合成数据集需在Physicl平台完成。",
+      "en": "This local example illustrates configuring physics parameters for specific object types and viewing fictional training data. Actual 3D environment construction, high-fidelity physics computation, and usable synthetic datasets must be completed on the Physicl platform."
+    },
+    "sources": [
+      {
+        "url": "https://www.physicl.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/11/06/physicl-raises-10m-to-make-the-digital-world-real-enough-for-robots/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}
