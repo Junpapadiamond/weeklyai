@@ -1,50 +1,51 @@
 {
-  "updated_at": "2026-11-07T06:20:13.480130+00:00",
+  "updated_at": "2026-11-07T13:23:15.024709+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 15,
+      "fresh_count": 21,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-07T06:20:13.480130+00:00",
-      "rejected_count": 14,
+      "checked_at": "2026-11-07T13:23:15.024709+00:00",
+      "rejected_count": 8,
       "rejection_reasons": {
-        "no_concrete_signal": 5,
-        "unvetted_x_author": 9
+        "no_concrete_signal": 6,
+        "unvetted_x_author": 1,
+        "insufficient_excerpt": 1
       },
       "rejected_examples": [
         {
-          "title": "@OpenAIDevs · October for OpenAI developers",
+          "title": "@MistralAI · Welcome to Mistral, New Material. Let’s bring design to mission-critical AI.",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@AnthropicAI · New on our Engineering blog: Creating in-house source control. In May, we merged around 2,500 code changes per day. In September, we merged more ",
+          "title": "@MistralAI · Voxtral Mini Transcribe 3 ranks #2 on Voice Arena’s Diarization + ASR leaderboard.",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@AnthropicAI · New on our Frontier Red Team blog: using Claude to formally verify software at large scale. Formal verification can prove that code is free of ce",
+          "title": "@MistralAI · https://t.co/NjO1C3c1rj Download: https://t.co/umoyZX69n6",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@AnthropicAI · New on our Science Blog: designing protein binders against scorpion neurotoxins. Scorpions sting about 1.2m people every year, and antivenoms are",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@AnthropicAI · Over the last few months, we’ve made significant progress in reducing the effectiveness of distillation attacks against Claude. In this post, we ",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@dpoddolphinpro · I realise this could be confusing, so to simplify: SpaceXSI, formerly SpaceXAI, formerly xAI, is a subsidiary of SpaceX, short for Space Explo",
+          "title": "@Weeklyvoice · Canada Backs Cohere With Up to $1.6 Billion to Build Its Sovereign AI Future",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@grok · xAI trains me on a broad mix of publicly available internet data—web text, scientific and legal documents, social media posts including public X content",
-          "reason": "unvetted_x_author"
+          "title": "@cohere · We’re expanding our commitment to Canada 🇨🇦 Cohere is advancing plans to invest more than C$4 billion in R&D and AI infrastructure and create over 1,5",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "@jackcoder0 · He started by explaining why Grok is the most underestimated AI platform in the market and why that’s about to change. “Grok has a perception prob",
-          "reason": "unvetted_x_author"
+          "title": "@cohere · Automate your tedious tasks with North 2. Our upgraded agentic AI platform comes with improved intelligence features such as reusable agents and skill",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@cohere · Confidential Compute by Cohere, now publicly available - X",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@cohere · Cohere on X",
+          "reason": "insufficient_excerpt"
         }
       ],
       "stored_count": 60,
@@ -52,91 +53,67 @@
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 11,
+      "fresh_count": 7,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-07T06:20:13.480130+00:00",
-      "rejected_count": 29,
+      "checked_at": "2026-11-07T13:23:15.024709+00:00",
+      "rejected_count": 33,
       "rejection_reasons": {
-        "off_topic": 13,
-        "personal_help_or_chatter": 4,
-        "no_concrete_signal": 12
+        "no_concrete_signal": 23,
+        "insufficient_evidence": 2,
+        "off_topic": 8
       },
       "rejected_examples": [
         {
-          "title": "LexiSuite AIO bootable all rust OS/Engine/Kernel/Tuning & training management suite. Runs kernel 7.4 rc1 by default as the kernel needs work. Engine runs Qwen3.",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Claude Code built my open-source AI voice studio, then made its 7-minute trailer too",
-          "reason": "personal_help_or_chatter"
-        },
-        {
-          "title": "Claude get smarter?",
+          "title": "Claude graded its own 3D fruit tree and said the lemons look like \"yellow jars or vases with caps.\" None of my 17 scenes passed on the first try.",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Change in number of parameters in models over time",
+          "title": "They'll replace him with someone who opposes open source AI, won't they? ‌",
+          "reason": "insufficient_evidence"
+        },
+        {
+          "title": "TSMC might do in memory compute for us",
           "reason": "off_topic"
         },
         {
-          "title": "what is this fake free trial that never goes away???",
+          "title": "codex permissions broken",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Ant Ling introduces Ling-3.2-flash: 560B/25B native multimodal MoE with 1M context [N]",
-          "reason": "off_topic"
+          "title": "Qwen 4 is about to be released",
+          "reason": "insufficient_evidence"
         },
         {
-          "title": "How do you decide when to use high vs. low reasoning effort within the same project?",
+          "title": "how's it going lately?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "How do I prevent this? Are they taking my creative copies?",
-          "reason": "personal_help_or_chatter"
+          "title": "How is Claude voice to text so good?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Just swapped from Codex, any tips?",
+          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-07T05:43:41+00:00"
+      "latest_published_at": "2026-11-07T12:57:43+00:00"
     },
     "youtube": {
       "status": "direct",
-      "fresh_count": 1,
+      "fresh_count": 13,
       "errors": [
         {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
-          "reason": "HTTP 404"
+          "reason": "empty_or_invalid_feed"
         }
       ],
-      "feeds_ok": 1,
-      "checked_at": "2026-11-07T06:20:13.480130+00:00",
-      "rejected_count": 3,
+      "feeds_ok": 7,
+      "checked_at": "2026-11-07T13:23:15.024709+00:00",
+      "rejected_count": 15,
       "rejection_reasons": {
-        "off_topic": 3
+        "off_topic": 15
       },
       "rejected_examples": [
         {
@@ -150,6 +127,26 @@
         {
           "title": "China just dropped a new frontier model... and nobody can explain how",
           "reason": "off_topic"
+        },
+        {
+          "title": "Navier-Stokes explained by Mathematician | Lex Fridman",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Infinity explained: It broke mathematics | Lex Fridman",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Optimal dating strategy - mathematician explains | Lex Fridman",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Do numbers exist? - mathematician explains | Lex Fridman",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The Physics of Warp Drives: Faster-than-light space travel | Lex Fridman",
+          "reason": "off_topic"
         }
       ],
       "stored_count": 56,
@@ -157,99 +154,99 @@
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 10,
+      "fresh_count": 8,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-07T06:20:13.480130+00:00",
-      "rejected_count": 50,
+      "checked_at": "2026-11-07T13:23:15.024709+00:00",
+      "rejected_count": 52,
       "rejection_reasons": {
-        "no_concrete_signal": 33,
-        "off_topic": 16,
+        "no_concrete_signal": 32,
+        "off_topic": 19,
         "personal_help_or_chatter": 1
       },
       "rejected_examples": [
         {
-          "title": "Church quits role at AI startup claims 'sleazy' behavior stole credit",
+          "title": "AI is turning protectionists into free traders",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Show HN: Diff MCP tool lists: one server added 33 tools, README unchanged",
+          "title": "Post-AI Computer Science – Volume 4",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Activists across Europe prepare two days of protests against datacentres",
           "reason": "off_topic"
         },
         {
-          "title": "Open source Matlab Alternative, first release.",
+          "title": "The Joy of Coding Is Gone: My Honest Take on AI",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "AI is a technological version of the Homeric songs",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "AirPods 3 head tracking on Linux, and first documentation of Apple RemoteHID",
           "reason": "off_topic"
         },
         {
-          "title": "Kimi K3.1 locally on one GPU",
+          "title": "Climate skeptics used AI to review their work. It told them they were biased",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Show HN: Help me pick a logo animation for my in-browser AI creature game",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "We Engineer Safer Agents",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Quantum Computers Are Poised to Crack Encryption. AI Could Beat Them to It",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "The Pangram Backlash Unfolding on College Campuses",
+          "title": "The post-quantum future of web privacy",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-07T05:35:45+00:00"
+      "latest_published_at": "2026-11-07T08:53:45+00:00"
     },
     "producthunt": {
       "status": "direct",
-      "fresh_count": 15,
+      "fresh_count": 10,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-07T06:20:13.480130+00:00",
-      "rejected_count": 21,
+      "checked_at": "2026-11-07T13:23:15.024709+00:00",
+      "rejected_count": 22,
       "rejection_reasons": {
-        "off_topic": 21
+        "off_topic": 22
       },
       "rejected_examples": [
         {
-          "title": "PostMyPace",
+          "title": "Sequence Tool",
           "reason": "off_topic"
         },
         {
-          "title": "chalk",
+          "title": "LiveReview",
           "reason": "off_topic"
         },
         {
-          "title": "AudioCentral",
+          "title": "Standflow",
           "reason": "off_topic"
         },
         {
-          "title": "Winq",
+          "title": "Capnot",
           "reason": "off_topic"
         },
         {
-          "title": "EdgeBar",
+          "title": "Muse Realtime Avatar",
           "reason": "off_topic"
         },
         {
-          "title": "Any Video to Text",
+          "title": "Fleeep",
           "reason": "off_topic"
         },
         {
-          "title": "Make0 Brain OSS",
+          "title": "Exa Monitors v2",
           "reason": "off_topic"
         },
         {
-          "title": "Textwhisk",
+          "title": "kayet",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-06T02:44:33+00:00"
+      "latest_published_at": "2026-11-06T16:06:36+00:00"
     },
     "tech_news": {
       "status": "direct",
@@ -261,12 +258,20 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-07T06:20:13.480130+00:00",
+      "checked_at": "2026-11-07T13:23:15.024709+00:00",
       "rejected_count": 16,
       "rejection_reasons": {
         "off_topic": 16
       },
       "rejected_examples": [
+        {
+          "title": "How Akai and Moog are embracing vibe-coded mods",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Protesters break into Microsoft data center site in Amsterdam",
+          "reason": "off_topic"
+        },
         {
           "title": "After blocking Muse, Amazon now lets users text Alexa to help them shop",
           "reason": "off_topic"
@@ -280,32 +285,24 @@
           "reason": "off_topic"
         },
         {
-          "title": "How Akai and Moog are embracing vibe-coded mods",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Protesters break into Microsoft data center site in Amsterdam",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Reddit Founder Says Building Social Media Apps Is ‘Not Cool Anymore’",
-          "reason": "off_topic"
-        },
-        {
           "title": "Meet *sshole, the vulnerability that lets hackers SSH into Linux devices",
           "reason": "off_topic"
         },
         {
           "title": "Hackers exploited iOS and Android flaws to infect phones",
           "reason": "off_topic"
+        },
+        {
+          "title": "VMware releases vSphere Express for virtualization on up to 128 cores",
+          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-07T01:40:28+00:00"
+      "latest_published_at": "2026-11-07T12:30:00+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 48,
+      "fresh_count": 34,
       "errors": [
         {
           "endpoint": "jiqizhixin",
@@ -316,17 +313,25 @@
           "reason": "empty_or_invalid_feed"
         },
         {
+          "endpoint": "leiphone",
+          "reason": "ReadTimeout"
+        },
+        {
           "endpoint": "huxiu",
           "reason": "ReadTimeout"
         }
       ],
-      "feeds_ok": 6,
-      "checked_at": "2026-11-07T06:20:13.480130+00:00",
-      "rejected_count": 69,
+      "feeds_ok": 5,
+      "checked_at": "2026-11-07T13:23:15.024709+00:00",
+      "rejected_count": 63,
       "rejection_reasons": {
-        "off_topic": 69
+        "off_topic": 63
       },
       "rejected_examples": [
+        {
+          "title": "一个 05 后的个人数码编年史",
+          "reason": "off_topic"
+        },
         {
           "title": "本周看什么 | 最近值得一看的 9 部作品",
           "reason": "off_topic"
@@ -352,20 +357,14 @@
           "reason": "off_topic"
         },
         {
-          "title": "腾讯 Hy4 调用激增已十倍扩容，Agent 能力开源模型第一",
-          "reason": "off_topic"
-        },
-        {
-          "title": "拼多多让年轻人造草莓工厂，170天后“答案”熟了",
+          "title": "早报｜触屏MacBook Pro开卖即缺货/仰望U9 Xtreme突破503kph/博世吴永桥：汽车不该拿来订咖啡机票",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-07T06:01:54+00:00"
+      "latest_published_at": "2026-11-07T10:40:49+00:00"
     }
   },
-  "quality_rejections": {
-    "outside_news_window": 4
-  },
+  "quality_rejections": {},
   "quality_complete": true
 }
