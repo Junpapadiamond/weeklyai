@@ -1,51 +1,50 @@
 {
-  "updated_at": "2026-11-07T13:23:15.024709+00:00",
+  "updated_at": "2026-11-07T22:10:05.879553+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 21,
+      "fresh_count": 13,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-07T13:23:15.024709+00:00",
-      "rejected_count": 8,
+      "checked_at": "2026-11-07T22:10:05.879553+00:00",
+      "rejected_count": 16,
       "rejection_reasons": {
-        "no_concrete_signal": 6,
-        "unvetted_x_author": 1,
-        "insufficient_excerpt": 1
+        "unvetted_x_author": 9,
+        "no_concrete_signal": 7
       },
       "rejected_examples": [
         {
-          "title": "@MistralAI · Welcome to Mistral, New Material. Let’s bring design to mission-critical AI.",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@MistralAI · Voxtral Mini Transcribe 3 ranks #2 on Voice Arena’s Diarization + ASR leaderboard.",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@MistralAI · https://t.co/NjO1C3c1rj Download: https://t.co/umoyZX69n6",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@Weeklyvoice · Canada Backs Cohere With Up to $1.6 Billion to Build Its Sovereign AI Future",
+          "title": "@Lovable · New in Lovable: the @perplexity_ai connector. Your app can now pull source-backed info from the live web in real-time, powered by Perplexity. Here's ",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@cohere · We’re expanding our commitment to Canada 🇨🇦 Cohere is advancing plans to invest more than C$4 billion in R&D and AI infrastructure and create over 1,5",
-          "reason": "no_concrete_signal"
+          "title": "@ChaseLochmiller · Always great to work with @AravSrinivas and the incredibly talented team at @perplexity_ai !!",
+          "reason": "unvetted_x_author"
         },
         {
-          "title": "@cohere · Automate your tedious tasks with North 2. Our upgraded agentic AI platform comes with improved intelligence features such as reusable agents and skill",
-          "reason": "no_concrete_signal"
+          "title": "@NYSE · Online purchases take one click, research takes thousands. @perplexity_ai Co-Founder + CEO @AravSrinivas discusses AI’s capability to personalize purcha",
+          "reason": "unvetted_x_author"
         },
         {
-          "title": "@cohere · Confidential Compute by Cohere, now publicly available - X",
-          "reason": "no_concrete_signal"
+          "title": "@ibab · You can get started with the API at https://t.co/hqtWzAT5LK. Our customers include @perplexity_ai who are running an on-prem cluster.",
+          "reason": "unvetted_x_author"
         },
         {
-          "title": "@cohere · Cohere on X",
-          "reason": "insufficient_excerpt"
+          "title": "@gsivulka · @databricks @anduriltech @Replit @perplexity_ai https://t.co/PITS0PVX2K",
+          "reason": "unvetted_x_author"
+        },
+        {
+          "title": "@arjundivecha · @perplexity_ai I have Pro - it’s says Max only",
+          "reason": "unvetted_x_author"
+        },
+        {
+          "title": "@gsivulka · Honored to be on UBS’s list of the top 10 private companies to keep an eye out for. In great company alongside: @databricks, @anduriltech, @Replit, ",
+          "reason": "unvetted_x_author"
+        },
+        {
+          "title": "@Daviswh · @perplexity_ai WANDR record is interesting, but after ARC-AGI-3's harness gap I want the eval scaffold named next to the score.",
+          "reason": "unvetted_x_author"
         }
       ],
       "stored_count": 60,
@@ -53,56 +52,56 @@
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 7,
+      "fresh_count": 18,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-07T13:23:15.024709+00:00",
-      "rejected_count": 33,
+      "checked_at": "2026-11-07T22:10:05.879553+00:00",
+      "rejected_count": 22,
       "rejection_reasons": {
-        "no_concrete_signal": 23,
-        "insufficient_evidence": 2,
-        "off_topic": 8
+        "no_concrete_signal": 14,
+        "off_topic": 6,
+        "personal_help_or_chatter": 2
       },
       "rejected_examples": [
         {
-          "title": "Claude graded its own 3D fruit tree and said the lemons look like \"yellow jars or vases with caps.\" None of my 17 scenes passed on the first try.",
+          "title": "Can ChatGPT autonomously manage Gmail or Messenger using its memory?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "They'll replace him with someone who opposes open source AI, won't they? ‌",
-          "reason": "insufficient_evidence"
+          "title": "Claude me sorprende cada día",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "TSMC might do in memory compute for us",
+          "title": "Current state of Prompt Engineering",
           "reason": "off_topic"
         },
         {
-          "title": "codex permissions broken",
+          "title": "Skills Auditor Prompts",
+          "reason": "off_topic"
+        },
+        {
+          "title": "I made an advaned image editor",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Got a Unique Recruiting Email Today",
+          "reason": "off_topic"
+        },
+        {
+          "title": "He said Google’s AI was conscious. But what was it doing to his mind?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Qwen 4 is about to be released",
-          "reason": "insufficient_evidence"
-        },
-        {
-          "title": "how's it going lately?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "How is Claude voice to text so good?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Just swapped from Codex, any tips?",
-          "reason": "no_concrete_signal"
+          "title": "Arguing with non-believers",
+          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-07T12:57:43+00:00"
+      "latest_published_at": "2026-11-07T21:54:10+00:00"
     },
     "youtube": {
       "status": "direct",
-      "fresh_count": 13,
+      "fresh_count": 14,
       "errors": [
         {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
@@ -110,24 +109,12 @@
         }
       ],
       "feeds_ok": 7,
-      "checked_at": "2026-11-07T13:23:15.024709+00:00",
+      "checked_at": "2026-11-07T22:10:05.879553+00:00",
       "rejected_count": 15,
       "rejection_reasons": {
         "off_topic": 15
       },
       "rejected_examples": [
-        {
-          "title": "The one thing holding theoretical CS together just broke... kinda",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The worst week in cybersecurity history... so far",
-          "reason": "off_topic"
-        },
-        {
-          "title": "China just dropped a new frontier model... and nobody can explain how",
-          "reason": "off_topic"
-        },
         {
           "title": "Navier-Stokes explained by Mathematician | Lex Fridman",
           "reason": "off_topic"
@@ -147,73 +134,96 @@
         {
           "title": "The Physics of Warp Drives: Faster-than-light space travel | Lex Fridman",
           "reason": "off_topic"
+        },
+        {
+          "title": "Is math invented or discovered? - mathematicians explain | Lex Fridman",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Why baseball outfielders don't run in a straight line | Lex Fridman",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The one thing holding theoretical CS together just broke... kinda",
+          "reason": "off_topic"
         }
       ],
-      "stored_count": 56,
-      "latest_published_at": "2026-11-06T07:27:02+00:00"
+      "stored_count": 57,
+      "latest_published_at": "2026-11-07T16:24:47+00:00"
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 8,
+      "fresh_count": 14,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-07T13:23:15.024709+00:00",
-      "rejected_count": 52,
+      "checked_at": "2026-11-07T22:10:05.879553+00:00",
+      "rejected_count": 46,
       "rejection_reasons": {
-        "no_concrete_signal": 32,
-        "off_topic": 19,
-        "personal_help_or_chatter": 1
+        "off_topic": 20,
+        "no_concrete_signal": 26
       },
       "rejected_examples": [
         {
-          "title": "AI is turning protectionists into free traders",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Post-AI Computer Science – Volume 4",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Activists across Europe prepare two days of protests against datacentres",
+          "title": "Cursed Napster",
           "reason": "off_topic"
         },
         {
-          "title": "The Joy of Coding Is Gone: My Honest Take on AI",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "AI is a technological version of the Homeric songs",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "AirPods 3 head tracking on Linux, and first documentation of Apple RemoteHID",
+          "title": "Show HN: An offline desktop companion to help maintain a healthy blink rhythm",
           "reason": "off_topic"
         },
         {
-          "title": "Climate skeptics used AI to review their work. It told them they were biased",
+          "title": "AI productivity boost UK firms",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "The post-quantum future of web privacy",
+          "title": "Segmentation Drives Market Share Wins in AI",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "GenDB-V: AI-generated, formally verified database engines",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Real-time context lifted RCA accuracy up to 50% and reduced token cost to 1/10th",
           "reason": "off_topic"
+        },
+        {
+          "title": "Show HN: Conductor sold to Meta. Agents rebuilt the app in 3 days for $170 (MIT)",
+          "reason": "off_topic"
+        },
+        {
+          "title": "HERV AI – Spatial intelligence platform",
+          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-07T08:53:45+00:00"
+      "latest_published_at": "2026-11-07T22:04:24+00:00"
     },
     "producthunt": {
       "status": "direct",
-      "fresh_count": 10,
+      "fresh_count": 16,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-07T13:23:15.024709+00:00",
-      "rejected_count": 22,
+      "checked_at": "2026-11-07T22:10:05.879553+00:00",
+      "rejected_count": 20,
       "rejection_reasons": {
-        "off_topic": 22
+        "off_topic": 20
       },
       "rejected_examples": [
         {
-          "title": "Sequence Tool",
+          "title": "Trace by Context.dev",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Sendoff",
+          "reason": "off_topic"
+        },
+        {
+          "title": "kayet",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Exa Monitors v2",
           "reason": "off_topic"
         },
         {
@@ -225,23 +235,11 @@
           "reason": "off_topic"
         },
         {
-          "title": "Capnot",
-          "reason": "off_topic"
-        },
-        {
           "title": "Muse Realtime Avatar",
           "reason": "off_topic"
         },
         {
-          "title": "Fleeep",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Exa Monitors v2",
-          "reason": "off_topic"
-        },
-        {
-          "title": "kayet",
+          "title": "seam",
           "reason": "off_topic"
         }
       ],
@@ -258,18 +256,18 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-07T13:23:15.024709+00:00",
+      "checked_at": "2026-11-07T22:10:05.879553+00:00",
       "rejected_count": 16,
       "rejection_reasons": {
         "off_topic": 16
       },
       "rejected_examples": [
         {
-          "title": "How Akai and Moog are embracing vibe-coded mods",
+          "title": "After the midterms, things are looking rocky for Elon Musk and data centers",
           "reason": "off_topic"
         },
         {
-          "title": "Protesters break into Microsoft data center site in Amsterdam",
+          "title": "Megaspeed exec was recruited to spy on Nvidia CEO, according to US intelligence memo",
           "reason": "off_topic"
         },
         {
@@ -298,11 +296,11 @@
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-07T12:30:00+00:00"
+      "latest_published_at": "2026-11-07T15:50:00+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 34,
+      "fresh_count": 44,
       "errors": [
         {
           "endpoint": "jiqizhixin",
@@ -313,56 +311,52 @@
           "reason": "empty_or_invalid_feed"
         },
         {
-          "endpoint": "leiphone",
-          "reason": "ReadTimeout"
-        },
-        {
           "endpoint": "huxiu",
           "reason": "ReadTimeout"
         }
       ],
-      "feeds_ok": 5,
-      "checked_at": "2026-11-07T13:23:15.024709+00:00",
-      "rejected_count": 63,
+      "feeds_ok": 6,
+      "checked_at": "2026-11-07T22:10:05.879553+00:00",
+      "rejected_count": 72,
       "rejection_reasons": {
-        "off_topic": 63
+        "off_topic": 72
       },
       "rejected_examples": [
         {
-          "title": "一个 05 后的个人数码编年史",
-          "reason": "off_topic"
-        },
-        {
-          "title": "本周看什么 | 最近值得一看的 9 部作品",
-          "reason": "off_topic"
-        },
-        {
-          "title": "iPhone 变强了，但我没有",
-          "reason": "off_topic"
-        },
-        {
-          "title": "开启 Mac 的下一世代：MacBook Pro (PROLED XDR) 首发体验",
-          "reason": "off_topic"
-        },
-        {
-          "title": "新玩意 255｜少数派的编辑们最近买了啥？",
-          "reason": "off_topic"
-        },
-        {
-          "title": "不用困在厨房也能做出好饭：三十道省事家常蒸菜",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Apple 官网排版细节鉴赏",
+          "title": "最贵比亚迪来了！仰望鼎曜亮相中东，「山河鼎韵」限量版定金 30 万元",
           "reason": "off_topic"
         },
         {
           "title": "早报｜触屏MacBook Pro开卖即缺货/仰望U9 Xtreme突破503kph/博世吴永桥：汽车不该拿来订咖啡机票",
           "reason": "off_topic"
+        },
+        {
+          "title": "503.17km/h！比亚迪仰望 U9X 再次刷新全球最速，量产车首次突破 5 字头",
+          "reason": "off_topic"
+        },
+        {
+          "title": "10 月最值得关注的 17 个产品｜明日产品 WATCHLIST",
+          "reason": "off_topic"
+        },
+        {
+          "title": "13 万买 5 米大轿车！比亚迪海豹 07 上市，首搭云辇-M 磁流变悬架",
+          "reason": "off_topic"
+        },
+        {
+          "title": "MacBook Pro 能触屏了，但这只是它最小的升级｜附选购指南",
+          "reason": "off_topic"
+        },
+        {
+          "title": "23.98 万元起！智己 LS8 NEO 正式上市，转向刹车全面线控",
+          "reason": "off_topic"
+        },
+        {
+          "title": "你记忆里的那台两座小车回来了！smart #2 上市，9.99 万元起",
+          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-07T10:40:49+00:00"
+      "latest_published_at": "2026-11-07T14:57:42+00:00"
     }
   },
   "quality_rejections": {},
