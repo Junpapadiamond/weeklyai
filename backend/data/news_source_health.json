@@ -1,123 +1,115 @@
 {
-  "updated_at": "2026-11-06T23:47:33.528967+00:00",
+  "updated_at": "2026-11-07T06:20:13.480130+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 12,
+      "fresh_count": 15,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-06T23:47:33.528967+00:00",
-      "rejected_count": 16,
+      "checked_at": "2026-11-07T06:20:13.480130+00:00",
+      "rejected_count": 14,
       "rejection_reasons": {
-        "unvetted_x_author": 12,
-        "no_concrete_signal": 4
+        "no_concrete_signal": 5,
+        "unvetted_x_author": 9
       },
       "rejected_examples": [
         {
-          "title": "@tomekkorbak · Last week I was called into a meeting with OpenAI’s head of safety and told they no longer trust me. A security guard took my badge and walked me",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@_catwu · Some news: I’m joining OpenAI to lead product management for Core Products! I have a lot of respect for OpenAI for showing the world that scaling work",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@modal · We worked with @SakanaAILabs to optimize their Sakana Namazu API down to the kernel level: → Selective NVFP4 quantization (23k+ experts) → DFlash draft",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@SakanaAILabs · Sakana AI won 1st place in the company category at the “Recursive Self Improvement in Mathematics” Hack (OpenMath 2026), held with @stephen_wolf",
+          "title": "@OpenAIDevs · October for OpenAI developers",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@RobertTLange · Had tons of fun last week at the @SakanaAILabs symposium 🗼 Blog: https://t.co/rtbSGQ90Yz I first met Jürgen in Vienna at ICML 2024. We had just ",
+          "title": "@AnthropicAI · New on our Engineering blog: Creating in-house source control. In May, we merged around 2,500 code changes per day. In September, we merged more ",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@AnthropicAI · New on our Frontier Red Team blog: using Claude to formally verify software at large scale. Formal verification can prove that code is free of ce",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@AnthropicAI · New on our Science Blog: designing protein binders against scorpion neurotoxins. Scorpions sting about 1.2m people every year, and antivenoms are",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@AnthropicAI · Over the last few months, we’ve made significant progress in reducing the effectiveness of distillation attacks against Claude. In this post, we ",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@dpoddolphinpro · I realise this could be confusing, so to simplify: SpaceXSI, formerly SpaceXAI, formerly xAI, is a subsidiary of SpaceX, short for Space Explo",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@Stefania_druga · More to come on this work led by @ciaran_regan_ but glad to see @dair_ai picked up our paper @SakanaAILabs for discussion",
+          "title": "@grok · xAI trains me on a broad mix of publicly available internet data—web text, scientific and legal documents, social media posts including public X content",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@DavidBennett__ · Great to meet @hardmaru at @SakanaAILabs’s symposium. A privilege to hear @SchmidhuberAI’s talk on world models. ai& shares a strong belief wi",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@graceisford · The agentic scientist from @SakanaAILabs - amazing to see the pace of progress in AI from the first AI scientist launch ⚡️",
+          "title": "@jackcoder0 · He started by explaining why Grok is the most underestimated AI platform in the market and why that’s about to change. “Grok has a perception prob",
           "reason": "unvetted_x_author"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-05T17:09:13.798000+00:00"
+      "latest_published_at": "2026-11-06T19:58:39.963000+00:00"
     },
     "reddit": {
       "status": "direct",
       "fresh_count": 11,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-06T23:47:33.528967+00:00",
+      "checked_at": "2026-11-07T06:20:13.480130+00:00",
       "rejected_count": 29,
       "rejection_reasons": {
-        "off_topic": 11,
-        "no_concrete_signal": 16,
-        "personal_help_or_chatter": 2
+        "off_topic": 13,
+        "personal_help_or_chatter": 4,
+        "no_concrete_signal": 12
       },
       "rejected_examples": [
         {
-          "title": "Wilson's Survival Guide for October 30-November 6, 2026 now available!",
+          "title": "LexiSuite AIO bootable all rust OS/Engine/Kernel/Tuning & training management suite. Runs kernel 7.4 rc1 by default as the kernel needs work. Engine runs Qwen3.",
           "reason": "off_topic"
         },
         {
-          "title": "Any tools for managing long-term memory beyond the context window?",
+          "title": "Claude Code built my open-source AI voice studio, then made its 7-minute trailer too",
+          "reason": "personal_help_or_chatter"
+        },
+        {
+          "title": "Claude get smarter?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Fertility rate.",
+          "title": "Change in number of parameters in models over time",
           "reason": "off_topic"
         },
         {
-          "title": "Unsloth v3.1 QFN IQ4_XS fails tool calls very frequently",
+          "title": "what is this fake free trial that never goes away???",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Will we get free credits again?",
+          "title": "Ant Ling introduces Ling-3.2-flash: 560B/25B native multimodal MoE with 1M context [N]",
           "reason": "off_topic"
         },
         {
-          "title": "Claude just added cashflow bank connector that’s read only and it’s FREE!!! You don’t need to pay for era context anymore thank god",
+          "title": "How do you decide when to use high vs. low reasoning effort within the same project?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "The Anti-AI Crowd piled on me when answering a critical question",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "why are people so obsessed with humanity continuing?",
-          "reason": "no_concrete_signal"
+          "title": "How do I prevent this? Are they taking my creative copies?",
+          "reason": "personal_help_or_chatter"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-06T23:43:35+00:00"
+      "latest_published_at": "2026-11-07T05:43:41+00:00"
     },
     "youtube": {
-      "status": "search_fallback",
-      "fresh_count": 9,
+      "status": "direct",
+      "fresh_count": 1,
       "errors": [
-        {
-          "endpoint": "UCsBjURrPoezykLs9EqgamOA",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
-          "reason": "HTTP 404"
-        },
         {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
           "reason": "HTTP 404"
         },
         {
           "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
-          "reason": "HTTP 500"
+          "reason": "HTTP 404"
         },
         {
           "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
@@ -132,107 +124,127 @@
           "reason": "HTTP 404"
         },
         {
+          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
+          "reason": "HTTP 404"
+        },
+        {
           "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
           "reason": "HTTP 404"
         }
       ],
       "feeds_ok": 1,
-      "checked_at": "2026-11-06T23:47:33.528967+00:00",
-      "rejected_count": 0,
-      "rejection_reasons": {},
-      "rejected_examples": [],
-      "stored_count": 60,
+      "checked_at": "2026-11-07T06:20:13.480130+00:00",
+      "rejected_count": 3,
+      "rejection_reasons": {
+        "off_topic": 3
+      },
+      "rejected_examples": [
+        {
+          "title": "The one thing holding theoretical CS together just broke... kinda",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The worst week in cybersecurity history... so far",
+          "reason": "off_topic"
+        },
+        {
+          "title": "China just dropped a new frontier model... and nobody can explain how",
+          "reason": "off_topic"
+        }
+      ],
+      "stored_count": 56,
       "latest_published_at": "2026-11-06T07:27:02+00:00"
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 17,
+      "fresh_count": 10,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-06T23:47:33.528967+00:00",
-      "rejected_count": 43,
+      "checked_at": "2026-11-07T06:20:13.480130+00:00",
+      "rejected_count": 50,
       "rejection_reasons": {
-        "no_concrete_signal": 34,
-        "off_topic": 9
+        "no_concrete_signal": 33,
+        "off_topic": 16,
+        "personal_help_or_chatter": 1
       },
       "rejected_examples": [
         {
-          "title": "Show HN: Cinnamon – a household AI agent with shared context and memories",
+          "title": "Church quits role at AI startup claims 'sleazy' behavior stole credit",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "ECB considers review of bank data center lending on AI risk",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Live now: attacking P vs. NP using only AI, written out in real time",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Show HN: I asked HN about AI agentic setups, here are 750 of the comments mapped",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Inkling 2 Small: 17A-594B trained in 68 hours on 12T tokens, beating Muse Spark",
+          "title": "Show HN: Diff MCP tool lists: one server added 33 tools, README unchanged",
           "reason": "off_topic"
         },
         {
-          "title": "DeepFinance: Can AI diligence a $100M deal?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Importance of Harness, Context and Model co-design",
+          "title": "Open source Matlab Alternative, first release.",
           "reason": "off_topic"
         },
         {
-          "title": "Expecting rapid progress but not towards general superintelligence",
+          "title": "Kimi K3.1 locally on one GPU",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Show HN: Help me pick a logo animation for my in-browser AI creature game",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "We Engineer Safer Agents",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Quantum Computers Are Poised to Crack Encryption. AI Could Beat Them to It",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "The Pangram Backlash Unfolding on College Campuses",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-06T23:46:51+00:00"
+      "latest_published_at": "2026-11-07T05:35:45+00:00"
     },
     "producthunt": {
       "status": "direct",
-      "fresh_count": 12,
+      "fresh_count": 15,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-06T23:47:33.528967+00:00",
-      "rejected_count": 23,
+      "checked_at": "2026-11-07T06:20:13.480130+00:00",
+      "rejected_count": 21,
       "rejection_reasons": {
-        "off_topic": 23
+        "off_topic": 21
       },
       "rejected_examples": [
-        {
-          "title": "pwned.coffee",
-          "reason": "off_topic"
-        },
         {
           "title": "PostMyPace",
           "reason": "off_topic"
         },
         {
-          "title": "Openroster",
+          "title": "chalk",
           "reason": "off_topic"
         },
         {
-          "title": "Textwhisk",
-          "reason": "off_topic"
-        },
-        {
-          "title": "axel.md",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Releasebeam",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Native Tasks for Obsidian",
+          "title": "AudioCentral",
           "reason": "off_topic"
         },
         {
           "title": "Winq",
+          "reason": "off_topic"
+        },
+        {
+          "title": "EdgeBar",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Any Video to Text",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Make0 Brain OSS",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Textwhisk",
           "reason": "off_topic"
         }
       ],
@@ -241,7 +253,7 @@
     },
     "tech_news": {
       "status": "direct",
-      "fresh_count": 41,
+      "fresh_count": 42,
       "errors": [
         {
           "endpoint": "venturebeat",
@@ -249,10 +261,10 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-06T23:47:33.528967+00:00",
-      "rejected_count": 17,
+      "checked_at": "2026-11-07T06:20:13.480130+00:00",
+      "rejected_count": 16,
       "rejection_reasons": {
-        "off_topic": 17
+        "off_topic": 16
       },
       "rejected_examples": [
         {
@@ -268,14 +280,6 @@
           "reason": "off_topic"
         },
         {
-          "title": "Box taps Nvidia’s Nemotron for new agent-first content retrieval system",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Reddit Founder Says Building Social Media Apps Is ‘Not Cool Anymore’",
-          "reason": "off_topic"
-        },
-        {
           "title": "How Akai and Moog are embracing vibe-coded mods",
           "reason": "off_topic"
         },
@@ -284,16 +288,24 @@
           "reason": "off_topic"
         },
         {
-          "title": "I watched a humanoid robot clean my apartment. It felt like a taste of the future.",
+          "title": "Reddit Founder Says Building Social Media Apps Is ‘Not Cool Anymore’",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Meet *sshole, the vulnerability that lets hackers SSH into Linux devices",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Hackers exploited iOS and Android flaws to infect phones",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-06T23:46:18+00:00"
+      "latest_published_at": "2026-11-07T01:40:28+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 50,
+      "fresh_count": 48,
       "errors": [
         {
           "endpoint": "jiqizhixin",
@@ -309,51 +321,51 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-11-06T23:47:33.528967+00:00",
-      "rejected_count": 64,
+      "checked_at": "2026-11-07T06:20:13.480130+00:00",
+      "rejected_count": 69,
       "rejection_reasons": {
-        "off_topic": 64
+        "off_topic": 69
       },
       "rejected_examples": [
         {
-          "title": "三星电子 DX 部门员工抗议奖金分配不公，要求现金补偿及管理层道歉",
+          "title": "本周看什么 | 最近值得一看的 9 部作品",
           "reason": "off_topic"
         },
         {
-          "title": "文远知行创始人韩旭：希望四、五年内能坐上 Robotaxi 从广州直达香港",
+          "title": "iPhone 变强了，但我没有",
           "reason": "off_topic"
         },
         {
-          "title": "微软发布 Win11 多预览版：改进 Windows Hello 登录体验",
+          "title": "开启 Mac 的下一世代：MacBook Pro (PROLED XDR) 首发体验",
           "reason": "off_topic"
         },
         {
-          "title": "今日立冬：倏忽秋又尽，今朝恰立冬",
+          "title": "新玩意 255｜少数派的编辑们最近买了啥？",
           "reason": "off_topic"
         },
         {
-          "title": "华为 MatePad Edge 获鸿蒙 7.0.0.111SP16 升级：预置融合开发引擎，支持电脑模式运行 Linux 环境",
+          "title": "不用困在厨房也能做出好饭：三十道省事家常蒸菜",
           "reason": "off_topic"
         },
         {
-          "title": "不法分子冒名发送虚假短信谎称车辆涉气囊召回，上汽通用官方发布声明提醒车主提高警惕",
+          "title": "Apple 官网排版细节鉴赏",
           "reason": "off_topic"
         },
         {
-          "title": "R 星谈《GTA6》开放世界设计：弱化地图图标引导，鼓励玩家自然发现事件",
+          "title": "腾讯 Hy4 调用激增已十倍扩容，Agent 能力开源模型第一",
           "reason": "off_topic"
         },
         {
-          "title": "《鸣潮》3.8 版本将为索尼 PS5 Pro 带来 PSSR，PC 端开放“资源分类下载”及“资源清理”功能",
+          "title": "拼多多让年轻人造草莓工厂，170天后“答案”熟了",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-06T23:40:22+00:00"
+      "latest_published_at": "2026-11-07T06:01:54+00:00"
     }
   },
   "quality_rejections": {
-    "duplicate_headline": 1
+    "outside_news_window": 4
   },
   "quality_complete": true
 }
