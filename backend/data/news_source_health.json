@@ -1,49 +1,49 @@
 {
-  "updated_at": "2026-11-08T06:27:10.735606+00:00",
+  "updated_at": "2026-11-08T17:59:52.970898+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 13,
+      "fresh_count": 16,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-08T06:27:10.735606+00:00",
-      "rejected_count": 15,
+      "checked_at": "2026-11-08T17:59:52.970898+00:00",
+      "rejected_count": 12,
       "rejection_reasons": {
-        "unvetted_x_author": 10,
-        "no_concrete_signal": 5
+        "unvetted_x_author": 11,
+        "no_concrete_signal": 1
       },
       "rejected_examples": [
         {
-          "title": "@rohanpaul_ai · Emad Mostaque (founder of Stability AI) ...",
+          "title": "@thecaisai · CAIS",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@EMostaque · Tbh thought this was the backup business model at stability ...",
+          "title": "@LangChain · LangChain on X",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@EMostaque · The original stable diffusion had an FID score of 12.63",
+          "title": "@WorldOfMercek · AI's next economic shift is moving beyond model intelligence toward the infrastructure that executes work, coordinates agents, and captures val",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@T3chFalcon · getty images spent years watermarking every photo on the internet. sued stability AI for training on their library. demanded the AI companies pay ",
+          "title": "@clcoding · 16 Essential Python Libraries & Tools for AI and Machine Learning (2026) Want to build machine learning models, develop LLM applications, and deploy",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@rohanpaul_ai · Emad Mostaque, founder of Stability AI: \"In 2 years' time, if ...",
+          "title": "@dotey · # X AI 资讯检索 目标：在 X 上找出最近一个时间窗口（通常是 1 小时）里真正重要、而且之前没推过的 AI 资讯。用公开读取的 X 工具（search_posts_all、get_users_posts、get_news / search_news、get_posts_counts_recen",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@RWA_Inc_ · RWA Global Inc. - www.rwa.inc on ...",
+          "title": "@yairwein · Yair Weinberger on X",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@Teknium · Give it a try early by switching your Hermes Agent's release channel to \"main\" instead of \"stable\"!",
+          "title": "@KanikaBK · I spent an hour digging through GitHub's AI agent repos. These 5 are the ones everyone is quietly building with. 100% FREE. Open source. And most pe",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@Teknium · Hermes Agent v0.22.0 is now live! The highlights: A much smoother easier to use onboarding - you don't even need to hook up a provider to get started",
+          "title": "@DeRonin_ · Ronin",
           "reason": "unvetted_x_author"
         }
       ],
@@ -52,99 +52,99 @@
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 12,
+      "fresh_count": 14,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-08T06:27:10.735606+00:00",
-      "rejected_count": 28,
+      "checked_at": "2026-11-08T17:59:52.970898+00:00",
+      "rejected_count": 26,
       "rejection_reasons": {
-        "no_concrete_signal": 17,
-        "off_topic": 10,
-        "personal_help_or_chatter": 1
+        "off_topic": 16,
+        "no_concrete_signal": 9,
+        "unverified_rumor": 1
       },
       "rejected_examples": [
         {
-          "title": "Four years ago, ChatGPT struggled with a text-based maze. Look how far we've come.",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Anybody tried Apex 35B and Axion 35B?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Agent 1 is here. U.S v China End Game?",
+          "title": "Why Hasn't Someone Recreate ShareGPT?",
           "reason": "off_topic"
         },
         {
-          "title": "follistatin on X: \"Qwen-4-Flash-Early (codename hawk) added to GameFeel Bench! (and audio score was calculated",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "How to avoid a business idea presented to Claude from being exposed?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Polymarket screenshot gives ChatGPT only a 9% chance of being the best AI at the end of 2026",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "The amount of vamping, hallucinating, flip flopping its opinions of things, syncophantic behavior etc is OUTRAGEOUS with this thing lately. It feels like it's r",
+          "title": "What are people finding local models actually useful for?",
           "reason": "off_topic"
         },
         {
-          "title": "ICLR 2027 Rebuttal response [D]",
+          "title": "Artificial Analysis: multimodal decision model Drex Max ranks #1. Both achieving SOTA and Pareto frontier [N]",
           "reason": "off_topic"
+        },
+        {
+          "title": "I merged attention and MLP processing into a single gated Transformer block. GAP [R]",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Holy guardrails",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Is it possible replacing Photoshop brush engine?",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Motion graphics video made with Qwen3.8 Flash Next GSQ RCO IQ3_XXS on strata",
+          "reason": "off_topic"
+        },
+        {
+          "title": "After the update yesterday ChatGPT can't do anything in Unreal Engine",
+          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-08T06:14:40+00:00"
+      "latest_published_at": "2026-11-08T17:48:48+00:00"
     },
     "youtube": {
-      "status": "search_fallback",
-      "fresh_count": 8,
+      "status": "direct",
+      "fresh_count": 14,
       "errors": [
         {
-          "endpoint": "UCsBjURrPoezykLs9EqgamOA",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
-          "reason": "HTTP 404"
-        },
-        {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
-          "reason": "HTTP 404"
+          "reason": "empty_or_invalid_feed"
         }
       ],
-      "feeds_ok": 1,
-      "checked_at": "2026-11-08T06:27:10.735606+00:00",
-      "rejected_count": 1,
+      "feeds_ok": 7,
+      "checked_at": "2026-11-08T17:59:52.970898+00:00",
+      "rejected_count": 15,
       "rejection_reasons": {
-        "off_topic": 1
+        "off_topic": 15
       },
       "rejected_examples": [
         {
-          "title": "Google's New Genie 4 Is the Beginning of Synthetic Reality!",
+          "title": "The Death of Stackoverlow | TheStandup",
+          "reason": "off_topic"
+        },
+        {
+          "title": "well this is bad",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The Greatest Business Ever?",
+          "reason": "off_topic"
+        },
+        {
+          "title": "This is Crazy",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The one thing holding theoretical CS together just broke... kinda",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The worst week in cybersecurity history... so far",
+          "reason": "off_topic"
+        },
+        {
+          "title": "China just dropped a new frontier model... and nobody can explain how",
+          "reason": "off_topic"
+        },
+        {
+          "title": "边听边说、边看边想、还有一张脸的全双工模型，讲一讲背后的技术",
           "reason": "off_topic"
         }
       ],
@@ -153,98 +153,98 @@
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 15,
+      "fresh_count": 10,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-08T06:27:10.735606+00:00",
-      "rejected_count": 45,
+      "checked_at": "2026-11-08T17:59:52.970898+00:00",
+      "rejected_count": 50,
       "rejection_reasons": {
-        "no_concrete_signal": 34,
-        "off_topic": 11
+        "no_concrete_signal": 35,
+        "off_topic": 15
       },
       "rejected_examples": [
         {
-          "title": "70% of Brits say please or thank you when speaking to AI, some even apologize",
+          "title": "The same work on a third of the tokens: tuning a fleet of coding agents",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "AI Live Speech Rewriting Patent",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "The internet has a human slop problem, and AI is exposing it",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "PolyNotes App",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Show HN: Reges Code – a free AI code editor that runs on local models",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Bringing Your Muse to Life",
+          "title": "Show HN: Email-like interface to review, decide, and annotate agent work",
           "reason": "off_topic"
         },
         {
-          "title": "Show HN: Reges Town – a 3D city run by AI citizens, in the browser",
+          "title": "Show HN: psi, a 6.4 MB cross-platform portable coding agent in ANSI C & Lua",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "I Love the Smiths AI: A Familiar Elevator Scene, with You in It",
+          "title": "Show HN: Just a Pause – Blur your Mac's screen when you turn away, using AirPods",
+          "reason": "off_topic"
+        },
+        {
+          "title": "One of Classical Music's Biggest Stars Says AI Is Degrading Our Taste",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Show HN: Jabhook – Harnessing computer vision for martial arts training",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Show HN: ModelRefs – Interactive reference hub for AI models",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "The 0rwx framework for AI usage attribution",
           "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-08T06:12:09+00:00"
+      "latest_published_at": "2026-11-08T17:31:42+00:00"
     },
     "producthunt": {
       "status": "direct",
-      "fresh_count": 12,
+      "fresh_count": 10,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-08T06:27:10.735606+00:00",
-      "rejected_count": 23,
+      "checked_at": "2026-11-08T17:59:52.970898+00:00",
+      "rejected_count": 25,
       "rejection_reasons": {
-        "off_topic": 23
+        "off_topic": 25
       },
       "rejected_examples": [
         {
-          "title": "Capnot",
+          "title": "Deduplication",
           "reason": "off_topic"
         },
         {
-          "title": "LiveReview",
+          "title": "DocsAlot for customer support",
           "reason": "off_topic"
         },
         {
-          "title": "Fleeep",
+          "title": "Sage2 by Levanto Labs",
           "reason": "off_topic"
         },
         {
-          "title": "Muse Realtime Avatar",
+          "title": "Frameboy by World Labs",
           "reason": "off_topic"
         },
         {
-          "title": "Standflow",
+          "title": "NotchIsland",
           "reason": "off_topic"
         },
         {
-          "title": "Exa Monitors v2",
+          "title": "Zigzag Browser",
           "reason": "off_topic"
         },
         {
-          "title": "Rex (Beta)",
+          "title": "outages.live",
           "reason": "off_topic"
         },
         {
-          "title": "Dino Kids",
+          "title": "Inkling 2 Small",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-06T16:06:36+00:00"
+      "latest_published_at": "2026-11-07T17:52:26+00:00"
     },
     "tech_news": {
       "status": "direct",
@@ -256,7 +256,7 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-08T06:27:10.735606+00:00",
+      "checked_at": "2026-11-08T17:59:52.970898+00:00",
       "rejected_count": 16,
       "rejection_reasons": {
         "off_topic": 16
@@ -296,18 +296,18 @@
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-07T15:50:00+00:00"
+      "latest_published_at": "2026-11-08T17:23:19+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 40,
+      "fresh_count": 45,
       "errors": [
         {
-          "endpoint": "jiqizhixin",
+          "endpoint": "36kr",
           "reason": "empty_or_invalid_feed"
         },
         {
-          "endpoint": "36kr",
+          "endpoint": "jiqizhixin",
           "reason": "empty_or_invalid_feed"
         },
         {
@@ -316,52 +316,49 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-11-08T06:27:10.735606+00:00",
-      "rejected_count": 76,
+      "checked_at": "2026-11-08T17:59:52.970898+00:00",
+      "rejected_count": 73,
       "rejection_reasons": {
-        "off_topic": 76
+        "off_topic": 73
       },
       "rejected_examples": [
         {
-          "title": "苹果产品那些不够颠覆，却值得被学习的细节",
+          "title": "别再拿《影之刃零》对比《黑神话》了",
           "reason": "off_topic"
         },
         {
-          "title": "一个 05 后的个人数码编年史",
+          "title": "最贵比亚迪来了！仰望鼎曜亮相中东，「山河鼎韵」限量版定金 30 万元",
           "reason": "off_topic"
         },
         {
-          "title": "本周看什么 | 最近值得一看的 9 部作品",
+          "title": "早报｜触屏MacBook Pro开卖即缺货/仰望U9 Xtreme突破503kph/博世吴永桥：汽车不该拿来订咖啡机票",
           "reason": "off_topic"
         },
         {
-          "title": "iPhone 变强了，但我没有",
+          "title": "503.17km/h！比亚迪仰望 U9X 再次刷新全球最速，量产车首次突破 5 字头",
           "reason": "off_topic"
         },
         {
-          "title": "开启 Mac 的下一世代：MacBook Pro (PROLED XDR) 首发体验",
+          "title": "10 月最值得关注的 17 个产品｜明日产品 WATCHLIST",
           "reason": "off_topic"
         },
         {
-          "title": "新玩意 255｜少数派的编辑们最近买了啥？",
+          "title": "13 万买 5 米大轿车！比亚迪海豹 07 上市，首搭云辇-M 磁流变悬架",
           "reason": "off_topic"
         },
         {
-          "title": "不用困在厨房也能做出好饭：三十道省事家常蒸菜",
+          "title": "MacBook Pro 能触屏了，但这只是它最小的升级｜附选购指南",
           "reason": "off_topic"
         },
         {
-          "title": "Apple 官网排版细节鉴赏",
+          "title": "23.98 万元起！智己 LS8 NEO 正式上市，转向刹车全面线控",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-08T05:21:12+00:00"
+      "latest_published_at": "2026-11-08T15:47:05+00:00"
     }
   },
-  "quality_rejections": {
-    "outside_news_window": 2,
-    "duplicate_headline": 2
-  },
+  "quality_rejections": {},
   "quality_complete": true
 }
