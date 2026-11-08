@@ -1,0 +1,202 @@
+{
+  "cache_key": "822a5a7d80f371dc928ee826-c9e4362bac88361bae11698a",
+  "product_key": "822a5a7d80f371dc928ee826",
+  "fingerprint": "c9e4362bac88361bae11698a",
+  "product_id": "195",
+  "product_name": "Actively",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-08T22:51:05.816519+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "AI代理判断跟进时机",
+      "en": "AI Agent Decides Follow-up"
+    },
+    "scenario": {
+      "zh": "虚构示例：销售代理分析潜客行为后自动选择联系策略，展示判断逻辑",
+      "en": "Fictional example: sales agent analyzes lead behavior then auto-selects contact strategy, showing decision logic"
+    },
+    "steps": [
+      {
+        "id": "behavior",
+        "widget": "choice",
+        "title": {
+          "zh": "潜客行为信号",
+          "en": "Lead Behavior Signal"
+        },
+        "instruction": {
+          "zh": "代理观察到哪种行为模式",
+          "en": "Which behavior pattern agent observes"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "反复查看定价",
+              "en": "Repeated Pricing Views"
+            },
+            "output": {
+              "zh": "识别为购买意向但有疑问",
+              "en": "Identifies purchase intent with questions"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "行为记录",
+                "en": "Activity Record"
+              },
+              "output_label": {
+                "zh": "代理分析",
+                "en": "Agent Analysis"
+              },
+              "input": {
+                "zh": "联系人Sarah访问定价页面四次，每次停留约两分钟，未点击购买按钮",
+                "en": "Contact Sarah visited pricing page four times, stayed about two minutes each, no buy button clicks"
+              },
+              "output": {
+                "zh": "高意向但决策受阻，建议提供方案对比澄清疑虑",
+                "en": "High intent but decision blocked; recommend plan comparison to clarify doubts"
+              },
+              "emphasis": {
+                "zh": "定价页面四次",
+                "en": "pricing page four times"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "下载技术文档",
+              "en": "Downloaded Tech Docs"
+            },
+            "output": {
+              "zh": "识别为技术评估阶段",
+              "en": "Identifies technical evaluation phase"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "行为记录",
+                "en": "Activity Record"
+              },
+              "output_label": {
+                "zh": "代理分析",
+                "en": "Agent Analysis"
+              },
+              "input": {
+                "zh": "联系人James下载API集成指南，职位显示为工程经理",
+                "en": "Contact James downloaded API integration guide, title shows Engineering Manager"
+              },
+              "output": {
+                "zh": "技术可行性验证中，建议分享集成案例并询问架构需求",
+                "en": "Verifying technical feasibility; recommend sharing integration cases and asking architecture needs"
+              },
+              "emphasis": {
+                "zh": "API集成指南",
+                "en": "API integration guide"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "approach",
+        "widget": "choice",
+        "title": {
+          "zh": "选择接触方式",
+          "en": "Select Contact Approach"
+        },
+        "instruction": {
+          "zh": "代理为此情境设计策略",
+          "en": "Agent designs strategy for context"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "发送对比资料",
+              "en": "Send Comparison Material"
+            },
+            "output": {
+              "zh": "针对定价疑问提供清晰对照",
+              "en": "Provides clear contrast for pricing questions"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "两个方案",
+                "en": "Two Plans"
+              },
+              "output_label": {
+                "zh": "代理建议",
+                "en": "Agent Recommendation"
+              },
+              "input": {
+                "zh": "标准版：基础功能，适合小团队；专业版：高级分析，适合成长型企业",
+                "en": "Standard: core features for small teams; Professional: advanced analytics for growing companies"
+              },
+              "output": {
+                "zh": "根据Sarah团队规模推荐专业版，附功能差异说明",
+                "en": "Recommends Professional for Sarah's team size with feature difference explanation"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "提议技术通话",
+              "en": "Propose Technical Call"
+            },
+            "output": {
+              "zh": "为工程角色安排深度讨论",
+              "en": "Arranges deep discussion for engineering role"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "消息草稿",
+                "en": "Message Draft"
+              },
+              "output_label": {
+                "zh": "后续行动",
+                "en": "Next Action"
+              },
+              "input": {
+                "zh": "James，看到您在研究集成方式。我们可以安排30分钟通话讨论您的架构，分享其他工程团队的实施经验",
+                "en": "James, saw you're exploring integration. We can arrange a 30-min call to discuss your architecture and share implementation experience from other engineering teams"
+              },
+              "output": {
+                "zh": "虚构回复表示愿意沟通，代理安排会议时间",
+                "en": "Fictional reply shows willingness; agent schedules meeting time"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "展示了AI代理根据虚构行为数据判断跟进策略的逻辑，真实表现需在Actively平台验证",
+      "en": "Showed AI agent logic deciding follow-up strategy from fictional behavior data; real performance requires verification on Actively platform"
+    },
+    "sources": [
+      {
+        "url": "https://www.actively.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techstartups.com/2026/04/28/actively-raises-45m-series-b-to-replace-human-led-sales-with-24-7-ai-superintelligence-agents/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

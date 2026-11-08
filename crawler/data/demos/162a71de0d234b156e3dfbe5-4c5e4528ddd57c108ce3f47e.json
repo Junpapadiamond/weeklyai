@@ -1,0 +1,196 @@
+{
+  "cache_key": "162a71de0d234b156e3dfbe5-4c5e4528ddd57c108ce3f47e",
+  "product_key": "162a71de0d234b156e3dfbe5",
+  "fingerprint": "4c5e4528ddd57c108ce3f47e",
+  "product_id": "180",
+  "product_name": "Featherless.ai",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-08T22:48:51.295691+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "开源模型API接入演示",
+      "en": "Open-Source Model API Demo"
+    },
+    "scenario": {
+      "zh": "演示如何通过API调用开源大模型，实际部署需在Featherless.ai完成",
+      "en": "Demonstrates API calls to open-source LLMs; actual deployment requires Featherless.ai"
+    },
+    "steps": [
+      {
+        "id": "model_select",
+        "widget": "choice",
+        "title": {
+          "zh": "选择推理模型",
+          "en": "Select Inference Model"
+        },
+        "instruction": {
+          "zh": "查看不同开源模型的API调用示例",
+          "en": "View API call examples for different open-source models"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "Llama代码生成",
+              "en": "Llama Code Generation"
+            },
+            "output": {
+              "zh": "返回Python函数实现示例",
+              "en": "Returns Python function implementation example"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "API请求参数",
+                "en": "API Request Parameters"
+              },
+              "output_label": {
+                "zh": "模型返回内容",
+                "en": "Model Response Content"
+              },
+              "input": {
+                "zh": "{\n  \"model\": \"meta-llama/Llama-3.1-8B\",\n  \"prompt\": \"编写斐波那契函数\",\n  \"max_tokens\": 200\n}",
+                "en": "{\n  \"model\": \"meta-llama/Llama-3.1-8B\",\n  \"prompt\": \"Write a Fibonacci function\",\n  \"max_tokens\": 200\n}"
+              },
+              "output": {
+                "zh": "def fibonacci(n):\n    if n <= 1:\n        return n\n    return fibonacci(n-1) + fibonacci(n-2)",
+                "en": "def fibonacci(n):\n    if n <= 1:\n        return n\n    return fibonacci(n-1) + fibonacci(n-2)"
+              },
+              "input_format": "code"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "Mistral文本分析",
+              "en": "Mistral Text Analysis"
+            },
+            "output": {
+              "zh": "返回情感分析结果",
+              "en": "Returns sentiment analysis result"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "API请求参数",
+                "en": "API Request Parameters"
+              },
+              "output_label": {
+                "zh": "模型返回内容",
+                "en": "Model Response Content"
+              },
+              "input": {
+                "zh": "{\n  \"model\": \"mistralai/Mistral-7B\",\n  \"prompt\": \"分析情感：产品质量超出预期\",\n  \"temperature\": 0.3\n}",
+                "en": "{\n  \"model\": \"mistralai/Mistral-7B\",\n  \"prompt\": \"Analyze sentiment: Product quality exceeded expectations\",\n  \"temperature\": 0.3\n}"
+              },
+              "output": {
+                "zh": "积极情感。关键词：质量、超出预期。建议回应：感谢反馈",
+                "en": "Positive sentiment. Keywords: quality, exceeded expectations. Suggested response: Thank feedback"
+              },
+              "input_format": "code"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "load_balance",
+        "widget": "choice",
+        "title": {
+          "zh": "负载均衡策略",
+          "en": "Load Balancing Strategy"
+        },
+        "instruction": {
+          "zh": "对比不同GPU编排方式的响应",
+          "en": "Compare responses from different GPU orchestration approaches"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "单区域部署",
+              "en": "Single-Region Deployment"
+            },
+            "output": {
+              "zh": "标准延迟响应",
+              "en": "Standard latency response"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "配置参数",
+                "en": "Configuration Parameters"
+              },
+              "output_label": {
+                "zh": "性能表现",
+                "en": "Performance Characteristics"
+              },
+              "input": {
+                "zh": "region: us-west\ninstances: 3\nrouting: round-robin",
+                "en": "region: us-west\ninstances: 3\nrouting: round-robin"
+              },
+              "output": {
+                "zh": "延迟稳定，适合单一市场服务",
+                "en": "Consistent latency, suitable for single-market services"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "多区域编排",
+              "en": "Multi-Region Orchestration"
+            },
+            "output": {
+              "zh": "优化全球访问延迟",
+              "en": "Optimized global access latency"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "配置参数",
+                "en": "Configuration Parameters"
+              },
+              "output_label": {
+                "zh": "性能表现",
+                "en": "Performance Characteristics"
+              },
+              "input": {
+                "zh": "regions: [us-west, eu-central, ap-south]\ninstances: 8\nrouting: geo-aware",
+                "en": "regions: [us-west, eu-central, ap-south]\ninstances: 8\nrouting: geo-aware"
+              },
+              "output": {
+                "zh": "就近路由降低延迟，适合全球服务",
+                "en": "Proximity routing reduces latency, suitable for global services"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了API调用格式和负载均衡概念，实际模型推理、GPU资源分配和全球部署需在Featherless.ai平台配置",
+      "en": "Demonstrated API call format and load-balancing concepts; actual model inference, GPU resource allocation, and global deployment require configuration on Featherless.ai platform"
+    },
+    "sources": [
+      {
+        "url": "https://featherless.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.vktr.com/ai-platforms/featherlessai-lands-20m-series-a-for-open-ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

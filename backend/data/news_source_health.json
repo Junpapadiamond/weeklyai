@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-08T22:20:05.549578+00:00",
+  "updated_at": "2026-11-08T22:47:57.870271+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
@@ -7,7 +7,7 @@
       "fresh_count": 17,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-08T22:20:05.549578+00:00",
+      "checked_at": "2026-11-08T22:47:57.870271+00:00",
       "rejected_count": 11,
       "rejection_reasons": {
         "no_concrete_signal": 6,
@@ -52,17 +52,24 @@
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 13,
+      "fresh_count": 14,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-08T22:20:05.549578+00:00",
-      "rejected_count": 27,
+      "checked_at": "2026-11-08T22:47:57.870271+00:00",
+      "rejected_count": 26,
       "rejection_reasons": {
         "off_topic": 17,
-        "no_concrete_signal": 9,
-        "insufficient_evidence": 1
+        "no_concrete_signal": 9
       },
       "rejected_examples": [
+        {
+          "title": "Anyone with access to Mythos here?",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Moving Beyond The Compute Arms Race: A Discussion and Technical White Paper",
+          "reason": "off_topic"
+        },
         {
           "title": "Nous Research Arete-27B GGUF quants",
           "reason": "off_topic"
@@ -86,18 +93,10 @@
         {
           "title": "Before you A/B test an agent skill, check the logs that it actually loaded",
           "reason": "off_topic"
-        },
-        {
-          "title": "How to make Claude produce or source the right SFX for my videos?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "let's burn some tokens",
-          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-08T22:19:15+00:00"
+      "latest_published_at": "2026-11-08T22:26:43+00:00"
     },
     "youtube": {
       "status": "direct",
@@ -109,12 +108,24 @@
         }
       ],
       "feeds_ok": 7,
-      "checked_at": "2026-11-08T22:20:05.549578+00:00",
+      "checked_at": "2026-11-08T22:47:57.870271+00:00",
       "rejected_count": 15,
       "rejection_reasons": {
         "off_topic": 15
       },
       "rejected_examples": [
+        {
+          "title": "The one thing holding theoretical CS together just broke... kinda",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The worst week in cybersecurity history... so far",
+          "reason": "off_topic"
+        },
+        {
+          "title": "China just dropped a new frontier model... and nobody can explain how",
+          "reason": "off_topic"
+        },
         {
           "title": "The Death of Stackoverlow | TheStandup",
           "reason": "off_topic"
@@ -132,18 +143,6 @@
           "reason": "off_topic"
         },
         {
-          "title": "The one thing holding theoretical CS together just broke... kinda",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The worst week in cybersecurity history... so far",
-          "reason": "off_topic"
-        },
-        {
-          "title": "China just dropped a new frontier model... and nobody can explain how",
-          "reason": "off_topic"
-        },
-        {
           "title": "边听边说、边看边想、还有一张脸的全双工模型，讲一讲背后的技术",
           "reason": "off_topic"
         }
@@ -156,13 +155,21 @@
       "fresh_count": 8,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-08T22:20:05.549578+00:00",
+      "checked_at": "2026-11-08T22:47:57.870271+00:00",
       "rejected_count": 52,
       "rejection_reasons": {
-        "no_concrete_signal": 41,
-        "off_topic": 11
+        "no_concrete_signal": 40,
+        "off_topic": 12
       },
       "rejected_examples": [
+        {
+          "title": "AI, Bullshit and Art Speak: How the art world prepared us for the age of AI slop",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Spreadsheets are all you need",
+          "reason": "off_topic"
+        },
         {
           "title": "File sharing platform made in Python – Not vibe coded – Since 2025",
           "reason": "no_concrete_signal"
@@ -186,40 +193,28 @@
         {
           "title": "AI skill to provide IPA and English translations from uploaded sheet music",
           "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Not another AI note taker",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Bloomington, Indiana Bans Artificial Intelligence: Ordinance 2026-29 Explained",
-          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-08T22:16:21+00:00"
+      "latest_published_at": "2026-11-08T22:34:06+00:00"
     },
     "producthunt": {
       "status": "direct",
       "fresh_count": 10,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-08T22:20:05.549578+00:00",
+      "checked_at": "2026-11-08T22:47:57.870271+00:00",
       "rejected_count": 25,
       "rejection_reasons": {
         "off_topic": 25
       },
       "rejected_examples": [
         {
+          "title": "Textly",
+          "reason": "off_topic"
+        },
+        {
           "title": "Tilde ",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Archie",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Sage2 by Levanto Labs",
           "reason": "off_topic"
         },
         {
@@ -227,7 +222,7 @@
           "reason": "off_topic"
         },
         {
-          "title": "Deduplication",
+          "title": "NotchX",
           "reason": "off_topic"
         },
         {
@@ -235,11 +230,15 @@
           "reason": "off_topic"
         },
         {
-          "title": "Frameboy by World Labs",
+          "title": "Archie",
           "reason": "off_topic"
         },
         {
           "title": "NotchIsland",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Sage2 by Levanto Labs",
           "reason": "off_topic"
         }
       ],
@@ -256,7 +255,7 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-08T22:20:05.549578+00:00",
+      "checked_at": "2026-11-08T22:47:57.870271+00:00",
       "rejected_count": 18,
       "rejection_reasons": {
         "off_topic": 18
@@ -291,7 +290,7 @@
           "reason": "off_topic"
         },
         {
-          "title": "Reddit Founder Says Building Social Media Apps Is ‘Not Cool Anymore’",
+          "title": "Meet *sshole, the vulnerability that lets hackers SSH into Linux devices",
           "reason": "off_topic"
         }
       ],
@@ -316,12 +315,16 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-11-08T22:20:05.549578+00:00",
+      "checked_at": "2026-11-08T22:47:57.870271+00:00",
       "rejected_count": 73,
       "rejection_reasons": {
         "off_topic": 73
       },
       "rejected_examples": [
+        {
+          "title": "《塞尔达传说：时之笛》重制版英国首发销量超《旷野之息》，登顶该国 2026 年实体游戏销量榜",
+          "reason": "off_topic"
+        },
         {
           "title": "马斯克：特斯拉将进一步改进 Cybercab，提升能效、新增配色",
           "reason": "off_topic"
@@ -348,10 +351,6 @@
         },
         {
           "title": "雷柏推出 VT2 RT V2 系列鼠标：类机械 / 光微动、电磁按键三种触感，499 元起",
-          "reason": "off_topic"
-        },
-        {
-          "title": "奔驰要把屏幕“装”进车玻璃：后挡风能提醒注意路况，侧窗能告诉你汽车电量",
           "reason": "off_topic"
         }
       ],

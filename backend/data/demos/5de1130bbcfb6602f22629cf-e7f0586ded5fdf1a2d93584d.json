@@ -1,0 +1,210 @@
+{
+  "cache_key": "5de1130bbcfb6602f22629cf-e7f0586ded5fdf1a2d93584d",
+  "product_key": "5de1130bbcfb6602f22629cf",
+  "fingerprint": "e7f0586ded5fdf1a2d93584d",
+  "product_id": "185",
+  "product_name": "Parallel Web Systems",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-08T22:49:10.963191+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "AI 智能体工作空间",
+      "en": "AI Agent Workspace"
+    },
+    "scenario": {
+      "zh": "为特定任务配置智能体，让它在独立工作区执行并行工作",
+      "en": "Configure agents for specific tasks and let them work in parallel workspaces"
+    },
+    "steps": [
+      {
+        "id": "workspace",
+        "widget": "choice",
+        "title": {
+          "zh": "选择工作场景",
+          "en": "Choose Work Scenario"
+        },
+        "instruction": {
+          "zh": "智能体将在独立空间处理任务",
+          "en": "Agents will handle tasks in separate spaces"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "市场调研",
+              "en": "Market Research"
+            },
+            "output": {
+              "zh": "三个智能体分别分析不同竞品",
+              "en": "Three agents analyze different competitors"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "调研目标",
+                "en": "Research Goal"
+              },
+              "output_label": {
+                "zh": "工作空间分配",
+                "en": "Workspace Assignment"
+              },
+              "input": {
+                "zh": "了解AI编辑工具市场的三个主要竞品定位",
+                "en": "Understand positioning of three major AI editing tool competitors"
+              },
+              "output": {
+                "zh": "已分配三个独立工作区，每个智能体负责一家公司",
+                "en": "Assigned three separate workspaces, each agent covers one company"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "工作区 A",
+                    "en": "Workspace A"
+                  },
+                  "detail": {
+                    "zh": "分析 Descript 的功能和目标用户",
+                    "en": "Analyze Descript features and target users"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "工作区 B",
+                    "en": "Workspace B"
+                  },
+                  "detail": {
+                    "zh": "分析 Runway 的定价和技术优势",
+                    "en": "Analyze Runway pricing and tech advantages"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "工作区 C",
+                    "en": "Workspace C"
+                  },
+                  "detail": {
+                    "zh": "分析 Synthesia 的企业客户案例",
+                    "en": "Analyze Synthesia enterprise client cases"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "内容创作",
+              "en": "Content Creation"
+            },
+            "output": {
+              "zh": "两个智能体同时撰写不同章节",
+              "en": "Two agents write different chapters simultaneously"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "文档大纲",
+                "en": "Document Outline"
+              },
+              "output_label": {
+                "zh": "并行任务",
+                "en": "Parallel Tasks"
+              },
+              "input": {
+                "zh": "产品手册需要技术规格和用户指南两部分",
+                "en": "Product manual needs technical specs and user guide sections"
+              },
+              "output": {
+                "zh": "两个智能体在独立空间同时工作",
+                "en": "Two agents work simultaneously in separate spaces"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "技术规格",
+                    "en": "Technical Specs"
+                  },
+                  "detail": {
+                    "zh": "智能体整理 API 文档和系统要求",
+                    "en": "Agent compiles API docs and system requirements"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "用户指南",
+                    "en": "User Guide"
+                  },
+                  "detail": {
+                    "zh": "智能体编写快速入门和常见问题",
+                    "en": "Agent writes quick start and FAQ"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "review",
+        "widget": "review",
+        "title": {
+          "zh": "查看进展",
+          "en": "Review Progress"
+        },
+        "instruction": {
+          "zh": "检查各工作区的输出质量",
+          "en": "Check output quality from each workspace"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "合并结果",
+              "en": "Merge Results"
+            },
+            "output": {
+              "zh": "将三份调研汇总为一份报告",
+              "en": "Combine three research outputs into one report"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "调整任务",
+              "en": "Adjust Tasks"
+            },
+            "output": {
+              "zh": "重新分配或补充智能体指令",
+              "en": "Reassign or supplement agent instructions"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "展示了并行工作区概念，实际配置和智能体执行能力需在 Parallel 官网验证",
+      "en": "Illustrated parallel workspace concept; actual configuration and agent execution capabilities require verification on Parallel's site"
+    },
+    "sources": [
+      {
+        "url": "https://parallel.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/04/29/parallel-web-systems-hits-2b-valuation-five-months-after-its-last-big-raise/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

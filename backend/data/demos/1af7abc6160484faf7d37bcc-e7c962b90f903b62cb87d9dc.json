@@ -1,0 +1,234 @@
+{
+  "cache_key": "1af7abc6160484faf7d37bcc-e7c962b90f903b62cb87d9dc",
+  "product_key": "1af7abc6160484faf7d37bcc",
+  "fingerprint": "e7c962b90f903b62cb87d9dc",
+  "product_id": "190",
+  "product_name": "Netomi",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-08T22:49:33.366465+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "Netomi 客服对话处理",
+      "en": "Netomi Customer Service Handling"
+    },
+    "scenario": {
+      "zh": "设定一位客户询问订单状态，系统生成AI回复，检验回复是否符合语气和解决问题",
+      "en": "A customer asks about order status; the system generates an AI reply to check if it matches tone and solves the issue"
+    },
+    "steps": [
+      {
+        "id": "incoming",
+        "widget": "choice",
+        "title": {
+          "zh": "客户咨询",
+          "en": "Customer Inquiry"
+        },
+        "instruction": {
+          "zh": "选择一条虚构客户消息",
+          "en": "Choose a fictional customer message"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "订单延迟",
+              "en": "Delayed Order"
+            },
+            "output": {
+              "zh": "顾客对物流延迟表示不满",
+              "en": "Customer frustrated by shipping delay"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "客户消息",
+                "en": "Customer Message"
+              },
+              "output_label": {
+                "zh": "建议回复",
+                "en": "Suggested Reply"
+              },
+              "input": {
+                "zh": "我的订单#8472已经等了10天还没发货，这是怎么回事？我很着急！",
+                "en": "My order #8472 has been waiting 10 days without shipping. What's going on? I'm really worried!"
+              },
+              "output": {
+                "zh": "感谢您联系我们。订单#8472因仓库库存调配延迟，我们已加急处理，预计2个工作日内发货并为您提供运费补偿。",
+                "en": "Thank you for reaching out. Order #8472 was delayed due to warehouse stock allocation. We've expedited it and expect shipment within 2 business days with a shipping credit."
+              },
+              "emphasis": {
+                "zh": "订单#8472",
+                "en": "order #8472"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "退款查询",
+              "en": "Refund Inquiry"
+            },
+            "output": {
+              "zh": "顾客询问退款进度",
+              "en": "Customer asks about refund status"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "客户消息",
+                "en": "Customer Message"
+              },
+              "output_label": {
+                "zh": "建议回复",
+                "en": "Suggested Reply"
+              },
+              "input": {
+                "zh": "我上周申请了退款，为什么账户还没收到钱？",
+                "en": "I requested a refund last week. Why hasn't the money reached my account yet?"
+              },
+              "output": {
+                "zh": "您的退款已在3天前处理完成，通常需要5-7个工作日到账。如果周五仍未收到，请告知我们立即核查。",
+                "en": "Your refund was processed 3 days ago and typically takes 5-7 business days to arrive. If you haven't received it by Friday, let us know for immediate review."
+              },
+              "emphasis": {
+                "zh": "退款",
+                "en": "refund"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "tone",
+        "widget": "choice",
+        "title": {
+          "zh": "回复语气",
+          "en": "Reply Tone"
+        },
+        "instruction": {
+          "zh": "调整虚构回复的语气风格",
+          "en": "Adjust the tone style of the fictional reply"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "正式专业",
+              "en": "Formal Professional"
+            },
+            "output": {
+              "zh": "使用规范商务语言",
+              "en": "Uses standard business language"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "友好亲切",
+              "en": "Friendly Warm"
+            },
+            "output": {
+              "zh": "采用轻松对话语气",
+              "en": "Adopts a relaxed conversational tone"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "简洁高效",
+              "en": "Concise Efficient"
+            },
+            "output": {
+              "zh": "提供直接简短答案",
+              "en": "Provides direct brief answers"
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "review",
+        "widget": "review",
+        "title": {
+          "zh": "检查结果",
+          "en": "Review Result"
+        },
+        "instruction": {
+          "zh": "审核虚构回复示例的要素",
+          "en": "Review elements of the fictional reply example"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "包含订单编号",
+              "en": "Includes Order Number"
+            },
+            "output": {
+              "zh": "准确引用了客户提供的订单号",
+              "en": "Accurately references the customer's order number"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "说明原因",
+              "en": "Explains Cause"
+            },
+            "output": {
+              "zh": "给出了延迟的具体原因",
+              "en": "Provides a specific reason for the delay"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "给出时间线",
+              "en": "Provides Timeline"
+            },
+            "output": {
+              "zh": "明确告知预计解决时间",
+              "en": "Clearly states the expected resolution time"
+            }
+          },
+          {
+            "id": "3",
+            "label": {
+              "zh": "提供补偿",
+              "en": "Offers Compensation"
+            },
+            "output": {
+              "zh": "主动提出运费补偿方案",
+              "en": "Proactively offers shipping credit"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "本例展示了虚构客户对话的回复生成，实际效果需在Netomi平台连接企业系统后测试",
+      "en": "This example shows fictional reply generation for customer dialogue; actual results require testing on the Netomi platform with connected business systems"
+    },
+    "sources": [
+      {
+        "url": "https://www.netomi.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.channelnewsasia.com/business/ai-customer-service-startup-netomi-raises-110-million-6092081",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}
