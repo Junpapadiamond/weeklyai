@@ -1,5 +1,370 @@
 [
   {
+    "name": "How much code do AI models and harnesses add? I made an open-source benchmark to measure code complexity.",
+    "description": "Existing benchmarks measure the solve rate and token output/cost, but don't punish excess code or overengineering, which increases technical debt in the long term. Parsimony counts syntax units (statements, calls, names) in the patches other benchmarks publish. It doesn't count lines, comments, tests. Each model or harness is compared with the human fix for the same issues it solved. - Smarter models surprisingly write slightly more code. - Models: the median model adds 1.9× the human fix on SWE-bench Verified (older models), but about 1× on DeepSWE. - Harnesses: with the same two open-weight models, the harness alone moves it from 0.80× (Codex) to 0.99× (mini-SWE-agent, OpenClaw). The harness data comes from Joel Niklaus's Harness Leaderboard. https://parsimony.lasu.dev https://github.com/La5u/Parsimony Looking for: public patches for newer models, any ideas or contributors for self run models. * some newer models are self run in codex and claude code, shown as faded (unverified) in DeepSWE",
+    "website": "https://reddit.com/r/LocalLLaMA/comments/1xrathc/how_much_code_do_ai_models_and_harnesses_add_i",
+    "source": "reddit",
+    "published_at": "2026-11-08T22:19:15+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/lasushin",
+      "outbound_urls": [
+        "https://parsimony.lasu.dev",
+        "https://github.com/La5u/Parsimony"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Show HN: Remedy – Prompt stuff out of your feeds",
+    "description": "I built an AI classifier with Jev to insta-remove stuff from all your feeds, just change the prompt to anything you want like \"remove ragebait\" and it works fast.",
+    "website": "https://news.ycombinator.com/item?id=50417974",
+    "source": "hackernews",
+    "published_at": "2026-11-08T22:16:21+00:00",
+    "extra": {
+      "evidence_kind": "platform_api",
+      "external_url": "https://getremedyapp.com",
+      "points": 1,
+      "comments": 0,
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Really cool 3d video on how the microduck ai robot works",
+    "description": "Underrated youtube channel, thought this would be nice to share given its open source uses local ai. Does anyone own one?",
+    "website": "https://reddit.com/r/LocalLLaMA/comments/1xrai3x/really_cool_3d_video_on_how_the_microduck_ai",
+    "source": "reddit",
+    "published_at": "2026-11-08T22:05:32+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/Individual-Dot5488",
+      "outbound_urls": [
+        "https://youtu.be/Zvu5cHlH9gM"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Built with Claude: once a day, a Claude Code session filters AI news down from over a hundred stories to the ones that check out, then sits on a ten-model jury that grades them, with its own vote struck out on Anthropic stories",
+    "description": "https://chrcl.app I wanted a daily answer to one question: was yesterday a good day or a bad day for AI, for people? Not for the companies, not for the people with a token to shill. For people. The feeds are useless for this. So I built chrcl, and the whole thing runs on Claude in Claude Code. How a day works: At 3:12 am Eastern a scheduled Claude Code session opens the repo and reads one skill file, about 1,500 lines, that is the entire editorial method. Nothing is hard-coded in a prompt; the method is a document I can diff. We're on version 5 after thirteen editions and each version is dated on the site. It scans the sources and does the unglamorous part: independence checks. A story is \"confirmed\" only when two outlets with their own reporting carry it, and every source gets a role (primary, original, derivative). Yesterday: 120 candidates in, 15 published. The 105 that didn't make it are mostly single-source, which on X would have been 105 viral posts. Ten models rate each surviving story blind on the council: Claude, GPT, Gemini, Meta's Muse, Grok, Kimi, MiMo, Qwen, DeepSeek, GLM. Median vote wins. The grade comes from the weighted mean. When a story is about Anthropic, Claude",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xr9upo/built_with_claude_once_a_day_a_claude_code",
+    "source": "reddit",
+    "published_at": "2026-11-08T21:37:11+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/Cactus-Parmigian",
+      "outbound_urls": [
+        "https://chrcl.app",
+        "https://i.redd.it/44l49zdyjg0i1.jpeg"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "I shipped a 3D zombie survival game to the App Store in 8 weeks with Claude writing most of the code. What worked, and what cost me.",
+    "description": "Solo dev here, and \"dev\" is doing a lot of work in that sentence. Nightporch is a cozy-meets-scary survival life game: build a home by day, look after your household, and hold the porch when the dead show up on Horde Night. It is live on iPhone, iPad and Mac, and in testing on Google Play. Since the first commit on September 11: 2,358 commits about 100k lines of JavaScript (Three.js, Vite, Capacitor for iOS and Android, Cloudflare Workers for co-op) around 2,100 of those commits co-authored by Claude, mostly Opus, some Fable and Sonnet 211 test scripts and a 13-step release gate What worked Lanes. Each big subsystem gets its own git worktree and its own agent: walls, ground, props, Horde Night performance. Nothing merges until it passes the gate. A gate the agent cannot talk its way past. Full test suite, a headless playthrough, a town determinism check (co-op needs every player's town to generate identically), a banned-names sweep, an asset provenance check, then the build. The verdict comes from exit codes, not from an agent telling me \"all tests pass\". A written failure catalog. Every time an agent was confidently wrong, it became a rule. My favourite category is \"verifications",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xr9r9v/i_shipped_a_3d_zombie_survival_game_to_the_app",
+    "source": "reddit",
+    "published_at": "2026-11-08T21:33:03+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/Shortykane",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Are Vector Databases Still Needed? RAG, AI Agents & Search",
+    "description": "Found this video and thought the discussion was interesting. I've been using a vector DB in front of a local wiki I setup to allow a model to cleanly access the wiki and have better context. It works well, but definitely not suitable for all use cases. The discussion here might help folks determine what is best for their Local project and save you some overhead or help you tune it right. For discussion: What are you using with your local model/harness to give it access to info? No affiliation with poster/channel. They seem to have some other good topics as well.",
+    "website": "https://reddit.com/r/LocalLLaMA/comments/1xr9hxb/are_vector_databases_still_needed_rag_ai_agents",
+    "source": "reddit",
+    "published_at": "2026-11-08T21:21:39+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/darklordfireape",
+      "outbound_urls": [
+        "https://youtube.com/watch?v=rXFV1ivDe6c"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Resurrecting 2013 E-Waste: Native CUDA Mamba-1 & PyTorch 2.7.1 on Windows (Kepler–Turing, SM 3.5–7.5)",
+    "description": "Hello! I want to share an active development project. If you have a drawer full of old NVIDIA GPU's collecting dust because modern AI stacks refuse to compile for them, this is for you. I have ported the modern LLM training stack on Windows to legacy CUDA GPUs (sm_35 through sm_75): PyTorch (v2.7.1) (custom build compiled with CUDA 11.8, keeping the legacy SASS) ([ https://github.com/theIvanR/torch-on-clunkers] ) causal-conv1d (v1.7.0) ( https://github.com/theIvanR/conv-on-clunkers ) mamba_ssm (Mamba-1) with pure native CUDA kernels ( https://github.com/theIvanR/mamba-on-clunkers ) Windows NCCL (DDP) for multi-GPU training across Kepler cards ( https://github.com/theIvanR/nccl-on-windows ) Status Mamba-1 (Pure CUDA): Fully functional with optimized execution across legacy GPU architectures ( SM 3.5–SM 7.5 ). Tested on a 2013 NVIDIA Tesla K40c, achieving a maximum absolute error of 3.8e-06 against the PyTorch reference implementation. Mamba-2 & Mamba-3: Currently supported with optimized execution on Turing ( SM 7.5 ) and newer architectures, due to their reliance on Triton and TileLang. Graceful Fallback: On older hardware, the package detects unavailable Triton-dependent modules a",
+    "website": "https://reddit.com/r/LocalLLaMA/comments/1xr97iz/resurrecting_2013_ewaste_native_cuda_mamba1",
+    "source": "reddit",
+    "published_at": "2026-11-08T21:09:11+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/TheSpicyBoi123",
+      "outbound_urls": [
+        "https://github.com/theIvanR/torch-on-clunkers%5D",
+        "https://github.com/theIvanR/conv-on-clunkers",
+        "https://github.com/theIvanR/mamba-on-clunkers",
+        "https://github.com/theIvanR/nccl-on-windows"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Claude trains on your code and saves your conversation for 5 years if you give feedback or report a bug",
+    "description": "You may have thought that if you select privacy on, your code won't be saved and trained on. But if you ever report a /bug, or give /feedback, they save your data for 5 years and train their models on it. They have your code and your project from that session, and you can do nothing about it. Anthropic is misleading us all. I see a major court case about this, having a switch that makes users believe they are in privacy mode and continuously showing a feedback pane is completely misleading if there isn no warning or info tooltip in either place, how can they get away with this? from https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training L7: By default, we will not use your inputs or outputs from our commercial products (e.g. Claude for Work, Anthropic API, Claude Gov, etc.) to train our models. L8: If you explicitly report feedback or bugs to us (e.g. via our thumbs up/down feedback button), or otherwise choose to allow us to use your data, then we may use your chats and coding sessions to train our models. L10: When you provide us feedback via our thumbs up / down button, we will store the entire related conversation, including any content, custom styles",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xr8sbp/claude_trains_on_your_code_and_saves_your",
+    "source": "reddit",
+    "published_at": "2026-11-08T20:51:21+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/IcySteak5762",
+      "outbound_urls": [
+        "https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training",
+        "https://code.claude.com/docs/en/data-usage.md",
+        "https://preview.redd.it/kn4qmjpbbg0i1.png?auto=webp&format=png&s=aafe46ea94d907a745a20239a6c70087b646e325&width=1182",
+        "https://preview.redd.it/tefvvezqbg0i1.png?auto=webp&format=png&s=ac345180f196cc62de4b95ccc7c31e5d8c700965&width=1992"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "MIT CSAIL: GPT-6 Astra edited 0.016% of a small Qwen model's weights and lifted MATH-500 from 7.9% to 48.1% -- critics say it's standard ML engineering",
+    "description": "MIT CSAIL researchers (Rikiya Takehi, Jayden Teoh, Alex Zhang and Omar Khattab) published 'Sparks of Weight-Space Programming' on Nov 2. They gave OpenAI's GPT-6 Astra access to the raw weights of Alibaba's small Qwen3.5-0.8B model plus a Python environment, and asked it to fix the model's habit of looping on math problems. Astra traced the looping to one direction in the MLPs of layers 15 and 19 and subtracted it from 64 output columns in each -- changing 131,072 weights (0.016% of the total), with no training run and no gradient descent. MATH-500 went from 7.9% to 48.1%. The full experiment logs are on GitHub, and Hugging Face's Ahsen Khaliq rebuilt the edited checkpoint from the logs (his rerun scored 51.0%). The pushback came within a day. spaCy creator Matthew Honnibal called the write-up 'massively misleading': the 'raw weights, no tools' setup only applied to experiments on tiny networks (17k-172k weights). Every experiment on a real language model used Python, and the Qwen run could also test the model on up to 50 batches of practice problems. Sean Goedecke made a similar point, describing the Qwen fix as an application of steering -- an existing technique. The authors them",
+    "website": "https://reddit.com/r/artificial/comments/1xr8gei/mit_csail_gpt6_astra_edited_0016_of_a_small_qwen",
+    "source": "reddit",
+    "published_at": "2026-11-08T20:36:57+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/winer666",
+      "outbound_urls": [
+        "https://rikiyat.github.io/blog/weight-space-programming"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Built a WoW treadmill integration",
+    "description": "I work full-time as a software engineer, and I've been using Claude to build personal projects I would otherwise never find the time for. My latest one connects my Xiaomi treadmill to World of Warcraft, letting my character control the belt's speed or vice versa. I used Claude for most of the development. The most interesting part was figuring out how to get a WoW addon to communicate with an external Windows app, since the addon API doesn't allow it. The solution Claude came up with? Have the addon draw three tiny colored squares in the corner of the screen and let the Windows app read those pixels to determine whether my character is walking, running or mounted. Ridiculous, but it works. This is what I find most exciting about AI coding: not replacing programming knowledge, but making projects worth attempting that I'd otherwise never have time for. GitHub: https://github.com/adunis/windrunner-walkingpad- Video demonstration: https://youtu.be/BBa3kIVbj6k",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xr88vb/built_a_wow_treadmill_integration",
+    "source": "reddit",
+    "published_at": "2026-11-08T20:27:58+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/Round_Worldliness766",
+      "outbound_urls": [
+        "https://github.com/adunis/windrunner-walkingpad-",
+        "https://youtu.be/BBa3kIVbj6k"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Stuck building your app in Base44? I was. Here's how I got out using Claude, and what I'd tell anyone stuck right now",
+    "description": "I built two apps on Base44, TheShore and The Anything Board. Honestly, it was magic at first. I had something working in a day. Then I got stuck, the same way both times: The AI fought me on the one feature I actually wanted, and every attempt burned credits. A new feature meant a new tier, and staying on it for good. I was paying $40–50 a month for a hobby. Something changed on the platform side, and my app broke without me touching it. That's when I realized I was renting my app, not owning it. And leaving looked like starting over, so I just stopped. What I wish someone had told me then: What you built still counts: your screens, your data, who's allowed to do what, the prompts and wording that work: that's most of a plan already. Write it down before you decide anything. Get your code out while you can. From Lovable, connect it to GitHub. From Base44, download the code. Even if you never use it, you'll have it. If you're on the free tier, get Claude to get the data out, file by file and the data as well - table by table. Leaving isn't the same as starting over. You rebuild it, piece by piece, with what you learned. My apps now run on my own Google Cloud for a few cents a month.",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xr85j4/stuck_building_your_app_in_base44_i_was_heres_how",
+    "source": "reddit",
+    "published_at": "2026-11-08T20:23:57+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/BusLogical6379",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Show HN: APC Playground – Stop AI agents from modifying your API tool calls",
+    "description": "Show HN: APC Playground – Stop AI agents from modifying your API tool calls",
+    "website": "https://news.ycombinator.com/item?id=50416757",
+    "source": "hackernews",
+    "published_at": "2026-11-08T20:22:26+00:00",
+    "extra": {
+      "evidence_kind": "platform_api",
+      "external_url": "https://playground.alephapc.com/",
+      "points": 1,
+      "comments": 0,
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Vibe-Shield – Static security scanner for AI-generated Next.js/Supabase code",
+    "description": "Vibe-Shield – Static security scanner for AI-generated Next.js/Supabase code",
+    "website": "https://news.ycombinator.com/item?id=50416741",
+    "source": "hackernews",
+    "published_at": "2026-11-08T20:21:10+00:00",
+    "extra": {
+      "evidence_kind": "platform_api",
+      "external_url": "https://github.com/avivgerz-hue/vibe-shield",
+      "points": 1,
+      "comments": 0,
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "What you think what it could be ?",
+    "description": "OpenAI Devwlopers just posted a Video Showcasing there Collaboration with Modretro Chromatic which is somwhere regarding to the OpenAIs new physical device ! No clear justification from OpenAI about the new model launch 2hich are probably GPT 6.2-Sol and 6.5-Astra But some Leakers on X showing a videos about 6.2 sol which shows his incredible capabilities at 3d models , Computer Use and some others !",
+    "website": "https://reddit.com/r/OpenAI/comments/1xr80fs/what_you_think_what_it_could_be",
+    "source": "reddit",
+    "published_at": "2026-11-08T20:17:53+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/Soggy_Perspective776",
+      "outbound_urls": [
+        "https://i.redd.it/jbnpmpxs5g0i1.png"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Prompting too much of the same things, I built a prompt library app that one-click pastes: Promptline",
+    "description": "Hi Community. This is a human written note :) As a software engineer, in the recent years, I'm mostly prompting, than coding. As usual, big chunk of my conversation with Claude is bureaucracy talk. \"You have the green light\", \"whats next on the roadmap\" etc.. Daily stuff. I'm sure most of you already has a solution for this, but I took it to a bit further than a copy paste problem. Promptline A prompt library popup && A prompt manager You can create simple prompts, parameterized prompts (clipboard could be one parameter, so that you can wrap whatever you copy with your own prompt), supported with paste-time fill in parameters, etc. I also use it for skills and commands and It became one of the tools that I use the most and I'm very happy about where it is at the moment to share this with you. Hope it makes your workflows easier. The video is a screen record of me demoing the app, with simple operation to give some idea. Not a tutorial, nor animation. I used Figma MCP for the UI, going back and forth with Claude to design the tokens and let Fable chose the windows app tech stack. Didn't use any fancy project management frameworks. Used Opus 5.5 most of the time and it handled the ba",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xr7c9l/prompting_too_much_of_the_same_things_i_built_a",
+    "source": "reddit",
+    "published_at": "2026-11-08T19:50:39+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/TallShift4907",
+      "outbound_urls": [
+        "https://promptline.cc",
+        "https://github.com/bekalpaslan/promptline",
+        "https://v.redd.it/nzk7anyr0g0i1"
+      ],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "I'm confused by the praise some of you give to each new model?",
+    "description": "I don't get the comments form from some of you...\"Sonnet is amazing when I did X and now Opus is doing even more with XYZ\" How do you even measure this? How does the average user test this, or hell, even know when to use Sonnet vs Opus vs Fable? I'm in sales and use the Web AI a lot and use it for reseaching accounts and use agents to get in deeper details or Research when trying to get a big reeport on something etc. What am I missing? Any good resources out there to help me out here? I see so much AI slope with TLDR new letters etc and I just don't know what to look at to learn more and more. Thank!",
+    "website": "https://reddit.com/r/ClaudeAI/comments/1xr770i/im_confused_by_the_praise_some_of_you_give_to",
+    "source": "reddit",
+    "published_at": "2026-11-08T19:44:49+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "newest submissions : multi",
+      "author": "/u/virtual008",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "Apple is racing to make Siri more agentic",
+    "description": "Bloomberg's Mark Gurman says CEO John Ternus is pressuring AI czar Craig Federighi to accelerate the Siri roadmap and deliver a powerful AI agent that can compete with OpenAI's Dots or Meta's Muse. While Federighi has delivered a functional version of Siri AI on an incredibly short timeline, the company has no illusions that it's […]",
+    "website": "https://theverge.com/ai-artificial-intelligence/1029552/apple-siri-ai-agentic",
+    "source": "tech_news",
+    "published_at": "2026-11-08T19:18:19+00:00",
+    "extra": {
+      "evidence_kind": "feed_excerpt",
+      "publisher": "AI | The Verge",
+      "author": "Terrence O’Brien",
+      "outbound_urls": [],
+      "publication_basis": "feed_published",
+      "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
     "name": "I built a free browser tycoon game with Claude: secretly live in the ceiling of a dying 2004 mall",
     "description": "I built Mall Bats with Claude Opus 5.5 after watching the fun documentary Secret Mall Apartment . My first attempt was in March, but LLMs weren't there yet. Tried again last week, and I'm amazed by the result. What it is: an isometric tycoon/stealth game. You build a hidden home in a mall's drop ceiling, steal power from the stores below, and send your crew out after closing to fish the fountain while the night guard patrols. Buy the mall at auction on New Year's Eve to win. How Claude helped: it wrote nearly all the code: the simulation, crew AI, isometric renderer, a balance bot, and the PixelLab art pipeline. I handled design, playtesting, and feedback. Claude also made the trailer by staging shots inside the running game and synthesizing the music. 100% free, in your browser: https://mall-bats.vercel.app",
     "website": "https://reddit.com/r/ClaudeAI/comments/1xr4cd7/i_built_a_free_browser_tycoon_game_with_claude",
@@ -55,7 +420,7 @@
       "external_url": "https://www.valueaddedresource.net/etsy-expands-ai-training-rights/",
       "points": 2,
       "comments": 0,
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -119,7 +484,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -249,7 +614,7 @@
       "external_url": "https://www.scmp.com/tech/tech-trends/article/3373550/chinas-ai-models-led-kimi-dominate-open-source-enterprise-spending",
       "points": 3,
       "comments": 0,
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -358,7 +723,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -400,7 +765,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -418,7 +783,7 @@
       "external_url": "https://velork.com",
       "points": 1,
       "comments": 2,
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -436,7 +801,7 @@
       "external_url": "https://inhouse.jurex.ai/login",
       "points": 1,
       "comments": 1,
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -456,7 +821,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -476,7 +841,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -498,7 +863,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -518,7 +883,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -543,7 +908,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -563,7 +928,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -585,7 +950,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -605,7 +970,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -625,7 +990,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -645,7 +1010,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -665,7 +1030,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -685,7 +1050,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -705,7 +1070,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -723,7 +1088,7 @@
       "external_url": "https://consumerrights.wiki/w/Etsy_AI_training_terms_change_(2026)",
       "points": 1,
       "comments": 0,
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -747,7 +1112,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -767,7 +1132,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -791,7 +1156,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -811,7 +1176,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -831,7 +1196,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ithome.com/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -869,7 +1234,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.leiphone.com/feed",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -907,7 +1272,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.tmtpost.com/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -1243,7 +1608,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.ifanr.com/feed",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -2224,7 +2589,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2280,7 +2645,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCbfYPyITQ-7l4upoX8nvctg",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2318,7 +2683,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2338,7 +2703,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2376,7 +2741,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2545,29 +2910,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "THE ART OF INTENTION - Why Artificial Intelligence May Demand More Human Creativity, Not Less",
-    "description": "There is a peculiar accusation leveled against artificial intelligence: that using it means outsourcing creativity. That the moment a human being asks a machine to write, design, reason, compose, or build something, they have somehow surrendered the very faculty that makes the endeavor creative in the first place. I would argue that this fundamentally misunderstands both creativity and the nature of the interaction. The question is not whether artificial intelligence can produce something creative. The question is whether the human being interacting with it understands what they are trying to create. Because there is an enormous difference between getting an output and cultivating an outcome. You can certainly treat a language model like a slot machine. Insert a prompt, pull the lever, and see what comes tumbling out. Sometimes you get something impressive. Sometimes you get something ridiculous. Sometimes the machine produces something so unexpectedly good that you mistake the surprise for evidence that you knew what you wanted all along. But the slot machine is not necessarily the machine itself. The slot machine is the relationship you've chosen to have with it. And that distinc",
-    "website": "https://reddit.com/r/OpenAI/comments/1xq4wup/the_art_of_intention_why_artificial_intelligence",
-    "source": "reddit",
-    "published_at": "2026-11-07T12:10:45+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/Cyborgized",
-      "outbound_urls": [
-        "https://i.redd.it/zt4llx4zl60i1.png"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-07T13:23:15.024709+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2587,7 +2930,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -2615,31 +2958,6 @@
     "market": "cn"
   },
   {
-    "name": "Claude Code driving a robot arm I built over MCP",
-    "description": "I attached a LeRobot arm on an RC car, runs on a single Raspberry Pi Pico W / Pico 2 W. The board has its own MCP server so Claude Code talks to it directly. All I typed was \"pick up object on your left, throw it to your right and say bye bye\". Claude did the rest: picks up a fluffy toy, throws it, does a 360, says bye, goes to sleep. How it works: - Added the board as an MCP server in Claude Code - Board commands (move, drive, poses, status, stop...) are exposed as MCP tools, Claude figures out the sequence based on calibration data - The firmware also has a CLAUDE.md + skills so Claude Code can create/build new projects on it Free and open source. Build: git clone --recursive https://github.com/AdrianCX/picohive-robotarm.git cd picohive-robotarm os/build_via_podman.sh pico2_w # or pico_w, or linux for a simulator Flash the uf2, connect to `picow_config` wifi, set it up, tick Enable MCP, then: claude mcp add --transport http robotarm http:// /mcp Hardware, wiring and the rest are in the repos: https://github.com/AdrianCX/picohive-robotarm https://github.com/AdrianCX/picohive-firmware",
-    "website": "https://reddit.com/r/ClaudeAI/comments/1xq3fsf/claude_code_driving_a_robot_arm_i_built_over_mcp",
-    "source": "reddit",
-    "published_at": "2026-11-07T10:39:11+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/funpicoprojects1",
-      "outbound_urls": [
-        "https://claude.md",
-        "https://github.com/AdrianCX/picohive-robotarm",
-        "https://github.com/AdrianCX/picohive-firmware",
-        "https://youtu.be/kQVQd28h4DM?feature=shared"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-07T13:23:15.024709+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
     "name": "谷歌 AI 新研究：无需袖带利用消费级智能手表检测高血压，成果登 Nature",
     "description": "IT之家 11 月 7 日消息，当地时间 11 月 5 日，谷歌发布博文，介绍在《自然》（Nature）发表的最新研究成果。 谷歌推出了名为 AI-PPG-ACC-HTN 的多模态 AI 系统。该系统无需袖带校准，使用普通消费级智能手表便能被动检测高血压迹象。 官方表示，与常规方案试图估算极易受瞬时环境噪声干扰的单次瞬时收缩压与舒张压不同，新系统转变了解决思路：通过聚合连续多天采集的被动生理特征， 专注于识别个体潜在且持续存在的高血压状态 。 自监督预训练 ：使用超 49 万小时无标注数据训练 1D-CNN，通过对比学习让模型自主挖掘复杂的心血管生理特征。 多天聚合与分类 ：将多天 15 秒特征向量取均值平滑瞬态噪声，结合身高（表征动脉路径长度），经逻辑回归模型输出持续高血压概率评分。 为评估其性能，研究团队在全美 5 个临床中心开展了前瞻性、多中心临床试验，纳入 196 名无心血管病史且未服降压药的受试者，并以临床金标准 ——24 小时动态血压监测为参照基准。试验结果显示： 初步筛查 ：特异度达 90.0%，阳性预测值（PPV）为 80.6%，灵敏度为 65.8%（优于门诊单次初筛的 55.3% 灵敏度与 77.8% PPV）。 确诊性检测 （针对初筛偏高人群）：PPV 高达 96.7%，特异度达 90.9%，灵敏度达 78.4%，优于门诊复测，更可比肩需佩戴数天的家庭连续袖带监测。 IT之家获悉，该项研究成果已为谷歌健康应用中的血压趋势“健康守护”功能提供核心技术支撑。",
     "website": "https://ithome.com/1/023/788.htm",
@@ -2660,32 +2978,6 @@
     "market": "cn"
   },
   {
-    "name": "Android Remote Control MCP v1.13.0 is out: free end-to-end encrypted tunnel, no account needed",
-    "description": "🚀 It has been a while since the last release, but Android Remote Control MCP is back and v1.13.0 is now out! It's the MCP server that runs on your phone and lets your AI agent use any app you want. https://github.com/danielealbano/android-remote-control-mcp/releases/tag/v1.13.0 The android application was vibecoded with Claude (VSCode extension + remote sessions), mix between Opus (from 4.6) and Fable (most recently with 5.1), it's free and it's fully open source (GPL 3 or later license). The big news of this release is the free end-to-end encrypted HTTPS tunnel, built into the app, which doesn't require any account and uses well known services for the HTTPS certificates (Let's Encrypt, Google Trust Services and ZeroSSL)! With my infrastructure no one can, apart from you and your AI provider, read the traffic (which is a big thing)! The encryption is terminated on the phone itself, the private key is generated on the phone and never leaves it and the app also watches the Certificate Transparency logs and warns you if a certificate for your name gets issued to another key so you can safely get a new tunnel (I mean, can't really happen but I wanted to offer an addition layer of prote",
-    "website": "https://reddit.com/r/ClaudeAI/comments/1xq38jt/android_remote_control_mcp_v1130_is_out_free",
-    "source": "reddit",
-    "published_at": "2026-11-07T10:25:42+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/daniele_dll",
-      "outbound_urls": [
-        "https://github.com/danielealbano/android-remote-control-mcp/releases/tag/v1.13.0",
-        "https://claude.ai",
-        "https://claude.ai/new?modal=add-custom-connector",
-        "https://github.com/danielealbano/android-remote-control-mcp-tunneld",
-        "https://booking.com"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-07T13:23:15.024709+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
     "name": "比尔 · 盖茨谈“亿万富翁税”：贫富差距不能指望靠“慈善捐赠”解决",
     "description": "IT之家 11 月 7 日消息，据《财富》杂志 6 日报道，微软联合创始人比尔 · 盖茨认为，向富豪征收类似加州“亿万富翁税”的税款，或许是 AI 时代 最合适的办法 。 AI 及周边产业的企业创始人财富大幅增长，持有这些公司股份的家庭也有望获得可观的投资回报。财富不断积累，也让贫富差距问题更加突出。尤其值得关注的是，AI 会否加剧当前的 K 型经济分化，即高收入和低收入群体在经济状况及未来发展前景上的差距不断扩大。 盖茨指出， 不能指望富豪靠慈善捐赠解决贫富差距问题 。政府应当按照财富水平实行累进征税，再由个人决定从收入中拿出多少钱用于慈善事业。“解决不平等问题，首要责任始终在政府。慈善捐赠毕竟是自愿的，不能指望慈善事业充当社会保障网。” 去年年初，盖茨决定把约 1,000 亿美元 （IT之家注：现汇率约合 6,686.11 亿元人民币） 捐给自己创办的盖茨基金会，条件是基金会必须在未来 20 年内花完这笔钱。当时，盖茨称这笔钱是他的“几乎所有财富”。但即便是如此庞大的捐赠，也难以抵消 AI 可能加剧的贫富差距。 美联储数据显示，美国最富有的 1% 人群持有全国过半数的股票资产，因此，无论是今年还是未来的股市收益，都会更多地流向这些富豪。 盖茨进一步指出：“因此，AI 时代 必须改革税制 ，包括对拥有巨额财富的人和亿万富翁征税。至于缴纳这些新税之后剩下的财富，我认为有一群 很有远见的人值得关注 。他们年纪轻轻就开始思考，无论是在美国国内还是为了全球公益，‘我怎样才能发挥最大的作用？’‘我们怎样才能配合政府现有的援助工作？’” 而在今年 8 月，盖茨曾发表文章写道：“企业雇用员工，需要根据员工的工资缴税；但购买机器人，通常可以立即将购置费用计入经营支出，在税前扣除。这样的税制实际上在鼓励企业用机器取代人力。”因此，盖茨提出对 AI 模型消耗的词元以及机器人征税。",
     "website": "https://ithome.com/1/023/787.htm",
@@ -2704,28 +2996,6 @@
     },
     "content_type": "blog",
     "market": "cn"
-  },
-  {
-    "name": "I built a free Claude skill for job hunting in Germany: finds jobs, tailors your CV and writes the cover letter (open source)",
-    "description": "Hi everyone, i built this mostly with Claude Code, and it's a Claude skill, so i'll share it here. job hunting here is messy. half the jobs only show up under the German title, the ad is in English but halfway down it says \"fließend Deutsch\", nobody tells you the salary, and a German Lebenslauf is its own thing. so i built Berlin Job Search, an AI job search assistant for Berlin and the rest of Germany that helps with the whole thing. what it does: finds jobs for you: searches the Arbeitsagentur, LinkedIn, company career pages and Daily Berlin Jobs (a free board with ~1,400 Berlin tech jobs) with German and English titles, so \"Softwareentwickler\" jobs show up too knows where else to look for your field and city (public sector, academia, healthcare, startups, Ausbildung...) tailors your CV to each job and writes the cover letter, German Lebenslauf and Anschreiben or English CV, using only what's actually in your CV reads an ad and tells you if German is really required (quotes the exact line), and if the salary works for a Blue Card practice interviews in German or English, and keeps track of your applications never applies or sends anything for you how Claude helped: i built most o",
-    "website": "https://reddit.com/r/ClaudeAI/comments/1xq33ju/i_built_a_free_claude_skill_for_job_hunting_in",
-    "source": "reddit",
-    "published_at": "2026-11-07T10:16:37+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/yesildaladam",
-      "outbound_urls": [
-        "https://github.com/umutyesildal/berlin-job-search"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-07T13:23:15.024709+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
   },
   {
     "name": "张艺谋谈 AI 冲击电影行业：AI 短视频产值已到几百亿，是很大的挑战",
@@ -2750,28 +3020,6 @@
     },
     "content_type": "blog",
     "market": "cn"
-  },
-  {
-    "name": "strata-dflash2-gfx906-mixed-rocm-cuda: use cuda alongside rocm and more",
-    "description": "Yes, it is yet another fork. But i think it brings some interesting things to the table. It's up to you whether you want to have it built and use it or if you just want to cherrypick some of the things into your own forks. Built by GLM 5.3, GPT Sol and Q38FN. Aimed at usage with a rocm-primary system that has a unused cuda gpu sitting idle. But also provides improvements for gfx906 and adds rocm dflash2 support. The features at a glance: *~47 GiB MoE (Swift-1.5 / Qwen3.8-Flash-Next) as a daily server on 2× Radeon VII (gfx906, 2019) + one 8 GiB NVIDIA laptop card.* **What base Strata can't do — this fork does** - **Runs on gfx906 at all** — full HIP backend, built and served through every release v0.1.45 → v0.2.11 (stock: compile-check only, doesn't build as tagged) - **GEMM works** — custom single-target rocBLAS replaces the stock library that segfaults on gfx906 on first inference - **Mixed AMD + NVIDIA serving** — the NVIDIA card serves expert/prefill rows to the AMD engine over a socket; stock has no cross-vendor path - **Speculative decoding on HIP** — DFlash2 drafter runs on the AMD cards (stock: CUDA-only), with exact-match verification for sampled requests, not just greedy -",
-    "website": "https://reddit.com/r/LocalLLaMA/comments/1xq2pxr/stratadflash2gfx906mixedrocmcuda_use_cuda",
-    "source": "reddit",
-    "published_at": "2026-11-07T09:51:43+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/milpster",
-      "outbound_urls": [
-        "https://github.com/milpster/strata-dflash2-gfx906-mixed-rocm-cuda"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-07T13:23:15.024709+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
   },
   {
     "name": "苹果披露人形机器人 HALO 系统：6 个未建图环境测试 360 次单项任务，平均成功率 91%",
@@ -2810,7 +3058,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.qbitai.com/feed",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -3048,7 +3296,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.qbitai.com/feed",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -3108,7 +3356,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.qbitai.com/feed",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "cn",
       "quality_policy_version": 1
     },
@@ -3176,83 +3424,6 @@
     "market": "cn"
   },
   {
-    "name": "PLaMo 3 Translate - a pfnet Collection",
-    "description": "Overview We have released the weights for PLaMo 3 Translate , our translation-specialized LLM, on Hugging Face. The models come in four sizes—0.8B, 2B, 8B, and 31B. Even the smallest 0.8B model outperforms existing translation-specialized LLMs, including models with more than 30 times as many parameters, in Japanese–English translation and translation between Japanese and other languages . The key was meticulous data refinement through techniques such as tournament-based data synthesis, back-translation, and iterative self-distillation, combined with distillation into smaller models. In this post, we describe how we developed these models and how they perform. Released Model Weights PLaMo 3 Translate comes in four model sizes: 0.8B, 2B, 8B, and 31B . All four are available on Hugging Face . For each size, we provide BF16 weights, several quantized variants, and models in GGUF and MLX formats. Choose the version that best suits your environment. We quantized the models using tools such as AutoRound [2]. In our benchmarks, all of the quantization formats retained nearly the same accuracy as the BF16 versions. See the model cards for details. PLaMo 3 Translate supports translation acr",
-    "website": "https://reddit.com/r/LocalLLaMA/comments/1xpysba/plamo_3_translate_a_pfnet_collection",
-    "source": "reddit",
-    "published_at": "2026-11-07T05:43:41+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/pmttyji",
-      "outbound_urls": [
-        "https://plamo.preferredai.jp/info/plamo-community-license-en",
-        "https://forms.gle/mTL8tBLrMYXKNZD56",
-        "https://translate.preferredai.jp/llm/contact",
-        "https://huggingface.co/pfnet/plamo-3-translate-0.8b",
-        "https://huggingface.co/pfnet/plamo-3-translate-0.8b-FP8",
-        "https://huggingface.co/pfnet/plamo-3-translate-0.8b-W4A16",
-        "https://huggingface.co/pfnet/plamo-3-translate-0.8b-W4AFP8",
-        "https://huggingface.co/pfnet/plamo-3-translate-0.8b-NVFP4",
-        "https://huggingface.co/pfnet/plamo-3-translate-0.8b-GGUF",
-        "https://huggingface.co/pfnet/plamo-3-translate-0.8b-MLX-4bit"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-07T06:20:13.480130+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "I made Claude Code and Codex message each other by name, no tmux",
-    "description": "I made peer, a small tool that lets your Claude Code and Codex sessions talk to each other directly. It's free and open source. The interesting part: Claude Code already has a hidden cross-session inbox, the one its SendMessage tool uses. peer opens it to Codex and other machines, so nothing gets typed into a terminal. I used to do this through tmux, and one stray Enter approved a prompt I never saw. How it works: Claude Code → its built-in inbox Codex → its app-server You're mid-sentence → your half-typed line stays put Sender → gets back delivered, queued or held, and moves on Example usage: peer say review \"the auth refactor is in, please check src/auth.ts\" In the video, Claude asks Codex to review an auth change, Codex finds bugs, Claude fixes them, and Codex approves. I don't copy anything between them. Built with Claude Code: Claude Code wrote most of the code, and I steered and tested it. Once peer worked, my agents used it to talk to each other, and what they tripped on became the next fixes. GitHub: https://github.com/oesoll/peer",
-    "website": "https://reddit.com/r/ClaudeAI/comments/1xpyq1r/i_made_claude_code_and_codex_message_each_other",
-    "source": "reddit",
-    "published_at": "2026-11-07T05:40:00+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/Seunghyeon413",
-      "outbound_urls": [
-        "https://github.com/oesoll/peer",
-        "https://v.redd.it/j8jw58cxl40i1"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-07T06:20:13.480130+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "Subway Zombie FPS for fun using Deepseek v4.1 1017 UD-IQ3_S with Maya and OMP",
-    "description": "inspired by Bijan Bowen's video - Subway FPS test . Hardware details: RTX 5090, 256GB DDR4 3200Mhz 8 channel, AMD EPYC 7532 CPU (32 core). Software: backend is Maya 1.1.55, harness is OMP v18.17.0. Model quant: Deepseek v4.1 1017 UD-IQ3_S latest UD3.1 quant from Unsloth. My prompt was very simple: I want you to create a single html file with a detailed subway station 3d scene, fps controls, zombie enemies, tracers, recoil, muzzle flash, high details. build it with three.js You can see at the end of the video some token stats. In short, total generated tokens were 180k. The model ran at 30t/s with 2k t/s PP at 10k context but then went down to ~20 t/s near 180k context. Note that stock llama.cpp only reaches 10t/s TG and 120t/s PP. This model and harness tools are amazing. Just a year ago we could not even image having such a model locally. Yet, here we are!",
-    "website": "https://reddit.com/r/LocalLLaMA/comments/1xpyp07/subway_zombie_fps_for_fun_using_deepseek_v41_1017",
-    "source": "reddit",
-    "published_at": "2026-11-07T05:38:22+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/MLDataScientist",
-      "outbound_urls": [
-        "https://youtu.be/6kjXzTVmT58?t=1035",
-        "https://v.redd.it/xlwjjjnxk40i1"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-07T06:20:13.480130+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
     "name": "Why Do We Build Fluxcut?",
     "description": "This article explains why we create Fluxcut to solve the issue of the AI video editor regenerating the video for a single edit from start again and again: https://fluxcut.substack.com/p/why-do-we-build-fluxcut",
     "website": "https://news.ycombinator.com/item?id=50401948",
@@ -3291,28 +3462,6 @@
     "market": "cn"
   },
   {
-    "name": "False positive: debugging my own software flagged as reverse engineering",
-    "description": "I’m working on my own project, VSTMX, and asked an AI assistant to help debug a browser reconnect issue after a tmux crash. The request was to reproduce the bug in my development environment, inspect my application’s connection and session-selection flow, and fix the reconnect behavior. The request wasn’t about extracting a model’s hidden reasoning, reverse-engineering a model, or copying model outputs. But I received this refusal: > *“This request was blocked as it seems to violate Anthropic's Terms of Service restrictions on reverse engineering or duplicating model outputs.”* It was labeled reasoning_extraction. I can’t tell which part of the prompt triggered it, and the refusal didn’t explain further. Has anyone else seen this kind of false positive on ordinary software debugging? Is there a way to report it or get more detail about what triggered the classification?",
-    "website": "https://reddit.com/r/ClaudeAI/comments/1xpxotw/false_positive_debugging_my_own_software_flagged",
-    "source": "reddit",
-    "published_at": "2026-11-07T04:42:22+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/berkayraifov",
-      "outbound_urls": [
-        "https://i.redd.it/xrjweaijd40i1.gif"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-07T06:20:13.480130+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
     "name": "The AI Business Model Just Collapsed",
     "description": "The AI Business Model Just Collapsed",
     "website": "https://news.ycombinator.com/item?id=50401626",
@@ -3324,96 +3473,6 @@
       "points": 5,
       "comments": 1,
       "retrieved_at": "2026-11-07T13:23:15.024709+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "I built a tiny helper that lives in my MacBook notch, works along with Claude Code and jumps for joy when it's done",
-    "description": "I built Nosy Notch, a free and open-source macOS app, almost entirely with Claude Code. It's free to try, no paid tier. What it does Claude Code often works on its own for minutes, then waits for a \"yes\" I never saw. Nosy Notch shows every Claude Code session in the MacBook notch, with a small helper called Nosy living in it: - While Claude works, the notch shows the tool it's running and Nosy concentrates. When the context compacts, he gets dizzy. - When Claude asks for permission, Nosy waves and the notch shows Deny / Always allow / Allow. Claude's own dialog stays open too. - When a turn is done, he drips out of the notch and jumps for joy, with the first lines of the answer. You can read the conversation and reply right from the notch. - Hover for all sessions, context fill and your 5-hour / weekly limits. When nothing runs, he falls asleep in the notch. - Finished tasks give him energy, levels and a streak. He never dies and never guilt-trips you. - Also: music player, file shelf with AirDrop, calendar heads-ups, battery and AirPods status, focus timer. Works with Codex and Cursor too. How Claude Code helped Claude Code wrote the Swift/SwiftUI app, the local hook server, the n",
-    "website": "https://reddit.com/r/ClaudeAI/comments/1xpxe0l/i_built_a_tiny_helper_that_lives_in_my_macbook",
-    "source": "reddit",
-    "published_at": "2026-11-07T04:25:46+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/Nkgsporty",
-      "outbound_urls": [
-        "https://nosynotch.davidkubus.dev",
-        "https://github.com/ddkbs/nosynotch"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-07T06:20:13.480130+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "Stanford researchers develop a new AI memory system that recalls information from entire conversation histories using just 16 memory tokens. It reduces document-token usage by up to 4,212×, runs 27× faster in a 512-document test, and outperforms existing approaches on 5 of 8 benchmarks.",
-    "description": "This, if applied to Claude, will be revolutionary.",
-    "website": "https://reddit.com/r/ClaudeAI/comments/1xpvvg3/stanford_researchers_develop_a_new_ai_memory",
-    "source": "reddit",
-    "published_at": "2026-11-07T03:04:25+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/Site-Staff",
-      "outbound_urls": [
-        "https://v.redd.it/gujdkfoj7zzh1"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-07T06:20:13.480130+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "Tried Anthropic’s webapp-testing skill on a tiny local app. Both checks passed, and Claude spotted a bug I hadn’t asked about",
-    "description": "The webapp-testing skill from Anthropic’s skills repo has Claude test a local web page in a real headless browser with Playwright. I tried it on a tiny Tip Splitter page (bill, tip %, people, and a Calculate button). One prompt with exact checks: bill 80, tip 20, people 4 should show $24.00 per person an empty bill should show an error save a screenshot of each and report the browser console messages Results, in 13 seconds by Claude’s timer: both tests passed, and the screenshots matched the report it listed the console messages, including an “Invalid bill” error. It noted the app logs that on purpose, so it didn’t call it a bug no uncaught page errors The part I liked: without being asked, it pointed out that the app never checks the people field, so 0 or empty would give Infinity or NaN. That was true, and it was a gap I’d left in on purpose. It said it didn’t test it because I hadn’t asked. Setup notes: the skill doesn’t install Playwright. I set it up in a virtual environment with a headless Chromium download, which is the biggest wait tell Claude which Python to use if Playwright lives in .venv it asked before running its combined script and server command, so read it before y",
-    "website": "https://reddit.com/r/ClaudeAI/comments/1xpvk88/tried_anthropics_webapptesting_skill_on_a_tiny",
-    "source": "reddit",
-    "published_at": "2026-11-07T02:48:11+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/vinishkapoor",
-      "outbound_urls": [
-        "https://aiparabellum.com/claude-code-webapp-testing-skill-test-local-app",
-        "https://i.redd.it/g6rz62pdr30i1.jpeg"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-07T06:20:13.480130+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "Harness Leaderboard - Kimi Code, Hermes, Pi, Claude Code, Codex, and Others Were Benchmarked Against Terminal Bench 2.1 & Deep SWE 1.1",
-    "description": "submitted by /u/Izento to r/LocalLLaMA [link] [comments]",
-    "website": "https://reddit.com/r/LocalLLaMA/comments/1xpvfx8/harness_leaderboard_kimi_code_hermes_pi_claude",
-    "source": "reddit",
-    "published_at": "2026-11-07T02:41:59+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "newest submissions : multi",
-      "author": "/u/Izento",
-      "outbound_urls": [
-        "https://huggingface.co/spaces/joelniklaus/harness-leaderboard"
-      ],
-      "publication_basis": "feed_published",
-      "feed_url": "https://www.reddit.com/r/LocalLLaMA+MachineLearning+artificial+singularity+OpenAI+ClaudeAI+LangChain/new/.rss?limit=50",
-      "retrieved_at": "2026-11-07T06:20:13.480130+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3469,7 +3528,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3525,7 +3584,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3545,7 +3604,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3565,7 +3624,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3657,7 +3716,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://feeds.arstechnica.com/arstechnica/technology-lab",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3713,7 +3772,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3748,7 +3807,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -3785,7 +3844,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-11-08T06:27:10.735606+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -3843,7 +3902,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3863,7 +3922,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3883,7 +3942,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -3959,7 +4018,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4051,7 +4110,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4135,24 +4194,6 @@
     "market": "global"
   },
   {
-    "name": "AI models built outside the US and China are nearly a year behind",
-    "description": "AI models built outside the US and China are nearly a year behind",
-    "website": "https://news.ycombinator.com/item?id=50394216",
-    "source": "hackernews",
-    "published_at": "2026-11-06T16:10:14+00:00",
-    "extra": {
-      "evidence_kind": "platform_api",
-      "external_url": "https://village.dev/blog/outside-the-us-and-china-the-world-is-building-last-years-ai/",
-      "points": 4,
-      "comments": 0,
-      "retrieved_at": "2026-11-06T19:36:48.023585+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
     "name": "The Writer's Quarter",
     "description": "AI-Free Writing & Novel Planning Software",
     "website": "https://producthunt.com/products/the-writer-s-quarter",
@@ -4168,7 +4209,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4188,7 +4229,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4208,25 +4249,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "SpaceX launched Google AI chips to orbit with Planet Labs satellites",
-    "description": "SpaceX launched Google AI chips to orbit with Planet Labs satellites",
-    "website": "https://news.ycombinator.com/item?id=50393851",
-    "source": "hackernews",
-    "published_at": "2026-11-06T15:49:39+00:00",
-    "extra": {
-      "evidence_kind": "platform_api",
-      "external_url": "https://www.cnbc.com/2026/10/01/spacex-to-launch-google-ai-chips-to-orbit-with-planet-labs-satellites.html",
-      "points": 3,
-      "comments": 3,
-      "retrieved_at": "2026-11-06T19:36:48.023585+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4246,24 +4269,6 @@
       "retrieved_at": "2026-11-08T06:27:10.735606+00:00",
       "author": "huggingface",
       "excerpt_basis": "indexed_post_title",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "Physical AI can't learn from the internet. We build the worlds it learns from",
-    "description": "Physical AI can't learn from the internet. We build the worlds it learns from",
-    "website": "https://news.ycombinator.com/item?id=50392820",
-    "source": "hackernews",
-    "published_at": "2026-11-06T14:37:02+00:00",
-    "extra": {
-      "evidence_kind": "platform_api",
-      "external_url": "https://www.physicl.ai/insights/inside-studio",
-      "points": 2,
-      "comments": 0,
-      "retrieved_at": "2026-11-06T19:36:48.023585+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4303,7 +4308,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4326,7 +4331,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4346,7 +4351,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCbfYPyITQ-7l4upoX8nvctg",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4366,7 +4371,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4412,7 +4417,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4518,7 +4523,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4558,7 +4563,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4601,7 +4606,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4621,7 +4626,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4641,7 +4646,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4681,7 +4686,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4701,7 +4706,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4787,7 +4792,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4810,7 +4815,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -4827,8 +4832,27 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "author": "OpenAI",
+      "excerpt_basis": "indexed_post_title",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
+    "name": "@GoogleAI · Meet Gemini Omni 1.2 Flash ⚡️ We’ve made the model more cost-effective, bumped the video generation and editing limit up to 15 seconds, and made updates to how scenes hold together over time. We've also given character speech an upgrade, reduced visual glitches like jump cuts, and…",
+    "description": "@GoogleAI · Meet Gemini Omni 1.2 Flash ⚡️ We’ve made the model more cost-effective, bumped the video generation and editing limit up to 15 seconds, and made updates to how scenes hold together over time. We've also given character speech an upgrade, reduced visual glitches like jump cuts, and…",
+    "website": "https://x.com/GoogleAI/status/2118389961426874879",
+    "source": "x",
+    "published_at": "2026-11-05T17:08:19.243000+00:00",
+    "extra": {
+      "evidence_kind": "search_excerpt",
+      "search_provider": "Tavily",
+      "publication_basis": "x_snowflake",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
+      "author": "GoogleAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
       "quality_policy_version": 1
@@ -5077,7 +5101,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -5097,7 +5121,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.technologyreview.com/feed/",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -5117,7 +5141,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -5157,7 +5181,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.wired.com/feed/tag/ai/latest/rss",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -5343,7 +5367,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -5422,26 +5446,6 @@
       "evidence_kind": "feed_excerpt",
       "publisher": "AI News & Artificial Intelligence | TechCrunch",
       "author": "Lucas Ropek",
-      "outbound_urls": [],
-      "publication_basis": "feed_published",
-      "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
-      "retrieved_at": "2026-11-06T07:08:25.513039+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "Almost no one uses AI agents to book their Uber, company says",
-    "description": "During its busiest week last quarter, Uber said only four people booked a ride using an AI agent.",
-    "website": "https://techcrunch.com/2026/11/04/almost-no-one-uses-ai-agents-to-book-their-uber-company-says",
-    "source": "tech_news",
-    "published_at": "2026-11-04T21:56:01+00:00",
-    "extra": {
-      "evidence_kind": "feed_excerpt",
-      "publisher": "AI News & Artificial Intelligence | TechCrunch",
-      "author": "Sarah Perez",
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://techcrunch.com/category/artificial-intelligence/feed/",
@@ -5553,7 +5557,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -5638,7 +5642,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -5658,7 +5662,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -5744,7 +5748,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -5803,7 +5807,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -5867,7 +5871,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -6182,7 +6186,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -6376,7 +6380,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCNJ1Ymd5yFuUPtn21xtRbbw",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -6416,7 +6420,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-11-06T23:47:33.528967+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "author": "SakanaAILabs",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -6503,7 +6507,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -6706,7 +6710,7 @@
       ],
       "publication_basis": "feed_published",
       "feed_url": "https://www.producthunt.com/feed",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -6835,7 +6839,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -7030,7 +7034,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCbfYPyITQ-7l4upoX8nvctg",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -7047,7 +7051,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -7259,7 +7263,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCbfYPyITQ-7l4upoX8nvctg",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -7276,7 +7280,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-11-02T06:34:35.336553+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "author": "GoogleAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -7356,7 +7360,7 @@
       "outbound_urls": [],
       "publication_basis": "feed_published",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "news_market": "global",
       "quality_policy_version": 1
     },
@@ -7452,7 +7456,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-11-02T06:34:35.336553+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "author": "GoogleAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -7471,7 +7475,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-11-04T06:48:37.589605+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "author": "GoogleAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -7799,6 +7803,25 @@
     "market": "global"
   },
   {
+    "name": "@OpenAI · Over the past several months, we have substantially hardened the security of our research training environment. We’ve removed live internet access for all frontier models during training and built an offline world for them to use instead—a cached version of the web where they can stil…",
+    "description": "@OpenAI · Over the past several months, we have substantially hardened the security of our research training environment. We’ve removed live internet access for all frontier models during training and built an offline world for them to use instead—a cached version of the web where they can stil…",
+    "website": "https://x.com/OpenAI/status/2113718797505036665",
+    "source": "x",
+    "published_at": "2026-10-23T19:46:46.978000+00:00",
+    "extra": {
+      "evidence_kind": "search_excerpt",
+      "search_provider": "Tavily",
+      "publication_basis": "x_snowflake",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
+      "author": "OpenAI",
+      "excerpt_basis": "indexed_post_title",
+      "news_market": "global",
+      "quality_policy_version": 1
+    },
+    "content_type": "blog",
+    "market": "global"
+  },
+  {
     "name": "@NVIDIAAI · From autonomous vehicles to smarter factories, companies are putting physical AI to work. We’ve added new NVIDIA Cosmos tools to help developers generate training data, train world models and test them before deployment. See how @Porsche, @MercedesBenz, @encord_team, @Siemens, @f… /",
     "description": "@NVIDIAAI · From autonomous vehicles to smarter factories, companies are putting physical AI to work. We’ve added new NVIDIA Cosmos tools to help developers generate training data, train world models and test them before deployment. See how @Porsche, @MercedesBenz, @encord_team, @Siemens, @f… /",
     "website": "https://x.com/NVIDIAAI/status/2113697272475320559",
@@ -8013,7 +8036,7 @@
       "evidence_kind": "search_excerpt",
       "search_provider": "Tavily",
       "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
+      "retrieved_at": "2026-11-08T22:20:05.549578+00:00",
       "author": "OpenAI",
       "excerpt_basis": "indexed_post_title",
       "news_market": "global",
@@ -8107,44 +8130,6 @@
       "search_provider": "Tavily",
       "publication_basis": "search_index",
       "retrieved_at": "2026-10-30T03:48:46.497650+00:00",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "@OpenAI · We’ve acquired Orchestra Bio, a platform that helps biopharma teams coordinate the complex process of drug development. Together, we’ll build on Rosalind, our AI models and tools for life sciences research, to streamline those operations and help new treatments reach patients sooner.…",
-    "description": "@OpenAI · We’ve acquired Orchestra Bio, a platform that helps biopharma teams coordinate the complex process of drug development. Together, we’ll build on Rosalind, our AI models and tools for life sciences research, to streamline those operations and help new treatments reach patients sooner.…",
-    "website": "https://x.com/OpenAI/status/2112607347688583586",
-    "source": "x",
-    "published_at": "2026-10-20T18:10:16.692000+00:00",
-    "extra": {
-      "evidence_kind": "search_excerpt",
-      "search_provider": "Tavily",
-      "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-11-08T17:59:52.970898+00:00",
-      "author": "OpenAI",
-      "excerpt_basis": "indexed_post_title",
-      "news_market": "global",
-      "quality_policy_version": 1
-    },
-    "content_type": "blog",
-    "market": "global"
-  },
-  {
-    "name": "@OpenAIDevs · You can now choose 12-hour prompt caching in the API. Persistent agents, like dots, reuse context throughout the day. You can keep shared instructions, tools, and context cached longer and pay the lower cached-input rate, even when requests are hours apart.",
-    "description": "@OpenAIDevs · You can now choose 12-hour prompt caching in the API. Persistent agents, like dots, reuse context throughout the day. You can keep shared instructions, tools, and context cached longer and pay the lower cached-input rate, even when requests are hours apart.",
-    "website": "https://x.com/OpenAIDevs/status/2112603916076781778",
-    "source": "x",
-    "published_at": "2026-10-20T17:56:38.532000+00:00",
-    "extra": {
-      "evidence_kind": "search_excerpt",
-      "search_provider": "Tavily",
-      "publication_basis": "x_snowflake",
-      "retrieved_at": "2026-11-05T00:19:58.648169+00:00",
-      "author": "OpenAIDevs",
-      "excerpt_basis": "indexed_post_title",
       "news_market": "global",
       "quality_policy_version": 1
     },

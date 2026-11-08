@@ -1,50 +1,50 @@
 {
-  "updated_at": "2026-11-08T17:59:52.970898+00:00",
+  "updated_at": "2026-11-08T22:20:05.549578+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 16,
+      "fresh_count": 17,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-08T17:59:52.970898+00:00",
-      "rejected_count": 12,
+      "checked_at": "2026-11-08T22:20:05.549578+00:00",
+      "rejected_count": 11,
       "rejection_reasons": {
-        "unvetted_x_author": 11,
-        "no_concrete_signal": 1
+        "no_concrete_signal": 6,
+        "unvetted_x_author": 5
       },
       "rejected_examples": [
         {
-          "title": "@thecaisai · CAIS",
+          "title": "@GoogleAI · How we're bringing powerful AI to small devices without draining the battery.",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@GoogleAI · Get started today: — Creatives and Consumers: Direct and edit in Google Flow (rolling out), generate clips in Google Vids, or create videos in the G",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@arena · Big news: Gemini Omni 1.2 Flash by @GoogleAI debuts at #1 in both Text-to-Video and Image-to-Video, and #3 in Video Edit! Gemini Omni 1.2 Flash landed ",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@LangChain · LangChain on X",
+          "title": "@SakanaAILabs · Sakana AI won 1st place in the company category at the “Recursive Self Improvement in Mathematics” Hack (OpenMath 2026), held with @stephen_wolf",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@RobertTLange · Had tons of fun last week at the @SakanaAILabs symposium 🗼 Blog: https://t.co/rtbSGQ90Yz I first met Jürgen in Vienna at ICML 2024. We had just ",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@WorldOfMercek · AI's next economic shift is moving beyond model intelligence toward the infrastructure that executes work, coordinates agents, and captures val",
+          "title": "@hardmaru · New paper from the team at Sakana AI: Recursive Self-Improvement through Multi-Agent Self-Supervision (MASS) How do we keep improving AI when the ta",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@clcoding · 16 Essential Python Libraries & Tools for AI and Machine Learning (2026) Want to build machine learning models, develop LLM applications, and deploy",
-          "reason": "unvetted_x_author"
+          "title": "@SakanaAILabs · Sakana AI Dinner Meetup #NeurIPS2026 🐟️ Signup → https://t.co/U5PURuLFkA We are excited to host a dinner meetup in Sydney on Monday, December 7t",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "@dotey · # X AI 资讯检索 目标：在 X 上找出最近一个时间窗口（通常是 1 小时）里真正重要、而且之前没推过的 AI 资讯。用公开读取的 X 工具（search_posts_all、get_users_posts、get_news / search_news、get_posts_counts_recen",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@yairwein · Yair Weinberger on X",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@KanikaBK · I spent an hour digging through GitHub's AI agent repos. These 5 are the ones everyone is quietly building with. 100% FREE. Open source. And most pe",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@DeRonin_ · Ronin",
-          "reason": "unvetted_x_author"
+          "title": "@SakanaAILabs · The Agentic Scientist: Orchestrating Coding Agents for Automated Scientific (Co-)Discovery Blog: https://t.co/7aVDvZd6m2 GitHub: https://t.co/JC",
+          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
@@ -52,52 +52,52 @@
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 14,
+      "fresh_count": 13,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-08T17:59:52.970898+00:00",
-      "rejected_count": 26,
+      "checked_at": "2026-11-08T22:20:05.549578+00:00",
+      "rejected_count": 27,
       "rejection_reasons": {
-        "off_topic": 16,
+        "off_topic": 17,
         "no_concrete_signal": 9,
-        "unverified_rumor": 1
+        "insufficient_evidence": 1
       },
       "rejected_examples": [
         {
-          "title": "Why Hasn't Someone Recreate ShareGPT?",
+          "title": "Nous Research Arete-27B GGUF quants",
           "reason": "off_topic"
         },
         {
-          "title": "What are people finding local models actually useful for?",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Artificial Analysis: multimodal decision model Drex Max ranks #1. Both achieving SOTA and Pareto frontier [N]",
-          "reason": "off_topic"
-        },
-        {
-          "title": "I merged attention and MLP processing into a single gated Transformer block. GAP [R]",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Holy guardrails",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Is it possible replacing Photoshop brush engine?",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Motion graphics video made with Qwen3.8 Flash Next GSQ RCO IQ3_XXS on strata",
-          "reason": "off_topic"
-        },
-        {
-          "title": "After the update yesterday ChatGPT can't do anything in Unreal Engine",
+          "title": "Where's Our Reset, Anthropic?! 47 Days and Counting...",
           "reason": "no_concrete_signal"
+        },
+        {
+          "title": "it keeps saying its copyrighted i don't have this problem with chatgbt and i don't know how to get past it",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Help with large project",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Have You Ever Thought About Automating Your Outreach As A Web Designer? Watch This. 👀",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Before you A/B test an agent skill, check the logs that it actually loaded",
+          "reason": "off_topic"
+        },
+        {
+          "title": "How to make Claude produce or source the right SFX for my videos?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "let's burn some tokens",
+          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-08T17:48:48+00:00"
+      "latest_published_at": "2026-11-08T22:19:15+00:00"
     },
     "youtube": {
       "status": "direct",
@@ -109,7 +109,7 @@
         }
       ],
       "feeds_ok": 7,
-      "checked_at": "2026-11-08T17:59:52.970898+00:00",
+      "checked_at": "2026-11-08T22:20:05.549578+00:00",
       "rejected_count": 15,
       "rejection_reasons": {
         "off_topic": 15
@@ -153,73 +153,85 @@
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 10,
+      "fresh_count": 8,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-08T17:59:52.970898+00:00",
-      "rejected_count": 50,
+      "checked_at": "2026-11-08T22:20:05.549578+00:00",
+      "rejected_count": 52,
       "rejection_reasons": {
-        "no_concrete_signal": 35,
-        "off_topic": 15
+        "no_concrete_signal": 41,
+        "off_topic": 11
       },
       "rejected_examples": [
         {
-          "title": "The same work on a third of the tokens: tuning a fleet of coding agents",
+          "title": "File sharing platform made in Python – Not vibe coded – Since 2025",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Show HN: Email-like interface to review, decide, and annotate agent work",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Show HN: psi, a 6.4 MB cross-platform portable coding agent in ANSI C & Lua",
+          "title": "Who do AI search engines name when buyers ask about 12 cold-email tools?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Show HN: Just a Pause – Blur your Mac's screen when you turn away, using AirPods",
-          "reason": "off_topic"
-        },
-        {
-          "title": "One of Classical Music's Biggest Stars Says AI Is Degrading Our Taste",
+          "title": "Meta's Charm gadget carries CEO Zuckerberg's big AI ambitions",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Show HN: Jabhook – Harnessing computer vision for martial arts training",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Show HN: ModelRefs – Interactive reference hub for AI models",
+          "title": "What Anthropic's IPO Filing Says About the Future of A.I",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "The 0rwx framework for AI usage attribution",
+          "title": "Beyond code generation: A developer's guide to agentic engineering",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "AI skill to provide IPA and English translations from uploaded sheet music",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Not another AI note taker",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Bloomington, Indiana Bans Artificial Intelligence: Ordinance 2026-29 Explained",
           "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-08T17:31:42+00:00"
+      "latest_published_at": "2026-11-08T22:16:21+00:00"
     },
     "producthunt": {
       "status": "direct",
       "fresh_count": 10,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-08T17:59:52.970898+00:00",
+      "checked_at": "2026-11-08T22:20:05.549578+00:00",
       "rejected_count": 25,
       "rejection_reasons": {
         "off_topic": 25
       },
       "rejected_examples": [
         {
-          "title": "Deduplication",
+          "title": "Tilde ",
           "reason": "off_topic"
         },
         {
-          "title": "DocsAlot for customer support",
+          "title": "Archie",
           "reason": "off_topic"
         },
         {
           "title": "Sage2 by Levanto Labs",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Zigzag Browser",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Deduplication",
+          "reason": "off_topic"
+        },
+        {
+          "title": "outages.live",
           "reason": "off_topic"
         },
         {
@@ -229,18 +241,6 @@
         {
           "title": "NotchIsland",
           "reason": "off_topic"
-        },
-        {
-          "title": "Zigzag Browser",
-          "reason": "off_topic"
-        },
-        {
-          "title": "outages.live",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Inkling 2 Small",
-          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
@@ -248,7 +248,7 @@
     },
     "tech_news": {
       "status": "direct",
-      "fresh_count": 42,
+      "fresh_count": 40,
       "errors": [
         {
           "endpoint": "venturebeat",
@@ -256,12 +256,16 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-08T17:59:52.970898+00:00",
-      "rejected_count": 16,
+      "checked_at": "2026-11-08T22:20:05.549578+00:00",
+      "rejected_count": 18,
       "rejection_reasons": {
-        "off_topic": 16
+        "off_topic": 18
       },
       "rejected_examples": [
+        {
+          "title": "Nvidia will investigate CEO Jensen Huang’s relationship with possible Chinese spy",
+          "reason": "off_topic"
+        },
         {
           "title": "After the midterms, things are looking rocky for Elon Musk and data centers",
           "reason": "off_topic"
@@ -283,31 +287,27 @@
           "reason": "off_topic"
         },
         {
+          "title": "Nvidia is investigating Jensen Huang’s relationship with a Chinese spy",
+          "reason": "off_topic"
+        },
+        {
           "title": "Reddit Founder Says Building Social Media Apps Is ‘Not Cool Anymore’",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Meet *sshole, the vulnerability that lets hackers SSH into Linux devices",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Hackers exploited iOS and Android flaws to infect phones",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-08T17:23:19+00:00"
+      "latest_published_at": "2026-11-08T19:18:19+00:00"
     },
     "cn_news": {
       "status": "direct",
       "fresh_count": 45,
       "errors": [
         {
-          "endpoint": "36kr",
+          "endpoint": "jiqizhixin",
           "reason": "empty_or_invalid_feed"
         },
         {
-          "endpoint": "jiqizhixin",
+          "endpoint": "36kr",
           "reason": "empty_or_invalid_feed"
         },
         {
@@ -316,42 +316,42 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-11-08T17:59:52.970898+00:00",
+      "checked_at": "2026-11-08T22:20:05.549578+00:00",
       "rejected_count": 73,
       "rejection_reasons": {
         "off_topic": 73
       },
       "rejected_examples": [
         {
-          "title": "别再拿《影之刃零》对比《黑神话》了",
+          "title": "马斯克：特斯拉将进一步改进 Cybercab，提升能效、新增配色",
           "reason": "off_topic"
         },
         {
-          "title": "最贵比亚迪来了！仰望鼎曜亮相中东，「山河鼎韵」限量版定金 30 万元",
+          "title": "当贝推出 H5 第二代电视盒子：升级全志 H626 处理器，469 元",
           "reason": "off_topic"
         },
         {
-          "title": "早报｜触屏MacBook Pro开卖即缺货/仰望U9 Xtreme突破503kph/博世吴永桥：汽车不该拿来订咖啡机票",
+          "title": "博世吴永桥：汽车不该拿来订咖啡、订机票，建议手机和车机划清边界",
           "reason": "off_topic"
         },
         {
-          "title": "503.17km/h！比亚迪仰望 U9X 再次刷新全球最速，量产车首次突破 5 字头",
+          "title": "李云飞：比亚迪今年全年销量预计略有增长，海外增长更高",
           "reason": "off_topic"
         },
         {
-          "title": "10 月最值得关注的 17 个产品｜明日产品 WATCHLIST",
+          "title": "李书福称吉利完全认同换电模式，“车电不同寿”的矛盾还没集中爆发",
           "reason": "off_topic"
         },
         {
-          "title": "13 万买 5 米大轿车！比亚迪海豹 07 上市，首搭云辇-M 磁流变悬架",
+          "title": "保时捷多款车型车机性能升级：新一代通讯管理系统算力达前代 5 倍",
           "reason": "off_topic"
         },
         {
-          "title": "MacBook Pro 能触屏了，但这只是它最小的升级｜附选购指南",
+          "title": "雷柏推出 VT2 RT V2 系列鼠标：类机械 / 光微动、电磁按键三种触感，499 元起",
           "reason": "off_topic"
         },
         {
-          "title": "23.98 万元起！智己 LS8 NEO 正式上市，转向刹车全面线控",
+          "title": "奔驰要把屏幕“装”进车玻璃：后挡风能提醒注意路况，侧窗能告诉你汽车电量",
           "reason": "off_topic"
         }
       ],
