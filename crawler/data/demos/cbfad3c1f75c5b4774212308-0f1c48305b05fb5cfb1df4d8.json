@@ -1,0 +1,258 @@
+{
+  "cache_key": "cbfad3c1f75c5b4774212308-0f1c48305b05fb5cfb1df4d8",
+  "product_key": "cbfad3c1f75c5b4774212308",
+  "fingerprint": "0f1c48305b05fb5cfb1df4d8",
+  "product_id": "p_3de0a6ab0496a715",
+  "product_name": "Physical Intelligence",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-10T02:03:27.933187+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "机器人操作任务构想",
+      "en": "Robot Task Concept"
+    },
+    "scenario": {
+      "zh": "为家居机器人设计一组日常操作任务，展示物理AI如何理解任务需求并规划动作序列",
+      "en": "Design household tasks for a robot, showing how physical AI interprets needs and plans action sequences"
+    },
+    "steps": [
+      {
+        "id": "task_type",
+        "widget": "choice",
+        "title": {
+          "zh": "选择机器人任务场景",
+          "en": "Choose Robot Task"
+        },
+        "instruction": {
+          "zh": "选择一个家居操作场景",
+          "en": "Pick a household scenario"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "整理桌面物品",
+              "en": "Organize Desktop"
+            },
+            "output": {
+              "zh": "识别杂乱物品并规划整理顺序",
+              "en": "Identify scattered items and plan arrangement"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "任务描述",
+                "en": "Task Description"
+              },
+              "output_label": {
+                "zh": "动作规划",
+                "en": "Action Plan"
+              },
+              "input": {
+                "zh": "桌面上有打开的书、马克杯、笔记本电脑和散落的文具。将物品归位到书架、杯垫和笔筒。",
+                "en": "Desktop has an open book, mug, laptop, and scattered stationery. Return items to bookshelf, coaster, and pen holder."
+              },
+              "output": {
+                "zh": "物理AI将任务分解为可执行的感知-抓取-放置序列",
+                "en": "Physical AI breaks task into perceive-grasp-place sequences"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "识别物品位置",
+                    "en": "Locate Items"
+                  },
+                  "detail": {
+                    "zh": "视觉感知定位书、杯子、笔，理解当前空间布局",
+                    "en": "Vision perceives book, mug, pens; understands current layout"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "规划抓取顺序",
+                    "en": "Plan Grasping Order"
+                  },
+                  "detail": {
+                    "zh": "优先移动杯子避免倾倒，再处理轻物品",
+                    "en": "Prioritize mug to avoid spills, then lighter objects"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "执行归位动作",
+                    "en": "Execute Placement"
+                  },
+                  "detail": {
+                    "zh": "书放回书架、杯子移至杯垫、笔插入笔筒",
+                    "en": "Book to shelf, mug to coaster, pens to holder"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "折叠洗好的衣物",
+              "en": "Fold Clean Laundry"
+            },
+            "output": {
+              "zh": "感知织物形态并生成折叠步骤",
+              "en": "Perceive fabric shape and generate folding steps"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "任务描述",
+                "en": "Task Description"
+              },
+              "output_label": {
+                "zh": "动作规划",
+                "en": "Action Plan"
+              },
+              "input": {
+                "zh": "篮子里有T恤、毛巾和裤子，需要折叠整齐并分类放入抽屉。",
+                "en": "Basket contains T-shirts, towels, and pants; fold neatly and sort into drawers."
+              },
+              "output": {
+                "zh": "物理AI处理柔性物体的变形和分类操作",
+                "en": "Physical AI handles deformable objects and sorting"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "识别衣物类型",
+                    "en": "Identify Clothing Type"
+                  },
+                  "detail": {
+                    "zh": "区分T恤、毛巾、裤子的材质和结构",
+                    "en": "Distinguish T-shirt, towel, pants by material and structure"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "展开并折叠",
+                    "en": "Spread and Fold"
+                  },
+                  "detail": {
+                    "zh": "双臂协作展开衣物，按标准方式折叠",
+                    "en": "Dual-arm spreads garment, folds in standard method"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "分类收纳",
+                    "en": "Sort and Store"
+                  },
+                  "detail": {
+                    "zh": "T恤放上层抽屉，毛巾放中层，裤子放下层",
+                    "en": "T-shirts to upper drawer, towels middle, pants lower"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "obstacle",
+        "widget": "choice",
+        "title": {
+          "zh": "添加环境约束",
+          "en": "Add Environment Constraint"
+        },
+        "instruction": {
+          "zh": "选择任务中的物理挑战",
+          "en": "Choose a physical challenge"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "光照变化",
+              "en": "Lighting Change"
+            },
+            "output": {
+              "zh": "模型需适应阴影或反光条件",
+              "en": "Model adapts to shadows or glare"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "环境条件",
+                "en": "Environment"
+              },
+              "output_label": {
+                "zh": "感知调整",
+                "en": "Perception Adjustment"
+              },
+              "input": {
+                "zh": "标准照明 vs. 窗边强侧光",
+                "en": "Standard lighting vs. Strong window sidelight"
+              },
+              "output": {
+                "zh": "基础视觉 vs. 动态曝光补偿和边缘强化",
+                "en": "Basic vision vs. Dynamic exposure compensation and edge enhancement"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "新物体出现",
+              "en": "New Object Appears"
+            },
+            "output": {
+              "zh": "识别未见过的形状并推断抓取点",
+              "en": "Recognize unseen shape and infer grasp points"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "物体类型",
+                "en": "Object Type"
+              },
+              "output_label": {
+                "zh": "泛化能力",
+                "en": "Generalization"
+              },
+              "input": {
+                "zh": "训练中的圆柱杯 vs. 新出现的方形保温杯",
+                "en": "Trained cylindrical mug vs. Novel square thermos"
+              },
+              "output": {
+                "zh": "记忆抓取模式 vs. 从形状推断侧面抓取",
+                "en": "Memorized grasp vs. Infer side-grasp from geometry"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "展示了物理AI如何将自然语言任务转化为感知-规划-执行流程。实际机器人性能需在Physical Intelligence平台测试。",
+      "en": "Illustrated how physical AI converts language tasks into perceive-plan-act workflows. Real robot performance requires testing on Physical Intelligence platform."
+    },
+    "sources": [
+      {
+        "url": "https://www.pi.website/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.infoq.com/articles/ai-ml-data-engineering-trends-2026",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "cache_key": "9ba372f562ed4370f6e93a44-811b51b68a2da77073528a9f",
+  "product_key": "9ba372f562ed4370f6e93a44",
+  "fingerprint": "811b51b68a2da77073528a9f",
+  "product_id": "197",
+  "product_name": "All3",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-10T02:05:30.282763+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "All3 融资动态示例",
+      "en": "All3 Funding Example"
+    },
+    "scenario": {
+      "zh": "欧洲 AI 初创公司 All3 完成 2500 万美元融资，用于 AI 能力开发",
+      "en": "European AI startup All3 raised $25M to advance AI capabilities"
+    },
+    "steps": [
+      {
+        "id": "funding_angle",
+        "widget": "choice",
+        "title": {
+          "zh": "选择报道角度",
+          "en": "Choose Coverage Angle"
+        },
+        "instruction": {
+          "zh": "为 All3 融资选择一个新闻角度",
+          "en": "Select a news angle for All3's funding"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "投资者视角",
+              "en": "Investor Perspective"
+            },
+            "output": {
+              "zh": "强调投资者对 AI 的持续押注",
+              "en": "Emphasizes investor commitment to AI"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "融资事实",
+                "en": "Funding Facts"
+              },
+              "output_label": {
+                "zh": "新闻导语",
+                "en": "News Lead"
+              },
+              "input": {
+                "zh": "All3 是一家欧洲 AI 初创公司，刚完成 2500 万美元融资，用于发展 AI 技术。这是 2026 年第一季度欧洲技术融资的一部分。",
+                "en": "All3, a European AI startup, just closed a $25M funding round to boost AI capabilities. This is part of Q1 2026 European tech funding activity."
+              },
+              "output": {
+                "zh": "投资者继续大举押注人工智能：欧洲初创公司 All3 获得 2500 万美元，成为 2026 年第一季度最新融资案例。",
+                "en": "Investors double down on AI: European startup All3 secures $25M in latest Q1 2026 funding deal."
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "区域竞争",
+              "en": "Regional Competition"
+            },
+            "output": {
+              "zh": "聚焦欧洲在 AI 领域的地位",
+              "en": "Focuses on Europe's AI position"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "融资事实",
+                "en": "Funding Facts"
+              },
+              "output_label": {
+                "zh": "新闻导语",
+                "en": "News Lead"
+              },
+              "input": {
+                "zh": "All3 是一家欧洲 AI 初创公司，刚完成 2500 万美元融资，用于发展 AI 技术。这是 2026 年第一季度欧洲技术融资的一部分。",
+                "en": "All3, a European AI startup, just closed a $25M funding round to boost AI capabilities. This is part of Q1 2026 European tech funding activity."
+              },
+              "output": {
+                "zh": "欧洲 AI 角逐升温：All3 获 2500 万美元融资，寻求在全球 AI 竞赛中占据一席之地。",
+                "en": "Europe's AI race heats up: All3 lands $25M to stake its claim in the global AI competition."
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例展示了如何从不同角度报道融资新闻。实际产品功能需在 All3 网站验证。",
+      "en": "Example shows different angles for covering funding news. Actual product features must be verified on All3's site."
+    },
+    "sources": [
+      {
+        "url": "https://all3.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://tech.eu",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

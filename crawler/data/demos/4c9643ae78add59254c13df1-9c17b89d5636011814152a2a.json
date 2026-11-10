@@ -1,0 +1,187 @@
+{
+  "cache_key": "4c9643ae78add59254c13df1-9c17b89d5636011814152a2a",
+  "product_key": "4c9643ae78add59254c13df1",
+  "fingerprint": "9c17b89d5636011814152a2a",
+  "product_id": "193",
+  "product_name": "Tandem",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-10T02:04:37.269748+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "兽医诊疗AI助手演示",
+      "en": "Veterinary AI Assistant Demo"
+    },
+    "scenario": {
+      "zh": "为兽医诊所提供智能诊疗建议，帮助快速评估病例并制定治疗方案",
+      "en": "Provides intelligent diagnostic support for veterinary clinics to assess cases and develop plans"
+    },
+    "steps": [
+      {
+        "id": "case_input",
+        "widget": "choice",
+        "title": {
+          "zh": "选择诊疗场景",
+          "en": "Select Clinical Scenario"
+        },
+        "instruction": {
+          "zh": "选择一个病例类型开始演示",
+          "en": "Choose a case type to begin"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "犬消化道症状",
+              "en": "Canine GI Symptoms"
+            },
+            "output": {
+              "zh": "识别关键症状并建议鉴别诊断",
+              "en": "Identifies symptoms and suggests differential diagnosis"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "主诉与体检",
+                "en": "Chief Complaint & Exam"
+              },
+              "output_label": {
+                "zh": "诊疗建议",
+                "en": "Clinical Recommendation"
+              },
+              "input": {
+                "zh": "3岁金毛，主诉呕吐2天，食欲下降。体温38.9℃，精神沉郁。",
+                "en": "3-year-old Golden Retriever, vomiting 2 days, decreased appetite. Temp 38.9°C, lethargic."
+              },
+              "output": {
+                "zh": "鉴别诊断：急性胃肠炎、异物梗阻、胰腺炎。建议：腹部超声、血液检查、支持治疗。",
+                "en": "Differential: acute gastroenteritis, foreign body, pancreatitis. Recommend: abdominal ultrasound, bloodwork, supportive care."
+              },
+              "emphasis": {
+                "zh": "呕吐2天",
+                "en": "vomiting 2 days"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "猫呼吸道问题",
+              "en": "Feline Respiratory Issue"
+            },
+            "output": {
+              "zh": "评估感染可能性并提供用药方向",
+              "en": "Assesses infection likelihood with medication guidance"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "主诉与体检",
+                "en": "Chief Complaint & Exam"
+              },
+              "output_label": {
+                "zh": "诊疗建议",
+                "en": "Clinical Recommendation"
+              },
+              "input": {
+                "zh": "5岁短毛猫，打喷嚏流鼻涕3天，眼分泌物增多。体温39.2℃。",
+                "en": "5-year-old shorthair, sneezing and nasal discharge 3 days, eye discharge increased. Temp 39.2°C."
+              },
+              "output": {
+                "zh": "初步诊断：上呼吸道感染。建议：病原检测、预防性抗生素、支持疗法、隔离观察。",
+                "en": "Preliminary diagnosis: upper respiratory infection. Recommend: pathogen testing, prophylactic antibiotics, supportive care, isolation."
+              },
+              "emphasis": {
+                "zh": "打喷嚏流鼻涕3天",
+                "en": "sneezing and nasal discharge 3 days"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "treatment_plan",
+        "widget": "choice",
+        "title": {
+          "zh": "制定治疗方案",
+          "en": "Develop Treatment Plan"
+        },
+        "instruction": {
+          "zh": "根据诊断选择治疗策略",
+          "en": "Select treatment strategy based on diagnosis"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "保守支持治疗",
+              "en": "Conservative Care"
+            },
+            "output": {
+              "zh": "对症处理和监测，适合轻中度病例",
+              "en": "Symptomatic management for mild-moderate cases"
+            },
+            "when": {
+              "step_id": "case_input",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "积极干预方案",
+              "en": "Aggressive Intervention"
+            },
+            "output": {
+              "zh": "进一步检查明确病因，适合复杂病例",
+              "en": "Further diagnostics for complex or severe cases"
+            },
+            "when": {
+              "step_id": "case_input",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "隔离与监测",
+              "en": "Isolation Protocol"
+            },
+            "output": {
+              "zh": "防止传播，监测症状进展",
+              "en": "Prevent spread and monitor symptom progression"
+            },
+            "when": {
+              "step_id": "case_input",
+              "option_id": "1"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "此演示展示虚构病例的诊疗逻辑，实际功能需在Tandem平台验证。访问官网了解产品详情。",
+      "en": "This demo illustrates diagnostic logic for fictional cases; verify actual features on Tandem platform or visit their site."
+    },
+    "sources": [
+      {
+        "url": "https://www.tandem.vet/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://fundraiseinsider.com/blog/pre-seed-startups/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

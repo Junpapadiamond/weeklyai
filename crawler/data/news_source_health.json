@@ -1,155 +1,148 @@
 {
-  "updated_at": "2026-11-09T22:36:59.399194+00:00",
+  "updated_at": "2026-11-10T02:02:21.928633+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 16,
-      "errors": [],
-      "feeds_ok": 1,
-      "checked_at": "2026-11-09T22:36:59.399194+00:00",
-      "rejected_count": 13,
-      "rejection_reasons": {
-        "insufficient_excerpt": 3,
-        "unvetted_x_author": 4,
-        "no_concrete_signal": 6
-      },
-      "rejected_examples": [
-        {
-          "title": "@OpenAI · OpenAI (@OpenAI) on X",
-          "reason": "insufficient_excerpt"
-        },
-        {
-          "title": "@OpenAI · OpenAI (@OpenAI) on X",
-          "reason": "insufficient_excerpt"
-        },
-        {
-          "title": "@Weeklyvoice · Canada Backs Cohere With Up to $1.6 Billion to Build Its Sovereign AI Future",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@cohere · We’re expanding our commitment to Canada 🇨🇦 Cohere is advancing plans to invest more than C$4 billion in R&D and AI infrastructure and create over 1,5",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@cohere · Trace, raw tokens, & minimal reproduction script found here on @huggingface: https://t.co/JzIfUazjg4",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@cohere · Cohere for the incoherent",
-          "reason": "insufficient_excerpt"
-        },
-        {
-          "title": "@IREN_Ltd · Perplexity is working with IREN to power fast, trustworthy AI. Under our multi-year agreement, @perplexity_ai will run workloads on NVIDIA Blackwell",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@Lovable · New in Lovable: the @perplexity_ai connector. Your app can now pull source-backed info from the live web in real-time, powered by Perplexity. Here's ",
-          "reason": "unvetted_x_author"
-        }
-      ],
-      "stored_count": 60,
-      "latest_published_at": "2026-11-07T00:02:21.372000+00:00"
-    },
-    "reddit": {
-      "status": "direct",
       "fresh_count": 12,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-09T22:36:59.399194+00:00",
-      "rejected_count": 28,
+      "checked_at": "2026-11-10T02:02:21.928633+00:00",
+      "rejected_count": 17,
       "rejection_reasons": {
-        "off_topic": 15,
+        "insufficient_excerpt": 3,
         "no_concrete_signal": 11,
-        "personal_help_or_chatter": 2
+        "unvetted_x_author": 3
       },
       "rejected_examples": [
         {
-          "title": "Can someone fine-tune a 9b model to lift assembly to higher level code?",
-          "reason": "off_topic"
+          "title": "@OpenAI · OpenAI (@OpenAI) on X",
+          "reason": "insufficient_excerpt"
         },
         {
-          "title": "Flappy Dragon: Fable 5.2 Adaptive vs Astra 6 Max",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Is this new? \"Claude can't use thinking from another organization Claude's earlier thinking was written while you were signed in to another organization, so Cla",
+          "title": "@cursor_ai · Origin, Cursor’s code hosting platform, now supports over 20 integrations. Connect your repos to tools for CI, deployments, code review, security, ",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "When will we have AI platforms that are dedicated exclusively to solving specific social issues and challenges?",
-          "reason": "personal_help_or_chatter"
-        },
-        {
-          "title": "Have you tried Fable 5.2?",
-          "reason": "off_topic"
-        },
-        {
-          "title": "O'Neill cylinder in fall",
-          "reason": "off_topic"
-        },
-        {
-          "title": "I think it's about time for the labs to demonstrate their AI power by focusing on groundbreaking achievements - like a cure of cancer",
+          "title": "@cursor_ai · New in Cursor design mode: Annotate. Give agents visual prompts: edit elements, draw on the page, and review your designs at different screen sizes",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "AI",
+          "title": "@cursor_ai · Cursor can now control your computer. Agents can drive desktop apps like the iOS Simulator to test the features they build.",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@cursor_ai · Cursor على X: \"Cursor can now control your computer. Agents can drive desktop apps like the iOS Simulator to test the features they build.",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@cursor_ai · Cloud agents can now build interactive canvases. Ask for a dashboard or report while the agent works, then share the finished canvas with your team",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@cursor_ai · The Agent SDK is now available. Define agents as code, with prompts in Markdown and tools in TypeScript. Deploy them on our hosted infrastructure, ",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@cursor_ai · Teams across Cursor are already using it to build live dashboards, customer presentations, internal ops tools, onboarding programs, and developer p",
           "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-09T22:35:22+00:00"
+      "latest_published_at": "2026-11-09T22:01:00.953000+00:00"
     },
-    "youtube": {
+    "reddit": {
       "status": "direct",
-      "fresh_count": 15,
-      "errors": [
-        {
-          "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
-          "reason": "empty_or_invalid_feed"
-        }
-      ],
-      "feeds_ok": 7,
-      "checked_at": "2026-11-09T22:36:59.399194+00:00",
-      "rejected_count": 15,
+      "fresh_count": 5,
+      "errors": [],
+      "feeds_ok": 1,
+      "checked_at": "2026-11-10T02:02:21.928633+00:00",
+      "rejected_count": 35,
       "rejection_reasons": {
-        "off_topic": 15
+        "no_concrete_signal": 11,
+        "off_topic": 23,
+        "personal_help_or_chatter": 1
       },
       "rejected_examples": [
         {
-          "title": "The one thing holding theoretical CS together just broke... kinda",
+          "title": "Received 3 Fable resets",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Just got off the waitlist for Duet",
           "reason": "off_topic"
         },
         {
-          "title": "The worst week in cybersecurity history... so far",
+          "title": "Why don't they provide any free reset anymore?",
           "reason": "off_topic"
         },
         {
-          "title": "HAHAHA (You deserve it)",
+          "title": "What type of rig would you suggest for 6-8k CAD? (4-5k USD)",
+          "reason": "personal_help_or_chatter"
+        },
+        {
+          "title": "sammy boy",
           "reason": "off_topic"
         },
         {
-          "title": "The Death of Stackoverlow | TheStandup",
+          "title": "Arete-27B vs Qwen3.8-27B comparison",
           "reason": "off_topic"
         },
         {
-          "title": "well this is bad",
+          "title": "Is there any way to fix these stupid sidebar groups?",
           "reason": "off_topic"
         },
         {
-          "title": "The Greatest Business Ever?",
-          "reason": "off_topic"
-        },
-        {
-          "title": "This is Crazy",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Navier-Stokes explained by Mathematician | Lex Fridman",
+          "title": "Update dispatch model.",
           "reason": "off_topic"
         }
       ],
-      "stored_count": 57,
+      "stored_count": 60,
+      "latest_published_at": "2026-11-10T00:02:31+00:00"
+    },
+    "youtube": {
+      "status": "search_fallback",
+      "fresh_count": 9,
+      "errors": [
+        {
+          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCsBjURrPoezykLs9EqgamOA",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
+          "reason": "HTTP 404"
+        }
+      ],
+      "feeds_ok": 1,
+      "checked_at": "2026-11-10T02:02:21.928633+00:00",
+      "rejected_count": 0,
+      "rejection_reasons": {},
+      "rejected_examples": [],
+      "stored_count": 58,
       "latest_published_at": "2026-11-09T21:04:16+00:00"
     },
     "hackernews": {
@@ -157,67 +150,70 @@
       "fresh_count": 11,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-09T22:36:59.399194+00:00",
+      "checked_at": "2026-11-10T02:02:21.928633+00:00",
       "rejected_count": 49,
       "rejection_reasons": {
         "no_concrete_signal": 35,
-        "off_topic": 13,
-        "personal_help_or_chatter": 1
+        "off_topic": 14
       },
       "rejected_examples": [
         {
-          "title": "What Is QoDuck? Is QoDuck Qwen 4?",
+          "title": "AI and Irontown",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "A year after the 100% AI mandate nobody understands our code",
+          "title": "Measuring how AI agents handle everyday wet-lab science",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "AI labs raise prices without raising prices",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "I use 11.35B AI tokens a month. How many do you use?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "TPUs",
+          "title": "Seedream 5.5 – 100-Round Editing, Native RGBA and Small Text",
           "reason": "off_topic"
         },
         {
-          "title": "USB: A trust layer for AI skills and MCP servers",
+          "title": "Toptal AI – Full-Stack AI Services Company in the World for Agent Creation",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Indie Game Development with AI",
+          "title": "Show HN: I built a tool that babysits your agents",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Why is AI slop so frustrating to read?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "AI chip financing hits a wall",
+          "title": "Sophon-Realtime v1",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Learning Abstractions: The Next Frontier for AI",
           "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-09T21:38:00+00:00"
+      "latest_published_at": "2026-11-10T01:17:15+00:00"
     },
     "producthunt": {
       "status": "direct",
       "fresh_count": 14,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-09T22:36:59.399194+00:00",
+      "checked_at": "2026-11-10T02:02:21.928633+00:00",
       "rejected_count": 22,
       "rejection_reasons": {
         "off_topic": 22
       },
       "rejected_examples": [
         {
-          "title": "Higgsfield Miracle",
+          "title": "MCP1",
           "reason": "off_topic"
         },
         {
-          "title": "Sign Language by Panda Video",
+          "title": "CozyZip",
+          "reason": "off_topic"
+        },
+        {
+          "title": "skuttr",
           "reason": "off_topic"
         },
         {
@@ -225,23 +221,19 @@
           "reason": "off_topic"
         },
         {
-          "title": "Jotform App for Shopify",
-          "reason": "off_topic"
-        },
-        {
           "title": "Nörth",
           "reason": "off_topic"
         },
         {
-          "title": "MCP1",
+          "title": "Jotform App for Shopify",
           "reason": "off_topic"
         },
         {
-          "title": "GitHub New PR Overview",
+          "title": "Higgsfield Miracle",
           "reason": "off_topic"
         },
         {
-          "title": "Calmly Script",
+          "title": "Sign Language by Panda Video",
           "reason": "off_topic"
         }
       ],
@@ -250,7 +242,7 @@
     },
     "tech_news": {
       "status": "direct",
-      "fresh_count": 37,
+      "fresh_count": 36,
       "errors": [
         {
           "endpoint": "venturebeat",
@@ -258,12 +250,20 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-09T22:36:59.399194+00:00",
-      "rejected_count": 22,
+      "checked_at": "2026-11-10T02:02:21.928633+00:00",
+      "rejected_count": 23,
       "rejection_reasons": {
-        "off_topic": 22
+        "off_topic": 23
       },
       "rejected_examples": [
+        {
+          "title": "Jensen Huang reportedly engaged a PR firm with a history of handling high-profile sex scandals a year ago",
+          "reason": "off_topic"
+        },
+        {
+          "title": "A short seller flagged Nvidia CEO’s ties to a suspected Chinese spy six months before the scandal",
+          "reason": "off_topic"
+        },
         {
           "title": "The race is on to sue Nvidia",
           "reason": "off_topic"
@@ -287,22 +287,14 @@
         {
           "title": "After the midterms, things are looking rocky for Elon Musk and data centers",
           "reason": "off_topic"
-        },
-        {
-          "title": "Megaspeed exec was recruited to spy on Nvidia CEO, according to US intelligence memo",
-          "reason": "off_topic"
-        },
-        {
-          "title": "From the front row to the hot seat — what the midterms mean for Big Tech",
-          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-09T20:09:06+00:00"
+      "latest_published_at": "2026-11-10T01:27:12+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 36,
+      "fresh_count": 46,
       "errors": [
         {
           "endpoint": "36kr",
@@ -318,51 +310,51 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-11-09T22:36:59.399194+00:00",
-      "rejected_count": 79,
+      "checked_at": "2026-11-10T02:02:21.928633+00:00",
+      "rejected_count": 74,
       "rejection_reasons": {
-        "off_topic": 79
+        "off_topic": 74
       },
       "rejected_examples": [
         {
-          "title": "派评 | 近期值得关注的 App",
+          "title": "天降陨石最大单体 35 公斤，全国“陨石猎人”扎堆赶往石家庄",
           "reason": "off_topic"
         },
         {
-          "title": "双十一 | 少数派会员、正版软件、付费栏目限时优惠",
+          "title": "微软加速现代化改造 Win11，“服务”等对话框将告别老古董界面",
           "reason": "off_topic"
         },
         {
-          "title": "一家人的客厅，和一个人的深夜 — Sonos Beam Ultra 与 Ace Ultra 体验",
+          "title": "华为官宣 MateBook Fold S 鸿蒙小折叠电脑 11 月 14 日开启预订",
           "reason": "off_topic"
         },
         {
-          "title": "天花板上的白色盒子，是怎样保护我们的安全的？",
+          "title": "快舟六号火箭预计 2027 年完成首飞及回收，运载能力达 20 吨级",
           "reason": "off_topic"
         },
         {
-          "title": "双十一好物精选：Sonos Play 85 折送充电套装，CD 机加赠透明面盖",
+          "title": "首位英国艺人：Olivia Dean 当选苹果 2026 Apple Music 年度艺人",
           "reason": "off_topic"
         },
         {
-          "title": "派早报：特斯拉将停产 Cybertruck",
+          "title": "消息称某厂骁龙 8EE6 超大杯超广角最高测试 LYT-L910，预计为 vivo X500 Ultra",
           "reason": "off_topic"
         },
         {
-          "title": "苹果产品那些不够颠覆，却值得被学习的细节",
+          "title": "八位堂推出 Ultimate 3C+ XBOX 版手柄，仅支持有线连接",
           "reason": "off_topic"
         },
         {
-          "title": "一个 05 后的个人数码编年史",
+          "title": "10:00~10:15 速抢限时不限量红包：京东红包今日全员加码",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-09T15:27:00+00:00"
+      "latest_published_at": "2026-11-10T01:45:00+00:00"
     }
   },
   "quality_rejections": {
-    "duplicate_headline": 1
+    "duplicate_headline": 2
   },
   "quality_complete": true
 }

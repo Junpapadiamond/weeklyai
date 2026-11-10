@@ -1,0 +1,266 @@
+{
+  "cache_key": "051d9ade96947ac1e678ead1-7ac5a3bd280e48c6afe32589",
+  "product_key": "051d9ade96947ac1e678ead1",
+  "fingerprint": "7ac5a3bd280e48c6afe32589",
+  "product_id": "p_0caf746c3227024f",
+  "product_name": "Synapse Analytics",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-10T02:03:57.981455+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "信贷决策场景演示",
+      "en": "Credit Decision Scenario"
+    },
+    "scenario": {
+      "zh": "为一家小微企业贷款申请生成风险评估,基于虚构财务数据和历史记录",
+      "en": "Generate risk assessment for a small business loan using fictional financial data and history"
+    },
+    "steps": [
+      {
+        "id": "application",
+        "widget": "choice",
+        "title": {
+          "zh": "选择申请类型",
+          "en": "Select Application Type"
+        },
+        "instruction": {
+          "zh": "选择一个虚构贷款申请场景",
+          "en": "Choose a fictional loan scenario"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "小微企业营运资金",
+              "en": "SME Working Capital"
+            },
+            "output": {
+              "zh": "月收入波动,存在季节性",
+              "en": "Monthly revenue fluctuates seasonally"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "申请信息",
+                "en": "Application Data"
+              },
+              "output_label": {
+                "zh": "关键发现",
+                "en": "Key Findings"
+              },
+              "input": {
+                "zh": "Green Harvest Ltd申请50万埃镑,经营18个月,月收入8-15万",
+                "en": "Green Harvest Ltd requests EGP 500k, operating 18 months, monthly revenue 80-150k"
+              },
+              "output": {
+                "zh": "现金流稳定但收款周期长,建议短期额度配合应收账款监控",
+                "en": "Stable cash flow but long collection cycle; recommend short-term limit with receivables monitoring"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "月收入范围",
+                    "en": "Monthly Revenue"
+                  },
+                  "detail": {
+                    "zh": "80,000 - 150,000埃镑,农产品批发旺季集中在3-6月",
+                    "en": "EGP 80k-150k, wholesale peak in Mar-Jun"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "应收账款",
+                    "en": "Receivables"
+                  },
+                  "detail": {
+                    "zh": "平均账期90天,主要客户为连锁超市",
+                    "en": "Average 90-day terms, major clients are retail chains"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "现有负债",
+                    "en": "Existing Debt"
+                  },
+                  "detail": {
+                    "zh": "一笔20万设备贷款,按时还款12期",
+                    "en": "EGP 200k equipment loan, 12 payments on time"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "个人消费贷款",
+              "en": "Personal Consumer Loan"
+            },
+            "output": {
+              "zh": "收入稳定但信用历史短",
+              "en": "Stable income but short credit history"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "申请信息",
+                "en": "Application Data"
+              },
+              "output_label": {
+                "zh": "关键发现",
+                "en": "Key Findings"
+              },
+              "input": {
+                "zh": "Ahmed Nabil申请15万埃镑,国企员工2年,月薪12,000",
+                "en": "Ahmed Nabil requests EGP 150k, state employee 2 years, monthly salary 12,000"
+              },
+              "output": {
+                "zh": "收入来源可靠但负债收入比需关注,建议批准额度10万并设定36期上限",
+                "en": "Reliable income source but debt-to-income ratio needs attention; approve EGP 100k with 36-month cap"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "月收入",
+                    "en": "Monthly Income"
+                  },
+                  "detail": {
+                    "zh": "12,000埃镑固定工资,来自国有电力公司",
+                    "en": "EGP 12k fixed salary from state utility company"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "现有债务",
+                    "en": "Existing Obligations"
+                  },
+                  "detail": {
+                    "zh": "信用卡余额3万,月供1,800;租房支出2,500",
+                    "en": "Credit card balance 30k, monthly 1,800; rent 2,500"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "信用记录",
+                    "en": "Credit History"
+                  },
+                  "detail": {
+                    "zh": "一张信用卡使用14个月,无逾期",
+                    "en": "One credit card used 14 months, no late payments"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "decision",
+        "widget": "review",
+        "title": {
+          "zh": "审查决策建议",
+          "en": "Review Decision"
+        },
+        "instruction": {
+          "zh": "查看虚构的风险评估结果",
+          "en": "View the fictional risk assessment"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "批准并设定条件",
+              "en": "Approve with Conditions"
+            },
+            "output": {
+              "zh": "建议额度和监控要求",
+              "en": "Recommended limit and monitoring"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "评估摘要",
+                "en": "Assessment Summary"
+              },
+              "output_label": {
+                "zh": "决策建议",
+                "en": "Decision Recommendation"
+              },
+              "input": {
+                "zh": "综合评分显示中等风险,现金流模式支持还款能力,但需监控应收账款回收",
+                "en": "Overall score indicates moderate risk; cash flow pattern supports repayment capacity but receivables collection requires monitoring"
+              },
+              "output": {
+                "zh": "批准额度40万埃镑,期限12个月,要求每季度提交应收账款账龄表",
+                "en": "Approve EGP 400k for 12 months, require quarterly receivables aging report"
+              },
+              "emphasis": {
+                "zh": "现金流模式支持还款能力",
+                "en": "cash flow pattern supports repayment capacity"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "要求补充材料",
+              "en": "Request Additional Info"
+            },
+            "output": {
+              "zh": "需要更多财务证明",
+              "en": "More financial evidence needed"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "评估摘要",
+                "en": "Assessment Summary"
+              },
+              "output_label": {
+                "zh": "决策建议",
+                "en": "Decision Recommendation"
+              },
+              "input": {
+                "zh": "综合评分显示中等风险,现金流模式支持还款能力,但需监控应收账款回收",
+                "en": "Overall score indicates moderate risk; cash flow pattern supports repayment capacity but receivables collection requires monitoring"
+              },
+              "output": {
+                "zh": "要求提供最近6个月银行流水和前三大客户合同副本后重新评估",
+                "en": "Request last 6 months' bank statements and top 3 customer contracts before reassessment"
+              },
+              "emphasis": {
+                "zh": "需监控应收账款回收",
+                "en": "receivables collection requires monitoring"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "此演示使用虚构数据展示信贷评估流程,实际决策需在Synapse平台上使用真实客户数据完成",
+      "en": "This demo uses fictional data to illustrate credit assessment flow; actual decisions require real customer data on the Synapse platform"
+    },
+    "sources": [
+      {
+        "url": "https://synapse-analytics.io/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://launchbaseafrica.com/2026/11/03/south-africa-and-egypt-contest-africas-ai-funding-crown",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}
