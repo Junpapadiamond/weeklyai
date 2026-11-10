@@ -5,12 +5,14 @@ import type { Lang } from "./types";
 type StudioProps = { title: string; lang: Lang };
 
 export function Slide({ title, lang }: StudioProps) {
-  const [headline, setHeadline] = useState(lang ? "Night market by the river" : "河畔夜市");
-  const [point, setPoint] = useState(lang ? "A Friday gathering for neighborhood makers." : "每周五，让街区手作者在河边相聚。");
+  const [headlines, setHeadlines] = useState<Partial<Record<Lang, string>>>({});
+  const [points, setPoints] = useState<Partial<Record<Lang, string>>>({});
+  const headline = headlines[lang] ?? (lang ? "Night market by the river" : "河畔夜市");
+  const point = points[lang] ?? (lang ? "A Friday gathering for neighborhood makers." : "每周五，让街区手作者在河边相聚。");
   const [poster, setPoster] = useState(false);
   return <Desk title={title} controls={<><label className="task-field">{lang ? "Event title" : "活动标题"}
-    <input value={headline} maxLength={70} onChange={e => setHeadline(e.target.value)} /></label>
-    <label className="task-field">{lang ? "Key message" : "活动要点"}<textarea value={point} maxLength={160} onChange={e => setPoint(e.target.value)} /></label>
+    <input value={headline} maxLength={70} onChange={e => setHeadlines(previous => ({ ...previous, [lang]: e.target.value }))} /></label>
+    <label className="task-field">{lang ? "Key message" : "活动要点"}<textarea value={point} maxLength={160} onChange={e => setPoints(previous => ({ ...previous, [lang]: e.target.value }))} /></label>
     <Toggle checked={poster} onChange={() => setPoster(!poster)}>{lang ? "Poster layout" : "海报版式"}</Toggle></>}>
     <article className={"task-slide" + (poster ? " task-slide--poster" : "")}><h4>{headline || "—"}</h4><p>{point}</p></article>
   </Desk>;

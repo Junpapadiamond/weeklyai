@@ -21,9 +21,10 @@ import "@/styles/reviewed-tasks.css";
 
 function Builder({ title, lang }: { title: string; lang: Lang }) {
   const spec = exampleSpec("tasks", Boolean(lang));
-  const [name, setName] = useState(spec.title);
+  const [names, setNames] = useState<Partial<Record<Lang, string>>>({});
+  const name = names[lang] ?? spec.title;
   return <Desk title={title} controls={<label className="task-field">{lang ? "Checklist app title" : "清单应用名称"}
-    <input value={name} maxLength={64} onChange={e => setName(e.target.value)} /></label>}>
+    <input value={name} maxLength={64} onChange={e => setNames(previous => ({ ...previous, [lang]: e.target.value }))} /></label>}>
     <DemoAppPreview spec={{ ...spec, title: name || spec.title }} en={Boolean(lang)} />
   </Desk>;
 }
@@ -88,7 +89,7 @@ export default function ReviewedPlayer({ productId, productName, website, logoUr
       <p className="task-instruction">{task.instruction[lang]}</p>
     </header>
     <small className="task-disclosure">{disclosure}</small>
-    <div ref={desk}><Activity key={productId + "/" + lang + "/" + revision} task={task} lang={lang} /></div>
+    <div ref={desk}><Activity key={productId + "/" + revision} task={task} lang={lang} /></div>
     <footer className="task-footer"><div><a href={task.source} target="_blank" rel="noopener noreferrer">{t("产品资料", "Product source")} · {sourceHost} <ArrowUpRight size={14} /></a>
       {isValidWebsite(productUrl) && productUrl !== task.source && <a href={productUrl} target="_blank" rel="noopener noreferrer">{t("前往官网", "Visit product")} <ArrowUpRight size={14} /></a>}</div>
       <div><button type="button" onClick={() => setRevision(v => v + 1)}><ArrowCounterClockwise size={15} />{t("重置", "Reset")}</button>

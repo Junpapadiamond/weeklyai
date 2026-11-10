@@ -209,8 +209,28 @@ describe("artifact contract and safe highlighting", () => {
       expect(html).toContain("Existing first item");
       expect(html).toContain("Existing second item");
       expect(html).toContain("First prepared detail");
+      expect(html).toContain("Second prepared detail");
+      // Reading the complete result must not require choosing a hidden detail pane.
+      expect(html).not.toContain('aria-pressed=');
+      expect(html).toContain('aria-expanded="false"');
+      expect(html).not.toContain("Save notes");
+      expect(html).not.toContain("Move earlier");
       expect(html).not.toContain("<mark>");
     }
+  });
+
+  it("preserves an arranged sequence without hiding any prepared details", () => {
+    const view = ExperienceArtifactSchema.parse({ ...artifact(), kind: "sequence", items: [
+      { label: copy("Opening"), detail: copy("Show the problem") },
+      { label: copy("Solution"), detail: copy("Show the product") },
+      { label: copy("Closing"), detail: copy("Show the next action") },
+    ] });
+    const html = renderToStaticMarkup(createElement(ExperienceArtifact, {
+      artifact: view, lang: "en", draft: { order: [2, 0, 1] }, onEdit: vi.fn(),
+    }));
+    expect(html.indexOf("Show the next action")).toBeLessThan(html.indexOf("Show the problem"));
+    expect(html.indexOf("Show the problem")).toBeLessThan(html.indexOf("Show the product"));
+    expect(html).toContain("Fictional example · Not vendor output");
   });
 });
 

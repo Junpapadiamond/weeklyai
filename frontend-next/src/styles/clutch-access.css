@@ -1,0 +1,33 @@
+.clutch-access { container-type: inline-size; color: var(--text); }
+.clutch-access:not(.experience-focus--embedded) { max-width: 960px; padding: 0 clamp(1rem, 3vw, 2rem) 1.3rem; }
+.clutch-access .focus-header { width: 100%; padding-inline: 0; }
+.clutch-disclosure { margin: .7rem 0 0; color: var(--text-muted); font-size: .76rem; line-height: 1.6; }
+.clutch-workspace { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); border-block: 1px solid var(--border); }
+.clutch-controls { min-width: 0; padding: 1.2rem 1.2rem 1.2rem 0; }
+.clutch-task { display: grid; gap: .45rem; font-size: .86rem; font-weight: 600; }
+.clutch-task select { width: 100%; min-width: 0; min-height: 44px; padding: .55rem; border: 1px solid var(--border); border-radius: .35rem; background: var(--surface); color: var(--text); font: inherit; }
+.clutch-scope { margin: .55rem 0 1.2rem; font-size: .78rem; color: var(--text-soft); }
+.clutch-requests { border: 0; padding: 0; margin: 0; min-width: 0; }
+.clutch-requests legend { margin-bottom: .5rem; font-size: .85rem; font-weight: 600; }
+.clutch-requests label, .clutch-grant { display: flex; align-items: flex-start; gap: .6rem; min-height: 44px; padding: .65rem; font-size: .86rem; line-height: 1.5; cursor: pointer; overflow-wrap: anywhere; }
+.clutch-requests label { border-left: 3px solid transparent; }
+.clutch-requests label.is-selected { border-left-color: var(--primary); background: var(--surface-soft); }
+.clutch-requests input, .clutch-grant input { margin: .2rem 0 0; width: 1rem; height: 1rem; flex: none; accent-color: var(--primary); }
+.clutch-grant { margin-top: .85rem; border: 1px solid var(--border); border-radius: .35rem; }
+.clutch-result { padding: 1.35rem; min-width: 0; border-left: 1px solid var(--border); background: var(--surface-soft); }
+.clutch-result h3 { display: flex; align-items: center; gap: .55rem; margin: 0; font-size: 1.1rem; }
+.clutch-result h3 svg { flex: none; }
+.clutch-result p { font-size: .9rem; line-height: 1.65; margin: .75rem 0 1.4rem; }
+.clutch-result h4 { margin: 0 0 .55rem; font-size: .83rem; color: var(--text-soft); }
+.clutch-result pre { margin: 0; padding: .9rem; border-left: 2px solid var(--primary); background: var(--surface); font: .83rem/1.8 var(--font-mono); white-space: pre-wrap; overflow-wrap: anywhere; }
+.clutch-footer { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: .8rem; padding-top: 1rem; font-size: .8rem; }
+.clutch-footer details { max-width: 64ch; }
+.clutch-footer summary { cursor: pointer; color: var(--text-soft); }
+.clutch-footer p { line-height: 1.65; }
+.clutch-footer a { display: inline-flex; align-items: center; gap: .3rem; margin-right: .7rem; }
+.clutch-access :is(input, select, summary, a):focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+@container (max-width: 620px) {
+  .clutch-workspace { grid-template-columns: minmax(0, 1fr); }
+  .clutch-controls { padding: 1rem 0; }
+  .clutch-result { border-left: 0; border-top: 1px solid var(--border); padding: 1rem; }
+}

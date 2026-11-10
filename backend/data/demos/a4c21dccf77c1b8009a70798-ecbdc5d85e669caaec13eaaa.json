@@ -4,84 +4,90 @@
   "fingerprint": "ecbdc5d85e669caaec13eaaa",
   "product_id": "p_16ab841852cd830c",
   "product_name": "Clutch Security",
-  "origin": "pregenerated",
-  "generated_at": "2026-11-06T23:48:49.091984+00:00",
+  "origin": "curated",
+  "generated_at": "2026-11-09T00:00:00+00:00",
   "spec": {
     "version": 2,
     "confidence": "illustrative",
     "tier": "workflow",
     "headline": {
-      "zh": "AI 智能体访问控制",
-      "en": "AI Agent Access Control"
+      "zh": "让智能体完成任务，同时限制越权访问",
+      "en": "Let agents work within the access their task needs"
     },
     "scenario": {
-      "zh": "为企业系统中的 AI 智能体设置访问权限和操作边界",
-      "en": "Set access permissions and operational boundaries for AI agents in enterprise systems"
+      "zh": "选择代码排错或账单咨询，查看完成任务需要哪些数据、哪些操作需授权，以及越权请求如何处理。",
+      "en": "Choose code debugging or billing support; inspect the data needed, actions needing authorization and out-of-scope requests."
     },
     "steps": [
       {
         "id": "agent_type",
         "widget": "choice",
         "title": {
-          "zh": "选择智能体角色",
-          "en": "Choose Agent Role"
+          "zh": "任务与访问范围",
+          "en": "Task and access scope"
         },
         "instruction": {
-          "zh": "确定需要管理权限的智能体类型",
-          "en": "Identify the agent type to manage"
+          "zh": "选择一个具体任务",
+          "en": "Choose a concrete task"
         },
         "options": [
           {
             "id": "0",
             "label": {
-              "zh": "客服助手",
-              "en": "Support Assistant"
+              "zh": "排查测试环境连接错误",
+              "en": "Debug a test connection"
             },
             "output": {
-              "zh": "限制为客户工单和历史记录访问",
-              "en": "Restrict to ticket and history access"
+              "zh": "保留必要配置，按任务限定凭证使用。",
+              "en": "Keep needed config; scope credential use to this task."
             },
             "artifact": {
               "kind": "list",
               "input_label": {
-                "zh": "权限请求",
-                "en": "Permission Request"
+                "zh": "任务输入",
+                "en": "Task input"
               },
               "output_label": {
-                "zh": "建议策略",
-                "en": "Recommended Policy"
+                "zh": "示例访问范围",
+                "en": "Example access scope"
               },
               "input": {
-                "zh": "客服智能体需要访问所有客户数据库和支付历史",
-                "en": "Support agent needs access to all customer database and payment history"
+                "zh": "测试库连接失败。代码助手需要检查连接代码、主机名、端口和测试环境配置。",
+                "en": "The test database connection fails. The code agent needs connection code, host, port and test-environment configuration."
               },
               "output": {
-                "zh": "仅允许读取已分配工单的客户信息，禁止访问支付数据",
-                "en": "Allow read-only access to assigned tickets, block payment data"
-              },
-              "emphasis": {
-                "zh": "所有客户数据库和支付历史",
-                "en": "all customer database and payment history"
+                "zh": "读取必要配置；连接测试需授权。密码原文不进入对话，生产环境不在本次任务内。",
+                "en": "Read needed config; authorize a connection test. Password text stays out of the conversation; production is outside this task."
               },
               "items": [
                 {
                   "label": {
-                    "zh": "允许访问",
-                    "en": "Allowed Access"
+                    "zh": "允许读取",
+                    "en": "Readable inputs"
                   },
                   "detail": {
-                    "zh": "当前工单、客户联系方式",
-                    "en": "Current tickets, customer contacts"
+                    "zh": "源代码、测试库主机名和端口，以及不含密钥的环境变量、部署参数。",
+                    "en": "Source code, test database host and port, plus environment variables and deployment settings without secret values."
                   }
                 },
                 {
                   "label": {
-                    "zh": "禁止访问",
-                    "en": "Blocked Access"
+                    "zh": "连接测试需授权",
+                    "en": "Authorize a test connection"
                   },
                   "detail": {
-                    "zh": "支付方式、账户余额、其他客户工单",
-                    "en": "Payment methods, account balance, other tickets"
+                    "zh": "示例工具经授权使用测试凭证，只返回连接状态；不向模型返回密码原文。",
+                    "en": "The example tool uses test credentials when authorized and returns connection status, without giving the model password text."
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "本次不开放",
+                    "en": "Outside this task"
+                  },
+                  "detail": {
+                    "zh": "生产数据库、生产凭证和部署操作不属于本次排错范围。",
+                    "en": "Production databases, production credentials and deployments are outside this debugging task."
                   }
                 }
               ]
@@ -90,132 +96,63 @@
           {
             "id": "1",
             "label": {
-              "zh": "代码分析智能体",
-              "en": "Code Analysis Agent"
+              "zh": "解释指定客户的账单",
+              "en": "Explain one customer bill"
             },
             "output": {
-              "zh": "访问代码库但隔离系统密钥",
-              "en": "Code repository access with secrets isolated"
+              "zh": "账单咨询可读取必要支付状态，不能任意退款。",
+              "en": "Billing support needs payment status, not unrestricted refunds."
             },
             "artifact": {
               "kind": "list",
               "input_label": {
-                "zh": "权限请求",
-                "en": "Permission Request"
+                "zh": "任务输入",
+                "en": "Task input"
               },
               "output_label": {
-                "zh": "建议策略",
-                "en": "Recommended Policy"
+                "zh": "示例访问范围",
+                "en": "Example access scope"
               },
               "input": {
-                "zh": "代码分析智能体请求读取所有代码、配置文件和部署密钥",
-                "en": "Code agent requests read access to all code, configs and deployment keys"
+                "zh": "工单 #4521：客户询问本月是否重复扣款。助手需要核对该客户的账单和支付状态。",
+                "en": "Ticket #4521 asks whether this month was charged twice. The assistant needs this customer's invoices and payment status."
               },
               "output": {
-                "zh": "允许代码读取，完全阻止密钥、环境变量和部署配置",
-                "en": "Allow code read, completely block keys, env vars and deploy configs"
-              },
-              "emphasis": {
-                "zh": "所有代码、配置文件和部署密钥",
-                "en": "all code, configs and deployment keys"
+                "zh": "当前工单可读；支付状态需该客户的只读授权。完整卡号、跨客户访问和退款不在本次查询范围。",
+                "en": "Read the current ticket; authorize read-only payment status for this customer. Full card numbers, other customers and refunds are outside this inquiry."
               },
               "items": [
                 {
                   "label": {
-                    "zh": "允许访问",
-                    "en": "Allowed Access"
+                    "zh": "工单内可读取",
+                    "en": "Readable for this ticket"
                   },
                   "detail": {
-                    "zh": "源代码、注释、公开文档",
-                    "en": "Source code, comments, public docs"
+                    "zh": "当前工单、客户问题和已提供的账单摘要。",
+                    "en": "The current ticket, customer question and supplied bill summary."
                   }
                 },
                 {
                   "label": {
-                    "zh": "完全隔离",
-                    "en": "Completely Isolated"
+                    "zh": "支付状态需授权",
+                    "en": "Payment status needs authorization"
                   },
                   "detail": {
-                    "zh": "API 密钥、数据库凭证、部署参数",
-                    "en": "API keys, DB credentials, deploy params"
+                    "zh": "只读授权限定当前客户，返回扣款日期、金额和状态；不返回支付凭证原文。",
+                    "en": "Read-only authorization is limited to this customer and returns charge dates, amounts and status, not raw payment credentials."
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "本次不开放",
+                    "en": "Outside this task"
+                  },
+                  "detail": {
+                    "zh": "完整银行卡号、支付凭证原文、其他客户账单，以及未经单独批准的退款。",
+                    "en": "Full card numbers, raw payment credentials, other customers' bills and refunds without separate approval."
                   }
                 }
               ]
-            }
-          }
-        ],
-        "example_data": true
-      },
-      {
-        "id": "boundaries",
-        "widget": "choice",
-        "title": {
-          "zh": "设置操作边界",
-          "en": "Set Operational Boundaries"
-        },
-        "instruction": {
-          "zh": "定义智能体可以执行的具体操作",
-          "en": "Define what actions the agent can perform"
-        },
-        "options": [
-          {
-            "id": "0",
-            "label": {
-              "zh": "只读模式",
-              "en": "Read-Only Mode"
-            },
-            "output": {
-              "zh": "智能体只能查询，不能修改或删除",
-              "en": "Agent can query only, no modifications or deletions"
-            },
-            "when": {
-              "step_id": "agent_type",
-              "option_id": "0"
-            }
-          },
-          {
-            "id": "1",
-            "label": {
-              "zh": "受限写入",
-              "en": "Limited Write"
-            },
-            "output": {
-              "zh": "智能体可以创建评论和标签，但不能更改工单状态",
-              "en": "Agent can add comments and tags, cannot change ticket status"
-            },
-            "when": {
-              "step_id": "agent_type",
-              "option_id": "0"
-            }
-          },
-          {
-            "id": "2",
-            "label": {
-              "zh": "代码审查权限",
-              "en": "Review Permissions"
-            },
-            "output": {
-              "zh": "可以评论代码，但不能推送或合并",
-              "en": "Can comment on code, cannot push or merge"
-            },
-            "when": {
-              "step_id": "agent_type",
-              "option_id": "1"
-            }
-          },
-          {
-            "id": "3",
-            "label": {
-              "zh": "审计隔离",
-              "en": "Audit Isolation"
-            },
-            "output": {
-              "zh": "所有操作被记录，敏感操作需人工批准",
-              "en": "All actions logged, sensitive ops require human approval"
-            },
-            "when": {
-              "step_id": "agent_type",
-              "option_id": "1"
             }
           }
         ],
@@ -225,64 +162,144 @@
         "id": "monitoring",
         "widget": "review",
         "title": {
-          "zh": "检查访问日志",
-          "en": "Review Access Logs"
+          "zh": "请求会怎样处理",
+          "en": "How requests are handled"
         },
         "instruction": {
-          "zh": "查看智能体的实际行为记录",
-          "en": "Inspect recorded agent behavior"
+          "zh": "查看当前任务中的请求与示例结果",
+          "en": "Inspect sample requests and outcomes for the selected task"
         },
         "options": [
           {
             "id": "0",
             "label": {
-              "zh": "查看会话活动",
-              "en": "View Session Activity"
+              "zh": "测试环境排错请求",
+              "en": "Test debugging requests"
             },
             "output": {
-              "zh": "虚构日志显示访问模式和异常事件",
-              "en": "Fictional logs show access patterns and anomalies"
+              "zh": "必要访问与越权请求得到不同处理。",
+              "en": "Needed access and out-of-scope requests get different outcomes."
             },
             "artifact": {
               "kind": "list",
               "input_label": {
-                "zh": "记录示例（虚构）",
-                "en": "Log Sample (fictional)"
+                "zh": "请求样例",
+                "en": "Sample requests"
               },
               "output_label": {
-                "zh": "风险评估",
-                "en": "Risk Assessment"
+                "zh": "示例处理结果",
+                "en": "Example decisions"
               },
               "input": {
-                "zh": "14:32 - 客服智能体读取工单 #4521；15:18 - 尝试访问销售部工单",
-                "en": "14:32 - Support agent read ticket #4521; 15:18 - Attempted access to sales ticket"
+                "zh": "同一次排错提出三种请求：读测试配置、测试连接、访问生产库。",
+                "en": "One debugging task requests test config, a connection test and production database access."
               },
               "output": {
-                "zh": "首次正常，第二次超出范围已拒绝，风险低",
-                "en": "First normal, second out-of-scope denied, risk low"
+                "zh": "以下按示例范围逐项判断，未连接数据库或读取真实凭证。",
+                "en": "Each request is evaluated against the example scope. No database or real credential is accessed."
               },
               "items": [
                 {
                   "label": {
-                    "zh": "正常操作",
-                    "en": "Normal Operations"
+                    "zh": "读取测试配置：允许",
+                    "en": "Read test config: allowed"
                   },
                   "detail": {
-                    "zh": "访问已分配的工单",
-                    "en": "Accessed assigned tickets"
+                    "zh": "返回示例值：主机 test-db.internal、端口 5432；密码字段不返回。",
+                    "en": "Sample response: host test-db.internal, port 5432; no password field is returned."
                   }
                 },
                 {
                   "label": {
-                    "zh": "被拦截",
-                    "en": "Blocked"
+                    "zh": "测试连接：需授权",
+                    "en": "Test connection: authorization needed"
                   },
                   "detail": {
-                    "zh": "跨部门访问尝试",
-                    "en": "Cross-department access attempt"
+                    "zh": "授权范围应限于测试环境和连接检查；工具可使用凭证，不将原文带回对话。",
+                    "en": "Authorization is limited to a connection check in the test environment. The tool may use credentials without returning their text."
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "访问生产库：拒绝",
+                    "en": "Access production: denied"
+                  },
+                  "detail": {
+                    "zh": "当前任务仅排查测试环境；需要生产访问时，应先建立并批准相应任务范围。",
+                    "en": "This task covers test debugging only. Production access needs its own defined and approved task scope."
                   }
                 }
               ]
+            },
+            "when": {
+              "step_id": "agent_type",
+              "option_id": "0"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "当前工单的账单请求",
+              "en": "Current-ticket billing requests"
+            },
+            "output": {
+              "zh": "工单可读，必要支付查询需授权，跨客户访问拒绝。",
+              "en": "Read the ticket; authorize needed payment queries; deny cross-customer access."
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "请求样例",
+                "en": "Sample requests"
+              },
+              "output_label": {
+                "zh": "示例处理结果",
+                "en": "Example decisions"
+              },
+              "input": {
+                "zh": "工单 #4521 提出三种请求：读取工单、核对支付状态、查看其他客户账单。",
+                "en": "Ticket #4521 requests the ticket text, payment status and another customer's bills."
+              },
+              "output": {
+                "zh": "以下按示例范围逐项判断，未查询真实账户或执行退款。",
+                "en": "Each request is evaluated against the example scope. No real account is queried and no refund is made."
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "读取当前工单：允许",
+                    "en": "Read current ticket: allowed"
+                  },
+                  "detail": {
+                    "zh": "返回示例问题：“本月出现两条扣款记录，是否扣了两次？”仅凭工单无法确认结算结果。",
+                    "en": "Sample question: “Two charge entries appear this month. Was I charged twice?” Ticket text alone does not establish settlement."
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "核对支付状态：需授权",
+                    "en": "Payment status: authorization needed"
+                  },
+                  "detail": {
+                    "zh": "授权只查询当前客户的支付状态。示例结果为一笔已结算、一笔待处理；查询授权不包含退款。",
+                    "en": "Authorize only this customer's payment status. Sample result: one settled charge and one pending entry. This grant does not authorize refunds."
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "其他客户账单：拒绝",
+                    "en": "Other customer bills: denied"
+                  },
+                  "detail": {
+                    "zh": "与当前工单无关，不能因为拥有账单查询工具就读取所有客户。",
+                    "en": "Unrelated to this ticket. Access to a billing tool does not grant access to every customer."
+                  }
+                }
+              ]
+            },
+            "when": {
+              "step_id": "agent_type",
+              "option_id": "1"
             }
           }
         ],
@@ -290,24 +307,51 @@
       }
     ],
     "takeaway": {
-      "zh": "此示例演示了智能体权限管理的核心概念：按角色限制访问、定义操作边界和监控异常行为。实际的执行效果和与企业系统的集成需要在 Clutch Security 平台上验证",
-      "en": "This example demonstrates core agent access management: role-based restriction, operational boundaries, and anomaly monitoring. Actual enforcement and enterprise system integration require verification on the Clutch Security platform"
+      "zh": "这里是本站编写的访问策略样例，不是 Clutch 的实测或通用安全建议。实际接入、凭证处理和授权机制需结合你的系统向官方验证。",
+      "en": "These are independently authored policy examples, not Clutch test results or universal security advice. Verify integration, credential handling and authorization for your systems with the vendor."
     },
     "sources": [
       {
-        "url": "https://www.clutch.security/",
+        "url": "https://www.clutch.security/agentic-ai/agent-guardrails",
         "label": {
-          "zh": "公开资料",
-          "en": "Public source"
+          "zh": "官方：智能体访问边界",
+          "en": "Official: agent guardrails"
         }
       },
       {
-        "url": "https://techcrunch.com/2026/11/05/palo-alto-networks-in-talks-to-buy-ai-agent-security-startup-clutch-for-500m/",
+        "url": "https://www.clutch.security/use-cases/least-privilege-enforcement",
         "label": {
-          "zh": "公开资料",
-          "en": "Public source"
+          "zh": "官方：按实际需求缩减权限",
+          "en": "Official: right-sizing permissions"
+        }
+      },
+      {
+        "url": "https://www.clutch.security/",
+        "label": {
+          "zh": "Clutch Security 官网",
+          "en": "Clutch Security website"
         }
       }
-    ]
+    ],
+    "product_context": {
+      "job": {
+        "zh": "Clutch 关联智能体、工具身份和资源，帮助组织管理访问范围。",
+        "en": "Clutch maps agents, tool identities and resources to help organizations govern access."
+      },
+      "input": {
+        "zh": "智能体要完成的任务、使用的身份，以及目标环境和资源。",
+        "en": "The agent's task, identity, target environment and resources."
+      },
+      "output": {
+        "zh": "厂商描述按上下文控制访问、识别多余权限并记录策略判断。",
+        "en": "The vendor describes context-aware access control, excessive-permission detection and recorded policy decisions."
+      },
+      "trial_note": {
+        "zh": "官网可预约产品演示。",
+        "en": "Book a product demo on the official website."
+      },
+      "source_url": "https://www.clutch.security/agentic-ai/agent-guardrails",
+      "trial_url": "https://www.clutch.security/"
+    }
   }
 }

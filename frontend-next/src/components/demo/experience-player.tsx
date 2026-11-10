@@ -14,13 +14,16 @@ import { ExperienceArtifact } from "./experience-artifact";
 import { downloadDemoText, itemNotes, type ItemDraft } from "@/lib/demo-notes";
 import { ExamplePlan } from "./example-plan";
 import { PresetComparison } from "./preset-comparison";
+import { CLUTCH_PRODUCT_ID } from "@/lib/clutch-access";
 
 const ReviewedPlayer = dynamic(() => import("./reviewed/reviewed-player"));
+const ClutchAccessDemo = dynamic(() => import("./clutch-access-demo"));
 
 type PlayerProps = { entry: ExperienceEntry; productId?: string; productName: string; website?: string; logoUrl?: string; secondaryLogoUrl?: string; embedded?: boolean };
 
 export function ExperiencePlayer(props: PlayerProps) {
   const { productId, entry } = props;
+  if (productId === CLUTCH_PRODUCT_ID) return <ClutchAccessDemo {...props} />;
   if (productId && reviewedIds.has(String(productId)) && isTextPlan(entry.spec)) {
     return <ReviewedPlayer key={productId} {...props} productId={String(productId)} />;
   }
