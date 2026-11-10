@@ -64,7 +64,7 @@ function FocusTimer({ spec, en }: PreviewProps) {
 }
 
 function TaskList({ spec, en }: PreviewProps) {
-  const [tasks, setTasks] = useState(() => spec.items.map((text, id) => ({ id, text, done: false })));
+  const [tasks, setTasks] = useState(() => spec.items.map((text, id) => ({ id, text, done: false, presetIndex: id as number | undefined })));
   const nextId = useRef(spec.items.length);
   const [draft, setDraft] = useState("");
   const id = useId();
@@ -73,7 +73,7 @@ function TaskList({ spec, en }: PreviewProps) {
   function add(event: FormEvent) {
     event.preventDefault();
     if (!draft.trim() || tasks.length >= 30) return;
-    setTasks([...tasks, { id: nextId.current++, text: draft.trim(), done: false }]);
+    setTasks([...tasks, { id: nextId.current++, text: draft.trim(), done: false, presetIndex: undefined }]);
     setDraft("");
   }
 
@@ -81,10 +81,13 @@ function TaskList({ spec, en }: PreviewProps) {
     <div className="demo-task-progress"><span>{en ? "Your progress" : "今天的进度"}</span><strong>{completed} / {tasks.length}</strong></div>
     <progress value={completed} max={Math.max(tasks.length, 1)} aria-label={en ? "Completed tasks" : "已完成任务"} />
     <ul className="demo-task-list">
-      {tasks.map(task => <li key={task.id} className={task.done ? "is-done" : ""}>
-        <label><input type="checkbox" checked={task.done} onChange={() => setTasks(tasks.map(item => item.id === task.id ? { ...item, done: !item.done } : item))} /><span>{task.text}</span></label>
-        <button type="button" className="demo-remove" onClick={() => setTasks(tasks.filter(item => item.id !== task.id))} aria-label={`${en ? "Delete" : "删除"} ${task.text}`}>×</button>
-      </li>)}
+      {tasks.map(task => {
+        const text = task.presetIndex === undefined ? task.text : spec.items[task.presetIndex] ?? task.text;
+        return <li key={task.id} className={task.done ? "is-done" : ""}>
+          <label><input type="checkbox" checked={task.done} onChange={() => setTasks(tasks.map(item => item.id === task.id ? { ...item, done: !item.done } : item))} /><span>{text}</span></label>
+          <button type="button" className="demo-remove" onClick={() => setTasks(tasks.filter(item => item.id !== task.id))} aria-label={`${en ? "Delete" : "删除"} ${text}`}>×</button>
+        </li>;
+      })}
     </ul>
     {tasks.length === 0 ? <p className="demo-app-empty">{en ? "A clear page. Add your first small step." : "清单空了。添加你想完成的第一件小事吧。"}</p> : null}
     <form className="demo-task-form" onSubmit={add}>
