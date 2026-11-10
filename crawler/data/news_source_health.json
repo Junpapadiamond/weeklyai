@@ -1,50 +1,50 @@
 {
-  "updated_at": "2026-11-10T02:02:21.928633+00:00",
+  "updated_at": "2026-11-10T07:35:50.115224+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 12,
+      "fresh_count": 3,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-10T02:02:21.928633+00:00",
-      "rejected_count": 17,
+      "checked_at": "2026-11-10T07:35:50.115224+00:00",
+      "rejected_count": 21,
       "rejection_reasons": {
-        "insufficient_excerpt": 3,
-        "no_concrete_signal": 11,
-        "unvetted_x_author": 3
+        "no_concrete_signal": 7,
+        "unvetted_x_author": 13,
+        "insufficient_excerpt": 1
       },
       "rejected_examples": [
         {
-          "title": "@OpenAI · OpenAI (@OpenAI) on X",
-          "reason": "insufficient_excerpt"
-        },
-        {
-          "title": "@cursor_ai · Origin, Cursor’s code hosting platform, now supports over 20 integrations. Connect your repos to tools for CI, deployments, code review, security, ",
+          "title": "@OpenAI · OpenAI على X: \"RT @OpenAIDevs: Put your dot on call. Ali, an engineer at OpenAI, used his dot to triage an on-call incident at 3am. His dot investigat",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@cursor_ai · New in Cursor design mode: Annotate. Give agents visual prompts: edit elements, draw on the page, and review your designs at different screen sizes",
+          "title": "@OpenAI · RT @OpenAIDevs: Put your dot on call. Ali, an engineer at OpenAI, used his dot to triage an on-call incident at 3am. His dot investigated…",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@cursor_ai · Cursor can now control your computer. Agents can drive desktop apps like the iOS Simulator to test the features they build.",
+          "title": "@OracleNYSE · $NOW OpenAI OpenAI and ServiceNow expand partnership across enterprise workflows- OpenAI",
+          "reason": "unvetted_x_author"
+        },
+        {
+          "title": "@sagarmoy22 · #AI #OpenAI #ChatGPT #GenAI #indiehackers #OpenAI #ChatGPT #GenAI #indiehackers #OpenAI #ChatGPT #GenAI #indiehackers #OpenAI #ChatGPT #GenAI #ind",
+          "reason": "unvetted_x_author"
+        },
+        {
+          "title": "@FUCK__OPENAI · @thsottiaux FUCK YOU TIBO!!! FUCK YOU SAM ALTMAN!!! FUCK YOU OPENAI!!! YOU ARE ALL MOTHERFUCKER SONS OF BITCH!!! GO DIE IF YOU ALWAYS MAKING THE",
+          "reason": "unvetted_x_author"
+        },
+        {
+          "title": "@vinhnx · openai/openai-cli: Official CLI for the OpenAI API https://t.co/Pog1OMvbMH",
+          "reason": "unvetted_x_author"
+        },
+        {
+          "title": "@runwayml · Introducing Runway App Studio. Build the creative app you wish existed, just by describing it. It generates images, video and audio with Runway’s mo",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@cursor_ai · Cursor على X: \"Cursor can now control your computer. Agents can drive desktop apps like the iOS Simulator to test the features they build.",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@cursor_ai · Cloud agents can now build interactive canvases. Ask for a dashboard or report while the agent works, then share the finished canvas with your team",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@cursor_ai · The Agent SDK is now available. Define agents as code, with prompts in Markdown and tools in TypeScript. Deploy them on our hosted infrastructure, ",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@cursor_ai · Teams across Cursor are already using it to build live dashboards, customer presentations, internal ops tools, onboarding programs, and developer p",
+          "title": "@runwayml · If you can describe it, you can run it as a video ad. Runway Ads turns your creative direction into on-brand ads for every platform, then learns wha",
           "reason": "no_concrete_signal"
         }
       ],
@@ -53,63 +53,62 @@
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 5,
+      "fresh_count": 11,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-10T02:02:21.928633+00:00",
-      "rejected_count": 35,
+      "checked_at": "2026-11-10T07:35:50.115224+00:00",
+      "rejected_count": 29,
       "rejection_reasons": {
-        "no_concrete_signal": 11,
-        "off_topic": 23,
-        "personal_help_or_chatter": 1
+        "off_topic": 13,
+        "no_concrete_signal": 16
       },
       "rejected_examples": [
         {
-          "title": "Received 3 Fable resets",
+          "title": "feat: external PLE file loading by pwilkin · Pull Request #31185 · ggml-org/llama.cpp",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Question for everyone here: Coding experience?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Just got off the waitlist for Duet",
+          "title": "Found this in Fable 5.2’s default system prompt in Claude Code",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Fable 5.2 vs Opus 5.5",
           "reason": "off_topic"
         },
         {
-          "title": "Why don't they provide any free reset anymore?",
+          "title": "Do unused usage resets carry over when upgrading from Max to Ultra?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Weekly reset did not reset....",
           "reason": "off_topic"
         },
         {
-          "title": "What type of rig would you suggest for 6-8k CAD? (4-5k USD)",
-          "reason": "personal_help_or_chatter"
-        },
-        {
-          "title": "sammy boy",
+          "title": "It's that time again",
           "reason": "off_topic"
         },
         {
-          "title": "Arete-27B vs Qwen3.8-27B comparison",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Is there any way to fix these stupid sidebar groups?",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Update dispatch model.",
-          "reason": "off_topic"
+          "title": "Unpopular opinion: LLMs without thinking are useless for agentic work because they can't follow instructions",
+          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-10T00:02:31+00:00"
+      "latest_published_at": "2026-11-10T06:57:38+00:00"
     },
     "youtube": {
-      "status": "search_fallback",
-      "fresh_count": 9,
+      "status": "direct",
+      "fresh_count": 2,
       "errors": [
         {
-          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
-          "reason": "HTTP 404"
+          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
+          "reason": "HTTP 500"
         },
         {
-          "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
+          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
           "reason": "HTTP 404"
         },
         {
@@ -117,31 +116,38 @@
           "reason": "HTTP 404"
         },
         {
-          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
-          "reason": "HTTP 404"
+          "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
+          "reason": "empty_or_invalid_feed"
         },
         {
           "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
           "reason": "HTTP 404"
         },
         {
-          "endpoint": "UCsBjURrPoezykLs9EqgamOA",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
-          "reason": "HTTP 404"
+          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
+          "reason": "HTTP 500"
         }
       ],
-      "feeds_ok": 1,
-      "checked_at": "2026-11-10T02:02:21.928633+00:00",
-      "rejected_count": 0,
-      "rejection_reasons": {},
-      "rejected_examples": [],
+      "feeds_ok": 2,
+      "checked_at": "2026-11-10T07:35:50.115224+00:00",
+      "rejected_count": 3,
+      "rejection_reasons": {
+        "off_topic": 3
+      },
+      "rejected_examples": [
+        {
+          "title": "The one thing holding theoretical CS together just broke... kinda",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The worst week in cybersecurity history... so far",
+          "reason": "off_topic"
+        },
+        {
+          "title": "边听边说、边看边想、还有一张脸的全双工模型，讲一讲背后的技术",
+          "reason": "off_topic"
+        }
+      ],
       "stored_count": 58,
       "latest_published_at": "2026-11-09T21:04:16+00:00"
     },
@@ -150,82 +156,62 @@
       "fresh_count": 11,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-10T02:02:21.928633+00:00",
+      "checked_at": "2026-11-10T07:35:50.115224+00:00",
       "rejected_count": 49,
       "rejection_reasons": {
-        "no_concrete_signal": 35,
-        "off_topic": 14
+        "off_topic": 13,
+        "no_concrete_signal": 36
       },
       "rejected_examples": [
         {
-          "title": "AI and Irontown",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Measuring how AI agents handle everyday wet-lab science",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Seedream 5.5 – 100-Round Editing, Native RGBA and Small Text",
+          "title": "Camoufox for Web Scraping: Setup, Proxies and Servers",
           "reason": "off_topic"
         },
         {
-          "title": "Toptal AI – Full-Stack AI Services Company in the World for Agent Creation",
+          "title": "Can You Explain a Zipper? Why AI Makes You Feel Smarter Than You Are [video]",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Show HN: I built a tool that babysits your agents",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Why is AI slop so frustrating to read?",
+          "title": "Hire AI Agents and Pay in Monero (XMR)",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Sophon-Realtime v1",
+          "title": "Codenotary released AgentMon Live as free, open-source software",
           "reason": "off_topic"
         },
         {
-          "title": "Learning Abstractions: The Next Frontier for AI",
+          "title": "Tell HN: Notion AI chat sessions have been exposed via Fireworks AI hack",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Show HN: Android and iOS games running offline in the browser",
+          "reason": "off_topic"
+        },
+        {
+          "title": "A sourced dictionary of how engineers pronounce 1,934 developer terms",
+          "reason": "off_topic"
+        },
+        {
+          "title": "FLEY AI-Voce – a voice AI assistant you but can also control your PC and phone",
           "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-10T01:17:15+00:00"
+      "latest_published_at": "2026-11-10T07:19:38+00:00"
     },
     "producthunt": {
       "status": "direct",
       "fresh_count": 14,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-10T02:02:21.928633+00:00",
+      "checked_at": "2026-11-10T07:35:50.115224+00:00",
       "rejected_count": 22,
       "rejection_reasons": {
         "off_topic": 22
       },
       "rejected_examples": [
         {
-          "title": "MCP1",
-          "reason": "off_topic"
-        },
-        {
           "title": "CozyZip",
-          "reason": "off_topic"
-        },
-        {
-          "title": "skuttr",
-          "reason": "off_topic"
-        },
-        {
-          "title": "If You Read This",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Nörth",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Jotform App for Shopify",
           "reason": "off_topic"
         },
         {
@@ -233,7 +219,27 @@
           "reason": "off_topic"
         },
         {
+          "title": "If You Read This",
+          "reason": "off_topic"
+        },
+        {
+          "title": "MCP1",
+          "reason": "off_topic"
+        },
+        {
           "title": "Sign Language by Panda Video",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Jotform App for Shopify",
+          "reason": "off_topic"
+        },
+        {
+          "title": "GitHub New PR Overview",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Calmly Script",
           "reason": "off_topic"
         }
       ],
@@ -242,7 +248,7 @@
     },
     "tech_news": {
       "status": "direct",
-      "fresh_count": 36,
+      "fresh_count": 35,
       "errors": [
         {
           "endpoint": "venturebeat",
@@ -250,12 +256,20 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-10T02:02:21.928633+00:00",
-      "rejected_count": 23,
+      "checked_at": "2026-11-10T07:35:50.115224+00:00",
+      "rejected_count": 24,
       "rejection_reasons": {
-        "off_topic": 23
+        "off_topic": 24
       },
       "rejected_examples": [
+        {
+          "title": "Here’s what Trump said he knew about Jensen Huang",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Everything we know so far about the Nvidia spy scandal targeting CEO Jensen Huang",
+          "reason": "off_topic"
+        },
         {
           "title": "Jensen Huang reportedly engaged a PR firm with a history of handling high-profile sex scandals a year ago",
           "reason": "off_topic"
@@ -279,29 +293,21 @@
         {
           "title": "Is Jensen Huang’s job on the line? Yale’s Jeffrey Sonnenfeld estimates it’s ‘about a 50-50’",
           "reason": "off_topic"
-        },
-        {
-          "title": "Nvidia will investigate CEO Jensen Huang’s relationship with possible Chinese spy",
-          "reason": "off_topic"
-        },
-        {
-          "title": "After the midterms, things are looking rocky for Elon Musk and data centers",
-          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-10T01:27:12+00:00"
+      "latest_published_at": "2026-11-10T07:00:00+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 46,
+      "fresh_count": 47,
       "errors": [
         {
-          "endpoint": "36kr",
+          "endpoint": "jiqizhixin",
           "reason": "empty_or_invalid_feed"
         },
         {
-          "endpoint": "jiqizhixin",
+          "endpoint": "36kr",
           "reason": "empty_or_invalid_feed"
         },
         {
@@ -310,47 +316,47 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-11-10T02:02:21.928633+00:00",
-      "rejected_count": 74,
+      "checked_at": "2026-11-10T07:35:50.115224+00:00",
+      "rejected_count": 72,
       "rejection_reasons": {
-        "off_topic": 74
+        "off_topic": 72
       },
       "rejected_examples": [
         {
-          "title": "天降陨石最大单体 35 公斤，全国“陨石猎人”扎堆赶往石家庄",
+          "title": "2499 元平衡指环号称戴上就“推不倒”遭质疑，企业称将请院士级科学家说明",
           "reason": "off_topic"
         },
         {
-          "title": "微软加速现代化改造 Win11，“服务”等对话框将告别老古董界面",
+          "title": "支持 7 天试用：iPhone 18 Pro / Max 官方 Apple Store 国补焕新立减 800 元",
           "reason": "off_topic"
         },
         {
-          "title": "华为官宣 MateBook Fold S 鸿蒙小折叠电脑 11 月 14 日开启预订",
+          "title": "爆料称《生化危机：代号维罗妮卡》重制版开发遇阻，发售时间可能推迟至 2028 年",
           "reason": "off_topic"
         },
         {
-          "title": "快舟六号火箭预计 2027 年完成首飞及回收，运载能力达 20 吨级",
+          "title": "小米联合北京大学发布《物联网设备模型技术白皮书》，11.6 亿台 AIoT 设备技术经验开放给全行业",
           "reason": "off_topic"
         },
         {
-          "title": "首位英国艺人：Olivia Dean 当选苹果 2026 Apple Music 年度艺人",
+          "title": "苹果 iPhone Air 2 机模曝光：厚度 5.2 毫米、新增 4800 万像素超广角镜头",
           "reason": "off_topic"
         },
         {
-          "title": "消息称某厂骁龙 8EE6 超大杯超广角最高测试 LYT-L910，预计为 vivo X500 Ultra",
+          "title": "年发电量 12 亿千瓦时，我国西北地区海拔最高抽水蓄能电站在青海开工建设",
           "reason": "off_topic"
         },
         {
-          "title": "八位堂推出 Ultimate 3C+ XBOX 版手柄，仅支持有线连接",
+          "title": "支撑 AR / VR、车载光场等关键像素引擎，我国牵头制定的光栅扫描激光显示国际标准正式发布",
           "reason": "off_topic"
         },
         {
-          "title": "10:00~10:15 速抢限时不限量红包：京东红包今日全员加码",
+          "title": "诺基亚粉丝坚持“回帖盖楼”14 年：每天一句“我觉得，对吧，我还是支持诺基亚”，三千余层盖出一代人的情怀",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-10T01:45:00+00:00"
+      "latest_published_at": "2026-11-10T07:34:01+00:00"
     }
   },
   "quality_rejections": {
