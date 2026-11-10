@@ -1,51 +1,51 @@
 {
-  "updated_at": "2026-11-10T07:35:50.115224+00:00",
+  "updated_at": "2026-11-10T19:54:04.512114+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 3,
+      "fresh_count": 13,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-10T07:35:50.115224+00:00",
-      "rejected_count": 21,
+      "checked_at": "2026-11-10T19:54:04.512114+00:00",
+      "rejected_count": 13,
       "rejection_reasons": {
-        "no_concrete_signal": 7,
-        "unvetted_x_author": 13,
+        "unvetted_x_author": 8,
+        "no_concrete_signal": 4,
         "insufficient_excerpt": 1
       },
       "rejected_examples": [
         {
-          "title": "@OpenAI · OpenAI على X: \"RT @OpenAIDevs: Put your dot on call. Ali, an engineer at OpenAI, used his dot to triage an on-call incident at 3am. His dot investigat",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@OpenAI · RT @OpenAIDevs: Put your dot on call. Ali, an engineer at OpenAI, used his dot to triage an on-call incident at 3am. His dot investigated…",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@OracleNYSE · $NOW OpenAI OpenAI and ServiceNow expand partnership across enterprise workflows- OpenAI",
+          "title": "@pushmeet · At @GoogleDeepMind, we believe one of AI's most transformative impacts is empowering scientists to solve society's hardest problems. Over the past y",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@sagarmoy22 · #AI #OpenAI #ChatGPT #GenAI #indiehackers #OpenAI #ChatGPT #GenAI #indiehackers #OpenAI #ChatGPT #GenAI #indiehackers #OpenAI #ChatGPT #GenAI #ind",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@FUCK__OPENAI · @thsottiaux FUCK YOU TIBO!!! FUCK YOU SAM ALTMAN!!! FUCK YOU OPENAI!!! YOU ARE ALL MOTHERFUCKER SONS OF BITCH!!! GO DIE IF YOU ALWAYS MAKING THE",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@vinhnx · openai/openai-cli: Official CLI for the OpenAI API https://t.co/Pog1OMvbMH",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@runwayml · Introducing Runway App Studio. Build the creative app you wish existed, just by describing it. It generates images, video and audio with Runway’s mo",
+          "title": "@GoogleDeepMind · Gemini 4 Argon is already unlocking new scientific breakthroughs in quantum computing, nuclear fusion, protein design and beyond. 🧵",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@runwayml · If you can describe it, you can run it as a video ad. Runway Ads turns your creative direction into on-brand ads for every platform, then learns wha",
+          "title": "@GoogleDeepMind · Google DeepMind (@GoogleDeepMind) on X",
           "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@GoogleDeepMind · Four Gemini 4 Argon agents beat Minecraft from scratch in 27 hours. Operating in a sandbox using only code and text, they wrote 2,783 programs",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@GoogleDeepMind · Carbon can work through complex tasks for days without getting stuck or taking shortcuts – delivering high-quality, reliable code. Feedback fr",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@GoogleAI · Google AI (@GoogleAI) on X",
+          "reason": "insufficient_excerpt"
+        },
+        {
+          "title": "@DeryaTR_ · Unbelievable new AI model Gemini 4 Carbon from @GoogleAI! It beats Astra and Opus 5.5 on science, math, cybersecurity, and agentic coding! As I wrot",
+          "reason": "unvetted_x_author"
+        },
+        {
+          "title": "@plotarmordev · OpenAI just took a shot at @GoogleAI. Google was leading on image generation, and even there they got surpassed.",
+          "reason": "unvetted_x_author"
         }
       ],
       "stored_count": 60,
@@ -53,88 +53,85 @@
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 11,
+      "fresh_count": 13,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-10T07:35:50.115224+00:00",
-      "rejected_count": 29,
+      "checked_at": "2026-11-10T19:54:04.512114+00:00",
+      "rejected_count": 27,
       "rejection_reasons": {
-        "off_topic": 13,
-        "no_concrete_signal": 16
+        "no_concrete_signal": 16,
+        "personal_help_or_chatter": 2,
+        "off_topic": 9
       },
       "rejected_examples": [
         {
-          "title": "feat: external PLE file loading by pwilkin · Pull Request #31185 · ggml-org/llama.cpp",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Question for everyone here: Coding experience?",
+          "title": "EU presses OpenAI, Anthropic for more details on AI safety incidents",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Found this in Fable 5.2’s default system prompt in Claude Code",
+          "title": "Finally switched here from codex",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Fable 5.2 vs Opus 5.5",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Do unused usage resets carry over when upgrading from Max to Ultra?",
+          "title": "Projects no longer shows to link local folder. Only upload",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Weekly reset did not reset....",
+          "title": "Microsoft patent describes paying you to train AI on your idle GPU",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "using CLAUDE in China",
+          "reason": "personal_help_or_chatter"
+        },
+        {
+          "title": "Microsoft tops Nvidia's market cap for first time since June 2025",
           "reason": "off_topic"
         },
         {
-          "title": "It's that time again",
+          "title": "Is this our future?",
           "reason": "off_topic"
         },
         {
-          "title": "Unpopular opinion: LLMs without thinking are useless for agentic work because they can't follow instructions",
+          "title": "How AI agents work",
           "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-10T06:57:38+00:00"
+      "latest_published_at": "2026-11-10T19:44:57+00:00"
     },
     "youtube": {
       "status": "direct",
-      "fresh_count": 2,
+      "fresh_count": 17,
       "errors": [
-        {
-          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
-          "reason": "HTTP 500"
-        },
-        {
-          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
-          "reason": "HTTP 404"
-        },
         {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
           "reason": "empty_or_invalid_feed"
-        },
-        {
-          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
-          "reason": "HTTP 500"
         }
       ],
-      "feeds_ok": 2,
-      "checked_at": "2026-11-10T07:35:50.115224+00:00",
-      "rejected_count": 3,
+      "feeds_ok": 7,
+      "checked_at": "2026-11-10T19:54:04.512114+00:00",
+      "rejected_count": 15,
       "rejection_reasons": {
-        "off_topic": 3
+        "off_topic": 15
       },
       "rejected_examples": [
+        {
+          "title": "Degenerate Gamblers keep losing",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The Death of Stackoverlow | TheStandup",
+          "reason": "off_topic"
+        },
+        {
+          "title": "well this is bad",
+          "reason": "off_topic"
+        },
+        {
+          "title": "This is Crazy",
+          "reason": "off_topic"
+        },
         {
           "title": "The one thing holding theoretical CS together just broke... kinda",
           "reason": "off_topic"
@@ -144,111 +141,115 @@
           "reason": "off_topic"
         },
         {
-          "title": "边听边说、边看边想、还有一张脸的全双工模型，讲一讲背后的技术",
+          "title": "Navier-Stokes explained by Mathematician | Lex Fridman",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Infinity explained: It broke mathematics | Lex Fridman",
           "reason": "off_topic"
         }
       ],
-      "stored_count": 58,
-      "latest_published_at": "2026-11-09T21:04:16+00:00"
+      "stored_count": 59,
+      "latest_published_at": "2026-11-10T18:19:55+00:00"
     },
     "hackernews": {
-      "status": "direct",
-      "fresh_count": 11,
-      "errors": [],
-      "feeds_ok": 1,
-      "checked_at": "2026-11-10T07:35:50.115224+00:00",
-      "rejected_count": 49,
-      "rejection_reasons": {
-        "off_topic": 13,
-        "no_concrete_signal": 36
-      },
-      "rejected_examples": [
-        {
-          "title": "Camoufox for Web Scraping: Setup, Proxies and Servers",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Can You Explain a Zipper? Why AI Makes You Feel Smarter Than You Are [video]",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Hire AI Agents and Pay in Monero (XMR)",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Codenotary released AgentMon Live as free, open-source software",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Tell HN: Notion AI chat sessions have been exposed via Fireworks AI hack",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Show HN: Android and iOS games running offline in the browser",
-          "reason": "off_topic"
-        },
-        {
-          "title": "A sourced dictionary of how engineers pronounce 1,934 developer terms",
-          "reason": "off_topic"
-        },
-        {
-          "title": "FLEY AI-Voce – a voice AI assistant you but can also control your PC and phone",
-          "reason": "no_concrete_signal"
-        }
-      ],
-      "stored_count": 60,
-      "latest_published_at": "2026-11-10T07:19:38+00:00"
-    },
-    "producthunt": {
       "status": "direct",
       "fresh_count": 14,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-10T07:35:50.115224+00:00",
-      "rejected_count": 22,
+      "checked_at": "2026-11-10T19:54:04.512114+00:00",
+      "rejected_count": 46,
       "rejection_reasons": {
-        "off_topic": 22
+        "no_concrete_signal": 34,
+        "off_topic": 12
       },
       "rejected_examples": [
         {
-          "title": "CozyZip",
+          "title": "Render is adding Anthropic, TypeSafe AI and others to its Subprocessors",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "OpenZL Compression Playground",
           "reason": "off_topic"
         },
         {
-          "title": "Higgsfield Miracle",
+          "title": "My Keynote at SeaGL and LLM-Gen-AI-Assisted Reverse Engineering",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "What objective is reasoning solving?",
           "reason": "off_topic"
         },
         {
-          "title": "If You Read This",
+          "title": "Show HN: Lovable for Photoshop",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Saltline: First-person shooter built by Fable 5.2",
           "reason": "off_topic"
         },
         {
-          "title": "MCP1",
+          "title": "Woolly, a local memory shared by all your AI tools",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "AI's impact will be bottlenecked by institutions more than by capabilities",
+          "reason": "no_concrete_signal"
+        }
+      ],
+      "stored_count": 60,
+      "latest_published_at": "2026-11-10T19:31:36+00:00"
+    },
+    "producthunt": {
+      "status": "direct",
+      "fresh_count": 19,
+      "errors": [],
+      "feeds_ok": 1,
+      "checked_at": "2026-11-10T19:54:04.512114+00:00",
+      "rejected_count": 15,
+      "rejection_reasons": {
+        "off_topic": 15
+      },
+      "rejected_examples": [
+        {
+          "title": "gitmanual",
           "reason": "off_topic"
         },
         {
-          "title": "Sign Language by Panda Video",
+          "title": "CollaboTokyo",
           "reason": "off_topic"
         },
         {
-          "title": "Jotform App for Shopify",
+          "title": "Daytwo",
           "reason": "off_topic"
         },
         {
-          "title": "GitHub New PR Overview",
+          "title": "Tokens by UI Colors",
           "reason": "off_topic"
         },
         {
-          "title": "Calmly Script",
+          "title": "ChromePing",
+          "reason": "off_topic"
+        },
+        {
+          "title": "MoreFrame",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Ember",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Seldon",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-08T20:08:44+00:00"
+      "latest_published_at": "2026-11-10T04:16:01+00:00"
     },
     "tech_news": {
       "status": "direct",
-      "fresh_count": 35,
+      "fresh_count": 43,
       "errors": [
         {
           "endpoint": "venturebeat",
@@ -256,18 +257,14 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-10T07:35:50.115224+00:00",
-      "rejected_count": 24,
+      "checked_at": "2026-11-10T19:54:04.512114+00:00",
+      "rejected_count": 16,
       "rejection_reasons": {
-        "off_topic": 24
+        "off_topic": 16
       },
       "rejected_examples": [
         {
-          "title": "Here’s what Trump said he knew about Jensen Huang",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Everything we know so far about the Nvidia spy scandal targeting CEO Jensen Huang",
+          "title": "Ring, known for its doorbell cameras, launches a home security drone and an enterprise security robot",
           "reason": "off_topic"
         },
         {
@@ -283,31 +280,35 @@
           "reason": "off_topic"
         },
         {
-          "title": "Meta releases Muse Ember, a new lightweight model for agent execution",
+          "title": "Vulnerability that lets hackers SSH into Linux devices is under active exploitation",
           "reason": "off_topic"
         },
         {
-          "title": "Automattic debuts a platform to deploy vibe-coding apps amid a changing internet",
+          "title": "Meet *sshole, the vulnerability that lets hackers SSH into Linux devices",
           "reason": "off_topic"
         },
         {
-          "title": "Is Jensen Huang’s job on the line? Yale’s Jeffrey Sonnenfeld estimates it’s ‘about a 50-50’",
+          "title": "Hackers exploited iOS and Android flaws to infect phones",
+          "reason": "off_topic"
+        },
+        {
+          "title": "VMware releases vSphere Express for virtualization on up to 128 cores",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-10T07:00:00+00:00"
+      "latest_published_at": "2026-11-10T19:23:34+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 47,
+      "fresh_count": 39,
       "errors": [
         {
-          "endpoint": "jiqizhixin",
+          "endpoint": "36kr",
           "reason": "empty_or_invalid_feed"
         },
         {
-          "endpoint": "36kr",
+          "endpoint": "jiqizhixin",
           "reason": "empty_or_invalid_feed"
         },
         {
@@ -316,51 +317,51 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-11-10T07:35:50.115224+00:00",
-      "rejected_count": 72,
+      "checked_at": "2026-11-10T19:54:04.512114+00:00",
+      "rejected_count": 75,
       "rejection_reasons": {
-        "off_topic": 72
+        "off_topic": 75
       },
       "rejected_examples": [
         {
-          "title": "2499 元平衡指环号称戴上就“推不倒”遭质疑，企业称将请院士级科学家说明",
+          "title": "嵌入式 x86 算力天花板：AMD 霄龙嵌入式 9006 系列 SP7 处理器发布，吞吐量飙升 1.8 倍",
           "reason": "off_topic"
         },
         {
-          "title": "支持 7 天试用：iPhone 18 Pro / Max 官方 Apple Store 国补焕新立减 800 元",
+          "title": "《足球经理 27》今日发售：国区售价 268 元，首发加入 PC Game Pass",
           "reason": "off_topic"
         },
         {
-          "title": "爆料称《生化危机：代号维罗妮卡》重制版开发遇阻，发售时间可能推迟至 2028 年",
+          "title": "MiniMax 开源 H3-Image 生图模型，10 秒就能生成一张 4K 图像",
           "reason": "off_topic"
         },
         {
-          "title": "小米联合北京大学发布《物联网设备模型技术白皮书》，11.6 亿台 AIoT 设备技术经验开放给全行业",
+          "title": "第 39 届中国电影金鸡奖全名单公布，《浪浪山小妖怪》《窗外是蓝星》《给阿嬷的情书》等获奖",
           "reason": "off_topic"
         },
         {
-          "title": "苹果 iPhone Air 2 机模曝光：厚度 5.2 毫米、新增 4800 万像素超广角镜头",
+          "title": "QQ 鸿蒙版 App 获 9.2.83 邀测升级，新增支持查看历史头像等功能",
           "reason": "off_topic"
         },
         {
-          "title": "年发电量 12 亿千瓦时，我国西北地区海拔最高抽水蓄能电站在青海开工建设",
+          "title": "PS5 Pro 也不例外：R 星确认《GTA 6》所有主机目标帧率都是 30fps",
           "reason": "off_topic"
         },
         {
-          "title": "支撑 AR / VR、车载光场等关键像素引擎，我国牵头制定的光栅扫描激光显示国际标准正式发布",
+          "title": "2025 年地球能量失衡达 1960 年有观测记录以来最高水平，今年可能再次刷新纪录",
           "reason": "off_topic"
         },
         {
-          "title": "诺基亚粉丝坚持“回帖盖楼”14 年：每天一句“我觉得，对吧，我还是支持诺基亚”，三千余层盖出一代人的情怀",
+          "title": "Steam 新一周游戏销量榜：《COD：MW4》反超《影之刃零》登顶全球",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-10T07:34:01+00:00"
+      "latest_published_at": "2026-11-10T16:04:24+00:00"
     }
   },
   "quality_rejections": {
-    "duplicate_headline": 2
+    "duplicate_headline": 1
   },
   "quality_complete": true
 }
