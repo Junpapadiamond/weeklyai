@@ -1,51 +1,51 @@
 {
-  "updated_at": "2026-11-11T00:03:46.378280+00:00",
+  "updated_at": "2026-11-11T06:54:27.333361+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 13,
+      "fresh_count": 21,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-11T00:03:46.378280+00:00",
-      "rejected_count": 16,
+      "checked_at": "2026-11-11T06:54:27.333361+00:00",
+      "rejected_count": 9,
       "rejection_reasons": {
-        "insufficient_excerpt": 5,
-        "unvetted_x_author": 6,
-        "no_concrete_signal": 5
+        "no_concrete_signal": 7,
+        "unvetted_x_author": 1,
+        "insufficient_excerpt": 1
       },
       "rejected_examples": [
         {
-          "title": "@OpenAI · OpenAI (@OpenAI) on X",
+          "title": "@OpenAI · During this red-teaming exercise, we also found a vulnerability that allows for unauthenticated remote code execution in Brotli, a widely-deployed com",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@OpenAINewsroom · We discovered a sophisticated recording device that was hidden inside one of our offices. We used our models to understand the device and wher",
+          "reason": "unvetted_x_author"
+        },
+        {
+          "title": "@NVIDIAAI · Turn a daytime drive into a rainy night while keeping the same road layout and vehicle trajectories. New NVIDIA Cosmos simulation recipes help devel",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@OpenAIDevs · Codex also got an upgrade with a simpler way to edit images. Edits now happen directly in the overlay instead of opening a side panel. https://t.c",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@OpenAIDevs · Now, you can use your ChatGPT Business plan in tools like @NotionHQ, @v0, @ampcode, @kilocode, @warpdotdev, Hermes from @NousResearch, @openclaw, ",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@OpenAIDevs · Cool projects our community is cooking with Codex:",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@OpenAIDevs · Our dot helps @danizeres, @axbehr and @fedesarquis with the recipe and keeps the prep in ChatGPT Space, while GPT-Live-1 talks us through making r",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@OpenAIDevs · Tomorrow.",
           "reason": "insufficient_excerpt"
-        },
-        {
-          "title": "@modal · We worked with @SakanaAILabs to optimize their Sakana Namazu API down to the kernel level: → Selective NVFP4 quantization (23k+ experts) → DFlash draft",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@hardmaru · Last week in Tokyo, we hosted the Sakana AI Symposium with our Chief Scientific Advisor, Jürgen Schmidhuber. Eight years ago, @SchmidhuberAI and I w",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@SakanaAILabs · Sakana AI won 1st place in the company category at the “Recursive Self Improvement in Mathematics” Hack (OpenMath 2026), held with @stephen_wolf",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@Stefania_druga · Yesterday the @SakanaAILabs RSI Lab took the stage at Hitotsubashi Hall, with a keynote by @SchmidhuberAI, @hardmaru on why we have to think d",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@SakanaAILabs · The Agentic Scientist: Orchestrating Coding Agents for Automated Scientific (Co-)Discovery Blog: https://t.co/7aVDvZd6m2 GitHub: https://t.co/JC",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@hardmaru · Multi-Agent Self-Supervision: Recursive self-improvement through collective intelligence Blog post: https://t.co/stzoZTp12R ⚖️",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@SakanaAILabs · QD-Rec: Open-Ended Evolution of Recommendations via Quality–Diversity Blog: https://t.co/UEkTkeGJY1 GitHub: https://t.co/6ER0m7XVRq arXiv: https",
-          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
@@ -53,103 +53,96 @@
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 11,
+      "fresh_count": 14,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-11T00:03:46.378280+00:00",
-      "rejected_count": 29,
+      "checked_at": "2026-11-11T06:54:27.333361+00:00",
+      "rejected_count": 26,
       "rejection_reasons": {
-        "off_topic": 13,
-        "no_concrete_signal": 15,
+        "no_concrete_signal": 14,
+        "off_topic": 11,
         "personal_help_or_chatter": 1
       },
       "rejected_examples": [
         {
-          "title": "I baked xkcd-artist: a 1.72 MB Int8 ONNX browser model that plans 12-DOF stick-figure comics & charts in 0.55ms (zero garbled speech bubbles)",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Anthropic Reveals IPO Price as AI Market Jitters Grow",
+          "title": "What to you guys think about the new Claude whiteboard?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "After 4 years, OpenAI has lost its lead to Anthropic despite having a massive head start",
+          "title": "Claude Passkeys",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "I gave Claude Fable 5.2 one prompt and got a playable 3D stealth shooter: 3 missions, no engine, no art assets (trailer + source)",
+          "title": "Spotify's AI DJ can keep picking songs with the commentary turned off",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "are MoEs on phones viable via custom engines?",
-          "reason": "off_topic"
+          "title": "2 Biggest things I wish Claude Had",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "is Fable 5.2 the new go to model for most people?",
-          "reason": "off_topic"
+          "title": "gstack: Garry Tan's free skill pack that turns Claude Code into a review team",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "Anyone Ever Use Max Effort?",
-          "reason": "off_topic"
+          "title": "Il metodo giusto",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "ChatGPT \"Claim Business\" - need govt ID as well as verifying domain?? Stuck in \"Draft\"?",
+          "title": "We are cooked …",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "What is the line of models being made for .. well.. not the public",
           "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-10T23:50:54+00:00"
+      "latest_published_at": "2026-11-11T06:12:05+00:00"
     },
     "youtube": {
-      "status": "direct",
-      "fresh_count": 18,
+      "status": "search_fallback",
+      "fresh_count": 9,
       "errors": [
         {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
-          "reason": "empty_or_invalid_feed"
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCsBjURrPoezykLs9EqgamOA",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
+          "reason": "HTTP 404"
         }
       ],
-      "feeds_ok": 7,
-      "checked_at": "2026-11-11T00:03:46.378280+00:00",
-      "rejected_count": 15,
-      "rejection_reasons": {
-        "off_topic": 15
-      },
-      "rejected_examples": [
-        {
-          "title": "Is Software Over?",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The one thing holding theoretical CS together just broke... kinda",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The worst week in cybersecurity history... so far",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Degenerate Gamblers keep losing",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The Death of Stackoverlow | TheStandup",
-          "reason": "off_topic"
-        },
-        {
-          "title": "well this is bad",
-          "reason": "off_topic"
-        },
-        {
-          "title": "This is Crazy",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Navier-Stokes explained by Mathematician | Lex Fridman",
-          "reason": "off_topic"
-        }
-      ],
-      "stored_count": 57,
+      "feeds_ok": 1,
+      "checked_at": "2026-11-11T06:54:27.333361+00:00",
+      "rejected_count": 0,
+      "rejection_reasons": {},
+      "rejected_examples": [],
+      "stored_count": 58,
       "latest_published_at": "2026-11-10T23:11:36+00:00"
     },
     "hackernews": {
@@ -157,76 +150,60 @@
       "fresh_count": 6,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-11T00:03:46.378280+00:00",
+      "checked_at": "2026-11-11T06:54:27.333361+00:00",
       "rejected_count": 54,
       "rejection_reasons": {
-        "off_topic": 17,
-        "no_concrete_signal": 37
+        "no_concrete_signal": 42,
+        "off_topic": 12
       },
       "rejected_examples": [
         {
-          "title": "Show HN: PDFMeasure – Measure PDF files in the browser",
+          "title": "AI Cracks a Quantum Computing Bottleneck",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Anthropic Unveils Claude Whiteboards, Claude Sheets, and Claude Data",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Generative AI and the temporary upskilling of knowledge workers",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Brazil's AI Development Strategy Needs an Edge Layer – TechPolicy.Press",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Voice layer for any website – does it worth?",
           "reason": "off_topic"
         },
         {
-          "title": "Show HN: Cinnamon AI – an agent for your household",
+          "title": "The Unexpected AI Stack: C# + .NET",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Hotel giant Wyndham exposed customer data after app security lapse",
+          "title": "Getting the (In)Formal Statement Right",
           "reason": "off_topic"
         },
         {
-          "title": "Show HN: Socialize/Presence multiplayer interaction on blog posts",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Ask HN: Do you believe RSI is possible?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Alice Huang reportedly instrumental in securing over $7.5B of Nvidia imports",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Noah Smith and Azeem Azhar Discuss the AI Boom",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Ukraine's fiber-optic drones get squeezed by AI data center demand",
+          "title": "Cognizant dedicates more than 25000 professionals to Claude delivery",
           "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-10T23:26:24+00:00"
+      "latest_published_at": "2026-11-11T03:46:42+00:00"
     },
     "producthunt": {
       "status": "direct",
-      "fresh_count": 19,
+      "fresh_count": 16,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-11T00:03:46.378280+00:00",
-      "rejected_count": 15,
+      "checked_at": "2026-11-11T06:54:27.333361+00:00",
+      "rejected_count": 18,
       "rejection_reasons": {
-        "off_topic": 15
+        "off_topic": 18
       },
       "rejected_examples": [
-        {
-          "title": "MuJoCo 4",
-          "reason": "off_topic"
-        },
-        {
-          "title": "LotusQ",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Ember",
-          "reason": "off_topic"
-        },
-        {
-          "title": "gitmanual",
-          "reason": "off_topic"
-        },
         {
           "title": "Tokens by UI Colors",
           "reason": "off_topic"
@@ -236,11 +213,27 @@
           "reason": "off_topic"
         },
         {
+          "title": "ChromePing",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Ember",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Coffee",
+          "reason": "off_topic"
+        },
+        {
+          "title": "gitmanual",
+          "reason": "off_topic"
+        },
+        {
           "title": "Obsiva",
           "reason": "off_topic"
         },
         {
-          "title": "Daytwo",
+          "title": "Opal Reader",
           "reason": "off_topic"
         }
       ],
@@ -257,7 +250,7 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-11T00:03:46.378280+00:00",
+      "checked_at": "2026-11-11T06:54:27.333361+00:00",
       "rejected_count": 14,
       "rejection_reasons": {
         "off_topic": 14
@@ -276,23 +269,23 @@
           "reason": "off_topic"
         },
         {
-          "title": "Security Flaws Across UK Government Sites Exposed ‘God-Tier’ Information",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Jensen Huang Hired a PR Firm Known for Handling Sex Scandals Last Year",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Bikers and Bug-Lovers Join Forces to Fight a New Google Data Center",
-          "reason": "off_topic"
-        },
-        {
           "title": "Vulnerability that lets hackers SSH into Linux devices is under active exploitation",
           "reason": "off_topic"
         },
         {
           "title": "Meet *sshole, the vulnerability that lets hackers SSH into Linux devices",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Hackers exploited iOS and Android flaws to infect phones",
+          "reason": "off_topic"
+        },
+        {
+          "title": "VMware releases vSphere Express for virtualization on up to 128 cores",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Binance says hackers who stole billions in crypto spent months planning heist",
           "reason": "off_topic"
         }
       ],
@@ -301,67 +294,71 @@
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 45,
+      "fresh_count": 35,
       "errors": [
-        {
-          "endpoint": "jiqizhixin",
-          "reason": "empty_or_invalid_feed"
-        },
         {
           "endpoint": "36kr",
           "reason": "empty_or_invalid_feed"
         },
         {
+          "endpoint": "jiqizhixin",
+          "reason": "empty_or_invalid_feed"
+        },
+        {
           "endpoint": "huxiu",
+          "reason": "ReadTimeout"
+        },
+        {
+          "endpoint": "leiphone",
           "reason": "ReadTimeout"
         }
       ],
-      "feeds_ok": 6,
-      "checked_at": "2026-11-11T00:03:46.378280+00:00",
-      "rejected_count": 69,
+      "feeds_ok": 5,
+      "checked_at": "2026-11-11T06:54:27.333361+00:00",
+      "rejected_count": 59,
       "rejection_reasons": {
-        "off_topic": 69
+        "off_topic": 59
       },
       "rejected_examples": [
         {
-          "title": "从芯片到千比特整机，超导量子计算还有一场硬仗",
+          "title": "罗技宣布首次全公司范围“游戏日”：员工获得 1 天游戏假期",
           "reason": "off_topic"
         },
         {
-          "title": "从“一脑多机”到“一脑多手”，蚂蚁灵波开源LingBot-Touch触觉基础模型",
+          "title": "黑鲨游戏手机微信公众号账号迁移，主体变更为深圳铭源电玩科技股份有限公司",
           "reason": "off_topic"
         },
         {
-          "title": "Agent自演进驶入“双轨时代”！openJiuwen首发TTSE经验学习框架",
+          "title": "Switch 2《塞尔达传说：时之笛》重制版发售 4 天全球销量突破 520 万份，创任天堂新纪录",
           "reason": "off_topic"
         },
         {
-          "title": "成立四个月，融资过亿美金：TensorWorld物原科技要跑通“物理真实”路线",
+          "title": "酷派 COOL X Wide 百元阔直板手机开售 3 天销量破万，999~1399 元",
           "reason": "off_topic"
         },
         {
-          "title": "达卯科技与浦东环保能源战略合作，黎明智算中心算电协同平台启动",
+          "title": "MONTECH 推出 KING 95 3D 三面玻璃机箱、LINK FAN INF 120 磁吸风扇",
           "reason": "off_topic"
         },
         {
-          "title": "Fable 5.2首批实测来了！网友：Opus突然不香了",
+          "title": "11998 → 7558 元：海信 E5S Pro 热泵洗烘多筒洗衣洗鞋机 11.11 破冰新低",
           "reason": "off_topic"
         },
         {
-          "title": "100轮图像编辑这道「毙刷题」，新出的Seedream 5.5稳上来了！",
+          "title": "消息称三星酝酿卷轴屏手机，可从 16:9 扩展到 21:9",
           "reason": "off_topic"
         },
         {
-          "title": "社区速递 165 | 透明工牌与派友十月购物清单",
+          "title": "国补后 999 元 → 502 元：小米米家无雾加湿器 3（1200）官方 11.11 直降",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-10T23:53:35+00:00"
+      "latest_published_at": "2026-11-11T06:47:56+00:00"
     }
   },
   "quality_rejections": {
-    "outside_news_window": 3
+    "duplicate_headline": 2
   },
   "quality_complete": true
 }
