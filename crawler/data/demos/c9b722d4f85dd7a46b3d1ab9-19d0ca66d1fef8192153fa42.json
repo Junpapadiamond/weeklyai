@@ -1,0 +1,181 @@
+{
+  "cache_key": "c9b722d4f85dd7a46b3d1ab9-19d0ca66d1fef8192153fa42",
+  "product_key": "c9b722d4f85dd7a46b3d1ab9",
+  "fingerprint": "19d0ca66d1fef8192153fa42",
+  "product_id": "196",
+  "product_name": "Spread AI",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-11T00:06:08.444817+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "WeeklyAI：企业AI洞察周刊",
+      "en": "WeeklyAI: Enterprise AI Intelligence Weekly"
+    },
+    "scenario": {
+      "zh": "每周浏览精选AI发展动态、融资案例、技术趋势，快速了解行业格局变化",
+      "en": "Browse curated AI developments, funding rounds, and tech trends weekly to stay current on industry shifts"
+    },
+    "steps": [
+      {
+        "id": "browse_content",
+        "widget": "choice",
+        "title": {
+          "zh": "选择本周重点内容",
+          "en": "Select this week's focus"
+        },
+        "instruction": {
+          "zh": "查看不同视角的AI产业动态",
+          "en": "View AI industry developments from different angles"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "融资与公司动态",
+              "en": "Funding & Company News"
+            },
+            "output": {
+              "zh": "看到本周新融资、估值变化、人员变动",
+              "en": "See this week's funding rounds, valuation shifts, and leadership moves"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "融资事件摘要",
+                "en": "Funding Events"
+              },
+              "output_label": {
+                "zh": "本周企业AI融资概览",
+                "en": "This Week's Enterprise AI Funding"
+              },
+              "input": {
+                "zh": "• Spread AI（柏林）：3000万美元融资，DTCP Growth领投\n• OpenAI：GPT-5发布，企业订阅价格调整\n• 本地初创：种子轮融资3家",
+                "en": "• Spread AI (Berlin): $30M funding, led by DTCP Growth\n• OpenAI: GPT-5 release, enterprise pricing update\n• Local startups: 3 seed rounds closed"
+              },
+              "output": {
+                "zh": "• 企业AI解决方案吸引主流VC，融资集中在欧洲和美国\n• 新模型发布推动产品定价重组\n• 本地生态加速发展",
+                "en": "• Enterprise AI solutions attracting mainstream VC, funding concentrated in EU and US\n• New model releases driving product pricing realignment\n• Local ecosystem accelerating"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "融资规模",
+                    "en": "Funding Size"
+                  },
+                  "detail": {
+                    "zh": "从种子轮到C轮，金额从几百万到数亿美元",
+                    "en": "From seed to Series C, ranging from millions to hundreds of millions"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "投资机构类型",
+                    "en": "Investor Types"
+                  },
+                  "detail": {
+                    "zh": "传统VC、战略投资者、产业基金共同出资",
+                    "en": "Traditional VCs, strategic investors, and corporate funds co-investing"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "地域分布",
+                    "en": "Geographic Focus"
+                  },
+                  "detail": {
+                    "zh": "美国、欧洲领先，亚洲快速增长",
+                    "en": "US and Europe leading, Asia growing rapidly"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "技术突破与模型",
+              "en": "Tech Breakthroughs & Models"
+            },
+            "output": {
+              "zh": "了解新模型能力、开源项目、研究进展",
+              "en": "Learn about new model capabilities, open-source projects, research advances"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "上周技术对比",
+                "en": "Last Week's Tech Landscape"
+              },
+              "output_label": {
+                "zh": "本周技术更新",
+                "en": "This Week's Tech Updates"
+              },
+              "input": {
+                "zh": "GPT-4o：多模态推理，主要应用在对话\nClaude Sonnet 5：长上下文能力\nLlama 2：开源基准模型",
+                "en": "GPT-4o: Multimodal reasoning, focused on conversation\nClaude Sonnet 5: Extended context capability\nLlama 2: Open-source baseline"
+              },
+              "output": {
+                "zh": "GPT-5：推理速度提升，企业API成本降低\nClaude Sonnet 5：上下文扩展至100万token\n开源模型：性能差距缩小，部署成本优化",
+                "en": "GPT-5: Reasoning speed improved, enterprise API costs lower\nClaude Sonnet 5: Context extended to 1M tokens\nOpen-source models: Performance gap narrowing, deployment costs optimized"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "应用案例与实践",
+              "en": "Use Cases & Practices"
+            },
+            "output": {
+              "zh": "查看企业如何应用AI，了解可复制的模式",
+              "en": "See how enterprises apply AI and identify reproducible patterns"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "企业实践描述",
+                "en": "Enterprise Practice"
+              },
+              "output_label": {
+                "zh": "可用的洞察",
+                "en": "Actionable Insights"
+              },
+              "input": {
+                "zh": "一家欧洲保险公司用AI自动化索赔评估。原本需要2周人工审核，现在系统初筛用时2小时，准确率达标。人工团队从事务性工作转向复杂案件和异议处理。",
+                "en": "A European insurer automated claims assessment with AI. Manual review took 2 weeks; AI now screens in 2 hours with high accuracy. Staff shifted from routine tasks to complex cases."
+              },
+              "output": {
+                "zh": "工作流再设计比单纯的自动化更重要。AI提升速度，但团队重组决定实际ROI。成功案例都做了变革管理和技能转换。",
+                "en": "Workflow redesign matters more than automation alone. AI lifts speed, but team restructuring determines actual ROI. Successful cases included change management and skill transitions."
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "WeeklyAI帮助追踪企业AI市场动向，包括融资、技术进展和应用案例。本示例展示了融资、模型更新和实际部署三个维度，具体数字和案例仅为演示。若要深入行业分析或订阅完整周刊，需访问产品官网确认功能和内容范围。",
+      "en": "WeeklyAI tracks enterprise AI market developments across funding, tech advances, and use cases. This example illustrates three dimensions—funding, model updates, and deployments—with illustrative data only. For detailed industry analysis or full subscription features, visit the product site to verify coverage and scope."
+    },
+    "sources": [
+      {
+        "url": "https://www.spread.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.handelsblatt.com/technik/ki/kuenstliche-intelligenz-spread-ai-sammelt-30-millionen-dollar-ein/100220428.html",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

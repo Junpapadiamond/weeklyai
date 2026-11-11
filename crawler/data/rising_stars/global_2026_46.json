@@ -169,5 +169,96 @@
         }
       ]
     }
+  },
+  {
+    "name": "Odessia",
+    "website": "https://odessia.com/",
+    "description": "AI旅行助手，可在数分钟内根据用户偏好生成可预订的旅行行程。2026年夏季已有数万用户规划价值6000万美元年度旅行。",
+    "description_en": "AI travel agent that creates bookable travel itineraries adhering to user preferences within minutes. Generated $60 million per year worth of travel planning for tens of thousands of users by summer 2026.",
+    "category": "agent",
+    "why_matters": "由Sonder联合创始人创办，采用AI原生架构开发。创始人通过AI智能体在2026年完成原需40小时的任务，展现AI agent实际生产力提升。不足一年内融资600万美元后被OpenAI收购。",
+    "why_matters_en": "Founded by Sonder co-founder with AI-native architecture. Founder demonstrated 20x productivity gains using AI agents (2-hour vs 40-hour tasks). Raised $6M Series A from Sequoia, acquired by OpenAI within one year of founding.",
+    "latest_news": "2026年11月被OpenAI收购，创始人Francis Davidson加入OpenAI团队专注旅行未来发展。服务已停止。",
+    "latest_news_en": "Acquired by OpenAI in November 2026. Founder Francis Davidson joins OpenAI to focus on future of travel. Service discontinued.",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal",
+      "founder_background"
+    ],
+    "company_country": "CA",
+    "confidence": 0.85,
+    "source_url": "https://betakit.com/openai-acquires-sonder-co-founders-new-travel-tech-company-odessia/",
+    "funding_total": "6000000",
+    "categories": [
+      "agent"
+    ],
+    "region": "Unknown",
+    "source": "claude_rss",
+    "source_title": "OpenAI acquires Sonder co-founder’s new travel tech company Odessia",
+    "website_source": "https://betakit.com/openai-acquires-sonder-co-founders-new-travel-tech-company-odessia/",
+    "discovered_at": "2026-11-10",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261110T235544Z-e4025aa2",
+      "search_region": "other",
+      "search_lane": "rss",
+      "website_verification": null,
+      "source_published_at": "2026-11-10T22:24:36+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "raise a $6-million round led by Sequoia"
+        },
+        {
+          "criterion": "founder_background",
+          "quote": "One of the co-founders behind Montréal-founded, San Francisco-based alternative lodging company Sonder"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Kognia",
+    "website": "https://kognialabs.ai/en/",
+    "description": "提供认知 AI 代理,通过推理而非脚本解决问题,Alan 产品线覆盖客户体验、流程智能和语音文本代理,在医疗领域将行政流程从数月缩短至数周",
+    "description_en": "Provides cognitive AI agents that reason through problems instead of following scripts, Alan product line covers customer experience, process intelligence, and voice/text agents, cutting healthcare administrative timelines from months to weeks",
+    "category": "agent",
+    "why_matters": "专注于认知 AI 而非传统脚本式自动化,在电信和医疗领域实现60-95%的流程时间缩减,其推理能力可自主验证合同、审查账单并执行修复",
+    "why_matters_en": "Focuses on cognitive AI rather than traditional script-based automation, achieving 60-95% process time reduction in telecom and healthcare, with reasoning capability to validate contracts, review billing and execute fixes autonomously",
+    "latest_news": "Alan 产品线已在电信和医疗领域部署",
+    "latest_news_en": "Alan product line deployed in telecom and healthcare sectors",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "category_innovation",
+      "growth_anomaly"
+    ],
+    "company_country": "CO",
+    "confidence": 0.75,
+    "source_url": "https://latinamericareports.com/born-in-latam-built-for-the-world-10-ai-leaders-to-watch-in-2027/15575",
+    "categories": [
+      "agent"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "Born in LatAm, built for the world: 15 AI leaders to watch in 2027",
+    "website_source": "https://latinamericareports.com/born-in-latam-built-for-the-world-10-ai-leaders-to-watch-in-2027/15575",
+    "discovered_at": "2026-11-11",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261110T235544Z-e4025aa2",
+      "search_region": "us",
+      "search_lane": "launch",
+      "website_verification": null,
+      "source_published_at": "2026-11-09T14:01:46+00:00",
+      "evidence": [
+        {
+          "criterion": "category_innovation",
+          "quote": "Kognia is betting on what it calls cognitive AI: agents that reason through a problem instead of following a script"
+        },
+        {
+          "criterion": "growth_anomaly",
+          "quote": "Kognia's site cites cuts of up to 60–95% in process time"
+        }
+      ]
+    }
   }
 ]

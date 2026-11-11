@@ -1,0 +1,268 @@
+{
+  "cache_key": "b25f142b02b30ffadee7450a-c7d55f28f2cddc89edf997d1",
+  "product_key": "b25f142b02b30ffadee7450a",
+  "fingerprint": "c7d55f28f2cddc89edf997d1",
+  "product_id": "p_0e9088f6e01a5578",
+  "product_name": "42AI",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-11T00:05:38.548743+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "42AI：行为世界模型",
+      "en": "42AI: Behavioral World Model"
+    },
+    "scenario": {
+      "zh": "金融机构输入交易者心理特征，获得其在新市场情景下的决策倾向预测",
+      "en": "Financial institutions input trader psychological traits and receive predicted decision tendencies in unfamiliar market scenarios"
+    },
+    "steps": [
+      {
+        "id": "trait_input",
+        "widget": "choice",
+        "title": {
+          "zh": "选择心理特征组合",
+          "en": "Select a psychological trait profile"
+        },
+        "instruction": {
+          "zh": "选择一组交易者特征，查看模型如何描述其在市场压力下的决策倾向",
+          "en": "Choose a trader trait profile to see how the model describes decision tendencies under market stress"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "高损失厌恶",
+              "en": "High loss aversion"
+            },
+            "output": {
+              "zh": "预测倾向：早于理性预期平仓，回避未知波动",
+              "en": "Predicted tendency: exits earlier than rational baseline, avoids unfamiliar volatility"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "心理特征输入",
+                "en": "Trait input"
+              },
+              "output_label": {
+                "zh": "决策倾向输出",
+                "en": "Decision tendency output"
+              },
+              "input": {
+                "zh": "损失厌恶：强 | 时间压力敏感性：中 | 群体心理跟随：低",
+                "en": "Loss aversion: Strong | Time pressure sensitivity: Medium | Herding tendency: Low"
+              },
+              "output": {
+                "zh": "亏损扩大时倾向快速止损 | 对新波动情景反应保守 | 较少跟随市场整体方向",
+                "en": "Tends to stop-loss quickly when losses grow | Reacts conservatively to unfamiliar volatility | Less likely to follow broad market direction"
+              },
+              "emphasis": {
+                "zh": "损失厌恶：强",
+                "en": "Loss aversion: Strong"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "高群体心理敏感度",
+              "en": "High herding sensitivity"
+            },
+            "output": {
+              "zh": "预测倾向：在恐慌期间跟随多数参与者行动，决策速度加快",
+              "en": "Predicted tendency: follows majority participants during panic, decision speed increases"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "心理特征输入",
+                "en": "Trait input"
+              },
+              "output_label": {
+                "zh": "决策倾向输出",
+                "en": "Decision tendency output"
+              },
+              "input": {
+                "zh": "损失厌恶：中 | 时间压力敏感性：高 | 群体心理跟随：强",
+                "en": "Loss aversion: Medium | Time pressure sensitivity: High | Herding tendency: Strong"
+              },
+              "output": {
+                "zh": "恐慌期间倾向跟随大多数参与者平仓 | 在截止时限临近时决策速度显著加快 | 较少独立评估基本面",
+                "en": "Tends to liquidate following majority during panic | Decision speed rises sharply near deadlines | Less likely to independently assess fundamentals"
+              },
+              "emphasis": {
+                "zh": "群体心理跟随：强",
+                "en": "Herding tendency: Strong"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "高风险容忍度",
+              "en": "High risk tolerance"
+            },
+            "output": {
+              "zh": "预测倾向：在不利行情中持仓更久，寻找逆向机会",
+              "en": "Predicted tendency: holds positions longer in adverse conditions, seeks contrarian opportunities"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "心理特征输入",
+                "en": "Trait input"
+              },
+              "output_label": {
+                "zh": "决策倾向输出",
+                "en": "Decision tendency output"
+              },
+              "input": {
+                "zh": "损失厌恶：弱 | 时间压力敏感性：低 | 群体心理跟随：弱",
+                "en": "Loss aversion: Weak | Time pressure sensitivity: Low | Herding tendency: Weak"
+              },
+              "output": {
+                "zh": "倾向在下跌中持仓等待反弹 | 对时间截止敏感度低，可能承担强平风险 | 倾向逆势操作",
+                "en": "Tends to hold through drawdowns waiting for recovery | Low sensitivity to deadlines, may risk forced liquidation | Inclines toward contrarian moves"
+              },
+              "emphasis": {
+                "zh": "损失厌恶：弱",
+                "en": "Loss aversion: Weak"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "application",
+        "widget": "choice",
+        "title": {
+          "zh": "选择应用场景",
+          "en": "Choose an application scenario"
+        },
+        "instruction": {
+          "zh": "选择经纪商如何使用这种决策倾向预测来管理风险",
+          "en": "Select how a broker applies decision tendency predictions to manage risk"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "流动性管理",
+              "en": "Liquidity management"
+            },
+            "output": {
+              "zh": "根据预测的平仓倾向提前安排流动性缓冲",
+              "en": "Pre-arranges liquidity buffers based on predicted liquidation tendencies"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "风险管理流程",
+                "en": "Risk management process"
+              },
+              "output_label": {
+                "zh": "流动性决策序列",
+                "en": "Liquidity decision sequence"
+              },
+              "input": {
+                "zh": "市场波动上升，经纪商需预判客户平仓行为",
+                "en": "Market volatility rises, broker needs to anticipate client liquidation behavior"
+              },
+              "output": {
+                "zh": "按预测倾向对客户分层，高风险优先关注",
+                "en": "Clients are tiered by predicted tendency, high-risk clients prioritized"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "识别高平仓倾向客户",
+                    "en": "Identify high-liquidation clients"
+                  },
+                  "detail": {
+                    "zh": "将强损失厌恶与高时间敏感度客户标记为优先监控对象",
+                    "en": "Flag clients with strong loss aversion and high time sensitivity for priority monitoring"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "预分配流动性缓冲",
+                    "en": "Pre-allocate liquidity buffer"
+                  },
+                  "detail": {
+                    "zh": "根据预测的平仓规模提前安排资金，避免流动性缺口",
+                    "en": "Arrange capital in advance based on predicted liquidation volume to avoid gaps"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "动态调整对冲头寸",
+                    "en": "Adjust hedge positions dynamically"
+                  },
+                  "detail": {
+                    "zh": "随市场变化更新预测，同步调整经纪商对冲敞口",
+                    "en": "Update predictions as market shifts, adjust broker hedge exposure accordingly"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "保证金要求优化",
+              "en": "Margin requirement optimization"
+            },
+            "output": {
+              "zh": "依据个人决策倾向调整保证金系数，减少过度资本占用",
+              "en": "Adjusts margin coefficients by individual decision tendency to reduce excess capital requirements"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "两类交易者的保证金场景",
+                "en": "Margin scenario for two trader types"
+              },
+              "output_label": {
+                "zh": "建议系数差异",
+                "en": "Suggested coefficient difference"
+              },
+              "input": {
+                "zh": "交易者A：强损失厌恶，历史上主动止损 | 交易者B：弱损失厌恶，历史上持仓至强平",
+                "en": "Trader A: Strong loss aversion, historically exits proactively | Trader B: Weak loss aversion, historically holds to forced liquidation"
+              },
+              "output": {
+                "zh": "交易者A：建议下调保证金系数，风险可控 | 交易者B：建议维持或上调保证金系数，防范强平风险",
+                "en": "Trader A: Suggested lower margin coefficient, risk is manageable | Trader B: Suggested maintain or raise coefficient to guard against forced liquidation"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "此示例展示了心理特征如何映射到决策倾向预测；具体模型性能、实施方式和支持行业需在 42AI 官网核实，所有示例为虚构说明，非真实系统输出",
+      "en": "This example illustrates how psychological traits map to decision tendency predictions; actual model performance, implementation details, and supported industries require verification at 42AI's site — all examples are fictional illustrations, not real system output"
+    },
+    "sources": [
+      {
+        "url": "https://42ai.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/11/02/42ai-comes-out-of-stealth-with-62-5m-and-a-world-model-that-can-predict-human-behavior",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

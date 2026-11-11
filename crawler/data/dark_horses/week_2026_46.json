@@ -48,5 +48,97 @@
         }
       ]
     }
+  },
+  {
+    "name": "42AI",
+    "website": "https://42ai.com/",
+    "description": "开发行为世界模型的以色列-美国初创公司,能够预测个人在新情况下的决策倾向,通过分析心理特征而非历史行为模式来生成决策概率分布",
+    "description_en": "Israeli-American startup developing a behavioral world model that can predict individual decision-making tendencies in new situations by analyzing psychological traits rather than historical behavior patterns to generate probability distributions",
+    "category": "finance",
+    "why_matters": "已在 10 家大型经纪商部署,用于管理流动性、保证金要求和对冲风险,声称交易预测准确率达 98%,F1 分数为 0.8-0.85,一家经纪商通过动态对冲产生约 3000 万美元额外价值,展示了实际商业影响力",
+    "why_matters_en": "Deployed at 10 large brokerages for managing liquidity, margin requirements, and hedging exposure, claiming 98% accuracy in trade prediction and F1 scores of 0.8-0.85, with one brokerage generating approximately $30 million in additional value through dynamic hedging, demonstrating real commercial impact",
+    "latest_news": "2026年11月完成 6250 万美元种子轮融资,资金来自创始人和 Infinity Group,客户数据集已覆盖近 3000 万人,收入达到七位数规模",
+    "latest_news_en": "Completed $62.5 million seed funding in November 2026 from founders and Infinity Group, with customer datasets covering nearly 30 million people and generating over seven figures in revenue",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "founder_background"
+    ],
+    "company_country": "IL",
+    "confidence": 0.9,
+    "source_url": "https://techcrunch.com/2026/11/02/42ai-comes-out-of-stealth-with-62-5m-and-a-world-model-that-can-predict-human-behavior",
+    "funding_total": "$62.5M",
+    "categories": [
+      "finance"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "42AI comes out of stealth with $62.5M and a world model that can 'predict human behavior' | TechCrunch",
+    "website_source": "https://techcrunch.com/2026/11/02/42ai-comes-out-of-stealth-with-62-5m-and-a-world-model-that-can-predict-human-behavior",
+    "discovered_at": "2026-11-10",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261110T235544Z-e4025aa2",
+      "search_region": "sea",
+      "search_lane": "launch",
+      "website_verification": null,
+      "source_published_at": "2026-11-02T16:30:00+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "it has just come out of stealth with $62.5 million in seed funding"
+        },
+        {
+          "criterion": "founder_background",
+          "quote": "42AI spent three years developing this approach, combining psychological research with neuroscience and genetics, as well as advice from experts in psychology and PTSD, and Dan Shechtman, who was awarded the 2011 Nobel Prize in Chemistry"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Rently",
+    "website": "https://www.rently.sg",
+    "description": "为租户提供灵活分期支付租金、赚取积分奖励和管理付款计划的租赁支付平台,允许租户延迟租金支付、降低入住成本并在每笔租金支付中赚取里程积分",
+    "description_en": "A rental payments platform that allows tenants to pay rent in flexible installments, earn rewards, and manage payment schedules, with features including deferred payments and reduced move-in costs",
+    "category": "finance",
+    "why_matters": "2026年前9个月新加坡租户交易量达3630万新元,同比增长2.5倍,显示强劲增长势头;已在新加坡、香港和阿联酋三地运营,拥有超3000名租户;2026年10月获得1200万美元债务融资用于扩展服务并为A轮融资做准备",
+    "why_matters_en": "Achieved 2.5x year-over-year growth in rental transaction volume reaching SGD 36.3 million in Singapore in first nine months of 2026; operates across three markets with over 3,000 tenants; secured US$12 million debt financing in October 2026 to scale and prepare for Series A",
+    "latest_news": "2026年10月获得1200万美元债务融资,用于在现有市场扩展租金灵活支付服务,并为2027年推出新市场的A轮融资做准备",
+    "latest_news_en": "Secured US$12 million debt financing in October 2026 to extend rent flexibility offering and prepare for Series A round to launch additional markets in 2027",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "growth_anomaly"
+    ],
+    "company_country": "SG",
+    "confidence": 0.95,
+    "source_url": "https://fintechnews.sg/139924/proptech/proptech-startups-from-singapore-to-watch",
+    "funding_total": "US$15 million",
+    "categories": [
+      "finance"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "5 Up-and-Coming Proptech Startups from Singapore to Watch - Fintech Singapore",
+    "website_source": "https://fintechnews.sg/139924/proptech/proptech-startups-from-singapore-to-watch",
+    "discovered_at": "2026-11-11",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261110T235544Z-e4025aa2",
+      "search_region": "sea",
+      "search_lane": "launch",
+      "website_verification": null,
+      "source_published_at": "2026-10-30T04:34:56+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "In October 2026, Rently secured US$12 million in debt financing to extend its rent flexibility offering across its existing markets."
+        },
+        {
+          "criterion": "growth_anomaly",
+          "quote": "In the first nine months of 2026, rental transaction volume from Singaporean tenants using Rently reached SGD 36.3 million (US$28.4 million), representing a 2.5-fold increase over the corresponding period in 2025"
+        }
+      ]
+    }
   }
 ]
