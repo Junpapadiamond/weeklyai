@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - crawler/data/migrations/product_copy_focus_2026_11_12.json
+      - crawler/tools/migrate_product_copy.py
 
 permissions:
   contents: read

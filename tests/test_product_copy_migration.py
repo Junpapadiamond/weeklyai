@@ -40,6 +40,45 @@ def test_preflight_mismatch_on_later_product_means_zero_writes(migration, tmp_pa
     assert list(collection.find()) == original
 
 
+@pytest.mark.parametrize('fault', ['changed', 'missing', 'null'])
+def test_failed_preflight_receipt_only_contains_declared_raw_text(migration, tmp_path, monkeypatch, fault):
+    collection, manifest = migration
+    if fault == 'missing':
+        collection.update_one({'_sync_key': 'one.test'}, {'$unset': {'description': ''}})
+    else:
+        collection.update_one({'_sync_key': 'one.test'}, {'$set': {
+            'description': 'Unreviewed text remains unchanged' if fault == 'changed' else None,
+        }})
+    # Include another permitted text field, unrelated fields, and an undeclared copy.
+    collection.update_one({'_sync_key': 'two.test'}, {'$set': {
+        'description_en': 'Raw untranslated evidence', 'private_metadata': 'must not be exported',
+    }})
+    collection.insert_one({'name': 'Example Two', '_sync_key': 'not-declared.test',
+                           'description': 'Undeclared record must not be exported'})
+    original = list(collection.find())
+    monkeypatch.setattr(collection, 'update_one', lambda *a, **kw: pytest.fail('Failed preflight cannot write'))
+    path = tmp_path / 'failure.json'
+    with pytest.raises(MigrationError, match='field description') as caught:
+        migrate_collection(collection, manifest, path)
+    assert 'Unreviewed text' not in str(caught.value)
+    assert list(collection.find()) == original
+    receipt = json.loads(path.read_text(encoding='utf-8'))
+    assert set(receipt) == {'execution'}
+    assert set(receipt['execution']) == {'status', 'products'}
+    assert receipt['execution']['status'] == 'preflight_failed'
+    records = {record['_sync_key']: record for record in receipt['execution']['products']}
+    assert set(records) == {'one.test', 'two.test'}
+    for key, record in records.items():
+        assert set(record) == {'name', '_sync_key', 'fields', 'missing_fields'}
+        raw = collection.find_one({'_sync_key': key})
+        permitted = {'description', 'description_en', 'why_matters', 'why_matters_en'}
+        assert record['fields'] == {field: raw[field] for field in permitted if field in raw}
+        assert record['missing_fields'] == sorted(permitted - raw.keys())
+    assert records['two.test']['fields']['description_en'] == 'Raw untranslated evidence'
+    assert ('description' in records['one.test']['missing_fields']) == (fault == 'missing')
+    assert '_id' not in path.read_text(encoding='utf-8')
+
+
 def test_migration_is_idempotent_and_preserves_all_unapproved_fields(migration, tmp_path):
     collection, manifest = migration
     before = {p['_sync_key']: p for p in collection.find()}

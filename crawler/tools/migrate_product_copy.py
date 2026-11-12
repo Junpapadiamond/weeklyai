@@ -86,28 +86,51 @@ def migrate_collection(collection, manifest, receipt_path, *, rollback=False, dr
     products = validate_manifest(manifest)
     destination = 'before' if rollback else 'after'
     prepared = []
-    # Do not mutate any record until every product and every field is compatible.
+    snapshots = []
+    diagnostics = []
+    # Gather a narrowly projected snapshot before validating so a failed preflight
+    # can expose raw text/missing fields without exporting unrelated MongoDB data.
     for product in products:
         declarations = declared_records(product)
-        projection = {'_id': 1, '_sync_key': 1, 'name': 1, **{field: 1 for field in product['fields']}}
+        projection = {'_id': 1, '_sync_key': 1, 'name': 1, **{field: 1 for field in ALLOWED_FIELDS}}
         # Matching names expose undeclared copies, but never authorize updating them.
         matches = list(collection.find({'$or': [
             {'_sync_key': {'$in': list(declarations)}}, {'name': product['name']},
         ]}, projection))
+        snapshots.append((product, declarations, matches))
+        for current in matches:
+            key = current.get('_sync_key')
+            if isinstance(key, str) and key in declarations:
+                diagnostics.append({
+                    'name': product['name'], '_sync_key': key,
+                    'fields': {field: current[field] for field in sorted(ALLOWED_FIELDS) if field in current},
+                    'missing_fields': sorted(ALLOWED_FIELDS - current.keys()),
+                })
+
+    def fail_preflight(kind, product, field):
+        # This failure artifact intentionally excludes the full manifest, MongoDB
+        # _id, all other product fields, and any connection configuration.
+        write_receipt(receipt_path, {'execution': {
+            'status': 'preflight_failed', 'products': diagnostics,
+        }})
+        raise MigrationError(f'Preflight {kind} mismatch: {product["name"]}, field {field}. No writes performed.')
+
+    # Do not mutate any record until every product and every field is compatible.
+    for product, declarations, matches in snapshots:
         if not matches:
-            raise MigrationError(f'Preflight identity mismatch: {product["name"]}. No writes performed.')
+            fail_preflight('identity', product, '_sync_key')
         seen = set()
         for current in matches:
             key = current.get('_sync_key')
             if not isinstance(key, str) or key not in declarations or key in seen:
-                raise MigrationError(f'Preflight identity mismatch: {product["name"]}. No writes performed.')
+                fail_preflight('identity', product, '_sync_key')
             seen.add(key)
             if current.get('name') != product['name']:
-                raise MigrationError(f'Preflight name mismatch: {product["name"]}. No writes performed.')
+                fail_preflight('name', product, 'name')
             declaration = declarations[key]
             for field, values in declaration['fields'].items():
                 if field not in current or current[field] not in (values['before'], values['after']):
-                    raise MigrationError(f'Preflight text mismatch: {product["name"]}. No writes performed.')
+                    fail_preflight('text', product, field)
             observed = {field: current[field] for field in declaration['fields']}
             target = {field: values[destination] for field, values in declaration['fields'].items()}
             changes = {field: text for field, text in target.items() if observed[field] != text}
