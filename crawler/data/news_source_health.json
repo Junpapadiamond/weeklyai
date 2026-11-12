@@ -1,118 +1,142 @@
 {
-  "updated_at": "2026-11-12T01:28:42.772591+00:00",
+  "updated_at": "2026-11-12T07:29:37.410493+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 19,
+      "fresh_count": 14,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-12T01:28:42.772591+00:00",
-      "rejected_count": 11,
+      "checked_at": "2026-11-12T07:29:37.410493+00:00",
+      "rejected_count": 15,
       "rejection_reasons": {
-        "unvetted_x_author": 4,
-        "no_concrete_signal": 7
+        "unvetted_x_author": 3,
+        "no_concrete_signal": 12
       },
       "rejected_examples": [
         {
-          "title": "@OpenAINewsroom · We discovered a sophisticated recording device that was hidden inside one of our offices. We used our models to understand the device and wher",
+          "title": "@ycombinator · Replit was building toward the AI coding era years before it had a name. In 2024, the company shipped an agent that could take a request in plain",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@IREN_Ltd · Perplexity is working with IREN to power fast, trustworthy AI. Under our multi-year agreement, @perplexity_ai will run workloads on NVIDIA Blackwell",
+          "title": "@Replit · Now anyone can now bring their ideas into the company codebase on Replit. Replit Cloud Agents can turn natural language into a tested pull request, an",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@Replit · This Week in Replit 1) The Self-Driving Company. We believe by the end of 2030, every Fortune 500 will be a Self-Driving Company. That doesn't mean AI",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@amasad · is Replit built with Replit?” The answer was historically “kinda.” But today it’s “absolutely!” Introducing Cloud Agents: run any codebase and generat",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@perplexity_ai · We're open sourcing SPACE, the sandbox platform that runs every task in Perplexity Computer. SPACE gives each agent task its own Firecracker mi",
+          "title": "@Replit · This Week in Replit 1) Stripe Atlas on Replit. Ask Replit to incorporate your business through the Stripe MCP integration, with 20% off when you incor",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@AravSrinivas · You can now run Perplexity Computer fully local on your Mac with no cloud based inference, without WiFi too. Enjoy!",
+          "title": "@Replit · We’re introducing Bring Your Own Cloud (BYOC) for Replit, with options for development and production in your cloud, whether you use @Azure, @GoogleCl",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@Replit · Meet Replit for Government. We’re powering public servants at every level of government, in the US and internationally, with super intelligence. Now n",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@amasad · To clarify: Replit remains model agnostic. Our users can choose Anthropic models as well as many other supported models. What I meant at TC Disrupt is",
           "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@Lovable · New in Lovable: the @perplexity_ai connector. Your app can now pull source-backed info from the live web in real-time, powered by Perplexity. Here's ",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@cursor_ai · The Agent SDK is now available. Define agents as code, with prompts in Markdown and tools in TypeScript. Deploy them on our hosted infrastructure, ",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@cursor_ai · Gemini 4 Argon is now available in Cursor! It scores 52.8% on CursorBench at default effort, on par with Opus 5.5. Priced at $2/M input and $10/M o",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@cursor_ai · Cloud agent environments now support up to 500 repos, and large multi-repo environments start 5x faster. See everything new: https://t.co/FfATEvnQd",
-          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-10T18:06:42.003000+00:00"
+      "latest_published_at": "2026-11-11T15:04:18.810000+00:00"
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 12,
+      "fresh_count": 6,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-12T01:28:42.772591+00:00",
-      "rejected_count": 28,
+      "checked_at": "2026-11-12T07:29:37.410493+00:00",
+      "rejected_count": 34,
       "rejection_reasons": {
         "no_concrete_signal": 16,
-        "off_topic": 9,
-        "personal_help_or_chatter": 3
+        "off_topic": 14,
+        "personal_help_or_chatter": 4
       },
       "rejected_examples": [
         {
-          "title": "First Typo I've Ever Seen Claude Make",
+          "title": "Claude Sheets - cannot find in artifacts?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Fable 5.2 for strategy and Opus 5.5 for execution ?",
+          "title": "qwen3.8 q4_k_m now running 2x faster on 7900xtx (90-100t/s)",
           "reason": "off_topic"
         },
         {
-          "title": "estou com problemas para proteger meus arquivos contra engenharia reversa.",
+          "title": "If an AI image genuinely moves you, where does the meaning live?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "does anthropic care that much if I'm under 18 (just 17)?",
+          "title": "Europe-only ChatGPT ads get 16/60 visits from Iran",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "I gave Claude Code a 1993 Sega game to reverse-engineer",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Burned 2 Fable 5.2 resets, lasting approximately 1 day each",
+          "title": "Does anyone else feel like years of developing intellectual skills are suddenly becoming worthless?",
           "reason": "off_topic"
         },
         {
-          "title": "Did You Know About Data Leasing?",
+          "title": "Agentic Framework for Development",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Fable 5.2 wakes up Opus 5.5",
-          "reason": "off_topic"
+          "title": "Help!!!!",
+          "reason": "personal_help_or_chatter"
+        },
+        {
+          "title": "Designing and Building Memory for AI Agents | Live Hands-On Workshop",
+          "reason": "personal_help_or_chatter"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-12T01:28:16+00:00"
+      "latest_published_at": "2026-11-12T05:44:18+00:00"
     },
     "youtube": {
       "status": "direct",
-      "fresh_count": 14,
+      "fresh_count": 2,
       "errors": [
         {
+          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
+          "reason": "HTTP 404"
+        },
+        {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
-          "reason": "empty_or_invalid_feed"
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
+          "reason": "HTTP 404"
         }
       ],
-      "feeds_ok": 7,
-      "checked_at": "2026-11-12T01:28:42.772591+00:00",
-      "rejected_count": 16,
+      "feeds_ok": 1,
+      "checked_at": "2026-11-12T07:29:37.410493+00:00",
+      "rejected_count": 2,
       "rejection_reasons": {
-        "off_topic": 16
+        "off_topic": 2
       },
       "rejected_examples": [
         {
@@ -122,30 +146,6 @@
         {
           "title": "The worst week in cybersecurity history... so far",
           "reason": "off_topic"
-        },
-        {
-          "title": "边听边说、边看边想、还有一张脸的全双工模型，讲一讲背后的技术",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Is Software Over?",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The future of modern warfare | Russia-Ukraine War - Military Analysis",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Russia's bombing campaign in Ukraine explained by military analyst | Lex Fridman Podcast",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Trump's role in Russia-Ukraine war | Lex Fridman Podcast",
-          "reason": "off_topic"
-        },
-        {
-          "title": "How the war in Ukraine ends | Lex Fridman Podcast",
-          "reason": "off_topic"
         }
       ],
       "stored_count": 55,
@@ -153,69 +153,73 @@
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 16,
+      "fresh_count": 12,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-12T01:28:42.772591+00:00",
-      "rejected_count": 44,
+      "checked_at": "2026-11-12T07:29:37.410493+00:00",
+      "rejected_count": 48,
       "rejection_reasons": {
-        "off_topic": 13,
+        "off_topic": 17,
         "no_concrete_signal": 31
       },
       "rejected_examples": [
         {
-          "title": "MAI-Transcribe-2: Fastest, most accurate and cheapest speech recognition model",
+          "title": "Show HN: AntFabric (One Subscription for all your operational needs)",
           "reason": "off_topic"
         },
         {
-          "title": "Cloudflare Clairic: a single pass extraction model",
+          "title": "Ask HN: Are clean Git commits still worth it?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "AI is getting smarter. Are we thinking better?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "What benefit does a San Francisco HQ offer if you are not a frontier AI lab?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Job Finding and Unemployment in the Age of AI",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "LG Research releases K-Exaone 2.5 API for free",
           "reason": "off_topic"
         },
         {
-          "title": "What gives you the chills? AI can engineer it",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Yes, you should panic about AI",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Agentic AI for Military Cyberoperations (West Point Press) [pdf]",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Show HN: Dogfood Bench",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Show HN: Agent skill and Claude/Codex plugins for Google Ads campaigns",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Show HN: Lettercamp – open-source static blog framework",
+          "title": "Perplexity Search API Review",
           "reason": "off_topic"
+        },
+        {
+          "title": "Why AI Coding Agents Lose Context After the PR, and How to Keep It",
+          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-12T01:26:11+00:00"
+      "latest_published_at": "2026-11-12T07:20:22+00:00"
     },
     "producthunt": {
       "status": "direct",
-      "fresh_count": 15,
+      "fresh_count": 17,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-12T01:28:42.772591+00:00",
-      "rejected_count": 22,
+      "checked_at": "2026-11-12T07:29:37.410493+00:00",
+      "rejected_count": 20,
       "rejection_reasons": {
-        "off_topic": 22
+        "off_topic": 20
       },
       "rejected_examples": [
         {
-          "title": "Shot.video",
+          "title": "MiniMax H3-Image",
           "reason": "off_topic"
         },
         {
-          "title": "Reddit Reviews",
+          "title": "Scribe v3 by ElevenLabs",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Subscriptrack",
           "reason": "off_topic"
         },
         {
@@ -223,19 +227,15 @@
           "reason": "off_topic"
         },
         {
-          "title": "MiniMax H3-Image",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Nod by n8n",
-          "reason": "off_topic"
-        },
-        {
           "title": "Earlybird",
           "reason": "off_topic"
         },
         {
-          "title": "Scribe v3 by ElevenLabs",
+          "title": "StableBar",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Xolace",
           "reason": "off_topic"
         },
         {
@@ -248,7 +248,7 @@
     },
     "tech_news": {
       "status": "direct",
-      "fresh_count": 40,
+      "fresh_count": 39,
       "errors": [
         {
           "endpoint": "venturebeat",
@@ -256,12 +256,16 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-12T01:28:42.772591+00:00",
-      "rejected_count": 19,
+      "checked_at": "2026-11-12T07:29:37.410493+00:00",
+      "rejected_count": 20,
       "rejection_reasons": {
-        "off_topic": 19
+        "off_topic": 20
       },
       "rejected_examples": [
+        {
+          "title": "Who could replace Jensen Huang? A highly unscientific list of possible successors",
+          "reason": "off_topic"
+        },
         {
           "title": "Nvidia’s stock drops as board reportedly preps to oust CEO Jensen Huang",
           "reason": "off_topic"
@@ -289,10 +293,6 @@
         {
           "title": "Is Jensen Huang’s bad behavior more commonplace than it seems?",
           "reason": "off_topic"
-        },
-        {
-          "title": "Nvidia’s crisis has corporate governance experts reaching for the popcorn",
-          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
@@ -300,14 +300,18 @@
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 41,
+      "fresh_count": 29,
       "errors": [
         {
-          "endpoint": "jiqizhixin",
-          "reason": "empty_or_invalid_feed"
+          "endpoint": "ithome",
+          "reason": "HTTP 404"
         },
         {
           "endpoint": "36kr",
+          "reason": "empty_or_invalid_feed"
+        },
+        {
+          "endpoint": "jiqizhixin",
           "reason": "empty_or_invalid_feed"
         },
         {
@@ -315,53 +319,52 @@
           "reason": "ReadTimeout"
         }
       ],
-      "feeds_ok": 6,
-      "checked_at": "2026-11-12T01:28:42.772591+00:00",
-      "rejected_count": 77,
+      "feeds_ok": 5,
+      "checked_at": "2026-11-12T07:29:37.410493+00:00",
+      "rejected_count": 48,
       "rejection_reasons": {
-        "off_topic": 77
+        "off_topic": 48
       },
       "rejected_examples": [
         {
-          "title": "远离地球约 259 亿公里：“旅行者 1 号”下周将解锁 1 光日里程碑",
+          "title": "拆解触屏 MacBook Pro：点亮苹果 LOGO 的秘密，藏在这里",
           "reason": "off_topic"
         },
         {
-          "title": "华强北脑机接口产业应用中心近期开放，超六成访客是老外",
+          "title": "联想 Googlebook 15 评测：安卓电脑准备好了，安卓没有",
           "reason": "off_topic"
         },
         {
-          "title": "ARM 生态再迎重磅拼图：Adobe InDesign / InCopy 22.0 原生适配骁龙 X Elite 芯片",
+          "title": "折叠屏手机的转身｜明日后视镜",
           "reason": "off_topic"
         },
         {
-          "title": "Polymarket 预测黄仁勋之女黄敏珊成接任英伟达 CEO 热门人选",
+          "title": "我们正目睹乔布斯后科技史上最严重的逼宫",
           "reason": "off_topic"
         },
         {
-          "title": "日本运营商 NTT Docomo 完成修复 5G SA 通信故障：原因为交换机拥塞",
+          "title": "曝字节要做「中国版 Muse」，给豆包造个「超级大脑」",
           "reason": "off_topic"
         },
         {
-          "title": "华为 WATCH Ultimate 2 新增滑雪登山模式，六大模式覆盖室内外与越野场景",
+          "title": "4.99 万元起，长安糯玉米 PLUS 变成四门「大玉米」，小车最后还是要「大大大」",
           "reason": "off_topic"
         },
         {
-          "title": "第二艘国产大型邮轮“爱达 · 花城号”完成首个试运营航次，11 月 22 日从广州开启首航季",
+          "title": "300 块的索尼复古耳机，没降噪不隔音，为什么还是卖爆了？",
           "reason": "off_topic"
         },
         {
-          "title": "英伟达董事会已聘请外部机构物色新 CEO 候选人以接替黄仁勋，同时考虑临时 CEO 方案",
+          "title": "早报｜华为小折叠电脑MateBook Fold S亮相/《GTA VI》开启预载，全平台目标30fps/董明珠回应格力业绩下滑：铜价上涨，格力将继续用铜",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-12T01:26:48+00:00"
+      "latest_published_at": "2026-11-12T06:14:30+00:00"
     }
   },
   "quality_rejections": {
-    "outside_news_window": 3,
-    "duplicate_headline": 2
+    "duplicate_headline": 1
   },
   "quality_complete": true
 }
