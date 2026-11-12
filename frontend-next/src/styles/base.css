@@ -317,16 +317,10 @@ a {
   min-height: 3rem;
   border-radius: 12px;
   color: var(--text-muted);
-  font-size: 0.68rem;
-  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-family: var(--font-body);
   letter-spacing: 0.01em;
   transition: color var(--motion-fast), background-color var(--motion-fast);
-}
-
-.mobile-tabbar__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .mobile-tabbar__link.active {
@@ -2135,8 +2129,8 @@ input {
   min-height: 3rem;
   border-radius: 12px;
   color: var(--text-muted);
-  font-size: 0.68rem;
-  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-family: var(--font-body);
 }
 
 .mobile-tabbar__badge {

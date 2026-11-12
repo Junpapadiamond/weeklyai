@@ -3,7 +3,7 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
-import { Shuffle, BookmarkSimple, Binoculars, MagnifyingGlass, PlayCircle } from "@phosphor-icons/react";
+import { BookmarkSimple } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { HorseMark } from "@/components/brand/horse-mark";
 import type { SiteLocale } from "@/lib/locale";
@@ -39,10 +39,10 @@ export function SiteHeader({ isAppShell = false }: SiteHeaderProps) {
   ];
 
   const mobileNavItems = [
-    { href: "/", label: t("首页", "Home"), icon: Binoculars },
-    { href: "/discover", label: t("发现", "Discover"), icon: Shuffle },
-    { href: "/demo", label: t("演示", "Demos"), icon: PlayCircle },
-    { href: "/search", label: t("搜索", "Search"), icon: MagnifyingGlass },
+    { href: "/", label: t("首页", "Home") },
+    { href: "/discover", label: t("发现", "Discover") },
+    { href: "/demo", label: t("演示", "Demos") },
+    { href: "/search", label: t("搜索", "Search") },
   ];
 
   function applyLocale(nextLocale: SiteLocale) {
@@ -119,7 +119,6 @@ export function SiteHeader({ isAppShell = false }: SiteHeaderProps) {
 
       <nav className="mobile-tabbar" aria-label={t("底部导航", "Bottom navigation")}>
         {mobileNavItems.map((item) => {
-          const Icon = item.icon;
           const isActive = isNavActive(item.href);
           return (
             <Link
@@ -128,9 +127,6 @@ export function SiteHeader({ isAppShell = false }: SiteHeaderProps) {
               className={`mobile-tabbar__link ${isActive ? "active" : ""}`}
               aria-current={isActive ? "page" : undefined}
             >
-              <span className="mobile-tabbar__icon">
-                <Icon size={16} />
-              </span>
               <span>{item.label}</span>
             </Link>
           );
@@ -141,9 +137,6 @@ export function SiteHeader({ isAppShell = false }: SiteHeaderProps) {
           aria-label={t("打开收藏夹", "Open favorites")}
           onClick={() => openFavoritesPanel("product")}
         >
-          <span className="mobile-tabbar__icon">
-            <BookmarkSimple size={16} />
-          </span>
           <span>{t("收藏", "Favorites")}</span>
           <strong className="mobile-tabbar__badge">{favoritesCount}</strong>
         </button>

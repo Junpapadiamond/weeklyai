@@ -1,0 +1,76 @@
+/* English keeps the existing fonts and hierarchy, with natural glyph spacing.
+   Scope every rule to the document locale so Chinese typography is unchanged. */
+html:lang(en) body { line-height: 1.65; }
+
+html:lang(en) .brand-wordmark .logo-text {
+  letter-spacing: 0;
+  line-height: 1.35;
+}
+html:lang(en) .nav-link { line-height: 1.5; }
+
+/* Large names were compressed by up to -.05em; small navigation and body
+   text do not need an artificial positive tracking value to compensate. */
+html:lang(en) .home-spotlight__name {
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+html:lang(en) .hero-title--en {
+  letter-spacing: 0;
+  line-height: 1.25;
+}
+html:lang(en) .briefing-hero .hero-title { letter-spacing: 0; }
+html:lang(en) .home-discovery-intro h1 { line-height: 1.5; }
+html:lang(en) .home-spotlight__summary { line-height: 1.7; }
+html:lang(en) .hero-subtitle--en { line-height: 1.75; }
+
+html:lang(en) .section-title,
+html:lang(en) .home-root[data-vibe="briefing"] .section-title,
+html:lang(en) .home-root[data-vibe="briefing"] .home-catalog-heading .section-title {
+  letter-spacing: 0;
+  line-height: 1.4;
+}
+
+html:lang(en) :is(.product-card__title, .research-product__title, .detail-hero__title),
+html:lang(en) .product-detail-page .detail-hero__title,
+html:lang(en) .profile-identity h1,
+html:lang(en) .home-footer .home-footer__eyebrow {
+  letter-spacing: 0;
+}
+html:lang(en) :is(.product-card__title, .darkhorse-spotlight__title, .detail-hero__title),
+html:lang(en) .product-detail-page .detail-hero__title,
+html:lang(en) .profile-identity h1,
+html:lang(en) .radar-product h3,
+html:lang(en) .leader-card h4 {
+  line-height: 1.35;
+}
+
+html:lang(en) :is(
+  .radar-product__summary,
+  .product-card__summary-text,
+  .product-card__summary-why,
+  .product-card__desc,
+  .product-card__thesis,
+  .product-card__why,
+  .leader-card__desc,
+  .leader-card__thesis,
+  .darkhorse-spotlight__why,
+  .swipe-card-highlight,
+  .detail-hero__description,
+  .detail-inline-related__card p
+) { line-height: 1.7; }
+
+/* Page and demo headings share the same natural tracking as the catalog.
+   Numeric instruments and code retain their intentional monospace spacing. */
+html:lang(en) :is(
+  .demo-gallery-header h1,
+  .experience-rail h3,
+  .experience-step h2,
+  .experience-finish h2,
+  .demo-invitation h2,
+  .demo-sidebar h4,
+  .demo-mini-header h4,
+  .focus-product h3,
+  .focus-content > h2,
+  .detail-block__title,
+  .website-shot__category-text
+) { letter-spacing: 0; }

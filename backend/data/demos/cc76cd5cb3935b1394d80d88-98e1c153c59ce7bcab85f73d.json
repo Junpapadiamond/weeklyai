@@ -1,0 +1,363 @@
+{
+  "cache_key": "cc76cd5cb3935b1394d80d88-98e1c153c59ce7bcab85f73d",
+  "product_key": "cc76cd5cb3935b1394d80d88",
+  "fingerprint": "98e1c153c59ce7bcab85f73d",
+  "product_id": "Exa",
+  "product_name": "Exa",
+  "origin": "ai",
+  "generated_at": "2026-11-12T08:48:40.379054+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "筛选技术文档并提取关键引用",
+      "en": "Filter technical documents and extract key quotes"
+    },
+    "scenario": {
+      "zh": "搜索示例记录，查看虚构原文，选择要保留的内容。",
+      "en": "Search sample records, inspect fictional source text and choose what to keep."
+    },
+    "steps": [
+      {
+        "id": "example",
+        "widget": "review",
+        "title": {
+          "zh": "可交互产物",
+          "en": "Interactive artifact"
+        },
+        "instruction": {
+          "zh": "搜索示例记录，查看虚构原文，选择要保留的内容。",
+          "en": "Search sample records, inspect fictional source text and choose what to keep."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "可交互产物",
+              "en": "Interactive artifact"
+            },
+            "output": {
+              "zh": "文档标题 / 相关度\n3 条可编辑示例记录",
+              "en": "Document title / Relevance\n3 editable example records"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "示例输入",
+                "en": "Example input"
+              },
+              "output_label": {
+                "zh": "可交互产物",
+                "en": "Interactive artifact"
+              },
+              "input": {
+                "zh": "查询 Transformer 架构优化相关文档",
+                "en": "Query documents about Transformer architecture optimization"
+              },
+              "output": {
+                "zh": "文档标题 / 相关度\n3 条可编辑示例记录",
+                "en": "Document title / Relevance\n3 editable example records"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "这是独立的本地示例，未调用该产品。产品资料用于了解方向，不证明示例中的数据或结果；实际能力请以官方产品为准。",
+      "en": "This independent local example does not call the product. Sources explain its purpose, not the fictional data or results. Check the official product for actual capabilities."
+    },
+    "sources": [
+      {
+        "url": "https://exa.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.menlotimes.com/ai-robotics",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ],
+    "interaction": {
+      "kind": "records",
+      "input_label": {
+        "zh": "查询主题",
+        "en": "Query topic"
+      },
+      "output_label": {
+        "zh": "检索结果",
+        "en": "Search results"
+      },
+      "inputs": [
+        {
+          "id": "topic",
+          "label": {
+            "zh": "主题",
+            "en": "Topic"
+          },
+          "options": [
+            {
+              "id": "transformer",
+              "label": {
+                "zh": "Transformer 优化",
+                "en": "Transformer optimization"
+              }
+            },
+            {
+              "id": "embedding",
+              "label": {
+                "zh": "向量嵌入",
+                "en": "Vector embeddings"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "when": {
+            "topic": "transformer"
+          },
+          "brief": {
+            "zh": "查询 Transformer 架构优化相关文档",
+            "en": "Query documents about Transformer architecture optimization"
+          },
+          "artifact": {
+            "columns": [
+              {
+                "id": "title",
+                "label": {
+                  "zh": "文档标题",
+                  "en": "Document title"
+                },
+                "type": "text"
+              },
+              {
+                "id": "relevance",
+                "label": {
+                  "zh": "相关度",
+                  "en": "Relevance"
+                },
+                "type": "select",
+                "options": [
+                  {
+                    "id": "high",
+                    "label": {
+                      "zh": "高",
+                      "en": "High"
+                    }
+                  },
+                  {
+                    "id": "medium",
+                    "label": {
+                      "zh": "中",
+                      "en": "Medium"
+                    }
+                  }
+                ]
+              }
+            ],
+            "rows": [
+              {
+                "id": "doc_a",
+                "cells": {
+                  "title": {
+                    "zh": "文档甲：注意力机制设计",
+                    "en": "Document A: Attention mechanism design"
+                  },
+                  "relevance": "high"
+                },
+                "evidence": {
+                  "text": {
+                    "zh": "多头注意力通过并行计算不同子空间的注意力权重。研究表明稀疏模式可降低计算开销同时保持性能。在长序列任务中，局部窗口注意力是实用的优化方向。",
+                    "en": "Multi-head attention computes attention weights in different subspaces in parallel. Research shows sparse patterns reduce computational cost while maintaining performance. Local window attention is a practical optimization for long-sequence tasks."
+                  },
+                  "quote": {
+                    "zh": "稀疏模式可降低计算开销同时保持性能",
+                    "en": "sparse patterns reduce computational cost while maintaining performance"
+                  }
+                }
+              },
+              {
+                "id": "doc_b",
+                "cells": {
+                  "title": {
+                    "zh": "文档乙：参数共享与蒸馏",
+                    "en": "Document B: Parameter sharing and distillation"
+                  },
+                  "relevance": "high"
+                },
+                "evidence": {
+                  "text": {
+                    "zh": "跨层权重共享可减少模型参数。知识蒸馏将大模型知识转移到小模型，提升推理效率。这两种技术常在资源受限场景中结合使用。",
+                    "en": "Cross-layer weight sharing reduces model parameters. Knowledge distillation transfers knowledge from large to small models to improve inference efficiency. These techniques are often combined in resource-constrained scenarios."
+                  },
+                  "quote": {
+                    "zh": "知识蒸馏将大模型知识转移到小模型",
+                    "en": "Knowledge distillation transfers knowledge from large to small models"
+                  }
+                }
+              },
+              {
+                "id": "doc_c",
+                "cells": {
+                  "title": {
+                    "zh": "文档丙：量化与编码",
+                    "en": "Document C: Quantization and encoding"
+                  },
+                  "relevance": "medium"
+                },
+                "evidence": {
+                  "text": {
+                    "zh": "低精度表示可减小模型体积。Post-training 量化无需重新训练，适合快速部署。混合精度策略在关键层使用高精度，其他层使用低精度。",
+                    "en": "Low-precision representation reduces model size. Post-training quantization requires no retraining and suits rapid deployment. Mixed-precision strategies use high precision on critical layers and low precision elsewhere."
+                  },
+                  "quote": {
+                    "zh": "Post-training 量化无需重新训练",
+                    "en": "Post-training quantization requires no retraining"
+                  }
+                }
+              }
+            ],
+            "view": "table",
+            "calculation": {
+              "op": "count",
+              "label": {
+                "zh": "已选文档数",
+                "en": "Selected documents"
+              }
+            }
+          }
+        },
+        {
+          "when": {
+            "topic": "embedding"
+          },
+          "brief": {
+            "zh": "查询向量嵌入技术相关文档",
+            "en": "Query documents about vector embedding techniques"
+          },
+          "artifact": {
+            "columns": [
+              {
+                "id": "title",
+                "label": {
+                  "zh": "文档标题",
+                  "en": "Document title"
+                },
+                "type": "text"
+              },
+              {
+                "id": "relevance",
+                "label": {
+                  "zh": "相关度",
+                  "en": "Relevance"
+                },
+                "type": "select",
+                "options": [
+                  {
+                    "id": "high",
+                    "label": {
+                      "zh": "高",
+                      "en": "High"
+                    }
+                  },
+                  {
+                    "id": "medium",
+                    "label": {
+                      "zh": "中",
+                      "en": "Medium"
+                    }
+                  }
+                ]
+              }
+            ],
+            "rows": [
+              {
+                "id": "doc_x",
+                "cells": {
+                  "title": {
+                    "zh": "文档甲：对比学习方法",
+                    "en": "Document A: Contrastive learning methods"
+                  },
+                  "relevance": "high"
+                },
+                "evidence": {
+                  "text": {
+                    "zh": "对比学习通过拉近相似样本、推远不相似样本来训练表示。无监督方法在大规模数据上学到有意义的特征，无需人工标注。这类方法广泛应用于图像和文本领域。",
+                    "en": "Contrastive learning trains representations by pulling similar samples closer and pushing dissimilar ones apart. Unsupervised methods learn meaningful features on large-scale data without manual annotation. These methods are widely used in image and text domains."
+                  },
+                  "quote": {
+                    "zh": "无需人工标注",
+                    "en": "without manual annotation"
+                  }
+                }
+              },
+              {
+                "id": "doc_y",
+                "cells": {
+                  "title": {
+                    "zh": "文档乙：池化策略与聚合",
+                    "en": "Document B: Pooling strategies and aggregation"
+                  },
+                  "relevance": "high"
+                },
+                "evidence": {
+                  "text": {
+                    "zh": "从 token 级别聚合为句子级别表示时，选择合适的池化方法很关键。平均池化简单有效，注意力池化可学习权重，CLS token 用于分类任务。不同任务场景需要不同策略。",
+                    "en": "Choosing the right pooling method is critical when aggregating from token-level to sentence-level representations. Mean pooling is simple and effective, attention pooling learns weights, and CLS tokens are used for classification tasks. Different scenarios need different strategies."
+                  },
+                  "quote": {
+                    "zh": "不同任务场景需要不同策略",
+                    "en": "Different scenarios need different strategies"
+                  }
+                }
+              },
+              {
+                "id": "doc_z",
+                "cells": {
+                  "title": {
+                    "zh": "文档丙：跨模态表示对齐",
+                    "en": "Document C: Cross-modal representation alignment"
+                  },
+                  "relevance": "medium"
+                },
+                "evidence": {
+                  "text": {
+                    "zh": "多模态模型需要将不同模态映射到共享的嵌入空间。对齐质量影响下游任务表现。噪声数据和模态差异是主要挑战，需要特殊的损失函数和训练策略处理。",
+                    "en": "Multimodal models map different modalities to a shared embedding space. Alignment quality affects downstream task performance. Noisy data and modal differences are key challenges requiring specialized loss functions and training strategies."
+                  },
+                  "quote": {
+                    "zh": "需要将不同模态映射到共享的嵌入空间",
+                    "en": "map different modalities to a shared embedding space"
+                  }
+                }
+              }
+            ],
+            "view": "table",
+            "calculation": {
+              "op": "count",
+              "label": {
+                "zh": "已选文档数",
+                "en": "Selected documents"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "generator_revision": "interaction-v3-2026-11-12",
+  "grounding": "catalog_only",
+  "reviewed_at": "2026-11-12",
+  "review_record": "demo-generator-final-candidate-review-2026-11-12",
+  "normalization": "application-owned-local-narration",
+  "model_artifact_sha256": "3894db2db417f4fb9eadc5376981c0a692c605b982a75f802a851908727d12c6"
+}

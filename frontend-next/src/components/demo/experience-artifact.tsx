@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment, useRef, useState } from "react";
-import { Code, Copy } from "@phosphor-icons/react";
+import { Copy } from "@phosphor-icons/react";
 import type { ExperienceArtifactData } from "@/lib/demo-experience";
 import { artifactInputParts, isCodeExcerpt } from "@/lib/demo-presentation";
 import type { ItemDraft } from "@/lib/demo-notes";
@@ -32,7 +32,7 @@ function CodeExcerpt({ artifact, lang }: Pick<Props, "artifact" | "lang">) {
   }
   return <div className="artifact-code">
     <div className="artifact-code__bar">
-      <h3><Code size={18} aria-hidden="true" />{artifact.input_label[lang]}</h3>
+      <h3>{artifact.input_label[lang]}</h3>
       <button type="button" onClick={copy}><Copy size={15} />{lang === "en" ? "Copy code" : "复制代码"}</button>
     </div>
     <pre tabIndex={0} aria-label={artifact.input_label[lang]}><code ref={code}>{highlightedInput(artifact, lang)}</code></pre>

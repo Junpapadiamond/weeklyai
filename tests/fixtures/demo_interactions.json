@@ -1,0 +1,72 @@
+{
+  "editor": {
+    "kind": "editor",
+    "input_label": {"zh": "产品简报", "en": "Product brief"},
+    "output_label": {"zh": "广告草稿", "en": "Ad draft"},
+    "inputs": [{"id": "product", "label": {"zh": "产品", "en": "Product"}, "options": [
+      {"id": "app", "label": {"zh": "口语应用", "en": "Speaking app"}, "facts": [{"zh": "口语伙伴", "en": "Speaking Partner"}, {"zh": "口语练习", "en": "speaking practice"}]},
+      {"id": "tea", "label": {"zh": "青茶饮品", "en": "Green tea"}, "facts": [{"zh": "青茶", "en": "green-tea"}]}
+    ]}],
+    "variants": [
+      {"when": {"product": "app"}, "brief": {"zh": "为旅行前练口语的人写广告。", "en": "Write an ad for travelers practicing conversation."}, "artifact": {"fields": [
+        {"id": "headline", "label": {"zh": "标题", "en": "Headline"}, "value": {"zh": "下一次开口，先练一遍", "en": "Rehearse your next conversation"}},
+        {"id": "body", "label": {"zh": "正文", "en": "Body"}, "value": {"zh": "口语伙伴把点餐和问路变成每天的口语练习。", "en": "Speaking Partner turns ordering food and asking directions into daily speaking practice."}}
+      ]}},
+      {"when": {"product": "tea"}, "brief": {"zh": "为忙碌通勤者写青茶广告。", "en": "Write a green-tea ad for busy commuters."}, "artifact": {"fields": [
+        {"id": "headline", "label": {"zh": "标题", "en": "Headline"}, "value": {"zh": "给忙碌留一口清爽", "en": "A fresh pause in a busy day"}},
+        {"id": "body", "label": {"zh": "正文", "en": "Body"}, "value": {"zh": "从地铁口到办公桌，让青茶陪你休息片刻。", "en": "From the station to your desk, make room for a green-tea break."}}
+      ]}}
+    ]
+  },
+  "records": {
+    "kind": "records",
+    "input_label": {"zh": "虚构工单", "en": "Fictional requests"},
+    "output_label": {"zh": "工作清单", "en": "Work list"},
+    "inputs": [],
+    "variants": [{"when": {}, "brief": {"zh": "检查两项请求的工作量与状态。", "en": "Review the effort and status of two requests."}, "artifact": {
+      "columns": [
+        {"id": "title", "label": {"zh": "请求", "en": "Request"}, "type": "text"},
+        {"id": "hours", "label": {"zh": "预计工时", "en": "Planned effort"}, "type": "number", "unit": {"zh": "小时", "en": "hours"}},
+        {"id": "status", "label": {"zh": "状态", "en": "Status"}, "type": "select", "options": [
+          {"id": "todo", "label": {"zh": "待处理", "en": "To do"}},
+          {"id": "ready", "label": {"zh": "待复核", "en": "For review"}}
+        ]}
+      ],
+      "rows": [
+        {"id": "navigation", "cells": {"title": {"zh": "整理导航", "en": "Organize navigation"}, "hours": 6, "status": "todo"}, "evidence": {"text": {"zh": "有人找不到价格页，导航需要整理。", "en": "Visitors cannot find pricing; navigation needs attention."}, "quote": {"zh": "找不到价格页", "en": "cannot find pricing"}}},
+        {"id": "copy", "cells": {"title": {"zh": "修订按钮文案", "en": "Revise button copy"}, "hours": 2.5, "status": "ready"}}
+      ],
+      "view": "board",
+      "group_by": "status",
+      "calculation": {"op": "difference", "column": "hours", "left": "navigation", "right": "copy", "label": {"zh": "两项工时差", "en": "Effort difference"}}
+    }}]
+  },
+  "form": {
+    "kind": "form",
+    "input_label": {"zh": "表单要求", "en": "Form brief"},
+    "output_label": {"zh": "本地表单预览", "en": "Local form preview"},
+    "inputs": [],
+    "variants": [{"when": {}, "brief": {"zh": "为工作坊设计报名字段。", "en": "Design the fields for a workshop signup."}, "artifact": {
+      "title": {"zh": "工作坊报名", "en": "Workshop signup"},
+      "fields": [
+        {"id": "name", "label": {"zh": "称呼", "en": "Name"}, "type": "text", "required": true},
+        {"id": "email", "label": {"zh": "邮箱", "en": "Email"}, "type": "email", "required": false}
+      ],
+      "submit_label": {"zh": "测试表单", "en": "Test form"},
+      "confirmation": {"zh": "本地示例已验证，内容没有发送。", "en": "Local sample validated; nothing was sent."}
+    }}]
+  },
+  "review": {
+    "kind": "review",
+    "input_label": {"zh": "待审代码", "en": "Code to review"},
+    "output_label": {"zh": "合并预览", "en": "Merged preview"},
+    "inputs": [],
+    "variants": [{"when": {}, "brief": {"zh": "选择要接受的两处文本修改。代码不会执行。", "en": "Choose which of two text edits to accept. The code is not executed."}, "artifact": {
+      "base": {"zh": "def normalize(value):\n    return value.strip()\n\nlimit = 10", "en": "def normalize(value):\n    return value.strip()\n\nlimit = 10"},
+      "patches": [
+        {"id": "lowercase", "label": {"zh": "统一小写", "en": "Normalize case"}, "before": {"zh": "value.strip()", "en": "value.strip()"}, "after": {"zh": "value.strip().lower()", "en": "value.strip().lower()"}},
+        {"id": "limit", "label": {"zh": "调整上限", "en": "Adjust limit"}, "before": {"zh": "limit = 10", "en": "limit = 10"}, "after": {"zh": "limit = 20", "en": "limit = 20"}}
+      ]
+    }}]
+  }
+}

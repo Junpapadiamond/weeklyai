@@ -18,6 +18,8 @@ import "../styles/featured-products.css";
 import "../styles/brand.css";
 import "../styles/chinese.css";
 import "../styles/editorial.css";
+import "../styles/hero-motion.css";
+import "../styles/english.css";
 
 const displayFont = Plus_Jakarta_Sans({
   subsets: ["latin"],

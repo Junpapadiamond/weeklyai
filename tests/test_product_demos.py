@@ -24,6 +24,7 @@ def spec():
     entry = next(iter(service.published().values()))
     result = copy.deepcopy(entry["spec"])
     result["sources"] = [{"url": PRODUCT["website"], "label": {"zh": "官网", "en": "Official"}}]
+    result["interaction"] = json.loads((Path(__file__).parent / "fixtures/demo_interactions.json").read_text(encoding="utf-8"))["records"]
     # Provider fixtures model the new first-value contract; legacy cache replay
     # without artifacts is separately covered in test_demo_artifacts.py.
     for option in result["steps"][0]["options"]:

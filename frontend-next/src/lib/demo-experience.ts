@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { InteractionSchema } from "./demo-interaction";
 
 const copy = (max: number) => z.object({ zh: z.string().trim().min(1).max(max), en: z.string().trim().min(1).max(max) });
 export const ExperienceArtifactSchema = z.object({
@@ -34,6 +35,7 @@ const step = z.object({
 export const ExperienceSchema = z.object({
   version: z.literal(2), confidence: z.literal("illustrative"), tier: z.enum(["workflow", "concept"]),
   headline: copy(120), scenario: copy(400), steps: z.array(step).min(1).max(6), takeaway: copy(500),
+  interaction: InteractionSchema.optional(),
   focus_step_id: z.string().min(1).max(40).optional(),
   workspace: z.object({ kind: z.enum(["video", "image", "search", "document", "board"]), label: copy(80), initial: copy(200) }).optional(),
   product_context: z.object({ job: copy(300), input: copy(300), output: copy(300), trial_note: copy(300),

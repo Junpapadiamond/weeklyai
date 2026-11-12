@@ -173,6 +173,7 @@ def mock_completions(monkeypatch, responses):
 
 def test_missing_artifact_in_one_opening_branch_uses_existing_repair(legacy_spec, artifact, monkeypatch):
     complete_spec = with_artifacts(legacy_spec, artifact)
+    complete_spec["interaction"] = json.loads((Path(__file__).parent / "fixtures/demo_interactions.json").read_text(encoding="utf-8"))["editor"]
     incomplete = copy.deepcopy(complete_spec)
     del incomplete["steps"][0]["options"][1]["artifact"]
     completion, sent = mock_completions(monkeypatch, [incomplete, complete_spec])
@@ -181,10 +182,9 @@ def test_missing_artifact_in_one_opening_branch_uses_existing_repair(legacy_spec
     assert completion.call_count == 2
     assert "Every first-step option needs a concrete artifact" in sent[1]["messages"][-1]["content"]
     prompt = sent[0]["messages"][0]["content"]
-    assert "EVERY option of the FIRST step" in prompt
-    assert "1-6 independent example sections" in prompt
-    assert "one focused input/output artifact" in prompt
-    assert "editable example brief" not in prompt
+    assert "interactive-v1" in prompt
+    assert "EXACTLY one variant" in prompt
+    assert "edit actual fields" in prompt
     assert "exact nonempty substring" in prompt
     assert '"artifact":' in prompt
 
@@ -203,6 +203,7 @@ def test_compact_artifact_round_trip_keeps_localized_highlight_and_items(legacy_
     artifact["items"] = [{"label": bilingual("问题", "Question"), "detail": bilingual("愿意分享哪些信息？", "What information would you share?")},
                          {"label": bilingual("假设", "Hypothesis"), "detail": bilingual("允许选择分享范围。", "Let people choose what to share.")}]
     complete_spec = with_artifacts(legacy_spec, artifact)
+    complete_spec["interaction"] = json.loads((Path(__file__).parent / "fixtures/demo_interactions.json").read_text(encoding="utf-8"))["editor"]
 
     def compact(value):
         if isinstance(value, dict):

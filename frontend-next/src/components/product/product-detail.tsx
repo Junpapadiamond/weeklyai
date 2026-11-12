@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, ArrowDown, ArrowUpRight, BookOpen, GlobeHemisphereWest } from "@phosphor-icons/react";
+import { ArrowLeft, ArrowDown, ArrowUpRight } from "@phosphor-icons/react";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { FavoriteButton } from "@/components/favorites/favorite-button";
@@ -76,14 +76,14 @@ export function ProductDetail({ product, related }: { product: Product; related:
           </section> : null}
           {!showExample && !why && !news ? <section className="profile-section"><h2>{t("继续了解", "Explore further")}</h2><p>{t("详细资料尚待补充，可从原始来源了解这款产品。", "More details are pending. Explore the original source to learn about this product.")}</p></section> : null}
         </div>
-        {showExample && why ? <section className="profile-insight"><h2 className="profile-kicker"><BookOpen size={16} aria-hidden="true" />{t("为什么值得关注", "Why look closer")}</h2><p>{why}</p></section> : null}
+        {showExample && why ? <section className="profile-insight"><h2 className="profile-kicker">{t("为什么值得关注", "Why look closer")}</h2><p>{why}</p></section> : null}
         <aside className="profile-sidebar" aria-label={t("产品资料", "Product facts")}>
           {facts.length ? <section className="profile-facts"><h2>{t("产品档案", "On record")}</h2><dl>
             {facts.map(fact => <div key={fact.label}><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}
           </dl></section> : null}
           <div className="profile-provenance">
-            {verified ? <a href={website} target="_blank" rel="noopener noreferrer"><GlobeHemisphereWest size={17} aria-hidden="true" /><span>{new URL(website).hostname}</span><ArrowUpRight size={14} aria-hidden="true" /></a> : null}
-            {source ? <a href={source} target="_blank" rel="noopener noreferrer"><BookOpen size={17} aria-hidden="true" /><span>{t("查看原始来源", "Read original source")}</span><ArrowUpRight size={14} aria-hidden="true" /></a> : null}
+            {verified ? <a href={website} target="_blank" rel="noopener noreferrer"><span>{new URL(website).hostname}</span><ArrowUpRight size={14} aria-hidden="true" /></a> : null}
+            {source ? <a href={source} target="_blank" rel="noopener noreferrer"><span>{t("查看原始来源", "Read original source")}</span><ArrowUpRight size={14} aria-hidden="true" /></a> : null}
             <p>{t("资料来自公开来源，收录信息不代表实时状态。", "Based on public sources. Recorded details may have changed.")}</p>
           </div>
         </aside>

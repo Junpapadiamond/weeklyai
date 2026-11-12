@@ -200,4 +200,7 @@ def validate_experience(value, allowed_sources=None):
             raise ValueError("Unsupported workspace")
         result["workspace"] = {"kind": workspace["kind"], "label": _copy(workspace.get("label"), 80, "workspace.label"),
                                "initial": _copy(workspace.get("initial"), 200, "workspace.initial")}
+    if "interaction" in value:
+        from app.services.demo_interaction import validate_interaction
+        result["interaction"] = validate_interaction(value["interaction"])
     return result

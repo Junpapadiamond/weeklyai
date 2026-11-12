@@ -14,6 +14,7 @@ from pathlib import Path
 from pymongo import ReturnDocument
 from pymongo.errors import DuplicateKeyError
 from app.services.product_repository import get_mongo_db, _mongo_uri_configured
+from app.services.demo_withdrawals import is_withdrawn, withdrawn_cache_keys
 
 LEASE_SECONDS = 150  # Outlives the 90-second generation + persistence window.
 
@@ -63,16 +64,22 @@ class DemoStore:
     def get(self, key):
         if self.db is not None:
             entry = self.db.demo_cache.find_one({"_id": key})
-            return entry.get("payload") if entry else None
-        with self.connect() as conn:
-            entry = conn.execute("SELECT payload FROM demo_cache WHERE key=?", (key,)).fetchone()
-            return json.loads(entry[0]) if entry else None
+            payload = entry.get("payload") if entry else None
+        else:
+            with self.connect() as conn:
+                entry = conn.execute("SELECT payload FROM demo_cache WHERE key=?", (key,)).fetchone()
+                payload = json.loads(entry[0]) if entry else None
+        return None if is_withdrawn(payload, key) else payload
 
     def keys(self):
         if self.db is not None:
-            return {item["_id"] for item in self.db.demo_cache.find({}, {"_id": 1})}
-        with self.connect() as conn:
-            return {item[0] for item in conn.execute("SELECT key FROM demo_cache")}
+            keys = {item["_id"] for item in self.db.demo_cache.find({}, {"_id": 1})}
+        else:
+            with self.connect() as conn:
+                keys = {item[0] for item in conn.execute("SELECT key FROM demo_cache")}
+        # Catalogs need only identities. Fetch content solely for the small
+        # intersection with reviewed withdrawals, including any later new spec.
+        return keys - {key for key in keys & withdrawn_cache_keys() if self.get(key) is None}
 
     def pending(self, key):
         """Only a live lease is pending; failed/expired jobs must stop polling."""
@@ -136,8 +143,9 @@ class DemoStore:
         with self.connect() as conn:
             conn.execute("BEGIN IMMEDIATE")
             cached = conn.execute("SELECT payload FROM demo_cache WHERE key=?", (key,)).fetchone()
-            if cached:
-                return {"state": "cached", "payload": json.loads(cached[0])}
+            payload = json.loads(cached[0]) if cached else None
+            if payload and not is_withdrawn(payload, key):
+                return {"state": "cached", "payload": payload}
             lease = conn.execute("SELECT * FROM demo_leases WHERE key=?", (key,)).fetchone()
             if lease and lease["expires"] > now:
                 return {"state": "pending"}

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { MagnifyingGlass, ArrowRight, Play, Gauge } from "@phosphor-icons/react";
+import { MagnifyingGlass, ArrowRight } from "@phosphor-icons/react";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import { SmartLogo } from "@/components/common/smart-logo";
 import { cleanDescription, formatCategories, getLocalizedProductDescription, resolveProductLogoSources } from "@/lib/product-utils";
@@ -48,7 +48,7 @@ export function DemoGallery({ initialFilter = "all" }: { initialFilter?: "all" |
 
     <header className="demo-gallery-header">
       <div><h1>{t("产品演示", "Product demos")}</h1><p>{t("独立示例 · 非原厂输出", "Independent examples · Not vendor output")}</p></div>
-      <div className="demo-budget"><Gauge size={17} /><div>
+      <div className="demo-budget"><div>
         <span>{t("今日剩余生成次数", "Generations left today")}</span>
         <strong>{catalog?.quota ? catalog.quota.remaining + " / " + catalog.quota.limit : "—"}</strong>
         <details><summary>{t("额度说明", "Credit details")}</summary><p>{t("首次生成使用 1 次额度；已有演示不计次数。每日北京时间 08:00 重置。", "New examples use 1 credit; prepared examples are free. Resets at 00:00 UTC.")}</p></details>
@@ -62,7 +62,7 @@ export function DemoGallery({ initialFilter = "all" }: { initialFilter?: "all" |
       <div className="demo-card-top"><SmartLogo key={`${product._id}-${product.logo_url || ""}`} className="demo-product-logo" name={product.name} {...resolveProductLogoSources(product)} website={product.website} sourceUrl={product.source_url} trustPrimaryLogo size={29} /><strong>{product.name}</strong></div>
       <p>{cleanDescription(getLocalizedProductDescription(product, locale), locale)}</p>
       <div className="demo-card-meta"><span>{product.dark_horse_index || 0}/5 · {formatCategories(product, locale)}</span>{product.is_hardware ? <span>{t("概念演示", "Concept")}</span> : null}</div>
-      <div className="demo-card-action"><span><Play size={12} />{product.demo_ready ? t("查看演示", "View example") : t("生成演示 · 1 次额度", "Generate · 1 credit")}</span><ArrowRight size={15} /></div>
+      <div className="demo-card-action"><span>{product.demo_ready ? t("查看演示", "View example") : t("生成演示 · 1 次额度", "Generate · 1 credit")}</span><ArrowRight size={15} aria-hidden="true" /></div>
     </button>) : null}</div>
     {!busy && !error && !catalog?.products.length ? <div className="demo-gallery-empty">{t("没有匹配的产品，换个词试试。", "No matching products. Try another search.")}</div> : null}
     {catalog && catalog.total > 24 ? <nav className="demo-pagination" aria-label={t("产品分页", "Product pages")}><button type="button" disabled={page <= 1 || busy} onClick={() => setPage(v => v - 1)}>{t("上一页", "Previous")}</button><span>{page} / {Math.ceil(catalog.total / 24)}</span><button type="button" disabled={page * 24 >= catalog.total || busy} onClick={() => setPage(v => v + 1)}>{t("下一页", "Next")}</button></nav> : null}

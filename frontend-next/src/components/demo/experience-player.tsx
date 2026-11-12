@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { reviewedIds } from "./reviewed/ids";
 import { useId, useRef, useState } from "react";
-import { ArrowRight, ArrowUpRight, Check, Download, ArrowCounterClockwise, Columns } from "@phosphor-icons/react";
+import { ArrowUpRight, Download, ArrowCounterClockwise } from "@phosphor-icons/react";
 import { useSiteLocale } from "@/components/layout/locale-provider";
 import { availableExperienceOptions, type ExperienceEntry } from "@/lib/demo-experience";
 import { defaultExperienceChoices, selectExperienceChoice, initialExperienceIndex, experienceArtifact } from "@/lib/demo-presentation";
@@ -18,16 +18,31 @@ import { CLUTCH_PRODUCT_ID } from "@/lib/clutch-access";
 
 const ReviewedPlayer = dynamic(() => import("./reviewed/reviewed-player"));
 const ClutchAccessDemo = dynamic(() => import("./clutch-access-demo"));
+const GeneratedInteraction = dynamic(() => import("./generated-interaction").then(module => module.GeneratedInteraction));
 
 type PlayerProps = { entry: ExperienceEntry; productId?: string; productName: string; website?: string; logoUrl?: string; secondaryLogoUrl?: string; embedded?: boolean };
 
 export function ExperiencePlayer(props: PlayerProps) {
   const { productId, entry } = props;
+  if (entry.spec.interaction) return <GeneratedPlayer {...props} />;
   if (productId === CLUTCH_PRODUCT_ID) return <ClutchAccessDemo {...props} />;
   if (productId && reviewedIds.has(String(productId)) && isTextPlan(entry.spec)) {
     return <ReviewedPlayer key={productId} {...props} productId={String(productId)} />;
   }
   return <PresetPlayer {...props} />;
+}
+
+function GeneratedPlayer({ entry, productName, website, logoUrl, secondaryLogoUrl, embedded = false }: PlayerProps) {
+  const { locale } = useSiteLocale();
+  const lang = locale === "en-US" ? "en" : "zh";
+  return <div className={`experience-shell experience-focus${embedded ? " experience-focus--embedded" : ""}`}>
+    <header className="focus-header">
+      {!embedded && <div className="focus-product"><SmartLogo className="demo-product-logo" name={productName}
+        logoUrl={logoUrl} secondaryLogoUrl={secondaryLogoUrl} website={website} trustPrimaryLogo size={30} /><h3>{productName}</h3></div>}
+      <h2 className="focus-promise">{entry.spec.headline[lang]}</h2>
+    </header>
+    <GeneratedInteraction key={`${entry.cache_key}:${entry.generated_at}`} interaction={entry.spec.interaction!} productName={productName} sources={entry.spec.sources} embedded={embedded} />
+  </div>;
 }
 
 function isTextPlan(spec: ExperienceEntry["spec"]) {
@@ -119,11 +134,11 @@ function PresetPlayer({ entry, productName, website, logoUrl, secondaryLogoUrl, 
       </select></div> : null}
       {options.length > 1 ? <fieldset className="focus-choices"><legend>{step.instruction[lang]}</legend><div>
         {options.map(option => <button key={option.id} type="button" aria-pressed={selected?.id === option.id} onClick={() => choose(step.id, option.id)}>
-          {selected?.id === option.id ? <Check size={16} aria-hidden="true" /> : <ArrowRight size={16} aria-hidden="true" />}<span>{option.label[lang]}</span>
+          <span>{option.label[lang]}</span>
         </button>)}
         {step.widget !== "app" && step.widget !== "dial" ? (
           <button className="focus-compare" type="button" aria-pressed={comparing} aria-controls={id + "-result"} onClick={() => setComparing(value => !value)}>
-            <Columns size={16} aria-hidden="true" />{comparing ? t("退出对照", "Close comparison") : t("对照方案", "Compare presets")}
+            {comparing ? t("退出对照", "Close comparison") : t("对照方案", "Compare presets")}
           </button>
         ) : null}
       </div></fieldset> : null}

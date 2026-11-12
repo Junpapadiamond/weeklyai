@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { BookmarkSimple, House } from "@phosphor-icons/react";
+import { BookmarkSimple } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 import { getDiscoveryPage } from "@/lib/api-client";
 import type { Product } from "@/types/api";
@@ -65,7 +65,7 @@ export function DiscoverClient({ initialPage }: DiscoverClientProps) {
             <BookmarkSimple size={17} aria-hidden="true" /> {favoritesCount}
           </button>
           <Link className="link-btn" href="/">
-            <House size={14} /> {t("返回首页", "Back to home")}
+            {t("返回首页", "Back to home")}
           </Link>
         </div>
 

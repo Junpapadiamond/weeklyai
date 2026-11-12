@@ -62,7 +62,7 @@ def demo_catalog():
         except Exception:
             context = (*context[:3], None, None)
     products = ProductService.get_discovery_products()
-    keys.update(cache_key(p) for p in products if profile_name(p))
+    keys.update(cache_key(p) for p in products if profile_name(p) and ready_experience(p))
     def is_prepared(product):
         return any(key in keys for key in compatible_cache_keys(product))
 
