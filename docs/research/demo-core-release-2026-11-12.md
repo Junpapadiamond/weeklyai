@@ -63,5 +63,12 @@ The current [NYU Software Ninjas Design components](https://www.figma.com/design
 ## Automated and deployment checks
 
 - Frontend: 174 tests passed; ESLint and TypeScript passed; catalog contract checked 2,379 records with zero failures.
-- Backend/crawler after merging remote main: 735 tests and 11 subtests passed (`pytest tests/ --ignore=tests/test_frontend.py -q`). The ignored file is the legacy localhost:3000 Playwright browser suite, not a backend test; current UI checks are recorded above.
+- Backend/crawler after merging remote main: 737 tests and 11 subtests passed (`pytest tests/ --ignore=tests/test_frontend.py -q`). The ignored file is the legacy localhost:3000 Playwright browser suite, not a backend test; current UI checks are recorded above.
 - `next build --webpack` passed after merging remote main. Remote commit and deployment browser receipts are appended after release verification.
+
+
+## Production cache precedence regression
+
+The first production deployment (`0a4101f`) exposed a second identity issue that local normalized-catalog checks did not reproduce: production compatible keys list the old `424a2fa...` shipped example before the reviewed `98e1c153...` example. Both are shipped files; this was not database-over-shipped precedence. Actual prepared GET and the real page still selected the old record despite the new deployment being READY. Melius withdrawal and the new Hero were already correct.
+
+The shared selector now prioritizes only entries with an explicit nonempty `review_record` and valid ISO `reviewed_at`; among reviewed candidates the later review wins. Generation timestamps do not imply approval. Stable sorting preserves the prior order among unreviewed candidates. Shipped entries still precede database copies, and withdrawal/schema validation remain mandatory with fallback for rejected candidates. No additional Exa cache file or provider request was added. Production-compatible key order, review order, malformed/missing approval, invalid specs and withdrawals are covered by the targeted **93-test passing** suite. The earlier full backend/crawler run remains 737 tests + 11 subtests; the targeted run includes 11 additional precedence regressions.

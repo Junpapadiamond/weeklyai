@@ -123,6 +123,22 @@ def provider_available():
     return bool(providers())
 
 
+def _review_priority(entry):
+    """Explicit review records outrank legacy keys; generation time is not approval."""
+    if not isinstance(entry, dict):
+        return (0, 0)
+    record, reviewed_at = entry.get("review_record"), entry.get("reviewed_at")
+    if not isinstance(record, str) or not record.strip() or not isinstance(reviewed_at, str):
+        return (0, 0)
+    try:
+        reviewed = datetime.fromisoformat(reviewed_at.replace("Z", "+00:00"))
+        if reviewed.tzinfo is None:
+            reviewed = reviewed.replace(tzinfo=timezone.utc)
+        return (1, reviewed.timestamp())
+    except (ValueError, OverflowError, OSError):
+        return (0, 0)
+
+
 def ready_experience(product, store=None):
     profile = product_profile(product)
     if profile:
@@ -132,16 +148,18 @@ def ready_experience(product, store=None):
             return entry
     keys = compatible_cache_keys(product)
     entries = published()
-    # Prefer any shipped equivalent before consulting the database.
-    for entry in [entries.get(key) for key in keys]:
+    # A reviewed compatible example must not be shadowed by an older exact key.
+    # Stable sorting preserves the existing order for all unreviewed candidates.
+    # Shipped examples still take precedence over database copies.
+    for entry in sorted([entries.get(key) for key in keys], key=_review_priority, reverse=True):
         if entry and not is_withdrawn(entry):
             try:
                 return {**entry, "spec": validate_experience(entry["spec"])}
             except (ValueError, KeyError, TypeError):
                 continue
     if store:
-        for key in keys:
-            entry = store.get(key)
+        candidates = [(key, store.get(key)) for key in keys]
+        for key, entry in sorted(candidates, key=lambda item: _review_priority(item[1]), reverse=True):
             if entry and not is_withdrawn(entry, key):
                 try:
                     return {**entry, "spec": validate_experience(entry["spec"])}
