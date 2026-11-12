@@ -55,7 +55,7 @@ def validate_manifest(manifest):
                     or legacy_key in keys):
                 raise MigrationError('Missing or duplicate product identity.')
             keys.add(legacy_key)
-            if (not isinstance(before, dict) or set(before) != set(fields)
+            if (not isinstance(before, dict) or not before or not set(before) <= set(fields)
                     or not all(isinstance(value, str) for value in before.values())):
                 raise MigrationError(f'Invalid legacy text transitions: {name}.')
     return products
@@ -67,8 +67,8 @@ def declared_records(product):
     for legacy in product.get('legacy_records', []):
         records[legacy['_sync_key']] = {
             'name': product['name'], '_sync_key': legacy['_sync_key'],
-            'fields': {field: {'before': legacy['before'][field], 'after': values['after']}
-                       for field, values in product['fields'].items()},
+            'fields': {field: {'before': before, 'after': product['fields'][field]['after']}
+                       for field, before in legacy['before'].items()},
         }
     return records
 

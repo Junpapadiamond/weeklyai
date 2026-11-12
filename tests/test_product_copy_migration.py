@@ -206,9 +206,7 @@ def test_committed_manifest_only_contains_reviewed_changes():
     assert harvey['legacy_records'] == [{
         '_sync_key': 'harveyllc.com', 'before': {
             'description': 'AI legal technology platform that automates legal document analysis and contract review for law firms.',
-            'description_en': 'AI legal technology platform that automates legal document analysis and contract review for law firms.',
             'why_matters': 'Raised $300M Series D round at $3B valuation, demonstrating strong market adoption in legal AI sector.',
-            'why_matters_en': 'Raised $300M Series D round at $3B valuation, demonstrating strong market adoption in legal AI sector.',
         },
     }]
 
@@ -274,15 +272,49 @@ def test_legacy_preflight_conflict_prevents_every_write(migration, tmp_path, mon
     assert list(collection.find()) == original
 
 
-@pytest.mark.parametrize('fault', ['missing_field', 'unapproved_field', 'duplicate_identity'])
+@pytest.mark.parametrize('fault', ['empty_fields', 'unapproved_field', 'duplicate_identity'])
 def test_legacy_manifest_is_explicit_and_limited_to_product_fields(migration, fault):
     collection, manifest = migration
     legacy = add_legacy_record(collection, manifest)
-    if fault == 'missing_field':
-        legacy['before'].pop('description')
+    if fault == 'empty_fields':
+        legacy['before'].clear()
     elif fault == 'unapproved_field':
         legacy['before']['website'] = 'https://different.test'
     else:
         legacy['_sync_key'] = 'two.test'
     with pytest.raises(MigrationError):
         validate_manifest(manifest)
+
+
+@pytest.mark.parametrize('legacy_first', [True, False])
+def test_harvey_legacy_subset_preserves_missing_english_and_merges_reviewed_copy(tmp_path, legacy_first):
+    from app.services.product_repository import ProductRepository
+    from tools.migrate_product_copy import declared_records
+
+    root = Path(__file__).resolve().parents[1]
+    manifest = json.loads((root / 'crawler/data/migrations/product_copy_focus_2026_11_12.json').read_text(encoding='utf-8'))
+    collection = mongomock.MongoClient().weeklyai.products
+    for product in manifest['products']:
+        for key, declaration in declared_records(product).items():
+            collection.insert_one({
+                'name': product['name'], '_sync_key': key, 'website': f'https://{key}',
+                **{field: values['before'] for field, values in declaration['fields'].items()},
+                'dark_horse_index': 4, 'funding_total': '$300M',
+            })
+    original = {record['_sync_key']: record for record in collection.find()}
+    receipt = migrate_collection(collection, manifest, tmp_path / 'forward.json')
+    assert len(receipt['execution']['products']) == 8
+    assert sum(record['field_count'] for record in receipt['execution']['products']) == 24
+    legacy = collection.find_one({'_sync_key': 'harveyllc.com'})
+    primary = collection.find_one({'_sync_key': 'harvey.ai/blog'})
+    for field in ('description_en', 'why_matters_en'):
+        assert field not in legacy
+    harvey = next(product for product in manifest['products'] if product['name'] == 'Harvey')
+    ordered = [legacy, primary] if legacy_first else [primary, legacy]
+    merged = ProductRepository._dedupe_products(copy.deepcopy(ordered))
+    assert len(merged) == 1
+    assert all(merged[0][field] == values['after'] for field, values in harvey['fields'].items())
+    repeated = migrate_collection(collection, manifest, tmp_path / 'repeat.json')
+    assert {record['status'] for record in repeated['execution']['products']} == {'unchanged'}
+    migrate_collection(collection, receipt, tmp_path / 'rollback.json', rollback=True)
+    assert {record['_sync_key']: record for record in collection.find()} == original
