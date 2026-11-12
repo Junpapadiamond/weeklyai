@@ -1,0 +1,256 @@
+{
+  "cache_key": "9dae25c38ee16ba47a389846-c0cc8cafede0e4dd9380b12f",
+  "product_key": "9dae25c38ee16ba47a389846",
+  "fingerprint": "c0cc8cafede0e4dd9380b12f",
+  "product_id": "209",
+  "product_name": "Avoca",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-12T01:32:29.864597+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "服务预约智能调度",
+      "en": "Service Booking Intelligence"
+    },
+    "scenario": {
+      "zh": "本地美发沙龙收到多个预约请求，需要根据技师专长和时段空位安排最优档期",
+      "en": "A local hair salon receives multiple booking requests and needs to optimize scheduling based on stylist expertise and availability"
+    },
+    "steps": [
+      {
+        "id": "analyze_request",
+        "widget": "choice",
+        "title": {
+          "zh": "识别客户需求",
+          "en": "Parse Customer Request"
+        },
+        "instruction": {
+          "zh": "选择一条预约咨询消息",
+          "en": "Choose a booking inquiry"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "染发+修剪复合需求",
+              "en": "Color + Trim Combo"
+            },
+            "output": {
+              "zh": "识别出两项服务及时长要求",
+              "en": "Identified two services and duration needs"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "客户消息",
+                "en": "Customer Message"
+              },
+              "output_label": {
+                "zh": "解析结果",
+                "en": "Parsed Requirements"
+              },
+              "input": {
+                "zh": "你好，我想下周三下午做个挑染，顺便修一下长度，大概需要多久？",
+                "en": "Hi, I'd like highlights next Wednesday afternoon, plus a trim. How long does that take?"
+              },
+              "output": {
+                "zh": "服务：挑染（90分钟）+ 修剪（30分钟）；偏好时段：下周三下午；总时长：2小时",
+                "en": "Services: Highlights (90min) + Trim (30min); Preferred: Wed PM next week; Total: 2 hours"
+              },
+              "emphasis": {
+                "zh": "挑染",
+                "en": "highlights"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "指定技师偏好",
+              "en": "Stylist Preference"
+            },
+            "output": {
+              "zh": "关联历史技师和服务类型",
+              "en": "Linked history and service type"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "客户消息",
+                "en": "Customer Message"
+              },
+              "output_label": {
+                "zh": "解析结果",
+                "en": "Parsed Requirements"
+              },
+              "input": {
+                "zh": "上次Lisa给我剪的短发特别满意，这次还能约她吗？想剪个更短的",
+                "en": "I loved the short cut Lisa gave me last time. Can I book her again? Want to go even shorter"
+              },
+              "output": {
+                "zh": "服务：剪发（45分钟）；指定技师：Lisa；参考记录：2024-12-08剪发服务",
+                "en": "Service: Haircut (45min); Requested stylist: Lisa; Reference: 2024-12-08 cut"
+              },
+              "emphasis": {
+                "zh": "Lisa",
+                "en": "Lisa"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "propose_slots",
+        "widget": "choice",
+        "title": {
+          "zh": "生成可选时段",
+          "en": "Generate Available Slots"
+        },
+        "instruction": {
+          "zh": "查看系统推荐的档期",
+          "en": "Review suggested time slots"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "优先满足技师偏好",
+              "en": "Prioritize Stylist Match"
+            },
+            "output": {
+              "zh": "找到指定技师的三个空档",
+              "en": "Found three openings with requested stylist"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "调度约束",
+                "en": "Scheduling Constraints"
+              },
+              "output_label": {
+                "zh": "推荐方案",
+                "en": "Recommended Slots"
+              },
+              "input": {
+                "zh": "客户要求：Lisa技师，剪发45分钟，本周优先",
+                "en": "Requirements: Stylist Lisa, 45min cut, this week preferred"
+              },
+              "output": {
+                "zh": "已匹配Lisa技师的空闲时段，考虑客户历史偏好的下午时间",
+                "en": "Matched Lisa's availability, considering customer's historical afternoon preference"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "周四 14:30",
+                    "en": "Thu 2:30 PM"
+                  },
+                  "detail": {
+                    "zh": "Lisa空档，客户偏好时段，无冲突",
+                    "en": "Lisa available, preferred time, no conflicts"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "周五 16:00",
+                    "en": "Fri 4:00 PM"
+                  },
+                  "detail": {
+                    "zh": "Lisa空档，接近下班前，略晚",
+                    "en": "Lisa available, near closing, slightly late"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "下周二 13:00",
+                    "en": "Next Tue 1:00 PM"
+                  },
+                  "detail": {
+                    "zh": "Lisa空档，午后时段，跨周",
+                    "en": "Lisa available, post-lunch, crosses week boundary"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "优化连续服务流程",
+              "en": "Optimize Service Flow"
+            },
+            "output": {
+              "zh": "安排两位技师接力完成",
+              "en": "Scheduled relay between two stylists"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "调度约束",
+                "en": "Scheduling Constraints"
+              },
+              "output_label": {
+                "zh": "推荐方案",
+                "en": "Recommended Slots"
+              },
+              "input": {
+                "zh": "客户要求：挑染+修剪共2小时，下周三下午",
+                "en": "Requirements: Highlights + Trim (2hr total), Wed PM next week"
+              },
+              "output": {
+                "zh": "分解为染色和修剪环节，协调专长技师无缝衔接",
+                "en": "Split into color and cut phases, coordinated specialists with seamless handoff"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "下周三 14:00 开始",
+                    "en": "Next Wed 2:00 PM start"
+                  },
+                  "detail": {
+                    "zh": "Amy染色90分钟，Lisa接续修剪30分钟",
+                    "en": "Amy color 90min, then Lisa trim 30min"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "下周三 15:30 开始",
+                    "en": "Next Wed 3:30 PM start"
+                  },
+                  "detail": {
+                    "zh": "Sophie染色，Tom修剪，两人均有空档",
+                    "en": "Sophie color, Tom trim, both available"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了将自然语言预约请求转化为结构化需求，并根据技师专长和时段生成优化方案；实际排班需在Avoca平台验证技师实时日历",
+      "en": "Illustrated parsing natural booking requests into structured needs and generating optimized slots based on expertise and availability; actual scheduling requires verifying real-time calendars on the Avoca platform"
+    },
+    "sources": [
+      {
+        "url": "https://www.avoca.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://pulse2.com/artificial-intelligence/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

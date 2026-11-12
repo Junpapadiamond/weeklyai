@@ -260,5 +260,94 @@
         }
       ]
     }
+  },
+  {
+    "name": "Limetax",
+    "website": "https://www.limetax.de/",
+    "description": "专注于中小企业的AI驱动税务平台，通过收购或合作整合现有税务事务所，并用AI平台赋能它们。保留当地专业人士的客户关系和专业责任，但用AI提高效率。",
+    "description_en": "AI-driven tax platform for SMEs that acquires or partners with existing tax firms and equips them with an AI platform. Retains local professional relationships and expertise while improving efficiency through AI.",
+    "category": "finance",
+    "why_matters": "融资模式创新：3600万欧元中3000万为收购信用额度，表明对通过整合现有事务所进行快速扩展的承诺。不同于从零开始的竞争对手，采用并购驱动增长。",
+    "why_matters_en": "Novel financing structure: €30M of €36M is acquisition credit line, signaling commitment to rapid scale via consolidation of existing firms. Differs from competitor by using M&A-driven growth rather than building from scratch.",
+    "latest_news": "2026年9月宣布融资3600万欧元，其中仅600万欧元为股权融资，其余3000万欧元为收购信用额度。",
+    "latest_news_en": "Announced €36M funding in September 2026, with only €6M as equity and €30M as acquisition credit line.",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "funding_signal",
+      "category_innovation"
+    ],
+    "company_country": "DE",
+    "confidence": 0.78,
+    "source_url": "https://paymentandbanking.com/fintechs-2026-wie-ki-neue-geschaftsmodelle-schafft",
+    "categories": [
+      "finance"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "Fintechs 2026: Wie KI neue Geschäftsmodelle schafft",
+    "website_source": "https://www.limetax.de/en",
+    "discovered_at": "2026-11-12",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261112T012027Z-545b46b5",
+      "search_region": "eu",
+      "search_lane": "niche",
+      "website_verification": {
+        "url": "https://www.limetax.de/",
+        "title": "Limetax - Steuerberatung der neuen Generation",
+        "search_result_url": "https://www.limetax.de/en"
+      },
+      "source_published_at": "2026-10-14T05:24:11+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "Von den 36 Millionen Euro, die Limetax im September bekannt gab, entfallen nur sechs Millionen Euro auf Eigenkapital. Die übrigen 30 Millionen Euro stehen als Kreditlinie für Akquisitionen zur Verfügung."
+        },
+        {
+          "criterion": "category_innovation",
+          "quote": "Limetax übernimmt bestehende Kanzleien oder geht Partnerschaften mit ihnen ein. Diese bündelt das Unternehmen in einer \"Agentic-First\"-Gruppe für kleine und mittlere Unternehmen"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Upfirst AI",
+    "website": "https://upfirst.ai",
+    "description": "Upfirst 构建 AI 接待员，为小型企业全天候接听电话、筛选潜在客户并预约，支持 35 种以上语言。其数据显示 23.9% 的来电发生在营业时间外，77% 的来电无需转接即可解决。",
+    "description_en": "Upfirst builds an AI receptionist that answers calls, qualifies leads, and books appointments for small businesses around the clock, supporting over 35 languages. Its data shows 23.9% of calls come in outside business hours, and 77% of calls are resolved without transfer.",
+    "category": "voice",
+    "why_matters": "Upfirst 用实际数据证明其产品价值：近四分之一的来电发生在营业时间外，且 77% 的来电无需人工转接即可解决，显示其在全球小型企业市场的明确应用场景和技术差异化。",
+    "why_matters_en": "Upfirst demonstrates product value with real data: nearly a quarter of calls come in outside business hours, and 77% are resolved without transfer, showing clear use cases and technical differentiation for the global small-business market.",
+    "latest_news": "创始人 Alfredo Salkeld 出生于秘鲁利马，现居佛罗里达州，产品已与 Clio 等工具集成。",
+    "latest_news_en": "Founder Alfredo Salkeld, born in Lima, Peru, now based in Florida; the product has integrated with tools such as Clio.",
+    "dark_horse_index": 3,
+    "criteria_met": [
+      "category_innovation"
+    ],
+    "company_country": "US",
+    "confidence": 0.82,
+    "source_url": "https://latinamericareports.com/15-ai-leaders-to-watch-in-2027/15575",
+    "categories": [
+      "voice"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "Born in LatAm, built for the world: 15 AI leaders to watch in 2027",
+    "website_source": "https://latinamericareports.com/15-ai-leaders-to-watch-in-2027/15575",
+    "discovered_at": "2026-11-12",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261112T012027Z-545b46b5",
+      "search_region": "us",
+      "search_lane": "launch",
+      "website_verification": null,
+      "source_published_at": "2026-11-09T14:01:46+00:00",
+      "evidence": [
+        {
+          "criterion": "category_innovation",
+          "quote": "Nearly a quarter of the calls it answers, 23.9%, come in outside business hours, Salkeld has said. The AI resolves 77% of calls without transferring them, according to Sociable."
+        }
+      ]
+    }
   }
 ]

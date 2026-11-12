@@ -140,5 +140,104 @@
         }
       ]
     }
+  },
+  {
+    "name": "Primero",
+    "website": "https://primero.com/",
+    "description": "Primero 的 Primia 平台连接大型企业的碎片化遗留系统与 AI 代理。客户包括 Kimberly-Clark de México 和 SmartFit。",
+    "description_en": "Primero's Primia platform connects large companies' fragmented legacy systems to AI agents. Customers include Kimberly-Clark de México and SmartFit.",
+    "category": "agent",
+    "why_matters": "Primero 专注于拉美大企业的遗留系统集成痛点，已获得 Kaszek 和 General Catalyst 共同领投的 1200 万美元种子轮，并计划在墨西哥城、马德里和波哥大设立办公室，具备跨区域扩张能力。",
+    "why_matters_en": "Primero addresses the pain point of legacy system integration for large Latin American enterprises, secured a $12 million seed round co-led by Kaszek and General Catalyst, and plans offices in Mexico City, Madrid, and Bogotá, demonstrating cross-regional expansion capability.",
+    "latest_news": "2026 年 8 月完成 1200 万美元种子轮融资，由 Kaszek 和 General Catalyst 共同领投。",
+    "latest_news_en": "Raised a $12 million seed round in August 2026, co-led by Kaszek and General Catalyst.",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "growth_anomaly"
+    ],
+    "company_country": "MX",
+    "confidence": 0.85,
+    "source_url": "https://latinamericareports.com/15-ai-leaders-to-watch-in-2027/15575",
+    "categories": [
+      "agent"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "Born in LatAm, built for the world: 15 AI leaders to watch in 2027",
+    "website_source": "https://primero.com/about",
+    "discovered_at": "2026-11-12",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261112T012027Z-545b46b5",
+      "search_region": "us",
+      "search_lane": "launch",
+      "website_verification": {
+        "url": "https://primero.com/",
+        "title": "Primero | Latin America's AI transformation company Primero AI",
+        "search_result_url": "https://primero.com/about"
+      },
+      "source_published_at": "2026-11-09T14:01:46+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "In August 2026 Primero raised a $12 million seed round co-led by Kaszek and General Catalyst."
+        },
+        {
+          "criterion": "growth_anomaly",
+          "quote": "Its Primia platform connects large companies' fragmented legacy systems to AI agents. Customers include Kimberly-Clark de México and SmartFit"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Kora Systems",
+    "website": "https://kora.fun/",
+    "description": "一款基于Linux的桌面操作系统,将AI模型和自主代理直接集成到计算体验中,允许它们跨应用程序工作、访问文件并在任务之间保留上下文。由Cyanogen联合创始人Kirt McMaster创立,专为重度AI用户设计",
+    "description_en": "A Linux-based desktop operating system that integrates AI models and autonomous agents directly into the computing experience, allowing them to work across applications, access files, and retain context between tasks. Founded by Cyanogen co-founder Kirt McMaster, designed for heavy AI users",
+    "category": "agent",
+    "why_matters": "由挑战过Google Android的Cyanogen联合创始人打造,针对微软Windows在AI时代的替代方案。利用AI编码工具使开发速度提升至少5倍,约50名工程师团队。预计2027年作为免费桌面操作系统推出,支持Intel、AMD和高通骁龙芯片。获得三星Next、Square Enix等投资",
+    "why_matters_en": "Built by Cyanogen co-founder who challenged Google's Android, targeting Microsoft Windows as an alternative for the AI era. Using AI coding tools accelerated development by at least fivefold with about 50 engineers. Expected to launch in 2027 as free desktop OS supporting Intel, AMD and Qualcomm Snapdragon chips. Backed by Samsung Next, Square Enix and others",
+    "latest_news": "2026年11月公开亮相,前身为游戏操作系统公司Playtron,2025年7月更名为Kora并转向AI操作系统。与高通密切合作近一年优化骁龙芯片支持,并与沙特AI公司Humain合作开发企业版Humain OS",
+    "latest_news_en": "Unveiled publicly in November 2026, previously known as gaming OS company Playtron, rebranded as Kora in July 2025 shifting focus to AI. Worked closely with Qualcomm for nearly a year to optimize for Snapdragon chips, and partnered with Saudi AI company Humain on enterprise version Humain OS",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "founder_background",
+      "category_innovation"
+    ],
+    "company_country": "US",
+    "confidence": 0.85,
+    "source_url": "https://techcrunch.com/2026/11/10/after-challenging-googles-android-with-cyanogen-its-co-founder-takes-aim-at-windows-for-ai-era/",
+    "categories": [
+      "agent"
+    ],
+    "region": "Unknown",
+    "source": "claude_rss",
+    "source_title": "After challenging Google’s Android with Cyanogen, its co-founder takes aim at Windows for AI era",
+    "website_source": "https://techcrunch.com/2026/11/10/after-challenging-googles-android-with-cyanogen-its-co-founder-takes-aim-at-windows-for-ai-era/",
+    "discovered_at": "2026-11-12",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261112T012027Z-545b46b5",
+      "search_region": "us",
+      "search_lane": "rss",
+      "website_verification": null,
+      "source_published_at": "2026-11-10T14:00:00+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "Kora's investors include Samsung Next, Square Enix, Alumni Ventures, Polychain, VanEck, and Circle, all of which previously backed Playtron. The company, McMaster said, has raised additional funding since shifting its focus to AI"
+        },
+        {
+          "criterion": "founder_background",
+          "quote": "Almost a decade after Cyanogen shut down its Android operating-system business following a years-long, unsuccessful effort to loosen Google's dominance, its co-founder, Kirt McMaster, is now targeting Microsoft's Windows"
+        },
+        {
+          "criterion": "category_innovation",
+          "quote": "Kora is designed to let users work with different AI models and agents across applications, while keeping track of conversations, documents, and other information. It also allows AI agents to operate in separate workspaces with restricted access to files and other resources"
+        }
+      ]
+    }
   }
 ]

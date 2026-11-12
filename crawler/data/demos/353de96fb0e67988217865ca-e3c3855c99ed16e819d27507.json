@@ -1,0 +1,258 @@
+{
+  "cache_key": "353de96fb0e67988217865ca-e3c3855c99ed16e819d27507",
+  "product_key": "353de96fb0e67988217865ca",
+  "fingerprint": "e3c3855c99ed16e819d27507",
+  "product_id": "p_372d02222c71aced",
+  "product_name": "Primero",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-12T01:30:38.874130+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "Primia 如何连接遗留系统与 AI 代理",
+      "en": "How Primia Connects Legacy Systems to AI Agents"
+    },
+    "scenario": {
+      "zh": "企业选择一个遗留系统，Primia 为其搭建 AI 代理集成层",
+      "en": "Pick a legacy system; see how Primia bridges it to an AI agent layer"
+    },
+    "steps": [
+      {
+        "id": "system",
+        "widget": "choice",
+        "title": {
+          "zh": "选择遗留系统类型",
+          "en": "Choose a Legacy System Type"
+        },
+        "instruction": {
+          "zh": "选择你的场景，查看 Primia 如何为其建立集成",
+          "en": "Pick your scenario to see how Primia builds the integration"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "ERP 库存系统",
+              "en": "ERP Inventory System"
+            },
+            "output": {
+              "zh": "Primia 将 ERP 库存数据暴露为标准化接口，供 AI 代理查询",
+              "en": "Primia exposes ERP inventory data via a normalized interface for AI agents to query"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "集成配置",
+                "en": "Integration Config"
+              },
+              "output_label": {
+                "zh": "AI 代理可用能力",
+                "en": "Agent-Accessible Capabilities"
+              },
+              "input": {
+                "zh": "ERP 系统：SAP R/3（遗留版本）\n数据源：库存模块\n连接方式：Primia 适配器",
+                "en": "ERP: SAP R/3 (legacy version)\nData source: inventory module\nConnector: Primia adapter"
+              },
+              "output": {
+                "zh": "代理可查询库存水位、触发补货请求、读取供应商交货记录",
+                "en": "Agent can query stock levels, trigger reorder requests, read supplier delivery records"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "适配器配置",
+                    "en": "Adapter Setup"
+                  },
+                  "detail": {
+                    "zh": "Primia 适配器映射 SAP R/3 的遗留 BAPI 接口至标准 API 格式",
+                    "en": "Primia adapter maps legacy SAP R/3 BAPI calls to a standard API format"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "代理能力注册",
+                    "en": "Agent Capability Registration"
+                  },
+                  "detail": {
+                    "zh": "库存查询、补货触发等操作注册为代理可调用工具",
+                    "en": "Stock query and reorder trigger registered as callable agent tools"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "权限边界",
+                    "en": "Permission Boundary"
+                  },
+                  "detail": {
+                    "zh": "代理只能读取库存与供应商数据，不可修改财务记录",
+                    "en": "Agent can read inventory and supplier data; financial records remain out of scope"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "健身会员 CRM",
+              "en": "Gym Membership CRM"
+            },
+            "output": {
+              "zh": "Primia 将会员数据库接入 AI 代理，支持续费提醒与流失预测",
+              "en": "Primia connects the membership database to an AI agent for renewal alerts and churn signals"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "集成配置",
+                "en": "Integration Config"
+              },
+              "output_label": {
+                "zh": "AI 代理可用能力",
+                "en": "Agent-Accessible Capabilities"
+              },
+              "input": {
+                "zh": "CRM 系统：定制遗留数据库（SQL Server 2008）\n数据源：会员档案、到访记录\n连接方式：Primia 适配器",
+                "en": "CRM: custom legacy database (SQL Server 2008)\nData source: member profiles, visit logs\nConnector: Primia adapter"
+              },
+              "output": {
+                "zh": "代理可识别连续未到访会员、生成续费提醒列表、标记高流失风险账户",
+                "en": "Agent can identify inactive members, generate renewal reminder lists, flag high-churn accounts"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "数据标准化",
+                    "en": "Data Normalization"
+                  },
+                  "detail": {
+                    "zh": "Primia 将非结构化遗留字段映射为统一会员数据模型",
+                    "en": "Primia maps unstructured legacy fields to a unified member data model"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "代理任务注册",
+                    "en": "Agent Task Registration"
+                  },
+                  "detail": {
+                    "zh": "流失检测与提醒生成注册为代理可触发的自动化任务",
+                    "en": "Churn detection and reminder generation registered as agent-triggered automations"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "权限边界",
+                    "en": "Permission Boundary"
+                  },
+                  "detail": {
+                    "zh": "代理可读取行为数据，不可修改会员合同或支付信息",
+                    "en": "Agent can read behavioral data; contract and payment info remain out of scope"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "agent_task",
+        "widget": "choice",
+        "title": {
+          "zh": "代理执行什么任务",
+          "en": "What Task Does the Agent Run"
+        },
+        "instruction": {
+          "zh": "选择代理的核心工作，查看输入与输出示例",
+          "en": "Choose the agent's core job to see an input/output example"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "自动异常检测",
+              "en": "Automated Anomaly Detection"
+            },
+            "output": {
+              "zh": "代理持续轮询遗留系统，标记异常并生成摘要报告",
+              "en": "Agent polls the legacy system continuously, flags anomalies, and produces a summary report"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "遗留系统数据片段（虚构）",
+                "en": "Legacy System Data (fictional)"
+              },
+              "output_label": {
+                "zh": "代理输出摘要（虚构）",
+                "en": "Agent Output Summary (fictional)"
+              },
+              "input": {
+                "zh": "仓库 A 库存：螺旋桨部件 12 件（正常阈值：≥50）\n仓库 B 库存：螺旋桨部件 487 件\n上次补货日期：43 天前",
+                "en": "Warehouse A stock: propeller parts 12 units (normal threshold: ≥50)\nWarehouse B stock: propeller parts 487 units\nLast reorder: 43 days ago"
+              },
+              "output": {
+                "zh": "异常标记：仓库 A 库存严重偏低，建议触发补货；仓库 B 库存过剩，建议暂缓采购",
+                "en": "Anomaly flagged: Warehouse A critically low — reorder suggested; Warehouse B overstocked — pause procurement"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "跨系统数据汇总",
+              "en": "Cross-System Data Merge"
+            },
+            "output": {
+              "zh": "代理从多个遗留系统拉取数据，合并为统一视图供决策层使用",
+              "en": "Agent pulls from multiple legacy systems and merges data into a unified view for decision-makers"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "整合前：孤立数据（虚构）",
+                "en": "Before Integration (fictional)"
+              },
+              "output_label": {
+                "zh": "整合后：统一视图（虚构）",
+                "en": "After Integration (fictional)"
+              },
+              "input": {
+                "zh": "ERP：会员 #4471 消费记录 ✓\nCRM：会员 #4471 到访记录 ✓\n营销系统：会员 #4471 活动参与 ✗（无法访问）",
+                "en": "ERP: Member #4471 spend history ✓\nCRM: Member #4471 visit logs ✓\nMarketing: Member #4471 campaign engagement ✗ (inaccessible)"
+              },
+              "output": {
+                "zh": "会员 #4471：高消费、低到访、未参与近期活动 → 流失风险：高",
+                "en": "Member #4471: high spend, low visits, no recent campaign engagement → Churn risk: high"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例说明了 Primia 的集成层概念；具体能力与系统支持范围请在 primero.com 核实",
+      "en": "Examples illustrate Primia's integration layer concept; verify supported systems and capabilities at primero.com"
+    },
+    "sources": [
+      {
+        "url": "https://primero.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://latinamericareports.com/15-ai-leaders-to-watch-in-2027/15575",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

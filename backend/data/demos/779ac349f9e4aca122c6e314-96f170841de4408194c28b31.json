@@ -1,0 +1,230 @@
+{
+  "cache_key": "779ac349f9e4aca122c6e314-96f170841de4408194c28b31",
+  "product_key": "779ac349f9e4aca122c6e314",
+  "fingerprint": "96f170841de4408194c28b31",
+  "product_id": "p_5bec1cf62f8f547e",
+  "product_name": "Rently",
+  "origin": "ai",
+  "generated_at": "2026-11-11T13:04:38.452875+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "灵活分期租金支付",
+      "en": "Flexible Rent Installments"
+    },
+    "scenario": {
+      "zh": "租户需要在月初支付全额租金,但现金流紧张。通过分期支付和积分奖励,租户可以按自己的节奏管理租金成本。",
+      "en": "A tenant faces tight cash flow at month-end but rent is due on the 1st. Flexible installments and earning rewards on each payment help spread costs."
+    },
+    "steps": [
+      {
+        "id": "payment_scenario",
+        "widget": "choice",
+        "title": {
+          "zh": "选择支付场景",
+          "en": "Choose Your Situation"
+        },
+        "instruction": {
+          "zh": "看看分期支付如何适应不同的租金管理需求",
+          "en": "See how installments fit different rent payment needs"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "首次入住 - 降低初期成本",
+              "en": "Moving In – Lower Upfront Cost"
+            },
+            "output": {
+              "zh": "用分期支付代替全额押金,按月累积积分",
+              "en": "Replace lump-sum deposit with installments, accumulate rewards monthly"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "传统方式",
+                "en": "Traditional"
+              },
+              "output_label": {
+                "zh": "分期方式",
+                "en": "Installment Plan"
+              },
+              "input": {
+                "zh": "月租2000元 + 押金2000元 = 首月需4000元",
+                "en": "Monthly rent 2000 SGD + deposit 2000 SGD = 4000 SGD upfront"
+              },
+              "output": {
+                "zh": "月租分2期 (1000+1000) + 积分可用于未来支付",
+                "en": "Rent split into 2 installments (1000+1000) + rewards apply to future payments"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "月中困难 - 推迟部分租金",
+              "en": "Mid-Month Crunch – Defer Payment"
+            },
+            "output": {
+              "zh": "将本月租金分期至下月,并在每笔付款中赚取里程积分",
+              "en": "Spread this month's rent across next month, earn miles on each installment"
+            },
+            "artifact": {
+              "kind": "sequence",
+              "input_label": {
+                "zh": "原计划",
+                "en": "Original Timeline"
+              },
+              "output_label": {
+                "zh": "调整后计划",
+                "en": "Adjusted Timeline"
+              },
+              "input": {
+                "zh": "1月1日: 一次性支付2000元租金",
+                "en": "Jan 1: Pay full 2000 SGD rent in one go"
+              },
+              "output": {
+                "zh": "1月10日: 支付1200元 (赚30积分); 1月20日: 支付800元 (赚20积分)",
+                "en": "Jan 10: Pay 1200 SGD (earn 30 miles); Jan 20: Pay 800 SGD (earn 20 miles)"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "第一期",
+                    "en": "First Installment"
+                  },
+                  "detail": {
+                    "zh": "按现金流灵活选择日期,积分立即生效",
+                    "en": "Pick date to match cash flow; rewards credit immediately"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "第二期",
+                    "en": "Second Installment"
+                  },
+                  "detail": {
+                    "zh": "剩余金额加积分,完成月度承诺",
+                    "en": "Remaining balance plus rewards fulfill monthly commitment"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "长期管理 - 持续积累奖励",
+              "en": "Ongoing – Build Rewards"
+            },
+            "output": {
+              "zh": "每次分期支付都赚积分,用于抵扣未来租金或其他费用",
+              "en": "Earn rewards on every installment, redeem toward future rent or fees"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "6个月支付记录",
+                "en": "6-Month Payment History"
+              },
+              "output_label": {
+                "zh": "累积的积分和用途",
+                "en": "Accrued Rewards & Uses"
+              },
+              "input": {
+                "zh": "每月分2次支付租金2000元,每笔支付赚25-50积分,取决于金额",
+                "en": "Each month: 2 installments of 2000 SGD total; earn 25–50 miles per payment based on amount"
+              },
+              "output": {
+                "zh": "6个月累计300-600积分 → 可抵扣下月租金、水电费或搬迁费用",
+                "en": "6 months = 300–600 miles total → redeem for next month's rent, utilities, or moving costs"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "月度积分",
+                    "en": "Monthly Accrual"
+                  },
+                  "detail": {
+                    "zh": "每笔分期付款按比例赚取,无需额外步骤",
+                    "en": "Proportional to each installment; no extra steps required"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "灵活兑现",
+                    "en": "Flexible Redemption"
+                  },
+                  "detail": {
+                    "zh": "积分可立即用于当月或转移到未来月份",
+                    "en": "Use immediately this month or roll forward anytime"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "payment_structure",
+        "widget": "choice",
+        "title": {
+          "zh": "选择分期结构",
+          "en": "Choose Installment Structure"
+        },
+        "instruction": {
+          "zh": "灵活组织你的支付时间表,适应现金流",
+          "en": "Organize your payment timeline to fit cash flow"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "均等分期 - 简单可预测",
+              "en": "Equal Splits – Predictable"
+            },
+            "output": {
+              "zh": "租金平均分成若干相等部分,每期日期固定",
+              "en": "Rent split into equal parts on fixed dates each month"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "自定义分期 - 按需调整",
+              "en": "Custom Splits – As Needed"
+            },
+            "output": {
+              "zh": "根据现金流灵活设定分期金额和日期,每月不同",
+              "en": "Set different amounts and dates each month to match your income"
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "分期支付和积分奖励降低了入住成本,让租户按自己的节奏管理现金流。具体的奖励兑现政策、最低分期金额和合作物业列表需在平台上验证。",
+      "en": "Installments and rewards lower entry costs and align with tenant cash flow. Verify reward redemption rules, minimum splits, and participating properties on the platform."
+    },
+    "sources": [
+      {
+        "url": "https://www.rently.sg",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://fintechnews.sg/139924/proptech/proptech-startups-from-singapore-to-watch",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

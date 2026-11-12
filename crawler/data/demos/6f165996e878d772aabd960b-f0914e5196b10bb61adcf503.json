@@ -1,0 +1,244 @@
+{
+  "cache_key": "6f165996e878d772aabd960b-f0914e5196b10bb61adcf503",
+  "product_key": "6f165996e878d772aabd960b",
+  "fingerprint": "f0914e5196b10bb61adcf503",
+  "product_id": "207",
+  "product_name": "Redpine",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-12T01:31:50.378439+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为 AI 代理提供授权数据",
+      "en": "Supply Licensed Data to AI Agents"
+    },
+    "scenario": {
+      "zh": "开发者通过 API 为 AI 代理获取科学、医疗或法律领域的高质量授权数据",
+      "en": "Developer uses API to fetch licensed high-quality data in scientific, medical, or legal domains for AI agents"
+    },
+    "steps": [
+      {
+        "id": "domain_select",
+        "widget": "choice",
+        "title": {
+          "zh": "选择数据领域",
+          "en": "Select Data Domain"
+        },
+        "instruction": {
+          "zh": "选择 AI 代理需要查询的专业领域",
+          "en": "Choose the domain your AI agent needs to query"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "科学研究",
+              "en": "Scientific Research"
+            },
+            "output": {
+              "zh": "获取发表论文和研究数据",
+              "en": "Retrieve published papers and research data"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "代理查询",
+                "en": "Agent Query"
+              },
+              "output_label": {
+                "zh": "授权数据响应",
+                "en": "Licensed Data Response"
+              },
+              "input": {
+                "zh": "查询关键词：CRISPR 基因编辑应用",
+                "en": "Query keywords: CRISPR gene editing applications"
+              },
+              "output": {
+                "zh": "标题：高效碱基编辑器设计 | 作者团队：Zhang Lab | 发表年份：2024 | 关键发现：新方法提升编辑精确度",
+                "en": "Title: Efficient base editor design | Author team: Zhang Lab | Published: 2024 | Key finding: Novel approach improves editing precision"
+              },
+              "emphasis": {
+                "zh": "CRISPR 基因编辑应用",
+                "en": "CRISPR gene editing applications"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "医疗临床",
+              "en": "Medical Clinical"
+            },
+            "output": {
+              "zh": "获取临床指南和治疗方案",
+              "en": "Retrieve clinical guidelines and treatment protocols"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "代理查询",
+                "en": "Agent Query"
+              },
+              "output_label": {
+                "zh": "授权数据响应",
+                "en": "Licensed Data Response"
+              },
+              "input": {
+                "zh": "查询关键词：2 型糖尿病管理",
+                "en": "Query keywords: Type 2 diabetes management"
+              },
+              "output": {
+                "zh": "指南来源：国际糖尿病协会 | 更新时间：2024 年 | 治疗路径：初始单药，条件下联合用药 | 监测指标：血糖控制达标情况",
+                "en": "Guideline source: International Diabetes Association | Updated: 2024 | Treatment path: Initial monotherapy, combination therapy when indicated | Monitoring: Glycemic control targets"
+              },
+              "emphasis": {
+                "zh": "2 型糖尿病管理",
+                "en": "Type 2 diabetes management"
+              }
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "zh": "法律文献",
+              "en": "Legal Documents"
+            },
+            "output": {
+              "zh": "获取判例和法规解释",
+              "en": "Retrieve case law and statute interpretations"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "代理查询",
+                "en": "Agent Query"
+              },
+              "output_label": {
+                "zh": "授权数据响应",
+                "en": "Licensed Data Response"
+              },
+              "input": {
+                "zh": "查询关键词：数据隐私跨境传输",
+                "en": "Query keywords: Cross-border data transfer privacy"
+              },
+              "output": {
+                "zh": "案例编号：欧盟 2024 裁定 | 主题：个人数据流动监管 | 裁定要点：合法传输需满足特定保护条件 | 适用范围：欧盟成员国及关联地区",
+                "en": "Case reference: EU 2024 ruling | Topic: Personal data flow regulation | Ruling point: Lawful transfer requires specific protection conditions | Scope: EU member states and affiliated regions"
+              },
+              "emphasis": {
+                "zh": "数据隐私跨境传输",
+                "en": "Cross-border data transfer privacy"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "data_format",
+        "widget": "choice",
+        "title": {
+          "zh": "选择数据返回格式",
+          "en": "Choose Data Return Format"
+        },
+        "instruction": {
+          "zh": "选择适合代理处理的结构化或原始格式",
+          "en": "Select format your agent can consume"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "结构化摘要",
+              "en": "Structured Summary"
+            },
+            "output": {
+              "zh": "元数据 + 关键信息提取",
+              "en": "Metadata plus key information extraction"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "API 返回示例",
+                "en": "API Return Example"
+              },
+              "output_label": {
+                "zh": "代理接收格式",
+                "en": "Agent Receives Format"
+              },
+              "input": {
+                "zh": "来源类型 | 标题 | 关键术语 | 发布日期",
+                "en": "Source type | Title | Key terms | Publication date"
+              },
+              "output": {
+                "zh": "研究论文 | 新型酶工程方法 | 蛋白质工程、催化效率 | 2024 年 Q2",
+                "en": "Research paper | Novel enzyme engineering approach | Protein engineering, catalytic efficiency | 2024 Q2"
+              },
+              "emphasis": {
+                "zh": "来源类型 | 标题 | 关键术语",
+                "en": "Source type | Title | Key terms"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "原始文本片段",
+              "en": "Raw Text Excerpts"
+            },
+            "output": {
+              "zh": "保留原始措辞用于精确引用",
+              "en": "Preserve original wording for exact citation"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "API 返回示例",
+                "en": "API Return Example"
+              },
+              "output_label": {
+                "zh": "代理接收格式",
+                "en": "Agent Receives Format"
+              },
+              "input": {
+                "zh": "\"该方法通过优化反应条件显著降低成本\"",
+                "en": "\"This approach significantly reduces cost by optimizing reaction conditions\""
+              },
+              "output": {
+                "zh": "报告中引用：该方法通过优化反应条件显著降低成本 [来源 ID: doc_2024_789]",
+                "en": "Citation in report: This approach significantly reduces cost by optimizing reaction conditions [Source ID: doc_2024_789]"
+              },
+              "emphasis": {
+                "zh": "通过优化反应条件显著降低成本",
+                "en": "significantly reduces cost by optimizing reaction conditions"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "示例演示了通过 API 为代理查询授权数据的工作流，实际集成和数据许可请访问 Redpine 平台",
+      "en": "Examples show workflow for querying licensed data through API for agents; for actual integration and licensing visit Redpine platform"
+    },
+    "sources": [
+      {
+        "url": "https://www.redpine.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://sifted.eu/articles/redpine-raises-e6-8m-to-give-ai-agents-access-to-non-public-data",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,226 @@
+{
+  "cache_key": "cf53c41893057ed31f8f2744-18891c82ce3c4f809bb72e98",
+  "product_key": "cf53c41893057ed31f8f2744",
+  "fingerprint": "18891c82ce3c4f809bb72e98",
+  "product_id": "p_fcffe884bd893cfe",
+  "product_name": "Kora Systems",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-12T01:29:54.507570+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "AI桌面操作系统",
+      "en": "AI Desktop OS"
+    },
+    "scenario": {
+      "zh": "在AI时代设计的Linux桌面系统,让AI代理跨应用协作并保留任务上下文",
+      "en": "Linux desktop OS designed for the AI era, enabling AI agents to collaborate across apps while retaining task context"
+    },
+    "steps": [
+      {
+        "id": "context_scope",
+        "widget": "choice",
+        "title": {
+          "zh": "跨应用协作范围",
+          "en": "Cross-App Collaboration"
+        },
+        "instruction": {
+          "zh": "AI代理需要访问哪些应用和文件?",
+          "en": "What apps and files does the agent access?"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "单一文档编辑",
+              "en": "Single Document Edit"
+            },
+            "output": {
+              "zh": "在文本编辑器中完成修订",
+              "en": "Revision completed in text editor"
+            },
+            "artifact": {
+              "kind": "excerpt",
+              "input_label": {
+                "zh": "原始草稿",
+                "en": "Original Draft"
+              },
+              "output_label": {
+                "zh": "修订后",
+                "en": "Revised"
+              },
+              "input": {
+                "zh": "Our Q4 revenue was strong. We saw good growth in APAC. Challenges remain in supply chain.",
+                "en": "Our Q4 revenue was strong. We saw good growth in APAC. Challenges remain in supply chain."
+              },
+              "output": {
+                "zh": "第四季度收入表现强劲,亚太市场增长显著,供应链仍面临挑战",
+                "en": "Q4 revenue performed strongly, with significant growth in APAC; supply chain challenges persist"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "文档+数据+浏览器",
+              "en": "Doc + Data + Browser"
+            },
+            "output": {
+              "zh": "从三个应用获取信息并汇总",
+              "en": "Information gathered from three apps"
+            },
+            "artifact": {
+              "kind": "list",
+              "input_label": {
+                "zh": "所需信息源",
+                "en": "Required Sources"
+              },
+              "output_label": {
+                "zh": "代理操作",
+                "en": "Agent Actions"
+              },
+              "input": {
+                "zh": "需要将本地销售数据与行业报告结合,并查找相关研究",
+                "en": "Need to combine local sales data with industry reports and find relevant research"
+              },
+              "output": {
+                "zh": "代理可访问电子表格、PDF阅读器和浏览器,提取数据后生成对比分析",
+                "en": "Agent accesses spreadsheet, PDF reader, and browser to extract data and generate comparative analysis"
+              },
+              "items": [
+                {
+                  "label": {
+                    "zh": "sales.xlsx",
+                    "en": "sales.xlsx"
+                  },
+                  "detail": {
+                    "zh": "提取Q3和Q4的区域销售数字",
+                    "en": "Extract Q3 and Q4 regional sales figures"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "report.pdf",
+                    "en": "report.pdf"
+                  },
+                  "detail": {
+                    "zh": "读取第12页的市场趋势章节",
+                    "en": "Read market trends section on page 12"
+                  }
+                },
+                {
+                  "label": {
+                    "zh": "浏览器搜索",
+                    "en": "Browser Search"
+                  },
+                  "detail": {
+                    "zh": "查找近期行业增长率(虚构示例)",
+                    "en": "Find recent industry growth rates (fictional)"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "example_data": true
+      },
+      {
+        "id": "task_continuity",
+        "widget": "choice",
+        "title": {
+          "zh": "任务间上下文保留",
+          "en": "Context Between Tasks"
+        },
+        "instruction": {
+          "zh": "新任务是否需要之前的工作记忆?",
+          "en": "Does the new task need prior work memory?"
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "独立新任务",
+              "en": "Independent Task"
+            },
+            "output": {
+              "zh": "代理处理全新请求,无需历史",
+              "en": "Agent handles fresh request, no history needed"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "用户请求",
+                "en": "User Request"
+              },
+              "output_label": {
+                "zh": "代理计划",
+                "en": "Agent Plan"
+              },
+              "input": {
+                "zh": "整理桌面文件夹,按项目分类",
+                "en": "Organize desktop folder by project"
+              },
+              "output": {
+                "zh": "将扫描文件名并创建三个子文件夹:客户项目、内部文档、参考资料",
+                "en": "Will scan filenames and create three subfolders: Client Projects, Internal Docs, Reference Material"
+              }
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "zh": "延续之前分析",
+              "en": "Continue Prior Analysis"
+            },
+            "output": {
+              "zh": "代理记住销售数据上下文,添加新维度",
+              "en": "Agent recalls sales data context, adds dimension"
+            },
+            "artifact": {
+              "kind": "comparison",
+              "input_label": {
+                "zh": "新增请求",
+                "en": "Follow-up Request"
+              },
+              "output_label": {
+                "zh": "代理响应",
+                "en": "Agent Response"
+              },
+              "input": {
+                "zh": "现在按产品线细分这些数字",
+                "en": "Now break down these numbers by product line"
+              },
+              "output": {
+                "zh": "代理保留之前从三个应用提取的销售数据,将其按产品线重新分组并生成对比表格",
+                "en": "Agent retains previously extracted sales data from three apps, regroups by product line and generates comparison table"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "演示了AI代理跨应用访问和任务记忆的概念场景。Kora Systems预计2027年发布;实际功能、性能和隐私机制需在正式版中验证",
+      "en": "Demonstrated conceptual scenarios of agent cross-app access and task memory. Kora Systems expected 2027; actual features, performance, and privacy mechanisms require verification in release version"
+    },
+    "sources": [
+      {
+        "url": "https://kora.fun/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://techcrunch.com/2026/11/10/after-challenging-googles-android-with-cyanogen-its-co-founder-takes-aim-at-windows-for-ai-era/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ]
+  }
+}
