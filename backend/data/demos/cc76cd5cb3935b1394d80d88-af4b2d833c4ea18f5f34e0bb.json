@@ -4,164 +4,61 @@
   "fingerprint": "af4b2d833c4ea18f5f34e0bb",
   "product_id": "36",
   "product_name": "Exa",
-  "origin": "curated",
-  "generated_at": "2026-09-14T07:43:42.880521+00:00",
+  "origin": "ai",
+  "generated_at": "2026-11-12T08:48:40.379054+00:00",
   "spec": {
     "version": 2,
     "confidence": "illustrative",
     "tier": "workflow",
     "headline": {
-      "zh": "把一个问题，变成有依据的研究简报。",
-      "en": "Turn a question into an evidence-led brief."
+      "zh": "筛选技术文档并提取关键引用",
+      "en": "Filter technical documents and extract key quotes"
     },
     "scenario": {
-      "zh": "你正在寻找一家适合小团队的知识库工具。走一遍搜索、提取内容、筛选证据和交付简报的流程。公司与结果均为虚构示例。",
-      "en": "Find a knowledge tool for a small team. Search, extract content, review evidence and deliver a brief. Companies and results are fictional."
+      "zh": "搜索示例记录，查看虚构原文，选择要保留的内容。",
+      "en": "Search sample records, inspect fictional source text and choose what to keep."
     },
     "steps": [
       {
-        "id": "step-1",
-        "widget": "choice",
-        "title": {
-          "zh": "选择搜索范围",
-          "en": "Choose a search scope"
-        },
-        "instruction": {
-          "zh": "搜索意图已经准备好了。你想先查哪一类资料？",
-          "en": "The search intent is ready. Which type of evidence matters first?"
-        },
-        "options": [
-          {
-            "id": "0",
-            "label": {
-              "zh": "找产品：小团队的 AI 知识库",
-              "en": "Products: knowledge tools for small teams"
-            },
-            "output": {
-              "zh": "搜索条件已建立\n查询：小团队 AI 知识库\n资料类型：公司\n下一步：检查三条示例候选资料。",
-              "en": "Query prepared: AI knowledge tools for small teams.\nCategory: companies.\nNext: inspect three sample candidates."
-            }
-          },
-          {
-            "id": "1",
-            "label": {
-              "zh": "找文章：知识库选型经验",
-              "en": "Articles: choosing a knowledge tool"
-            },
-            "output": {
-              "zh": "搜索条件已建立\n查询：知识库选型与接入经验\n资料类型：网页文章\n下一步：优先查看包含实施细节的内容。",
-              "en": "Query prepared: knowledge-tool selection and integration.\nCategory: web articles.\nNext: prioritize implementation details."
-            }
-          }
-        ],
-        "example_data": true
-      },
-      {
-        "id": "step-2",
-        "widget": "choice",
-        "title": {
-          "zh": "查看搜索结果",
-          "en": "Inspect search results"
-        },
-        "instruction": {
-          "zh": "在示例结果中选择一个候选，查看正文提取会给你什么。",
-          "en": "Choose a sample candidate to see what content extraction provides."
-        },
-        "options": [
-          {
-            "id": "0",
-            "label": {
-              "zh": "示例 A · Atlas Notes",
-              "en": "Example A · Atlas Notes"
-            },
-            "output": {
-              "zh": "标题：Atlas Notes 团队知识库\n正文摘要：支持将文档整理为可检索的团队资料。\n高亮片段：「可以连接内部文档并保留原文出处。」\n待核实：接入权限与更新频率。",
-              "en": "Atlas Notes team knowledge base\nExtract: organizes documents into searchable team resources.\nHighlight: “Connect internal documents and retain original references.”\nVerify: permissions and refresh frequency."
-            }
-          },
-          {
-            "id": "1",
-            "label": {
-              "zh": "示例 B · Cedar Docs",
-              "en": "Example B · Cedar Docs"
-            },
-            "output": {
-              "zh": "标题：Cedar Docs 使用体验\n正文摘要：作者描述了导入文件、问答和人工核查的步骤。\n高亮片段：「回答旁边可以查看引用段落。」\n待核实：是否支持你的文件格式。",
-              "en": "Cedar Docs experience report\nExtract: import files, ask questions, review answers.\nHighlight: “Inspect a cited passage next to the answer.”\nVerify: support for your file formats."
-            }
-          }
-        ],
-        "example_data": true
-      },
-      {
-        "id": "step-3",
+        "id": "example",
         "widget": "review",
         "title": {
-          "zh": "筛选并核对证据",
-          "en": "Review the evidence"
+          "zh": "可交互产物",
+          "en": "Interactive artifact"
         },
         "instruction": {
-          "zh": "搜索结果只是起点。决定哪些资料值得进入简报。",
-          "en": "A search result is a starting point. Decide what belongs in the brief."
+          "zh": "搜索示例记录，查看虚构原文，选择要保留的内容。",
+          "en": "Search sample records, inspect fictional source text and choose what to keep."
         },
         "options": [
           {
             "id": "0",
             "label": {
-              "zh": "保留有正文依据的资料",
-              "en": "Keep evidence with source content"
+              "zh": "可交互产物",
+              "en": "Interactive artifact"
             },
             "output": {
-              "zh": "保留：包含产品说明和引用段落的资料。\n标记：接入条件仍需核实。\n排除：只有推广标题、没有正文证据的条目。",
-              "en": "Keep entries with product descriptions and cited passages.\nFlag integration requirements for verification.\nExclude promotion-only titles without supporting content."
-            }
-          },
-          {
-            "id": "1",
-            "label": {
-              "zh": "要求补充实施细节",
-              "en": "Request implementation details"
+              "zh": "文档标题 / 相关度\n3 条可编辑示例记录",
+              "en": "Document title / Relevance\n3 editable example records"
             },
-            "output": {
-              "zh": "新增研究问题：支持哪些连接器？权限如何继承？\n暂缓判断：没有足够信息的候选。\n下一轮搜索将围绕实施文档展开。",
-              "en": "Add questions: which connectors are supported, and how are permissions inherited?\nDefer judgment on incomplete candidates.\nFocus the next search on implementation documents."
-            }
-          }
-        ],
-        "example_data": true
-      },
-      {
-        "id": "step-4",
-        "widget": "choice",
-        "title": {
-          "zh": "整理研究交付物",
-          "en": "Package the research"
-        },
-        "instruction": {
-          "zh": "选一种交付形式，完成这次体验。",
-          "en": "Choose an output format to finish the workflow."
-        },
-        "options": [
-          {
-            "id": "0",
-            "label": {
-              "zh": "一页简报",
-              "en": "One-page brief"
-            },
-            "output": {
-              "zh": "研究目标 → 候选概览 → 引用证据 → 待核实事项。\n你可以在完成页下载本次选择与示例结果，作为研究框架。",
-              "en": "Research goal → candidates → cited evidence → open questions.\nDownload your choices and example outcomes on the final page."
-            }
-          },
-          {
-            "id": "1",
-            "label": {
-              "zh": "结构化候选清单",
-              "en": "Structured candidate list"
-            },
-            "output": {
-              "zh": "清单字段：候选名称、资料类型、正文摘要、引用片段、待核实事项。\n适合继续筛选与比较，不自动替你作出购买决定。",
-              "en": "Fields: candidate, source type, extract, highlight, open question.\nUse the list for further review and comparison."
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "示例输入",
+                "en": "Example input"
+              },
+              "output_label": {
+                "zh": "可交互产物",
+                "en": "Interactive artifact"
+              },
+              "input": {
+                "zh": "查询 Transformer 架构优化相关文档",
+                "en": "Query documents about Transformer architecture optimization"
+              },
+              "output": {
+                "zh": "文档标题 / 相关度\n3 条可编辑示例记录",
+                "en": "Document title / Relevance\n3 editable example records"
+              }
             }
           }
         ],
@@ -169,17 +66,302 @@
       }
     ],
     "takeaway": {
-      "zh": "Exa 的核心体验是找到相关网页，再提取能用于后续研究的内容。这里演示的是工作流程，没有执行真实搜索。",
-      "en": "Exa helps find relevant pages and extract content for research. This illustrates the workflow without running a live search."
+      "zh": "这是独立的本地示例，未调用该产品。产品资料用于了解方向，不证明示例中的数据或结果；实际能力请以官方产品为准。",
+      "en": "This independent local example does not call the product. Sources explain its purpose, not the fictional data or results. Check the official product for actual capabilities."
     },
     "sources": [
       {
-        "url": "https://exa.ai/docs/reference/search",
+        "url": "https://exa.ai/",
         "label": {
-          "zh": "官方产品资料",
-          "en": "Official product documentation"
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.menlotimes.com/ai-robotics",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
         }
       }
-    ]
+    ],
+    "interaction": {
+      "kind": "records",
+      "input_label": {
+        "zh": "查询主题",
+        "en": "Query topic"
+      },
+      "output_label": {
+        "zh": "检索结果",
+        "en": "Search results"
+      },
+      "inputs": [
+        {
+          "id": "topic",
+          "label": {
+            "zh": "主题",
+            "en": "Topic"
+          },
+          "options": [
+            {
+              "id": "transformer",
+              "label": {
+                "zh": "Transformer 优化",
+                "en": "Transformer optimization"
+              }
+            },
+            {
+              "id": "embedding",
+              "label": {
+                "zh": "向量嵌入",
+                "en": "Vector embeddings"
+              }
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "when": {
+            "topic": "transformer"
+          },
+          "brief": {
+            "zh": "查询 Transformer 架构优化相关文档",
+            "en": "Query documents about Transformer architecture optimization"
+          },
+          "artifact": {
+            "columns": [
+              {
+                "id": "title",
+                "label": {
+                  "zh": "文档标题",
+                  "en": "Document title"
+                },
+                "type": "text"
+              },
+              {
+                "id": "relevance",
+                "label": {
+                  "zh": "相关度",
+                  "en": "Relevance"
+                },
+                "type": "select",
+                "options": [
+                  {
+                    "id": "high",
+                    "label": {
+                      "zh": "高",
+                      "en": "High"
+                    }
+                  },
+                  {
+                    "id": "medium",
+                    "label": {
+                      "zh": "中",
+                      "en": "Medium"
+                    }
+                  }
+                ]
+              }
+            ],
+            "rows": [
+              {
+                "id": "doc_a",
+                "cells": {
+                  "title": {
+                    "zh": "文档甲：注意力机制设计",
+                    "en": "Document A: Attention mechanism design"
+                  },
+                  "relevance": "high"
+                },
+                "evidence": {
+                  "text": {
+                    "zh": "多头注意力通过并行计算不同子空间的注意力权重。研究表明稀疏模式可降低计算开销同时保持性能。在长序列任务中，局部窗口注意力是实用的优化方向。",
+                    "en": "Multi-head attention computes attention weights in different subspaces in parallel. Research shows sparse patterns reduce computational cost while maintaining performance. Local window attention is a practical optimization for long-sequence tasks."
+                  },
+                  "quote": {
+                    "zh": "稀疏模式可降低计算开销同时保持性能",
+                    "en": "sparse patterns reduce computational cost while maintaining performance"
+                  }
+                }
+              },
+              {
+                "id": "doc_b",
+                "cells": {
+                  "title": {
+                    "zh": "文档乙：参数共享与蒸馏",
+                    "en": "Document B: Parameter sharing and distillation"
+                  },
+                  "relevance": "high"
+                },
+                "evidence": {
+                  "text": {
+                    "zh": "跨层权重共享可减少模型参数。知识蒸馏将大模型知识转移到小模型，提升推理效率。这两种技术常在资源受限场景中结合使用。",
+                    "en": "Cross-layer weight sharing reduces model parameters. Knowledge distillation transfers knowledge from large to small models to improve inference efficiency. These techniques are often combined in resource-constrained scenarios."
+                  },
+                  "quote": {
+                    "zh": "知识蒸馏将大模型知识转移到小模型",
+                    "en": "Knowledge distillation transfers knowledge from large to small models"
+                  }
+                }
+              },
+              {
+                "id": "doc_c",
+                "cells": {
+                  "title": {
+                    "zh": "文档丙：量化与编码",
+                    "en": "Document C: Quantization and encoding"
+                  },
+                  "relevance": "medium"
+                },
+                "evidence": {
+                  "text": {
+                    "zh": "低精度表示可减小模型体积。Post-training 量化无需重新训练，适合快速部署。混合精度策略在关键层使用高精度，其他层使用低精度。",
+                    "en": "Low-precision representation reduces model size. Post-training quantization requires no retraining and suits rapid deployment. Mixed-precision strategies use high precision on critical layers and low precision elsewhere."
+                  },
+                  "quote": {
+                    "zh": "Post-training 量化无需重新训练",
+                    "en": "Post-training quantization requires no retraining"
+                  }
+                }
+              }
+            ],
+            "view": "table",
+            "calculation": {
+              "op": "count",
+              "label": {
+                "zh": "已选文档数",
+                "en": "Selected documents"
+              }
+            }
+          }
+        },
+        {
+          "when": {
+            "topic": "embedding"
+          },
+          "brief": {
+            "zh": "查询向量嵌入技术相关文档",
+            "en": "Query documents about vector embedding techniques"
+          },
+          "artifact": {
+            "columns": [
+              {
+                "id": "title",
+                "label": {
+                  "zh": "文档标题",
+                  "en": "Document title"
+                },
+                "type": "text"
+              },
+              {
+                "id": "relevance",
+                "label": {
+                  "zh": "相关度",
+                  "en": "Relevance"
+                },
+                "type": "select",
+                "options": [
+                  {
+                    "id": "high",
+                    "label": {
+                      "zh": "高",
+                      "en": "High"
+                    }
+                  },
+                  {
+                    "id": "medium",
+                    "label": {
+                      "zh": "中",
+                      "en": "Medium"
+                    }
+                  }
+                ]
+              }
+            ],
+            "rows": [
+              {
+                "id": "doc_x",
+                "cells": {
+                  "title": {
+                    "zh": "文档甲：对比学习方法",
+                    "en": "Document A: Contrastive learning methods"
+                  },
+                  "relevance": "high"
+                },
+                "evidence": {
+                  "text": {
+                    "zh": "对比学习通过拉近相似样本、推远不相似样本来训练表示。无监督方法在大规模数据上学到有意义的特征，无需人工标注。这类方法广泛应用于图像和文本领域。",
+                    "en": "Contrastive learning trains representations by pulling similar samples closer and pushing dissimilar ones apart. Unsupervised methods learn meaningful features on large-scale data without manual annotation. These methods are widely used in image and text domains."
+                  },
+                  "quote": {
+                    "zh": "无需人工标注",
+                    "en": "without manual annotation"
+                  }
+                }
+              },
+              {
+                "id": "doc_y",
+                "cells": {
+                  "title": {
+                    "zh": "文档乙：池化策略与聚合",
+                    "en": "Document B: Pooling strategies and aggregation"
+                  },
+                  "relevance": "high"
+                },
+                "evidence": {
+                  "text": {
+                    "zh": "从 token 级别聚合为句子级别表示时，选择合适的池化方法很关键。平均池化简单有效，注意力池化可学习权重，CLS token 用于分类任务。不同任务场景需要不同策略。",
+                    "en": "Choosing the right pooling method is critical when aggregating from token-level to sentence-level representations. Mean pooling is simple and effective, attention pooling learns weights, and CLS tokens are used for classification tasks. Different scenarios need different strategies."
+                  },
+                  "quote": {
+                    "zh": "不同任务场景需要不同策略",
+                    "en": "Different scenarios need different strategies"
+                  }
+                }
+              },
+              {
+                "id": "doc_z",
+                "cells": {
+                  "title": {
+                    "zh": "文档丙：跨模态表示对齐",
+                    "en": "Document C: Cross-modal representation alignment"
+                  },
+                  "relevance": "medium"
+                },
+                "evidence": {
+                  "text": {
+                    "zh": "多模态模型需要将不同模态映射到共享的嵌入空间。对齐质量影响下游任务表现。噪声数据和模态差异是主要挑战，需要特殊的损失函数和训练策略处理。",
+                    "en": "Multimodal models map different modalities to a shared embedding space. Alignment quality affects downstream task performance. Noisy data and modal differences are key challenges requiring specialized loss functions and training strategies."
+                  },
+                  "quote": {
+                    "zh": "需要将不同模态映射到共享的嵌入空间",
+                    "en": "map different modalities to a shared embedding space"
+                  }
+                }
+              }
+            ],
+            "view": "table",
+            "calculation": {
+              "op": "count",
+              "label": {
+                "zh": "已选文档数",
+                "en": "Selected documents"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "generator_revision": "interaction-v3-2026-11-12",
+  "grounding": "catalog_only",
+  "reviewed_at": "2026-11-12",
+  "review_record": "demo-generator-final-candidate-review-2026-11-12",
+  "normalization": "application-owned-local-narration",
+  "model_artifact_sha256": "3894db2db417f4fb9eadc5376981c0a692c605b982a75f802a851908727d12c6",
+  "identity_rebinding": {
+    "source_cache_key": "cc76cd5cb3935b1394d80d88-98e1c153c59ce7bcab85f73d",
+    "reason": "The same catalog product normalizes the website trailing slash, category agent to other, and absent is_hardware to false. Its reviewed spec, sources, model artifact and generation time are unchanged."
   }
 }

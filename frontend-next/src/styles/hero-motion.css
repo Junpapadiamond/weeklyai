@@ -4,7 +4,8 @@
   --hero-ink: #f3dbc0;
   --hero-line: #9d8c80;
   --hero-signal: #f07167;
-  background-image: radial-gradient(ellipse at 84% 40%, #44333745, transparent 48%);
+  background-image: radial-gradient(ellipse at 84% 40%, #79554d35, transparent 46%),
+    linear-gradient(120deg, #ffffff03, transparent 65%, #00000012);
 }
 .radar-emblem__art { position: absolute; inset: 0; }
 .home-discovery-intro .radar-emblem {
@@ -13,7 +14,7 @@
   margin-block: -1.3rem;
 }
 .home-discovery-intro .radar-emblem__art {
-  background: radial-gradient(circle, #f0716710, transparent 62%);
+  background: radial-gradient(circle, #f0716717, transparent 65%);
   pointer-events: none;
 }
 .home-discovery-intro .radar-emblem__grid { color: var(--hero-line); }
@@ -40,12 +41,12 @@
 .radar-emblem__horse-control:focus-visible { outline: 2px solid var(--hero-ink); outline-offset: 3px; }
 
 @media (prefers-reduced-motion: no-preference) {
-  .radar-emblem--animated .radar-emblem__scan { animation: hero-radar-scan 9.6s linear infinite; }
-  .radar-emblem--animated .radar-emblem__echo { animation: hero-radar-echo 9.6s ease-out infinite; }
-  .radar-emblem--animated .radar-emblem__hit { animation: hero-radar-hit 9.6s linear infinite; }
-  .radar-emblem--animated .radar-emblem__lock { animation: hero-radar-lock 9.6s linear infinite; }
-  .radar-emblem--animated .radar-emblem__signal--2 :is(.radar-emblem__echo, .radar-emblem__hit) { animation-delay: 2.4s; }
-  .radar-emblem--animated .radar-emblem__signal--3 :is(.radar-emblem__echo, .radar-emblem__hit) { animation-delay: 6s; }
+  .radar-emblem--animated .radar-emblem__scan { animation: hero-radar-scan 13.5s linear infinite; }
+  .radar-emblem--animated .radar-emblem__echo { animation: hero-radar-echo 13.5s ease-out infinite; }
+  .radar-emblem--animated .radar-emblem__hit { animation: hero-radar-hit 13.5s linear infinite; }
+  .radar-emblem--animated .radar-emblem__lock { animation: hero-radar-lock 13.5s linear infinite; }
+  .radar-emblem--animated .radar-emblem__signal--2 :is(.radar-emblem__echo, .radar-emblem__hit) { animation-delay: 3.375s; }
+  .radar-emblem--animated .radar-emblem__signal--3 :is(.radar-emblem__echo, .radar-emblem__hit) { animation-delay: 8.4375s; }
   .radar-emblem--animated .radar-emblem__motion { animation-play-state: paused; }
   .radar-emblem--animated[data-running="true"] .radar-emblem__motion { animation-play-state: running; }
   @keyframes hero-radar-scan { to { transform: rotate(360deg); } }
