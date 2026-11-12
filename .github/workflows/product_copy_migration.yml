@@ -1,0 +1,48 @@
+name: Apply Reviewed Product Copy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - crawler/data/migrations/product_copy_focus_2026_11_12.json
+
+permissions:
+  contents: read
+
+concurrency:
+  group: daily-data-update
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout reviewed manifest
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install MongoDB client
+        run: python -m pip install 'pymongo[srv]==4.6.1'
+
+      - name: Apply reviewed text changes
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+          MONGO_DB_NAME: ${{ vars.MONGO_DB_NAME || 'weeklyai' }}
+        run: >-
+          python crawler/tools/migrate_product_copy.py
+          --manifest crawler/data/migrations/product_copy_focus_2026_11_12.json
+          --receipt product-copy-migration-receipt.json
+
+      - name: Preserve reversible migration receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: product-copy-migration-${{ github.run_id }}
+          path: product-copy-migration-receipt.json
+          if-no-files-found: ignore
+          retention-days: 90

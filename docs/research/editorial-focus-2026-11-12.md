@@ -51,3 +51,11 @@ The frontend changes comprise 30 existing Chinese rationale overrides, four exis
 - ESLint for `product-utils.ts` and `discovery-deck.tsx`: passed.
 - Parsed changed JSON and compared each record against `HEAD`: all 25 changed records are one of the seven named products; array lengths, record identity and every field outside the four allowed text fields are unchanged. Edited copies agree across files.
 - Browser validation must inspect Chinese and English detail/card copy with real records after integration. Automated checks and agent review do not establish first-time visitor understanding; no human comprehension session has been run.
+
+## Publication and storage
+
+The deployed API uses MongoDB, so snapshot edits alone do not update visible records. `crawler/data/migrations/product_copy_focus_2026_11_12.json` records the exact reviewed text transitions. Its dedicated workflow uses the existing database secret, preflights every declared record, then updates only changed description/rationale fields with compare-and-set checks and no upserts. A reversible receipt is retained. A concurrent edit stops the migration instead of overwriting it.
+
+The public Harvey route currently resolves to a legacy `harveyllc.com` storage key; the reviewed snapshot uses `harvey.ai/blog`. The migration explicitly covers existing declared copies with their respective before values, so merging a legacy copy cannot restore the old financing rationale. This text migration does not change website, key, score, date or other metadata.
+
+Integration checks passed: frontend production build, TypeScript, ESLint, all 138 frontend tests, the 2,379-record catalog contract, and bundled snapshot parity. Preview server rendering shows Sakana AI's product-focused rationale while preserving the separate financing record and original source. Release verification also checks the public API and bilingual rendered pages after the database migration; no human comprehension study is implied.
