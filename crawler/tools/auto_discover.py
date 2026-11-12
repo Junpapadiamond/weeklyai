@@ -28,6 +28,7 @@ from typing import Any, Dict, Optional, Tuple, List
 
 # 添加父目录到路径（用于导入 utils）
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from utils.product_identity import product_identity_key
 
 # 导入新的去重模块
 try:
@@ -1250,18 +1251,11 @@ def is_duplicate(name: str, website: str, existing: set) -> bool:
 
 def normalize_url(url: str) -> str:
     """
-    标准化 URL，提取主域名用于去重
+    标准化独立站域名或共享托管项目身份用于去重。
 
     "https://www.example.com/page" → "example.com"
     """
-    if not url:
-        return ""
-    try:
-        parsed = urlparse(url)
-        domain = parsed.netloc.replace("www.", "")
-        return domain.lower()
-    except:
-        return url.lower()
+    return product_identity_key(url)
 
 
 # ============================================

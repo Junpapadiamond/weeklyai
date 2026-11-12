@@ -17,6 +17,7 @@ FEED_MARKETS = {
     'TechCrunch Startups': 'us', 'TechCrunch AI': 'us', 'TechCrunch Venture': 'us',
     'VentureBeat': 'us', '36kr': 'cn', 'QbitAI': 'cn', 'TMTPost': 'cn',
     'Leiphone': 'cn', 'iFanr': 'cn', 'Tech.eu': 'eu', 'Sifted': 'eu', 'BetaKit': 'other',
+    'BRIDGE': 'jp', 'Platum': 'kr', 'VentureSquare': 'kr',
 }
 NICHES = [
     ('AI robotics edge devices agriculture manufacturing', 'AI workflow developer tools small business'),

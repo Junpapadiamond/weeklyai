@@ -304,7 +304,7 @@ const ZH_PRODUCT_TEXT_OVERRIDES: Record<string, ProductTextOverride> = {
   },
   "kontext": {
     "description": "为 AI 智能体提供运行时安全控制，监测其行为，并在执行前拦截未经授权的操作。",
-    "why_matters": "通过实时评估智能体行为和执行安全策略，帮助企业管理智能体的访问权限。投资方包括 a16z CSX。"
+    "why_matters": "把安全策略检查放在智能体执行操作之前，关注代理获得更大访问权限后带来的越权风险。"
   },
   "duqu": {
     "description": "为企业尚未收款的 B2B 发票提供短期垫款，使用 AI 自动完成约 95% 的信用评估，24 小时内转账。",
@@ -312,7 +312,7 @@ const ZH_PRODUCT_TEXT_OVERRIDES: Record<string, ProductTextOverride> = {
   },
   "outerlimit": {
     "description": "为 AI 智能体提供去中心化的安全和授权服务。",
-    "why_matters": "完成 1600 万美元种子前轮融资后首次公开亮相，投资方包括 AlbionVC 和 Evolution Equity Partners。专注智能体的权限管理和安全授权。"
+    "why_matters": "关注 AI 智能体访问系统时的授权边界，采用去中心化安全与授权设计，面向代理自主执行任务的场景。"
   },
   "reply next": {
     "description": "帮助连锁品牌统一管理各地门店的线上信息，自动回复客户、发现经营问题并跟踪竞争对手。",
@@ -320,31 +320,31 @@ const ZH_PRODUCT_TEXT_OVERRIDES: Record<string, ProductTextOverride> = {
   },
   "sakana ai": {
     "description": "日本基础模型公司，通过受自然启发的方法研发 AI 模型，并推出 AI Scientist 自动化科研工具。",
-    "why_matters": "由 Transformer 论文作者 Llion Jones 和 Google Brain 东京前负责人 David Ha 创立。A 轮融资 2 亿美元，后续追加 1.35 亿美元，累计融资 4.79 亿美元；投资方包括 MUFG、SMBC、富士通和 KDDI。"
+    "why_matters": "AI Scientist 探索科研流程自动化，基础模型研发采用受自然启发的方法。团队由 Llion Jones 和 David Ha 创立。"
   },
   "skildai": {
     "description": "为不同类型的机器人研发通用基础模型，让机器人理解环境并执行任务。",
-    "why_matters": "2026 年 1 月完成 14 亿美元 C 轮融资，主要研发方向是具身智能基础模型。"
+    "why_matters": "将基础模型研究用于真实机器人的环境理解和任务执行，研发重点是不同机器人任务所需的通用能力。"
   },
   "frankenburg technologies": {
-    "description": "2024 年成立于爱沙尼亚塔林的 AI 创业公司，两年内累计融资 4300 万欧元。",
-    "why_matters": "最新一轮由 SmartCap 和 Plural 领投，A 轮融资 3000 万欧元，累计融资达到 4300 万欧元。"
+    "description": "总部位于爱沙尼亚塔林，研发用于空中防御的制导拦截系统。",
+    "why_matters": "公司把拦截系统的制造成本与规模化生产作为研发重点；这些是产品设计目标，不代表已经核实的作战效果。"
   },
   "ai2 robotics": {
     "description": "中国具身智能公司，围绕人形机器人研发 GOVLA 等模型和控制系统。",
-    "why_matters": "B 轮融资超过 10 亿元，估值突破 100 亿元，投资方包括百度和 CRRC Capital。资金用于机器人模型研发与量产。"
+    "why_matters": "围绕人形机器人同时研发 GOVLA 模型和控制系统，关注模型能力如何转化为机器人的实际动作。"
   },
   "vertical compute": {
     "description": "比利时 AI 芯片公司，通过新型存储器件和芯粒设计，缓解 AI 计算中的内存瓶颈。",
-    "why_matters": "从 imec 分拆后一年内，完成首颗 3D 存储与逻辑集成测试芯片的流片。累计融资 5700 万欧元，其中新增融资 3700 万欧元，目标是不更换 CPU 或 GPU 就能提高内存效率。"
+    "why_matters": "从 imec 分拆后一年内完成首颗 3D 存储与逻辑集成测试芯片流片，尝试通过芯粒改善现有 CPU、GPU 的内存瓶颈；流片尚不等于量产性能验证。"
   },
   "abridge": {
     "description": "将医生与患者的临床对话整理成结构化病历，帮助医院减少文书工作。",
-    "why_matters": "2025 年两轮融资合计 5.5 亿美元，估值达到 53 亿美元。产品直接融入医院的病历记录流程。"
+    "why_matters": "把临床对话整理成病历记录，直接面向医生日常文书流程，让医院能围绕具体记录任务评估工具。"
   },
   "anysphere (cursor)": {
     "description": "Cursor 的开发公司，提供支持代码生成、编辑和问答的 AI 编程工具。",
-    "why_matters": "2025 年 6 月和 11 月连续融资，估值在 5 个月内从 100 亿美元升至 293 亿美元。"
+    "why_matters": "将代码生成、编辑和问答放进开发工作流，开发者可以围绕同一份代码连续提问和修改。"
   },
   "cerebras wse-3": {
     "description": "晶圆级 AI 推理芯片，集成 4 万亿个晶体管和 44GB 片上内存，搭载于采用水冷的 CS-3 系统。",
@@ -352,27 +352,27 @@ const ZH_PRODUCT_TEXT_OVERRIDES: Record<string, ProductTextOverride> = {
   },
   "google x gentle monster android xr glasses": {
     "description": "Google 与 Gentle Monster 合作的 AI 智能眼镜，结合时尚镜框、Android XR 和 Gemini，提供日常场景下的智能辅助。",
-    "why_matters": "Google 向 Gentle Monster 投资 1 亿美元。这款产品从镜框设计和日常佩戴需求入手，降低智能眼镜的使用门槛。"
+    "why_matters": "从镜框设计和日常佩戴需求入手，将 Android XR 与 Gemini 功能融入眼镜形态，探索智能辅助与时尚设计的结合。"
   },
   "google x warby parker android xr glasses": {
     "description": "支持配近视镜片的 AI 智能眼镜，搭载 Android XR 和 Gemini，可通过语音获取日常帮助。",
-    "why_matters": "Google 计划投入最多 1.5 亿美元，并结合 Warby Parker 的直营销售渠道，将智能功能融入日常眼镜。"
+    "why_matters": "结合可配近视镜片的设计和 Warby Parker 的直营渠道，探索将语音智能辅助融入日常配镜与佩戴体验。"
   },
   "harvey": {
     "description": "面向律师事务所和企业法务的 AI 工具，支持合同审阅、法律检索和文档分析。",
-    "why_matters": "以 30 亿美元估值完成 3 亿美元 D 轮融资，专注法律行业的专业工作流程。"
+    "why_matters": "把法律文档分析和合同审查放进律师的工作流程，便于围绕具体材料开展审阅；生成内容仍需由专业人员核对。"
   },
   "hippocratic ai": {
-    "description": "面向医疗机构研发 AI 产品，聚焦患者服务等医疗场景。",
-    "why_matters": "2025 年两轮融资合计 2.67 亿美元，其中最新 C 轮融资 1.26 亿美元，估值为 35 亿美元。"
+    "description": "面向医疗机构的语音 AI 智能体，用于预约、就诊信息收集和随访等患者服务。",
+    "why_matters": "将患者联络与服务流程交给语音智能体处理。官网明确其智能体不作诊断或开处方，适用范围应与临床决策区分。"
   },
   "robco modular ai robots": {
     "description": "面向工厂的模块化机械臂，结合示教学习和数字孪生技术完成自动化作业。",
-    "why_matters": "模块化硬件方便中小制造企业按需求部署。已融资 1 亿美元用于拓展美国市场，客户包括 BMW。"
+    "why_matters": "模块化硬件面向中小制造企业的不同作业需求，结合示教学习与数字孪生来配置任务，已有资料列出的客户包括 BMW。"
   },
   "sandboxaq": {
     "description": "研发后量子密码学和 AI 安全技术，帮助企业保护数据与系统。",
-    "why_matters": "2025 年 4 月完成 4.5 亿美元 E 轮融资，估值为 57 亿美元，重点投入 AI 安全与后量子密码技术。"
+    "why_matters": "将后量子密码学与 AI 安全用于企业的数据和系统保护，聚焦底层安全技术的应用。"
   },
   "cudis ai health ring": {
     "description": "无需订阅的 AI 智能戒指，支持健康指标追踪、AI 健康教练和积分奖励。",
@@ -383,8 +383,8 @@ const ZH_PRODUCT_TEXT_OVERRIDES: Record<string, ProductTextOverride> = {
     "why_matters": "专注翻译场景，减少不必要的功能和成本，并支持先试用后购买。"
   },
   "kewazo": {
-    "description": "将机器人和数据分析用于建筑施工，帮助工地完成自动化作业和流程管理。",
-    "why_matters": "围绕建筑机器人累计融资 1.44 亿美元，面向实际施工场景推进部署。"
+    "description": "面向工业维护和建筑施工，提供 LIFTBOT 物料提升机器人与 ONSITE 现场数据分析平台。",
+    "why_matters": "把现场物料搬运和作业数据放在同一产品体系中，分别对应施工执行与现场活动分析的需求。"
   },
   "mentra live": {
     "description": "开源 AI 智能眼镜，配备高清摄像头和小程序商店，支持直播、笔记及翻译。重量 43g，续航超过 12 小时。",
@@ -400,7 +400,7 @@ const ZH_PRODUCT_TEXT_OVERRIDES: Record<string, ProductTextOverride> = {
   },
   "ivee": {
     "description": "面向企业员工的 AI 技能培训平台，通过能力测评和实操训练，帮助团队学会使用 AI 工具。",
-    "why_matters": "完成 100 万美元种子轮融资，投资方包括 Steven Bartlett 和 Social Impact Enterprises，并入选英国政府重点活动的合作伙伴。"
+    "why_matters": "把 AI 工具培训、技能验证和人才匹配连接起来。原始资料列出超过 8 万份已验证技能档案，并介绍其英国政府培训活动合作伙伴身份。"
   },
   "friend": {
     "description": "AI 智能挂坠，提供实时陪伴对话和情绪支持。采用一次性购买模式，无需订阅。"
@@ -411,11 +411,11 @@ const ZH_PRODUCT_TEXT_OVERRIDES: Record<string, ProductTextOverride> = {
   },
   "godot": {
     "description": "日本行为科学 AI 公司，利用行为分析帮助个人和组织改善行动习惯。",
-    "why_matters": "在 Dawn Capital 领投的 A 轮融资后，累计融资 11 亿日元，业务已从神户拓展至澳大利亚和维也纳。在大阪大肠癌筛查项目中实现 46% 的提升，并获得 WHO 奖项。"
+    "why_matters": "将行为科学用于具体的行动改变场景。公司发布资料报告，大阪项目的大肠癌筛查率提升 46%；这是项目参与率信息，不代表诊断准确性。"
   },
   "neureality": {
     "description": "将 NAPU 芯片与配套软件结合，为云端和边缘设备提供 AI 推理方案。",
-    "why_matters": "累计融资 5965 万美元，获 SK Hynix 和 Samsung Ventures 投资。通过基础设施服务降低 AI 推理扩容的成本。"
+    "why_matters": "把 NAPU 芯片、软件和基础设施服务结合起来，面向已有云端与边缘系统的 AI 推理扩容需求。"
   },
   "rokid スマートaiグラス": {
     "description": "重量 49g 的 AI 智能眼镜，配备 Micro LED 和 1200 万像素摄像头，支持 GPT-5、Gemini 视觉理解、89 种语言翻译及 AR 导航。",
@@ -427,7 +427,7 @@ const ZH_PRODUCT_TEXT_OVERRIDES: Record<string, ProductTextOverride> = {
   },
   "seeqc": {
     "description": "基于单磁通量子（SFQ）芯片的量子计算硬件，主要提升系统能效和扩展能力。",
-    "why_matters": "2025 年 1 月完成 3000 万美元 A 轮融资，通过芯片设计解决量子计算系统的功耗与扩展问题。"
+    "why_matters": "以 SFQ 芯片设计探索量子计算系统的功耗与扩展问题，关注计算硬件层面的改进。"
   },
   "turing inc.": {
     "description": "日本自动驾驶公司，研发端到端驾驶模型、专用算力集群 Gaggle Cluster 和生成式世界模型 Terra。",
@@ -443,15 +443,15 @@ const ZH_PRODUCT_TEXT_OVERRIDES: Record<string, ProductTextOverride> = {
   },
   "basis": {
     "description": "面向会计师事务所和财务团队的 AI 智能体，协助处理审计、台账和日常会计工作。",
-    "why_matters": "由 Accel 领投完成 1 亿美元 B 轮融资，估值达到 11.5 亿美元，专注会计行业的工作流程。"
+    "why_matters": "围绕会计师的审计、台账和日常会计任务组织智能体能力，便于按专业工作流程评估其用途。"
   },
   "xross road": {
     "description": "AI 漫画创作工具，通过 HANASEE 将小说或脚本转成长篇漫画，并尽量保持角色形象一致。",
-    "why_matters": "完成 150 万美元种子前轮融资，重点解决长篇漫画生成中的角色一致性和连续叙事问题。"
+    "why_matters": "针对从小说或脚本制作长篇漫画的流程，重点处理多幅画面之间的角色一致性与连续叙事。"
   },
   "modveon": {
     "description": "以身份验证为核心的系统，为政务和线上协作提供可信身份与交互记录。",
-    "why_matters": "完成 1000 万美元融资，投资方包括 Coinbase Ventures，尝试将身份验证延伸到后续的线上交互。"
+    "why_matters": "将本人身份验证与后续线上交互记录结合，面向政务和协作场景中的冒充及可信身份问题。"
   },
   "genas.ai": {
     "description": "面向日本市场的 AI 视频生成平台，接入 Sora、Veo 和 Seedance 等模型，用于制作广告和短剧。",
@@ -463,7 +463,7 @@ const ZH_PRODUCT_TEXT_OVERRIDES: Record<string, ProductTextOverride> = {
   },
   "shizuku ai": {
     "description": "日本 AI 虚拟主播服务，使用 StreamDiffusion 等技术实现实时互动和画面生成。",
-    "why_matters": "获得 a16z 投资，将实时生成技术用于虚拟角色，让角色能随对话及时做出反应。"
+    "why_matters": "将实时生成技术用于虚拟角色，让画面与对话互动相结合，面向虚拟主播的持续交流场景。"
   },
   "tiergeo": {
     "description": "帮助企业查看和优化品牌在 AI 搜索及推荐结果中的曝光情况。",
@@ -471,7 +471,7 @@ const ZH_PRODUCT_TEXT_OVERRIDES: Record<string, ProductTextOverride> = {
   },
   "helpfeel": {
     "description": "AI 知识管理平台，为客服常见问题、客户反馈分析和生成式 AI 提供结构化知识。",
-    "why_matters": "E 轮第二次交割后累计融资约 29 亿日元，已服务超过 800 个站点，重点解决 AI 应用的知识准确性问题。"
+    "why_matters": "把客服常见问题与客户反馈组织成可供 AI 使用的知识。公司资料列出超过 800 个服务站点，重点是企业知识的可检索性与准确性。"
   },
   "appier group": {
     "description": "面向销售和营销的 AI 软件服务，覆盖获客、转化和客户价值分析。",
@@ -490,8 +490,8 @@ const ZH_PRODUCT_TEXT_OVERRIDES: Record<string, ProductTextOverride> = {
     "why_matters": "主要满足听音频和通话的需求，以更轻的结构适配日常佩戴。"
   },
   "upscale ai": {
-    "description": "AI 基础设施公司，为模型训练和推理提供算力及系统支持。",
-    "why_matters": "种子轮融资达到 1 亿美元，由关注半导体和基础设施的基金联合领投。"
+    "description": "面向 AI 训练与推理的网络基础设施公司，研发连接不同计算设备的网络芯片、系统和软件。",
+    "why_matters": "采用 SONiC、UAL 和 Ultra Ethernet 等开放标准，研发重点是不同厂商计算设备之间的互联；产品性能仍需具体测试验证。"
   },
   "j-style smart rings": {
     "description": "无屏智能戒指，支持连续健康监测、心电检测和 AI 健康提醒。",
@@ -499,11 +499,11 @@ const ZH_PRODUCT_TEXT_OVERRIDES: Record<string, ProductTextOverride> = {
   },
   "snorkel ai": {
     "description": "AI 数据开发与标注平台，帮助团队准备训练数据、搭建评测流程和管理模型。",
-    "why_matters": "以 13 亿美元估值完成 1 亿美元 D 轮融资，专注 AI 开发中的数据质量与标注问题。"
+    "why_matters": "将训练数据准备、标注和模型评测放在同一工作流中，帮助团队围绕数据质量迭代 AI 应用。"
   },
   "valkaai": {
     "description": "来自布拉格的实时 AI 数字人和视频技术公司，服务体育与媒体行业。",
-    "why_matters": "完成 1200 万欧元种子前轮融资，研发重点是可实时交互的数字人。"
+    "why_matters": "面向体育与媒体场景研发实时数字人，关注虚拟角色在交互过程中的响应，而不仅是预先制作的视频。"
   },
   "vitrealab quantum light chips": {
     "description": "研发量子光芯片的光子技术公司，为 AR 显示和视觉计算设备提供光学器件。",
@@ -515,11 +515,11 @@ const ZH_PRODUCT_TEXT_OVERRIDES: Record<string, ProductTextOverride> = {
   },
   "foodforecast": {
     "description": "来自科隆的食品科技公司，为零售和食品生产企业提供 AI 需求预测与产能规划。",
-    "why_matters": "完成 800 万欧元 A 轮融资，帮助企业根据需求安排生产，减少食品损耗。"
+    "why_matters": "把需求预测用于超生鲜食品的生产与备货规划，以减少供需错配和食品损耗为目标。"
   },
   "lmarena": {
     "description": "由加州大学伯克利分校推动的大语言模型评测平台，用于比较不同模型的表现。",
-    "why_matters": "由 Felicis 领投，4 个月内估值升至 17 亿美元，主要提供大语言模型的评测和对比。"
+    "why_matters": "提供不同大语言模型的对比与评测结果，帮助使用者按任务判断模型表现，而非只看厂商介绍。"
   }
 };
 

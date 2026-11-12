@@ -21,6 +21,7 @@ from urllib.parse import urlparse
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, PROJECT_ROOT)
+from utils.product_identity import catalog_url_key
 
 # Data files
 DATA_DIR = os.path.join(PROJECT_ROOT, "data")
@@ -71,29 +72,8 @@ def load_json(filepath: str) -> list:
 
 
 def _normalize_domain(url: str) -> str:
-    """Normalize domain for dedupe: strip scheme/www/port and keep first path."""
-    if not url:
-        return ""
-    raw = str(url).strip()
-    if not raw:
-        return ""
-    if not re.match(r"^https?://", raw, re.IGNORECASE) and "." in raw:
-        raw = f"https://{raw}"
-    try:
-        parsed = urlparse(raw)
-        domain = (parsed.netloc or "").lower()
-        domain = re.sub(r"^www\.", "", domain)
-        domain = domain.split(":")[0]
-        if not domain:
-            return ""
-        path = (parsed.path or "").strip("/")
-        if path:
-            first = path.split("/")[0]
-            if len(first) > 1:
-                return f"{domain}/{first}"
-        return domain
-    except Exception:
-        return raw.lower()
+    """Use the backend's project-aware catalog identity."""
+    return catalog_url_key(url)
 
 
 def build_sync_key(item: Dict[str, Any]) -> str:

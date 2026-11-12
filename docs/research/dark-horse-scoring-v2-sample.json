@@ -1,0 +1,165 @@
+{
+  "status": "proposal_only",
+  "review_date": "2026-11-12",
+  "baseline_commit": "c52717a0a04052c20e0120b92b4a074744b36247",
+  "baseline_file": "crawler/data/products_featured.json",
+  "method": "Purposeful boundary samples reviewed against saved quoted evidence; not a randomized evaluation, new LLM call, independent product test, or automated historical re-score. Needs-source-review is not an assigned lower score.",
+  "reviews": [
+    {
+      "name": "Primero",
+      "current_score": 4,
+      "review_outcome": "consider_3_pending_deployment_evidence",
+      "candidate_score": 3,
+      "reason_zh": "具体差异与部署证据仍需补充；客户名单不等于效果。",
+      "source_url": "https://latinamericareports.com/15-ai-leaders-to-watch-in-2027/15575",
+      "stored_evidence_criteria": [
+        "funding_signal",
+        "growth_anomaly"
+      ],
+      "exposure_status": "unknown",
+      "live_score_changed": false
+    },
+    {
+      "name": "42AI",
+      "current_score": 4,
+      "review_outcome": "needs_source_review",
+      "candidate_score": null,
+      "reason_zh": "评分引文未覆盖介绍中的部署和效果；先回查原文，不自动降分。",
+      "source_url": "https://techcrunch.com/2026/11/02/42ai-comes-out-of-stealth-with-62-5m-and-a-world-model-that-can-predict-human-behavior",
+      "stored_evidence_criteria": [
+        "funding_signal",
+        "founder_background"
+      ],
+      "exposure_status": "unknown",
+      "live_score_changed": false
+    },
+    {
+      "name": "Physicl",
+      "current_score": 4,
+      "review_outcome": "needs_source_review",
+      "candidate_score": null,
+      "reason_zh": "现存评分引文为融资与创始人背景，需补产品能力/采用证据。",
+      "source_url": "https://techcrunch.com/2026/11/06/physicl-raises-10m-to-make-the-digital-world-real-enough-for-robots/",
+      "stored_evidence_criteria": [
+        "funding_signal",
+        "founder_background"
+      ],
+      "exposure_status": "unknown",
+      "live_score_changed": false
+    },
+    {
+      "name": "Trajectory",
+      "current_score": 4,
+      "review_outcome": "retain_4_candidate",
+      "candidate_score": 4,
+      "reason_zh": "原文引文有具体任务与采用；未独立验证收益。",
+      "source_url": "https://techcrunch.com/2026/11/02/trajectory-raises-45m-to-make-ai-model-training-accessible-to-nontechnical-experts/",
+      "stored_evidence_criteria": [
+        "funding_signal",
+        "founder_background",
+        "category_innovation"
+      ],
+      "exposure_status": "unknown",
+      "live_score_changed": false
+    },
+    {
+      "name": "ugo",
+      "current_score": 4,
+      "review_outcome": "retain_4_candidate",
+      "candidate_score": 4,
+      "reason_zh": "产品形态和出货/增长为不同事实；设备尚未独立实测。",
+      "source_url": "https://note.com/kmoriyama/n/n8d4aa5aee0f6",
+      "stored_evidence_criteria": [
+        "funding_signal",
+        "growth_anomaly",
+        "category_innovation"
+      ],
+      "exposure_status": "unknown",
+      "live_score_changed": false
+    },
+    {
+      "name": "Holo",
+      "current_score": 4,
+      "review_outcome": "retain_4_candidate",
+      "candidate_score": 4,
+      "reason_zh": "用途与自报付费采用支持评估；自报不支持5。",
+      "source_url": "https://www.eu-startups.com/2026/10/vilnius-based-holo-raises-e5-million-to-put-marketing-on-autopilot-for-small-businesses",
+      "stored_evidence_criteria": [
+        "funding_signal",
+        "growth_anomaly"
+      ],
+      "exposure_status": "unknown",
+      "live_score_changed": false
+    },
+    {
+      "name": "Synapse Analytics",
+      "current_score": 4,
+      "review_outcome": "retain_4_candidate",
+      "candidate_score": 4,
+      "reason_zh": "有信贷使用规模与公司自述效果，须核实指标口径。",
+      "source_url": "https://launchbaseafrica.com/2026/11/03/south-africa-and-egypt-contest-africas-ai-funding-crown",
+      "stored_evidence_criteria": [
+        "funding_signal",
+        "growth_anomaly"
+      ],
+      "exposure_status": "unknown",
+      "live_score_changed": false
+    },
+    {
+      "name": "Daytona",
+      "current_score": 4,
+      "review_outcome": "needs_source_review",
+      "candidate_score": null,
+      "reason_zh": "现存引文缺具体隔离执行能力；不能让投资人名单替代创始人或产品证据。",
+      "source_url": "https://tech.eu/2026/10/20/daytona-hits-1b-valuation-with-60m-series-b-for-ai-agent-cloud/",
+      "stored_evidence_criteria": [
+        "funding_signal",
+        "founder_background",
+        "growth_anomaly"
+      ],
+      "exposure_status": "unknown",
+      "live_score_changed": false
+    },
+    {
+      "name": "WHERE",
+      "current_score": 3,
+      "review_outcome": "retain_3",
+      "candidate_score": 3,
+      "reason_zh": "技术转用具体，缺任务效果或采用证据。",
+      "source_url": "https://kpmg.com/jp/ja/insights/2026/11/alh-deeptech-industrialization.html",
+      "stored_evidence_criteria": [
+        "category_innovation"
+      ],
+      "exposure_status": "unknown",
+      "live_score_changed": false
+    },
+    {
+      "name": "AI Diagnostics",
+      "current_score": 3,
+      "review_outcome": "retain_3",
+      "candidate_score": 3,
+      "reason_zh": "筛查与研究数量不证明临床有效性。",
+      "source_url": "https://launchbaseafrica.com/2026/10/12/african-healthtech-2026",
+      "stored_evidence_criteria": [
+        "funding_signal",
+        "growth_anomaly"
+      ],
+      "exposure_status": "unknown",
+      "live_score_changed": false
+    },
+    {
+      "name": "Rently",
+      "current_score": 4,
+      "review_outcome": "review_ai_eligibility",
+      "candidate_score": null,
+      "reason_zh": "支付交易增长未能证明具体AI产品作用。",
+      "source_url": "https://fintechnews.sg/139924/proptech/proptech-startups-from-singapore-to-watch",
+      "stored_evidence_criteria": [
+        "funding_signal",
+        "growth_anomaly"
+      ],
+      "exposure_status": "unknown",
+      "live_score_changed": false
+    }
+  ]
+}

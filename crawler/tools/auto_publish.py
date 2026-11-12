@@ -10,14 +10,16 @@ Rules:
 import argparse
 import json
 import os
+import sys
 from datetime import datetime
-from urllib.parse import urlparse
 
 UNKNOWN_COUNTRY_CODE = "UNKNOWN"
 UNKNOWN_COUNTRY_NAME = "Unknown"
 UNKNOWN_COUNTRY_DISPLAY = "Unknown"
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, PROJECT_ROOT)
+from utils.product_identity import product_identity_key
 DATA_DIR = os.path.join(PROJECT_ROOT, 'data')
 DARK_HORSES_DIR = os.path.join(DATA_DIR, 'dark_horses')
 RISING_STARS_DIR = os.path.join(DATA_DIR, 'rising_stars')
@@ -30,18 +32,7 @@ def get_current_week() -> str:
 
 
 def normalize_url(url: str) -> str:
-    if not url:
-        return ""
-    url = url.strip()
-    if not url:
-        return ""
-    if not url.startswith(("http://", "https://")):
-        url = f"https://{url}"
-    parsed = urlparse(url)
-    domain = (parsed.netloc or "").lower()
-    if domain.startswith("www."):
-        domain = domain[4:]
-    return domain or url.lower()
+    return product_identity_key(url)
 
 
 def load_json(path: str) -> list:

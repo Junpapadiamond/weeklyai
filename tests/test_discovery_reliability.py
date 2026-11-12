@@ -77,6 +77,20 @@ def test_later_bad_json_cannot_discard_earlier_saved_product(setup_run):
     assert source(0)['url'] in cache and source(2)['url'] not in cache
 
 
+@pytest.mark.parametrize('extra', [None, 'unexpected metadata', [],
+                                  {'hosted_project_verification': {'verified': True}}])
+def test_model_extra_cannot_interrupt_publication_or_supply_verification(setup_run, extra):
+    engine, outcomes, calls, featured = setup_run
+    first = dict(candidate(0), extra=extra)
+    outcomes.extend([[first], [candidate(2)], []])
+    report = discovery.run_discovery(engine)
+    assert report['saved'] == ['Example0', 'Example2'] and len(calls) == 3
+    published = json.loads(featured.read_text())
+    assert len(published) == 2
+    assert isinstance(published[0]['extra'], dict)
+    assert 'hosted_project_verification' not in published[0]['extra']
+
+
 def test_retries_follow_other_markets_and_share_request_budget(setup_run):
     engine, outcomes, calls, _ = setup_run
     outcomes.extend([ClaudeError('timeout'), [candidate(2)], [], [candidate(0)]])
@@ -223,3 +237,99 @@ def test_website_lookup_has_a_hard_request_limit(setup_run, monkeypatch):
     report = discovery.run_discovery(engine, dry_run=True)
     assert len(lookups) == len(report['website_lookups']) == 8
     assert not report['accepted']
+
+
+def test_lookup_budget_reaches_later_markets_and_deferrals_remain_retryable(setup_run, monkeypatch):
+    engine, outcomes, _, featured = setup_run
+    monkeypatch.setenv('TAVILY_API_KEY', 'test-key')
+    monkeypatch.setenv('CLAUDE_DISCOVERY_MAX_ARTICLES', '16')
+    monkeypatch.setenv('CLAUDE_DISCOVERY_MAX_CALLS', '8')
+    countries = ['US'] * 8 + ['CN', 'JP', 'KR', 'DE', 'SG', 'IN', 'unknown', 'CN']
+    sources = [source(i) for i in range(16)]
+    monkeypatch.setattr(discovery, 'collect_articles', lambda *a, **kw: (sources, []))
+    candidates = [dict(candidate(i, country), website='') for i, country in enumerate(countries)]
+    outcomes.extend([candidates[i:i + 2] for i in range(0, 16, 2)])
+    monkeypatch.setattr(discovery, 'resolve_official_site', lambda *a: None)
+    report = discovery.run_discovery(engine)
+    assert len(report['website_lookups']) == 8
+    assert {x['company_market'] for x in report['website_lookups']} == set(markets_for('all')) | {'unknown'}
+    assert len(report['website_deferrals']) == 8
+    assert {x['reason'] for x in report['website_deferrals']} == {'budget_exhausted'}
+    cache = discovery.load_seen(featured.parent / 'discovery_state.json', datetime.now(timezone.utc))
+    assert not ({x['source_url'] for x in report['website_deferrals']} & set(cache))
+    assert {x['source_url'] for x in report['website_lookups']} <= set(cache)
+    # A skipped lookup is distinct from a failed identity check in operational data.
+    assert len(report['rejected']) == 8
+
+
+def test_paid_lookup_unavailable_is_a_deferral_not_identity_failure(setup_run, monkeypatch):
+    engine, outcomes, _, featured = setup_run
+    monkeypatch.delenv('TAVILY_API_KEY', raising=False)
+    outcomes.extend([[dict(candidate(0), website='')], [], []])
+    report = discovery.run_discovery(engine)
+    assert not report['website_lookups'] and not report['rejected']
+    assert report['website_deferrals'][0]['reason'] == 'search_unavailable'
+    assert source(0)['url'] not in discovery.load_seen(featured.parent / 'discovery_state.json', datetime.now(timezone.utc))
+
+
+def test_hosted_tool_is_not_misclassified_as_github_copilot(setup_run, monkeypatch):
+    engine, outcomes, _, featured = setup_run
+    leader = {'categories': {'coding': {'products': [
+        {'name': 'GitHub Copilot', 'website': 'https://github.com/features/copilot'}]}}}
+    (featured.parent / 'industry_leaders.json').write_text(json.dumps(leader))
+    tool = candidate(0)
+    tool['extra'] = None
+    tool['website'] = 'https://github.com/example/Example0'
+    usage = 'Users can install Example0 to transcribe recordings offline.'
+    tool['hosted_product_use'] = {'kind': 'usable_product', 'quote': usage}
+    article = source(0)
+    article['links'] = [{'url': tool['website'], 'text': 'Example0'}]
+    article['content'] += ' ' + usage
+    monkeypatch.setattr(discovery, 'collect_articles', lambda *a, **kw: ([article], []))
+    monkeypatch.setattr(discovery, 'fetch_public', lambda url: (b'<html><title>Example0</title>Example0 installable AI transcription tool</html>', url))
+    outcomes.extend([[tool]])
+    report = discovery.run_discovery(engine)
+    assert len(report['accepted']) == 1 and report['saved'] == ['Example0']
+    record = report['accepted'][0]['extra']['hosted_project_verification']
+    assert record['project_key'] == 'github.com/example/example0'
+    assert record['usage_quote'] == usage and record['verified'] is True
+    assert json.loads(featured.read_text())[0]['extra']['hosted_project_verification'] == record
+
+
+def test_hosted_product_redirect_to_another_project_is_rejected(setup_run, monkeypatch):
+    engine, outcomes, _, _ = setup_run
+    tool = candidate(0)
+    tool['website'] = 'https://github.com/example/Example0'
+    usage = 'Users can install Example0 to transcribe recordings offline.'
+    tool['hosted_product_use'] = {'kind': 'usable_product', 'quote': usage}
+    article = source(0)
+    article['links'] = [{'url': tool['website'], 'text': 'Example0'}]
+    article['content'] += ' ' + usage
+    monkeypatch.setattr(discovery, 'collect_articles', lambda *a, **kw: ([article], []))
+    monkeypatch.setattr(discovery, 'fetch_public', lambda url: (b'<title>Example0</title>Example0 AI tool', 'https://github.com/unrelated/Example0'))
+    outcomes.extend([[tool]])
+    report = discovery.run_discovery(engine, dry_run=True)
+    assert not report['accepted']
+    assert report['rejected'][0]['reason'] == 'hosted project redirected to another identity'
+
+
+def test_official_site_recovery_preserves_shared_project_path(monkeypatch):
+    project = 'https://github.com/example/Example0'
+    monkeypatch.setattr('utils.tavily_client.search_official_sites', lambda *a: [
+        {'url': project, 'title': 'Example0', 'content': ''}])
+    fetched = []
+    def fetch(url):
+        fetched.append(url)
+        return b'<title>Example0</title>Example0 AI offline transcription for endangered languages', url
+    monkeypatch.setattr(discovery, 'fetch_public', fetch)
+    proof = discovery.resolve_official_site(candidate(0), [source(0)])
+    assert proof['url'] == project and fetched == [project]
+
+
+def test_resolver_reports_identity_failure_without_weakening_use_case_check(monkeypatch):
+    monkeypatch.setattr('utils.tavily_client.search_official_sites', lambda *a: [
+        {'url': 'https://namesake.test/', 'title': 'Example0', 'content': ''}])
+    monkeypatch.setattr(discovery, 'fetch_public', lambda url: (b'<title>Example0</title>Example0 AI generic business platform', url))
+    diagnostics = {}
+    assert discovery.resolve_official_site(candidate(0), [source(0)], diagnostics) is None
+    assert diagnostics['results_checked'][0]['reason'] == 'homepage_use_case_mismatch'

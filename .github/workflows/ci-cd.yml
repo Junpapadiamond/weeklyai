@@ -74,7 +74,8 @@ jobs:
       - name: Build Crawler
         uses: docker/build-push-action@v5
         with:
-          context: ./crawler
+          context: .
+          file: crawler/Dockerfile
           push: false
           tags: ${{ env.REGISTRY }}/${{ steps.image_meta.outputs.prefix }}-crawler:test
           cache-from: type=gha
@@ -146,7 +147,8 @@ jobs:
       - name: Push Crawler
         uses: docker/build-push-action@v5
         with:
-          context: ./crawler
+          context: .
+          file: crawler/Dockerfile
           push: true
           tags: |
             ${{ env.REGISTRY }}/${{ steps.image_meta.outputs.prefix }}-crawler:latest

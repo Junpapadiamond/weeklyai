@@ -77,8 +77,8 @@ services:
   # 爬虫服务 (定时任务)
   crawler:
     build:
-      context: ./crawler
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: crawler/Dockerfile
     container_name: weeklyai-crawler
     restart: unless-stopped
     environment:

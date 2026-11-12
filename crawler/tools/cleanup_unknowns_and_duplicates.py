@@ -10,9 +10,11 @@ import argparse
 import json
 import os
 import re
-from urllib.parse import urlparse
+import sys
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, PROJECT_ROOT)
+from utils.product_identity import product_identity_key
 DATA_DIR = os.path.join(PROJECT_ROOT, "data")
 FEATURED_FILE = os.path.join(DATA_DIR, "products_featured.json")
 
@@ -25,21 +27,7 @@ def normalize_name(name: str) -> str:
 
 
 def normalize_domain(url: str) -> str:
-    if not url:
-        return ""
-    url = url.strip()
-    if not url:
-        return ""
-    if not url.startswith(("http://", "https://")) and "." in url:
-        url = f"https://{url}"
-    try:
-        parsed = urlparse(url)
-    except Exception:
-        return url.lower()
-    host = (parsed.netloc or "").lower()
-    if host.startswith("www."):
-        host = host[4:]
-    return host or url.lower()
+    return product_identity_key(url)
 
 
 def product_quality(p: dict) -> int:
