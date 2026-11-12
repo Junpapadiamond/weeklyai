@@ -31,6 +31,7 @@ from dotenv import load_dotenv
 # 添加项目路径
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, PROJECT_ROOT)
+from utils.product_identity import is_shared_host, product_identity_key
 
 REPO_ROOT = os.path.dirname(PROJECT_ROOT)
 load_dotenv(os.path.join(REPO_ROOT, '.env'))
@@ -70,6 +71,8 @@ def safe_save_json(path: str, payload) -> None:
 def normalize_domain(url: str) -> str:
     if not url:
         return ""
+    if is_shared_host(url):
+        return product_identity_key(url)
     url = url.strip()
     if not url:
         return ""

@@ -589,7 +589,7 @@ export default function DiscoveryDeck({ products, onLike, onExhausted }: Discove
     cleanDescription(getLocalizedProductDescription(current, locale), locale)
     || currentWhyMatters
     || t("暂无产品介绍", "Product summary pending");
-  const currentHighlight = currentWhyMatters || current.funding_total || "";
+  const currentHighlight = currentWhyMatters;
   const nextDescription = nextCard ? cleanDescription(getLocalizedProductDescription(nextCard, locale), locale) : "";
   const backDescription = backCard ? cleanDescription(getLocalizedProductDescription(backCard, locale), locale) : "";
   const feedbackDirection = swipeOutDirection || (dragX > SWIPE_FEEDBACK_MIN ? "right" : dragX < -SWIPE_FEEDBACK_MIN ? "left" : null);

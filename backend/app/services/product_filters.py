@@ -5,6 +5,7 @@
 import re
 from typing import List, Dict, Any, Optional, Iterable
 from urllib.parse import urlparse
+from product_identity import catalog_url_key, is_verified_hosted_product, product_identity_key
 
 # 被屏蔽的来源和域名
 BLOCKED_SOURCES = {'github', 'huggingface', 'huggingface_spaces'}
@@ -432,7 +433,7 @@ def _normalize_country_fields(product: Dict[str, Any]) -> None:
 
 def _get_domain_key(url: str) -> str:
     """Return domain key (domain or domain/first-path) for dedupe."""
-    return _normalize_domain(url, include_path=True)
+    return catalog_url_key(url)
 
 
 def build_product_key(product: Dict[str, Any]) -> str:
@@ -446,12 +447,14 @@ def build_product_key(product: Dict[str, Any]) -> str:
 
 
 def is_blocked(product: Dict[str, Any]) -> bool:
-    """Filter non-end-user sources/domains."""
+    """Allow only source-verified usable projects on otherwise blocked hosts."""
+    if is_verified_hosted_product(product):
+        return False
     source = (product.get('source') or '').strip().lower()
     if source in BLOCKED_SOURCES:
         return True
-    website = (product.get('website') or '').strip().lower()
-    return any(domain in website for domain in BLOCKED_DOMAINS)
+    host = (urlparse(_normalize_website(product.get('website'))).hostname or '').lower()
+    return any(host == domain or host.endswith('.' + domain) for domain in BLOCKED_DOMAINS)
 
 
 def is_well_known(product: Dict[str, Any]) -> bool:
@@ -466,9 +469,9 @@ def is_well_known(product: Dict[str, Any]) -> bool:
     for category in ProductRepository.load_industry_leaders().get('categories', {}).values():
         for leader in category.get('products', []):
             known.add(key(leader.get('name')))
-            domain = urlparse(leader.get('website', '')).hostname
-            if domain:
-                domains.add(domain.removeprefix('www.'))
+            identity = product_identity_key(leader.get('website', ''))
+            if identity:
+                domains.add(identity)
     known.update(key(name) for name in (
         'Databricks', 'Devin', 'Devin AI', 'Scale AI', 'Anduril', 'Nebius',
         'Horizon Robotics', 'Cerebras', 'Cohere', 'Neuralink', 'Oura',
@@ -477,8 +480,8 @@ def is_well_known(product: Dict[str, Any]) -> bool:
         'Fitbit Air',
     ))
     name = key(product.get('name', ''))
-    host = (urlparse(str(product.get('website') or '')).hostname or '').removeprefix('www.')
-    return name in known or (bool(host) and host in domains)
+    identity = product_identity_key(product.get('website'))
+    return name in known or (bool(identity) and identity in domains)
 
 
 def is_non_product(product: Dict[str, Any]) -> bool:

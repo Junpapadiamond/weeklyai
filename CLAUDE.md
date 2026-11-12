@@ -476,7 +476,7 @@ launchctl load ~/Library/LaunchAgents/com.weeklyai.crawler.plist
 
 ## 自动发现配置
 
-### 当前线上发现流程（2026-10-03）
+### 当前线上发现流程（2026-11-12）
 
 GitHub Actions 每日任务使用 `DISCOVERY_PROVIDER=claude`。Claude 根据原文提取和评判产品；
 搜索使用 `DISCOVERY_SEARCH_PROVIDER=auto`，优先已有的 Tavily Key，再选 Exa，无 Key 时使用 RSS。
@@ -490,9 +490,13 @@ GitHub Actions 每日任务使用 `DISCOVERY_PROVIDER=claude`。Claude 根据原
 - 原文抓取和模型输入都按市场、搜索类型与媒体轮流分配，避免单一英文媒体占满预算。
 - 默认最多分析 40 篇原文、24 次 Claude 请求（重试共用预算），分析阶段最多 900 秒。可通过同名 GitHub Variables 调整文章/调用上限。
 - 暂时性请求失败、错误 JSON 和截断响应可重试一次，先完成其他地区。单批失败不丢弃已验证结果；全部批次失败仍使任务失败。
-- 已完成批次的文章缓存 1-3 天，异常批次和暂时无法访问官网的产品不缓存。定时任务提交 `crawler/data/discovery_state.json`，跨运行生效。
+- 已完成批次的文章缓存 1-3 天；异常批次和未尝试官网查找的文章不缓存，已尝试但未确认的查找冷却一天。定时任务提交 `crawler/data/discovery_state.json`，跨运行生效。
 - 新增按官网域名及名称去重。每日公司地区上限：美国 6、中国 4、欧洲 3、日本 2、韩国 2、东南亚 2、其他 3、未知 3。
 - 原文未附官网时，先验证产品名称与引用，再使用已有 Tavily 查官网（每轮最多 8 次，每次最多 3 个结果）。候选域名必须来自实际搜索结果，官网标题、正文品牌和产品用途都须匹配原文引用，排除同名无关站点；媒体、社交及目录页不得冒充官网。该查找只证明官网身份，不替代新闻事实证据。`extra.website_verification` 保留独立核验来源。
+- 官网查找在提取后按真实公司市场轮流分配，起始市场每日轮换；有原文官网链接的产品继续即时验证和保存。未尝试的预算/时间/搜索可用性原因与实际查找失败分开报告。
+- 日韩 RSS 包含 BRIDGE、Platum、VentureSquare；原生发布词与正文选择器支持日韩文章。产品名保留原文，翻译别名须有原文名称对应，不用模糊匹配补身份。
+- GitHub/Hugging Face 按具体项目识别，不能按整个主域名排除或合并。只有原文证明可用产品用途、项目链接和页面身份检查通过的记录才写入 `extra.hosted_project_verification` 并放行；仓库、权重或论文存在本身不够。
+- 双语 description 介绍产品任务，why_matters 说明差异或有归属的采用/效果，融资留在资金字段和相关动态中。评分 v2 仍是 [讨论提案](docs/research/dark-horse-scoring-v2.md)，未启用或修改历史分数。
 - 冷门产品无需融资或强行补数字，可凭原文支持的具体差异化获得 2-3 分；4-5 分仍需两项独立、有原文引用的信号。
 - Actions Summary 和 discovery JSON/Markdown 报告分别显示检索市场覆盖、真实公司国家、新增、拒绝原因、来源故障和重试情况。
 

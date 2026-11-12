@@ -48,6 +48,74 @@ def test_two_character_cjk_brand_is_not_discarded_as_short_english_name():
     assert validate_evidence(candidate, [source])[0]
 
 
+def test_source_name_drops_invented_translation_without_accepting_invented_identity():
+    candidate = product()
+    candidate['name'] = '柯基数据 (Corgi Data)'
+    source = article()
+    source['title'] = '柯基数据发布 AI 产品'
+    assert validate_evidence(candidate, [source])[0]
+    assert candidate['name'] == '柯基数据'
+    candidate['name'] = '不存在的产品 (Corgi Data)'
+    candidate['source_name'] = '柯基数据'
+    assert not validate_evidence(candidate, [source])[0]
+
+
+def test_separately_named_japanese_product_requires_verbatim_source_name():
+    candidate = product()
+    candidate['name'] = 'ルクミー すくすくログ'
+    source = article()
+    source['title'] = '「ルクミー」の新サービス「すくすくログ」を公開'
+    assert not validate_evidence(candidate, [source])[0]
+    candidate['source_name'] = 'すくすくログ'
+    assert validate_evidence(candidate, [source])[0]
+    assert candidate['name'] == 'すくすくログ'
+
+
+def test_shared_host_link_must_identify_the_exact_project_and_usable_product():
+    candidate = product()
+    source = article()
+    candidate['website'] = 'https://github.com/example/tool'
+    source['links'] = [{'url': candidate['website'], 'text': 'ExampleAI'}]
+    assert not validate_evidence(candidate, [source])[0]
+    usage = 'Users can install ExampleAI to transcribe recordings offline.'
+    source['content'] += ' ' + usage
+    candidate['hosted_product_use'] = {'kind': 'usable_product', 'quote': usage}
+    assert validate_evidence(candidate, [source])[0]
+    candidate['website'] = 'https://github.com/unrelated/tool'
+    assert not validate_evidence(candidate, [source])[0]
+    candidate['website'] = 'https://github.com/example/tool'
+    candidate['hosted_product_use']['kind'] = 'research_demo'
+    assert not validate_evidence(candidate, [source])[0]
+    candidate['hosted_product_use'] = {'kind': 'usable_product', 'quote': 'A fabricated installable tool with no article evidence.'}
+    assert not validate_evidence(candidate, [source])[0]
+
+
+@pytest.mark.parametrize('title', ['音声AIの新サービスを提供開始', '인공지능 도구를 공개'])
+def test_native_product_launches_enter_dated_feed_pipeline(title):
+    feed = f'<rss><channel><item><title>{title}</title><link>https://news.test/product</link><pubDate>13 Sep 2026 00:00:00 GMT</pubDate></item></channel></rss>'
+    assert len(parse_feed(feed, 'Native', 'https://news.test/rss', datetime(2026, 9, 14, tzinfo=timezone.utc), 14)) == 1
+
+
+def test_native_ai_terms_do_not_need_spaces_but_english_word_substrings_do():
+    from tools.claude_discover import AI
+    assert AI.search('生成AIのツールを公開')
+    assert AI.search('AI에이전트 제품 출시')
+    assert not AI.search('A handmade painting mailed to Spain')
+
+
+@pytest.mark.parametrize('body_class', ['vs-article__body', 'br-article-body', 'dynamic-entry-content'])
+def test_native_article_body_does_not_borrow_ai_relevance_from_sidebar(monkeypatch, body_class):
+    from tools import claude_discover as discovery
+    monkeypatch.setenv('DISCOVERY_SEARCH_PROVIDER', 'rss')
+    monkeypatch.delenv('TAVILY_API_KEY', raising=False)
+    monkeypatch.setattr(discovery, 'FEEDS', [('Native', 'https://news.test/feed')])
+    feed = '<rss><channel><item><title>New product launch</title><link>https://news.test/article</link><pubDate>13 Sep 2026 00:00:00 GMT</pubDate></item></channel></rss>'
+    body = f'<div class="{body_class}">' + 'A skincare product for everyday use. ' * 12 + '<a href="https://brand.test">Brand</a></div><aside>AI startup launches transcription product</aside>'
+    monkeypatch.setattr(discovery, 'fetch_public', lambda url: ((feed if url.endswith('/feed') else body).encode(), url))
+    articles, _ = discovery.collect_articles(14, 4, now=datetime(2026, 9, 14, tzinfo=timezone.utc))
+    assert articles == []
+
+
 def test_feeds_skip_old_future_undated_and_external_entries():
     entries = []
     for label, date, host in [('fresh', '13 Sep', 'news.test'), ('old', '01 Aug', 'news.test'),

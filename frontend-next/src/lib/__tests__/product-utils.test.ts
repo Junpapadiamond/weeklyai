@@ -377,7 +377,7 @@ describe("product-utils", () => {
 
     expect(getLocalizedProductDescription(product, "zh-CN")).toContain("基础模型");
     expect(getLocalizedProductWhyMatters(product, "zh-CN")).toContain("Llion Jones");
-    expect(getLocalizedProductWhyMatters(product, "zh-CN")).toContain("4.79 亿美元");
+    expect(getLocalizedProductWhyMatters(product, "zh-CN")).toContain("科研流程自动化");
   });
 
   it("localizes country metadata labels for zh-CN cards", () => {

@@ -8,6 +8,7 @@ import hashlib
 from datetime import datetime, timedelta, timezone
 from functools import lru_cache
 from typing import List, Dict, Any, Optional
+from product_identity import catalog_url_key, is_shared_host
 
 # Sorting helpers for merge decisions
 from . import product_sorting as sorting
@@ -267,26 +268,12 @@ class ProductRepository:
     @staticmethod
     def _build_product_key(product: Dict[str, Any]) -> str:
         """Normalize a product key for dedupe/merge."""
-        website = (product.get('website') or '').strip().lower()
-        if website:
-            # Normalize scheme/www/port and keep first path segment when available
-            try:
-                if not website.startswith(('http://', 'https://')) and '.' in website:
-                    website = f"https://{website}"
-                from urllib.parse import urlparse
-                parsed = urlparse(website)
-                domain = (parsed.netloc or '').lower()
-                if domain.startswith('www.'):
-                    domain = domain[4:]
-                domain = domain.split(':')[0]
-                path = (parsed.path or '').strip('/')
-                if path:
-                    first = path.split('/')[0]
-                    if len(first) > 1:
-                        return f"{domain}/{first}"
-                return domain
-            except Exception:
-                return website
+        website = str(product.get('website') or '').strip()
+        # This legacy fallback lowercased complete independent-site URLs.
+        # Keep those IDs stable; hosted project paths use their own rules.
+        website_key = catalog_url_key(website if is_shared_host(website) else website.lower())
+        if website_key:
+            return website_key
         name_key = (product.get('name') or '').strip().lower()
         return ''.join(ch for ch in name_key if ch.isalnum())
 
@@ -514,7 +501,7 @@ class ProductRepository:
     @classmethod
     def load_from_mongodb(cls) -> List[Dict]:
         """从MongoDB加载产品数据"""
-        from .product_filters import BLOCKED_SOURCES
+        from .product_filters import is_blocked
 
         db = get_mongo_db()
         if db is None:
@@ -522,12 +509,10 @@ class ProductRepository:
 
         try:
             collection = db.products
-            blocked_sources = list(BLOCKED_SOURCES)
             # 获取产品，排除 content_type='blog' 和 content_type='filtered'
             products = list(collection.find(
                 {
                     'content_type': {'$nin': ['blog', 'filtered']},
-                    'source': {'$nin': blocked_sources}
                 },
                 {'_id': 0}
             ).sort('final_score', -1))
@@ -535,7 +520,7 @@ class ProductRepository:
             # 如果没有 content_type 字段，获取所有产品
             if not products:
                 products = list(collection.find(
-                    {'source': {'$nin': blocked_sources}},
+                    {},
                     {'_id': 0}
                 ).sort('final_score', -1))
 
@@ -558,7 +543,10 @@ class ProductRepository:
                     except Exception:
                         pass
 
-            return products
+            # Project-level provenance lives in extra. Parse it before deciding
+            # whether a shared-host product is eligible; a source-wide query
+            # would discard verified repositories before that check can run.
+            return [p for p in products if not is_blocked(p)]
         except Exception as e:
             print(f"  MongoDB load failed: {e}")
             return []

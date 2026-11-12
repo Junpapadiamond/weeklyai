@@ -13,6 +13,7 @@ import re
 from difflib import SequenceMatcher
 from typing import Dict, List, Optional, Set, Tuple
 from urllib.parse import urlparse
+from utils.product_identity import catalog_url_key, is_shared_host, product_identity_key
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -104,6 +105,9 @@ def normalize_domain(url: str, include_path: bool = False) -> str:
     """
     if not url:
         return ""
+
+    if is_shared_host(url):
+        return product_identity_key(url)
     
     try:
         # 添加协议（如果没有）
@@ -147,6 +151,9 @@ def get_domain_key(url: str) -> str:
     """
     if not url:
         return ""
+
+    if is_shared_host(url):
+        return catalog_url_key(url)
     
     try:
         if not url.startswith(("http://", "https://")):
