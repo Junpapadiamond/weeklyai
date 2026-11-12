@@ -1,49 +1,49 @@
 {
-  "updated_at": "2026-11-12T07:29:37.410493+00:00",
+  "updated_at": "2026-11-12T20:14:45.672157+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 14,
+      "fresh_count": 17,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-12T07:29:37.410493+00:00",
-      "rejected_count": 15,
+      "checked_at": "2026-11-12T20:14:45.672157+00:00",
+      "rejected_count": 12,
       "rejection_reasons": {
-        "unvetted_x_author": 3,
-        "no_concrete_signal": 12
+        "unvetted_x_author": 10,
+        "no_concrete_signal": 2
       },
       "rejected_examples": [
         {
-          "title": "@ycombinator · Replit was building toward the AI coding era years before it had a name. In 2024, the company shipped an agent that could take a request in plain",
+          "title": "@WorldOfMercek · AI's next economic shift is moving beyond model intelligence toward the infrastructure that executes work, coordinates agents, and captures val",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@Replit · Now anyone can now bring their ideas into the company codebase on Replit. Replit Cloud Agents can turn natural language into a tested pull request, an",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@Replit · This Week in Replit 1) The Self-Driving Company. We believe by the end of 2030, every Fortune 500 will be a Self-Driving Company. That doesn't mean AI",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@amasad · is Replit built with Replit?” The answer was historically “kinda.” But today it’s “absolutely!” Introducing Cloud Agents: run any codebase and generat",
+          "title": "@rammcodes · Source 🔗: github. com/langchain-ai/rag-from-scratch",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@Replit · This Week in Replit 1) Stripe Atlas on Replit. Ask Replit to incorporate your business through the Stripe MCP integration, with 20% off when you incor",
-          "reason": "no_concrete_signal"
+          "title": "@thecaisai · CAIS",
+          "reason": "unvetted_x_author"
         },
         {
-          "title": "@Replit · We’re introducing Bring Your Own Cloud (BYOC) for Replit, with options for development and production in your cloud, whether you use @Azure, @GoogleCl",
-          "reason": "no_concrete_signal"
+          "title": "@vedangvatsa · 1/ Over 300 AI agent frameworks launched this year. Most were brittle demos that fail in production. If you are building autonomous agents, here ",
+          "reason": "unvetted_x_author"
         },
         {
-          "title": "@Replit · Meet Replit for Government. We’re powering public servants at every level of government, in the US and internationally, with super intelligence. Now n",
-          "reason": "no_concrete_signal"
+          "title": "@KanikaBK · I spent an hour digging through GitHub's AI agent repos. These 5 are the ones everyone is quietly building with. 100% FREE. Open source. And most pe",
+          "reason": "unvetted_x_author"
         },
         {
-          "title": "@amasad · To clarify: Replit remains model agnostic. Our users can choose Anthropic models as well as many other supported models. What I meant at TC Disrupt is",
+          "title": "@RodmanAi · Building an AI research agent? Start with these 10 GitHub repos. They help AI find credible sources, read research papers, extract information, and ",
+          "reason": "unvetted_x_author"
+        },
+        {
+          "title": "@clcoding · 16 Essential Python Libraries & Tools for AI and Machine Learning (2026) Want to build machine learning models, develop LLM applications, and deploy",
+          "reason": "unvetted_x_author"
+        },
+        {
+          "title": "@yairwein · Yair Weinberger on X",
           "reason": "unvetted_x_author"
         }
       ],
@@ -52,203 +52,206 @@
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 6,
+      "fresh_count": 10,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-12T07:29:37.410493+00:00",
-      "rejected_count": 34,
+      "checked_at": "2026-11-12T20:14:45.672157+00:00",
+      "rejected_count": 30,
       "rejection_reasons": {
-        "no_concrete_signal": 16,
-        "off_topic": 14,
-        "personal_help_or_chatter": 4
+        "no_concrete_signal": 14,
+        "personal_help_or_chatter": 2,
+        "off_topic": 13,
+        "insufficient_evidence": 1
       },
       "rejected_examples": [
         {
-          "title": "Claude Sheets - cannot find in artifacts?",
+          "title": "NVIDIA should replace Jensen with AI.",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "qwen3.8 q4_k_m now running 2x faster on 7900xtx (90-100t/s)",
-          "reason": "off_topic"
-        },
-        {
-          "title": "If an AI image genuinely moves you, where does the meaning live?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Europe-only ChatGPT ads get 16/60 visits from Iran",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Does anyone else feel like years of developing intellectual skills are suddenly becoming worthless?",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Agentic Framework for Development",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Help!!!!",
+          "title": "Money Was All You Needed: Open AI Research Is Dead and OpenAI Killed It [D]",
           "reason": "personal_help_or_chatter"
         },
         {
-          "title": "Designing and Building Memory for AI Agents | Live Hands-On Workshop",
-          "reason": "personal_help_or_chatter"
+          "title": "Built a typing game where your keys play the music with Fable 5.2 (sound on)",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Solved High CPU usage when model fit in GPU, beware of -ngl -1 llama.cpp layers offloading to GPU and llama-fit-param",
+          "reason": "off_topic"
+        },
+        {
+          "title": "MoE and expert offloading on llama, exllamav3, strata on 9070XT",
+          "reason": "off_topic"
+        },
+        {
+          "title": "What are some actually useful projects made with claude",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Got great feedback on Ninada (in-browser Indic TTS), so I built Swanada: a 12-language Indic + Classical Sanskrit STT engine running 100% in Browser WASM (31.8 ",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Nvidia CEO Jensen Huang Resigns After Multiple Affairs",
+          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-12T05:44:18+00:00"
+      "latest_published_at": "2026-11-12T20:13:37+00:00"
     },
     "youtube": {
       "status": "direct",
-      "fresh_count": 2,
+      "fresh_count": 15,
       "errors": [
         {
-          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
-          "reason": "HTTP 404"
-        },
-        {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
-          "reason": "HTTP 404"
+          "reason": "empty_or_invalid_feed"
         }
       ],
-      "feeds_ok": 1,
-      "checked_at": "2026-11-12T07:29:37.410493+00:00",
-      "rejected_count": 2,
+      "feeds_ok": 7,
+      "checked_at": "2026-11-12T20:14:45.672157+00:00",
+      "rejected_count": 17,
       "rejection_reasons": {
-        "off_topic": 2
+        "off_topic": 17
       },
       "rejected_examples": [
         {
-          "title": "The one thing holding theoretical CS together just broke... kinda",
+          "title": "Over 10,000 drones a day in Ukraine War - explained by military analyst | Lex Fridman Podcast",
           "reason": "off_topic"
         },
         {
-          "title": "The worst week in cybersecurity history... so far",
+          "title": "The most brutal battles of Ukraine War - explained by military analyst | Lex Fridman Podcast",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The nature of war: Why we fight | Russia-Ukraine War - Military Analysis",
+          "reason": "off_topic"
+        },
+        {
+          "title": "The future of modern warfare | Russia-Ukraine War - Military Analysis",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Russia's bombing campaign in Ukraine explained by military analyst | Lex Fridman Podcast",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Trump's role in Russia-Ukraine war | Lex Fridman Podcast",
+          "reason": "off_topic"
+        },
+        {
+          "title": "How the war in Ukraine ends | Lex Fridman Podcast",
+          "reason": "off_topic"
+        },
+        {
+          "title": "State of the War in Ukraine - Military analyst explains | Lex Fridman Podcast",
           "reason": "off_topic"
         }
       ],
-      "stored_count": 55,
-      "latest_published_at": "2026-11-10T23:11:36+00:00"
+      "stored_count": 57,
+      "latest_published_at": "2026-11-12T17:36:47+00:00"
     },
     "hackernews": {
       "status": "direct",
       "fresh_count": 12,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-12T07:29:37.410493+00:00",
+      "checked_at": "2026-11-12T20:14:45.672157+00:00",
       "rejected_count": 48,
       "rejection_reasons": {
-        "off_topic": 17,
-        "no_concrete_signal": 31
+        "off_topic": 14,
+        "no_concrete_signal": 32,
+        "personal_help_or_chatter": 2
       },
       "rejected_examples": [
         {
-          "title": "Show HN: AntFabric (One Subscription for all your operational needs)",
+          "title": "Show HN: Mudroom – Unified inbox for support requests",
           "reason": "off_topic"
         },
         {
-          "title": "Ask HN: Are clean Git commits still worth it?",
+          "title": "United to block customers from using AI agents, citing cyber threats",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "AI is getting smarter. Are we thinking better?",
+          "title": "SF company designs and assembles PCBs with AI in weeks instead of months",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "What benefit does a San Francisco HQ offer if you are not a frontier AI lab?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Job Finding and Unemployment in the Age of AI",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "LG Research releases K-Exaone 2.5 API for free",
+          "title": "MCP vs. CLI vs. Skills: What Each Costs in Context",
           "reason": "off_topic"
         },
         {
-          "title": "Perplexity Search API Review",
+          "title": "American Inequality and the Future of AI",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "We tracked AI key theft over 35 days. Here's what we learned",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "From Lufthansa's crane to United's tulip, the stories behind 12 airline logos",
           "reason": "off_topic"
         },
         {
-          "title": "Why AI Coding Agents Lose Context After the PR, and How to Keep It",
+          "title": "I Made an AI Animated Short Film: Here Is the Full Process [video]",
           "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-12T07:20:22+00:00"
+      "latest_published_at": "2026-11-12T18:53:56+00:00"
     },
     "producthunt": {
       "status": "direct",
-      "fresh_count": 17,
+      "fresh_count": 16,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-12T07:29:37.410493+00:00",
-      "rejected_count": 20,
+      "checked_at": "2026-11-12T20:14:45.672157+00:00",
+      "rejected_count": 23,
       "rejection_reasons": {
-        "off_topic": 20
+        "off_topic": 22,
+        "unusable_title": 1
       },
       "rejected_examples": [
         {
-          "title": "MiniMax H3-Image",
+          "title": "Harness Memory",
           "reason": "off_topic"
         },
         {
-          "title": "Scribe v3 by ElevenLabs",
+          "title": "Hoy for Mac",
           "reason": "off_topic"
         },
         {
-          "title": "Subscriptrack",
+          "title": "Skysoon",
           "reason": "off_topic"
         },
         {
-          "title": "nizima ACTION!!",
+          "title": "Yogurt",
           "reason": "off_topic"
         },
         {
-          "title": "Earlybird",
+          "title": "Customer.io Fall Release",
           "reason": "off_topic"
         },
         {
-          "title": "StableBar",
+          "title": "Jot 2.0",
           "reason": "off_topic"
         },
         {
-          "title": "Xolace",
+          "title": "LeaseWire",
           "reason": "off_topic"
         },
         {
-          "title": "Valin",
+          "title": "Didit MCP",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-11T05:07:26+00:00"
+      "latest_published_at": "2026-11-12T02:56:39+00:00"
     },
     "tech_news": {
       "status": "direct",
-      "fresh_count": 39,
+      "fresh_count": 29,
       "errors": [
         {
           "endpoint": "venturebeat",
@@ -256,12 +259,24 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-12T07:29:37.410493+00:00",
-      "rejected_count": 20,
+      "checked_at": "2026-11-12T20:14:45.672157+00:00",
+      "rejected_count": 30,
       "rejection_reasons": {
-        "off_topic": 20
+        "off_topic": 30
       },
       "rejected_examples": [
+        {
+          "title": "Jensen Huang agrees to testify before Congress",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Trump floats Apple chairman Tim Cook as Jensen Huang’s successor",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Jensen Huang is out at Nvidia — who is Colette Kress, his interim replacement?",
+          "reason": "off_topic"
+        },
         {
           "title": "Who could replace Jensen Huang? A highly unscientific list of possible successors",
           "reason": "off_topic"
@@ -281,37 +296,21 @@
         {
           "title": "Meta is losing its longtime head of infrastructure",
           "reason": "off_topic"
-        },
-        {
-          "title": "How backlash and red tape continue to slow data centers post-Blue Wave",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Congress to call Jensen Huang in to answer for alleged Chinese spy affair",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Is Jensen Huang’s bad behavior more commonplace than it seems?",
-          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-11T23:50:00+00:00"
+      "latest_published_at": "2026-11-12T19:27:45+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 29,
+      "fresh_count": 36,
       "errors": [
         {
-          "endpoint": "ithome",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "36kr",
+          "endpoint": "jiqizhixin",
           "reason": "empty_or_invalid_feed"
         },
         {
-          "endpoint": "jiqizhixin",
+          "endpoint": "36kr",
           "reason": "empty_or_invalid_feed"
         },
         {
@@ -319,13 +318,25 @@
           "reason": "ReadTimeout"
         }
       ],
-      "feeds_ok": 5,
-      "checked_at": "2026-11-12T07:29:37.410493+00:00",
-      "rejected_count": 48,
+      "feeds_ok": 6,
+      "checked_at": "2026-11-12T20:14:45.672157+00:00",
+      "rejected_count": 80,
       "rejection_reasons": {
-        "off_topic": 48
+        "off_topic": 80
       },
       "rejected_examples": [
+        {
+          "title": "突发！黄仁勋辞任 CEO，英伟达迎来历史性换帅",
+          "reason": "off_topic"
+        },
+        {
+          "title": "26.99 万元起！腾势 N8 上市，内饰最美的比亚迪来了",
+          "reason": "off_topic"
+        },
+        {
+          "title": "森海塞尔 HDB 630 体验：把 Hi-Fi 音响，装进这副降噪耳机里",
+          "reason": "off_topic"
+        },
         {
           "title": "拆解触屏 MacBook Pro：点亮苹果 LOGO 的秘密，藏在这里",
           "reason": "off_topic"
@@ -345,22 +356,10 @@
         {
           "title": "曝字节要做「中国版 Muse」，给豆包造个「超级大脑」",
           "reason": "off_topic"
-        },
-        {
-          "title": "4.99 万元起，长安糯玉米 PLUS 变成四门「大玉米」，小车最后还是要「大大大」",
-          "reason": "off_topic"
-        },
-        {
-          "title": "300 块的索尼复古耳机，没降噪不隔音，为什么还是卖爆了？",
-          "reason": "off_topic"
-        },
-        {
-          "title": "早报｜华为小折叠电脑MateBook Fold S亮相/《GTA VI》开启预载，全平台目标30fps/董明珠回应格力业绩下滑：铜价上涨，格力将继续用铜",
-          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-12T06:14:30+00:00"
+      "latest_published_at": "2026-11-12T18:17:17+00:00"
     }
   },
   "quality_rejections": {
