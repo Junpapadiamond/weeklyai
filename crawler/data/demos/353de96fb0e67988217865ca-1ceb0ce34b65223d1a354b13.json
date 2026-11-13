@@ -1,0 +1,449 @@
+{
+  "cache_key": "353de96fb0e67988217865ca-1ceb0ce34b65223d1a354b13",
+  "product_key": "353de96fb0e67988217865ca",
+  "fingerprint": "1ceb0ce34b65223d1a354b13",
+  "product_id": "p_372d02222c71aced",
+  "product_name": "Primero",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-13T00:13:46.337060+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为遗留系统选择 AI 代理集成方案",
+      "en": "Select AI agent integration approach for legacy systems"
+    },
+    "scenario": {
+      "zh": "搜索示例记录，查看虚构原文，选择要保留的内容。",
+      "en": "Search sample records, inspect fictional source text and choose what to keep."
+    },
+    "steps": [
+      {
+        "id": "example",
+        "widget": "review",
+        "title": {
+          "zh": "可交互产物",
+          "en": "Interactive artifact"
+        },
+        "instruction": {
+          "zh": "搜索示例记录，查看虚构原文，选择要保留的内容。",
+          "en": "Search sample records, inspect fictional source text and choose what to keep."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "可交互产物",
+              "en": "Interactive artifact"
+            },
+            "output": {
+              "zh": "方案 / 涉及系统 / 复杂度 / 时间线\n3 条可编辑示例记录",
+              "en": "Approach / Systems involved / Complexity / Timeline\n3 editable example records"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "示例输入",
+                "en": "Example input"
+              },
+              "output_label": {
+                "zh": "可交互产物",
+                "en": "Interactive artifact"
+              },
+              "input": {
+                "zh": "墨西哥消费品制造商需要将 AI 代理接入多工厂生产所用的 ERP、质量系统和库存系统",
+                "en": "Mexican consumer goods manufacturer needs to connect AI agents to ERP, quality system, and inventory system used in multi-plant production"
+              },
+              "output": {
+                "zh": "方案 / 涉及系统 / 复杂度 / 时间线\n3 条可编辑示例记录",
+                "en": "Approach / Systems involved / Complexity / Timeline\n3 editable example records"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "这是独立的本地示例，未调用该产品。产品资料用于了解方向，不证明示例中的数据或结果；实际能力请以官方产品为准。",
+      "en": "This independent local example does not call the product. Sources explain its purpose, not the fictional data or results. Check the official product for actual capabilities."
+    },
+    "sources": [
+      {
+        "url": "https://primero.com/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://latinamericareports.com/15-ai-leaders-to-watch-in-2027/15575",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ],
+    "interaction": {
+      "kind": "records",
+      "input_label": {
+        "zh": "企业场景",
+        "en": "Enterprise scenario"
+      },
+      "output_label": {
+        "zh": "集成方案比较",
+        "en": "Integration approach comparison"
+      },
+      "inputs": [
+        {
+          "id": "enterprise",
+          "label": {
+            "zh": "企业类型",
+            "en": "Enterprise type"
+          },
+          "options": [
+            {
+              "id": "manufacturing",
+              "label": {
+                "zh": "制造企业",
+                "en": "Manufacturing"
+              },
+              "facts": [
+                {
+                  "zh": "墨西哥消费品制造商",
+                  "en": "Mexican consumer goods manufacturer"
+                },
+                {
+                  "zh": "多工厂生产",
+                  "en": "multi-plant production"
+                }
+              ]
+            },
+            {
+              "id": "fitness",
+              "label": {
+                "zh": "健身连锁",
+                "en": "Fitness chain"
+              },
+              "facts": [
+                {
+                  "zh": "拉美健身连锁",
+                  "en": "Latin American fitness chain"
+                },
+                {
+                  "zh": "多地点运营",
+                  "en": "multi-location operations"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "when": {
+            "enterprise": "manufacturing"
+          },
+          "brief": {
+            "zh": "墨西哥消费品制造商需要将 AI 代理接入多工厂生产所用的 ERP、质量系统和库存系统",
+            "en": "Mexican consumer goods manufacturer needs to connect AI agents to ERP, quality system, and inventory system used in multi-plant production"
+          },
+          "artifact": {
+            "columns": [
+              {
+                "id": "approach",
+                "label": {
+                  "zh": "方案",
+                  "en": "Approach"
+                },
+                "type": "text"
+              },
+              {
+                "id": "systems",
+                "label": {
+                  "zh": "涉及系统",
+                  "en": "Systems involved"
+                },
+                "type": "text"
+              },
+              {
+                "id": "complexity",
+                "label": {
+                  "zh": "复杂度",
+                  "en": "Complexity"
+                },
+                "type": "select",
+                "options": [
+                  {
+                    "id": "low",
+                    "label": {
+                      "zh": "低",
+                      "en": "Low"
+                    }
+                  },
+                  {
+                    "id": "medium",
+                    "label": {
+                      "zh": "中",
+                      "en": "Medium"
+                    }
+                  },
+                  {
+                    "id": "high",
+                    "label": {
+                      "zh": "高",
+                      "en": "High"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "timeline",
+                "label": {
+                  "zh": "时间线",
+                  "en": "Timeline"
+                },
+                "type": "number",
+                "unit": {
+                  "zh": "周",
+                  "en": "weeks"
+                }
+              }
+            ],
+            "rows": [
+              {
+                "id": "a",
+                "cells": {
+                  "approach": {
+                    "zh": "直接 API 包装",
+                    "en": "Direct API wrapper"
+                  },
+                  "systems": {
+                    "zh": "ERP、库存系统",
+                    "en": "ERP, inventory system"
+                  },
+                  "complexity": "low",
+                  "timeline": 6
+                },
+                "evidence": {
+                  "text": {
+                    "zh": "该墨西哥消费品制造商的 ERP 和库存系统已有 REST API，可通过薄包装层让 AI 代理调用现有端点读取多工厂生产的订单和库存数据，无需改动核心系统",
+                    "en": "The Mexican consumer goods manufacturer's ERP and inventory system already expose REST APIs. A thin wrapper layer can let AI agents call existing endpoints to read order and inventory data from multi-plant production without modifying core systems"
+                  },
+                  "quote": {
+                    "zh": "墨西哥消费品制造商的 ERP 和库存系统已有 REST API",
+                    "en": "Mexican consumer goods manufacturer's ERP and inventory system already expose REST APIs"
+                  }
+                }
+              },
+              {
+                "id": "b",
+                "cells": {
+                  "approach": {
+                    "zh": "消息总线集成",
+                    "en": "Message bus integration"
+                  },
+                  "systems": {
+                    "zh": "ERP、质量系统、库存系统",
+                    "en": "ERP, quality system, inventory system"
+                  },
+                  "complexity": "medium",
+                  "timeline": 10
+                },
+                "evidence": {
+                  "text": {
+                    "zh": "在多工厂生产流程中，质量系统通过专有协议与 ERP 通信。引入消息总线可统一事件流，AI 代理订阅质量检查和库存变动事件，但需为质量系统开发适配器",
+                    "en": "In multi-plant production, the quality system communicates with the ERP via proprietary protocol. Introducing a message bus can unify event streams, letting AI agents subscribe to quality checks and inventory changes, but requires developing an adapter for the quality system"
+                  },
+                  "quote": {
+                    "zh": "多工厂生产流程中，质量系统通过专有协议与 ERP 通信",
+                    "en": "multi-plant production, the quality system communicates with the ERP via proprietary protocol"
+                  }
+                }
+              },
+              {
+                "id": "c",
+                "cells": {
+                  "approach": {
+                    "zh": "数据库复制",
+                    "en": "Database replication"
+                  },
+                  "systems": {
+                    "zh": "ERP、质量系统、库存系统",
+                    "en": "ERP, quality system, inventory system"
+                  },
+                  "complexity": "high",
+                  "timeline": 14
+                },
+                "evidence": {
+                  "text": {
+                    "zh": "该墨西哥消费品制造商的三个遗留系统数据库结构复杂，建立只读副本供 AI 代理查询可避免影响多工厂生产的实时事务，但需持续同步和模式映射维护",
+                    "en": "The three legacy system databases at this Mexican consumer goods manufacturer have complex schemas. Building read replicas for AI agents to query avoids impacting real-time transactions in multi-plant production, but requires continuous synchronization and schema mapping maintenance"
+                  },
+                  "quote": {
+                    "zh": "墨西哥消费品制造商的三个遗留系统数据库结构复杂",
+                    "en": "three legacy system databases at this Mexican consumer goods manufacturer have complex schemas"
+                  }
+                }
+              }
+            ],
+            "view": "table"
+          }
+        },
+        {
+          "when": {
+            "enterprise": "fitness"
+          },
+          "brief": {
+            "zh": "拉美健身连锁需要将 AI 代理接入多地点运营所用的会员系统、排课系统和设备系统",
+            "en": "Latin American fitness chain needs to connect AI agents to membership system, scheduling system, and equipment system used in multi-location operations"
+          },
+          "artifact": {
+            "columns": [
+              {
+                "id": "approach",
+                "label": {
+                  "zh": "方案",
+                  "en": "Approach"
+                },
+                "type": "text"
+              },
+              {
+                "id": "systems",
+                "label": {
+                  "zh": "涉及系统",
+                  "en": "Systems involved"
+                },
+                "type": "text"
+              },
+              {
+                "id": "complexity",
+                "label": {
+                  "zh": "复杂度",
+                  "en": "Complexity"
+                },
+                "type": "select",
+                "options": [
+                  {
+                    "id": "low",
+                    "label": {
+                      "zh": "低",
+                      "en": "Low"
+                    }
+                  },
+                  {
+                    "id": "medium",
+                    "label": {
+                      "zh": "中",
+                      "en": "Medium"
+                    }
+                  },
+                  {
+                    "id": "high",
+                    "label": {
+                      "zh": "高",
+                      "en": "High"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "timeline",
+                "label": {
+                  "zh": "时间线",
+                  "en": "Timeline"
+                },
+                "type": "number",
+                "unit": {
+                  "zh": "周",
+                  "en": "weeks"
+                }
+              }
+            ],
+            "rows": [
+              {
+                "id": "a",
+                "cells": {
+                  "approach": {
+                    "zh": "直接 API 包装",
+                    "en": "Direct API wrapper"
+                  },
+                  "systems": {
+                    "zh": "会员系统、排课系统",
+                    "en": "Membership system, scheduling system"
+                  },
+                  "complexity": "low",
+                  "timeline": 5
+                },
+                "evidence": {
+                  "text": {
+                    "zh": "该拉美健身连锁的会员系统和排课系统提供 REST API，支持多地点运营的课程查询和会员验证，AI 代理可通过轻量认证层直接调用，无需中间件",
+                    "en": "The Latin American fitness chain's membership system and scheduling system provide REST APIs supporting course queries and member verification across multi-location operations. AI agents can call them directly via a lightweight auth layer without middleware"
+                  },
+                  "quote": {
+                    "zh": "拉美健身连锁的会员系统和排课系统提供 REST API",
+                    "en": "Latin American fitness chain's membership system and scheduling system provide REST APIs"
+                  }
+                }
+              },
+              {
+                "id": "b",
+                "cells": {
+                  "approach": {
+                    "zh": "消息总线集成",
+                    "en": "Message bus integration"
+                  },
+                  "systems": {
+                    "zh": "会员系统、排课系统、设备系统",
+                    "en": "Membership system, scheduling system, equipment system"
+                  },
+                  "complexity": "medium",
+                  "timeline": 9
+                },
+                "evidence": {
+                  "text": {
+                    "zh": "在多地点运营中，设备系统通过定时批处理向排课系统推送维护计划。引入消息总线让 AI 代理实时获取设备状态和排课冲突，但需为批处理流程添加事件发布逻辑",
+                    "en": "In multi-location operations, the equipment system pushes maintenance schedules to the scheduling system via periodic batch jobs. Introducing a message bus lets AI agents receive equipment status and scheduling conflicts in real time, but requires adding event publishing logic to batch processes"
+                  },
+                  "quote": {
+                    "zh": "多地点运营中，设备系统通过定时批处理向排课系统推送维护计划",
+                    "en": "multi-location operations, the equipment system pushes maintenance schedules to the scheduling system via periodic batch jobs"
+                  }
+                }
+              },
+              {
+                "id": "c",
+                "cells": {
+                  "approach": {
+                    "zh": "数据库复制",
+                    "en": "Database replication"
+                  },
+                  "systems": {
+                    "zh": "会员系统、排课系统、设备系统",
+                    "en": "Membership system, scheduling system, equipment system"
+                  },
+                  "complexity": "high",
+                  "timeline": 13
+                },
+                "evidence": {
+                  "text": {
+                    "zh": "该拉美健身连锁的三个系统分布在不同数据中心支持多地点运营，建立跨区域只读副本供 AI 代理分析会员行为和设备使用模式，但网络延迟和数据一致性是挑战",
+                    "en": "The three systems at this Latin American fitness chain are distributed across data centers to support multi-location operations. Building cross-region read replicas for AI agents to analyze member behavior and equipment usage patterns poses challenges in network latency and data consistency"
+                  },
+                  "quote": {
+                    "zh": "拉美健身连锁的三个系统分布在不同数据中心支持多地点运营",
+                    "en": "three systems at this Latin American fitness chain are distributed across data centers to support multi-location operations"
+                  }
+                }
+              }
+            ],
+            "view": "table"
+          }
+        }
+      ]
+    }
+  },
+  "generator_revision": "interaction-v3-2026-11-12",
+  "grounding": "stored_source_excerpts"
+}

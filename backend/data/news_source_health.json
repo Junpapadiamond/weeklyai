@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-12T20:14:45.672157+00:00",
+  "updated_at": "2026-11-13T00:12:06.350995+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
@@ -7,98 +7,97 @@
       "fresh_count": 17,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-12T20:14:45.672157+00:00",
-      "rejected_count": 12,
+      "checked_at": "2026-11-13T00:12:06.350995+00:00",
+      "rejected_count": 11,
       "rejection_reasons": {
-        "unvetted_x_author": 10,
-        "no_concrete_signal": 2
+        "no_concrete_signal": 8,
+        "unvetted_x_author": 3
       },
       "rejected_examples": [
         {
-          "title": "@WorldOfMercek · AI's next economic shift is moving beyond model intelligence toward the infrastructure that executes work, coordinates agents, and captures val",
+          "title": "@GoogleAI · Get started today: — Creatives and Consumers: Direct and edit in Google Flow (rolling out), generate clips in Google Vids, or create videos in the G",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@GoogleAI · How we're bringing powerful AI to small devices without draining the battery.",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@GoogleAI · Learn more: https://t.co/uSjuXDjJYg",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@modal · We worked with @SakanaAILabs to optimize their Sakana Namazu API down to the kernel level: → Selective NVFP4 quantization (23k+ experts) → DFlash draft",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@rammcodes · Source 🔗: github. com/langchain-ai/rag-from-scratch",
+          "title": "@hardmaru · Last week in Tokyo, we hosted the Sakana AI Symposium with our Chief Scientific Advisor, Jürgen Schmidhuber. Eight years ago, @SchmidhuberAI and I w",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@thecaisai · CAIS",
-          "reason": "unvetted_x_author"
+          "title": "@SakanaAILabs · Sakana AI初のモバイルアプリのテスターを募集します🐟 現在開発中の「Sakana AI App（仮）」のβテストにご協力いただけるテスターの方を募集しています。 皆さまからのフィードバックを元に、より使いやすく、便利なアプリへと改善していきたいと考えています。ぜひ、ご参加ください",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "@vedangvatsa · 1/ Over 300 AI agent frameworks launched this year. Most were brittle demos that fail in production. If you are building autonomous agents, here ",
-          "reason": "unvetted_x_author"
+          "title": "@SakanaAILabs · Introducing “My Fish” in Sakana Chat. English Blog: https://t.co/GCNRQYXMtJ All your memories in one place, your history on a timeline, and the ",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "@KanikaBK · I spent an hour digging through GitHub's AI agent repos. These 5 are the ones everyone is quietly building with. 100% FREE. Open source. And most pe",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@RodmanAi · Building an AI research agent? Start with these 10 GitHub repos. They help AI find credible sources, read research papers, extract information, and ",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@clcoding · 16 Essential Python Libraries & Tools for AI and Machine Learning (2026) Want to build machine learning models, develop LLM applications, and deploy",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@yairwein · Yair Weinberger on X",
-          "reason": "unvetted_x_author"
+          "title": "@SakanaAILabs · Sakana AI won 1st place in the company category at the “Recursive Self Improvement in Mathematics” Hack (OpenMath 2026), held with @stephen_wolf",
+          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-11T15:04:18.810000+00:00"
+      "latest_published_at": "2026-11-12T18:03:58.712000+00:00"
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 10,
+      "fresh_count": 17,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-12T20:14:45.672157+00:00",
-      "rejected_count": 30,
+      "checked_at": "2026-11-13T00:12:06.350995+00:00",
+      "rejected_count": 23,
       "rejection_reasons": {
-        "no_concrete_signal": 14,
-        "personal_help_or_chatter": 2,
-        "off_topic": 13,
-        "insufficient_evidence": 1
+        "no_concrete_signal": 13,
+        "off_topic": 8,
+        "personal_help_or_chatter": 2
       },
       "rejected_examples": [
         {
-          "title": "NVIDIA should replace Jensen with AI.",
+          "title": "Isn’t it funny how quickly people who were extremely anti AI changed their mind the second it created something they want to use.",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Money Was All You Needed: Open AI Research Is Dead and OpenAI Killed It [D]",
-          "reason": "personal_help_or_chatter"
-        },
-        {
-          "title": "Built a typing game where your keys play the music with Fable 5.2 (sound on)",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Solved High CPU usage when model fit in GPU, beware of -ngl -1 llama.cpp layers offloading to GPU and llama-fit-param",
-          "reason": "off_topic"
-        },
-        {
-          "title": "MoE and expert offloading on llama, exllamav3, strata on 9070XT",
-          "reason": "off_topic"
-        },
-        {
-          "title": "What are some actually useful projects made with claude",
+          "title": "I don't feel AI is improving at communication or \"modelling humans\"",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Got great feedback on Ninada (in-browser Indic TTS), so I built Swanada: a 12-language Indic + Classical Sanskrit STT engine running 100% in Browser WASM (31.8 ",
+          "title": "For devs using Claude Code or similar at work: what’s the 10% you still fix by hand in Python?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Startup unveils Thorsten-4, an AI trained on 35 million psychologist-labeled words from 7,000+ people to predict their motivations, decisions and future behavio",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "I hate how Claude formulates responses, they are very hard to read",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Was Claude better when it could search reddit?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Transition from individual consumer Ultra plan to business Team plan one Standard and one Pro seat.",
           "reason": "off_topic"
         },
         {
-          "title": "Nvidia CEO Jensen Huang Resigns After Multiple Affairs",
-          "reason": "off_topic"
+          "title": "Reasoning doesn't help small (9B) models on complex summaries?",
+          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-12T20:13:37+00:00"
+      "latest_published_at": "2026-11-13T00:11:18+00:00"
     },
     "youtube": {
       "status": "direct",
@@ -110,135 +109,135 @@
         }
       ],
       "feeds_ok": 7,
-      "checked_at": "2026-11-12T20:14:45.672157+00:00",
-      "rejected_count": 17,
+      "checked_at": "2026-11-13T00:12:06.350995+00:00",
+      "rejected_count": 18,
       "rejection_reasons": {
-        "off_topic": 17
+        "off_topic": 18
       },
       "rejected_examples": [
         {
-          "title": "Over 10,000 drones a day in Ukraine War - explained by military analyst | Lex Fridman Podcast",
+          "title": "Degenerate Gamblers keep losing",
           "reason": "off_topic"
         },
         {
-          "title": "The most brutal battles of Ukraine War - explained by military analyst | Lex Fridman Podcast",
+          "title": "The Death of Stackoverlow | TheStandup",
           "reason": "off_topic"
         },
         {
-          "title": "The nature of war: Why we fight | Russia-Ukraine War - Military Analysis",
+          "title": "well this is bad",
           "reason": "off_topic"
         },
         {
-          "title": "The future of modern warfare | Russia-Ukraine War - Military Analysis",
+          "title": "Is Software Over?",
           "reason": "off_topic"
         },
         {
-          "title": "Russia's bombing campaign in Ukraine explained by military analyst | Lex Fridman Podcast",
+          "title": "Jensen Huang just pulled out of Nvidia...",
           "reason": "off_topic"
         },
         {
-          "title": "Trump's role in Russia-Ukraine war | Lex Fridman Podcast",
+          "title": "The one thing holding theoretical CS together just broke... kinda",
           "reason": "off_topic"
         },
         {
-          "title": "How the war in Ukraine ends | Lex Fridman Podcast",
+          "title": "The worst week in cybersecurity history... so far",
           "reason": "off_topic"
         },
         {
-          "title": "State of the War in Ukraine - Military analyst explains | Lex Fridman Podcast",
+          "title": "How Russia uses jet-powered drones | Russia-Ukraine War - Military Analysis",
           "reason": "off_topic"
         }
       ],
-      "stored_count": 57,
+      "stored_count": 56,
       "latest_published_at": "2026-11-12T17:36:47+00:00"
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 12,
+      "fresh_count": 6,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-12T20:14:45.672157+00:00",
-      "rejected_count": 48,
+      "checked_at": "2026-11-13T00:12:06.350995+00:00",
+      "rejected_count": 54,
       "rejection_reasons": {
-        "off_topic": 14,
-        "no_concrete_signal": 32,
+        "off_topic": 21,
+        "no_concrete_signal": 31,
         "personal_help_or_chatter": 2
       },
       "rejected_examples": [
         {
-          "title": "Show HN: Mudroom – Unified inbox for support requests",
+          "title": "The Singularity Clock",
           "reason": "off_topic"
         },
         {
-          "title": "United to block customers from using AI agents, citing cyber threats",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "SF company designs and assembles PCBs with AI in weeks instead of months",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "MCP vs. CLI vs. Skills: What Each Costs in Context",
+          "title": "Show HN: TreasuryFlow, an overnight bank-vs-books check for small businesses",
           "reason": "off_topic"
         },
         {
-          "title": "American Inequality and the Future of AI",
+          "title": "Dario Amodei says AI will cure cancer, Alzheimer's, heart disease in 10 years",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "We tracked AI key theft over 35 days. Here's what we learned",
+          "title": "Show HN: AxiomStory – Keep stories consistent across AI text, images, video",
+          "reason": "personal_help_or_chatter"
+        },
+        {
+          "title": "Habits of Highly Ineffective AI Programmers",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "From Lufthansa's crane to United's tulip, the stories behind 12 airline logos",
+          "title": "Kids and Parents Are Protesting Google's Classroom AI",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Big Walk used AI to fix a bug. Now the indie gaming world is having a reckoning",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "When Your Inner Thoughts Are No Longer Just Yours",
           "reason": "off_topic"
-        },
-        {
-          "title": "I Made an AI Animated Short Film: Here Is the Full Process [video]",
-          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-12T18:53:56+00:00"
+      "latest_published_at": "2026-11-12T23:31:10+00:00"
     },
     "producthunt": {
       "status": "direct",
-      "fresh_count": 16,
+      "fresh_count": 14,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-12T20:14:45.672157+00:00",
-      "rejected_count": 23,
+      "checked_at": "2026-11-13T00:12:06.350995+00:00",
+      "rejected_count": 24,
       "rejection_reasons": {
-        "off_topic": 22,
+        "off_topic": 23,
         "unusable_title": 1
       },
       "rejected_examples": [
+        {
+          "title": "Marqly 7.0",
+          "reason": "off_topic"
+        },
         {
           "title": "Harness Memory",
           "reason": "off_topic"
         },
         {
-          "title": "Hoy for Mac",
-          "reason": "off_topic"
+          "title": "⌘+L",
+          "reason": "unusable_title"
         },
         {
           "title": "Skysoon",
           "reason": "off_topic"
         },
         {
-          "title": "Yogurt",
+          "title": "Infinite Drive",
           "reason": "off_topic"
         },
         {
-          "title": "Customer.io Fall Release",
+          "title": "Cloudways Velocity",
           "reason": "off_topic"
         },
         {
           "title": "Jot 2.0",
-          "reason": "off_topic"
-        },
-        {
-          "title": "LeaseWire",
           "reason": "off_topic"
         },
         {
@@ -251,7 +250,7 @@
     },
     "tech_news": {
       "status": "direct",
-      "fresh_count": 29,
+      "fresh_count": 31,
       "errors": [
         {
           "endpoint": "venturebeat",
@@ -259,12 +258,20 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-12T20:14:45.672157+00:00",
-      "rejected_count": 30,
+      "checked_at": "2026-11-13T00:12:06.350995+00:00",
+      "rejected_count": 28,
       "rejection_reasons": {
-        "off_topic": 30
+        "off_topic": 28
       },
       "rejected_examples": [
+        {
+          "title": "Democrats launch Nvidia investigation, write scathing letter on Huang’s ‘scheme’ with Trump",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Jensen Huang was having a third affair, Reuters reports",
+          "reason": "off_topic"
+        },
         {
           "title": "Jensen Huang agrees to testify before Congress",
           "reason": "off_topic"
@@ -282,28 +289,20 @@
           "reason": "off_topic"
         },
         {
-          "title": "Nvidia’s stock drops as board reportedly preps to oust CEO Jensen Huang",
+          "title": "Oh, Palantir is ‘progressive’ now, is it?",
           "reason": "off_topic"
         },
         {
-          "title": "Jensen Huang accused of having another affair — with an Nvidia exec",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Why the data center you dread might never even be built",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Meta is losing its longtime head of infrastructure",
+          "title": "Jensen Huang is out. What did China want from him?",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-12T19:27:45+00:00"
+      "latest_published_at": "2026-11-12T22:22:28+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 36,
+      "fresh_count": 40,
       "errors": [
         {
           "endpoint": "jiqizhixin",
@@ -319,50 +318,51 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-11-12T20:14:45.672157+00:00",
-      "rejected_count": 80,
+      "checked_at": "2026-11-13T00:12:06.350995+00:00",
+      "rejected_count": 78,
       "rejection_reasons": {
-        "off_topic": 80
+        "off_topic": 78
       },
       "rejected_examples": [
         {
-          "title": "突发！黄仁勋辞任 CEO，英伟达迎来历史性换帅",
+          "title": "城市漫步指南｜夏末大阪，「青黄不接」的时节刚刚好",
           "reason": "off_topic"
         },
         {
-          "title": "26.99 万元起！腾势 N8 上市，内饰最美的比亚迪来了",
+          "title": "Mac 选购指南 2026 冬季版",
           "reason": "off_topic"
         },
         {
-          "title": "森海塞尔 HDB 630 体验：把 Hi-Fi 音响，装进这副降噪耳机里",
+          "title": "让老音箱焕发新生：Home Assistant Connect AUX-2 首发体验",
           "reason": "off_topic"
         },
         {
-          "title": "拆解触屏 MacBook Pro：点亮苹果 LOGO 的秘密，藏在这里",
+          "title": "派早报：Apple 公布 Swift Student Challenge 安排、微软发布 Auto SR 等",
           "reason": "off_topic"
         },
         {
-          "title": "联想 Googlebook 15 评测：安卓电脑准备好了，安卓没有",
+          "title": "城市漫步指南 | 安特卫普，时尚就在生活中",
           "reason": "off_topic"
         },
         {
-          "title": "折叠屏手机的转身｜明日后视镜",
+          "title": "从优胜美地到金门大桥：跟着 macOS 游览加州",
           "reason": "off_topic"
         },
         {
-          "title": "我们正目睹乔布斯后科技史上最严重的逼宫",
+          "title": "RetroSweeper Go：复古外观、更有手感的扫雷游戏",
           "reason": "off_topic"
         },
         {
-          "title": "曝字节要做「中国版 Muse」，给豆包造个「超级大脑」",
+          "title": "社区速递 165 | 透明工牌与派友十月购物清单",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-12T18:17:17+00:00"
+      "latest_published_at": "2026-11-13T00:04:39+00:00"
     }
   },
   "quality_rejections": {
+    "outside_news_window": 1,
     "duplicate_headline": 1
   },
   "quality_complete": true
