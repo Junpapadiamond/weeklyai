@@ -1,50 +1,51 @@
 {
-  "updated_at": "2026-11-13T00:12:06.350995+00:00",
+  "updated_at": "2026-11-13T07:01:06.313227+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 17,
+      "fresh_count": 19,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-13T00:12:06.350995+00:00",
-      "rejected_count": 11,
+      "checked_at": "2026-11-13T07:01:06.313227+00:00",
+      "rejected_count": 9,
       "rejection_reasons": {
-        "no_concrete_signal": 8,
-        "unvetted_x_author": 3
+        "no_concrete_signal": 3,
+        "unvetted_x_author": 2,
+        "insufficient_excerpt": 4
       },
       "rejected_examples": [
         {
-          "title": "@GoogleAI · Get started today: — Creatives and Consumers: Direct and edit in Google Flow (rolling out), generate clips in Google Vids, or create videos in the G",
+          "title": "@OpenAI · During this red-teaming exercise, we also found a vulnerability that allows for unauthenticated remote code execution in Brotli, a widely-deployed com",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@GoogleAI · How we're bringing powerful AI to small devices without draining the battery.",
+          "title": "@NVIDIAAI · Learn more: https://t.co/n0ESA0ID04",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@GoogleAI · Learn more: https://t.co/uSjuXDjJYg",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "@modal · We worked with @SakanaAILabs to optimize their Sakana Namazu API down to the kernel level: → Selective NVFP4 quantization (23k+ experts) → DFlash draft",
+          "title": "@Ales_ia_com · 「6473 ジェイテクト」 3月よりUpstage AI ...",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@hardmaru · Last week in Tokyo, we hosted the Sakana AI Symposium with our Chief Scientific Advisor, Jürgen Schmidhuber. Eight years ago, @SchmidhuberAI and I w",
+          "title": "@StockMKTNewz · Nvidia $NVDA just announced new planned investments in South Korean 🇰🇷 startups Nvidia said it just invested in Point2. Point2 builds radio-base",
           "reason": "unvetted_x_author"
         },
         {
-          "title": "@SakanaAILabs · Sakana AI初のモバイルアプリのテスターを募集します🐟 現在開発中の「Sakana AI App（仮）」のβテストにご協力いただけるテスターの方を募集しています。 皆さまからのフィードバックを元に、より使いやすく、便利なアプリへと改善していきたいと考えています。ぜひ、ご参加ください",
-          "reason": "no_concrete_signal"
+          "title": "@upstageai · Upstage - X",
+          "reason": "insufficient_excerpt"
         },
         {
-          "title": "@SakanaAILabs · Introducing “My Fish” in Sakana Chat. English Blog: https://t.co/GCNRQYXMtJ All your memories in one place, your history on a timeline, and the ",
-          "reason": "no_concrete_signal"
+          "title": "@upstageai · Upstage - X",
+          "reason": "insufficient_excerpt"
         },
         {
-          "title": "@SakanaAILabs · Sakana AI won 1st place in the company category at the “Recursive Self Improvement in Mathematics” Hack (OpenMath 2026), held with @stephen_wolf",
-          "reason": "no_concrete_signal"
+          "title": "@upstageai · Upstage - X",
+          "reason": "insufficient_excerpt"
+        },
+        {
+          "title": "@upstageai · Upstage on X",
+          "reason": "insufficient_excerpt"
         }
       ],
       "stored_count": 60,
@@ -52,166 +53,186 @@
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 17,
+      "fresh_count": 5,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-13T00:12:06.350995+00:00",
-      "rejected_count": 23,
+      "checked_at": "2026-11-13T07:01:06.313227+00:00",
+      "rejected_count": 35,
       "rejection_reasons": {
-        "no_concrete_signal": 13,
-        "off_topic": 8,
-        "personal_help_or_chatter": 2
+        "off_topic": 13,
+        "insufficient_evidence": 1,
+        "no_concrete_signal": 21
       },
       "rejected_examples": [
         {
-          "title": "Isn’t it funny how quickly people who were extremely anti AI changed their mind the second it created something they want to use.",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "I don't feel AI is improving at communication or \"modelling humans\"",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "For devs using Claude Code or similar at work: what’s the 10% you still fix by hand in Python?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Startup unveils Thorsten-4, an AI trained on 35 million psychologist-labeled words from 7,000+ people to predict their motivations, decisions and future behavio",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "I hate how Claude formulates responses, they are very hard to read",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Was Claude better when it could search reddit?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Transition from individual consumer Ultra plan to business Team plan one Standard and one Pro seat.",
+          "title": "What do you think of BIOME's multi-agent architecture?",
           "reason": "off_topic"
         },
         {
-          "title": "Reasoning doesn't help small (9B) models on complex summaries?",
+          "title": "Scheming Eunuchs promoted as CEOs of Nvidia",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Anybody have any idea what model \"Pumpkin Wombat\" is? I've been seeing it a lot on arena.ai and it's very impressive at image editing.",
+          "reason": "insufficient_evidence"
+        },
+        {
+          "title": "Why are you excited about singularity if AI alignment isn't solved?",
           "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Dumbest way to burn credits",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "With these scandals and uncertainty with Huggingface, what models should I download?",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Local Parakeet speech to text on Android",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Micro-soft Mega-Lol",
+          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-13T00:11:18+00:00"
+      "latest_published_at": "2026-11-13T06:23:16+00:00"
     },
     "youtube": {
-      "status": "direct",
-      "fresh_count": 15,
+      "status": "search_fallback",
+      "fresh_count": 8,
       "errors": [
         {
+          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCsBjURrPoezykLs9EqgamOA",
+          "reason": "HTTP 404"
+        },
+        {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
-          "reason": "empty_or_invalid_feed"
+          "reason": "HTTP 404"
         }
       ],
-      "feeds_ok": 7,
-      "checked_at": "2026-11-13T00:12:06.350995+00:00",
-      "rejected_count": 18,
+      "feeds_ok": 1,
+      "checked_at": "2026-11-13T07:01:06.313227+00:00",
+      "rejected_count": 2,
       "rejection_reasons": {
-        "off_topic": 18
+        "off_topic": 2
       },
       "rejected_examples": [
         {
-          "title": "Degenerate Gamblers keep losing",
+          "title": "Google's New Genie 4 Is the Beginning of Synthetic Reality!",
           "reason": "off_topic"
         },
         {
-          "title": "The Death of Stackoverlow | TheStandup",
-          "reason": "off_topic"
-        },
-        {
-          "title": "well this is bad",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Is Software Over?",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Jensen Huang just pulled out of Nvidia...",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The one thing holding theoretical CS together just broke... kinda",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The worst week in cybersecurity history... so far",
-          "reason": "off_topic"
-        },
-        {
-          "title": "How Russia uses jet-powered drones | Russia-Ukraine War - Military Analysis",
+          "title": "Andhra Pradesh Beats Karnataka in Tech, eMudhra’s SSL Collapse & India’s New 6G Tech List",
           "reason": "off_topic"
         }
       ],
-      "stored_count": 56,
+      "stored_count": 58,
       "latest_published_at": "2026-11-12T17:36:47+00:00"
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 6,
+      "fresh_count": 11,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-13T00:12:06.350995+00:00",
-      "rejected_count": 54,
+      "checked_at": "2026-11-13T07:01:06.313227+00:00",
+      "rejected_count": 49,
       "rejection_reasons": {
-        "off_topic": 21,
-        "no_concrete_signal": 31,
-        "personal_help_or_chatter": 2
+        "no_concrete_signal": 34,
+        "off_topic": 14,
+        "personal_help_or_chatter": 1
       },
       "rejected_examples": [
         {
-          "title": "The Singularity Clock",
+          "title": "United Airlines blocks AI agents from booking flights",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Skills I'm Willing to Let AI Have",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Gemini for Healthcare",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Aircraft Defects",
           "reason": "off_topic"
         },
         {
-          "title": "Show HN: TreasuryFlow, an overnight bank-vs-books check for small businesses",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Dario Amodei says AI will cure cancer, Alzheimer's, heart disease in 10 years",
+          "title": "Post-AI Computer Science – Volume 5",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Show HN: AxiomStory – Keep stories consistent across AI text, images, video",
-          "reason": "personal_help_or_chatter"
-        },
-        {
-          "title": "Habits of Highly Ineffective AI Programmers",
+          "title": "Michelangelo AI",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Kids and Parents Are Protesting Google's Classroom AI",
+          "title": "Show HN: Vending machine uses words, not money",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Big Walk used AI to fix a bug. Now the indie gaming world is having a reckoning",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "When Your Inner Thoughts Are No Longer Just Yours",
+          "title": "The Scandal Is Bigger Than Jensen Huang",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-12T23:31:10+00:00"
+      "latest_published_at": "2026-11-13T06:59:21+00:00"
     },
     "producthunt": {
       "status": "direct",
-      "fresh_count": 14,
+      "fresh_count": 16,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-13T00:12:06.350995+00:00",
-      "rejected_count": 24,
+      "checked_at": "2026-11-13T07:01:06.313227+00:00",
+      "rejected_count": 23,
       "rejection_reasons": {
-        "off_topic": 23,
+        "off_topic": 22,
         "unusable_title": 1
       },
       "rejected_examples": [
+        {
+          "title": "Yogurt",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Jot 2.0",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Klang",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Plurai Simulation",
+          "reason": "off_topic"
+        },
         {
           "title": "Marqly 7.0",
           "reason": "off_topic"
@@ -225,23 +246,7 @@
           "reason": "unusable_title"
         },
         {
-          "title": "Skysoon",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Infinite Drive",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Cloudways Velocity",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Jot 2.0",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Didit MCP",
+          "title": "Toki Matter",
           "reason": "off_topic"
         }
       ],
@@ -258,7 +263,7 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-13T00:12:06.350995+00:00",
+      "checked_at": "2026-11-13T07:01:06.313227+00:00",
       "rejected_count": 28,
       "rejection_reasons": {
         "off_topic": 28
@@ -302,7 +307,7 @@
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 40,
+      "fresh_count": 37,
       "errors": [
         {
           "endpoint": "jiqizhixin",
@@ -318,10 +323,10 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-11-13T00:12:06.350995+00:00",
-      "rejected_count": 78,
+      "checked_at": "2026-11-13T07:01:06.313227+00:00",
+      "rejected_count": 81,
       "rejection_reasons": {
-        "off_topic": 78
+        "off_topic": 81
       },
       "rejected_examples": [
         {
@@ -358,12 +363,9 @@
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-13T00:04:39+00:00"
+      "latest_published_at": "2026-11-13T06:55:27+00:00"
     }
   },
-  "quality_rejections": {
-    "outside_news_window": 1,
-    "duplicate_headline": 1
-  },
+  "quality_rejections": {},
   "quality_complete": true
 }
