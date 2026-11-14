@@ -1,0 +1,360 @@
+{
+  "cache_key": "60b2fecd218daf97b60613cc-3636f5bde48ca890f97b0176",
+  "product_key": "60b2fecd218daf97b60613cc",
+  "fingerprint": "3636f5bde48ca890f97b0176",
+  "product_id": "p_bbd2a7f007992e26",
+  "product_name": "Holo",
+  "origin": "pregenerated",
+  "generated_at": "2026-11-14T00:23:03.237854+00:00",
+  "spec": {
+    "version": 2,
+    "confidence": "illustrative",
+    "tier": "workflow",
+    "headline": {
+      "zh": "为小型企业草拟社交媒体帖子",
+      "en": "Draft social media posts for a small business"
+    },
+    "scenario": {
+      "zh": "编辑准备好的草稿，选择保留内容并调整顺序。",
+      "en": "Edit the prepared draft, choose content to include and adjust its order."
+    },
+    "steps": [
+      {
+        "id": "example",
+        "widget": "review",
+        "title": {
+          "zh": "可交互产物",
+          "en": "Interactive artifact"
+        },
+        "instruction": {
+          "zh": "编辑准备好的草稿，选择保留内容并调整顺序。",
+          "en": "Edit the prepared draft, choose content to include and adjust its order."
+        },
+        "options": [
+          {
+            "id": "0",
+            "label": {
+              "zh": "可交互产物",
+              "en": "Interactive artifact"
+            },
+            "output": {
+              "zh": "帖子1: 早安从绿叶咖啡开始。本地咖啡店为你现磨新鲜咖啡,温暖你的每个清晨。\n标签1: #绿叶咖啡 #本地咖啡 #新鲜现磨\n帖子2: 周末好去处。绿叶咖啡邀你来享受本地咖啡的醇香和轻松时光。\n标签2: #本地咖啡 #周末时光 #咖啡店",
+              "en": "Post 1: Mornings start at Green Leaf Coffee. Your local coffee shop brewing fresh cups to warm every morning.\nTags 1: #GreenLeafCoffee #LocalCoffee #FreshBrewed\nPost 2: Weekend destination. Green Leaf Coffee invites you…"
+            },
+            "artifact": {
+              "kind": "text",
+              "input_label": {
+                "zh": "示例输入",
+                "en": "Example input"
+              },
+              "output_label": {
+                "zh": "可交互产物",
+                "en": "Interactive artifact"
+              },
+              "input": {
+                "zh": "绿叶咖啡的 Instagram 推广帖",
+                "en": "Green Leaf Coffee Instagram promotional posts"
+              },
+              "output": {
+                "zh": "帖子1: 早安从绿叶咖啡开始。本地咖啡店为你现磨新鲜咖啡,温暖你的每个清晨。\n标签1: #绿叶咖啡 #本地咖啡 #新鲜现磨\n帖子2: 周末好去处。绿叶咖啡邀你来享受本地咖啡的醇香和轻松时光。\n标签2: #本地咖啡 #周末时光 #咖啡店",
+                "en": "Post 1: Mornings start at Green Leaf Coffee. Your local coffee shop brewing fresh cups to warm every morning.\nTags 1: #GreenLeafCoffee #LocalCoffee #FreshBrewed\nPost 2: Weekend destination. Green Leaf Coffee invites you…"
+              }
+            }
+          }
+        ],
+        "example_data": true
+      }
+    ],
+    "takeaway": {
+      "zh": "这是独立的本地示例，未调用该产品。产品资料用于了解方向，不证明示例中的数据或结果；实际能力请以官方产品为准。",
+      "en": "This independent local example does not call the product. Sources explain its purpose, not the fictional data or results. Check the official product for actual capabilities."
+    },
+    "sources": [
+      {
+        "url": "https://tryholo.ai/",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      },
+      {
+        "url": "https://www.eu-startups.com/2026/10/vilnius-based-holo-raises-e5-million-to-put-marketing-on-autopilot-for-small-businesses",
+        "label": {
+          "zh": "公开资料",
+          "en": "Public source"
+        }
+      }
+    ],
+    "interaction": {
+      "kind": "editor",
+      "input_label": {
+        "zh": "营销输入",
+        "en": "Marketing Input"
+      },
+      "output_label": {
+        "zh": "帖子草稿",
+        "en": "Post Drafts"
+      },
+      "inputs": [
+        {
+          "id": "platform",
+          "label": {
+            "zh": "平台",
+            "en": "Platform"
+          },
+          "options": [
+            {
+              "id": "instagram",
+              "label": {
+                "zh": "Instagram",
+                "en": "Instagram"
+              }
+            },
+            {
+              "id": "facebook",
+              "label": {
+                "zh": "Facebook",
+                "en": "Facebook"
+              }
+            }
+          ]
+        },
+        {
+          "id": "business",
+          "label": {
+            "zh": "业务",
+            "en": "Business"
+          },
+          "options": [
+            {
+              "id": "cafe",
+              "label": {
+                "zh": "咖啡店",
+                "en": "Café"
+              },
+              "facts": [
+                {
+                  "zh": "绿叶咖啡",
+                  "en": "Green Leaf Coffee"
+                },
+                {
+                  "zh": "本地咖啡",
+                  "en": "local coffee"
+                }
+              ]
+            },
+            {
+              "id": "bakery",
+              "label": {
+                "zh": "面包店",
+                "en": "Bakery"
+              },
+              "facts": [
+                {
+                  "zh": "晨光烘焙",
+                  "en": "Morning Light Bakery"
+                },
+                {
+                  "zh": "手工面包",
+                  "en": "artisan bread"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "when": {
+            "platform": "instagram",
+            "business": "cafe"
+          },
+          "brief": {
+            "zh": "绿叶咖啡的 Instagram 推广帖",
+            "en": "Green Leaf Coffee Instagram promotional posts"
+          },
+          "artifact": {
+            "fields": [
+              {
+                "id": "post1",
+                "label": {
+                  "zh": "帖子1",
+                  "en": "Post 1"
+                },
+                "value": {
+                  "zh": "早安从绿叶咖啡开始。本地咖啡店为你现磨新鲜咖啡,温暖你的每个清晨。",
+                  "en": "Mornings start at Green Leaf Coffee. Your local coffee shop brewing fresh cups to warm every morning."
+                }
+              },
+              {
+                "id": "tags1",
+                "label": {
+                  "zh": "标签1",
+                  "en": "Tags 1"
+                },
+                "value": {
+                  "zh": "#绿叶咖啡 #本地咖啡 #新鲜现磨",
+                  "en": "#GreenLeafCoffee #LocalCoffee #FreshBrewed"
+                }
+              },
+              {
+                "id": "post2",
+                "label": {
+                  "zh": "帖子2",
+                  "en": "Post 2"
+                },
+                "value": {
+                  "zh": "周末好去处。绿叶咖啡邀你来享受本地咖啡的醇香和轻松时光。",
+                  "en": "Weekend destination. Green Leaf Coffee invites you to enjoy local coffee and relaxed moments."
+                }
+              },
+              {
+                "id": "tags2",
+                "label": {
+                  "zh": "标签2",
+                  "en": "Tags 2"
+                },
+                "value": {
+                  "zh": "#本地咖啡 #周末时光 #咖啡店",
+                  "en": "#LocalCoffee #WeekendVibes #CoffeeShop"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "when": {
+            "platform": "instagram",
+            "business": "bakery"
+          },
+          "brief": {
+            "zh": "晨光烘焙的 Instagram 推广帖",
+            "en": "Morning Light Bakery Instagram promotional posts"
+          },
+          "artifact": {
+            "fields": [
+              {
+                "id": "post1",
+                "label": {
+                  "zh": "帖子1",
+                  "en": "Post 1"
+                },
+                "value": {
+                  "zh": "新鲜出炉。晨光烘焙每天为你准备手工面包和糕点,温暖你的早晨。",
+                  "en": "Fresh from the oven. Morning Light Bakery prepares artisan bread and pastries daily to warm your morning."
+                }
+              },
+              {
+                "id": "tags1",
+                "label": {
+                  "zh": "标签1",
+                  "en": "Tags 1"
+                },
+                "value": {
+                  "zh": "#晨光烘焙 #手工面包 #新鲜出炉",
+                  "en": "#MorningLightBakery #ArtisanBread #FreshBaked"
+                }
+              },
+              {
+                "id": "post2",
+                "label": {
+                  "zh": "帖子2",
+                  "en": "Post 2"
+                },
+                "value": {
+                  "zh": "手工面包的香气。晨光烘焙用传统工艺为你呈现最地道的味道。",
+                  "en": "The aroma of artisan bread. Morning Light Bakery uses traditional methods to bring you authentic flavors."
+                }
+              },
+              {
+                "id": "tags2",
+                "label": {
+                  "zh": "标签2",
+                  "en": "Tags 2"
+                },
+                "value": {
+                  "zh": "#手工面包 #传统工艺 #烘焙香气",
+                  "en": "#ArtisanBread #TraditionalCraft #BakeryAromas"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "when": {
+            "platform": "facebook",
+            "business": "cafe"
+          },
+          "brief": {
+            "zh": "绿叶咖啡的 Facebook 推广帖",
+            "en": "Green Leaf Coffee Facebook promotional posts"
+          },
+          "artifact": {
+            "fields": [
+              {
+                "id": "post1",
+                "label": {
+                  "zh": "帖子1",
+                  "en": "Post 1"
+                },
+                "value": {
+                  "zh": "欢迎来到绿叶咖啡!我们是你的本地咖啡店,每天为社区提供新鲜现磨的咖啡。无论是早晨提神还是下午小憩,我们都在这里等你。",
+                  "en": "Welcome to Green Leaf Coffee! We're your local coffee shop, serving the community with freshly brewed coffee every day. Whether it's a morning boost or afternoon break, we're here for you."
+                }
+              },
+              {
+                "id": "post2",
+                "label": {
+                  "zh": "帖子2",
+                  "en": "Post 2"
+                },
+                "value": {
+                  "zh": "本周特别推荐。绿叶咖啡为你准备了精选本地咖啡豆,香醇口感值得品味。来店里试试我们的招牌拿铁和卡布奇诺。",
+                  "en": "This week's special. Green Leaf Coffee presents selected local coffee beans with rich flavors worth savoring. Visit us to try our signature lattes and cappuccinos."
+                }
+              }
+            ]
+          }
+        },
+        {
+          "when": {
+            "platform": "facebook",
+            "business": "bakery"
+          },
+          "brief": {
+            "zh": "晨光烘焙的 Facebook 推广帖",
+            "en": "Morning Light Bakery Facebook promotional posts"
+          },
+          "artifact": {
+            "fields": [
+              {
+                "id": "post1",
+                "label": {
+                  "zh": "帖子1",
+                  "en": "Post 1"
+                },
+                "value": {
+                  "zh": "晨光烘焙欢迎你!我们每天清晨开始制作手工面包,用优质食材和传统工艺为社区带来新鲜美味。从法棍到全麦面包,每一款都用心烘焙。",
+                  "en": "Morning Light Bakery welcomes you! We start each morning crafting artisan bread, bringing fresh goodness to the community with quality ingredients and traditional methods. From baguettes to whole wheat, every loaf is baked with care."
+                }
+              },
+              {
+                "id": "post2",
+                "label": {
+                  "zh": "帖子2",
+                  "en": "Post 2"
+                },
+                "value": {
+                  "zh": "本周新品上架。晨光烘焙推出新款手工面包系列,结合传统配方和创新口味。周末来店里品尝我们的羊角包和丹麦酥。",
+                  "en": "New arrivals this week. Morning Light Bakery introduces new artisan bread varieties, combining traditional recipes with innovative flavors. Visit this weekend to taste our croissants and Danish pastries."
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "generator_revision": "interaction-v3-2026-11-12",
+  "grounding": "stored_source_excerpts"
+}

@@ -239,5 +239,56 @@
         }
       ]
     }
+  },
+  {
+    "name": "Bay",
+    "website": "https://www.bay.io",
+    "description": "为企业提供AI代理安全控制平台。安全团队可通过会话级别上下文评估AI代理的每项操作是否安全，在毫秒级别进行实时决策，无需部署端点代理、内核驱动或网络代理。",
+    "description_en": "Enterprise platform for controlling AI agent actions through session-context enforcement. Evaluates whether proposed actions are safe based on full agent session context and real-time observability, enabling enterprises to deploy autonomous AI agents at scale while maintaining security controls.",
+    "category": "agent",
+    "why_matters": "解决AI代理权限滥用问题。创始人来自以色列Unit 8200和CrowdStrike，具有深厚的安全背景。已获得Fortune 100客户采用，并将其平台使用量增加三倍。",
+    "why_matters_en": "Addresses critical AI agent authorization drift—agents can misuse legitimate permissions for dangerous actions. Founded by leaders from Israel's Unit 8200 cyber intelligence unit and CrowdStrike's 90-engineer department. Deployed by Fortune 100 companies, tripling autonomous agent use while maintaining control.",
+    "latest_news": "2026年11月10日从隐身模式现身，宣布完成3700万美元Series A融资，由Battery Ventures领投。总融资达5000万美元（包括之前未披露的1300万美元种子轮）。客户包括Micron、Peloton、ClickUp和Wix。",
+    "latest_news_en": "Emerged from stealth on November 10, 2026, announcing $37M Series A led by Battery Ventures, bringing total funding to $50M (including previously undisclosed $13M seed co-led by YL Ventures and Striker). Microsoft's M12 and Wiz CEO Assaf Rappaport participated. Early customers include Micron, Peloton, ClickUp, and Wix.",
+    "funding_total": "$50 million",
+    "company_country": "IL",
+    "dark_horse_index": 4,
+    "criteria_met": [
+      "funding_signal",
+      "founder_background",
+      "growth_anomaly"
+    ],
+    "confidence": 0.92,
+    "source_url": "https://www.unite.ai/bay-raises-37m-series-a-to-scale-enterprise-ai-agent-security",
+    "extra": {
+      "discovery_provider": "claude",
+      "discovery_run_id": "20261114T001302Z-d4b3f1a7",
+      "search_region": "us",
+      "search_lane": "launch",
+      "website_verification": null,
+      "source_published_at": "2026-11-10T23:46:04+00:00",
+      "evidence": [
+        {
+          "criterion": "funding_signal",
+          "quote": "Bay announced on November 10, 2026, that it had raised a $37 million Series A led by Battery Ventures, bringing total funding to $50 million as the Tel Aviv-based startup emerged from stealth with a platform designed to control what enterprise AI agents can do."
+        },
+        {
+          "criterion": "founder_background",
+          "quote": "Zacharia founded Bay with chief product officer Aner Morag and research-and-development vice president Boris Danilovich. She previously led a 50-person department in Israel's Unit 8200 and later served as director of research and AI at Hunters. Danilovich previously led a 90-engineer department at CrowdStrike, while Morag joined Noname Security as an early employee and became vice president of product."
+        },
+        {
+          "criterion": "growth_anomaly",
+          "quote": "Bay reports that it has dozens of enterprise customers at launch, including Micron, Peloton, ClickUp and Wix, and that Fortune 100 companies used its platform to triple autonomous AI agent use."
+        }
+      ]
+    },
+    "categories": [
+      "agent"
+    ],
+    "region": "Unknown",
+    "source": "claude_tavily",
+    "source_title": "Bay Raises $37M Series A to Scale Enterprise AI Agent Security – Unite.AI",
+    "website_source": "https://www.unite.ai/bay-raises-37m-series-a-to-scale-enterprise-ai-agent-security",
+    "discovered_at": "2026-11-14"
   }
 ]

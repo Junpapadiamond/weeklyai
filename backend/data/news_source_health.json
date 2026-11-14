@@ -1,49 +1,37 @@
 {
-  "updated_at": "2026-11-13T19:55:53.720764+00:00",
+  "updated_at": "2026-11-14T00:18:54.883619+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 10,
+      "fresh_count": 24,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-13T19:55:53.720764+00:00",
-      "rejected_count": 16,
+      "checked_at": "2026-11-14T00:18:54.883619+00:00",
+      "rejected_count": 5,
       "rejection_reasons": {
-        "no_concrete_signal": 4,
-        "unvetted_x_author": 12
+        "unvetted_x_author": 2,
+        "no_concrete_signal": 3
       },
       "rejected_examples": [
         {
-          "title": "@OpenAI · RT @OpenAIDevs: Put your dot on call. Ali, an engineer at OpenAI, used his dot to triage an on-call incident at 3am. His dot investigated…",
+          "title": "@Weeklyvoice · Canada Backs Cohere With Up to $1.6 Billion to Build Its Sovereign AI Future",
+          "reason": "unvetted_x_author"
+        },
+        {
+          "title": "@cohere · We’re expanding our commitment to Canada 🇨🇦 Cohere is advancing plans to invest more than C$4 billion in R&D and AI infrastructure and create over 1,5",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@OpenAI · OpenAI على X: \"RT @OpenAIDevs: Put your dot on call. Ali, an engineer at OpenAI, used his dot to triage an on-call incident at 3am. His dot investigat",
+          "title": "@cohere · Trace, raw tokens, & minimal reproduction script found here on @huggingface: https://t.co/JzIfUazjg4",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@vinhnx · openai/openai-cli: Official CLI for the OpenAI API https://t.co/Pog1OMvbMH",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@FUCK__OPENAI · @thsottiaux FUCK YOU TIBO!!! FUCK YOU SAM ALTMAN!!! FUCK YOU OPENAI!!! YOU ARE ALL MOTHERFUCKER SONS OF BITCH!!! GO DIE IF YOU ALWAYS MAKING THE",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@OracleNYSE · $NOW OpenAI OpenAI and ServiceNow expand partnership across enterprise workflows- OpenAI",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@OpenAIDevs · @emharsha_1812 @OpenAI cute pics!",
+          "title": "@perplexity_ai · We're open sourcing SPACE, the sandbox platform that runs every task in Perplexity Computer. SPACE gives each agent task its own Firecracker mi",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@grok · xAI trains me on a broad mix of publicly available internet data—web text, scientific and legal documents, social media posts including public X content",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@minchoi · This is wild. xAI just dropped Grok Bot 1.0, and it's built to be an AI teammate, not just a chatbot. Here's what's new: • Bots can join your video c",
+          "title": "@AravSrinivas · You can now run Perplexity Computer fully local on your Mac with no cloud based inference, without WiFi too. Enjoy!",
           "reason": "unvetted_x_author"
         }
       ],
@@ -52,159 +40,151 @@
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 10,
+      "fresh_count": 15,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-13T19:55:53.720764+00:00",
-      "rejected_count": 30,
+      "checked_at": "2026-11-14T00:18:54.883619+00:00",
+      "rejected_count": 25,
       "rejection_reasons": {
-        "off_topic": 7,
-        "no_concrete_signal": 20,
-        "personal_help_or_chatter": 3
+        "off_topic": 8,
+        "no_concrete_signal": 17
       },
       "rejected_examples": [
         {
-          "title": "Are resets kept when you upgrade?",
+          "title": "Convince me we aren't getting regulation. Why would the government sit around and let a private company develop and control superintelligence?",
           "reason": "off_topic"
         },
         {
-          "title": "Cula suscripción de IA es mejor o que ofrezcan más",
+          "title": "Interval of consciousness?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Two things happened close together and I’m curious how people here see it:",
+          "title": "Amazing with Spotify",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "We give AI coding agents access to everything. Are we being way too careless?",
+          "title": "Back Propagation [D]",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Weight Space Programming for Quantization: Nace quants achieve up to 2x better KL divergence for Qwen 9B, 27B, 35B & Flash Next [GGUF]",
-          "reason": "personal_help_or_chatter"
+          "title": "Wilson's Survival Guide for November 6-13, 2026 now available!",
+          "reason": "off_topic"
         },
         {
-          "title": "OpenAI disbands its stand-alone robotics team as its general-purpose AI models start running robots",
+          "title": "Digital lifeform (update)",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "How to use 2 accounts on 1 project (not using Claude Code)",
-          "reason": "personal_help_or_chatter"
+          "title": "Strata QFN Setup Question: Which PCIe Slot for Helper 2080ti?",
+          "reason": "off_topic"
         },
         {
-          "title": "ChatGPT’s agents can now buy things for you with your credit card",
-          "reason": "no_concrete_signal"
+          "title": "Why do they all seem to do this?",
+          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-13T19:53:16+00:00"
+      "latest_published_at": "2026-11-14T00:16:15+00:00"
     },
     "youtube": {
-      "status": "direct",
-      "fresh_count": 10,
+      "status": "search_fallback",
+      "fresh_count": 9,
       "errors": [
         {
+          "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCUyeluBRhGPCW4rPe_UvBZQ",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCsBjURrPoezykLs9EqgamOA",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
+          "reason": "HTTP 404"
+        },
+        {
           "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
-          "reason": "empty_or_invalid_feed"
+          "reason": "HTTP 404"
         }
       ],
-      "feeds_ok": 7,
-      "checked_at": "2026-11-13T19:55:53.720764+00:00",
-      "rejected_count": 22,
-      "rejection_reasons": {
-        "off_topic": 22
-      },
-      "rejected_examples": [
-        {
-          "title": "Jensen Huang just pulled out of Nvidia...",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The one thing holding theoretical CS together just broke... kinda",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The worst week in cybersecurity history... so far",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Degenerate Gamblers keep losing",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The Death of Stackoverlow | TheStandup",
-          "reason": "off_topic"
-        },
-        {
-          "title": "well this is bad",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Is Software Over?",
-          "reason": "off_topic"
-        },
-        {
-          "title": "The killer drone arms race: Ukraine innovates, Russia scales | Russia-Ukraine War",
-          "reason": "off_topic"
-        }
-      ],
-      "stored_count": 58,
+      "feeds_ok": 1,
+      "checked_at": "2026-11-14T00:18:54.883619+00:00",
+      "rejected_count": 0,
+      "rejection_reasons": {},
+      "rejected_examples": [],
+      "stored_count": 60,
       "latest_published_at": "2026-11-12T17:36:47+00:00"
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 11,
+      "fresh_count": 9,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-13T19:55:53.720764+00:00",
-      "rejected_count": 49,
+      "checked_at": "2026-11-14T00:18:54.883619+00:00",
+      "rejected_count": 51,
       "rejection_reasons": {
-        "no_concrete_signal": 33,
-        "off_topic": 16
+        "off_topic": 25,
+        "no_concrete_signal": 26
       },
       "rejected_examples": [
         {
-          "title": "The AI megatrade's mounting portfolio concentration risk problem",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "No AI Slop: A Manifesto",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Ghost Writing: On AI Before AI",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Perplexity Decider v1.3: Training, eval, and use cases",
+          "title": "Unsloth Qwen3.8-27B Quantizations – Dynamic v3.1 Update",
           "reason": "off_topic"
         },
         {
-          "title": "Nvidia looks for successor after exit of CEO Jensen Huang, shake the AI industry",
+          "title": "Show HN: Feedback/AMA MeditionBench; LLMs for mediation and conflict resolution",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "First inference results on Xbox Series X",
+          "title": "Tell HN: Google Search to start locking down search behind a login wall",
           "reason": "off_topic"
         },
         {
-          "title": "Crypto and AI lost the midterms, and why they say they didn't",
+          "title": "FAA tees up $875M AI tool to help manage air traffic congestion",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "I Saw the Future of Mind-Reading",
+          "title": "Drones over UK skies: US Air Force launches urgent response",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Ground stop ordered for all airports nationwide for 'reasons of safety'",
+          "reason": "off_topic"
+        },
+        {
+          "title": "FAA expands AI advice to manage air traffic congestion across US airspace",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "Flights halted at airports across US due to air traffic control comms problems",
           "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-13T18:24:08+00:00"
+      "latest_published_at": "2026-11-14T00:18:06+00:00"
     },
     "producthunt": {
       "status": "direct",
       "fresh_count": 14,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-13T19:55:53.720764+00:00",
+      "checked_at": "2026-11-14T00:18:54.883619+00:00",
       "rejected_count": 21,
       "rejection_reasons": {
         "off_topic": 20,
@@ -216,15 +196,7 @@
           "reason": "off_topic"
         },
         {
-          "title": "Kairos",
-          "reason": "off_topic"
-        },
-        {
           "title": "Google Pixel Tag",
-          "reason": "off_topic"
-        },
-        {
-          "title": "StockRip",
           "reason": "off_topic"
         },
         {
@@ -232,15 +204,23 @@
           "reason": "off_topic"
         },
         {
+          "title": "StockRip",
+          "reason": "off_topic"
+        },
+        {
           "title": "Expo Simulators",
           "reason": "off_topic"
         },
         {
-          "title": "Hoverine",
+          "title": "Kairos",
           "reason": "off_topic"
         },
         {
           "title": "Pocket Studio for Supabase",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Willo",
           "reason": "off_topic"
         }
       ],
@@ -249,7 +229,7 @@
     },
     "tech_news": {
       "status": "direct",
-      "fresh_count": 33,
+      "fresh_count": 34,
       "errors": [
         {
           "endpoint": "venturebeat",
@@ -257,24 +237,12 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-13T19:55:53.720764+00:00",
-      "rejected_count": 27,
+      "checked_at": "2026-11-14T00:18:54.883619+00:00",
+      "rejected_count": 25,
       "rejection_reasons": {
-        "off_topic": 27
+        "off_topic": 25
       },
       "rejected_examples": [
-        {
-          "title": "Let’s talk about Jensen Huang’s many affairs!",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Oh, Palantir is ‘progressive’ now, is it?",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Jensen Huang is out. What did China want from him?",
-          "reason": "off_topic"
-        },
         {
           "title": "ElevenLabs’ new app combines meeting note-taking and dictation for teams",
           "reason": "off_topic"
@@ -294,21 +262,33 @@
         {
           "title": "Jensen Huang agrees to testify before Congress",
           "reason": "off_topic"
+        },
+        {
+          "title": "Let’s talk about Jensen Huang’s many affairs!",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Oh, Palantir is ‘progressive’ now, is it?",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Jensen Huang and the End of the Founder Fairy Tale",
+          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-13T19:08:57+00:00"
+      "latest_published_at": "2026-11-13T22:43:00+00:00"
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 41,
+      "fresh_count": 40,
       "errors": [
         {
-          "endpoint": "jiqizhixin",
+          "endpoint": "36kr",
           "reason": "empty_or_invalid_feed"
         },
         {
-          "endpoint": "36kr",
+          "endpoint": "jiqizhixin",
           "reason": "empty_or_invalid_feed"
         },
         {
@@ -317,50 +297,51 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-11-13T19:55:53.720764+00:00",
-      "rejected_count": 77,
+      "checked_at": "2026-11-14T00:18:54.883619+00:00",
+      "rejected_count": 78,
       "rejection_reasons": {
-        "off_topic": 77
+        "off_topic": 78
       },
       "rejected_examples": [
         {
-          "title": "本周看什么 | 最近值得一看的 10 部作品",
+          "title": "黄仁勋辞职，英伟达33年首换帅，市值蒸发超3万亿",
           "reason": "off_topic"
         },
         {
-          "title": "城市漫步指南｜夏末大阪，「青黄不接」的时节刚刚好",
+          "title": "比亚迪第1900万辆新能源汽车下线，科技新奢旗舰SUV方程豹钛9开启预订",
           "reason": "off_topic"
         },
         {
-          "title": "Mac 选购指南 2026 冬季版",
+          "title": "从仰望极速新纪录和鼎曜全球发布 看比亚迪的国际化与高端化之路",
           "reason": "off_topic"
         },
         {
-          "title": "让老音箱焕发新生：Home Assistant Connect AUX-2 首发体验",
+          "title": "比亚迪与神州租车首批闪充车及闪充站投放仪式顺利举行，战略合作落地兑现，闪充中国再次提速",
           "reason": "off_topic"
         },
         {
-          "title": "派早报：Apple 公布 Swift Student Challenge 安排、微软发布 Auto SR 等",
+          "title": "openJiuwen发布RSI原生AgentOS，让Agent自由变身，持续迭代！",
           "reason": "off_topic"
         },
         {
-          "title": "城市漫步指南 | 安特卫普，时尚就在生活中",
-          "reason": "off_topic"
-        },
-        {
-          "title": "从优胜美地到金门大桥：跟着 macOS 游览加州",
+          "title": "特斯拉和SpaceX最快下月合并",
           "reason": "off_topic"
         },
         {
           "title": "余承东公布华为问界新合作模式！新 M8 同步上市，起售价 37.98 万元",
           "reason": "off_topic"
+        },
+        {
+          "title": "iPhone 20 爆料汇总：一整块玻璃，藏着苹果下一个十年",
+          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-13T16:50:00+00:00"
+      "latest_published_at": "2026-11-14T00:14:06+00:00"
     }
   },
   "quality_rejections": {
+    "outside_news_window": 1,
     "duplicate_headline": 2
   },
   "quality_complete": true
