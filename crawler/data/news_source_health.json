@@ -1,37 +1,49 @@
 {
-  "updated_at": "2026-11-14T00:18:54.883619+00:00",
+  "updated_at": "2026-11-14T06:51:13.160314+00:00",
   "quality_policy_version": 1,
   "sources": {
     "x": {
       "status": "search_fallback",
-      "fresh_count": 24,
+      "fresh_count": 13,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-14T00:18:54.883619+00:00",
-      "rejected_count": 5,
+      "checked_at": "2026-11-14T06:51:13.160314+00:00",
+      "rejected_count": 16,
       "rejection_reasons": {
-        "unvetted_x_author": 2,
-        "no_concrete_signal": 3
+        "no_concrete_signal": 13,
+        "unvetted_x_author": 3
       },
       "rejected_examples": [
         {
-          "title": "@Weeklyvoice · Canada Backs Cohere With Up to $1.6 Billion to Build Its Sovereign AI Future",
-          "reason": "unvetted_x_author"
-        },
-        {
-          "title": "@cohere · We’re expanding our commitment to Canada 🇨🇦 Cohere is advancing plans to invest more than C$4 billion in R&D and AI infrastructure and create over 1,5",
+          "title": "@OpenAI · During this red-teaming exercise, we also found a vulnerability that allows for unauthenticated remote code execution in Brotli, a widely-deployed com",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@cohere · Trace, raw tokens, & minimal reproduction script found here on @huggingface: https://t.co/JzIfUazjg4",
+          "title": "@cursor_ai · The Agent SDK is now available. Define agents as code, with prompts in Markdown and tools in TypeScript. Deploy them on our hosted infrastructure, ",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@perplexity_ai · We're open sourcing SPACE, the sandbox platform that runs every task in Perplexity Computer. SPACE gives each agent task its own Firecracker mi",
+          "title": "@cursor_ai · Cloud agents can now build interactive canvases. Ask for a dashboard or report while the agent works, then share the finished canvas with your team",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "@AravSrinivas · You can now run Perplexity Computer fully local on your Mac with no cloud based inference, without WiFi too. Enjoy!",
+          "title": "@cursor_ai · Gemini 4 Hydrogen is now available in Cursor! At its default effort, it scores 54.3% on CursorBench, up from 39.6% for Gemini 3.8 Flash.",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@cursor_ai · Cloud agent environments now support up to 500 repos, and large multi-repo environments start 5x faster. See everything new: https://t.co/FfATEvnQd",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@cursor_ai · New in Cursor design mode: Annotate. Give agents visual prompts: edit elements, draw on the page, and review your designs at different screen sizes",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@cursor_ai · Teams across Cursor are already using it to build live dashboards, customer presentations, internal ops tools, onboarding programs, and developer p",
+          "reason": "no_concrete_signal"
+        },
+        {
+          "title": "@ycombinator · Replit was building toward the AI coding era years before it had a name. In 2024, the company shipped an agent that could take a request in plain",
           "reason": "unvetted_x_author"
         }
       ],
@@ -40,62 +52,64 @@
     },
     "reddit": {
       "status": "direct",
-      "fresh_count": 15,
+      "fresh_count": 9,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-14T00:18:54.883619+00:00",
-      "rejected_count": 25,
+      "checked_at": "2026-11-14T06:51:13.160314+00:00",
+      "rejected_count": 31,
       "rejection_reasons": {
-        "off_topic": 8,
-        "no_concrete_signal": 17
+        "off_topic": 12,
+        "personal_help_or_chatter": 2,
+        "insufficient_evidence": 1,
+        "no_concrete_signal": 16
       },
       "rejected_examples": [
         {
-          "title": "Convince me we aren't getting regulation. Why would the government sit around and let a private company develop and control superintelligence?",
+          "title": "Jensen Huang in the secret council meetings last week:",
           "reason": "off_topic"
         },
         {
-          "title": "Interval of consciousness?",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Amazing with Spotify",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Back Propagation [D]",
-          "reason": "no_concrete_signal"
-        },
-        {
-          "title": "Wilson's Survival Guide for November 6-13, 2026 now available!",
+          "title": "Picking Opus 5.5 for voice mode actually gives you Opus 5",
           "reason": "off_topic"
         },
         {
-          "title": "Digital lifeform (update)",
+          "title": "Building a personal assistant agent vs using one off the shelf",
+          "reason": "personal_help_or_chatter"
+        },
+        {
+          "title": "How do you build these aaa games",
+          "reason": "insufficient_evidence"
+        },
+        {
+          "title": "Terrible Claude results with Blender",
+          "reason": "personal_help_or_chatter"
+        },
+        {
+          "title": "Any legitimate options for Claude phone verification?",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Strata QFN Setup Question: Which PCIe Slot for Helper 2080ti?",
-          "reason": "off_topic"
+          "title": "Claude Isn't the Best at Everything",
+          "reason": "no_concrete_signal"
         },
         {
-          "title": "Why do they all seem to do this?",
-          "reason": "off_topic"
+          "title": "AI coding agents have made me 10x faster at creating problems I didn’t have yesterday.",
+          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-14T00:16:15+00:00"
+      "latest_published_at": "2026-11-14T06:16:56+00:00"
     },
     "youtube": {
       "status": "search_fallback",
-      "fresh_count": 9,
+      "fresh_count": 10,
       "errors": [
         {
           "endpoint": "UCNJ1Ymd5yFuUPtn21xtRbbw",
           "reason": "HTTP 404"
         },
         {
-          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
+          "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
           "reason": "HTTP 404"
         },
         {
@@ -103,11 +117,7 @@
           "reason": "HTTP 404"
         },
         {
-          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
-          "reason": "HTTP 404"
-        },
-        {
-          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
+          "endpoint": "UCbfYPyITQ-7l4upoX8nvctg",
           "reason": "HTTP 404"
         },
         {
@@ -115,79 +125,83 @@
           "reason": "HTTP 404"
         },
         {
-          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
+          "endpoint": "UC8WCW6C3BWLKSZ5cMzD8Gyw",
           "reason": "HTTP 404"
         },
         {
-          "endpoint": "UCRJFAp0rewx8kzdhEqDHIlA",
+          "endpoint": "UCZHmQk67mSJgfCCTn7xBfew",
+          "reason": "HTTP 404"
+        },
+        {
+          "endpoint": "UCJIfeSCssxSC_Dhc5s7woww",
           "reason": "HTTP 404"
         }
       ],
       "feeds_ok": 1,
-      "checked_at": "2026-11-14T00:18:54.883619+00:00",
+      "checked_at": "2026-11-14T06:51:13.160314+00:00",
       "rejected_count": 0,
       "rejection_reasons": {},
       "rejected_examples": [],
       "stored_count": 60,
-      "latest_published_at": "2026-11-12T17:36:47+00:00"
+      "latest_published_at": "2026-11-13T00:00:00+00:00"
     },
     "hackernews": {
       "status": "direct",
-      "fresh_count": 9,
+      "fresh_count": 12,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-14T00:18:54.883619+00:00",
-      "rejected_count": 51,
+      "checked_at": "2026-11-14T06:51:13.160314+00:00",
+      "rejected_count": 48,
       "rejection_reasons": {
-        "off_topic": 25,
-        "no_concrete_signal": 26
+        "no_concrete_signal": 26,
+        "off_topic": 22
       },
       "rejected_examples": [
         {
-          "title": "Unsloth Qwen3.8-27B Quantizations – Dynamic v3.1 Update",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Show HN: Feedback/AMA MeditionBench; LLMs for mediation and conflict resolution",
+          "title": "AI Productivity Gains Mainly Benefit People at the Top",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Tell HN: Google Search to start locking down search behind a login wall",
-          "reason": "off_topic"
-        },
-        {
-          "title": "FAA tees up $875M AI tool to help manage air traffic congestion",
+          "title": "Every Flight Is Grounded on Day Trump Admin Installed AI Controls",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Drones over UK skies: US Air Force launches urgent response",
+          "title": "FAA TDM-to-IP Migration (2015) [pdf]",
           "reason": "off_topic"
         },
         {
-          "title": "Ground stop ordered for all airports nationwide for 'reasons of safety'",
+          "title": "Old tech blamed for the ground stop that caused flight chaos: It got overloaded",
           "reason": "off_topic"
         },
         {
-          "title": "FAA expands AI advice to manage air traffic congestion across US airspace",
+          "title": "ShieldFont – Protect human muffins by poisoning unauthorized AI starfish",
           "reason": "no_concrete_signal"
         },
         {
-          "title": "Flights halted at airports across US due to air traffic control comms problems",
+          "title": "Israeli airstrike on Nasser hospital in Gaza killed surgeon and others",
           "reason": "off_topic"
+        },
+        {
+          "title": "Air traffic control modernization effort needs (Sep 14, 2026)",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Transforming Ripgrep's Documentation with AI Automation and MkDocs",
+          "reason": "no_concrete_signal"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-14T00:18:06+00:00"
+      "latest_published_at": "2026-11-14T04:13:42+00:00"
     },
     "producthunt": {
       "status": "direct",
-      "fresh_count": 14,
+      "fresh_count": 13,
       "errors": [],
       "feeds_ok": 1,
-      "checked_at": "2026-11-14T00:18:54.883619+00:00",
-      "rejected_count": 21,
+      "checked_at": "2026-11-14T06:51:13.160314+00:00",
+      "rejected_count": 22,
       "rejection_reasons": {
-        "off_topic": 20,
+        "off_topic": 21,
         "unusable_title": 1
       },
       "rejected_examples": [
@@ -200,11 +214,7 @@
           "reason": "off_topic"
         },
         {
-          "title": "Paxper",
-          "reason": "off_topic"
-        },
-        {
-          "title": "StockRip",
+          "title": "Kairos",
           "reason": "off_topic"
         },
         {
@@ -212,7 +222,11 @@
           "reason": "off_topic"
         },
         {
-          "title": "Kairos",
+          "title": "Paxper",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Willo",
           "reason": "off_topic"
         },
         {
@@ -220,7 +234,7 @@
           "reason": "off_topic"
         },
         {
-          "title": "Willo",
+          "title": "Hoverine",
           "reason": "off_topic"
         }
       ],
@@ -229,7 +243,7 @@
     },
     "tech_news": {
       "status": "direct",
-      "fresh_count": 34,
+      "fresh_count": 33,
       "errors": [
         {
           "endpoint": "venturebeat",
@@ -237,12 +251,24 @@
         }
       ],
       "feeds_ok": 5,
-      "checked_at": "2026-11-14T00:18:54.883619+00:00",
-      "rejected_count": 25,
+      "checked_at": "2026-11-14T06:51:13.160314+00:00",
+      "rejected_count": 26,
       "rejection_reasons": {
-        "off_topic": 25
+        "off_topic": 26
       },
       "rejected_examples": [
+        {
+          "title": "Amazon has a plan to index the world’s online shopping data",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Let’s talk about Jensen Huang’s many affairs!",
+          "reason": "off_topic"
+        },
+        {
+          "title": "Oh, Palantir is ‘progressive’ now, is it?",
+          "reason": "off_topic"
+        },
         {
           "title": "ElevenLabs’ new app combines meeting note-taking and dictation for teams",
           "reason": "off_topic"
@@ -262,18 +288,6 @@
         {
           "title": "Jensen Huang agrees to testify before Congress",
           "reason": "off_topic"
-        },
-        {
-          "title": "Let’s talk about Jensen Huang’s many affairs!",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Oh, Palantir is ‘progressive’ now, is it?",
-          "reason": "off_topic"
-        },
-        {
-          "title": "Jensen Huang and the End of the Founder Fairy Tale",
-          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
@@ -281,7 +295,7 @@
     },
     "cn_news": {
       "status": "direct",
-      "fresh_count": 40,
+      "fresh_count": 30,
       "errors": [
         {
           "endpoint": "36kr",
@@ -297,36 +311,12 @@
         }
       ],
       "feeds_ok": 6,
-      "checked_at": "2026-11-14T00:18:54.883619+00:00",
-      "rejected_count": 78,
+      "checked_at": "2026-11-14T06:51:13.160314+00:00",
+      "rejected_count": 87,
       "rejection_reasons": {
-        "off_topic": 78
+        "off_topic": 87
       },
       "rejected_examples": [
-        {
-          "title": "黄仁勋辞职，英伟达33年首换帅，市值蒸发超3万亿",
-          "reason": "off_topic"
-        },
-        {
-          "title": "比亚迪第1900万辆新能源汽车下线，科技新奢旗舰SUV方程豹钛9开启预订",
-          "reason": "off_topic"
-        },
-        {
-          "title": "从仰望极速新纪录和鼎曜全球发布 看比亚迪的国际化与高端化之路",
-          "reason": "off_topic"
-        },
-        {
-          "title": "比亚迪与神州租车首批闪充车及闪充站投放仪式顺利举行，战略合作落地兑现，闪充中国再次提速",
-          "reason": "off_topic"
-        },
-        {
-          "title": "openJiuwen发布RSI原生AgentOS，让Agent自由变身，持续迭代！",
-          "reason": "off_topic"
-        },
-        {
-          "title": "特斯拉和SpaceX最快下月合并",
-          "reason": "off_topic"
-        },
         {
           "title": "余承东公布华为问界新合作模式！新 M8 同步上市，起售价 37.98 万元",
           "reason": "off_topic"
@@ -334,15 +324,36 @@
         {
           "title": "iPhone 20 爆料汇总：一整块玻璃，藏着苹果下一个十年",
           "reason": "off_topic"
+        },
+        {
+          "title": "李飞飞最新世界模型正式开放，我用它一句话造出重庆山城",
+          "reason": "off_topic"
+        },
+        {
+          "title": "黄仁勋自嘲是「人渣」，英伟达员工集体喊话求回归",
+          "reason": "off_topic"
+        },
+        {
+          "title": "突发！黄仁勋辞任 CEO，英伟达迎来历史性换帅",
+          "reason": "off_topic"
+        },
+        {
+          "title": "26.99 万元起！腾势 N8 上市，内饰最美的比亚迪来了",
+          "reason": "off_topic"
+        },
+        {
+          "title": "森海塞尔 HDB 630 体验：把 Hi-Fi 音响，装进这副降噪耳机里",
+          "reason": "off_topic"
+        },
+        {
+          "title": "拆解触屏 MacBook Pro：点亮苹果 LOGO 的秘密，藏在这里",
+          "reason": "off_topic"
         }
       ],
       "stored_count": 60,
-      "latest_published_at": "2026-11-14T00:14:06+00:00"
+      "latest_published_at": "2026-11-14T06:33:00+00:00"
     }
   },
-  "quality_rejections": {
-    "outside_news_window": 1,
-    "duplicate_headline": 2
-  },
+  "quality_rejections": {},
   "quality_complete": true
 }
